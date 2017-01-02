@@ -1,0 +1,10 @@
+{
+	"name": "PixelMaestro",
+	"keyboards": "rgb, led, pixel",
+	"description": "Arduino library for controlling the output of multiple RGB pixels.",
+	"repository":
+	{
+		"type": "git",
+		"url": "https://gitlab.amenoph.us/andre/PixelMaestro.git"
+	}
+}
