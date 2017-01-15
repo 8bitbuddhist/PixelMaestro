@@ -42,6 +42,10 @@ namespace PixelMaestro {
 		return &lines_[row];
 	}
 
+	unsigned char Grid::getNumLines() {
+		return num_lines_;
+	}
+
 	/**
 		Sets the speed for the active animation for all Lines.
 

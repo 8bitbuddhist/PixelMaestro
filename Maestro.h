@@ -30,7 +30,10 @@ namespace PixelMaestro {
 			Maestro(Line *lines, unsigned char numLines, Grid *grids, unsigned char numGrids);
 			Grid *getGrid(unsigned char grid);
 			Line *getLine(unsigned char line);
+			unsigned char getNumGrids();
+			unsigned char getNumLines();
 			bool getRunning();
+			unsigned char getSpeed();
 			void setGrids(Grid *grids, unsigned char numGrids);
 			void setLines(Line *lines, unsigned char numLines);
 			void toggleRunning();

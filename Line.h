@@ -47,7 +47,9 @@ namespace PixelMaestro {
 			Line::ColorAnimations getColorAnimation();
 			unsigned long getCurrentTime();
 			bool getFade();
+			unsigned char getNumPixels();
 			Pixel *getPixel(unsigned char pixel);
+			unsigned char getSpeed();
 			void setAll(Colors::RGB *color);
 			void setColorAnimation(Line::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false);
 			void setColors(Colors::RGB *colors, unsigned char numColors);

@@ -42,8 +42,21 @@ namespace PixelMaestro {
 		return &lines_[line];
 	}
 
+	unsigned char Maestro::getNumGrids() {
+		return num_grids_;
+	}
+
+	unsigned char Maestro::getNumLines() {
+		return num_lines_;
+	}
+
 	bool Maestro::getRunning() {
 		return running_;
+	}
+
+	unsigned char Maestro::getSpeed() {
+		// Placeholder
+		return lines_[0].getSpeed();
 	}
 
 	void Maestro::setGrids(Grid *grids, unsigned char numGrids) {

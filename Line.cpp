@@ -54,6 +54,10 @@ namespace PixelMaestro {
 		return fade_;
 	}
 
+	unsigned char Line::getNumPixels() {
+		return num_pixels_;
+	}
+
 	/**
 		Returns the Pixel at the specified index.
 		Useful for getting the color of the Pixel for display via pixel->getColor().
@@ -63,6 +67,10 @@ namespace PixelMaestro {
 	*/
 	Pixel *Line::getPixel(unsigned char pixel) {
 		return &pixels_[pixel];
+	}
+
+	unsigned char Line::getSpeed() {
+		return speed_;
 	}
 
 	/**
@@ -129,8 +137,8 @@ namespace PixelMaestro {
 		@param index Where the cycle should start.
 	*/
 	void Line::setCycleIndex(unsigned char index) {
-		if (index > cycle_index_) {
-			cycle_index_ %= index;
+		if (index > num_colors_) {
+			cycle_index_ = (index - 1) % num_colors_;
 		}
 		else {
 			cycle_index_ = index;

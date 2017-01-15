@@ -28,6 +28,7 @@ namespace PixelMaestro {
 			Grid(Line *lines, unsigned char numLines);
 
 			Line *getLine(unsigned char row);
+			unsigned char getNumLines();
 			void setUpdateSpeed(unsigned char speed, unsigned char delay = 0);
 			void toggleFade();
 			void update(unsigned long currentTime);
