@@ -25,15 +25,27 @@
 namespace PixelMaestro {
 	class Grid {
 		public:
+			enum ColorAnimations {
+				NONE,
+				SOLID,
+				BLINK,
+				STRIPES
+			};
+			Grid();
 			Grid(Line *lines, unsigned char numLines);
 
 			Line *getLine(unsigned char row);
 			unsigned char getNumLines();
+			void setColorAnimation(Grid::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false);
+			void setColors(Colors::RGB *colors, unsigned char numColors);
+			void setLines(Line *lines, unsigned char numLines);
+			void setPixels(Pixel *pixels, unsigned char pixelsPerLine);
 			void setUpdateSpeed(unsigned char speed, unsigned char delay = 0);
 			void toggleFade();
 			void update(unsigned long currentTime);
 
 		private:
+			ColorAnimations color_animation_ = ColorAnimations(SOLID);
 			Line *lines_;
 			unsigned char num_lines_;
 	};

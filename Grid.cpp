@@ -21,6 +21,7 @@
 #include "Line.h"
 
 namespace PixelMaestro {
+	Grid::Grid() {}
 	/**
 		Constructor. Initializes the matrix. Arrays must be declared in advance.
 
@@ -28,8 +29,7 @@ namespace PixelMaestro {
 		@param numArrays Number of Lines to manage.
 	*/
 	Grid::Grid(Line *lines, unsigned char numLines) {
-		lines_ = lines;
-		num_lines_ = numLines;
+		setLines(lines, numLines);
 	}
 
 	/**
@@ -44,6 +44,66 @@ namespace PixelMaestro {
 
 	unsigned char Grid::getNumLines() {
 		return num_lines_;
+	}
+
+	void Grid::setColorAnimation(Grid::ColorAnimations animation, bool reverseAnimation) {
+		// If animation was supplied, change to the desired animation.
+		// Otherwise, increment the current animation to the next one.
+		if (animation) {
+			color_animation_ = animation;
+		}
+		else {
+			unsigned char animationNum = color_animation_ + 1;
+
+			if (animationNum > Grid::ColorAnimations::STRIPES) {
+				animationNum = Grid::ColorAnimations::SOLID;
+			}
+
+			color_animation_ = Grid::ColorAnimations(animationNum);
+		}
+
+		// Iterate through each animation and update each line as needed.
+		for (unsigned char line = 0; line < num_lines_; line++) {
+			switch (color_animation_) {
+				case Grid::ColorAnimations::STRIPES:
+					{
+						if (line % 2 == 0) {
+							lines_[line].setColorAnimation(Line::ColorAnimations::WAVE, reverseAnimation);
+						}
+						else {
+							lines_[line].setColorAnimation(Line::ColorAnimations::WAVE, !reverseAnimation);
+						}
+						break;
+
+					}
+				case Grid::ColorAnimations::BLINK:
+					lines_[line].setColorAnimation(Line::ColorAnimations::BLINK);
+					break;
+				case Grid::ColorAnimations::SOLID:
+					lines_[line].setColorAnimation(Line::ColorAnimations::SOLID);
+					break;
+				default:
+					lines_[line].setColorAnimation(Line::ColorAnimations::NONE);
+					break;
+			}
+        }
+	}
+
+	void Grid::setColors(Colors::RGB *colors, unsigned char numColors) {
+		for (unsigned char line = 0; line < num_lines_; line++) {
+			lines_[line].setColors(colors, numColors);
+		}
+	}
+
+	void Grid::setLines(Line *lines, unsigned char numLines) {
+		lines_ = lines;
+		num_lines_ = numLines;
+	}
+
+	void Grid::setPixels(Pixel *pixels, unsigned char pixelsPerLine) {
+		for (unsigned char line = 0; line < num_lines_; line++) {
+			lines_[line].setPixels(&pixels[line * pixelsPerLine], pixelsPerLine);
+		}
 	}
 
 	/**
