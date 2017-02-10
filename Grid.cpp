@@ -82,8 +82,10 @@ namespace PixelMaestro {
 				case Grid::ColorAnimations::SOLID:
 					lines_[line].setColorAnimation(Line::ColorAnimations::SOLID);
 					break;
-				default:
+				case Grid::ColorAnimations::NONE:
 					lines_[line].setColorAnimation(Line::ColorAnimations::NONE);
+					break;
+				default:
 					break;
 			}
         }

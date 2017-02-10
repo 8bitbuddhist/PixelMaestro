@@ -55,8 +55,30 @@ namespace PixelMaestro {
 	}
 
 	unsigned char Maestro::getSpeed() {
-		// Placeholder
-		return lines_[0].getSpeed();
+		// Default to the slowest possible speed
+		unsigned char minSpeed = 255;
+
+		// The Maestro must be at least as fast as the fastest animation.
+		// Loop through each Grid and Line until we find it.
+		if (num_grids_ > 0) {
+			for (unsigned char grid = 0; grid < num_grids_; grid++) {
+				for (unsigned char line = 0; line < grids_[grid].getNumLines(); line++) {
+					if (grids_[grid].getLine(line)->getSpeed() < minSpeed) {
+						minSpeed = grids_[grid].getLine(line)->getSpeed();
+					}
+				}
+			}
+		}
+
+		if (num_lines_ > 0) {
+			for (unsigned char line = 0; line < num_lines_; line++) {
+				if (lines_[line].getSpeed() < minSpeed) {
+					minSpeed = lines_[line].getSpeed();
+				}
+			}
+		}
+
+		return minSpeed;
 	}
 
 	void Maestro::setGrids(Grid *grids, unsigned char numGrids) {
@@ -74,6 +96,7 @@ namespace PixelMaestro {
 	}
 
 	void Maestro::update(unsigned long currentTime) {
+		// Call each Grid and Line's update method.
 		if (running_) {
 			for (unsigned char grid = 0; grid < num_grids_; grid++) {
 				grids_[grid].update(currentTime);
