@@ -51,18 +51,47 @@ namespace PixelMaestro {
 
 	void Show::update(unsigned long currentTime) {
 		if (currentTime >= transitions_[current_index_].time && !transitions_[current_index_].ran) {
-			runTransition();
+			runTransition(&transitions_[current_index_]);
 		}
 		maestro_->update(currentTime);
 	}
 
-	void Show::runTransition() {
-		Transition *transition = &transitions_[current_index_];
+	void Show::runTransition(Transition *transition) {
+		Opts opts = transition->opts;
 		// Run the current transition
 		switch (transition->action) {
 			case Actions::SET_SPEED:
-				// TESTING. Final version will have logic to determine which Grid/Line to modify
-				maestro_->getGrid(0)->setUpdateSpeed(transition->opts.val1);
+				if (opts.line && opts.grid) {
+					maestro_->getGrid(opts.gridNum)->getLine(opts.lineNum)->setUpdateSpeed(transition->opts.val1);
+				}
+				else if (opts.grid) {
+					maestro_->getGrid(opts.gridNum)->setUpdateSpeed(transition->opts.val1);
+				}
+				else if (opts.line) {
+					maestro_->getLine(opts.lineNum)->setUpdateSpeed(transition->opts.val1);
+				}
+				break;
+			case Actions::SET_COLOR_ANIMATION:
+				if (opts.line && opts.grid) {
+					maestro_->getGrid(opts.gridNum)->getLine(opts.lineNum)->setColorAnimation(opts.lineAnimation, opts.val1);
+				}
+				else if (opts.grid) {
+					maestro_->getGrid(opts.gridNum)->setColorAnimation(opts.gridAnimation, opts.val1);
+				}
+				else if (opts.line) {
+					maestro_->getLine(opts.lineNum)->setColorAnimation(opts.lineAnimation, opts.val1);
+				}
+				break;
+			case Actions::TOGGLE_FADE:
+				if (opts.line && opts.grid) {
+					maestro_->getGrid(opts.gridNum)->getLine(opts.lineNum)->toggleFade();
+				}
+				else if (opts.grid) {
+					maestro_->getGrid(opts.gridNum)->toggleFade();
+				}
+				else if (opts.line) {
+					maestro_->getLine(opts.lineNum)->toggleFade();
+				}
 				break;
 			default:
 				break;

@@ -32,13 +32,20 @@ namespace PixelMaestro {
 				// CHANGE_COLOR,			// {Actions action, byte index, byte r, byte g, byte b}
 				// GENERATE_COLOR_ARRAY,	// {Actions action, byte size, byte r, byte g, byte b}
 				// GENERATE_SCALING_COLOR_ARRAY,	// {Actions action, byte array size, byte color1.r, byte color1.g, byte color1.b, byte color2.r, byte color2.g, byte color2.b, bool reverse}
-				SET_SPEED,				// Opts.val1
-				// SET_MODE,				// {Actions action, byte mode, byte opts}
+				SET_COLOR_ANIMATION,
+				SET_SPEED,
+				TOGGLE_FADE
 				// SET_PATTERN				// {Actions action, byte pattern_index}
 			};
 
-			typedef struct {
-				int val1;					// Generic value to store
+			struct Opts {
+				bool grid;			// Does this action modify a Grid?
+				unsigned char gridNum;		// Index of the Grid to modify. Leave null if you're modifying a line.
+				bool line;			// Does this action modify a Line?
+				unsigned char lineNum;		// Index of the Line to modify. Leave null if you're modifying a Grid, or combine with gridNum to modify a Line within a Grid.
+				int val1;					// Generic stored value
+				Line::ColorAnimations lineAnimation;	// Line animation to change to.
+				Grid::ColorAnimations gridAnimation;	// Grid animation to change to.
 				/*unsigned char index;		// Index of the color or pattern to change
 				unsigned char array_size;	// Size of the color or scaling array
 				unsigned char update_speed;		// Animation interval period
@@ -53,14 +60,14 @@ namespace PixelMaestro {
 				unsigned char b2;			// b-value for the second color
 				bool reverse;				// Whether to generate a color scheme that scales in reverse
 				*/
-			} Opts;
+			};
 
-			typedef struct {
+			struct Transition {
 				unsigned long time;
 				Actions action;
 				Opts opts;
 				bool ran = false;
-			} Transition;
+			};
 
 			/** Default constructor */
 			Show(Maestro *maestro, Transition *transitions, unsigned char numTransitions);
@@ -80,7 +87,7 @@ namespace PixelMaestro {
 			unsigned char num_transitions_;
 
 			unsigned char getNextIndex();
-			void runTransition();
+			void runTransition(Transition *transition);
 	};
 }
 
