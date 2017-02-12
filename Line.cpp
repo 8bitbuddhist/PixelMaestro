@@ -24,11 +24,14 @@
 #include "Pixel.h"
 
 namespace PixelMaestro {
+	/**
+		Default constructor.
+		Note that if you use the default constructor, you MUST use setPixels() to initialize the Pixel array.
+	*/
     Line::Line() {}
 
 	/**
-		Constructor. Initializes the Pixel array.
-		Note that if you use the empty constructor, you MUST use setPixels().
+		Constructor. A Line is a collection of initialized Pixels.
 
 		@param pixels Initial pixel array.
 		@param numPixels Number of pixels.
@@ -38,22 +41,19 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the current time as stored by the strip.
-
-		@return Current time.
-	*/
-	unsigned long Line::getCurrentTime() {
-		return *current_time_;
-	}
-
-	/**
 		Returns whether the Line is fading.
-		@return Line is fading.
+
+		@return Whether the Line is fading.
 	*/
 	bool Line::getFade() {
 		return fade_;
 	}
 
+	/**
+		Returns the number of Pixels in the Line.
+
+		@return Number of Pixels.
+	*/
 	unsigned char Line::getNumPixels() {
 		return num_pixels_;
 	}
@@ -69,21 +69,26 @@ namespace PixelMaestro {
 		return &pixels_[pixel];
 	}
 
-	unsigned char Line::getSpeed() {
+	/**
+		Returns the speed of the array.
+
+		@return speed The current speed.
+	*/
+	unsigned char Line::getUpdateSpeed() {
 		return speed_;
 	}
 
 	/**
 		Returns the current color animation.
 
-		@return Current Line::ColorAnimation.
+		@return Current color animation.
 	*/
 	Line::ColorAnimations Line::getColorAnimation() {
 		return color_animation_;
 	}
 
 	/**
-		Sets all Pixelss to the specified color.
+		Sets all Pixels to the specified color.
 
 		@param color New color.
 	*/
@@ -121,7 +126,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Replaces the current colors_ array with a new array.
+		Replaces the current color array.
 
 		@param colors New color array.
 		@param numColors Size of the array.
@@ -156,9 +161,9 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets the pattern to be displayed.
+		Changes the display pattern.
 
-		@param pattern Pointer to the unsigned char array where the lines are stored.
+		@param pattern Pointer to the pattern (byte) array.
 		@param patternLength Length of the pattern array.
 	*/
 	void Line::setPattern(unsigned char *pattern, unsigned char patternLength) {
@@ -167,10 +172,10 @@ namespace PixelMaestro {
 	}
 
 	/**
-        Sets the pixels used in the array.
+        Sets the Pixels used in the array.
 
-        @param pixels Initial pixel array.
-		@param numPixels Number of pixels.
+        @param pixels Initial Pixel array.
+		@param numPixels Number of Pixels.
 	*/
 	void Line::setPixels(Pixel* pixels, unsigned char numPixels) {
         pixels_ = pixels;
@@ -208,16 +213,23 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Main update routine. Must be called in loop().
+		Main update routine.
+
+		@param currentTime Program runtime.
 	*/
 	void Line::update(unsigned long currentTime) {
 		// Update the timer
-		//current_time_ = millis();
 		current_time_ = &currentTime;
+
+		/*
+			Run if either of the following cases is true:
+				1. The Line has never updated (last_time_ == 0).
+				2. The program's runtime minus the Line's last update time exceeds the update interval (current_time_ - last_time_ >= speed).
+		*/
 		if ((last_time_ == 0) || (*current_time_ - last_time_ >= speed_)) {
 
-			// Run a function based on the current mode.
-			// Defaults to Modes::NONE
+			// Determine which animation to run, then run the associated method.
+			// Defaults to off.
 			switch (color_animation_) {
 				case Line::ColorAnimations::SOLID:
 					animation_solid();
@@ -254,17 +266,17 @@ namespace PixelMaestro {
 					break;
 			}
 
-			// Update each LED
+			// Update each LED.
 			for (unsigned char pixel = 0; pixel < num_pixels_; pixel++) {
 				pixels_[pixel].update();
 			}
 
-			// Update the timer
+			// Update the timer.
 			last_time_ = *current_time_;
 		}
 	}
 
-	// Private functions
+	// Private animation functions
 
 	/**
 		Creates a blinking effect.
@@ -272,6 +284,7 @@ namespace PixelMaestro {
 		Modes: BLINK
 	*/
 	void Line::animation_blink() {
+		// Alternate the Pixel between its normal color and off (Colors::BLACK).
 		if (cycle_index_ == 0) {
 			for (unsigned char pixel = 0; pixel < num_pixels_; pixel++) {
 				setOne(pixel, &colors_[animation_getColorIndex(pixel)]);
@@ -282,13 +295,14 @@ namespace PixelMaestro {
 		}
 		animation_incrementCycle();
 
+		// Only run for two cycles.
 		if (cycle_index_ == 2) {
 			cycle_index_ = 0;
 		}
 	}
 
 	/**
-		Cycles through the colors stored in colors_.
+		Cycles all Pixels through all stored colors.
 
 		Modes: CYCLE
 	*/
@@ -304,11 +318,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Gets the current color index.
-		Used to detect the current position in a cycle.
+		Calculates the index of a color.
+		Used mainly to determine which color a Pixel should use during an animation based on where it is in the array.
+		For example, this allows a Line of 10 Pixels to use an array of 5 colors by repeating the colors after Pixel 5.
 
-		@param count Index used by the calling function, if any.
-		@return Current index.
+		@param count Number to resolve to an index.
+		@return Resulting index.
 	*/
 	unsigned char Line::animation_getColorIndex(unsigned char count) {
 		if (count >= num_colors_) {
@@ -322,9 +337,8 @@ namespace PixelMaestro {
 		Decrements the current position in the cycle.
 	*/
 	void Line::animation_decrementCycle() {
-		// If the Pixels are finished cycling through their steps, continue.
+		// Only continue if the Pixels are finished cycling through their steps.
 		if ((pixels_[0].getStepCount() == 0) && (*current_time_ - cycle_end_ >= delay_)) {
-			//cycle_end_ = millis();
 			cycle_end_ = *current_time_;
 			cycle_index_--;
 			if (cycle_index_ < 0) {
@@ -337,9 +351,8 @@ namespace PixelMaestro {
 		Increments the current position in the cycle.
 	*/
 	void Line::animation_incrementCycle() {
-		// If the Pixels are finished cycling through their steps, continue.
+		// Only continue if the Pixels are finished cycling through their steps.
 		if ((pixels_[0].getStepCount() == 0) && (*current_time_ - cycle_end_ >= delay_)) {
-			//cycle_end_ = millis();
 			cycle_end_ = *current_time_;
 			cycle_index_++;
 			if (cycle_index_ >= num_colors_) {
@@ -349,14 +362,14 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Creates a converging effect.
+		Creates an effect where colors converge into the center of the array.
 
 		Modes: MERGE
 	*/
 	void Line::animation_merge() {
-		unsigned char midPoint = (num_pixels_ / 2) - 1;
 
-		// Go from the center to the first
+		// Calculate the center of the array
+		unsigned char midPoint = (num_pixels_ / 2) - 1;
 		unsigned char count = 0;
 
 		for (int pixel = midPoint; pixel >= 0; pixel--) {
@@ -390,6 +403,7 @@ namespace PixelMaestro {
 
 	/**
 		Scrolls through the pattern stored in pattern_.
+		If there is no pattern set, blink.
 
 		Modes: PATTERN
 	*/
@@ -427,10 +441,10 @@ namespace PixelMaestro {
 		}
 
 		if (cycle_index_ == 0) {
-			reverse_animation_ = false;		// start upcycle
+			reverse_animation_ = false;		// Start upcycle
 		}
 		if (cycle_index_ == num_colors_ - 1) {
-			reverse_animation_ = true;		// start downcycle
+			reverse_animation_ = true;		// Start downcycle
 		}
 
 		if (reverse_animation_) {
@@ -466,8 +480,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Creates a shimmering effect.
-		A default color can be used in place of colors_[led].
+		Creates a shimmering effect by turning on random Pixels.
 
 		Modes: SPARKLE
 	*/
@@ -485,7 +498,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Creates a static effect.
+		Creates a static effect by blending each Pixel between varying levels of gray.
 
 		Modes: STATIC
 	*/
@@ -498,7 +511,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Creates a wave effect.
+		Creates a wave effect by scrolling the color array across the Line.
 
 		Modes: WAVE
 	*/

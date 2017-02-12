@@ -25,11 +25,12 @@
 namespace PixelMaestro {
 	class Grid {
 		public:
+			/// Set of animations usable by the Grid.
 			enum ColorAnimations {
-				NONE,
-				SOLID,
-				BLINK,
-				STRIPES
+				NONE,		/// Turns off all Pixels in the Grid.
+				SOLID,		/// Displays the default color of each Pixel.
+				BLINK,		/// Alternates Pixels between their default color and black (off).
+				STRIPES		/// Scrolls each Line in alternating directions.
 			};
 			Grid();
 			Grid(Line *lines, unsigned char numLines);
@@ -45,9 +46,9 @@ namespace PixelMaestro {
 			void update(unsigned long currentTime);
 
 		private:
-			ColorAnimations color_animation_ = ColorAnimations(SOLID);
-			Line *lines_;
-			unsigned char num_lines_;
+			ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// Current color animation (defaults to SOLID).
+			Line *lines_;				/// Collection of Lines in the Grid.
+			unsigned char num_lines_;	/// Number of Lines in the Grid.
 	};
 }
 

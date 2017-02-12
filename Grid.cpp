@@ -21,9 +21,15 @@
 #include "Line.h"
 
 namespace PixelMaestro {
-	Grid::Grid() {}
 	/**
-		Constructor. Initializes the matrix. Arrays must be declared in advance.
+		Default constructor.
+		Note that if you use the default constructor, you MUST use setPixels() to initialize the Pixel array.
+	*/
+	Grid::Grid() {}
+
+	/**
+		Constructor. A Grid is a collection of already initialized Lines.
+		Grids have their own wrapper functions for speed, animations, etc, although each line can still be managed independently.
 
 		@param arrays Array of Lines.
 		@param numArrays Number of Lines to manage.
@@ -42,10 +48,22 @@ namespace PixelMaestro {
 		return &lines_[row];
 	}
 
+	/**
+		Returns the number of Lines.
+
+		@return Number of Lines.
+	*/
 	unsigned char Grid::getNumLines() {
 		return num_lines_;
 	}
 
+	/**
+		Sets the color animation used in the Grid.
+		Grids have their own animation set, although this is merely a wrapper for individual Line animations.
+
+		@param animation The animation to use.
+		@param reverseAnimation Whether to reverse the animation.
+	*/
 	void Grid::setColorAnimation(Grid::ColorAnimations animation, bool reverseAnimation) {
 		// If animation was supplied, change to the desired animation.
 		// Otherwise, increment the current animation to the next one.
@@ -62,7 +80,7 @@ namespace PixelMaestro {
 			color_animation_ = Grid::ColorAnimations(animationNum);
 		}
 
-		// Iterate through each animation and update each line as needed.
+		// Iterate through each animation and update each Line as needed.
 		for (unsigned char line = 0; line < num_lines_; line++) {
 			switch (color_animation_) {
 				case Grid::ColorAnimations::STRIPES:
@@ -91,17 +109,37 @@ namespace PixelMaestro {
         }
 	}
 
+	/**
+		Sets the colors used for each line.
+
+		@param colors Array of colors.
+		@param numColors Number of colors in the array.
+	*/
 	void Grid::setColors(Colors::RGB *colors, unsigned char numColors) {
 		for (unsigned char line = 0; line < num_lines_; line++) {
 			lines_[line].setColors(colors, numColors);
 		}
 	}
 
+	/**
+		Sets the Lines used in the Grid.
+
+		@param lines Array of Lines.
+		@param numLines Number of Lines in the array.
+	*/
 	void Grid::setLines(Line *lines, unsigned char numLines) {
 		lines_ = lines;
 		num_lines_ = numLines;
 	}
 
+	/**
+		Sets the Pixels to use in the Grid.
+		This is a convenient alternative to setting Pixels for each Line, as it evenly distributes an array of Pixels across each Line in the Grid.
+		This assumes that the Grid already has Lines set with the correct number of pixels per Line.
+
+		@param pixels Array of Pixels.
+		@param pixelsPerLine Number of Pixels to set per Line.
+	*/
 	void Grid::setPixels(Pixel *pixels, unsigned char pixelsPerLine) {
 		for (unsigned char line = 0; line < num_lines_; line++) {
 			lines_[line].setPixels(&pixels[line * pixelsPerLine], pixelsPerLine);
@@ -131,6 +169,8 @@ namespace PixelMaestro {
 
 	/**
 		Main update routine.
+
+		@param currentTime Program runtime.
 	*/
 	void Grid::update(unsigned long currentTime) {
 		// Update each array

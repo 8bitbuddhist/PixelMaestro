@@ -1,5 +1,5 @@
 /*
-	Colors.cpp - Arduino library for defining commonly used colors and methods
+	Colors.cpp - Library for defining commonly used colors and methods for handling those colors.
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -21,6 +21,7 @@
 #include <stdlib.h>
 
 namespace PixelMaestro {
+	// Simple color set
 	Colors::RGB Colors::RED = {255, 0, 0};
 	Colors::RGB Colors::GREEN = {0, 255, 0};
 	Colors::RGB Colors::BLUE = {0, 0, 255};
@@ -38,6 +39,8 @@ namespace PixelMaestro {
 	Colors::RGB Colors::MAGENTA = {255, 0, 255};
 	Colors::RGB Colors::ROSE = {255, 0, 128};
 	Colors::RGB Colors::INDIGO = {180, 0, 130};
+
+	// Color collections
 	Colors::RGB Colors::COLORWHEEL[] = {
 		Colors::RED,
 		Colors::ORANGE,
@@ -63,7 +66,7 @@ namespace PixelMaestro {
 	};
 
 	/**
-		Checks if the current color matches the next color stored.
+		Checks if two colors match.
 
 		@param colorOne First color to match.
 		@param colorTwo Second color to match.

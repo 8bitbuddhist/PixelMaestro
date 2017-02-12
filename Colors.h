@@ -1,5 +1,5 @@
 /*
-	Colors.h - Arduino library for defining commonly used colors and methods
+	Colors.cpp - Library for defining commonly used colors and methods for handling those colors.
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -24,17 +24,20 @@ namespace PixelMaestro {
 
 		private:
 		public:
-			typedef struct RGB {
-				unsigned char r;
-				unsigned char g;
-				unsigned char b;
-			} RGB;
-
-			enum MixMode {
-				NORMAL,
-				ALPHA_BLENDING
+			/// Stores an RGB definition of a color.
+			struct RGB {
+				unsigned char r;	/// The red value of the color.
+				unsigned char g;	/// The green value of the color.
+				unsigned char b;	/// The blue value of the color.
 			};
 
+			/// Determines the blending algorithm used when mixing two colors.
+			enum MixMode {
+				NORMAL,			/// Simple 50/50 blending.
+				ALPHA_BLENDING	/// Overlays Color 2 on top of Color 1 with a specified blend percentage.
+			};
+
+			// Basic color set
 			static RGB RED;
 			static RGB GREEN;
 			static RGB BLUE;

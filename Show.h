@@ -1,6 +1,5 @@
 /*
-	Show.cpp - Library for managing PixelMaestro transitions
-	Requires PixelMaestro library
+	Show.cpp - Library for managing PixelMaestro transitions.
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -28,51 +27,60 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class Show {
 		public:
+			/**
+				Set of actions that can be performed by a Transition.
+
+				Standard options:
+					grid/line: Whether the change applies to a Grid or Line.
+					gridNum/lineNum: The index of the Grid or Line to change.
+			*/
 			enum Actions {
-				// CHANGE_COLOR,			// {Actions action, byte index, byte r, byte g, byte b}
-				// GENERATE_COLOR_ARRAY,	// {Actions action, byte size, byte r, byte g, byte b}
-				// GENERATE_SCALING_COLOR_ARRAY,	// {Actions action, byte array size, byte color1.r, byte color1.g, byte color1.b, byte color2.r, byte color2.g, byte color2.b, bool reverse}
-				SET_COLOR_ANIMATION,
-				SET_SPEED,
-				TOGGLE_FADE
-				// SET_PATTERN				// {Actions action, byte pattern_index}
-			};
+				/**
+					Sets the color animation of a Grid or Line.
 
-			struct Opts {
-				bool grid;			// Does this action modify a Grid?
-				unsigned char gridNum;		// Index of the Grid to modify. Leave null if you're modifying a line.
-				bool line;			// Does this action modify a Line?
-				unsigned char lineNum;		// Index of the Line to modify. Leave null if you're modifying a Grid, or combine with gridNum to modify a Line within a Grid.
-				int val1;					// Generic stored value
-				Line::ColorAnimations lineAnimation;	// Line animation to change to.
-				Grid::ColorAnimations gridAnimation;	// Grid animation to change to.
-				/*unsigned char index;		// Index of the color or pattern to change
-				unsigned char array_size;	// Size of the color or scaling array
-				unsigned char update_speed;		// Animation interval period
-				unsigned char mode;			// Mode to set
-				unsigned char mode_opts;	// Options to append to the mode
-				unsigned char threshold;	// Threshold when generating a color array
-				unsigned char r;			// r-value for the first color
-				unsigned char g;			// g-value for the first color
-				unsigned char b;			// b-value for the first color
-				unsigned char r2;			// r-value for the second color
-				unsigned char g2;			// g-value for the second color
-				unsigned char b2;			// b-value for the second color
-				bool reverse;				// Whether to generate a color scheme that scales in reverse
+					gridAnimation/lineAnimation: The animation to set.
+					val1: Whether to reverse the animation.
+
 				*/
+				SET_COLOR_ANIMATION,
+				/**
+					Sets the update speed of a Grid or Line.
+
+					val1: Whether to reverse the animation.
+				*/
+				SET_UPDATE_SPEED,
+				/**
+					Toggles fading of a Grid or Line.
+				*/
+				TOGGLE_FADE					/// Toggles fading of a Grid or Line.
 			};
 
+			/**
+				Options applied on a Transition to the Maestro.
+			*/
+			struct Opts {
+				bool grid;				/// Whether the action modifies a Grid. Leave false if modifying a Line that does *not* belong to a Grid.
+				unsigned char gridNum;	/// Index of the Grid to modify.
+				bool line;				/// Whether the action modifies a Line. Set grid and line to true if modifying a Line within a Grid.
+				unsigned char lineNum;	/// Index of the Line to modify.
+				int val1;				/// Multi-purpose storage.
+				Line::ColorAnimations lineAnimation;	/// Line animation to set.
+				Grid::ColorAnimations gridAnimation;	/// Grid animation to set.
+			};
+
+			/**
+				Defines an action that a Maestro will perform at a specific time.
+			*/
 			struct Transition {
-				unsigned long time;
-				Actions action;
-				Opts opts;
-				bool ran = false;
+				unsigned long time;	/// The program time when the action will be performed.
+				Actions action;		/// The action to perform.
+				Opts opts;			/// Options associated with the action.
+				bool ran = false;	/// Whether the Transition has already executed.
 			};
 
 			/** Default constructor */
 			Show(Maestro *maestro, Transition *transitions, unsigned char numTransitions);
 
-			void nextTransition();
 			int getCurrentIndex();
 			Transition *getCurrentTransition();
 			void update(unsigned long currentTime);
@@ -81,10 +89,10 @@ namespace PixelMaestro {
 			virtual ~Show();
 
 		private:
-			unsigned char current_index_ = 0;
-			Maestro *maestro_;
-			Transition *transitions_;
-			unsigned char num_transitions_;
+			unsigned char current_index_ = 0;	/// The index of the current Transition.
+			Maestro *maestro_;					/// The Maestro that the Transitions apply to.
+			Transition *transitions_;			/// Array of Transitions.
+			unsigned char num_transitions_;		/// The number of Transitions in the array.
 
 			unsigned char getNextIndex();
 			void runTransition(Transition *transition);

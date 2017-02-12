@@ -1,5 +1,5 @@
 /*
-	Maestro.cpp - Library for controlling multiple RGB LEDs
+	Maestro.cpp - Library for controlling multiple collections (Grids or Lines) of RGB LEDs.
 
 	This library is free software; you can redistribute it and/or
 	modify it under the terms of the GNU Lesser General Public
@@ -33,18 +33,18 @@ namespace PixelMaestro {
 			unsigned char getNumGrids();
 			unsigned char getNumLines();
 			bool getRunning();
-			unsigned char getSpeed();
+			unsigned char getUpdateSpeed();
 			void setGrids(Grid *grids, unsigned char numGrids);
 			void setLines(Line *lines, unsigned char numLines);
 			void toggleRunning();
 			void update(unsigned long currentTime);
 
 		private:
-			Grid *grids_;
-			Line *lines_;
-			unsigned char num_grids_ = 0;
-			unsigned char num_lines_ = 0;
-			bool running_ = true;
+			Grid *grids_;	/// Collection of Grids managed by the Maestro.
+			Line *lines_;	/// Collection of Lines managed by the Maestro.
+			unsigned char num_grids_ = 0;	/// Number of Grids in grids_.
+			unsigned char num_lines_ = 0;	/// Number of Lines in lines_.
+			bool running_ = true;			/// Active state of the Maestro.
 	};
 }
 
