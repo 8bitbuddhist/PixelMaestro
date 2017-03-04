@@ -85,35 +85,28 @@ namespace PixelMaestro {
 	void Pixel::update() {
 		// If we're fading, we need to increment (or decrement) by step_size_.
 		if (step_count_ > 0) {
-			unsigned char nextColor, currentColor;
 
 			// Red
-			nextColor = next_color_->r;
-			currentColor = current_color_.r;
-			if (nextColor > currentColor) {
+			if (next_color_->r > current_color_.r) {
 				current_color_.r += step_size_[0];
 			}
-			else if (nextColor < currentColor) {
+			else if (next_color_->r < current_color_.r) {
 				current_color_.r -= step_size_[0];
 			}
 
 			// Green
-			nextColor = next_color_->g;
-			currentColor = current_color_.g;
-			if (nextColor > currentColor) {
+			if (next_color_->g > current_color_.g) {
 				current_color_.g += step_size_[1];
 			}
-			else if (nextColor < currentColor) {
+			else if (next_color_->g < current_color_.g) {
 				current_color_.g -= step_size_[1];
 			}
 
 			// Blue
-			nextColor = next_color_->b;
-			currentColor = current_color_.b;
-			if (nextColor > currentColor) {
+			if (next_color_->b > current_color_.b) {
 				current_color_.b += step_size_[2];
 			}
-			else if (nextColor < currentColor) {
+			else if (next_color_->b < current_color_.b) {
 				current_color_.b -= step_size_[2];
 			}
 
