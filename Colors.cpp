@@ -131,11 +131,7 @@ namespace PixelMaestro {
 			b = falling;
 			break;
 		}
-		Colors::RGB newColor;
-		newColor.r = r;
-		newColor.g = g;
-		newColor.b = b;
-		return newColor;
+		return Colors::RGB {r, g, b};
 	};
 
 	/**
@@ -147,9 +143,11 @@ namespace PixelMaestro {
 	*/
 	void Colors::generateRandomColorArray(Colors::RGB newArray[], Colors::RGB baseColor, unsigned char numColors, float range) {
 		for (int newColorIndex = 0; newColorIndex < numColors; newColorIndex++) {
-			newArray[newColorIndex].r = baseColor.r - (rand() % (int)(baseColor.r * range));
-			newArray[newColorIndex].g = baseColor.g - (rand() % (int)(baseColor.g * range));
-			newArray[newColorIndex].b = baseColor.b - (rand() % (int)(baseColor.b * range));
+			newArray[newColorIndex] = {
+				(baseColor.r > 0 ? baseColor.r - (rand() % (int)(baseColor.r * range)) : 0),
+				(baseColor.g > 0 ? baseColor.g - (rand() % (int)(baseColor.g * range)) : 0),
+				(baseColor.b > 0 ? baseColor.b - (rand() % (int)(baseColor.b * range)) : 0)
+			};
 		}
 	}
 
