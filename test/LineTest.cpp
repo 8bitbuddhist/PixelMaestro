@@ -7,8 +7,21 @@ using namespace PixelMaestro;
 
 TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
     const unsigned char numPixels = 10;
+    const unsigned char numColors = 10;
     Pixel pixels[numPixels];
     Line *line = new Line(pixels, numPixels);
+    Colors::RGB colors[numColors] = {
+        Colors::AZURE,
+        Colors::BLACK,
+        Colors::BLUE,
+        Colors::CHARTREUSE,
+        Colors::CYAN,
+        Colors::GREEN,
+        Colors::INDIGO,
+        Colors::MAGENTA,
+        Colors::ORANGE,
+        Colors::RED
+    };
 
     SECTION("Test basic Pixel interaction.") {
         const unsigned char pixelIndex = 0;
@@ -42,36 +55,74 @@ TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
         REQUIRE(line->getUpdateSpeed() == 25);
     }
 
-    SECTION("Test color animations.") {
-        const unsigned char numColors = 10;
-        Colors::RGB colors[numColors] = {
-            Colors::AZURE,
-            Colors::BLACK,
-            Colors::BLUE,
-            Colors::CHARTREUSE,
-            Colors::CYAN,
-            Colors::GREEN,
-            Colors::INDIGO,
-            Colors::MAGENTA,
-            Colors::ORANGE,
-            Colors::RED};
-        line->setColors(colors, numColors);
-        line->setColorAnimation(Line::ColorAnimations::BLINK);
-        line->toggleFade();
+    // START color animation testing
+    // Set the colors and an instantaneous update speed.
+    line->setColors(colors, numColors);
+    line->setUpdateSpeed(0);
 
-        // Set an instant update speed
-        line->setUpdateSpeed(0);
-
-        // Verify that all colors match
+    SECTION("Test SOLID animation.") {
+        line->setColorAnimation(Line::ColorAnimations::SOLID);
         line->update(0);
-        for (int index = 0; index < numPixels; index++) {
+        for (int index = 0; index < numColors; index++) {
+            REQUIRE(Colors::colorsMatch(line->getPixel(index)->getColor(), &colors[index]));
+        }
+    }
+
+    SECTION("Test BLINK animation.") {
+        line->setColorAnimation(Line::ColorAnimations::BLINK);
+        line->update(0);
+        for (int index = 0; index < numColors; index++) {
             REQUIRE(Colors::colorsMatch(line->getPixel(index)->getColor(), &colors[index]));
         }
 
-        // Blink to black, then re-check colors
         line->update(0);
-        for (int index = 0; index < numPixels; index++) {
+        for (int index = 0; index < numColors; index++) {
             REQUIRE(Colors::colorsMatch(line->getPixel(index)->getColor(), &Colors::BLACK));
         }
     }
+
+    SECTION("Test WAVE animation.") {
+        line->setColorAnimation(Line::ColorAnimations::WAVE);
+        for (int colorIndex = 0; colorIndex < numColors; colorIndex++) {
+            line->update(0);
+            REQUIRE(Colors::colorsMatch(line->getPixel(0)->getColor(), &colors[colorIndex]));
+        }
+
+        // TODO: Test reverse
+    }
+
+    SECTION("Test PONG animation.") {
+        line->setColorAnimation(Line::ColorAnimations::PONG);
+        for (int index = 0; index < 20; index++) {
+            line->update(0);
+            if (index <= numColors - 1) {
+                REQUIRE(Colors::colorsMatch(line->getPixel(0)->getColor(), &colors[index]));
+            }
+            else {
+                REQUIRE(Colors::colorsMatch(line->getPixel(0)->getColor(), &colors[(numColors - (index - numColors)) - 2]));
+            }
+        }
+    }
+
+    // TODO: Test MERGE
+    // TODO: Test RANDOMINDEX
+    // TODO: Test SPARKLE
+    // TODO: Test PATTERN
+
+    SECTION("Test CYCLE animation.") {
+        line->setColorAnimation(Line::ColorAnimations::CYCLE);
+        // Verify that all colors match
+        for (int colorIndex = 0; colorIndex < numColors; colorIndex++) {
+            line->update(0);
+            for (int pixelIndex = 0; pixelIndex < numPixels; pixelIndex++) {
+                REQUIRE(Colors::colorsMatch(line->getPixel(pixelIndex)->getColor(), &colors[colorIndex]));
+            }
+        }
+
+        // TODO: Test reverse
+    }
+
+    // TODO: Test STATIC
+
+    // END color animation testing
 }
