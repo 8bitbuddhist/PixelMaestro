@@ -66,7 +66,7 @@ namespace PixelMaestro {
 			/* If fading, calculate the steps between the current color and the next color.
 			This ensures all transitions take the same amount of time.
 			*/
-			if (fade) {
+			if (fade && interval > 0) {
 				step_size_[0] = abs(next_color_->r - previous_color_->r) / interval;
 				step_size_[1] = abs(next_color_->g - previous_color_->g) / interval;
 				step_size_[2] = abs(next_color_->b - previous_color_->b) / interval;
