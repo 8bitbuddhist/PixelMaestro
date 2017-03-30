@@ -36,7 +36,7 @@ namespace PixelMaestro {
 			Colors::RGB current_color_ = Colors::BLACK;
 			Colors::RGB *next_color_ = &Colors::BLACK;
 			Colors::RGB *previous_color_ = &Colors::BLACK;
-			unsigned char step_size_[3] = {0, 0, 0};
+			Colors::RGB step_ = {0, 0, 0};
 			unsigned char step_count_ = 0;
 	};
 }

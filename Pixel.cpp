@@ -59,7 +59,7 @@ namespace PixelMaestro {
 	*/
 	void Pixel::setNextColor(Colors::RGB *nextColor, bool fade, unsigned char interval) {
 		// Only trigger an update if the colors don't match.
-		if (nextColor != next_color_) {
+		if (*nextColor != *next_color_) {
 			previous_color_ = next_color_;
 			next_color_ = nextColor;
 
@@ -67,9 +67,9 @@ namespace PixelMaestro {
 			This ensures all transitions take the same amount of time.
 			*/
 			if (fade && interval > 0) {
-				step_size_[0] = abs(next_color_->r - previous_color_->r) / interval;
-				step_size_[1] = abs(next_color_->g - previous_color_->g) / interval;
-				step_size_[2] = abs(next_color_->b - previous_color_->b) / interval;
+				step_.r = abs(next_color_->r - previous_color_->r) / interval;
+				step_.g = abs(next_color_->g - previous_color_->g) / interval;
+				step_.b = abs(next_color_->b - previous_color_->b) / interval;
 
 				step_count_ = interval;
 			}
@@ -88,26 +88,26 @@ namespace PixelMaestro {
 
 			// Red
 			if (next_color_->r > current_color_.r) {
-				current_color_.r += step_size_[0];
+				current_color_.r += step_.r;
 			}
 			else if (next_color_->r < current_color_.r) {
-				current_color_.r -= step_size_[0];
+				current_color_.r -= step_.r;
 			}
 
 			// Green
 			if (next_color_->g > current_color_.g) {
-				current_color_.g += step_size_[1];
+				current_color_.g += step_.g;
 			}
 			else if (next_color_->g < current_color_.g) {
-				current_color_.g -= step_size_[1];
+				current_color_.g -= step_.g;
 			}
 
 			// Blue
 			if (next_color_->b > current_color_.b) {
-				current_color_.b += step_size_[2];
+				current_color_.b += step_.b;
 			}
 			else if (next_color_->b < current_color_.b) {
-				current_color_.b -= step_size_[2];
+				current_color_.b -= step_.b;
 			}
 
 			step_count_ --;
