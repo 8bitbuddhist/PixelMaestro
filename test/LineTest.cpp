@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "../catch/include/catch.hpp"
 #include "LineTest.h"
 #include "../Line.h"
 #include "../Colors.h"
@@ -29,15 +29,15 @@ TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
 
         REQUIRE(line->getNumPixels() == numPixels);
 
-        REQUIRE(Colors::colorsMatch(pixel->getColor(), &Colors::BLACK));
+        REQUIRE(*pixel->getColor() == Colors::BLACK);
 
         // Set the color of Pixels to Azure.
         line->setOne(pixelIndex, &Colors::AZURE);
-        REQUIRE(Colors::colorsMatch(pixel->getNextColor(), &Colors::AZURE));
+        REQUIRE(*pixel->getNextColor() == Colors::AZURE);
 
         line->setAll(&Colors::GREEN);
         for (int index = 0; index < numPixels; index++) {
-            REQUIRE(Colors::colorsMatch(line->getPixel(index)->getNextColor(), &Colors::GREEN));
+            REQUIRE(*line->getPixel(index)->getNextColor() == Colors::GREEN);
         }
     }
 
@@ -64,7 +64,7 @@ TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
         line->setColorAnimation(Line::ColorAnimations::SOLID);
         line->update(0);
         for (int index = 0; index < numColors; index++) {
-            REQUIRE(Colors::colorsMatch(line->getPixel(index)->getColor(), &colors[index]));
+            REQUIRE(*line->getPixel(index)->getColor() == colors[index]);
         }
     }
 
@@ -72,12 +72,12 @@ TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
         line->setColorAnimation(Line::ColorAnimations::BLINK);
         line->update(0);
         for (int index = 0; index < numColors; index++) {
-            REQUIRE(Colors::colorsMatch(line->getPixel(index)->getColor(), &colors[index]));
+            REQUIRE(*line->getPixel(index)->getColor() == colors[index]);
         }
 
         line->update(0);
         for (int index = 0; index < numColors; index++) {
-            REQUIRE(Colors::colorsMatch(line->getPixel(index)->getColor(), &Colors::BLACK));
+            REQUIRE(*line->getPixel(index)->getColor() == Colors::BLACK);
         }
     }
 
@@ -85,7 +85,7 @@ TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
         line->setColorAnimation(Line::ColorAnimations::WAVE);
         for (int colorIndex = 0; colorIndex < numColors; colorIndex++) {
             line->update(0);
-            REQUIRE(Colors::colorsMatch(line->getPixel(0)->getColor(), &colors[colorIndex]));
+            REQUIRE(*line->getPixel(0)->getColor() == colors[colorIndex]);
         }
 
         // TODO: Test reverse
@@ -96,10 +96,10 @@ TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
         for (int index = 0; index < 20; index++) {
             line->update(0);
             if (index <= numColors - 1) {
-                REQUIRE(Colors::colorsMatch(line->getPixel(0)->getColor(), &colors[index]));
+                REQUIRE(*line->getPixel(0)->getColor() == colors[index]);
             }
             else {
-                REQUIRE(Colors::colorsMatch(line->getPixel(0)->getColor(), &colors[(numColors - (index - numColors)) - 2]));
+                REQUIRE(*line->getPixel(0)->getColor() == colors[(numColors - (index - numColors)) - 2]);
             }
         }
     }
@@ -115,7 +115,7 @@ TEST_CASE("Create and manipulate a Line of Pixels.", "[Line]") {
         for (int colorIndex = 0; colorIndex < numColors; colorIndex++) {
             line->update(0);
             for (int pixelIndex = 0; pixelIndex < numPixels; pixelIndex++) {
-                REQUIRE(Colors::colorsMatch(line->getPixel(pixelIndex)->getColor(), &colors[colorIndex]));
+                REQUIRE(*line->getPixel(pixelIndex)->getColor() == colors[colorIndex]);
             }
         }
 

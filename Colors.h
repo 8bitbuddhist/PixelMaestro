@@ -29,6 +29,30 @@ namespace PixelMaestro {
 				unsigned char r;	/// The red value of the color.
 				unsigned char g;	/// The green value of the color.
 				unsigned char b;	/// The blue value of the color.
+
+				bool operator==(RGB colorTwo) {
+					return r == colorTwo.r && g == colorTwo.g && b == colorTwo.b;
+				}
+
+				bool operator!=(RGB colorTwo) {
+					return !operator==(colorTwo);
+				}
+
+				RGB operator+(RGB colorTwo) {
+					return {
+						(r + colorTwo.r) % 255,
+						(g + colorTwo.g) % 255,
+						(b + colorTwo.b) % 255
+					};
+				}
+
+				RGB operator-(RGB colorTwo) {
+					return {
+						(r - colorTwo.r) % 255,
+						(g - colorTwo.g) % 255,
+						(b - colorTwo.b) % 255
+					};
+				}
 			};
 
 			/// Determines the blending algorithm used when mixing two colors.
@@ -58,7 +82,6 @@ namespace PixelMaestro {
 			static RGB COLORWHEEL[];
 			static RGB RAINBOW[];
 
-			static bool colorsMatch(RGB *colorOne, RGB *colorTwo);
 			static RGB HSVtoRGB(unsigned int hue, unsigned int sat, unsigned int val);
 			static void generateRandomColorArray(RGB newArray[], RGB baseColor, unsigned char numColors, float range = 1.0);
 			static void generateScalingColorArray(RGB newArray[], RGB baseColor, RGB targetColor, unsigned char numColors, bool reverse = false);

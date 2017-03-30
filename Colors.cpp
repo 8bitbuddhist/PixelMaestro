@@ -66,19 +66,6 @@ namespace PixelMaestro {
 	};
 
 	/**
-		Checks if two colors match.
-
-		@param colorOne First color to match.
-		@param colorTwo Second color to match.
-		@return True if both colors match.
-	*/
-	bool Colors::colorsMatch(RGB *colorOne, RGB *colorTwo) {
-		return (colorOne->r == colorTwo->r &&
-				colorOne->g == colorTwo->g &&
-				colorOne->b == colorTwo->b);
-	}
-
-	/**
 		Converts an HSV value to an RGB value.
 		Courtesy of Elco Jacobs' ShiftPWM library (http://www.elcojacobs.com/shiftpwm/)
 

@@ -462,7 +462,7 @@ namespace PixelMaestro {
 	*/
 	void Line::animation_randomIndex() {
 		for (unsigned char pixel = 0; pixel < num_pixels_; pixel++) {
-			if (Colors::colorsMatch(pixels_[pixel].getColor(), pixels_[pixel].getNextColor())) {
+			if (pixels_[pixel].getColor() == pixels_[pixel].getNextColor()) {
 				setOne(pixel, &colors_[rand() % num_colors_]);
 			}
 		}

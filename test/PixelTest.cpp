@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "../catch/include/catch.hpp"
 #include "PixelTest.h"
 #include "../Pixel.h"
 #include "../Colors.h"
@@ -15,7 +15,7 @@ TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
     pixel.setNextColor(&color, fade, interval);
 
     SECTION("Set a new color.") {
-        REQUIRE(Colors::colorsMatch(pixel.getNextColor(), &Colors::RED));
+        REQUIRE(*pixel.getNextColor() == Colors::RED);
     }
 
     SECTION("Get the step count. It should equal the interval we set in the previous section.") {
