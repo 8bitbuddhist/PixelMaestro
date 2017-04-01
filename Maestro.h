@@ -26,9 +26,9 @@ namespace PixelMaestro {
 	class Maestro {
 		public:
 			Maestro(Pixel *pixels, unsigned short numPixels, Section *sections, unsigned char numSections);
-			Section *getSection(unsigned char section);
 			unsigned char getNumSections();
 			bool getRunning();
+			Section *getSection(unsigned char section);
 			unsigned char getUpdateSpeed();
 			void setSections(Section *sections, unsigned char numSections);
 			void toggleRunning();

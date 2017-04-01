@@ -21,16 +21,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the Section at the specified index.
-
-		@param section Index of the Section to return.
-		@return Section at the specified index.
-	*/
-	Section *Maestro::getSection(unsigned char section) {
-		return &sections_[section];
-	}
-
-	/**
 		Returns the number of Sections.
 
 		@return Number of Sections.
@@ -46,6 +36,16 @@ namespace PixelMaestro {
 	*/
 	bool Maestro::getRunning() {
 		return running_;
+	}
+
+	/**
+		Returns the Section at the specified index.
+
+		@param section Index of the Section to return.
+		@return Section at the specified index.
+	*/
+	Section *Maestro::getSection(unsigned char section) {
+		return &sections_[section];
 	}
 
 	/**

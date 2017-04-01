@@ -56,6 +56,21 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Returns the RGB value of the specified Pixel after applying post-processing effects.
+
+		@param pixel Index of the Pixel.
+		@return RGB value of the Pixel's de facto color.
+	*/
+	Colors::RGB Section::getPixelColor(unsigned char pixel) {
+		if (layer_.section != nullptr) {
+			return Colors::mixColors(pixels_[pixel].getColor(), layer_.section->getPixel(pixel)->getColor(), layer_.mixMode, layer_.alpha);
+		}
+		else {
+			return *pixels_[pixel].getColor();
+		}
+	}
+
+	/**
 		Returns the speed of the array.
 
 		@return speed The current speed.
@@ -137,6 +152,16 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Overlays a Section on top of the current Section.
+		The base Section automatically handles blending in the layer on output.
+
+		@param layer Section to overlay.
+	*/
+	void Section::setLayer(Layer layer) {
+        layer_ = layer;
+	}
+
+	/**
 		Sets the specified Pixel to a new color.
 
 		@param pixel Pixel to change.
@@ -166,6 +191,14 @@ namespace PixelMaestro {
 	void Section::setPixels(Pixel* pixels, unsigned char numPixels) {
         pixels_ = pixels;
 		num_pixels_ = numPixels;
+	}
+
+	/**
+		Removes the overlay from the Section.
+	*/
+	void Section::unsetLayer() {
+		layer_.section = nullptr;
+		layer_.alpha = 0;
 	}
 
 	/**
@@ -481,7 +514,6 @@ namespace PixelMaestro {
 		for (unsigned char pixel = 0; pixel < num_pixels_; pixel++) {
 			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (0.95) ) ));
 			setOne(pixel, &colors_[pixel]);
-			//setOne(led, &colors_[animation_getColorIndex(led)]);
 		}
 	}
 

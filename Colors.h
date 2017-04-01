@@ -30,6 +30,12 @@ namespace PixelMaestro {
 				unsigned char g;	/// The green value of the color.
 				unsigned char b;	/// The blue value of the color.
 
+				void operator=(RGB colorTwo) {
+					r = colorTwo.r;
+					g = colorTwo.g;
+					b = colorTwo.b;
+				}
+
 				bool operator==(RGB colorTwo) {
 					return r == colorTwo.r && g == colorTwo.g && b == colorTwo.b;
 				}
