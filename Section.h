@@ -1,40 +1,26 @@
 /*
-	Line.cpp - Library for controlling multiple pixels
-	Requires Pixel and Colors libraries
-
-	This library is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Lesser General Public
-	License as published by the Free Software Foundation; either
-	version 2.1 of the License, or (at your option) any later version.
-
-	This library is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	Lesser General Public License for more details.
-
-	You should have received a copy of the GNU Lesser General Public
-	License along with this library; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	Section.cpp - Class for controlling multiple Pixels.
+	Requires Pixel and Colors classes.
 */
 
-#ifndef LINE_H
-#define LINE_H
+#ifndef SECTION_H
+#define SECTION_H
 
 #include "Colors.h"
 #include "Pixel.h"
 
 namespace PixelMaestro {
-	class Line {
+	class Section {
 
 		public:
-			/// Set of animations usable by the Line.
+			/// Set of animations usable by the Section.
 			enum ColorAnimations {
-				NONE,			/// Turns off all Pixels in the Line.
+				NONE,			/// Turns off all Pixels in the Section.
 				SOLID,			/// Displays the default color of each Pixel.
 				BLINK,			/// Alternates Pixels between their default color and black (off).
-				WAVE,			/// Scrolls the color array across the Line.
+				WAVE,			/// Scrolls the color array across the Section.
 				PONG,			/// Scrolls the color array back and forth in a ping-pong pattern.
-				MERGE,			/// Converges colors into the center of the Line.
+				MERGE,			/// Converges colors into the center of the Section.
 				RANDOMINDEX,	/// Sets each Pixel to a random color stored in colors_.
 				SPARKLE,		/// Creates a shimmering effect by turning on random pixels.
 				PATTERN,		/// Scrolls through the pattern set in pattern_.
@@ -42,16 +28,16 @@ namespace PixelMaestro {
 				STATIC			/// Creates a static effect by blending each pixel between varying levels of gray.
 			};
 
-			Line();
-			Line(Pixel *pixels, unsigned char numPixels);
+			Section();
+			Section(Pixel *pixels, unsigned char numPixels);
 
-			Line::ColorAnimations getColorAnimation();
+			Section::ColorAnimations getColorAnimation();
 			bool getFade();
 			unsigned char getNumPixels();
 			Pixel *getPixel(unsigned char pixel);
 			unsigned char getUpdateSpeed();
 			void setAll(Colors::RGB *color);
-			void setColorAnimation(Line::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false);
+			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false);
 			void setColors(Colors::RGB *colors, unsigned char numColors);
 			void setCycleIndex(unsigned char index);
 			void setOne(unsigned char pixel, Colors::RGB *color);
@@ -62,21 +48,21 @@ namespace PixelMaestro {
 			void update(unsigned long currentTime);
 
 		private:
-			Colors::RGB *colors_;			/// Array of colors stored in the Line.
-			unsigned long *current_time_;	/// The current program time. Used to determine when to update the Line.
+			Colors::RGB *colors_;			/// Array of colors stored in the Section.
+			unsigned long *current_time_;	/// The current program time. Used to determine when to update the Section.
 			unsigned long cycle_end_;		/// The end time of the last cycle. Used to determine when to run the next cycle.
 			unsigned char cycle_index_ = 0;	///	The current cycle index.
 			unsigned char delay_ = 0;		/// Any delay between cycles.
 			bool fade_ = true;				/// Whether to fade between cycles.
-			unsigned long last_time_ = 0;	/// The last time the Line was updated. Note that this is different than cycle_end_.
-			Pixel *pixels_;					/// Array of Pixels stored in the Line.
-			Line::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The current Line animation. Defaults to SOLID.
+			unsigned long last_time_ = 0;	/// The last time the Section was updated. Note that this is different than cycle_end_.
+			Pixel *pixels_;					/// Array of Pixels stored in the Section.
+			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The current Section animation. Defaults to SOLID.
 			unsigned char num_colors_;		/// The number of colors in colors_.
 			unsigned char num_pixels_;		/// The number of Pixels in pixels_.
 			unsigned char *pattern_;		/// The pattern to display when the PATTERN animation is active.
 			unsigned char pattern_length_ = 0;	/// The number of pattern elements in pattern_.
 			bool reverse_animation_ = false;	/// Whether to reverse the animation in color_animation_.
-			unsigned char speed_ = 10;		/// The update speed of the Line (in ms). Defaults to 10.
+			unsigned char speed_ = 10;		/// The update speed of the Section (in ms). Defaults to 10.
 
 			// Color animation functions
 			void animation_blink();

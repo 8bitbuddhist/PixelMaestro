@@ -1,19 +1,5 @@
 /*
 	Show.cpp - Library for managing PixelMaestro transitions.
-
-	This library is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Lesser General Public
-	License as published by the Free Software Foundation; either
-	version 2.1 of the License, or (at your option) any later version.
-
-	This library is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	Lesser General Public License for more details.
-
-	You should have received a copy of the GNU Lesser General Public
-	License along with this library; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #ifndef SHOW_H
@@ -31,12 +17,11 @@ namespace PixelMaestro {
 				Set of actions that can be performed by a Transition.
 
 				Standard options:
-					grid/line: Whether the change applies to a Grid or Line.
-					gridNum/lineNum: The index of the Grid or Line to change.
+					sectionNum: The index of the Section to update.
 			*/
 			enum Actions {
 				/**
-					Sets the color animation of a Grid or Line.
+					Sets the color animation of a Section.
 
 					gridAnimation/lineAnimation: The animation to set.
 					val1: Whether to reverse the animation.
@@ -44,33 +29,27 @@ namespace PixelMaestro {
 				*/
 				SET_COLOR_ANIMATION,
 				/**
-					Sets the update speed of a Grid or Line.
+					Sets the update speed of a Section.
 
 					val1: Whether to reverse the animation.
 				*/
 				SET_UPDATE_SPEED,
 				/**
-					Toggles fading of a Grid or Line.
+					Toggles fading of a Section.
 				*/
-				TOGGLE_FADE					/// Toggles fading of a Grid or Line.
+				TOGGLE_FADE					/// Toggles fading of a Section.
 			};
 
 			/**
 				Options applied on a Transition to the Maestro.
 			*/
 			struct Opts {
-				bool grid;				/// Whether the action modifies a Grid. Leave false if modifying a Line that does *not* belong to a Grid.
-				unsigned char gridNum;	/// Index of the Grid to modify.
-				bool line;				/// Whether the action modifies a Line. Set grid and line to true if modifying a Line within a Grid.
-				unsigned char lineNum;	/// Index of the Line to modify.
+				unsigned char sectionNum;	/// Index of the Section to update.
 				int val1;				/// Multi-purpose storage.
-				Line::ColorAnimations lineAnimation;	/// Line animation to set.
-				Grid::ColorAnimations gridAnimation;	/// Grid animation to set.
+				Section::ColorAnimations animation;	/// Animation to set.
 			};
 
-			/**
-				Defines an action that a Maestro will perform at a specific time.
-			*/
+			/** Defines an action that a Maestro will perform at a specific time. */
 			struct Transition {
 				unsigned long time;	/// The program time when the action will be performed.
 				Actions action;		/// The action to perform.

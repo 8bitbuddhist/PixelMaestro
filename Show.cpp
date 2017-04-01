@@ -1,19 +1,5 @@
 /*
 	Show.cpp - Library for managing PixelMaestro transitions.
-
-	This library is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Lesser General Public
-	License as published by the Free Software Foundation; either
-	version 2.1 of the License, or (at your option) any later version.
-
-	This library is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	Lesser General Public License for more details.
-
-	You should have received a copy of the GNU Lesser General Public
-	License along with this library; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include "Show.h"
@@ -90,40 +76,16 @@ namespace PixelMaestro {
 		// Determine how to proceed based on the Transition action.
 		switch (transition->action) {
 			case Actions::SET_UPDATE_SPEED:
-				// Change the update speed of a Grid or Line to val1.
-				if (opts.line && opts.grid) {
-					maestro_->getGrid(opts.gridNum)->getLine(opts.lineNum)->setUpdateSpeed(transition->opts.val1);
-				}
-				else if (opts.grid) {
-					maestro_->getGrid(opts.gridNum)->setUpdateSpeed(transition->opts.val1);
-				}
-				else if (opts.line) {
-					maestro_->getLine(opts.lineNum)->setUpdateSpeed(transition->opts.val1);
-				}
+				// Change the update speed of a Section to val1.
+				maestro_->getSection(opts.sectionNum)->setUpdateSpeed(transition->opts.val1);
 				break;
 			case Actions::SET_COLOR_ANIMATION:
-				// Change the color animation of a Grid or Line to gridAnimation or lineAnimation.
-				if (opts.line && opts.grid) {
-					maestro_->getGrid(opts.gridNum)->getLine(opts.lineNum)->setColorAnimation(opts.lineAnimation, opts.val1);
-				}
-				else if (opts.grid) {
-					maestro_->getGrid(opts.gridNum)->setColorAnimation(opts.gridAnimation, opts.val1);
-				}
-				else if (opts.line) {
-					maestro_->getLine(opts.lineNum)->setColorAnimation(opts.lineAnimation, opts.val1);
-				}
+				// Change the color animation of a Section.
+				maestro_->getSection(opts.sectionNum)->setColorAnimation(opts.animation, opts.val1);
 				break;
 			case Actions::TOGGLE_FADE:
-				// Toggle fading on a Grid or Line.
-				if (opts.line && opts.grid) {
-					maestro_->getGrid(opts.gridNum)->getLine(opts.lineNum)->toggleFade();
-				}
-				else if (opts.grid) {
-					maestro_->getGrid(opts.gridNum)->toggleFade();
-				}
-				else if (opts.line) {
-					maestro_->getLine(opts.lineNum)->toggleFade();
-				}
+				// Toggle fading on a Section.
+				maestro_->getSection(opts.sectionNum)->toggleFade();
 				break;
 			default:
 				break;

@@ -20,31 +20,26 @@
 #define MAESTRO_H
 
 #include "Colors.h"
-#include "Grid.h"
+#include "Section.h"
 
 namespace PixelMaestro {
 	class Maestro {
 		public:
-			Maestro(Grid *grids, unsigned char numGrids);
-			Maestro(Line *lines, unsigned char numLines);
-			Maestro(Line *lines, unsigned char numLines, Grid *grids, unsigned char numGrids);
-			Grid *getGrid(unsigned char grid);
-			Line *getLine(unsigned char line);
-			unsigned char getNumGrids();
-			unsigned char getNumLines();
+			Maestro(Pixel *pixels, unsigned char numPixels, Section *sections, unsigned char numSections);
+			Section *getSection(unsigned char section);
+			unsigned char getNumSections();
 			bool getRunning();
 			unsigned char getUpdateSpeed();
-			void setGrids(Grid *grids, unsigned char numGrids);
-			void setLines(Line *lines, unsigned char numLines);
+			void setSections(Section *sections, unsigned char numSections);
 			void toggleRunning();
 			void update(unsigned long currentTime);
 
 		private:
-			Grid *grids_;	/// Collection of Grids managed by the Maestro.
-			Line *lines_;	/// Collection of Lines managed by the Maestro.
-			unsigned char num_grids_ = 0;	/// Number of Grids in grids_.
-			unsigned char num_lines_ = 0;	/// Number of Lines in lines_.
-			bool running_ = true;			/// Active state of the Maestro.
+			Pixel *pixels_;				/// Array of Pixels managed by the Maestro.
+			unsigned char num_pixels_;	/// Number of Pixels managed by the Maestro.
+			bool running_ = true;		/// Active state of the Maestro.
+			Section *sections_;			/// Array of Sections managed by the Maestro.
+			unsigned char num_sections_;	/// Number of Sections managed by the Maestro.
 	};
 }
 
