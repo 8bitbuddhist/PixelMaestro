@@ -471,17 +471,18 @@ namespace PixelMaestro {
 		}
 	}
 
+
 	/**
 		Creates a static effect by blending each Pixel between varying levels of gray.
 
 		Modes: STATIC
 	*/
 	void Section::animation_static() {
-			for (unsigned char pixel = 0; pixel < num_pixels_; pixel++) {
-				colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (0.5) ) ));
-				setOne(pixel, &colors_[pixel]);
-				//setOne(led, &colors_[animation_getColorIndex(led)]);
-			}
+		for (unsigned char pixel = 0; pixel < num_pixels_; pixel++) {
+			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (0.95) ) ));
+			setOne(pixel, &colors_[pixel]);
+			//setOne(led, &colors_[animation_getColorIndex(led)]);
+		}
 	}
 
 	/**
