@@ -176,26 +176,14 @@ namespace PixelMaestro {
 	*/
 	void Section::setUpdateSpeed(unsigned char speed, unsigned char delay) {
 		delay_ = delay;
-		// If not fading, increase the delay so the array doesn't update as rapidly.
-		if (fade_) {
-			speed_ = speed;
-		}
-		else {
-			speed_ = speed * speed;
-		}
+		speed_ = speed;
 	}
 
 	/**
-		Toggles fading. We need to adjust the speed when fading vs. not fading.
+		Toggles fading.
 	*/
 	void Section::toggleFade() {
 		fade_ = !fade_;
-		if (fade_) {
-			speed_ /= speed_;
-		}
-		else {
-			speed_ *= speed_;
-		}
 	}
 
 	/**
@@ -254,7 +242,7 @@ namespace PixelMaestro {
 
 			// Update each LED.
 			for (unsigned char pixel = 0; pixel < num_pixels_; pixel++) {
-				pixels_[pixel].update();
+				pixels_[pixel].update(fade_);
 			}
 
 			// Update the timer.

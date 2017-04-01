@@ -1,20 +1,6 @@
 /**
-	Pixel.cpp - Library for controlling a single RGB pixel
+	Pixel.cpp - Library for controlling a single RGB pixel.
 	Inspired by RGBMood (http://forum.arduino.cc/index.php?topic=90160.0)
-
-	This library is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Lesser General Public
-	License as published by the Free Software Foundation; either
-	version 2.1 of the License, or (at your option) any later version.
-
-	This library is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	Lesser General Public License for more details.
-
-	You should have received a copy of the GNU Lesser General Public
-	License along with this library; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
 #include <stdlib.h>
@@ -55,61 +41,64 @@ namespace PixelMaestro {
 
 		@param color New color to store.
 		@param fade Whether to fade to the next color.
-		@param interval Time between color changes.
+		@param speed Time until next color applies.
 	*/
-	void Pixel::setNextColor(Colors::RGB *nextColor, bool fade, unsigned char interval) {
+	void Pixel::setNextColor(Colors::RGB *nextColor, bool fade, unsigned char speed) {
 		// Only trigger an update if the colors don't match.
-		if (*nextColor != *next_color_) {
+		if (nextColor != next_color_) {
 			previous_color_ = next_color_;
 			next_color_ = nextColor;
 
-			/* If fading, calculate the steps between the current color and the next color.
-			This ensures all transitions take the same amount of time.
+			/*
+				If fading, calculate the steps between the current color and the next color.
+				This ensures all transitions take the same amount of time.
 			*/
-			if (fade && interval > 0) {
+			if (fade && speed > 0) {
 				step_ = {
-					abs(next_color_->r - previous_color_->r) / interval,
-					abs(next_color_->g - previous_color_->g) / interval,
-					abs(next_color_->b - previous_color_->b) / interval
+					(unsigned char)(abs(next_color_->r - current_color_.r) / speed),
+					(unsigned char)(abs(next_color_->g - current_color_.g) / speed),
+					(unsigned char)(abs(next_color_->b - current_color_.b) / speed)
 				};
+			}
 
-				step_count_ = interval;
-			}
-			else {
-				step_count_ = 0;
-			}
+			step_count_ = speed;
 		}
 	}
 
 	/**
 		Main update routine.
 	*/
-	void Pixel::update() {
-		// If we're fading, we need to increment (or decrement) by step_size_.
+	void Pixel::update(bool fade) {
+		/*
+			We measure the time between transitions using step_size_.
+			This ensures a consistent wait time regardless of whether we're fading.
+		*/
 		if (step_count_ > 0) {
 
-			// Red
-			if (next_color_->r > current_color_.r) {
-				current_color_.r += step_.r;
-			}
-			else if (next_color_->r < current_color_.r) {
-				current_color_.r -= step_.r;
-			}
+			if (fade) {
+				// Red
+				if (next_color_->r > current_color_.r) {
+					current_color_.r += step_.r;
+				}
+				else if (next_color_->r < current_color_.r) {
+					current_color_.r -= step_.r;
+				}
 
-			// Green
-			if (next_color_->g > current_color_.g) {
-				current_color_.g += step_.g;
-			}
-			else if (next_color_->g < current_color_.g) {
-				current_color_.g -= step_.g;
-			}
+				// Green
+				if (next_color_->g > current_color_.g) {
+					current_color_.g += step_.g;
+				}
+				else if (next_color_->g < current_color_.g) {
+					current_color_.g -= step_.g;
+				}
 
-			// Blue
-			if (next_color_->b > current_color_.b) {
-				current_color_.b += step_.b;
-			}
-			else if (next_color_->b < current_color_.b) {
-				current_color_.b -= step_.b;
+				// Blue
+				if (next_color_->b > current_color_.b) {
+					current_color_.b += step_.b;
+				}
+				else if (next_color_->b < current_color_.b) {
+					current_color_.b -= step_.b;
+				}
 			}
 
 			step_count_--;

@@ -131,9 +131,9 @@ namespace PixelMaestro {
 	void Colors::generateRandomColorArray(Colors::RGB newArray[], Colors::RGB baseColor, unsigned char numColors, float range) {
 		for (int newColorIndex = 0; newColorIndex < numColors; newColorIndex++) {
 			newArray[newColorIndex] = {
-				(baseColor.r > 0 ? baseColor.r - (rand() % (int)(baseColor.r * range)) : 0),
-				(baseColor.g > 0 ? baseColor.g - (rand() % (int)(baseColor.g * range)) : 0),
-				(baseColor.b > 0 ? baseColor.b - (rand() % (int)(baseColor.b * range)) : 0)
+				(baseColor.r > 0 ? baseColor.r - (unsigned char)(rand() % (unsigned char)(baseColor.r * range)) : 0),
+				(baseColor.g > 0 ? baseColor.g - (unsigned char)(rand() % (unsigned char)(baseColor.g * range)) : 0),
+				(baseColor.b > 0 ? baseColor.b - (unsigned char)(rand() % (unsigned char)(baseColor.b * range)) : 0)
 			};
 		}
 	}

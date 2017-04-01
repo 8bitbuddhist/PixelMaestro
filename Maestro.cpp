@@ -14,7 +14,7 @@ namespace PixelMaestro {
 		@param sections Initial Section array.
 		@param numSections Number of Sections.
 	*/
-	Maestro::Maestro(Pixel *pixels, unsigned char numPixels, Section *sections, unsigned char numSections) {
+	Maestro::Maestro(Pixel *pixels, unsigned short numPixels, Section *sections, unsigned char numSections) {
 		pixels_ = pixels;
 		num_pixels_ = numPixels;
 		this->setSections(sections, numSections);

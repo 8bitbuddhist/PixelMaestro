@@ -40,17 +40,17 @@ namespace PixelMaestro {
 
 				RGB operator+(RGB colorTwo) {
 					return {
-						(r + colorTwo.r) % 255,
-						(g + colorTwo.g) % 255,
-						(b + colorTwo.b) % 255
+						(unsigned char)((r + colorTwo.r) % 255),
+						(unsigned char)((g + colorTwo.g) % 255),
+						(unsigned char)((b + colorTwo.b) % 255)
 					};
 				}
 
 				RGB operator-(RGB colorTwo) {
 					return {
-						(r - colorTwo.r) % 255,
-						(g - colorTwo.g) % 255,
-						(b - colorTwo.b) % 255
+						(unsigned char)((r - colorTwo.r) % 255),
+						(unsigned char)((g - colorTwo.g) % 255),
+						(unsigned char)((b - colorTwo.b) % 255)
 					};
 				}
 			};
