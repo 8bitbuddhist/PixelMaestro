@@ -67,9 +67,11 @@ namespace PixelMaestro {
 			This ensures all transitions take the same amount of time.
 			*/
 			if (fade && interval > 0) {
-				step_.r = abs(next_color_->r - previous_color_->r) / interval;
-				step_.g = abs(next_color_->g - previous_color_->g) / interval;
-				step_.b = abs(next_color_->b - previous_color_->b) / interval;
+				step_ = {
+					abs(next_color_->r - previous_color_->r) / interval,
+					abs(next_color_->g - previous_color_->g) / interval,
+					abs(next_color_->b - previous_color_->b) / interval
+				};
 
 				step_count_ = interval;
 			}
@@ -110,7 +112,7 @@ namespace PixelMaestro {
 				current_color_.b -= step_.b;
 			}
 
-			step_count_ --;
+			step_count_--;
 		}
 		else {
 			current_color_ = *next_color_;

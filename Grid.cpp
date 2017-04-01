@@ -92,7 +92,6 @@ namespace PixelMaestro {
 							lines_[line].setColorAnimation(Line::ColorAnimations::WAVE, !reverseAnimation);
 						}
 						break;
-
 					}
 				case Grid::ColorAnimations::BLINK:
 					lines_[line].setColorAnimation(Line::ColorAnimations::BLINK);
