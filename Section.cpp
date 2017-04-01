@@ -62,8 +62,8 @@ namespace PixelMaestro {
 		@return RGB value of the Pixel's de facto color.
 	*/
 	Colors::RGB Section::getPixelColor(unsigned char pixel) {
-		if (layer_.section != nullptr) {
-			return Colors::mixColors(pixels_[pixel].getColor(), layer_.section->getPixel(pixel)->getColor(), layer_.mixMode, layer_.alpha);
+		if (overlay_.section != nullptr) {
+			return Colors::mixColors(pixels_[pixel].getColor(), overlay_.section->getPixel(pixel)->getColor(), overlay_.mixMode, overlay_.alpha);
 		}
 		else {
 			return *pixels_[pixel].getColor();
@@ -155,10 +155,10 @@ namespace PixelMaestro {
 		Overlays a Section on top of the current Section.
 		The base Section automatically handles blending in the layer on output.
 
-		@param layer Section to overlay.
+		@param overlay Section to overlay.
 	*/
-	void Section::setLayer(Layer layer) {
-        layer_ = layer;
+	void Section::setOverlay(Overlay overlay) {
+        overlay_ = overlay;
 	}
 
 	/**
@@ -196,9 +196,9 @@ namespace PixelMaestro {
 	/**
 		Removes the overlay from the Section.
 	*/
-	void Section::unsetLayer() {
-		layer_.section = nullptr;
-		layer_.alpha = 0;
+	void Section::unsetOverlay() {
+		overlay_.section = nullptr;
+		overlay_.alpha = 0;
 	}
 
 	/**
