@@ -23,7 +23,7 @@ TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
     }
 
     // Update the Pixel
-    pixel.update();
+    pixel.update(fade);
 
     SECTION("Update and check the current color.") {
         Colors::RGB currentColor = *pixel.getColor();
