@@ -43,13 +43,25 @@ namespace PixelMaestro {
 				}
 			};
 
+			/**
+				Defines the Pixel layout of the Section.
+				The number of Pixels in this Section is determined by rows * columns.
+			*/
+			struct Layout {
+				unsigned int rows;
+				unsigned int columns;
+			};
+
 			Section();
-			Section(Pixel *pixels, unsigned char numPixels);
+			Section(Pixel *pixels, unsigned char rows, unsigned char columns);
 
 			Section::ColorAnimations getColorAnimation();
 			bool getFade();
+			Layout *getLayout();
 			unsigned char getNumPixels();
+			Pixel *getPixel(unsigned char row, unsigned char column);
 			Pixel *getPixel(unsigned char pixel);
+			Colors::RGB getPixelColor(unsigned char row, unsigned char column);
 			Colors::RGB getPixelColor(unsigned char pixel);
 			unsigned char getUpdateSpeed();
 			void setAll(Colors::RGB *color);
@@ -58,8 +70,9 @@ namespace PixelMaestro {
 			void setCycleIndex(unsigned char index);
 			void setOverlay(Overlay overlay);
 			void setOne(unsigned char pixel, Colors::RGB *color);
+			void setOne(unsigned char row, unsigned char column, Colors::RGB *color);
 			void setPattern(unsigned char *pattern, unsigned char patternLength);
-			void setPixels(Pixel *pixels, unsigned char numPixels);
+			void setPixels(Pixel *pixels, unsigned char rows, unsigned char columns);
 			void setUpdateSpeed(unsigned char speed, unsigned char delay = 0);
 			void toggleFade();
 			void update(unsigned long currentTime);
@@ -73,7 +86,8 @@ namespace PixelMaestro {
 			unsigned char delay_ = 0;		/// Any delay between cycles.
 			bool fade_ = true;				/// Whether to fade between cycles.
 			unsigned long last_time_ = 0;	/// The last time the Section was updated. Note that this is different than cycle_end_.
-			Overlay overlay_;					/// Section overlaying the current section (if applicable);
+			Layout layout_;					/// The Pixel layout of the array.
+			Overlay overlay_;				/// Section overlaying the current section (if applicable);
 			Pixel *pixels_;					/// Array of Pixels stored in the Section.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The current Section animation. Defaults to SOLID.
 			unsigned char num_colors_;		/// The number of colors in colors_.
