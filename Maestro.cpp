@@ -14,7 +14,7 @@ namespace PixelMaestro {
 		@param sections Initial Section array.
 		@param numSections Number of Sections.
 	*/
-	Maestro::Maestro(Pixel *pixels, unsigned int numPixels, Section *sections, unsigned char numSections) {
+	Maestro::Maestro(Pixel *pixels, unsigned int numPixels, Section *sections, unsigned short numSections) {
 		pixels_ = pixels;
 		num_pixels_ = numPixels;
 		this->setSections(sections, numSections);
@@ -25,7 +25,7 @@ namespace PixelMaestro {
 
 		@return Number of Sections.
 	*/
-	unsigned char Maestro::getNumSections() {
+	unsigned short Maestro::getNumSections() {
 		return num_sections_;
 	}
 
@@ -44,7 +44,7 @@ namespace PixelMaestro {
 		@param section Index of the Section to return.
 		@return Section at the specified index.
 	*/
-	Section *Maestro::getSection(unsigned char section) {
+	Section *Maestro::getSection(unsigned short section) {
 		return &sections_[section];
 	}
 
@@ -58,7 +58,7 @@ namespace PixelMaestro {
 		unsigned char minSpeed = 255;
 
 		// The Maestro must be at least as fast as the fastest animation.
-		for (unsigned char section = 0; section < num_sections_; section++) {
+		for (unsigned short section = 0; section < num_sections_; section++) {
 			if (sections_[section].getUpdateSpeed() < minSpeed) {
 				minSpeed = sections_[section].getUpdateSpeed();
 			}
@@ -73,7 +73,7 @@ namespace PixelMaestro {
 		@param grids Array of Grids.
 		@param numGrids Number of Grids in the array.
 	*/
-	void Maestro::setSections(Section *sections, unsigned char numSections) {
+	void Maestro::setSections(Section *sections, unsigned short numSections) {
 		sections_ = sections;
 		num_sections_ = numSections;
 	}
@@ -93,7 +93,7 @@ namespace PixelMaestro {
 	void Maestro::update(unsigned long currentTime) {
 		// Call each Grid and Line's update method.
 		if (running_) {
-			for (unsigned char section = 0; section < num_sections_; section++) {
+			for (unsigned short section = 0; section < num_sections_; section++) {
 				sections_[section].update(currentTime);
 			}
 		}
