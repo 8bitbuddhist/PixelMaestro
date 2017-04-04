@@ -25,7 +25,7 @@
 namespace PixelMaestro {
 	class Maestro {
 		public:
-			Maestro(Pixel *pixels, unsigned short numPixels, Section *sections, unsigned char numSections);
+			Maestro(Pixel *pixels, unsigned int numPixels, Section *sections, unsigned char numSections);
 			unsigned char getNumSections();
 			bool getRunning();
 			Section *getSection(unsigned char section);
@@ -36,7 +36,7 @@ namespace PixelMaestro {
 
 		private:
 			Pixel *pixels_;			/// Array of Pixels managed by the Maestro.
-			unsigned short num_pixels_;	/// Number of Pixels managed by the Maestro.
+			unsigned int num_pixels_;	/// Number of Pixels managed by the Maestro.
 			bool running_ = true;	/// Active state of the Maestro.
 			Section *sections_;		/// Array of Sections managed by the Maestro.
 			unsigned char num_sections_;	/// Number of Sections managed by the Maestro.
