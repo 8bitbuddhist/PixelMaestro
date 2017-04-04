@@ -20,11 +20,11 @@ namespace PixelMaestro {
 		Constructor. A Section is a collection of initialized Pixels.
 
 		@param pixels Initial Pixel array.
-		@param numRows Number of rows of Pixels.
-		@param numColumns Number of Pixels per row.
+		@param rows Number of rows of Pixels.
+		@param columns Number of Pixels per row.
 	*/
-	Section::Section(Pixel *pixels, unsigned char numRows, unsigned char numColumns) {
-        setPixels(pixels, numRows, numColumns);
+	Section::Section(Pixel *pixels, unsigned short rows, unsigned short columns) {
+        setPixels(pixels, rows, columns);
 	}
 
 	/**
@@ -61,7 +61,7 @@ namespace PixelMaestro {
 		@param column Column that the Pixel is in.
 		@return Pixel Reference to Pixel.
 	*/
-	Pixel *Section::getPixel(unsigned char row, unsigned char column) {
+	Pixel *Section::getPixel(unsigned short row, unsigned short column) {
 		return &pixels_[(row * layout_.rows) + column];
 	}
 
@@ -70,7 +70,7 @@ namespace PixelMaestro {
 
 		@param pixel The index of the Pixel in the pixels_ array.
 	*/
-	Pixel *Section::getPixel(unsigned char pixel) {
+	Pixel *Section::getPixel(unsigned int pixel) {
 		return &pixels_[pixel];
 	}
 
@@ -81,7 +81,7 @@ namespace PixelMaestro {
 		@param column Column that the Pixel is in.
 		@return RGB value of the Pixel's de facto color.
 	*/
-	Colors::RGB Section::getPixelColor(unsigned char row, unsigned char column) {
+	Colors::RGB Section::getPixelColor(unsigned short row, unsigned short column) {
 		return this->getPixelColor((row * layout_.columns) + column);
 	}
 
@@ -91,7 +91,7 @@ namespace PixelMaestro {
 		@param pixel Index of the Pixel.
 		@return RGB value of the Pixel's de facto color.
 	*/
-	Colors::RGB Section::getPixelColor(unsigned char pixel) {
+	Colors::RGB Section::getPixelColor(unsigned int pixel) {
 		if (overlay_.section != nullptr) {
 			return Colors::mixColors(this->getPixel(pixel)->getColor(), overlay_.section->getPixel(pixel)->getColor(), overlay_.mixMode, overlay_.alpha);
 		}
@@ -124,8 +124,8 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setAll(Colors::RGB *color) {
-		for (unsigned char row = 0; row < layout_.rows; row++) {
-			for (unsigned char column = 0; column < layout_.columns; column++) {
+		for (unsigned short row = 0; row < layout_.rows; row++) {
+			for (unsigned short column = 0; column < layout_.columns; column++) {
 				setOne(row, column, color);
 			}
 		}
@@ -164,7 +164,7 @@ namespace PixelMaestro {
 		@param colors New color array.
 		@param numColors Size of the array.
 	*/
-	void Section::setColors(Colors::RGB *colors, unsigned char numColors) {
+	void Section::setColors(Colors::RGB *colors, unsigned int numColors) {
 		colors_ = colors;
 		num_colors_ = numColors;
 	}
@@ -174,7 +174,7 @@ namespace PixelMaestro {
 
 		@param index Where the cycle should start.
 	*/
-	void Section::setCycleIndex(unsigned char index) {
+	void Section::setCycleIndex(unsigned int index) {
 		if (index > num_colors_) {
 			cycle_index_ = (index - 1) % num_colors_;
 		}
@@ -199,7 +199,7 @@ namespace PixelMaestro {
 		@param pixel The index of the Pixel to update.
 		@param color New color.
 	*/
-	void Section::setOne(unsigned char pixel, Colors::RGB *color) {
+	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
 		this->getPixel(pixel)->setNextColor(color, fade_, speed_);
 	}
 
@@ -210,7 +210,7 @@ namespace PixelMaestro {
 		@param column The column number of the Pixel.
 		@param color New color.
 	*/
-	void Section::setOne(unsigned char row, unsigned char column, Colors::RGB *color) {
+	void Section::setOne(unsigned short row, unsigned short column, Colors::RGB *color) {
 		this->getPixel(row, column)->setNextColor(color, fade_, speed_);
 	}
 
@@ -233,7 +233,7 @@ namespace PixelMaestro {
 		@param rows Number of rows of Pixels.
 		@param columns Number of columns of Pixels.
 	*/
-	void Section::setPixels(Pixel* pixels, unsigned char rows, unsigned char columns) {
+	void Section::setPixels(Pixel* pixels, unsigned short rows, unsigned short columns) {
         pixels_ = pixels;
 		layout_.rows = rows;
 		layout_.columns = columns;
@@ -320,7 +320,7 @@ namespace PixelMaestro {
 			}
 
 			// Update each Pixel.
-			for (unsigned char pixel = 0; pixel < this->getNumPixels(); pixel++) {
+			for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
 				this->getPixel(pixel)->update(fade_);
 			}
 
@@ -339,7 +339,7 @@ namespace PixelMaestro {
 	void Section::animation_blink() {
 		// Alternate the Pixel between its normal color and off (Colors::BLACK).
 		if (cycle_index_ == 0) {
-			for (unsigned char pixel = 0; pixel < this->getNumPixels(); pixel++) {
+			for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
 				this->setOne(pixel, &colors_[animation_getColorIndex(pixel)]);
 			}
 		}
@@ -378,7 +378,7 @@ namespace PixelMaestro {
 		@param count Number to resolve to an index.
 		@return Resulting index.
 	*/
-	unsigned char Section::animation_getColorIndex(unsigned char count) {
+	unsigned int Section::animation_getColorIndex(unsigned int count) {
 		if (count >= num_colors_) {
 			count %= num_colors_;
 		}
@@ -423,13 +423,14 @@ namespace PixelMaestro {
 
 		// Calculate the center of the array
 		unsigned short midPoint;
-		unsigned char count;
+		unsigned short count;
 
 		for (unsigned short row = 0; row < layout_.rows; row++) {
 			midPoint = (layout_.columns / 2) - 1;
 			count = 0;
 
-			// Pixel has to be a signed int in order to access index 0.
+			// HEY DUMBASS, pixel *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
+			// DON'T FUCK WITH IT!!!!
 			for (int pixel = midPoint; pixel >= 0; pixel--) {
 				setOne(row, pixel, &colors_[animation_getColorIndex(count + cycle_index_)]);
 				count++;
@@ -448,7 +449,7 @@ namespace PixelMaestro {
 
 			// Go from the center to the last
 			count = 0;
-			for (unsigned short pixel = midPoint; pixel < layout_.columns; pixel++) {
+			for (int pixel = midPoint; pixel < layout_.columns; pixel++) {
 				setOne(row, pixel, &colors_[animation_getColorIndex(count + cycle_index_)]);
 				count++;
 			}
@@ -476,7 +477,7 @@ namespace PixelMaestro {
 
 		// Increment through each bit. If the bit is set, turn on the Pixel.
 		unsigned char data = pattern_[cycle_index_];
-		for (unsigned char pixel = 0; pixel < this->getNumPixels(); pixel++) {
+		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
 			if (data & (1 << pixel)) {
 				setOne(pixel, &colors_[animation_getColorIndex(pixel)]);
 			}
@@ -498,7 +499,7 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_pong() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned char pixel = 0; pixel < layout_.columns; pixel++) {
+			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
 				setOne(row, pixel, &colors_[animation_getColorIndex(pixel + cycle_index_)]);
 			}
 		}
@@ -524,7 +525,7 @@ namespace PixelMaestro {
 		Modes: RANDOMINDEX
 	*/
 	void Section::animation_randomIndex() {
-		for (unsigned char pixel = 0; pixel < this->getNumPixels(); pixel++) {
+		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
 			setOne(pixel, &colors_[rand() % num_colors_]);
 		}
 	}
@@ -536,7 +537,7 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_solid() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned char pixel = 0; pixel < layout_.columns; pixel++) {
+			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
 				setOne(row, pixel, &colors_[animation_getColorIndex(pixel)]);
 			}
 		}
@@ -550,9 +551,9 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_sparkle() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
-			unsigned char activePixel = rand() % layout_.columns;
+			unsigned short activePixel = rand() % layout_.columns;
 
-			for (unsigned char pixel = 0; pixel < layout_.columns; pixel++) {
+			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
 				if (pixel == activePixel) {
 					setOne(row, pixel, &colors_[animation_getColorIndex(pixel)]);
 				}
@@ -570,7 +571,7 @@ namespace PixelMaestro {
 		Modes: STATIC
 	*/
 	void Section::animation_static() {
-		for (unsigned char pixel = 0; pixel < this->getNumPixels(); pixel++) {
+		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
 			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (0.95) ) ));
 			setOne(pixel, &colors_[pixel]);
 		}
@@ -582,8 +583,8 @@ namespace PixelMaestro {
 		Modes: WAVE
 	*/
 	void Section::animation_wave() {
-		for (unsigned char row = 0; row < layout_.rows; row++) {
-			for (unsigned char pixel = 0; pixel < layout_.columns; pixel++) {
+		for (unsigned short row = 0; row < layout_.rows; row++) {
+			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
 				setOne(row, pixel, &colors_[animation_getColorIndex(pixel + cycle_index_)]);
 			}
 		}
