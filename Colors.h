@@ -89,9 +89,9 @@ namespace PixelMaestro {
 			static RGB RAINBOW[];
 
 			static RGB HSVtoRGB(unsigned int hue, unsigned int sat, unsigned int val);
-			static void generateRandomColorArray(RGB newArray[], RGB baseColor, unsigned char numColors, float range = 1.0);
-			static void generateScalingColorArray(RGB newArray[], RGB baseColor, RGB targetColor, unsigned char numColors, bool reverse = false);
-			static void generateScalingColorArray(RGB newArray[], RGB baseColor, unsigned char numColors, unsigned char threshold, bool reverse = false);
+			static void generateRandomColorArray(RGB newArray[], RGB baseColor, unsigned int numColors, float range = 1.0);
+			static void generateScalingColorArray(RGB newArray[], RGB baseColor, RGB targetColor, unsigned int numColors, bool reverse = false);
+			static void generateScalingColorArray(RGB newArray[], RGB baseColor, unsigned int numColors, unsigned char threshold, bool reverse = false);
 			static RGB mixColors(RGB *colorOne, RGB *colorTwo, MixMode mode, float alpha = 0);
 	};
 }

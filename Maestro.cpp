@@ -9,14 +9,10 @@ namespace PixelMaestro {
 	/**
 		Constructor. Initializes the Pixel array and divides it into Sections.
 
-		@param pixels Initial Pixel array.
-		@param numPixels Number of Pixels.
 		@param sections Initial Section array.
 		@param numSections Number of Sections.
 	*/
-	Maestro::Maestro(Pixel *pixels, unsigned int numPixels, Section *sections, unsigned short numSections) {
-		pixels_ = pixels;
-		num_pixels_ = numPixels;
+	Maestro::Maestro(Section *sections, unsigned short numSections) {
 		this->setSections(sections, numSections);
 	}
 

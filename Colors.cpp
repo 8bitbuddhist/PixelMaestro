@@ -128,12 +128,12 @@ namespace PixelMaestro {
 		@param baseColor The initial color.
 		@param numColors Number of colors to generate.
 	*/
-	void Colors::generateRandomColorArray(Colors::RGB newArray[], Colors::RGB baseColor, unsigned char numColors, float range) {
-		for (int newColorIndex = 0; newColorIndex < numColors; newColorIndex++) {
+	void Colors::generateRandomColorArray(Colors::RGB newArray[], Colors::RGB baseColor, unsigned int numColors, float range) {
+		for (unsigned int newColorIndex = 0; newColorIndex < numColors; newColorIndex++) {
 			newArray[newColorIndex] = {
-				(baseColor.r > 0 ? baseColor.r - (unsigned char)(rand() % (unsigned char)(baseColor.r * range)) : 0),
-				(baseColor.g > 0 ? baseColor.g - (unsigned char)(rand() % (unsigned char)(baseColor.g * range)) : 0),
-				(baseColor.b > 0 ? baseColor.b - (unsigned char)(rand() % (unsigned char)(baseColor.b * range)) : 0)
+				(unsigned char)(baseColor.r > 0 ? baseColor.r - (unsigned char)(rand() % (unsigned char)(baseColor.r * range)) : 0),
+				(unsigned char)(baseColor.g > 0 ? baseColor.g - (unsigned char)(rand() % (unsigned char)(baseColor.g * range)) : 0),
+				(unsigned char)(baseColor.b > 0 ? baseColor.b - (unsigned char)(rand() % (unsigned char)(baseColor.b * range)) : 0)
 			};
 		}
 	}
@@ -147,29 +147,29 @@ namespace PixelMaestro {
 		@param numColors Number of colors in the array.
 		@param reverse If true, the second half of the array will transition from targetColor back to baseColor.
 	*/
-	void Colors::generateScalingColorArray(RGB newArray[], RGB baseColor, RGB targetColor, unsigned char numColors, bool reverse) {
+	void Colors::generateScalingColorArray(RGB newArray[], RGB baseColor, RGB targetColor, unsigned int numColors, bool reverse) {
 		if (reverse) {
 			numColors /= 2;
 		}
 
-		unsigned char step[] = {
+		Colors::RGB step = {
 			(unsigned char)ceil((targetColor.r - baseColor.r) / numColors),
 			(unsigned char)ceil((targetColor.g - baseColor.g) / numColors),
 			(unsigned char)ceil((targetColor.b - baseColor.b) / numColors)
 		};
 
-		for (int i = 0; i < numColors; i++) {
-			newArray[i].r =	baseColor.r + (step[0] * i);
-			newArray[i].g = baseColor.g + (step[1] * i);
-			newArray[i].b = baseColor.b + (step[2] * i);
+		for (unsigned int i = 0; i < numColors; i++) {
+			newArray[i].r =	baseColor.r + (step.r * i);
+			newArray[i].g = baseColor.g + (step.g * i);
+			newArray[i].b = baseColor.b + (step.b * i);
 		}
 
 		if (reverse) {
-			unsigned char colorIndex = numColors;
-			for (int i = numColors; i < (numColors * 2); i++) {
-				newArray[i].r =	targetColor.r + (step[0] * colorIndex);
-				newArray[i].g = targetColor.g + (step[1] * colorIndex);
-				newArray[i].b = targetColor.b + (step[2] * colorIndex);
+			unsigned int colorIndex = numColors;
+			for (unsigned int i = numColors; i < (numColors * 2); i++) {
+				newArray[i].r =	targetColor.r + (step.r * colorIndex);
+				newArray[i].g = targetColor.g + (step.g * colorIndex);
+				newArray[i].b = targetColor.b + (step.b * colorIndex);
 
 				colorIndex--;
 			}
@@ -186,12 +186,13 @@ namespace PixelMaestro {
 		@param threshold The variation between the base color and the newly generated target color.
 		@param reverse If true, the array will be doubled to transition from baseColor to targetColor, then back to baseColor.
 	*/
-	void Colors::generateScalingColorArray(RGB newArray[], RGB baseColor, unsigned char numColors, unsigned char threshold, bool reverse) {
-		RGB newColor = {(unsigned char)(baseColor.r - threshold),
+	void Colors::generateScalingColorArray(RGB newArray[], RGB baseColor, unsigned int numColors, unsigned char threshold, bool reverse) {
+		RGB newColor = {
+			(unsigned char)(baseColor.r - threshold),
 			(unsigned char)(baseColor.g - threshold),
 			(unsigned char)(baseColor.b - threshold)
 		};
-		generateScalingColorArray(newArray, baseColor, newColor, numColors, reverse);
+		Colors::generateScalingColorArray(newArray, baseColor, newColor, numColors, reverse);
 	}
 
 	/**

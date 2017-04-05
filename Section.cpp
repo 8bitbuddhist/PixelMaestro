@@ -429,8 +429,7 @@ namespace PixelMaestro {
 			midPoint = (layout_.columns / 2) - 1;
 			count = 0;
 
-			// HEY DUMBASS, pixel *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
-			// DON'T FUCK WITH IT!!!!
+			// pixel *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
 			for (int pixel = midPoint; pixel >= 0; pixel--) {
 				setOne(row, pixel, &colors_[animation_getColorIndex(count + cycle_index_)]);
 				count++;
@@ -449,7 +448,7 @@ namespace PixelMaestro {
 
 			// Go from the center to the last
 			count = 0;
-			for (int pixel = midPoint; pixel < layout_.columns; pixel++) {
+			for (unsigned int pixel = midPoint; pixel < layout_.columns; pixel++) {
 				setOne(row, pixel, &colors_[animation_getColorIndex(count + cycle_index_)]);
 				count++;
 			}
