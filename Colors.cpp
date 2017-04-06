@@ -152,26 +152,28 @@ namespace PixelMaestro {
 			numColors /= 2;
 		}
 
-		Colors::RGB step = {
-			(unsigned char)ceil((targetColor.r - baseColor.r) / numColors),
-			(unsigned char)ceil((targetColor.g - baseColor.g) / numColors),
-			(unsigned char)ceil((targetColor.b - baseColor.b) / numColors)
+		signed short step[] = {
+			(targetColor.r - baseColor.r) / (float)numColors,
+			(targetColor.g - baseColor.g) / (float)numColors,
+			(targetColor.b - baseColor.b) / (float)numColors
 		};
 
 		for (unsigned int i = 0; i < numColors; i++) {
-			newArray[i].r =	baseColor.r + (step.r * i);
-			newArray[i].g = baseColor.g + (step.g * i);
-			newArray[i].b = baseColor.b + (step.b * i);
+			newArray[i].r =	baseColor.r + (step[0] * i);
+			newArray[i].g = baseColor.g + (step[1] * i);
+			newArray[i].b = baseColor.b + (step[2] * i);
 		}
 
 		if (reverse) {
-			unsigned int colorIndex = numColors;
-			for (unsigned int i = numColors; i < (numColors * 2); i++) {
-				newArray[i].r =	targetColor.r + (step.r * colorIndex);
-				newArray[i].g = targetColor.g + (step.g * colorIndex);
-				newArray[i].b = targetColor.b + (step.b * colorIndex);
+			// Handle the middle Pixel
+			newArray[numColors].r = baseColor.r + (step[0] * numColors);
+			newArray[numColors].g = baseColor.g + (step[1] * numColors);
+			newArray[numColors].b = baseColor.b + (step[2] * numColors);
 
-				colorIndex--;
+			for (unsigned int i = numColors + 1; i < (numColors * 2); i++) {
+				newArray[i].r = newArray[numColors - (i - numColors)].r;
+				newArray[i].g = newArray[numColors - (i - numColors)].g;
+				newArray[i].b = newArray[numColors - (i - numColors)].b;
 			}
 		}
 	}

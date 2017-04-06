@@ -62,7 +62,7 @@ namespace PixelMaestro {
 		@return Pixel Reference to Pixel.
 	*/
 	Pixel *Section::getPixel(unsigned short row, unsigned short column) {
-		return &pixels_[(row * layout_.rows) + column];
+		return &pixels_[(row * layout_.columns) + column];
 	}
 
 	/**
