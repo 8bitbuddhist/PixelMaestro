@@ -153,9 +153,9 @@ namespace PixelMaestro {
 		}
 
 		signed short step[] = {
-			(targetColor.r - baseColor.r) / (float)numColors,
-			(targetColor.g - baseColor.g) / (float)numColors,
-			(targetColor.b - baseColor.b) / (float)numColors
+			(signed short)((targetColor.r - baseColor.r) / (float)numColors),
+			(signed short)((targetColor.g - baseColor.g) / (float)numColors),
+			(signed short)((targetColor.b - baseColor.b) / (float)numColors)
 		};
 
 		for (unsigned int i = 0; i < numColors; i++) {
