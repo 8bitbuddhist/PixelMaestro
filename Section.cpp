@@ -546,16 +546,15 @@ namespace PixelMaestro {
 
 	/**
 		Creates a shimmering effect by turning on random Pixels.
-		NOTE: Requires a very fast refresh rate (< 5 ticks).
+		NOTE: Requires a very fast refresh rate (1 - 2 ticks).
 
 		Modes: SPARKLE
 	*/
 	void Section::animation_sparkle() {
-		for (unsigned short row = 0; row < layout_.rows; row++) {
-			unsigned short activePixel = rand() % layout_.columns;
-
+		for (unsigned int row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
-				if (column == activePixel) {
+				// The number of lit Pixels is inversely proportional to the threshold (e.g. the higher the threshold, the fewer the lit Pixels)
+				if ((rand() % 100) > 60) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
@@ -568,6 +567,7 @@ namespace PixelMaestro {
 
 	/**
 		Creates a static effect by blending each Pixel between varying levels of gray.
+		WARNING: THIS EFFECT MODIFIES THE SET COLOR ARRAY.
 
 		Modes: STATIC
 	*/
