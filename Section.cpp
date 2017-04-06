@@ -3,6 +3,7 @@
 	Requires Pixel and Colors classes.
 */
 
+#include <cmath>
 #include <limits.h>
 #include <stdlib.h>
 #include "Colors.h"
@@ -215,14 +216,16 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Changes the display pattern.
+		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
+		A pattern consists of several unsigned shorts, and Pixels are activated based on which bits are active.
+		A single short corresponds to a row in the Section.
 
-		@param pattern Pointer to the pattern (byte) array.
-		@param patternLength Length of the pattern array.
+		@param pattern Pointer to the pattern array.
+		@param patternRows Length of the pattern array (e.g. the number of rows in the pattern).
 	*/
-	void Section::setPattern(unsigned char *pattern, unsigned char patternLength) {
+	void Section::setPattern(unsigned int *pattern, unsigned short patternRows) {
 		pattern_ = pattern;
-		pattern_length_ = patternLength;
+		num_pattern_rows_ = patternRows;
 	}
 
 	/**
@@ -466,30 +469,34 @@ namespace PixelMaestro {
 
 	/**
 		Scrolls through the pattern stored in pattern_.
+		For now, this just sets it to whatever is stored in pattern_. Anything additional would require a 2D array.
 		If there is no pattern set, blink.
 
 		Modes: PATTERN
 	*/
 	void Section::animation_pattern() {
-		if (!(pattern_ && pattern_length_)) {
+		// If the pattern has not been set, blink the array.
+		if (!(pattern_ && num_pattern_rows_)) {
 			animation_blink();
 			return;
 		}
 
 		// Increment through each bit. If the bit is set, turn on the Pixel.
-		unsigned char data = pattern_[cycle_index_];
-		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			if (data & (1 << pixel)) {
-				setOne(pixel, &colors_[animation_getColorIndex(pixel)]);
+		for (unsigned short row = 0; row < layout_.rows; row++) {
+			for (unsigned short column = 0; column < layout_.columns; column++) {
+				// If this row isn't even in the pattern, just set it to black.
+				if (row >= num_pattern_rows_) {
+					setOne(row, column, &Colors::BLACK);
+				}
+				else {
+					if (pattern_[row] & (unsigned int)pow(2, column)) {
+						setOne(row, column, &colors_[animation_getColorIndex(column)]);
+					}
+					else {
+						setOne(row, column, &Colors::BLACK);
+					}
+				}
 			}
-			else {
-				setOne(pixel, &Colors::BLACK);
-			}
-		}
-
-		cycle_index_++;
-		if (cycle_index_ > pattern_length_) {
-			cycle_index_ = 0;
 		}
 	}
 

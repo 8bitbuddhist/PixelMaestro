@@ -71,7 +71,7 @@ namespace PixelMaestro {
 			void setOverlay(Overlay overlay);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
-			void setPattern(unsigned char *pattern, unsigned char patternLength);
+			void setPattern(unsigned int *pattern, unsigned short patternRows);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
 			void setUpdateSpeed(unsigned char speed, unsigned char delay = 0);
 			void toggleFade();
@@ -91,9 +91,9 @@ namespace PixelMaestro {
 			Pixel *pixels_;					/// Array of Pixels stored in the Section.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The current Section animation. Defaults to SOLID.
 			unsigned int num_colors_;		/// The number of colors in colors_.
-			unsigned char *pattern_;		/// The pattern to display when the PATTERN animation is active.
-			unsigned char pattern_length_ = 0;	/// The number of pattern elements in pattern_.
-			bool reverse_animation_ = false;	/// Whether to reverse the animation in color_animation_.
+			unsigned int *pattern_;		/// The pattern to display when the PATTERN animation is active. Stored as an array of unsigned shorts where each element corresponds to a row.
+			unsigned short num_pattern_rows_ = 0;	/// The number of rows in pattern_.
+			bool reverse_animation_ = false;		/// Whether to reverse the animation in color_animation_.
 			unsigned char speed_ = 10;		/// The update speed of the Section (in ms). Defaults to 10.
 
 			// Color animation functions
