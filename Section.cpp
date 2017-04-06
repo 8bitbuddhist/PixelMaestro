@@ -339,8 +339,10 @@ namespace PixelMaestro {
 	void Section::animation_blink() {
 		// Alternate the Pixel between its normal color and off (Colors::BLACK).
 		if (cycle_index_ == 0) {
-			for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-				this->setOne(pixel, &colors_[animation_getColorIndex(pixel)]);
+			for (unsigned short row = 0; row < layout_.rows; row++) {
+				for (unsigned short column = 0; column < layout_.columns; column++) {
+					this->setOne(row, column, &colors_[animation_getColorIndex(column)]);
+				}
 			}
 		}
 		else {
@@ -429,9 +431,9 @@ namespace PixelMaestro {
 			midPoint = (layout_.columns / 2) - 1;
 			count = 0;
 
-			// pixel *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
-			for (int pixel = midPoint; pixel >= 0; pixel--) {
-				setOne(row, pixel, &colors_[animation_getColorIndex(count + cycle_index_)]);
+			// column *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
+			for (int column = midPoint; column >= 0; column--) {
+				setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
 				count++;
 			}
 
@@ -448,8 +450,8 @@ namespace PixelMaestro {
 
 			// Go from the center to the last
 			count = 0;
-			for (unsigned int pixel = midPoint; pixel < layout_.columns; pixel++) {
-				setOne(row, pixel, &colors_[animation_getColorIndex(count + cycle_index_)]);
+			for (unsigned int column = midPoint; column < layout_.columns; column++) {
+				setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
 				count++;
 			}
 		}
@@ -498,8 +500,8 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_pong() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
-				setOne(row, pixel, &colors_[animation_getColorIndex(pixel + cycle_index_)]);
+			for (unsigned short column = 0; column < layout_.columns; column++) {
+				setOne(row, column, &colors_[animation_getColorIndex(column + cycle_index_)]);
 			}
 		}
 
@@ -536,8 +538,8 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_solid() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
-				setOne(row, pixel, &colors_[animation_getColorIndex(pixel)]);
+			for (unsigned short column = 0; column < layout_.columns; column++) {
+				setOne(row, column, &colors_[animation_getColorIndex(column)]);
 			}
 		}
 	}
@@ -552,12 +554,12 @@ namespace PixelMaestro {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
 			unsigned short activePixel = rand() % layout_.columns;
 
-			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
-				if (pixel == activePixel) {
-					setOne(row, pixel, &colors_[animation_getColorIndex(pixel)]);
+			for (unsigned short column = 0; column < layout_.columns; column++) {
+				if (column == activePixel) {
+					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
-					setOne(row, pixel, &Colors::BLACK);
+					setOne(row, column, &Colors::BLACK);
 				}
 			}
 		}
@@ -583,8 +585,8 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_wave() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short pixel = 0; pixel < layout_.columns; pixel++) {
-				setOne(row, pixel, &colors_[animation_getColorIndex(pixel + cycle_index_)]);
+			for (unsigned short column = 0; column < layout_.columns; column++) {
+				setOne(row, column, &colors_[animation_getColorIndex(column + cycle_index_)]);
 			}
 		}
 
