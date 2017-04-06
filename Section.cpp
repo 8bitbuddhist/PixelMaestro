@@ -41,7 +41,7 @@ namespace PixelMaestro {
 
 		@return Number of Pixels.
 	*/
-	unsigned char Section::getNumPixels() {
+	unsigned int Section::getNumPixels() {
 		return layout_.rows * layout_.columns;
 	}
 

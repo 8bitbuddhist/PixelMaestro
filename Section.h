@@ -58,7 +58,7 @@ namespace PixelMaestro {
 			Section::ColorAnimations getColorAnimation();
 			bool getFade();
 			Layout *getLayout();
-			unsigned char getNumPixels();
+			unsigned int getNumPixels();
 			Pixel *getPixel(unsigned short row, unsigned short column);
 			Pixel *getPixel(unsigned int pixel);
 			Colors::RGB getPixelColor(unsigned short row, unsigned short column);
