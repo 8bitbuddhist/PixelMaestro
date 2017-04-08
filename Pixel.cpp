@@ -1,5 +1,5 @@
-/**
-	Pixel.cpp - Library for controlling a single RGB pixel.
+/*
+	Pixel.cpp - Library for controlling a single RGB.
 	Inspired by RGBMood (http://forum.arduino.cc/index.php?topic=90160.0)
 */
 

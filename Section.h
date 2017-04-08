@@ -1,6 +1,5 @@
 /*
 	Section.cpp - Class for controlling multiple Pixels.
-	Requires Pixel and Colors classes.
 */
 
 #ifndef SECTION_H
