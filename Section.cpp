@@ -222,10 +222,14 @@ namespace PixelMaestro {
 
 		@param pattern Pointer to the pattern array.
 		@param patternRows Length of the pattern array (e.g. the number of rows in the pattern).
+		@param numFrames Number of frames in the pattern.
 	*/
-	void Section::setPattern(unsigned int *pattern, unsigned short patternRows) {
-		pattern_ = pattern;
-		num_pattern_rows_ = patternRows;
+	void Section::setPattern(unsigned int *pattern, unsigned short patternRows, unsigned short numFrames) {
+		pattern_ = {
+			pattern,
+			patternRows,
+			numFrames
+		};
 	}
 
 	/**
@@ -351,12 +355,9 @@ namespace PixelMaestro {
 		else {
 			setAll(&Colors::BLACK);
 		}
-		animation_incrementCycle();
 
 		// Only run for two cycles.
-		if (cycle_index_ == 2) {
-			cycle_index_ = 0;
-		}
+		animation_updateCycle(0, 2);
 	}
 
 	/**
@@ -366,13 +367,7 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_cycle() {
 		setAll(&colors_[cycle_index_]);
-
-		if (reverse_animation_) {
-			animation_decrementCycle();
-		}
-		else {
-			animation_incrementCycle();
-		}
+		animation_updateCycle(0, num_colors_);
 	}
 
 	/**
@@ -389,34 +384,6 @@ namespace PixelMaestro {
 		}
 
 		return count;
-	}
-
-	/**
-		Decrements the current position in the cycle.
-	*/
-	void Section::animation_decrementCycle() {
-		// Only continue if the Pixels are finished cycling through their steps.
-		if ((pixels_[0].getStepCount() == 0) && (*current_time_ - cycle_end_ >= delay_)) {
-			cycle_end_ = *current_time_;
-			cycle_index_--;
-			if (cycle_index_ < 0) {
-				cycle_index_ = num_colors_ - 1;
-			}
-		}
-	}
-
-	/**
-		Increments the current position in the cycle.
-	*/
-	void Section::animation_incrementCycle() {
-		// Only continue if the Pixels are finished cycling through their steps.
-		if ((pixels_[0].getStepCount() == 0) && (*current_time_ - cycle_end_ >= delay_)) {
-			cycle_end_ = *current_time_;
-			cycle_index_++;
-			if (cycle_index_ >= num_colors_) {
-				cycle_index_ = 0;
-			}
-		}
 	}
 
 	/**
@@ -459,12 +426,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		if (reverse_animation_) {
-			animation_decrementCycle();
-		}
-		else {
-			animation_incrementCycle();
-		}
+		animation_updateCycle(0, num_colors_);
 	}
 
 	/**
@@ -476,7 +438,7 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_pattern() {
 		// If the pattern has not been set, blink the array.
-		if (!(pattern_ && num_pattern_rows_)) {
+		if (pattern_.pattern == nullptr) {
 			animation_blink();
 			return;
 		}
@@ -485,11 +447,11 @@ namespace PixelMaestro {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
 				// If this row isn't even in the pattern, just set it to black.
-				if (row >= num_pattern_rows_) {
+				if (row >= pattern_.height) {
 					setOne(row, column, &Colors::BLACK);
 				}
 				else {
-					if (pattern_[row] & (unsigned int)pow(2, column)) {
+					if (pattern_.pattern[(pattern_.height * cycle_index_) + row] & (unsigned int)pow(2, column)) {
 						setOne(row, column, &colors_[animation_getColorIndex(column)]);
 					}
 					else {
@@ -498,6 +460,8 @@ namespace PixelMaestro {
 				}
 			}
 		}
+
+		animation_updateCycle(0, pattern_.frames);
 	}
 
 	/**
@@ -519,12 +483,7 @@ namespace PixelMaestro {
 			reverse_animation_ = true;		// Start downcycle
 		}
 
-		if (reverse_animation_) {
-			animation_decrementCycle();
-		}
-		else {
-			animation_incrementCycle();
-		}
+		animation_updateCycle(0, num_colors_);
 	}
 
 	/**
@@ -574,7 +533,7 @@ namespace PixelMaestro {
 
 	/**
 		Creates a static effect by blending each Pixel between varying levels of gray.
-		WARNING: THIS EFFECT MODIFIES THE SET COLOR ARRAY.
+		WARNING: THIS EFFECT MODIFIES THE COLOR ARRAY.
 
 		Modes: STATIC
 	*/
@@ -582,6 +541,31 @@ namespace PixelMaestro {
 		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
 			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (0.95) ) ));
 			setOne(pixel, &colors_[pixel]);
+		}
+	}
+
+	/**
+		Updates the current cycle.
+		If reverse_animation_ is true, this will automatically reverse the animation.
+		@param min The minimum value of the cycle.
+		@param max The maximum value of the cycle.
+	*/
+	void Section::animation_updateCycle(unsigned int min, unsigned int max) {
+		// Only continue if the Pixels are finished cycling through their steps.
+		if ((pixels_[0].getStepCount() == 0) && (*current_time_ - cycle_end_ >= delay_)) {
+			cycle_end_ = *current_time_;
+			if (reverse_animation_) {
+				cycle_index_--;
+				if ((unsigned int)(cycle_index_ + 1) == max) {	// I know, buffer overflows are ugly, but in this case it works.
+					cycle_index_ = max - 1;
+				}
+			}
+			else {
+				cycle_index_++;
+				if (cycle_index_ >= max) {
+					cycle_index_ = min;
+				}
+			}
 		}
 	}
 
@@ -597,11 +581,6 @@ namespace PixelMaestro {
 			}
 		}
 
-		if (reverse_animation_) {
-			animation_decrementCycle();
-		}
-		else {
-			animation_incrementCycle();
-		}
+		animation_updateCycle(0, num_colors_);
 	}
 }

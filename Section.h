@@ -48,8 +48,23 @@ namespace PixelMaestro {
 				The number of Pixels in this Section is determined by rows * columns.
 			*/
 			struct Layout {
+				/// The number of rows in the Section.
 				unsigned short rows;
+				/// The number of columns in the Section.
 				unsigned short columns;
+			};
+
+			/**
+				Defines a pattern displayed in the Section.
+				Patterns are encoded in an unsigned int corresponding to a single row of Pixels.
+			*/
+			struct Pattern {
+				/// The pattern to display when the PATTERN animation is active. Stored as an array of unsigned shorts where each element corresponds to a row.
+				unsigned int *pattern;
+				/// The number of rows that make up a single frame.
+				unsigned short height;
+				/// The number of frames that make up the Pattern.
+				unsigned short frames;
 			};
 
 			Section();
@@ -71,7 +86,7 @@ namespace PixelMaestro {
 			void setOverlay(Overlay overlay);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
-			void setPattern(unsigned int *pattern, unsigned short patternRows);
+			void setPattern(unsigned int *pattern, unsigned short patternRows, unsigned short numFrames);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
 			void setUpdateSpeed(unsigned char speed, unsigned char delay = 0);
 			void toggleFade();
@@ -82,26 +97,23 @@ namespace PixelMaestro {
 			Colors::RGB *colors_;			/// Array of colors used in the Section.
 			unsigned long *current_time_;	/// The current program time. Used to determine when to update the Section.
 			unsigned long cycle_end_;		/// The end time of the last cycle. Used to determine when to run the next cycle.
-			long cycle_index_ = 0;			///	The current cycle index.
+			unsigned short cycle_index_ = 0;			///	The current cycle index.
 			unsigned char delay_ = 0;		/// Any delay between cycles.
-			bool fade_ = true;				/// Whether to fade between cycles.
+			bool fade_ = true;				/// Whether to fade between cycles. Defaults to true.
 			unsigned long last_time_ = 0;	/// The last time the Section was updated. Note that this is different than cycle_end_.
 			Layout layout_;					/// The Pixel layout of the array.
 			Overlay overlay_;				/// Section overlaying the current section (if applicable);
+			Pattern pattern_;				/// The layout of a pattern used in the PATTERN animation.
 			Pixel *pixels_;					/// Array of Pixels stored in the Section.
-			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The current Section animation. Defaults to SOLID.
+			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The active Section animation. Defaults to SOLID.
 			unsigned int num_colors_;		/// The number of colors in colors_.
-			unsigned int *pattern_;		/// The pattern to display when the PATTERN animation is active. Stored as an array of unsigned shorts where each element corresponds to a row.
-			unsigned short num_pattern_rows_ = 0;	/// The number of rows in pattern_.
-			bool reverse_animation_ = false;		/// Whether to reverse the animation in color_animation_.
+			bool reverse_animation_ = false;		/// Whether to reverse the active animation.
 			unsigned char speed_ = 10;		/// The update speed of the Section (in ms). Defaults to 10.
 
 			// Color animation functions
 			void animation_blink();
 			void animation_cycle();
-			void animation_decrementCycle();
 			unsigned int animation_getColorIndex(unsigned int count);
-			void animation_incrementCycle();
 			void animation_merge();
 			void animation_pattern();
 			void animation_pong();
@@ -109,6 +121,7 @@ namespace PixelMaestro {
 			void animation_solid();
 			void animation_sparkle();
 			void animation_static();
+			void animation_updateCycle(unsigned int min, unsigned int max);
 			void animation_wave();
 	};
 }
