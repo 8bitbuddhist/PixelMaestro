@@ -3,7 +3,6 @@
 */
 
 #include "Colors.h"
-#include <math.h>
 #include <stdlib.h>
 
 namespace PixelMaestro {

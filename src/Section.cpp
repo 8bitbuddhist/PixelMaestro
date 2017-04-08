@@ -4,7 +4,6 @@
 */
 
 #include <cmath>
-#include <limits.h>
 #include <stdlib.h>
 #include "Colors.h"
 #include "Pixel.h"
