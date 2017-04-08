@@ -556,7 +556,7 @@ namespace PixelMaestro {
 			cycle_end_ = *current_time_;
 			if (reverse_animation_) {
 				cycle_index_--;
-				if ((unsigned int)(cycle_index_ + 1) == max) {	// I know, buffer overflows are ugly, but in this case it works.
+				if ((cycle_index_ + 1) == 0) {	// I know, buffer overflows are ugly, but in this case it works.
 					cycle_index_ = max - 1;
 				}
 			}

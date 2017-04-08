@@ -96,7 +96,7 @@ namespace PixelMaestro {
 			Colors::RGB *colors_;			/// Array of colors used in the Section.
 			unsigned long *current_time_;	/// The current program time. Used to determine when to update the Section.
 			unsigned long cycle_end_;		/// The end time of the last cycle. Used to determine when to run the next cycle.
-			unsigned short cycle_index_ = 0;			///	The current cycle index.
+			unsigned int cycle_index_ = 0;	///	The current cycle index.
 			unsigned char delay_ = 0;		/// Any delay between cycles.
 			bool fade_ = true;				/// Whether to fade between cycles. Defaults to true.
 			unsigned long last_time_ = 0;	/// The last time the Section was updated. Note that this is different than cycle_end_.

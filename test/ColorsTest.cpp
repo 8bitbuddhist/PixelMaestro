@@ -1,5 +1,5 @@
 #define CATCH_CONFIG_MAIN
-#include "../catch/include/catch.hpp"
+#include "../include/catch/include/catch.hpp"
 #include "ColorsTest.h"
 #include "../Colors.h"
 
