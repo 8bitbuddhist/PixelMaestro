@@ -285,7 +285,7 @@ namespace PixelMaestro {
 				1. The Section has never updated (last_time_ == 0).
 				2. The program's runtime minus the Section's last update time exceeds the update interval (current_time_ - last_time_ >= speed).
 		*/
-		if ((last_time_ == 0) || (*current_time_ - last_time_ >= speed_)) {
+		if ((last_time_ == 0) || (*current_time_ - last_time_ >= (unsigned long)speed_)) {
 
 			// Determine which animation to run, then run the associated method.
 			// Defaults to off.
@@ -551,7 +551,15 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_updateCycle(unsigned int min, unsigned int max) {
 		// Only continue if the Pixels are finished cycling through their steps.
-		if ((pixels_[0].getStepCount() == 0) && (*current_time_ - cycle_end_ >= delay_)) {
+		bool finished = true;
+		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
+			if (pixels_[pixel].getStepCount() != 0) {
+				finished = false;
+				break;
+			}
+		}
+
+		if (finished && (*current_time_ - cycle_end_ >= delay_)) {
 			cycle_end_ = *current_time_;
 			if (reverse_animation_) {
 				cycle_index_--;
