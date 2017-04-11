@@ -15,13 +15,12 @@ namespace PixelMaestro {
 			Colors::RGB *getColor();
 			Colors::RGB *getNextColor();
 			unsigned char getStepCount();
-			void setNextColor(Colors::RGB *nextColor, bool fade, unsigned char interval);
-			void update(bool fade);
+			void setNextColor(Colors::RGB *nextColor, bool fade, unsigned short cycleSpeed, unsigned short refreshRate);
+			void update();
 
 		private:
 			Colors::RGB current_color_ = Colors::BLACK;
 			Colors::RGB *next_color_ = &Colors::BLACK;
-			Colors::RGB *previous_color_ = &Colors::BLACK;
 			Colors::RGB step_ = {0, 0, 0};
 			unsigned char step_count_ = 0;
 	};

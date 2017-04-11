@@ -13,9 +13,9 @@ namespace PixelMaestro {
 		public:
 			Maestro(Section *sections, unsigned short numSections);
 			unsigned short getNumSections();
+			unsigned short getRefreshRate();
 			bool getRunning();
 			Section *getSection(unsigned short section);
-			unsigned char getUpdateSpeed();
 			void setSections(Section *sections, unsigned short numSections);
 			void toggleRunning();
 			void update(unsigned long currentTime);

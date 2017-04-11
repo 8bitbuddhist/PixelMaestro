@@ -41,64 +41,62 @@ namespace PixelMaestro {
 
 		@param color New color to store.
 		@param fade Whether to fade to the next color.
-		@param speed Time until next color applies.
+		@param cycleSpeed The amount of time to go from the current color to nextColor.
+		@param refreshRate The refresh rate of the section. Used to calculate color transitions (if fading).
 	*/
-	void Pixel::setNextColor(Colors::RGB *nextColor, bool fade, unsigned char speed) {
+	void Pixel::setNextColor(Colors::RGB *nextColor, bool fade, unsigned short cycleSpeed, unsigned short refreshRate) {
 		// Only trigger an update if the colors don't match.
 		if (nextColor != next_color_) {
-			previous_color_ = next_color_;
 			next_color_ = nextColor;
 
 			/*
 				If fading, calculate the steps between the current color and the next color.
-				This ensures all transitions take the same amount of time.
+				Use the refresh rate to determine the number of steps to take during the transition.
 			*/
-			if (fade && speed > 0) {
+			if (fade) {
+				float diff = cycleSpeed / (float)refreshRate;
 				step_ = {
-					(unsigned char)(abs(next_color_->r - current_color_.r) / speed),
-					(unsigned char)(abs(next_color_->g - current_color_.g) / speed),
-					(unsigned char)(abs(next_color_->b - current_color_.b) / speed)
+					(unsigned char)(abs(next_color_->r - current_color_.r) / diff),
+					(unsigned char)(abs(next_color_->g - current_color_.g) / diff),
+					(unsigned char)(abs(next_color_->b - current_color_.b) / diff)
 				};
-			}
 
-			step_count_ = speed;
+				step_count_ = diff;
+			}
 		}
 	}
 
 	/**
 		Main update routine.
 	*/
-	void Pixel::update(bool fade) {
+	void Pixel::update() {
 		/*
-			We measure the time between transitions using step_size_.
-			This ensures a consistent wait time regardless of whether we're fading.
+			If we're fading, increment by a step.
+			The existence of step_count_ implies setNextColor() was called with fade = true.
 		*/
 		if (step_count_ > 0) {
+			// Red
+			if (next_color_->r > current_color_.r) {
+				current_color_.r += step_.r;
+			}
+			else if (next_color_->r < current_color_.r) {
+				current_color_.r -= step_.r;
+			}
 
-			if (fade) {
-				// Red
-				if (next_color_->r > current_color_.r) {
-					current_color_.r += step_.r;
-				}
-				else if (next_color_->r < current_color_.r) {
-					current_color_.r -= step_.r;
-				}
+			// Green
+			if (next_color_->g > current_color_.g) {
+				current_color_.g += step_.g;
+			}
+			else if (next_color_->g < current_color_.g) {
+				current_color_.g -= step_.g;
+			}
 
-				// Green
-				if (next_color_->g > current_color_.g) {
-					current_color_.g += step_.g;
-				}
-				else if (next_color_->g < current_color_.g) {
-					current_color_.g -= step_.g;
-				}
-
-				// Blue
-				if (next_color_->b > current_color_.b) {
-					current_color_.b += step_.b;
-				}
-				else if (next_color_->b < current_color_.b) {
-					current_color_.b -= step_.b;
-				}
+			// Blue
+			if (next_color_->b > current_color_.b) {
+				current_color_.b += step_.b;
+			}
+			else if (next_color_->b < current_color_.b) {
+				current_color_.b -= step_.b;
 			}
 
 			step_count_--;

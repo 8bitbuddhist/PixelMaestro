@@ -37,30 +37,37 @@ namespace PixelMaestro {
 				/**
 					Toggles fading of a Section.
 				*/
-				TOGGLE_FADE					/// Toggles fading of a Section.
+				TOGGLE_FADE
 			};
 
 			/**
 				Options applied on a Transition to the Maestro.
 			*/
 			struct Opts {
-				unsigned char sectionNum;	/// Index of the Section to update.
-				int val1;				/// Multi-purpose storage.
-				Section::ColorAnimations animation;	/// Animation to set.
+				/// Index of the Section to update.
+				unsigned short sectionNum;
+				/// Multi-purpose variable.
+				int val1;
+				/// Animation to set.
+				Section::ColorAnimations animation;
 			};
 
 			/** Defines an action that a Maestro will perform at a specific time. */
 			struct Transition {
-				unsigned long time;	/// The program time when the action will be performed.
-				Actions action;		/// The action to perform.
-				Opts opts;			/// Options associated with the action.
-				bool ran = false;	/// Whether the Transition has already executed.
+				/// The program time when the action will be performed.
+				unsigned long time;
+				/// The action to perform.
+				Actions action;
+				/// Options associated with the action.
+				Opts opts;
+				/// Whether the Transition has already executed.
+				bool ran = false;
 			};
 
 			/** Default constructor */
 			Show(Maestro *maestro, Transition *transitions, unsigned char numTransitions);
 
-			int getCurrentIndex();
+			unsigned short getCurrentIndex();
 			Transition *getCurrentTransition();
 			void update(unsigned long currentTime);
 
@@ -68,12 +75,12 @@ namespace PixelMaestro {
 			virtual ~Show();
 
 		private:
-			unsigned char current_index_ = 0;	/// The index of the current Transition.
+			unsigned short current_index_ = 0;	/// The index of the current Transition.
 			Maestro *maestro_;					/// The Maestro that the Transitions apply to.
 			Transition *transitions_;			/// Array of Transitions.
 			unsigned char num_transitions_;		/// The number of Transitions in the array.
 
-			unsigned char getNextIndex();
+			unsigned short getNextIndex();
 			void runTransition(Transition *transition);
 	};
 }

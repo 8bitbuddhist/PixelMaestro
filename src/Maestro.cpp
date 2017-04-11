@@ -26,6 +26,25 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Returns the refresh rate based on the fastest running Section.
+
+		@return Refresh rate of the fastest Section.
+	*/
+	unsigned short Maestro::getRefreshRate() {
+		// Start off at the slowest possible speed
+		unsigned short minRefreshRate = 65535;
+
+		// The Maestro must be at least as fast as the fastest animation.
+		for (unsigned short section = 0; section < num_sections_; section++) {
+			if (sections_[section].getRefreshRate() < minRefreshRate) {
+				minRefreshRate = sections_[section].getRefreshRate();
+			}
+		}
+
+		return minRefreshRate;
+	}
+
+	/**
 		Returns whether the Maestro is running.
 
 		@return Whether the Maestro is running.
@@ -45,29 +64,10 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the update speed based on the fastest running Section.
+		Sets the Sections used in the Maestro.
 
-		@return Update speed of the fastest Section.
-	*/
-	unsigned char Maestro::getUpdateSpeed() {
-		// Start off at the slowest possible speed
-		unsigned char minSpeed = 255;
-
-		// The Maestro must be at least as fast as the fastest animation.
-		for (unsigned short section = 0; section < num_sections_; section++) {
-			if (sections_[section].getUpdateSpeed() < minSpeed) {
-				minSpeed = sections_[section].getUpdateSpeed();
-			}
-		}
-
-		return minSpeed;
-	}
-
-	/**
-		Sets the Grids used in the Maestro.
-
-		@param grids Array of Grids.
-		@param numGrids Number of Grids in the array.
+		@param sections Array of Sections.
+		@param numSections Number of Sections in the array.
 	*/
 	void Maestro::setSections(Section *sections, unsigned short numSections) {
 		sections_ = sections;
@@ -87,7 +87,7 @@ namespace PixelMaestro {
 		@param currentTime Program runtime.
 	*/
 	void Maestro::update(unsigned long currentTime) {
-		// Call each Grid and Line's update method.
+		// Call each Section's update method.
 		if (running_) {
 			for (unsigned short section = 0; section < num_sections_; section++) {
 				sections_[section].update(currentTime);

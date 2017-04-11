@@ -24,7 +24,7 @@ namespace PixelMaestro {
 
 		@return Index of the current Transition.
 	*/
-	int Show::getCurrentIndex() {
+	unsigned short Show::getCurrentIndex() {
 		return current_index_;
 	}
 
@@ -42,7 +42,7 @@ namespace PixelMaestro {
 
 		@return Index of the next Transition.
 	*/
-	unsigned char Show::getNextIndex() {
+	unsigned short Show::getNextIndex() {
 		// Get the next index. If we've exceeded the size of the array, start over from 0
 		if (current_index_ + 1 >= num_transitions_) {
 			return 0;
@@ -77,7 +77,7 @@ namespace PixelMaestro {
 		switch (transition->action) {
 			case Actions::SET_UPDATE_SPEED:
 				// Change the update speed of a Section to val1.
-				maestro_->getSection(opts.sectionNum)->setUpdateSpeed(transition->opts.val1);
+				maestro_->getSection(opts.sectionNum)->setCycleSpeed(transition->opts.val1);
 				break;
 			case Actions::SET_COLOR_ANIMATION:
 				// Change the color animation of a Section.

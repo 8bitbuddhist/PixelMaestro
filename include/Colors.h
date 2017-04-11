@@ -12,9 +12,12 @@ namespace PixelMaestro {
 		public:
 			/// Stores an RGB definition of a color.
 			struct RGB {
-				unsigned char r;	/// The red value of the color.
-				unsigned char g;	/// The green value of the color.
-				unsigned char b;	/// The blue value of the color.
+				/// The color's red value.
+				unsigned char r;
+				/// The color's green value.
+				unsigned char g;
+				/// The color's blue value.
+				unsigned char b;
 
 				void operator=(RGB colorTwo) {
 					r = colorTwo.r;
@@ -53,14 +56,14 @@ namespace PixelMaestro {
 				ALPHA_BLENDING	/// Overlays Color 2 on top of Color 1 with a specified blend percentage.
 			};
 
-			// Basic color set
+			// Basic color set.
 			static RGB RED;
 			static RGB GREEN;
 			static RGB BLUE;
 			static RGB WHITE;
 			static RGB BLACK;
 
-			// Extended color set
+			// Extended color set.
 			static RGB ORANGE;
 			static RGB YELLOW;
 			static RGB CHARTREUSE;
@@ -71,6 +74,8 @@ namespace PixelMaestro {
 			static RGB MAGENTA;
 			static RGB ROSE;
 			static RGB INDIGO;
+
+			// Sample color arrays.
 			static RGB COLORWHEEL[];
 			static RGB RAINBOW[];
 
