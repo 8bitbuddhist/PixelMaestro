@@ -89,7 +89,7 @@ namespace PixelMaestro {
 			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false);
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
-			void setCycleSpeed(unsigned short speed);
+			void setCycleSpeed(unsigned short speed, unsigned short pause = 0);
 			void setOverlay(Overlay overlay);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
@@ -105,6 +105,7 @@ namespace PixelMaestro {
 			Colors::RGB *colors_;				/// Array of colors used in animations.
 			unsigned int cycle_index_ = 0;		///	The current cycle index.
 			unsigned short cycle_speed_ = 100;	/// The time between animation cycles in milliseconds.
+			unsigned short pause_ = 0;			/// The amount of time the Section will wait in milliseconds before starting an animation cycle.
 			bool fade_ = true;					/// Whether to fade between cycles.
 			unsigned long last_cycle_ = 0;		/// The time since the last animation cycle change.
 			unsigned long last_refresh_ = 0;	/// The time since the Pixels were last refreshed.

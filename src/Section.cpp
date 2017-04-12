@@ -123,7 +123,7 @@ namespace PixelMaestro {
 	*/
 	void Section::setAll(Colors::RGB *color) {
 		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			setOne(pixel, color);
+			this->setOne(pixel, color);
 		}
 	}
 
@@ -183,8 +183,9 @@ namespace PixelMaestro {
 
 		@param cycleSpeed Speed between animation cycles.
 	*/
-	void Section::setCycleSpeed(unsigned short cycleSpeed) {
+	void Section::setCycleSpeed(unsigned short cycleSpeed, unsigned short pause) {
 		cycle_speed_ = cycleSpeed;
+		pause_ = pause;
 	}
 
 	/**
@@ -194,7 +195,12 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
-		this->getPixel(pixel)->setNextColor(color, fade_, cycle_speed_, refresh_rate_);
+		if (pause_ > 0) {
+			this->getPixel(pixel)->setNextColor(color, fade_, cycle_speed_ - pause_, refresh_rate_);
+		}
+		else {
+			this->getPixel(pixel)->setNextColor(color, fade_, cycle_speed_, refresh_rate_);
+		}
 	}
 
 	/**
@@ -205,7 +211,7 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setOne(unsigned short row, unsigned short column, Colors::RGB *color) {
-		this->getPixel(this->getPixelIndex(row, column))->setNextColor(color, fade_, cycle_speed_, refresh_rate_);
+		this->setOne(this->getPixelIndex(row, column), color);
 	}
 
 	/**
