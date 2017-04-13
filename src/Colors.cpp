@@ -7,26 +7,26 @@
 
 namespace PixelMaestro {
 	// Simple color set
-	Colors::RGB Colors::RED = {255, 0, 0};
-	Colors::RGB Colors::GREEN = {0, 255, 0};
-	Colors::RGB Colors::BLUE = {0, 0, 255};
-	Colors::RGB Colors::WHITE = {255, 255, 255};
-	Colors::RGB Colors::BLACK = {0, 0, 0};
+	Colors::RGB Colors::RED 	= {255, 0, 0};
+	Colors::RGB Colors::GREEN 	= {0, 255, 0};
+	Colors::RGB Colors::BLUE 	= {0, 0, 255};
+	Colors::RGB Colors::WHITE 	= {255, 255, 255};
+	Colors::RGB Colors::BLACK 	= {0, 0, 0};
 
 	// Extended color set
-	Colors::RGB Colors::ORANGE = {255, 128, 0};
-	Colors::RGB Colors::YELLOW = {255, 255, 0};
-	Colors::RGB Colors::CHARTREUSE = {128, 255, 0};
-	Colors::RGB Colors::SPRING = {0, 255, 128};
-	Colors::RGB Colors::CYAN = {0, 255, 255};
-	Colors::RGB Colors::AZURE = {0, 128, 255};
-	Colors::RGB Colors::VIOLET = {143, 0, 255};
-	Colors::RGB Colors::MAGENTA = {255, 0, 255};
-	Colors::RGB Colors::ROSE = {255, 0, 128};
-	Colors::RGB Colors::INDIGO = {180, 0, 130};
+	Colors::RGB Colors::ORANGE 		= {255, 128, 0};
+	Colors::RGB Colors::YELLOW 		= {255, 255, 0};
+	Colors::RGB Colors::CHARTREUSE	= {128, 255, 0};
+	Colors::RGB Colors::SPRING 		= {0, 255, 128};
+	Colors::RGB Colors::CYAN 		= {0, 255, 255};
+	Colors::RGB Colors::AZURE 		= {0, 128, 255};
+	Colors::RGB Colors::VIOLET 		= {143, 0, 255};
+	Colors::RGB Colors::MAGENTA 	= {255, 0, 255};
+	Colors::RGB Colors::ROSE 		= {255, 0, 128};
+	Colors::RGB Colors::INDIGO 		= {180, 0, 130};
 
 	// Color collections
-	Colors::RGB Colors::COLORWHEEL[] = {
+	Colors::RGB Colors::COLORWHEEL[12] = {
 		Colors::RED,
 		Colors::ORANGE,
 		Colors::YELLOW,
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 		Colors::MAGENTA,
 		Colors::ROSE
 	};
-	Colors::RGB Colors::RAINBOW[] = {
+	Colors::RGB Colors::RAINBOW[7] = {
 		Colors::RED,
 		Colors::ORANGE,
 		Colors::YELLOW,
@@ -59,51 +59,46 @@ namespace PixelMaestro {
 		@param val The initial value.
 	*/
 	Colors::RGB Colors::HSVtoRGB(unsigned int hue, unsigned int sat, unsigned int val){
-		unsigned char r,g,b;
-		unsigned int H_accent = hue/60;
+		Colors::RGB newColor;
+		unsigned int accent = hue / 60;
 		unsigned int bottom = ((255 - sat) * val)>>8;
 		unsigned int top = val;
-		unsigned char rising  = ((top-bottom)  *(hue%60   )  )  /  60  +  bottom;
-		unsigned char falling = ((top-bottom)  *(60-hue%60)  )  /  60  +  bottom;
+		unsigned char rising  = ((top - bottom) * (hue % 60)) / 60 + bottom;
+		unsigned char falling = ((top - bottom) * (60 - hue % 60)) / 60 + bottom;
 
-		switch(H_accent) {
-		case 0:
-			r = top;
-			g = rising;
-			b = bottom;
-			break;
-
-		case 1:
-			r = falling;
-			g = top;
-			b = bottom;
-			break;
-
-		case 2:
-			r = bottom;
-			g = top;
-			b = rising;
-			break;
-
-		case 3:
-			r = bottom;
-			g = falling;
-			b = top;
-			break;
-
-		case 4:
-			r = rising;
-			g = bottom;
-			b = top;
-			break;
-
-		case 5:
-			r = top;
-			g = bottom;
-			b = falling;
-			break;
+		switch(accent) {
+			case 0:
+				newColor.r = top;
+				newColor.g = rising;
+				newColor.b = bottom;
+				break;
+			case 1:
+				newColor.r = falling;
+				newColor.g = top;
+				newColor.b = bottom;
+				break;
+			case 2:
+				newColor.r = bottom;
+				newColor.g = top;
+				newColor.b = rising;
+				break;
+			case 3:
+				newColor.r = bottom;
+				newColor.g = falling;
+				newColor.b = top;
+				break;
+			case 4:
+				newColor.r = rising;
+				newColor.g = bottom;
+				newColor.b = top;
+				break;
+			case 5:
+				newColor.r = top;
+				newColor.g = bottom;
+				newColor.b = falling;
+				break;
 		}
-		return Colors::RGB {r, g, b};
+		return newColor;
 	};
 
 	/**
@@ -137,12 +132,14 @@ namespace PixelMaestro {
 			numColors /= 2;
 		}
 
+		// Calculate the distance between each color.
 		signed short step[] = {
 			(signed short)((targetColor.r - baseColor.r) / (float)numColors),
 			(signed short)((targetColor.g - baseColor.g) / (float)numColors),
 			(signed short)((targetColor.b - baseColor.b) / (float)numColors)
 		};
 
+		// Apply the step distance to each index of the array.
 		for (unsigned int i = 0; i < numColors; i++) {
 			newArray[i].r =	baseColor.r + (step[0] * i);
 			newArray[i].g = baseColor.g + (step[1] * i);
@@ -150,11 +147,12 @@ namespace PixelMaestro {
 		}
 
 		if (reverse) {
-			// Handle the middle Pixel
+			// Handle the middle color.
 			newArray[numColors].r = baseColor.r + (step[0] * numColors);
 			newArray[numColors].g = baseColor.g + (step[1] * numColors);
 			newArray[numColors].b = baseColor.b + (step[2] * numColors);
 
+			// Repeat the first half of the array in reverse for each remaining color.
 			for (unsigned int i = numColors + 1; i < (numColors * 2); i++) {
 				newArray[i].r = newArray[numColors - (i - numColors)].r;
 				newArray[i].g = newArray[numColors - (i - numColors)].g;
