@@ -66,7 +66,7 @@ namespace PixelMaestro {
 					The pattern to display when the PATTERN animation is active.
 					Stored as an array of unsigned ints where each element corresponds to a row.
 				*/
-				unsigned int *pattern;
+				unsigned long *pattern;
 				/// The number of rows in a single frame.
 				unsigned short height;
 				/// The number of frames in the Pattern.
@@ -90,10 +90,10 @@ namespace PixelMaestro {
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
 			void setCycleSpeed(unsigned short speed, unsigned short pause = 0);
-			void setOverlay(Overlay overlay);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
-			void setPattern(unsigned int *pattern, unsigned short patternRows, unsigned short numFrames);
+			void setOverlay(Section *section, Colors::MixMode mixMode, float alpha);
+			void setPattern(unsigned long *pattern, unsigned short patternRows, unsigned short numFrames);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
 			void setRefreshRate(unsigned short refreshRate);
 			void toggleFade();

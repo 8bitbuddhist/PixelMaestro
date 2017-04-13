@@ -218,22 +218,28 @@ namespace PixelMaestro {
 		Overlays another  Section on top of the current Section.
 		You can retrieve the blended output by using getPixelColor() on the base Section.
 
-		@param overlay Section to overlay.
+		@param section The Section to overlay.
+		@param mixMode The method for blending the overlaid Section.
+		@param alpha The amount of blending to perform.
 	*/
-	void Section::setOverlay(Overlay overlay) {
-        overlay_ = overlay;
+	void Section::setOverlay(Section *section, Colors::MixMode mixMode, float alpha) {
+        overlay_ = {
+			section,
+			mixMode,
+			alpha
+        };
 	}
 
 	/**
 		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
-		A pattern consists of several unsigned shorts, and Pixels are activated based on which bits are active.
+		A pattern consists of several integer values, and Pixels are activated based on which bits are active.
 		A single short corresponds to a row in the Section.
 
 		@param pattern Pointer to the pattern array.
 		@param patternRows Length of the pattern array (e.g. the number of rows in the pattern).
 		@param numFrames Number of frames in the pattern.
 	*/
-	void Section::setPattern(unsigned int *pattern, unsigned short patternRows, unsigned short numFrames) {
+	void Section::setPattern(unsigned long *pattern, unsigned short patternRows, unsigned short numFrames) {
 		pattern_ = {
 			pattern,
 			patternRows,
@@ -285,6 +291,11 @@ namespace PixelMaestro {
 		@param currentTime Program runtime.
 	*/
 	void Section::update(unsigned long currentTime) {
+
+		// If this Section has an Overlay, update it.
+		if (overlay_.section != nullptr) {
+			overlay_.section->update(currentTime);
+		}
 
 		if (currentTime - last_refresh_ >= (unsigned long)refresh_rate_) {
 
@@ -467,7 +478,7 @@ namespace PixelMaestro {
 						We use bitmasking to store the indices of active Pixels in each of the pattern's elements.
 						If the bit is set, turn on the Pixel, otherwise, set it to black.
 					*/
-					if (pattern_.pattern[(pattern_.height * cycle_index_) + row] & (unsigned int)pow(2, column)) {
+					if (pattern_.pattern[(pattern_.height * cycle_index_) + row] & (unsigned long)pow(2, column)) {
 						setOne(row, column, &colors_[animation_getColorIndex(column)]);
 					}
 					else {
