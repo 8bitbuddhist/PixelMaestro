@@ -193,6 +193,13 @@ namespace PixelMaestro {
 		Colors::RGB mixedColor;
 
 		switch (mode) {
+			case MixMode::OVERLAY:
+			{
+				mixedColor.r = colorOne->r * (float)(colorTwo->r / (float)255);
+				mixedColor.g = colorOne->g * (float)(colorTwo->g / (float)255);
+				mixedColor.b = colorOne->b * (float)(colorTwo->b / (float)255);
+				break;
+			}
 			case MixMode::ALPHA_BLENDING:
 			{
 				mixedColor.r = (alpha * colorTwo->r) + ((1 - alpha) * colorOne->r);

@@ -53,7 +53,8 @@ namespace PixelMaestro {
 			/// Determines the blending algorithm used when mixing two colors.
 			enum MixMode {
 				NORMAL,			/// Simple 50/50 blending.
-				ALPHA_BLENDING	/// Overlays color 2 on top of color 1 with a specified blend percentage.
+				ALPHA_BLENDING,	/// Overlays color 2 on top of color 1 with a specified blend percentage.
+				OVERLAY			/// Multiply the base color by the overlay color.
 			};
 
 			// Basic color set.
