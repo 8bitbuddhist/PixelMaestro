@@ -1,34 +1,38 @@
 #include "../include/catch/include/catch.hpp"
 #include "PixelTest.h"
-#include "../Pixel.h"
-#include "../Colors.h"
+#include "../include/Pixel.h"
+#include "../include/Colors.h"
 
 using namespace PixelMaestro;
 
 TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
     Pixel pixel;
-    unsigned char interval = 10;
+    unsigned short cycleSpeed = 100;
+    unsigned short refreshRate = 10;
     Colors::RGB color = Colors::RED;
     bool fade = true;
 
     // Change to red, allow fading, finish a transition every 10 ms
-    pixel.setNextColor(&color, fade, interval);
+    pixel.setNextColor(&color, fade, cycleSpeed, refreshRate);
 
     SECTION("Set a new color.") {
         REQUIRE(*pixel.getNextColor() == Colors::RED);
     }
 
-    SECTION("Get the step count. It should equal the interval we set in the previous section.") {
-        REQUIRE(pixel.getStepCount() == interval);
+    // Calculate the diff between the refresh and cycle rates
+    unsigned short diff = (unsigned short)(cycleSpeed / (float)refreshRate);
+
+    SECTION("Get the step count. It should equal the cycle speed and refresh rate we set in the previous section.") {
+        REQUIRE(pixel.getStepCount() == diff);
     }
 
     // Update the Pixel
-    pixel.update(fade);
+    pixel.update();
 
     SECTION("Update and check the current color.") {
         Colors::RGB currentColor = *pixel.getColor();
-        REQUIRE(currentColor.r == (color.r > 0 ? color.r / interval : 0));
-        REQUIRE(currentColor.g == (color.g > 0 ? color.g / interval : 0));
-        REQUIRE(currentColor.b == (color.b > 0 ? color.b / interval : 0));
+        REQUIRE(currentColor.r == (color.r > 0 ? color.r / diff : 0));
+        REQUIRE(currentColor.g == (color.g > 0 ? color.g / diff : 0));
+        REQUIRE(currentColor.b == (color.b > 0 ? color.b / diff : 0));
     }
 }

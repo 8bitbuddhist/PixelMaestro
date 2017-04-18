@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "../include/catch/include/catch.hpp"
+#include "../include/Colors.h"
 #include "ColorsTest.h"
-#include "../Colors.h"
 
 using namespace PixelMaestro;
 
