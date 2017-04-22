@@ -9,7 +9,9 @@ int main (int argc, char *argv[])
 	//window.set_default_size(200, 200);
 
 	PixelGridDrawingArea *pixelGridDrawingArea = new PixelGridDrawingArea(&window);
-	Glib::signal_timeout().connect( sigc::mem_fun(pixelGridDrawingArea, &PixelGridDrawingArea::update), pixelGridDrawingArea->getMaestro()->getRefreshRate());
+
+	// Refresh at 50Hz
+	Glib::signal_timeout().connect( sigc::mem_fun(pixelGridDrawingArea, &PixelGridDrawingArea::update), 20);
 
 	return app->run(window);
 }

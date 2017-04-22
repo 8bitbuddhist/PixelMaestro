@@ -39,7 +39,7 @@ class PixelGridDrawingArea : public Gtk::DrawingArea
         // Maestro variables
         Maestro* maestro_;
         const unsigned short NUM_ROWS_ = 15;
-        const unsigned short NUM_COLUMNS_ = 40;
+        const unsigned short NUM_COLUMNS_ = 50;
         const unsigned short NUM_SECTIONS_ = 1;
         const unsigned int NUM_PIXELS_ = NUM_ROWS_ * NUM_COLUMNS_;
 
@@ -47,6 +47,7 @@ class PixelGridDrawingArea : public Gtk::DrawingArea
         vector<Colors::RGB> colors_;
         vector<Pixel> pixels_;
         vector<Section> sections_;
+        vector<Colors::RGB> overlay_colors_;
 
         // Variables for storing temporary/volatile data
         Colors::RGB pixel_rgb_;
@@ -54,6 +55,9 @@ class PixelGridDrawingArea : public Gtk::DrawingArea
         FloatRGB RGBtoFloatRGB(Colors::RGB rgb);
         chrono::milliseconds runtime_;
         chrono::milliseconds start_time_;
+        vector<unsigned long> pattern_;
+
+        static unsigned long long binaryToInt(const char* binary, unsigned int numChars);
 };
 
 #endif // PIXELGRIDDRAWINGAREA_H
