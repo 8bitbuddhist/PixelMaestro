@@ -1,5 +1,5 @@
 #include <gtkmm.h>
-#include "../include/PixelGridDrawingArea.h"
+#include "../include/SimplePixelGridDrawingArea.h"
 
 int main (int argc, char *argv[])
 {
@@ -8,7 +8,7 @@ int main (int argc, char *argv[])
 	window.set_title("PixelMaestro");
 	//window.set_default_size(200, 200);
 
-	PixelGridDrawingArea *pixelGridDrawingArea = new PixelGridDrawingArea(&window);
+	SimplePixelGridDrawingArea *pixelGridDrawingArea = new SimplePixelGridDrawingArea(&window);
 
 	// Refresh at 50Hz
 	Glib::signal_timeout().connect( sigc::mem_fun(pixelGridDrawingArea, &PixelGridDrawingArea::update), 20);

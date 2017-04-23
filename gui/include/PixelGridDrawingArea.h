@@ -1,11 +1,12 @@
+/*
+	PixelGridDrawingArea.h - Abstract class for rendering Pixels to a screen.
+*/
+
 #include <chrono>
 #include "Colors.h"
-#include <gtkmm/box.h>
 #include <gtkmm/drawingarea.h>
 #include <gtkmm/window.h>
 #include "Maestro.h"
-#include "Pixel.h"
-#include <vector>
 
 #ifndef PIXELGRIDDRAWINGAREA_H
 #define PIXELGRIDDRAWINGAREA_H
@@ -16,48 +17,37 @@ using namespace std;
 class PixelGridDrawingArea : public Gtk::DrawingArea
 {
     public:
-        PixelGridDrawingArea(Gtk::Window* parentWindow);
+        PixelGridDrawingArea();
         Maestro* getMaestro();
         bool update();
 
     protected:
-        bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
-
-    private:
-        struct FloatRGB {
+        /// Stores a color as a Cairo-friendly float value.
+        struct FloatRGB
+        {
             double r;
             double g;
             double b;
         };
 
-        // Window/drawing area variables
-        Gtk::Box box_;
-        static const unsigned short RADIUS_ = 5;
-        static const unsigned short PAD_ = RADIUS_ * 3;
-        static const unsigned short OFFSET_ = RADIUS_ * 2;
-
-        // Maestro variables
-        Maestro* maestro_;
-        const unsigned short NUM_ROWS_ = 15;
-        const unsigned short NUM_COLUMNS_ = 50;
-        const unsigned short NUM_SECTIONS_ = 1;
-        const unsigned int NUM_PIXELS_ = NUM_ROWS_ * NUM_COLUMNS_;
-
-        // Collections
-        vector<Colors::RGB> colors_;
-        vector<Pixel> pixels_;
-        vector<Section> sections_;
-        vector<Colors::RGB> overlay_colors_;
-
-        // Variables for storing temporary/volatile data
+        /// Temporarily stores a Pixel's Colors::RGB value.
         Colors::RGB pixel_rgb_;
+        /// Temporarily stores a Pixel's FloatRGB value.
         FloatRGB float_rgb_;
-        FloatRGB RGBtoFloatRGB(Colors::RGB rgb);
+        /// Maestro controlling this grid.
+        Maestro* maestro_;
+        /// The drawing area's current runtime.
         chrono::milliseconds runtime_;
+        /// The drawing area's start time.
         chrono::milliseconds start_time_;
-        vector<unsigned long> pattern_;
 
-        static unsigned long long binaryToInt(const char* binary, unsigned int numChars);
+        /**
+            Re-draws the drawing area. This method must be overriden by the inheriting class.
+
+            @param cr Pointer to the Cairo context.
+        */
+        virtual bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override = 0;
+        FloatRGB RGBtoFloatRGB(Colors::RGB rgb);
 };
 
 #endif // PIXELGRIDDRAWINGAREA_H
