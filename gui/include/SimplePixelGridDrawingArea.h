@@ -45,9 +45,10 @@ private:
     vector<Pixel> pixels_;
     vector<Section> sections_;
     vector<Colors::RGB> overlay_colors_;
-    vector<unsigned long> pattern_;
+    vector<char> pattern_;
 
     static unsigned long long binaryToInt(const char* binary, unsigned int numChars);
+    void encodeFrame(bool *boolArray, unsigned char *charArray, unsigned short rows, unsigned short columns, unsigned short frames);
 };
 
 #endif // SIMPLEPIXELGRIDDRAWINGAREA_H

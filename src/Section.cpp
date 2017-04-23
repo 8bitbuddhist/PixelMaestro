@@ -232,18 +232,19 @@ namespace PixelMaestro {
 
 	/**
 		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
-		A pattern consists of several integer values, and Pixels are activated based on which bits are active.
-		A single short corresponds to a row in the Section.
+		A Pattern is an array of booleans.
 
 		@param pattern Pointer to the pattern array.
-		@param patternRows Length of the pattern array (e.g. the number of rows in the pattern).
-		@param numFrames Number of frames in the pattern.
+		@param rows Number of rows in the array.
+		@param columns Number of bools in each row.
+		@param frames Number of frames in the pattern.
 	*/
-	void Section::setPattern(unsigned long *pattern, unsigned short patternRows, unsigned short numFrames) {
+	void Section::setPattern(char *pattern, unsigned short rows, unsigned short columns, unsigned short frames) {
 		pattern_ = {
 			pattern,
-			patternRows,
-			numFrames
+			rows,
+			columns,
+			frames
 		};
 	}
 
@@ -466,24 +467,19 @@ namespace PixelMaestro {
 			return;
 		}
 
-		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short column = 0; column < layout_.columns; column++) {
-				// If the current row isn't in the pattern, set it to black.
-				if (row >= pattern_.height) {
-					setOne(row, column, &Colors::BLACK);
+		// Stores the beginning index of the active Frame.
+		unsigned int frameStart = (pattern_.rows * pattern_.columns) * cycle_index_;
+
+		// Stores the index of the current Pixel as we iterate through the Pattern.
+		unsigned int patternPixel = 0;
+		for (unsigned short row = 0; row < pattern_.rows; row++) {
+			for (unsigned short column = 0; column < pattern_.columns; column++) {
+				patternPixel = frameStart + ((row * pattern_.columns) + column);
+				if (pattern_.pattern[patternPixel] == 1) {
+					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
-					/*
-						Determine which Pixels to activate.
-						We use bitmasking to store the indices of active Pixels in each of the pattern's elements.
-						If the bit is set, turn on the Pixel, otherwise, set it to black.
-					*/
-					if (pattern_.pattern[(pattern_.height * cycle_index_) + row] & (unsigned long)pow(2, column)) {
-						setOne(row, column, &colors_[animation_getColorIndex(column)]);
-					}
-					else {
-						setOne(row, column, &Colors::BLACK);
-					}
+					setOne(row, column, &Colors::BLACK);
 				}
 			}
 		}
