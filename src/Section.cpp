@@ -232,14 +232,13 @@ namespace PixelMaestro {
 
 	/**
 		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
-		A Pattern is an array of booleans.
 
 		@param pattern Pointer to the pattern array.
 		@param rows Number of rows in the array.
 		@param columns Number of bools in each row.
 		@param frames Number of frames in the pattern.
 	*/
-	void Section::setPattern(char *pattern, unsigned short rows, unsigned short columns, unsigned short frames) {
+	void Section::setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames) {
 		pattern_ = {
 			pattern,
 			rows,
