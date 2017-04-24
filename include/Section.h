@@ -12,6 +12,12 @@ namespace PixelMaestro {
 	class Section {
 
 		public:
+			/// The orientation of the current animation. Does not affect animations that don't have a specific direction (e.g. BLINK).
+			enum AnimationOrientations {
+				HORIZONTAL,
+				VERTICAL
+			};
+
 			/// Set of animations usable by the Section.
 			enum ColorAnimations {
 				SOLID,			/// Activates each Pixel.
@@ -88,7 +94,7 @@ namespace PixelMaestro {
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);
-			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false);
+			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
 			void setCycleSpeed(unsigned short speed, unsigned short pause = 0);
@@ -104,6 +110,7 @@ namespace PixelMaestro {
 			void unsetOverlay();
 
 		private:
+			AnimationOrientations animation_orientation_ = AnimationOrientations(HORIZONTAL);
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The active Section animation. Defaults to SOLID.
 			Colors::RGB *colors_;				/// Array of colors used in animations.
 			unsigned int cycle_index_ = 0;		///	The current cycle index.
