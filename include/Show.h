@@ -23,20 +23,22 @@ namespace PixelMaestro {
 				/**
 					Sets the color animation of a Section.
 
-					gridAnimation/lineAnimation: The animation to set.
 					val1: Whether to reverse the animation.
-
 				*/
 				SET_COLOR_ANIMATION,
 				/**
+					Sets a new Pattern.
+
+					pattern: New Pattern to set.
+				*/
+				SET_PATTERN,
+				/**
 					Sets the update speed of a Section.
 
-					val1: Whether to reverse the animation.
+					val1: New update speed.
 				*/
 				SET_UPDATE_SPEED,
-				/**
-					Toggles fading of a Section.
-				*/
+				/// Toggles fading of a Section.
 				TOGGLE_FADE
 			};
 
@@ -44,12 +46,12 @@ namespace PixelMaestro {
 				Options applied on a Transition to the Maestro.
 			*/
 			struct Opts {
-				/// Index of the Section to update.
+				Section::ColorAnimations animation;
+				Section::Pattern pattern;
+				/// Index of the Section to modify.
 				unsigned short sectionNum;
 				/// Multi-purpose variable.
 				int val1;
-				/// Animation to set.
-				Section::ColorAnimations animation;
 			};
 
 			/** Defines an action that a Maestro will perform at a specific time. */

@@ -75,13 +75,16 @@ namespace PixelMaestro {
 
 		// Determine how to proceed based on the Transition action.
 		switch (transition->action) {
-			case Actions::SET_UPDATE_SPEED:
-				// Change the update speed of a Section to val1.
-				maestro_->getSection(opts.sectionNum)->setCycleSpeed(transition->opts.val1);
-				break;
 			case Actions::SET_COLOR_ANIMATION:
 				// Change the color animation of a Section.
 				maestro_->getSection(opts.sectionNum)->setColorAnimation(opts.animation, opts.val1);
+				break;
+			case Actions::SET_PATTERN:
+				maestro_->getSection(opts.sectionNum)->setPattern(opts.pattern);
+				break;
+			case Actions::SET_UPDATE_SPEED:
+				// Change the update speed of a Section to val1.
+				maestro_->getSection(opts.sectionNum)->setCycleSpeed(transition->opts.val1);
 				break;
 			case Actions::TOGGLE_FADE:
 				// Toggle fading on a Section.
