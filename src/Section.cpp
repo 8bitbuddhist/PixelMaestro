@@ -248,6 +248,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
+
+		@param pattern New Pattern.
+	*/
+	void Section::setPattern(Pattern pattern) {
+		pattern_ = pattern;
+	}
+
+	/**
 		Sets the refresh rate of the Section (how quickly the Pixels update).
 
 		@param refreshRate The rate in milliseconds that the Section will update.
