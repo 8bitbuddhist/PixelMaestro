@@ -1,5 +1,4 @@
 #include <cairomm/context.h>
-#include <chrono>
 #include <cmath>
 #include "../../include/Colors.h"
 #include <gtkmm/box.h>
@@ -13,51 +12,28 @@ using namespace std;
 using namespace std::chrono;
 
 SimplePixelGridDrawingArea::SimplePixelGridDrawingArea(Gtk::Window* parentWindow) {
-	// Initialize collections
-	colors_.resize(NUM_COLUMNS_);
-	//pixels_.resize(NUM_PIXELS_);
-	//sections_.resize(NUM_SECTIONS_);
-	pixels_.resize(NUM_PIXELS_ * 2);
-	sections_.resize(NUM_SECTIONS_ * 2);
+    this->build_grid(parentWindow);
+}
 
-	// Initialize Section
-	/*
-	sections_[0].setColors(Colors::COLORWHEEL, 12);
-	sections_[0].setPixels(&pixels_[0], NUM_ROWS_, NUM_COLUMNS_);
-	sections_[0].setColorAnimation(Section::ColorAnimations::MERGE);
-	sections_[0].setCycleSpeed(500);
-	*/
+SimplePixelGridDrawingArea::SimplePixelGridDrawingArea(Gtk::Window* parentWindow, unsigned short rows, unsigned short columns) {
+    num_rows_ = rows;
+    num_columns_ = columns;
 
-    //Colors::generateScalingColorArray(&colors_[0], Colors::AZURE, Colors::RED, NUM_COLUMNS_, true);
-	//sections_[0].setColors(&colors_[0], NUM_COLUMNS_);
-	sections_[0].setColors(Colors::COLORWHEEL, 12);
-	sections_[0].setPixels(&pixels_[0], NUM_ROWS_, NUM_COLUMNS_);
-	sections_[0].setColorAnimation(Section::ColorAnimations::WAVE, true);
-	sections_[0].setCycleSpeed(200);
+    this->build_grid(parentWindow);
+}
 
-	// Handle overlay
-	overlay_colors_ = {Colors::WHITE};
-	sections_[1].setPixels(&pixels_[NUM_PIXELS_], NUM_ROWS_, NUM_COLUMNS_);
-	sections_[1].setColors(&overlay_colors_[0], 1);
-	sections_[1].setColorAnimation(Section::ColorAnimations::PATTERN);
-	sections_[1].setRefreshRate(1000);
-	sections_[1].setCycleSpeed(1000);
-	sections_[1].setPattern(pattern_, 14, 40, 1);
-
-	sections_[0].setOverlay(&sections_[1], Colors::MixMode::OVERLAY, 1.0);
-
-	// Initialize maestro
-	maestro_ = new Maestro(&sections_[0], NUM_SECTIONS_);
-
-	// Add the grid to the Window
+void SimplePixelGridDrawingArea::build_grid(Gtk::Window* parentWindow) {
+    // Add the grid to the Window
 	box_ = Gtk::Box(Gtk::Orientation::ORIENTATION_VERTICAL, 5);
 	box_.pack_start(*this, true, true, 0);
 	box_.show_all();
 	parentWindow->add(box_);
 
-	// Adjust window to fit all Pixels according to the size of the drawing area.
-	// There has to be a better way to do this.
-	parentWindow->set_default_size((NUM_COLUMNS_ * PAD_) + RADIUS_,(NUM_ROWS_ * PAD_) + RADIUS_);
+	/*
+        Adjust window to fit all Pixels according to the size of the drawing area.
+        There has to be a smarter way to do this.
+    */
+	parentWindow->set_default_size((num_columns_ * pad_) + radius_,(num_rows_ * pad_) + radius_);
 	parentWindow->set_resizable(false);
 }
 
@@ -78,7 +54,7 @@ bool SimplePixelGridDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr
                 pixel_rgb_ = maestro_->getSection(section)->getPixelColor(maestro_->getSection(section)->getPixelIndex(row, pixel));
                 float_rgb_ = RGBtoFloatRGB(pixel_rgb_);
                 if (pixel_rgb_ != Colors::BLACK) {
-                    cr->arc((double)(pixel * PAD_) + OFFSET_, (double)(row * PAD_) + OFFSET_, (double)RADIUS_, 0.0, (double)(2 * M_PI));
+                    cr->arc((double)(pixel * pad_) + offset_, (double)(row * pad_) + offset_, (double)radius_, 0.0, (double)(2 * M_PI));
                     cr->set_source_rgb(float_rgb_.r, float_rgb_.g, float_rgb_.b);
                     cr->fill();
                 }

@@ -1,5 +1,5 @@
 /*
-    SimplePixelGridDrawingArea.h - Renders the Maestro to a single grid of Pixels.
+    SimplePixelGridDrawingArea.h - Renders the Maestro to a plain 2D Pixel grid.
 */
 
 #include "Colors.h"
@@ -15,56 +15,32 @@
 using namespace PixelMaestro;
 using namespace std;
 
-class SimplePixelGridDrawingArea : public PixelGridDrawingArea
-{
-public:
-    SimplePixelGridDrawingArea(Gtk::Window* parentWindow);
+class SimplePixelGridDrawingArea : public PixelGridDrawingArea {
+    public:
+        SimplePixelGridDrawingArea(Gtk::Window* parentWindow);
+        SimplePixelGridDrawingArea(Gtk::Window* parentWindow, unsigned short rows, unsigned short columns);
 
-protected:
-    bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
+    protected:
+        // Window/drawing area variables
+        Gtk::Box box_;
+        static const unsigned short radius_ = 5;
+        static const unsigned short pad_ = radius_ * 3;
+        static const unsigned short offset_ = radius_ * 2;
 
-private:
-    // Window/drawing area variables
-    Gtk::Box box_;
-    static const unsigned short RADIUS_ = 5;
-    static const unsigned short PAD_ = RADIUS_ * 3;
-    static const unsigned short OFFSET_ = RADIUS_ * 2;
+        // Maestro/grid variables
+        unsigned short num_rows_ = 15;
+        unsigned short num_columns_ = 50;
+        unsigned short num_sections_ = 1;
+        unsigned int num_pixels_ = num_rows_ * num_columns_;
 
-    // Maestro variables
-    /// The number of rows in the drawing area.
-    const unsigned short NUM_ROWS_ = 15;
-    /// The number of columns in the drawing area.
-    const unsigned short NUM_COLUMNS_ = 50;
-    /// The number of Sections in the drawing area.
-    const unsigned short NUM_SECTIONS_ = 1;
-    /// The number of Pixels in the drawing area (equivalent to NUM_ROWS_ * NUM_COLUMNS_).
-    const unsigned int NUM_PIXELS_ = NUM_ROWS_ * NUM_COLUMNS_;
+        vector<Colors::RGB> colors_;
+        vector<Pixel> pixels_;
+        vector<Section> sections_;
 
-    // Collections
-    vector<Colors::RGB> colors_;
-    vector<Pixel> pixels_;
-    vector<Section> sections_;
-    vector<Colors::RGB> overlay_colors_;
-    bool pattern_[560] = {
+        bool on_draw(const Cairo::RefPtr<Cairo::Context>& cr) override;
 
-		// Pixel
-		1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-		1, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-
-		// Maestro
-		1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0,
-		1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1,
-		1, 0, 1, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1,
-		1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 0, 1,
-		1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1,
-		1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1,
-		1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 1, 0
-	};
+    private:
+        void build_grid(Gtk::Window* parentWindow);
 };
 
 #endif // SIMPLEPIXELGRIDDRAWINGAREA_H
