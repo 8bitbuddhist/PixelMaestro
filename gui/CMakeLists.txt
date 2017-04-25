@@ -8,8 +8,8 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Bring in local header and source files
-include_directories("include" "../include")
-file(GLOB SOURCES "src/*.cpp" "../src/*.cpp")
+include_directories("include" "include/drawingareas" "../include")
+file(GLOB SOURCES "src/*.cpp" "src/drawingareas/*.cpp" "../src/*.cpp")
 
 # Find and include GTK
 find_package(PkgConfig REQUIRED)
