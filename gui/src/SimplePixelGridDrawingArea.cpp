@@ -1,10 +1,10 @@
 #include <cairomm/context.h>
 #include <cmath>
-#include "../../include/Colors.h"
+#include "../include/Colors.h"
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
-#include "../../include/Maestro.h"
-#include "../../include/drawingareas/SimplePixelGridDrawingArea.h"
+#include "../include/Maestro.h"
+#include "../include/SimplePixelGridDrawingArea.h"
 #include <vector>
 
 using namespace PixelMaestro;
