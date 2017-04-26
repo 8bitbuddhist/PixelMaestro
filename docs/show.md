@@ -31,4 +31,4 @@ The `Opts` struct lets you define various parameters as part of the Transition. 
 * unsigned short getCurrentIndex(): Returns the index of the next queued Transition.
 * Transition \*getCurrentTransition: Returns the next queued Transition.
 
-[Home](Readme.md)
+[Home](README.md)

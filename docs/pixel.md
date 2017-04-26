@@ -19,4 +19,4 @@ To update the Pixel, simply call the Pixel's `update()` method. This triggers a 
 * Pixel::setNextColor(Colors::RGB \*nextColor, bool fade, unsigned char interval): Sets the next color for the Pixel. On update, the Pixel will switch from its current color to the target color. Fade specifies whether the transition is instantaneous or smoothed out over time, while interval specifies how long the transition will take.
 * Pixel::update(bool fade): Calculates and applies the Pixel's next color. If fade is true, this value will be some intermediate color based on your specified transition time.
 
-[Home](Readme.md)
+[Home](README.md)

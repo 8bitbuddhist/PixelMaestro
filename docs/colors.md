@@ -21,4 +21,4 @@ The MixMode determines the type of blending performed:
 PixelMaestro provides several pre-defined colors out of the box. These include primary colors (red, green, blue), as well as some secondary and tertiary colors.
 There are also two sample color arrays: COLORWHEEL and RAINBOW.
 
-[Home](Readme.md)
+[Home](README.md)

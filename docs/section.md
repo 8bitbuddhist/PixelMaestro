@@ -104,4 +104,4 @@ section.update(runtime);
 * Section::setAll(Colors::RGB \*color): Sets all Pixels to the specified color.
 * Section::setOne(unsigned short row, unsigned short column, Colors::RGB *color): Sets the Pixel at the specified row and column number to the specified color.
 
-[Home](Readme.md)
+[Home](README.md)
