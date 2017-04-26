@@ -1,5 +1,5 @@
 /*
-    SimplePixelGridDrawingArea.h - Renders the Maestro to a plain 2D Pixel grid.
+    SimplePixelGridDrawingArea.h - Base class for rendering to a plain 2D grid.
 */
 
 #include "Colors.h"

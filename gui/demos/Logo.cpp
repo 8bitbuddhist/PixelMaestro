@@ -1,7 +1,7 @@
-#include "../../include/Colors.h"
+#include "../include/Colors.h"
 #include <gtkmm/window.h>
-#include "../../include/drawingareas/Logo.h"
-#include "../../include/Maestro.h"
+#include "../demos/Logo.h"
+#include "../include/Maestro.h"
 #include <vector>
 
 using namespace PixelMaestro;

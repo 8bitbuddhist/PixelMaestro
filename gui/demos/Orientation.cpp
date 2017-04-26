@@ -1,7 +1,7 @@
-#include "../../include/Colors.h"
+#include "../include/Colors.h"
 #include <gtkmm/window.h>
-#include "../../include/Maestro.h"
-#include "../../include/drawingareas/Orientation.h"
+#include "../include/Maestro.h"
+#include "../demos/Orientation.h"
 
 using namespace PixelMaestro;
 using namespace std;
