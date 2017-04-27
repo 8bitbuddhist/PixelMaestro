@@ -1,5 +1,6 @@
 #include <chrono>
 #include "PixelGridDrawingArea.h"
+#include "Maestro.h"
 
 using namespace PixelMaestro;
 using namespace std;
@@ -18,7 +19,7 @@ PixelGridDrawingArea::PixelGridDrawingArea() {
     @return Controlling Maestro.
 */
 Maestro* PixelGridDrawingArea::getMaestro() {
-    return maestro_;
+    return &maestro_;
 }
 
 
@@ -45,7 +46,7 @@ bool PixelGridDrawingArea::update() {
 	);
 
 	// Update maestro
-	maestro_->update(runtime_.count());
+	maestro_.update(runtime_.count());
 
 	this->queue_draw();
 

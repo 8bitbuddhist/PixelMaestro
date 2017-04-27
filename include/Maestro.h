@@ -10,8 +10,8 @@
 
 namespace PixelMaestro {
 	class Maestro {
+
 		public:
-			Maestro(Section *sections, unsigned short numSections);
 			unsigned short getNumSections();
 			unsigned short getRefreshRate();
 			bool getRunning();

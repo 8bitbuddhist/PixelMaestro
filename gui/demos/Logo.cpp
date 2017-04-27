@@ -40,5 +40,5 @@ Logo::Logo(Gtk::Window* parentWindow) : SimplePixelGridDrawingArea(parentWindow)
 	sections_[0].setOverlay(&sections_[1], Colors::MixMode::OVERLAY, 1.0);
 
 	// Initialize maestro
-	maestro_ = new Maestro(&sections_[0], num_sections_);
+	maestro_.setSections(&sections_[0], num_sections_);
 }

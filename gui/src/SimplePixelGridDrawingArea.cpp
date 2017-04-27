@@ -48,10 +48,10 @@ bool SimplePixelGridDrawingArea::on_draw(const Cairo::RefPtr<Cairo::Context>& cr
         We first draw a representation of a Pixel as a circle (or arc), then fill in the arc with the Pixel's color.
         PAD_, RADIUS_, and OFFSET_ determine the padding, size, and relative origin of each circle respectively.
     */
-    for (unsigned short section = 0; section < maestro_->getNumSections(); section++) {
-        for (unsigned short row = 0; row < maestro_->getSection(section)->getLayout()->rows; row++) {
-            for (unsigned short pixel = 0; pixel < maestro_->getSection(section)->getLayout()->columns; pixel++) {
-                pixel_rgb_ = maestro_->getSection(section)->getPixelColor(maestro_->getSection(section)->getPixelIndex(row, pixel));
+    for (unsigned short section = 0; section < maestro_.getNumSections(); section++) {
+        for (unsigned short row = 0; row < maestro_.getSection(section)->getLayout()->rows; row++) {
+            for (unsigned short pixel = 0; pixel < maestro_.getSection(section)->getLayout()->columns; pixel++) {
+                pixel_rgb_ = maestro_.getSection(section)->getPixelColor(maestro_.getSection(section)->getPixelIndex(row, pixel));
                 float_rgb_ = RGBtoFloatRGB(pixel_rgb_);
                 if (pixel_rgb_ != Colors::BLACK) {
                     cr->arc((double)(pixel * pad_) + offset_, (double)(row * pad_) + offset_, (double)radius_, 0.0, (double)(2 * M_PI));

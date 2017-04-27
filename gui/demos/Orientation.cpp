@@ -23,5 +23,5 @@ Orientation::Orientation(Gtk::Window* parentWindow) : SimplePixelGridDrawingArea
 	sections_[0].setCycleSpeed(100);
 
 	// Initialize maestro
-	maestro_ = new Maestro(&sections_[0], num_sections_);
+	maestro_.setSections(&sections_[0], num_sections_);
 }

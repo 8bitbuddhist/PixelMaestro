@@ -35,7 +35,7 @@ class PixelGridDrawingArea : public Gtk::DrawingArea
         /// Temporarily stores a Pixel's FloatRGB value.
         FloatRGB float_rgb_;
         /// Maestro controlling this grid.
-        Maestro* maestro_;
+        Maestro maestro_;
         /// The drawing area's current runtime.
         chrono::milliseconds runtime_;
         /// The drawing area's start time.
