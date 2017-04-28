@@ -13,7 +13,6 @@ namespace PixelMaestro {
 
 		public:
 			Colors::RGB *getColor();
-			Colors::RGB *getNextColor();
 			unsigned char getStepCount();
 			void setNextColor(Colors::RGB *nextColor, bool fade, unsigned short cycleSpeed, unsigned short refreshRate);
 			void update();

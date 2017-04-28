@@ -3,29 +3,12 @@
 	Requires Pixel and Colors classes.
 */
 
-#include <cmath>
 #include <stdlib.h>
 #include "Colors.h"
 #include "Pixel.h"
 #include "Section.h"
 
 namespace PixelMaestro {
-	/**
-		Default constructor.
-		Note that if you use the default constructor, you MUST use setPixels() to initialize the Pixel array.
-	*/
-    Section::Section() {}
-
-	/**
-		Constructor. A Section is a collection of Pixels organized into a logical grid.
-
-		@param pixels Pixel array.
-		@param rows Number of rows of Pixels.
-		@param columns Number of Pixels per row.
-	*/
-	Section::Section(Pixel *pixels, unsigned short rows, unsigned short columns) {
-        setPixels(pixels, rows, columns);
-	}
 
 	/**
 		Returns the current color animation.

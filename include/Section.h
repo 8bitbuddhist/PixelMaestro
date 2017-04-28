@@ -81,9 +81,6 @@ namespace PixelMaestro {
 				unsigned short frames;
 			};
 
-			Section();
-			Section(Pixel *pixels, unsigned short rows, unsigned short columns);
-
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
 			bool getFade();

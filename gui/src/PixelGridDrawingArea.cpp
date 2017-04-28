@@ -3,7 +3,6 @@
 #include "Maestro.h"
 
 using namespace PixelMaestro;
-using namespace std;
 using namespace std::chrono;
 
 PixelGridDrawingArea::PixelGridDrawingArea() {

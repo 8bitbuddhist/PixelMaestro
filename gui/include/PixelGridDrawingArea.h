@@ -5,7 +5,6 @@
 #include <chrono>
 #include "Colors.h"
 #include <gtkmm/drawingarea.h>
-#include <gtkmm/window.h>
 #include "Maestro.h"
 
 #ifndef PIXELGRIDDRAWINGAREA_H

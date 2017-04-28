@@ -1,11 +1,8 @@
 #include "../include/Colors.h"
 #include <gtkmm/window.h>
-#include "../include/Maestro.h"
 #include "../demos/Orientation.h"
 
 using namespace PixelMaestro;
-using namespace std;
-using namespace std::chrono;
 
 // Resize the array so that it's 10x40
 Orientation::Orientation(Gtk::Window* parentWindow) : SimplePixelGridDrawingArea(parentWindow, 40, 10) {

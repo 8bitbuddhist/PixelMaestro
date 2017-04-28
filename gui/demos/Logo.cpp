@@ -1,12 +1,8 @@
 #include "../include/Colors.h"
 #include <gtkmm/window.h>
 #include "../demos/Logo.h"
-#include "../include/Maestro.h"
-#include <vector>
 
 using namespace PixelMaestro;
-using namespace std;
-using namespace std::chrono;
 
 Logo::Logo(Gtk::Window* parentWindow) : SimplePixelGridDrawingArea(parentWindow) {
     // Initialize collections

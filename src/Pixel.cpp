@@ -18,15 +18,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the next color.
-
-		@return The target color.
-	*/
-	Colors::RGB *Pixel::getNextColor() {
-		return next_color_;
-	}
-
-	/**
 		Returns the current step count.
 		Used by RGBArray to determine when the LED has finished its cycle.
 
