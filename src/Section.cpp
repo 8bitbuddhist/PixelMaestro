@@ -25,7 +25,7 @@ namespace PixelMaestro {
 		@return speed The amount of time between animation changes.
 	*/
 	unsigned short Section::getCycleSpeed() {
-		return cycle_speed_;
+		return cycle_interval_;
 	}
 
 	/**
@@ -96,7 +96,7 @@ namespace PixelMaestro {
 		@return The refresh rate of the Section.
 	*/
 	unsigned short Section::getRefreshRate() {
-		return refresh_rate_;
+		return refresh_interval_;
 	}
 
 	/**
@@ -166,10 +166,11 @@ namespace PixelMaestro {
 	/**
 		Sets the speed between animation cycles.
 
-		@param cycleSpeed Speed between animation cycles.
+		@param interval Rate in milliseconds between animation cycles.
+		@param pause Time in milliseconds to delay the cycle.
 	*/
-	void Section::setCycleSpeed(unsigned short cycleSpeed, unsigned short pause) {
-		cycle_speed_ = cycleSpeed;
+	void Section::setCycleInterval(unsigned short interval, unsigned short pause) {
+		cycle_interval_ = interval;
 		pause_ = pause;
 	}
 
@@ -181,10 +182,10 @@ namespace PixelMaestro {
 	*/
 	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
 		if (pause_ > 0) {
-			this->getPixel(pixel)->setNextColor(color, fade_, cycle_speed_ - pause_, refresh_rate_);
+			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
 		}
 		else {
-			this->getPixel(pixel)->setNextColor(color, fade_, cycle_speed_, refresh_rate_);
+			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_, refresh_interval_);
 		}
 	}
 
@@ -244,10 +245,10 @@ namespace PixelMaestro {
 	/**
 		Sets the refresh rate of the Section (how quickly the Pixels update).
 
-		@param refreshRate The rate in milliseconds that the Section will update.
+		@param interval Rate in milliseconds between Pixel redraws.
 	*/
-	void Section::setRefreshRate(unsigned short refreshRate) {
-		refresh_rate_ = refreshRate;
+	void Section::setRefreshInterval(unsigned short interval) {
+		refresh_interval_ = interval;
 	}
 
 	/**
@@ -291,14 +292,14 @@ namespace PixelMaestro {
 			overlay_.section->update(currentTime);
 		}
 
-		if (currentTime - last_refresh_ >= (unsigned long)refresh_rate_) {
+		if (currentTime - last_refresh_ >= (unsigned long)refresh_interval_) {
 
 			/*
 				Update the animation cycle.
 				cycle_index_ tracks the Section's current position in the animation, while last_cycle_ tracks the time since the last position.
 				If we've exceed our cycle time (indicated by speed_), calculate and move to the next animation position.
 			*/
-			if (currentTime - last_cycle_ >= (unsigned long)cycle_speed_) {
+			if (currentTime - last_cycle_ >= (unsigned long)cycle_interval_) {
 
 				// Determine which animation to run, then run it.
 				// Defaults to off.

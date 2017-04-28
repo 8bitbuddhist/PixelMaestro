@@ -17,7 +17,7 @@ Orientation::Orientation(Gtk::Window* parentWindow) : SimplePixelGridDrawingArea
 	sections_[0].setColors(Colors::COLORWHEEL, 12);
 	sections_[0].setPixels(&pixels_[0], num_rows_, num_columns_);
 	sections_[0].setColorAnimation(Section::ColorAnimations::MERGE, true, Section::AnimationOrientations::VERTICAL);
-	sections_[0].setCycleSpeed(100);
+	sections_[0].setCycleInterval(100);
 
 	// Initialize maestro
 	maestro_.setSections(&sections_[0], num_sections_);

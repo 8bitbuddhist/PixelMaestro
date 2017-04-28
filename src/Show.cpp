@@ -84,7 +84,7 @@ namespace PixelMaestro {
 				break;
 			case Actions::SET_UPDATE_SPEED:
 				// Change the update speed of a Section to val1.
-				maestro_->getSection(opts.sectionNum)->setCycleSpeed(transition->opts.val1);
+				maestro_->getSection(opts.sectionNum)->setCycleInterval(transition->opts.val1);
 				break;
 			case Actions::TOGGLE_FADE:
 				// Toggle fading on a Section.

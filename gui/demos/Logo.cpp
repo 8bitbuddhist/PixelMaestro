@@ -17,7 +17,7 @@ Logo::Logo(Gtk::Window* parentWindow) : SimplePixelGridDrawingArea(parentWindow)
 	sections_[0].setColors(Colors::COLORWHEEL, 12);
 	sections_[0].setPixels(&pixels_[0], num_rows_, num_columns_);
 	sections_[0].setColorAnimation(Section::ColorAnimations::WAVE, true);
-	sections_[0].setCycleSpeed(200);
+	sections_[0].setCycleInterval(200);
 
 	/*
         Section 2 is the overlay.
@@ -29,8 +29,8 @@ Logo::Logo(Gtk::Window* parentWindow) : SimplePixelGridDrawingArea(parentWindow)
 	sections_[1].setPixels(&pixels_[num_pixels_], num_rows_, num_columns_);
 	sections_[1].setColors(&overlay_colors_[0], 1);
 	sections_[1].setColorAnimation(Section::ColorAnimations::PATTERN);
-	sections_[1].setRefreshRate(1000);
-	sections_[1].setCycleSpeed(1000);
+	sections_[1].setRefreshInterval(1000);
+	sections_[1].setCycleInterval(1000);
 	sections_[1].setPattern(pattern_, 14, 40, 1);
 
 	sections_[0].setOverlay(&sections_[1], Colors::MixMode::OVERLAY, 1.0);
