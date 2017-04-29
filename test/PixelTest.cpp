@@ -12,12 +12,14 @@ TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
     Colors::RGB color = Colors::RED;
     bool fade = true;
 
+    SECTION("Set a new color.") {
+        pixel.setNextColor(&color, false, 0, 0);
+        pixel.update();
+        REQUIRE(*pixel.getColor() == Colors::RED);
+    }
+
     // Change to red, allow fading, finish a transition every 10 ms
     pixel.setNextColor(&color, fade, cycleSpeed, refreshRate);
-
-    SECTION("Set a new color.") {
-        REQUIRE(*pixel.getNextColor() == Colors::RED);
-    }
 
     // Calculate the diff between the refresh and cycle rates
     unsigned short diff = (unsigned short)(cycleSpeed / (float)refreshRate);
