@@ -4,8 +4,8 @@
 */
 
 #include <stdlib.h>
-#include "Colors.h"
-#include "Pixel.h"
+#include "../include/Colors.h"
+#include "../include/Pixel.h"
 
 namespace PixelMaestro {
 	/**

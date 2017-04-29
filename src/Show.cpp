@@ -2,7 +2,7 @@
 	Show.cpp - Library for managing PixelMaestro transitions.
 */
 
-#include "Show.h"
+#include "../include/Show.h"
 
 namespace PixelMaestro {
 

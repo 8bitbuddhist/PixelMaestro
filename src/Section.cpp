@@ -4,9 +4,9 @@
 */
 
 #include <stdlib.h>
-#include "Colors.h"
-#include "Pixel.h"
-#include "Section.h"
+#include "../include/Colors.h"
+#include "../include/Pixel.h"
+#include "../include/Section.h"
 
 namespace PixelMaestro {
 
@@ -209,11 +209,9 @@ namespace PixelMaestro {
 		@param alpha The amount of blending to perform.
 	*/
 	void Section::setOverlay(Section *section, Colors::MixMode mixMode, float alpha) {
-        overlay_ = {
-			section,
-			mixMode,
-			alpha
-        };
+		overlay_.section = section;
+		overlay_.mixMode = mixMode;
+		overlay_.alpha = alpha;
 	}
 
 	/**
