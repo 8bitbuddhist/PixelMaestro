@@ -1,3 +1,7 @@
+/*
+  WS2812.ino - Displays a simple animation using a WS2812 LEDs.
+*/
+
 #include <Arduino.h>
 #include "../include/Colors.h"
 #include "../include/Maestro.h"
