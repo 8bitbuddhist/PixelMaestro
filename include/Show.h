@@ -1,5 +1,5 @@
 /*
-	Show.cpp - Library for managing PixelMaestro transitions.
+	Show.cpp - Library for scheduling PixelMaestro animations.
 */
 
 #ifndef SHOW_H

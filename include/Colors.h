@@ -14,8 +14,10 @@ namespace PixelMaestro {
 			struct RGB {
 				/// The color's red value.
 				unsigned char r;
+
 				/// The color's green value.
 				unsigned char g;
+
 				/// The color's blue value.
 				unsigned char b;
 
@@ -52,9 +54,14 @@ namespace PixelMaestro {
 
 			/// Determines the blending algorithm used when mixing two colors.
 			enum MixMode {
-				NORMAL,			/// Simple 50/50 blending.
-				ALPHA_BLENDING,	/// Overlays color 2 on top of color 1 with a specified blend percentage.
-				OVERLAY			/// Multiply the base color by the overlay color.
+				/// Simple 50/50 blending.
+				NORMAL,
+
+				/// Overlays color 2 on top of color 1 with a specified blend percentage.
+				ALPHA_BLENDING,
+
+				/// Multiplies the base color by the overlay color, resulting in the base color "bleeding through" the overlay.
+				OVERLAY
 			};
 
 			// Basic color set.
