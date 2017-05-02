@@ -1,4 +1,4 @@
-#include "../include/catch/include/catch.hpp"
+#include "catch/single_include/catch.hpp"
 #include "PixelTest.h"
 #include "../include/Pixel.h"
 #include "../include/Colors.h"
