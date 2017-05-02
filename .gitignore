@@ -1,0 +1,13 @@
+*.cbp
+*.depend
+*.layout
+*bin/
+*obj/
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+.pioenvs
+.piolibdeps
+.clang_complete
+.gcc-flags.json

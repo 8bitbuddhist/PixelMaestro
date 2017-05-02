@@ -12,19 +12,46 @@ namespace PixelMaestro {
 	class Section {
 
 		public:
+			/// The orientation of the current animation. Does not affect animations that don't have a specific direction (e.g. BLINK).
+			enum AnimationOrientations {
+				HORIZONTAL,
+				VERTICAL
+			};
+
 			/// Set of animations usable by the Section.
 			enum ColorAnimations {
-				SOLID,			/// Activates each Pixel.
-				BLINK,			/// Alternates Pixels between their default color and black (off).
-				WAVE,			/// Scrolls the color array across the Section.
-				PONG,			/// Scrolls the color array back and forth in a ping-pong animation.
-				MERGE,			/// Converges the color array into the center of the Section.
-				RANDOMINDEX,	/// Sets each Pixel to a random color stored in colors_.
-				SPARKLE,		/// Creates a shimmering effect by turning on random pixels.
-				PATTERN,		/// Scrolls through a pattern defined in pattern_.
-				CYCLE,			/// Cycles all pixels through all stored colors.
-				STATIC,			/// Creates a static effect by blending each pixel between varying levels of gray.
-				NONE			/// Turns off all Pixels in the Section. This should always be the last animation in the list.
+				/// Sets each Pixel to its corresponding color.
+				SOLID,
+
+				/// Alternates Pixels between their default color and black (off).
+				BLINK,
+
+				/// Scrolls the color array across the Section.
+				WAVE,
+
+				/// Scrolls the color array back and forth ping-pong style.
+				PONG,
+
+				/// Converges the color array into the center of the Section.
+				MERGE,
+
+				/// Sets each Pixel to a random color stored in colors_.
+				RANDOMINDEX,
+
+				/// Creates a shimmering effect by turning on random pixels.
+				SPARKLE,
+
+				/// Scrolls through a pattern defined in pattern_.
+				PATTERN,
+
+				/// Cycles all pixels through all stored colors.
+				CYCLE,
+
+				/// Blends each pixel between varying levels of gray. THIS MODIFIES THE COLOR ARRAY.
+				STATIC,
+
+				/// Turns off the Section. This should always be the last animation in the list.
+				NONE
 			};
 
 			/**
@@ -34,8 +61,10 @@ namespace PixelMaestro {
 			struct Overlay {
 				/// The Section to overlay.
 				Section *section = nullptr;
+
 				/// Method of blending the output from the Overlay with the base Section.
 				Colors::MixMode mixMode;
+
 				/// Transparency level of the overlaid Section (if applicable).
 				float alpha;
 
@@ -53,6 +82,7 @@ namespace PixelMaestro {
 			struct Layout {
 				/// The number of rows in the Section.
 				unsigned short rows;
+
 				/// The number of columns in the Section.
 				unsigned short columns;
 			};
@@ -64,17 +94,19 @@ namespace PixelMaestro {
 			struct Pattern {
 				/**
 					The pattern to display when the PATTERN animation is active.
-					Stored as an array of unsigned ints where each element corresponds to a row.
+					Stored as an array of bools where each bool corresponds to a Pixel.
 				*/
-				unsigned long *pattern;
+				bool *pattern;
+
 				/// The number of rows in a single frame.
-				unsigned short height;
+				unsigned short rows;
+
+				/// The number of columns in a single frame.
+				unsigned short columns;
+
 				/// The number of frames in the Pattern.
 				unsigned short frames;
 			};
-
-			Section();
-			Section(Pixel *pixels, unsigned short rows, unsigned short columns);
 
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
@@ -86,36 +118,69 @@ namespace PixelMaestro {
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);
-			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false);
+			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
-			void setCycleSpeed(unsigned short speed, unsigned short pause = 0);
+			void setCycleInterval(unsigned short rate, unsigned short pause = 0);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Section *section, Colors::MixMode mixMode, float alpha = 0.0);
-			void setPattern(unsigned long *pattern, unsigned short patternRows, unsigned short numFrames);
+			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
+			void setPattern(Pattern pattern);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
-			void setRefreshRate(unsigned short refreshRate);
+			void setRefreshInterval(unsigned short rate);
 			void toggleFade();
 			void update(unsigned long currentTime);
 			void unsetOverlay();
 
 		private:
-			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);	/// The active Section animation. Defaults to SOLID.
-			Colors::RGB *colors_;				/// Array of colors used in animations.
-			unsigned int cycle_index_ = 0;		///	The current cycle index.
-			unsigned short cycle_speed_ = 100;	/// The time between animation cycles in milliseconds.
-			unsigned short pause_ = 0;			/// The amount of time the Section will wait in milliseconds before starting an animation cycle.
-			bool fade_ = true;					/// Whether to fade between cycles.
-			unsigned long last_cycle_ = 0;		/// The time since the last animation cycle change.
-			unsigned long last_refresh_ = 0;	/// The time since the Pixels were last refreshed.
-			Layout layout_;						/// The Pixel layout of the array.
-			Overlay overlay_;					/// Section overlaying the current section (if applicable);
-			Pattern pattern_;					/// The layout of the pattern used in the PATTERN animation (if applicable).
-			Pixel *pixels_;						/// Array of Pixels stored in the Section.
-			unsigned int num_colors_;			/// The number of colors in colors_.
-			unsigned short refresh_rate_ = 20;	/// The time between Pixel updates in milliseconds.
-			bool reverse_animation_ = false;	/// Whether to reverse the current  animation.
+			/// The orientation of the animation. Defaults to HORIZONTAL.
+			AnimationOrientations animation_orientation_ = AnimationOrientations(HORIZONTAL);
+
+			/// The active Section animation. Defaults to SOLID.
+			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);
+
+			/// Array of colors used in animations. For some animations, the color index corresponds to the Pixel index (see ColorAnimations::SOLID).
+			Colors::RGB *colors_;
+
+			///	The current stage of the animation cycle. Defaults to 0.
+			unsigned int cycle_index_ = 0;
+
+			/// The time between animation cycles in milliseconds. Defaults to 100.
+			unsigned short cycle_interval_ = 100;
+
+			/// The amount of time the Section will wait in milliseconds before starting an animation cycle. Defaults to 0.
+			unsigned short pause_ = 0;
+
+			/// Whether to fade between cycles. Defaults to true.
+			bool fade_ = true;
+
+			/// The time since the last animation cycle change in milliseconds. Defaults to 0.
+			unsigned long last_cycle_ = 0;
+
+			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
+			unsigned long last_refresh_ = 0;
+
+			/// The 2D layout of the Pixels.
+			Layout layout_;
+
+			/// The Section overlaying the current section (if applicable);
+			Overlay overlay_;
+
+			/// The layout of the pattern used in the PATTERN animation (if applicable).
+			Pattern pattern_;
+
+			/// The Pixels managed by the Section.
+			Pixel *pixels_;
+
+			/// The number of colors in colors_.
+			unsigned int num_colors_;
+
+			/// The time between Pixel redraws in milliseconds. Defaults to 20.
+			unsigned short refresh_interval_ = 20;
+
+			/// Whether to reverse the current animation. Defaults to false.
+			bool reverse_animation_ = false;
 
 			// Color animation functions
 			void animation_blink();

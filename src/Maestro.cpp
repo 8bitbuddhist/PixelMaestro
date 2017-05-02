@@ -2,20 +2,10 @@
 	Maestro.cpp - Library for controlling a collection of Pixels and Sections.
 */
 
-#include "Maestro.h"
-#include "Section.h"
+#include "../include/Maestro.h"
+#include "../include/Section.h"
 
 namespace PixelMaestro {
-	/**
-		Constructor. Initializes the Pixel array and divides it into Sections.
-
-		@param sections Initial Section array.
-		@param numSections Number of Sections.
-	*/
-	Maestro::Maestro(Section *sections, unsigned short numSections) {
-		this->setSections(sections, numSections);
-	}
-
 	/**
 		Returns the number of Sections.
 

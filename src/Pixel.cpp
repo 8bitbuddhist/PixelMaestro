@@ -4,8 +4,8 @@
 */
 
 #include <stdlib.h>
-#include "Colors.h"
-#include "Pixel.h"
+#include "../include/Colors.h"
+#include "../include/Pixel.h"
 
 namespace PixelMaestro {
 	/**
@@ -15,15 +15,6 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB *Pixel::getColor() {
 		return &current_color_;
-	}
-
-	/**
-		Returns the next color.
-
-		@return The target color.
-	*/
-	Colors::RGB *Pixel::getNextColor() {
-		return next_color_;
 	}
 
 	/**

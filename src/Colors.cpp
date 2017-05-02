@@ -2,7 +2,7 @@
 	Colors.cpp - Library for defining commonly used colors and methods for handling those colors.
 */
 
-#include "Colors.h"
+#include "../include/Colors.h"
 #include <stdlib.h>
 
 namespace PixelMaestro {
@@ -23,7 +23,7 @@ namespace PixelMaestro {
 	Colors::RGB Colors::VIOLET 		= {143, 0, 255};
 	Colors::RGB Colors::MAGENTA 	= {255, 0, 255};
 	Colors::RGB Colors::ROSE 		= {255, 0, 128};
-	Colors::RGB Colors::INDIGO 		= {180, 0, 130};
+	Colors::RGB Colors::INDIGO 		= {75, 0, 130};
 
 	// Color collections
 	Colors::RGB Colors::COLORWHEEL[12] = {

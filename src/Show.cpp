@@ -1,26 +1,13 @@
 /*
-	Show.cpp - Library for managing PixelMaestro transitions.
+	Show.cpp - Library for scheduling PixelMaestro animations.
 */
 
-#include "Show.h"
+#include "../include/Show.h"
 
 namespace PixelMaestro {
 
 	/**
-		Constructor.
-
-		@param maestro The Maestro driving the show.
-		@param transitions Array of Transitions to perform.
-		@param numTransitions The number of Transitions in the array.
-	*/
-	Show::Show(Maestro *maestro, Transition *transitions, unsigned char numTransitions) {
-		maestro_ = maestro;
-		transitions_ = transitions;
-		num_transitions_ = numTransitions;
-	}
-
-	/**
-		Returns the index of the current Transition.
+		Returns the index of the currently queued Transition.
 
 		@return Index of the current Transition.
 	*/
@@ -29,12 +16,21 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the current Transition.
+		Returns whether the Show loops back over its Transitions, or if it just ends.
 
-		@return Current Transition.
+		@return Whether or not the Show loops.
 	*/
-	Show::Transition *Show::getCurrentTransition() {
-		return &transitions_[current_index_];
+	bool Show::getLooping() {
+		return loop_;
+	}
+
+	/**
+		Returns the Maestro controlled by the Show.
+
+		@return Maestro.
+	*/
+	Maestro *Show::getMaestro() {
+		return maestro_;
 	}
 
 	/**
@@ -53,48 +49,65 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Sets the Maestro that the Show will control.
+
+		@param maestro Pointer to the Maestro that the show will control.
+	*/
+	void Show::setMaestro(Maestro *maestro) {
+		maestro_ = maestro;
+	}
+
+	/**
+		Sets the timing mode.
+
+		@param timing Timing mode used.
+	*/
+	void Show::setTiming(TimingModes timing) {
+		timing_ = timing;
+	}
+
+	/**
+		Sets the Transitions in the Show.
+
+		@param transitions Array of Transitions to queue.
+		@param numTransitions The number of Transitions in the queue.
+	*/
+	void Show::setTransitions(Transition* transitions, unsigned char numTransitions) {
+		transitions_ = transitions;
+		num_transitions_ = numTransitions;
+	}
+
+	/**
+		Toggles whether to loop when the Transitions are done running.
+	*/
+	void Show::toggleLooping() {
+		loop_ = !loop_;
+	}
+
+	/**
 		Main update routine.
 
 		@param currentTime Program runtime.
 	*/
 	void Show::update(unsigned long currentTime) {
-		// If the program time is past the Transition's scheduled time and the Transition has not already ran, run it.
-		if (currentTime >= transitions_[current_index_].time && !transitions_[current_index_].ran) {
-			runTransition(&transitions_[current_index_]);
+		// Only run if we're looping, or if we haven't reached the end of the Transition list yet.
+		if (loop_ || (!loop_ && last_index_ != (num_transitions_ - 1))) {
+			/*
+				Based on the timing method used, determine whether to run the Transition.
+				If ABSOLUTE, compare the current time to the queued Transition's start time.
+				If RELATIVE, compare the time since the last Transition to the queued Transition's start time.
+				After running the Transition, update the last run time and last run Transition index.
+			*/
+			if ((timing_ == TimingModes::ABSOLUTE && (currentTime >= transitions_[current_index_].time)) ||
+				(timing_ == TimingModes::RELATIVE && ((currentTime - last_time_) >= transitions_[current_index_].time))) {
+				transitions_[current_index_].action();
+				last_index_ = current_index_;
+				last_time_ = currentTime;
+				current_index_ = getNextIndex();
+			}
 		}
+
+		// Finally, update the Maestro
 		maestro_->update(currentTime);
 	}
-
-	/**
-		Runs a Transition on the Maestro.
-
-		@param transition Transition to run.
-	*/
-	void Show::runTransition(Transition *transition) {
-		Opts opts = transition->opts;
-
-		// Determine how to proceed based on the Transition action.
-		switch (transition->action) {
-			case Actions::SET_UPDATE_SPEED:
-				// Change the update speed of a Section to val1.
-				maestro_->getSection(opts.sectionNum)->setCycleSpeed(transition->opts.val1);
-				break;
-			case Actions::SET_COLOR_ANIMATION:
-				// Change the color animation of a Section.
-				maestro_->getSection(opts.sectionNum)->setColorAnimation(opts.animation, opts.val1);
-				break;
-			case Actions::TOGGLE_FADE:
-				// Toggle fading on a Section.
-				maestro_->getSection(opts.sectionNum)->toggleFade();
-				break;
-			default:
-				break;
-		}
-
-		// Mark the Transition as having executed.
-		transition->ran = true;
-		current_index_ = getNextIndex();
-	}
-
-	Show::~Show() {}
 }

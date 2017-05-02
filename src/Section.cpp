@@ -3,29 +3,12 @@
 	Requires Pixel and Colors classes.
 */
 
-#include <cmath>
 #include <stdlib.h>
-#include "Colors.h"
-#include "Pixel.h"
-#include "Section.h"
+#include "../include/Colors.h"
+#include "../include/Pixel.h"
+#include "../include/Section.h"
 
 namespace PixelMaestro {
-	/**
-		Default constructor.
-		Note that if you use the default constructor, you MUST use setPixels() to initialize the Pixel array.
-	*/
-    Section::Section() {}
-
-	/**
-		Constructor. A Section is a collection of Pixels organized into a logical grid.
-
-		@param pixels Pixel array.
-		@param rows Number of rows of Pixels.
-		@param columns Number of Pixels per row.
-	*/
-	Section::Section(Pixel *pixels, unsigned short rows, unsigned short columns) {
-        setPixels(pixels, rows, columns);
-	}
 
 	/**
 		Returns the current color animation.
@@ -42,7 +25,7 @@ namespace PixelMaestro {
 		@return speed The amount of time between animation changes.
 	*/
 	unsigned short Section::getCycleSpeed() {
-		return cycle_speed_;
+		return cycle_interval_;
 	}
 
 	/**
@@ -113,7 +96,7 @@ namespace PixelMaestro {
 		@return The refresh rate of the Section.
 	*/
 	unsigned short Section::getRefreshRate() {
-		return refresh_rate_;
+		return refresh_interval_;
 	}
 
 	/**
@@ -132,8 +115,9 @@ namespace PixelMaestro {
 
 		@param animation Animation selection.
 		@param reverseAnimation Whether to display the animation in reverse (only works for certain animations).
+		@param orientation The orientation of the animation.
 	*/
-	void Section::setColorAnimation(ColorAnimations animation, bool reverseAnimation) {
+	void Section::setColorAnimation(ColorAnimations animation, bool reverseAnimation, AnimationOrientations orientation) {
 		// If animation was supplied, change to the desired animation.
 		// Otherwise, increment the current animation to the next one.
 		if (animation) {
@@ -151,6 +135,7 @@ namespace PixelMaestro {
 		}
 
 		reverse_animation_ = reverseAnimation;
+		animation_orientation_ = orientation;
 	}
 
 	/**
@@ -181,10 +166,11 @@ namespace PixelMaestro {
 	/**
 		Sets the speed between animation cycles.
 
-		@param cycleSpeed Speed between animation cycles.
+		@param interval Rate in milliseconds between animation cycles.
+		@param pause Time in milliseconds to delay the cycle.
 	*/
-	void Section::setCycleSpeed(unsigned short cycleSpeed, unsigned short pause) {
-		cycle_speed_ = cycleSpeed;
+	void Section::setCycleInterval(unsigned short interval, unsigned short pause) {
+		cycle_interval_ = interval;
 		pause_ = pause;
 	}
 
@@ -196,10 +182,10 @@ namespace PixelMaestro {
 	*/
 	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
 		if (pause_ > 0) {
-			this->getPixel(pixel)->setNextColor(color, fade_, cycle_speed_ - pause_, refresh_rate_);
+			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
 		}
 		else {
-			this->getPixel(pixel)->setNextColor(color, fade_, cycle_speed_, refresh_rate_);
+			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_, refresh_interval_);
 		}
 	}
 
@@ -223,37 +209,44 @@ namespace PixelMaestro {
 		@param alpha The amount of blending to perform.
 	*/
 	void Section::setOverlay(Section *section, Colors::MixMode mixMode, float alpha) {
-        overlay_ = {
-			section,
-			mixMode,
-			alpha
-        };
+		overlay_.section = section;
+		overlay_.mixMode = mixMode;
+		overlay_.alpha = alpha;
 	}
 
 	/**
 		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
-		A pattern consists of several integer values, and Pixels are activated based on which bits are active.
-		A single short corresponds to a row in the Section.
 
 		@param pattern Pointer to the pattern array.
-		@param patternRows Length of the pattern array (e.g. the number of rows in the pattern).
-		@param numFrames Number of frames in the pattern.
+		@param rows Number of rows in the array.
+		@param columns Number of bools in each row.
+		@param frames Number of frames in the pattern.
 	*/
-	void Section::setPattern(unsigned long *pattern, unsigned short patternRows, unsigned short numFrames) {
+	void Section::setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames) {
 		pattern_ = {
 			pattern,
-			patternRows,
-			numFrames
+			rows,
+			columns,
+			frames
 		};
+	}
+
+	/**
+		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
+
+		@param pattern New Pattern.
+	*/
+	void Section::setPattern(Pattern pattern) {
+		pattern_ = pattern;
 	}
 
 	/**
 		Sets the refresh rate of the Section (how quickly the Pixels update).
 
-		@param refreshRate The rate in milliseconds that the Section will update.
+		@param interval Rate in milliseconds between Pixel redraws.
 	*/
-	void Section::setRefreshRate(unsigned short refreshRate) {
-		refresh_rate_ = refreshRate;
+	void Section::setRefreshInterval(unsigned short interval) {
+		refresh_interval_ = interval;
 	}
 
 	/**
@@ -297,14 +290,14 @@ namespace PixelMaestro {
 			overlay_.section->update(currentTime);
 		}
 
-		if (currentTime - last_refresh_ >= (unsigned long)refresh_rate_) {
+		if (currentTime - last_refresh_ >= (unsigned long)refresh_interval_) {
 
 			/*
 				Update the animation cycle.
 				cycle_index_ tracks the Section's current position in the animation, while last_cycle_ tracks the time since the last position.
 				If we've exceed our cycle time (indicated by speed_), calculate and move to the next animation position.
 			*/
-			if (currentTime - last_cycle_ >= (unsigned long)cycle_speed_) {
+			if (currentTime - last_cycle_ >= (unsigned long)cycle_interval_) {
 
 				// Determine which animation to run, then run it.
 				// Defaults to off.
@@ -362,11 +355,7 @@ namespace PixelMaestro {
 
 	// Private animation functions
 
-	/**
-		Creates a blinking effect.
-
-		Modes: BLINK
-	*/
+	/// Flashes all Pixels on and off.
 	void Section::animation_blink() {
 		// Alternate the Pixel between its normal color and off (Colors::BLACK).
 		if (cycle_index_ == 0) {
@@ -384,11 +373,7 @@ namespace PixelMaestro {
 		animation_updateCycle(0, 2);
 	}
 
-	/**
-		Cycles all Pixels through all stored colors.
-
-		Modes: CYCLE
-	*/
+	/// Cycles all Pixels through all stored colors.
 	void Section::animation_cycle() {
 		setAll(&colors_[cycle_index_]);
 		animation_updateCycle(0, num_colors_);
@@ -411,9 +396,9 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Creates an effect where colors converge into the center of the array.
+		Converges colors into the center of the Section.
 
-		Modes: MERGE
+		Supports vertical orientation
 	*/
 	void Section::animation_merge() {
 
@@ -421,32 +406,64 @@ namespace PixelMaestro {
 		unsigned short midPoint;
 		unsigned short count;
 
-		for (unsigned short row = 0; row < layout_.rows; row++) {
-			midPoint = (layout_.columns / 2) - 1;
-			count = 0;
+		if (animation_orientation_ == VERTICAL) {
+			for (unsigned short column = 0; column < layout_.columns; column++) {
+				midPoint = (layout_.rows / 2) - 1;
+				count = 0;
 
-			// column *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
-			for (signed int column = midPoint; column >= 0; column--) {
-				setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
-				count++;
-			}
+				// Note: column *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
+				for (signed int row = midPoint; row >= 0; row--) {
+					setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
+					count++;
+				}
 
-			/*
-				Check for an odd number of Pixels.
-				If so, set the center one to index 0.
-			*/
-			if (this->getNumPixels() % 2 != 0) {
+				/*
+					Check for an odd number of Pixels.
+					If so, set the center one to index 0.
+				*/
+				if (this->getNumPixels() % 2 != 0) {
+					midPoint += 1;
+					setOne(midPoint, column, &colors_[cycle_index_]);
+				}
+
 				midPoint += 1;
-				setOne(row, midPoint, &colors_[cycle_index_]);
+
+				// Go from the center to the last
+				count = 0;
+				for (unsigned int row = midPoint; row < layout_.rows; row++) {
+					setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
+					count++;
+				}
 			}
+		}
+		else {	// Horizontal
+			for (unsigned short row = 0; row < layout_.rows; row++) {
+				midPoint = (layout_.columns / 2) - 1;
+				count = 0;
 
-			midPoint += 1;
+				// Note: column *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
+				for (signed int column = midPoint; column >= 0; column--) {
+					setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
+					count++;
+				}
 
-			// Go from the center to the last
-			count = 0;
-			for (unsigned int column = midPoint; column < layout_.columns; column++) {
-				setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
-				count++;
+				/*
+					Check for an odd number of Pixels.
+					If so, set the center one to index 0.
+				*/
+				if (this->getNumPixels() % 2 != 0) {
+					midPoint += 1;
+					setOne(row, midPoint, &colors_[cycle_index_]);
+				}
+
+				midPoint += 1;
+
+				// Go from the center to the last
+				count = 0;
+				for (unsigned int column = midPoint; column < layout_.columns; column++) {
+					setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
+					count++;
+				}
 			}
 		}
 
@@ -455,9 +472,7 @@ namespace PixelMaestro {
 
 	/**
 		Displays a pattern, drawing one full frame at a time.
-		If there is no pattern set, blink.
-
-		Modes: PATTERN
+		If there is no pattern set, the Section blinks.
 	*/
 	void Section::animation_pattern() {
 		// If the pattern has not been set, blink the array.
@@ -466,24 +481,19 @@ namespace PixelMaestro {
 			return;
 		}
 
-		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short column = 0; column < layout_.columns; column++) {
-				// If the current row isn't in the pattern, set it to black.
-				if (row >= pattern_.height) {
-					setOne(row, column, &Colors::BLACK);
+		// Stores the beginning index of the active Frame.
+		unsigned int frameStart = (pattern_.rows * pattern_.columns) * cycle_index_;
+
+		// Stores the index of the current Pixel as we iterate through the Pattern.
+		unsigned int patternPixel = 0;
+		for (unsigned short row = 0; row < pattern_.rows; row++) {
+			for (unsigned short column = 0; column < pattern_.columns; column++) {
+				patternPixel = frameStart + ((row * pattern_.columns) + column);
+				if (pattern_.pattern[patternPixel] == 1) {
+					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
-					/*
-						Determine which Pixels to activate.
-						We use bitmasking to store the indices of active Pixels in each of the pattern's elements.
-						If the bit is set, turn on the Pixel, otherwise, set it to black.
-					*/
-					if (pattern_.pattern[(pattern_.height * cycle_index_) + row] & (unsigned long)pow(2, column)) {
-						setOne(row, column, &colors_[animation_getColorIndex(column)]);
-					}
-					else {
-						setOne(row, column, &Colors::BLACK);
-					}
+					setOne(row, column, &Colors::BLACK);
 				}
 			}
 		}
@@ -494,12 +504,17 @@ namespace PixelMaestro {
 	/**
 		Cycles colors back and forth in a ping-pong pattern.
 
-		Modes: PONG
+		Supports vertical orientation
 	*/
 	void Section::animation_pong() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
-				setOne(row, column, &colors_[animation_getColorIndex(column + cycle_index_)]);
+				if (animation_orientation_ == VERTICAL) {
+					setOne(row, column, &colors_[animation_getColorIndex(row + cycle_index_)]);
+				}
+				else {	// Horizontal
+					setOne(row, column, &colors_[animation_getColorIndex(column + cycle_index_)]);
+				}
 			}
 		}
 
@@ -515,22 +530,14 @@ namespace PixelMaestro {
 		animation_updateCycle(0, num_colors_);
 	}
 
-	/**
-		Sets each Pixel to a random color stored in colors_.
-
-		Modes: RANDOMINDEX
-	*/
+	/// Sets each Pixel to a random stored color .
 	void Section::animation_randomIndex() {
 		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
 			setOne(pixel, &colors_[rand() % num_colors_]);
 		}
 	}
 
-	/**
-		Sets each Pixel to a solid color.
-
-		Modes: SOLID
-	*/
+	/// Sets each Pixel to a solid color.
 	void Section::animation_solid() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
@@ -539,11 +546,7 @@ namespace PixelMaestro {
 		}
 	}
 
-	/**
-		Creates a shimmering effect by activating random Pixels.
-
-		Modes: SPARKLE
-	*/
+	/// Creates a shimmering effect by activating random Pixels.
 	void Section::animation_sparkle() {
 		for (unsigned int row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
@@ -565,8 +568,6 @@ namespace PixelMaestro {
 	/**
 		Creates a static effect by blending each Pixel between varying levels of gray.
 		WARNING: THIS ANIMATION MODIFIES THE COLOR ARRAY.
-
-		Modes: STATIC
 	*/
 	void Section::animation_static() {
 		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
@@ -600,14 +601,20 @@ namespace PixelMaestro {
 	/**
 		Creates a wave effect by scrolling the color array across the Section.
 
-		Modes: WAVE
+		Vertical orientation
 	*/
 	void Section::animation_wave() {
 		for (unsigned short row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
-				setOne(row, column, &colors_[animation_getColorIndex(column + cycle_index_)]);
+				if (animation_orientation_ == VERTICAL) {
+					setOne(row, column, &colors_[animation_getColorIndex(row + cycle_index_)]);
+				}
+				else {	// Horizontal
+					setOne(row, column, &colors_[animation_getColorIndex(column + cycle_index_)]);
+				}
 			}
 		}
+
 
 		animation_updateCycle(0, num_colors_);
 	}

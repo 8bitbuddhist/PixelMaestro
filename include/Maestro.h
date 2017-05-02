@@ -10,8 +10,8 @@
 
 namespace PixelMaestro {
 	class Maestro {
+
 		public:
-			Maestro(Section *sections, unsigned short numSections);
 			unsigned short getNumSections();
 			unsigned short getRefreshRate();
 			bool getRunning();
@@ -21,9 +21,14 @@ namespace PixelMaestro {
 			void update(unsigned long currentTime);
 
 		private:
-			bool running_ = true;	/// Active state of the Maestro.
-			Section *sections_;		/// Array of Sections managed by the Maestro.
-			unsigned short num_sections_;	/// Number of Sections managed by the Maestro.
+			/// Active running state of the Maestro.
+			bool running_ = true;
+
+			/// Sections managed by the Maestro.
+			Section *sections_;
+
+			/// Number of Sections managed by the Maestro.
+			unsigned short num_sections_;
 	};
 }
 
