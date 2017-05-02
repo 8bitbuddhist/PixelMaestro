@@ -45,7 +45,7 @@ bool PixelGridDrawingArea::update() {
 	);
 
 	// Update Maestro or Show
-	if (show_.getMaestro() != nullptr) {
+	if (show_.getMaestro() == &maestro_) {
         show_.update(runtime_.count());
 	}
 	else {
