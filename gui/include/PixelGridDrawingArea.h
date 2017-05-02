@@ -6,6 +6,7 @@
 #include "Colors.h"
 #include <gtkmm/drawingarea.h>
 #include "Maestro.h"
+#include "Show.h"
 
 #ifndef PIXELGRIDDRAWINGAREA_H
 #define PIXELGRIDDRAWINGAREA_H
@@ -37,6 +38,8 @@ class PixelGridDrawingArea : public Gtk::DrawingArea
         Maestro maestro_;
         /// The drawing area's current runtime.
         chrono::milliseconds runtime_;
+        /// Show controlling this grid.
+        Show show_;
         /// The drawing area's start time.
         chrono::milliseconds start_time_;
 

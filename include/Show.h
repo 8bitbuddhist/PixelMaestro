@@ -5,6 +5,7 @@
 #ifndef SHOW_H
 #define SHOW_H
 
+#include <functional>
 #include "Maestro.h"
 
 using namespace std;
@@ -13,77 +14,62 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class Show {
 		public:
-			/**
-				Set of actions that can be performed by a Transition.
 
-				Standard options:
-					sectionNum: The index of the Section to update.
-			*/
-			enum Actions {
-				/**
-					Sets the color animation of a Section.
-
-					val1: Whether to reverse the animation.
-				*/
-				SET_COLOR_ANIMATION,
-				/**
-					Sets a new Pattern.
-
-					pattern: New Pattern to set.
-				*/
-				SET_PATTERN,
-				/**
-					Sets the update speed of a Section.
-
-					val1: New update speed.
-				*/
-				SET_UPDATE_SPEED,
-				/// Toggles fading of a Section.
-				TOGGLE_FADE
-			};
-
-			/**
-				Options applied on a Transition to the Maestro.
-			*/
-			struct Opts {
-				Section::ColorAnimations animation;
-				Section::Pattern pattern;
-				/// Index of the Section to modify.
-				unsigned short sectionNum;
-				/// Multi-purpose variable.
-				int val1;
-			};
-
-			/** Defines an action that a Maestro will perform at a specific time. */
+			/// Defines an action that a Maestro will perform at a specific time.
 			struct Transition {
-				/// The program time when the action will be performed.
+
+				/// How long until the action will be performed.
 				unsigned long time;
-				/// The action to perform.
-				Actions action;
-				/// Options associated with the action.
-				Opts opts;
-				/// Whether the Transition has already executed.
-				bool ran = false;
+
+				/// The function to call when the Transition triggers.
+				function<void()> action;
 			};
 
-			/** Default constructor */
-			Show(Maestro *maestro, Transition *transitions, unsigned char numTransitions);
+			/// The method used to measure time between Transitions.
+			enum TimingModes {
+
+				/// Counts time from when the Show starts.
+				ABSOLUTE,
+
+				/// Counts time since the last Transition.
+				RELATIVE
+			};
 
 			unsigned short getCurrentIndex();
-			Transition *getCurrentTransition();
+			bool getLooping();
+			Maestro *getMaestro();
+			void setMaestro(Maestro *maestro);
+			void setTiming(TimingModes timing);
+			void setTransitions(Transition *transitions, unsigned char numTransitions);
+			void toggleLooping();
 			void update(unsigned long currentTime);
 
-			/** Default destructor */
-			virtual ~Show();
-
 		private:
-			unsigned short current_index_ = 0;	/// The index of the current Transition.
-			Maestro *maestro_;					/// The Maestro that the Transitions apply to.
-			Transition *transitions_;			/// Array of Transitions.
-			unsigned char num_transitions_;		/// The number of Transitions in the array.
+			/// The index of the current Transition.
+			unsigned short current_index_ = 0;
+
+			/// The index of the last run Transition.
+			unsigned short last_index_ = 0;
+
+			/// The time that the last Transition ran.
+			unsigned long last_time_ = 0;
+
+			/// Whether to loop over the Transition.
+			bool loop_ = false;
+
+			/// The Maestro that the Transitions apply to.
+			Maestro *maestro_;
+
+			/// The number of Transitions in the array.
+			unsigned char num_transitions_;
+
+			/// Method for measuring a Transition's start time. Defaults to Absolute.
+			TimingModes timing_ = TimingModes::ABSOLUTE;
+
+			/// Transitions used in the Show.
+			Transition *transitions_;
 
 			unsigned short getNextIndex();
-			void runTransition(Transition *transition);
 	};
 }
 

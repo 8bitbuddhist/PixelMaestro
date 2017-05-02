@@ -44,8 +44,13 @@ bool PixelGridDrawingArea::update() {
 		system_clock::now().time_since_epoch() - start_time_
 	);
 
-	// Update maestro
-	maestro_.update(runtime_.count());
+	// Update Maestro or Show
+	if (show_.getMaestro() != nullptr) {
+        show_.update(runtime_.count());
+	}
+	else {
+        maestro_.update(runtime_.count());
+    }
 
 	this->queue_draw();
 
