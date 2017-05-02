@@ -1,31 +1,29 @@
 # Show
-Shows are used to schedule animation changes for Sections in a Maestro.
+Shows are used to schedule animation changes for Sections in a Maestro. To initialize a Show, use the `Show::setMaestro()` method, passing in a reference to the Maestro that you wish to control.
+
+For an example of how to configure a Show, see [ShowDemo](../gui/demos/ShowDemo.cpp) in the PixelMaestro_GUI application.
 
 ## Transition
-A `Transition` is a set of instructions for changing the properties of a Section. A Transition consists of the following properties:
+A `Transition` is a set of instructions for changing the properties of a Section. Transitions are defined by:
 * A `time` when the Transition will execute, based on the program's current runtime
 * An `action` that will be performed when the Transition executes
-* Any `opts`, or options, passed to the Section
-* Whether the Transition has already `ran`.
 
-When a Transition's `time` is matched or exceeded by the program's runtime, the `action` is performed with any extra parameters specified in `opts`. After the `action` has finished executing, `ran` is switched to `true`.
-The Show stores an array of Transitions. As each Transition executes, the Show tracks the current index of the array. Since a Show could contain a lot of Transitions, it may be more resource-friendly to overwrite already-executed Transitions than to create a large array of Transitions that only run once.
+An `action` is a function that gets executed when the Transition's `time` is matched or exceeded by the program's runtime.
+
+The Show stores an array of Transitions. As each Transition executes, the Show tracks the current index of the array and the time the last Transition ran.
+
+To set the Transitions in a Show, use the `Show::setTransitions()` method.
 
 ### Specifying an Action
-Actions are specified by the Show::Actions enum. Actions are performed against a Section. Transitions support the following actions:
-* SET_COLOR_ANIMATION: Changes the active color animationto the one specified by `opts.val1`.
-* SET_PATTERN: Changes the pattern to the one specified by `opts.pattern`.
-* SET_UPDATE_SPEED: Changes the refresh rate to the one specified by `opts.val`.
-* TOGGLE_FADE: Toggles fading of the Section.
+Actions are partial function applications created using [std::bind](http://en.cppreference.com/w/cpp/utility/functional/bind). When the Transition executes, it runs this function, then moves on to the next Transition. An Action can be anything from toggling the Maestro to changing a Section's layout to generating a new color scheme.
 
-How to specify which Section to update is described in detail under the heading *Setting Options*.
+## Timing Methods
+A Show can use one of two timing methods: relative or absolute. Relative time measures the amount of time that has passed since the last Transition. For example, if Transition 1 has a time of 1000 and Transition 2 has a time of 2000 ms, Transition 1 will execute 1000 ms after the program starts, and Transition 2 will execute 2000 ms after Transition 1.
 
-### Setting Options
-The `Opts` struct lets you define various parameters as part of the Transition. These parameters include:
-* `animation`: Specifies the Section::ColorAnimation to switch to when using the `SET_COLOR_ANIMATION` Action.
-* `pattern`: Specifies the pattern that will be used for the `PATTERN` color animation.
-* `sectionNum`: Specifies the index of the Section that the Action applies to.
-* `val`: A multi-purpose variable for passing integer values.
+Absolute time measures the amount of time that has passed since the program started. Using the same example above, Transition 1 executes 1000 ms after the program starts, and Transition 2 executes 2000 ms after the program starts (or 1000 ms after Transition 1 starts).
+
+## Looping
+When a Show completes its last Transition, it does nothing except update the Maestro. However, with looping enabled, the Show will repeat its Transitions indefinitely. To enable looping, call `Show::toggleLooping()`. To determine whether a Show is looping, call `Show::getLooping()`. Looping works best when using relative time.
 
 ## Other Methods
 * unsigned short getCurrentIndex(): Returns the index of the next queued Transition.
