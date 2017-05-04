@@ -76,7 +76,7 @@ namespace PixelMaestro {
 
 		@param currentTime Program runtime.
 	*/
-	void Maestro::update(unsigned long currentTime) {
+	void Maestro::update(const unsigned long &currentTime) {
 		// Call each Section's update method.
 		if (running_) {
 			for (unsigned short section = 0; section < num_sections_; section++) {

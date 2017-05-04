@@ -130,7 +130,7 @@ namespace PixelMaestro {
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
 			void setRefreshInterval(unsigned short rate);
 			void toggleFade();
-			void update(unsigned long currentTime);
+			void update(const unsigned long &currentTime);
 			void unsetOverlay();
 
 		private:

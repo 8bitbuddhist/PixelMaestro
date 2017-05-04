@@ -283,7 +283,7 @@ namespace PixelMaestro {
 
 		@param currentTime Program runtime.
 	*/
-	void Section::update(unsigned long currentTime) {
+	void Section::update(const unsigned long &currentTime) {
 
 		// If this Section has an Overlay, update it.
 		if (overlay_.section != nullptr) {

@@ -42,7 +42,7 @@ namespace PixelMaestro {
 			void setTiming(TimingModes timing);
 			void setTransitions(Transition *transitions, unsigned char numTransitions);
 			void toggleLooping();
-			void update(unsigned long currentTime);
+			void update(const unsigned long &currentTime);
 
 		private:
 			/// The index of the current Transition.

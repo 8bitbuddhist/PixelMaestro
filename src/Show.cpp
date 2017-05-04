@@ -89,7 +89,7 @@ namespace PixelMaestro {
 
 		@param currentTime Program runtime.
 	*/
-	void Show::update(unsigned long currentTime) {
+	void Show::update(const unsigned long &currentTime) {
 		// Only run if we're looping, or if we haven't reached the end of the Transition list yet.
 		if (loop_ || (!loop_ && last_index_ != (num_transitions_ - 1))) {
 			/*
