@@ -167,7 +167,7 @@ namespace PixelMaestro {
 		Sets the speed between animation cycles.
 
 		@param interval Rate in milliseconds between animation cycles.
-		@param pause Time in milliseconds to delay the cycle.
+		@param pause Specifies the amount of time to wait in milliseconds until the next animation cycle by speeding up the current cycle.
 	*/
 	void Section::setCycleInterval(unsigned short interval, unsigned short pause) {
 		cycle_interval_ = interval;
@@ -181,6 +181,10 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
+		/*
+			If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
+			This results in the Pixel finishing early and waiting until the next cycle.
+		*/
 		if (pause_ > 0) {
 			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
 		}

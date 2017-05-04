@@ -121,14 +121,14 @@ namespace PixelMaestro {
 			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
-			void setCycleInterval(unsigned short rate, unsigned short pause = 0);
+			void setCycleInterval(unsigned short interval, unsigned short pause = 0);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Section *section, Colors::MixMode mixMode, float alpha = 0.0);
 			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
 			void setPattern(Pattern pattern);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
-			void setRefreshInterval(unsigned short rate);
+			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
 			void update(const unsigned long &currentTime);
 			void unsetOverlay();
@@ -149,7 +149,7 @@ namespace PixelMaestro {
 			/// The time between animation cycles in milliseconds. Defaults to 100.
 			unsigned short cycle_interval_ = 100;
 
-			/// The amount of time the Section will wait in milliseconds before starting an animation cycle. Defaults to 0.
+			/// The amount of time the Section waits in milliseconds before starting the next animation cycle, by finishing the current cycle early. Defaults to 0.
 			unsigned short pause_ = 0;
 
 			/// Whether to fade between cycles. Defaults to true.
