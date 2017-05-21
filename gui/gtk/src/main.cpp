@@ -11,8 +11,8 @@ int main (int argc, char *argv[])
 	//window.set_default_size(200, 200);
 
 	//Logo *pixelGridDrawingArea = new Logo(&window);
-	//Orientation *pixelGridDrawingArea = new Orientation(&window);
-	ShowDemo *pixelGridDrawingArea = new ShowDemo(&window);
+	Orientation *pixelGridDrawingArea = new Orientation(&window);
+	//ShowDemo *pixelGridDrawingArea = new ShowDemo(&window);
 
 	// Refresh at 50Hz
 	Glib::signal_timeout().connect( sigc::mem_fun(pixelGridDrawingArea, &PixelGridDrawingArea::update), 20);
