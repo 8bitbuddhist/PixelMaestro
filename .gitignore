@@ -11,3 +11,4 @@ cmake_install.cmake
 .piolibdeps
 .clang_complete
 .gcc-flags.json
+gui/PixelMaestro_QT.pro.user
