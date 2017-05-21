@@ -14,7 +14,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-        $$PWD/../../src/*.cpp \
+        $$PWD/../src/*.cpp \
         drawingarea/maestrodrawingarea.cpp \
         drawingarea/simpledrawingarea.cpp \
         demo/blinkdemo.cpp \
@@ -31,4 +31,4 @@ FORMS    += \
         widget/maestrocontrol.ui
 
 INCLUDEPATH += include \
-            $$PWD/../../include
+            $$PWD/../include
