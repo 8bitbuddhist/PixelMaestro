@@ -2,7 +2,6 @@
 #define BLINKDEMO_H
 
 #include "Maestro.h"
-#include <QWidget>
 #include "../drawingarea/simpledrawingarea.h"
 
 class BlinkDemo : public SimpleDrawingArea {

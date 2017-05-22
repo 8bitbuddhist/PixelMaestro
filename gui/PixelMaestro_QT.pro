@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = PixelMaestro_QT
 TEMPLATE = app
-
+QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter
 
 SOURCES += main.cpp\
         mainwindow.cpp \

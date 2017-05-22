@@ -1,6 +1,12 @@
 #include "maestrodrawingarea.h"
 #include "simpledrawingarea.h"
 #include <QPainter>
+#include <vector>
+
+SimpleDrawingArea::SimpleDrawingArea(QWidget *parent, Maestro *maestro, unsigned short rows, unsigned short columns) : SimpleDrawingArea(parent, maestro) {
+	this->num_rows_ = rows;
+	this->num_columns_ = columns;
+}
 
 SimpleDrawingArea::SimpleDrawingArea(QWidget *parent, Maestro *maestro) : MaestroDrawingArea(parent, maestro) {
 	this->maestro_ = maestro;
