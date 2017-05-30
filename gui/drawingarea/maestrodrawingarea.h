@@ -3,12 +3,14 @@
 
 #include "Colors.h"
 #include "Maestro.h"
+#include "controller/maestrocontroller.h"
 #include "maestrodrawingarea.h"
 #include "Pixel.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QWidget>
 #include "Section.h"
+#include "controller/sectioncontroller.h"
 #include <vector>
 
 using namespace PixelMaestro;
@@ -17,13 +19,10 @@ class MaestroDrawingArea : public QWidget {
 	Q_OBJECT
 
 	public:
-		MaestroDrawingArea(QWidget *parent, Maestro *maestro);
-		MaestroDrawingArea(QWidget *parent, Maestro *maestro, unsigned short rows, unsigned short columns);
+		MaestroDrawingArea(QWidget *parent, MaestroController *maestroController);
+		//MaestroDrawingArea(QWidget *parent, Maestro *maestro, unsigned short rows, unsigned short columns);
 		Maestro *getMaestro();
-
-		std::vector<Colors::RGB> colors_;
-		std::vector<Pixel> pixels_;
-		std::vector<Section> sections_;
+		MaestroController *getMaestroController();
 
 	protected:
 		QElapsedTimer elapsedTimer;
@@ -31,6 +30,7 @@ class MaestroDrawingArea : public QWidget {
 
 		// Maestro/grid variables
 		Maestro *maestro_;
+		MaestroController *maestro_controller_;
 		unsigned short num_rows_ = 10;
 		unsigned short num_columns_ = 10;
 		unsigned short num_sections_ = 1;

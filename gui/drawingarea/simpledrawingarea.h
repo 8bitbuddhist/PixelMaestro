@@ -1,12 +1,12 @@
 #ifndef SIMPLEDRAWINGAREA_H
 #define SIMPLEDRAWINGAREA_H
 
+#include "controller/maestrocontroller.h"
 #include "maestrodrawingarea.h"
 
 class SimpleDrawingArea : public MaestroDrawingArea {
 	public:
-		SimpleDrawingArea(QWidget *parent, Maestro *maestro);
-		SimpleDrawingArea(QWidget *parent, Maestro *maestro, unsigned short rows, unsigned short columns);
+		SimpleDrawingArea(QWidget *parent, MaestroController *maestroController);
 
 	protected:
 		void paintEvent(QPaintEvent *event) override;

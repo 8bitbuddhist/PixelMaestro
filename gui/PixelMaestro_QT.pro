@@ -13,22 +13,26 @@ TEMPLATE = app
 QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-        $$PWD/../src/*.cpp \
-        drawingarea/maestrodrawingarea.cpp \
-        drawingarea/simpledrawingarea.cpp \
-        demo/blinkdemo.cpp \
-        widget/maestrocontrol.cpp \
+		mainwindow.cpp \
+		$$PWD/../src/*.cpp \
+		drawingarea/maestrodrawingarea.cpp \
+		drawingarea/simpledrawingarea.cpp \
+		demo/blinkdemo.cpp \
+		widget/maestrocontrol.cpp \
+		drawingarea/controller/sectioncontroller.cpp \
+		drawingarea/controller/maestrocontroller.cpp
 
 HEADERS += mainwindow.h \
-        demo/blinkdemo.h \
-        drawingarea/maestrodrawingarea.h \
-        drawingarea/simpledrawingarea.h \
-        widget/maestrocontrol.h
+		demo/blinkdemo.h \
+		drawingarea/maestrodrawingarea.h \
+		drawingarea/simpledrawingarea.h \
+		widget/maestrocontrol.h \
+		drawingarea/controller/sectioncontroller.h \
+		drawingarea/controller/maestrocontroller.h
 
-FORMS    += \
-        mainwindow.ui \
-        widget/maestrocontrol.ui
+FORMS	+= \
+		mainwindow.ui \
+		widget/maestrocontrol.ui
 
 INCLUDEPATH += include \
-            $$PWD/../include
+			$$PWD/../include

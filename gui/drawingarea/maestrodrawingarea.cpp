@@ -5,9 +5,9 @@
 
 using namespace PixelMaestro;
 
-MaestroDrawingArea::MaestroDrawingArea(QWidget *parent, Maestro *maestro) : QWidget(parent) {
+MaestroDrawingArea::MaestroDrawingArea(QWidget *parent, MaestroController *maestroController) : QWidget(parent) {
 	// Initialize the Maestro
-	this->maestro_ = maestro;
+	this->maestro_controller_ = maestroController;
 
 	// Initialize refresh timer
 	this->timer = new QTimer(this);
@@ -25,7 +25,11 @@ Maestro *MaestroDrawingArea::getMaestro() {
 	return this->maestro_;
 }
 
+MaestroController *MaestroDrawingArea::getMaestroController() {
+	return this->maestro_controller_;
+}
+
 void MaestroDrawingArea::refreshMaestro() {
-	this->maestro_->update(this->elapsedTimer.elapsed());
+	this->maestro_controller_->getMaestro()->update(this->elapsedTimer.elapsed());
 	this->update();
 }

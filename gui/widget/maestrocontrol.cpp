@@ -1,5 +1,7 @@
 #include "maestrocontrol.h"
 #include "ui_maestrocontrol.h"
+#include "drawingarea/controller/maestrocontroller.h"
+#include "drawingarea/controller/sectioncontroller.h"
 #include "drawingarea/simpledrawingarea.h"
 #include <QPalette>
 #include <QString>
@@ -8,14 +10,17 @@
 MaestroControl::MaestroControl(QWidget *parent, SimpleDrawingArea *drawingarea) : QWidget(parent), ui(new Ui::MaestroControl) {
 	this->maestro_ = drawingarea->getMaestro();
 	this->drawing_area_ = drawingarea;
+	this->maestro_controller_ = this->drawing_area_->getMaestroController();
 	ui->setupUi(this);
 
 	this->initialize();
 }
 
 void MaestroControl::initialize() {
+	this->maestro_controller_->addSectionController();
+
 	// Populate Section combo box
-	for (int section = 0; section < maestro_->getNumSections(); section++) {
+	for (int section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
 		ui->sectionComboBox->addItem("Section " + QString::number(section + 1));
 	}
 	ui->sectionComboBox->setCurrentIndex(active_section_);
@@ -29,17 +34,17 @@ void MaestroControl::initialize() {
 
 	// Set defaults
 	ui->animationComboBox->setCurrentIndex(2);
-	ui->cycleSlider->setValue((int)maestro_->getSection(active_section_)->getCycleSpeed());
+	ui->cycleSlider->setValue((int)getActiveSectionController()->getSection()->getCycleSpeed());
 }
 
 void MaestroControl::on_cycleSlider_valueChanged(int value) {
 	value = ui->cycleSlider->maximum() - value;
-	maestro_->getSection(active_section_)->setCycleInterval((unsigned short)value);
+	getActiveSectionController()->getSection()->setCycleInterval((unsigned short)value);
 	ui->cycleSlider->setToolTip(QString::number(value));
 }
 
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-	maestro_->getSection(active_section_)->setColorAnimation((Section::ColorAnimations)index, ui->reverseAnimationCheckBox->isChecked());
+	getActiveSectionController()->getSection()->setColorAnimation((Section::ColorAnimations)index, ui->reverseAnimationCheckBox->isChecked());
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
@@ -57,11 +62,11 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 			this->on_custom_color_changed();
 			break;
 		case 1:
-			maestro_->getSection(active_section_)->setColors(Colors::RAINBOW, 7);
+			getActiveSectionController()->getSection()->setColors(Colors::RAINBOW, 7);
 			ui->numColorsSpinBox->setValue(7);
 			break;
 		default:
-			maestro_->getSection(active_section_)->setColors(Colors::COLORWHEEL, 12);
+			getActiveSectionController()->getSection()->setColors(Colors::COLORWHEEL, 12);
 			ui->numColorsSpinBox->setValue(12);
 	}
 }
@@ -88,10 +93,11 @@ void MaestroControl::on_ui_changed() {
 
 void MaestroControl::changeScalingColorArray(Colors::RGB color) {
 	unsigned int numColors = (unsigned int)ui->numColorsSpinBox->value();
-	this->drawing_area_->colors_.resize(numColors);
+
+	getActiveSectionController()->colors_.resize(numColors);
 	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-	Colors::generateScalingColorArray(&this->drawing_area_->colors_[0], color, numColors, threshold, true);
-	maestro_->getSection(active_section_)->setColors(&this->drawing_area_->colors_[0], numColors);
+	Colors::generateScalingColorArray(&getActiveSectionController()->colors_[0], color, numColors, threshold, true);
+	getActiveSectionController()->getSection()->setColors(&getActiveSectionController()->colors_[0], numColors);
 }
 
 void MaestroControl::on_redDial_valueChanged(int value) {
@@ -112,4 +118,8 @@ void MaestroControl::on_numColorsSpinBox_valueChanged(int arg1) {
 
 void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
 	this->on_custom_color_changed();
+}
+
+SectionController *MaestroControl::getActiveSectionController() {
+	return this->maestro_controller_->getSectionController(active_section_);
 }

@@ -1,13 +1,12 @@
 #ifndef BLINKDEMO_H
 #define BLINKDEMO_H
 
-#include "Maestro.h"
+#include "drawingarea/controller/maestrocontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
 
 class BlinkDemo : public SimpleDrawingArea {
 	public:
-		BlinkDemo(QWidget *parent);
-		Maestro maestro_;
+		BlinkDemo(QWidget *parent, MaestroController *maestroController);
 };
 
 #endif // BLINKDEMO_H

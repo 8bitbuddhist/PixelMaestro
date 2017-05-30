@@ -3,6 +3,8 @@
 
 #include "Colors.h"
 #include "Maestro.h"
+#include "drawingarea/controller/maestrocontroller.h"
+#include "drawingarea/controller/sectioncontroller.h"
 #include "drawingarea/simpledrawingarea.h"
 #include <QWidget>
 
@@ -24,6 +26,10 @@ class MaestroControl : public QWidget {
 		Maestro *maestro_;
 		SimpleDrawingArea *drawing_area_;
 		Ui::MaestroControl *ui;
+
+		MaestroController *maestro_controller_;
+
+		SectionController *getActiveSectionController();
 
 		void changeScalingColorArray(Colors::RGB color);
 		void initialize();

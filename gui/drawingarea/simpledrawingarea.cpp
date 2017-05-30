@@ -1,15 +1,11 @@
+#include "controller/maestrocontroller.h"
 #include "maestrodrawingarea.h"
 #include "simpledrawingarea.h"
 #include <QPainter>
 #include <vector>
 
-SimpleDrawingArea::SimpleDrawingArea(QWidget *parent, Maestro *maestro, unsigned short rows, unsigned short columns) : SimpleDrawingArea(parent, maestro) {
-	this->num_rows_ = rows;
-	this->num_columns_ = columns;
-}
-
-SimpleDrawingArea::SimpleDrawingArea(QWidget *parent, Maestro *maestro) : MaestroDrawingArea(parent, maestro) {
-	this->maestro_ = maestro;
+SimpleDrawingArea::SimpleDrawingArea(QWidget *parent, MaestroController *maestroController) : MaestroDrawingArea(parent, maestroController) {
+	this->maestro_controller_ = maestroController;
 }
 
 void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
@@ -21,10 +17,10 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	QColor tmpColor;
 	QBrush tmpBrush;
 	QRect tmpRect;
-	for (unsigned short section = 0; section < maestro_->getNumSections(); section++) {
-		for (unsigned short row = 0; row < maestro_->getSection(section)->getLayout()->rows; row++) {
-			for (unsigned short pixel = 0; pixel < maestro_->getSection(section)->getLayout()->columns; pixel++) {
-				tmpRGB = maestro_->getSection(section)->getPixelColor(maestro_->getSection(section)->getPixelIndex(row, pixel));
+	for (unsigned short section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
+		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->rows; row++) {
+			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->columns; pixel++) {
+				tmpRGB = this->maestro_controller_->getSectionController(section)->getSection()->getPixelColor(this->maestro_controller_->getSectionController(section)->getSection()->getPixelIndex(row, pixel));
 				tmpColor.setRgb(tmpRGB.r, tmpRGB.g, tmpRGB.b);
 				tmpBrush.setColor(tmpColor);
 				tmpBrush.setStyle(Qt::BrushStyle::SolidPattern);
