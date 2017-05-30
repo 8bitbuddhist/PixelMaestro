@@ -10,18 +10,18 @@ using namespace PixelMaestro;
 
 class SectionController {
 	public:
-		SectionController(Section *section);
+		SectionController();
+		// TODO: Make colors_ private
 		std::vector<Colors::RGB> colors_;
 
 		Section *getSection();
-		SectionController *getOverlayController();
+		Section *getOverlay();
 		void setControllerColors(Colors::RGB *colors, unsigned short numColors);
-		void setOverlayController(SectionController *overlayController, Colors::MixMode mixMode, float alpha);
+		void setOverlay(Colors::MixMode mixMode, float alpha);
 
 	private:
 		std::vector<Pixel> pixels_;
-		Section *section_;
-		SectionController *overlay_controller_;
+		std::vector<Section> sections_;
 };
 
 #endif // SECTIONCONTROLLER_H

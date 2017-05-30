@@ -19,7 +19,7 @@ class MaestroController {
 
 	private:
 		Maestro maestro_;
-		std::vector<Section> sections_;
+		std::vector<Section*> sections_;
 		std::vector<SectionController> section_controllers_;
 
 		void reassignSections();

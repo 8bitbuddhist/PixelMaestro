@@ -8,8 +8,8 @@ MaestroController::MaestroController() {
 }
 
 void MaestroController::addSectionController() {
-	this->sections_.push_back(Section());
-	this->section_controllers_.push_back(SectionController(&this->sections_[this->sections_.size() - 1]));
+	this->section_controllers_.push_back(SectionController());
+	this->sections_.push_back(this->section_controllers_[this->section_controllers_.size() - 1].getSection());
 	reassignSections();
 }
 
@@ -34,5 +34,5 @@ SectionController *MaestroController::getSectionController(int index) {
 }
 
 void MaestroController::reassignSections() {
-	this->maestro_.setSections(&this->sections_[0], this->sections_.size());
+	this->maestro_.setSections(this->sections_[0], this->sections_.size());
 }

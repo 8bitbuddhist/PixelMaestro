@@ -5,21 +5,26 @@
 
 using namespace PixelMaestro;
 
-SectionController::SectionController(Section *section) {
-	// TODO: Allow setting rows and columns
+SectionController::SectionController() {
+	// TODO: Allow customizing rows and columns
 	unsigned short rows = 10;
 	unsigned short columns = 10;
 	this->pixels_.resize(rows * columns);
-	this->section_ = section;
-	this->section_->setPixels(&this->pixels_[0], rows, columns);
+	this->sections_.push_back(Section());
+	this->sections_[0].setPixels(&this->pixels_[0], rows, columns);
 }
 
-SectionController *SectionController::getOverlayController() {
-	return this->overlay_controller_;
+Section *SectionController::getOverlay() {
+	if (this->sections_.size() > 1) {
+		return &this->sections_[1];
+	}
+	else {
+		return nullptr;
+	}
 }
 
 Section *SectionController::getSection() {
-	return this->section_;
+	return &this->sections_[0];
 }
 
 void SectionController::setControllerColors(Colors::RGB *colors, unsigned short numColors) {
@@ -29,10 +34,10 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
 		colors_[i] = colors[i];
 	}
 
-	this->section_->setColors(&this->colors_[0], numColors);
+	this->sections_[0].setColors(&this->colors_[0], numColors);
 }
 
-void SectionController::setOverlayController(SectionController *overlayController, Colors::MixMode mixMode, float alpha) {
-	this->overlay_controller_ = overlayController;
-	this->section_->setOverlay(this->overlay_controller_->getSection(), mixMode, alpha);
+void SectionController::setOverlay(Colors::MixMode mixMode, float alpha) {
+	this->sections_.push_back(Section());
+	this->sections_[0].setOverlay(&this->sections_[1], mixMode, alpha);
 }
