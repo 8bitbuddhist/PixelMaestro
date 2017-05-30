@@ -14,10 +14,12 @@ class SectionController {
 		// TODO: Make colors_ private
 		std::vector<Colors::RGB> colors_;
 
-		Section *getSection();
+		void addOverlay(Colors::MixMode mixMode, float alpha);
+		Colors::RGB *getColors();
+		unsigned short getNumColors();
 		Section *getOverlay();
+		Section *getSection();
 		void setControllerColors(Colors::RGB *colors, unsigned short numColors);
-		void setOverlay(Colors::MixMode mixMode, float alpha);
 
 	private:
 		std::vector<Pixel> pixels_;

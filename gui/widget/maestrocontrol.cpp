@@ -94,10 +94,15 @@ void MaestroControl::on_ui_changed() {
 void MaestroControl::changeScalingColorArray(Colors::RGB color) {
 	unsigned int numColors = (unsigned int)ui->numColorsSpinBox->value();
 
-	getActiveSectionController()->colors_.resize(numColors);
+	std::vector<Colors::RGB> tmpColors;
+	tmpColors.resize(numColors);
+
 	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-	Colors::generateScalingColorArray(&getActiveSectionController()->colors_[0], color, numColors, threshold, true);
-	getActiveSectionController()->getSection()->setColors(&getActiveSectionController()->colors_[0], numColors);
+	Colors::generateScalingColorArray(&tmpColors[0], color, numColors, threshold, true);
+	getActiveSectionController()->setControllerColors(&tmpColors[0], numColors);
+
+	// Release tmpColors
+	std::vector<Colors::RGB>().swap(tmpColors);
 }
 
 void MaestroControl::on_redDial_valueChanged(int value) {
