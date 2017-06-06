@@ -47,6 +47,9 @@ class MaestroControl : public QWidget {
 		void on_blueDial_valueChanged(int value);
 		void on_numColorsSpinBox_valueChanged(int arg1);
 		void on_thresholdSpinBox_valueChanged(int arg1);
+		void on_fadeCheckBox_toggled(bool checked);
+		void on_columnsSpinBox_valueChanged(int arg1);
+		void on_rowsSpinBox_valueChanged(int arg1);
 };
 
 #endif // MAESTROCONTROL_H

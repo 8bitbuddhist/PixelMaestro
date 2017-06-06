@@ -29,12 +29,15 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->addItems({"Solid", "Blink", "Wave", "Pong", "Merge", "RandomIndex", "Sparkle", "Pattern", "Cycle"});
 
 	// Populate color combo box
-	ui->colorComboBox->addItems({"Custom", "Rainbow", "Color Wheel"});
+	ui->colorComboBox->addItems({"Custom", "Fire", "Deep Sea", "Color Wheel"});
 	ui->colorComboBox->setCurrentIndex(2);
 
 	// Set defaults
 	ui->animationComboBox->setCurrentIndex(2);
 	ui->cycleSlider->setValue((int)getActiveSectionController()->getSection()->getCycleSpeed());
+
+	ui->rowsSpinBox->setValue(getActiveSectionController()->getSection()->getLayout()->rows);
+	ui->columnsSpinBox->setValue(getActiveSectionController()->getSection()->getLayout()->columns);
 }
 
 void MaestroControl::on_cycleSlider_valueChanged(int value) {
@@ -58,16 +61,27 @@ MaestroControl::~MaestroControl() {
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 	// TODO: Hide custom controls when a pre-defined scheme is selected
 	switch (index) {
-		case 0:
+		case 0:	// Custom
 			this->on_custom_color_changed();
 			break;
-		case 1:
-			getActiveSectionController()->getSection()->setColors(Colors::RAINBOW, 7);
-			ui->numColorsSpinBox->setValue(7);
-			break;
-		default:
+		case 1:	// Fire
+			{
+				unsigned char numColors = 14;
+				Colors::RGB fire[numColors];
+				Colors::generateScalingColorArray(fire, Colors::RED, Colors::ORANGE, numColors, true);
+				getActiveSectionController()->setControllerColors(fire, numColors);
+				break;
+			}
+		case 2:	// Deep Sea
+			{
+				unsigned char numColors = 14;
+				Colors::RGB deepSea[numColors];
+				Colors::generateScalingColorArray(deepSea, Colors::BLUE, Colors::GREEN, numColors, true);
+				getActiveSectionController()->setControllerColors(deepSea, numColors);
+				break;
+			}
+		default:// Color Wheel
 			getActiveSectionController()->getSection()->setColors(Colors::COLORWHEEL, 12);
-			ui->numColorsSpinBox->setValue(12);
 	}
 }
 
@@ -127,4 +141,18 @@ void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
 
 SectionController *MaestroControl::getActiveSectionController() {
 	return this->maestro_controller_->getSectionController(active_section_);
+}
+
+void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
+	getActiveSectionController()->getSection()->toggleFade();
+}
+
+void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
+	getActiveSectionController()->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+	this->drawing_area_->resizePixels();
+}
+
+void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
+	getActiveSectionController()->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+	this->drawing_area_->resizePixels();
 }

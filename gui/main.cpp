@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 	MainWindow w;
 
 	// Set a starting window size
-	w.resize(410, 800);
+	w.resize(500, 800);
 
 	// Add drawing area to form
 	QVBoxLayout *mainLayout = w.findChild<QVBoxLayout*>("mainLayout");

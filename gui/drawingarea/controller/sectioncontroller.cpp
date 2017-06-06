@@ -6,21 +6,28 @@
 using namespace PixelMaestro;
 
 SectionController::SectionController() {
-	// TODO: Allow customizing rows and columns
-	unsigned short rows = 10;
-	unsigned short columns = 10;
-	this->pixels_.resize(rows * columns);
+	this->pixels_.resize(layout_.rows * layout_.columns);
 	this->sections_.push_back(Section());
-	this->sections_[0].setPixels(&this->pixels_[0], rows, columns);
+	this->sections_[0].setPixels(&this->pixels_[0], layout_.rows, layout_.columns);
 }
 
 void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
+	// Resize Pixel grid
+	int pixels = this->pixels_.size();
+	this->pixels_.resize(pixels * 2);
+
+	// Create overlay and assign Pixels
 	this->sections_.push_back(Section());
+	this->sections_[1].setPixels(&this->pixels_[pixels], layout_.rows, layout_.columns);
 	this->sections_[0].setOverlay(&this->sections_[1], mixMode, alpha);
 }
 
 Colors::RGB *SectionController::getColors() {
 	return &this->colors_[0];
+}
+
+Section::Layout SectionController::getLayout() {
+	return this->layout_;
 }
 
 unsigned short SectionController::getNumColors() {
@@ -51,4 +58,10 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
 	}
 
 	this->sections_[0].setColors(&this->colors_[0], numColors);
+}
+
+void SectionController::setLayout(unsigned short rows, unsigned short columns) {
+	this->layout_ = {rows, columns};
+	this->pixels_.resize(layout_.rows * layout_.columns);
+	this->sections_[0].setPixels(&this->pixels_[0], layout_.rows, layout_.columns);
 }

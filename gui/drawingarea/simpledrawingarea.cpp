@@ -39,3 +39,25 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 		}
 	}
 }
+
+void SimpleDrawingArea::resizePixels() {
+	int minDimension, minLayout;
+	if (this->width() < this->height()) {
+		minDimension = this->width();
+	}
+	else {
+		minDimension = this->height();
+	}
+
+	Section::Layout *layout = this->maestro_controller_->getSectionController(0)->getSection()->getLayout();
+	if (layout->rows > layout->columns) {
+		minLayout = layout->rows;
+	}
+	else {
+		minLayout = layout->columns;
+	}
+
+	RADIUS_ = (minDimension / minLayout) / 2;
+	PAD_ = RADIUS_ * 2;
+	OFFSET_ = PAD_;
+}

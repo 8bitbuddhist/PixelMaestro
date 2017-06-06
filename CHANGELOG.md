@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.3] - Unreleased
+### Added
+- Added QT-based GUI with controls for user input.
+
+### Removed
+- Removed GTK-based GUI
+
 ## [v0.2] - 2017-05-01
 ### Added
 - Added Changelog file.
