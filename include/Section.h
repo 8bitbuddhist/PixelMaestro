@@ -22,9 +22,6 @@ namespace PixelMaestro {
 			union AnimationOpts {
 				/// Threshold for activating a Pixel using the SPARKLE animation. The higher the threshold, the fewer the number of lit Pixels (0 - 100).
 				unsigned char sparkle_threshold;
-
-				/// Maximum brightness level for STATIC animation (0.0 - 1.0)
-				float static_alpha_blend;
 			};
 
 			/// Set of animations usable by the Section.
@@ -55,9 +52,6 @@ namespace PixelMaestro {
 
 				/// Cycles all pixels through all stored colors.
 				CYCLE,
-
-				/// Blends each pixel between varying levels of gray. THIS MODIFIES THE COLOR ARRAY.
-				STATIC,
 
 				/// Turns off the Section. This should always be the last animation in the list.
 				NONE
@@ -205,7 +199,6 @@ namespace PixelMaestro {
 			void animation_randomIndex();
 			void animation_solid();
 			void animation_sparkle();
-			void animation_static();
 			void animation_updateCycle(unsigned int min, unsigned int max);
 			void animation_wave();
 	};

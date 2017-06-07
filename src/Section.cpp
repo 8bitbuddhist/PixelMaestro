@@ -151,13 +151,6 @@ namespace PixelMaestro {
 				}
 				break;
 			}
-			case STATIC:
-			{
-				if (!this->animation_opts_.static_alpha_blend) {
-					this->animation_opts_.static_alpha_blend = 0.95;
-				}
-				break;
-			}
 		}
 
 		reverse_animation_ = reverseAnimation;
@@ -358,9 +351,6 @@ namespace PixelMaestro {
 						break;
 					case Section::ColorAnimations::PATTERN:
 						animation_pattern();
-						break;
-					case Section::ColorAnimations::STATIC:
-						animation_static();
 						break;
 					default:
 						setAll(&Colors::BLACK);
@@ -587,18 +577,6 @@ namespace PixelMaestro {
 					setOne(row, column, &Colors::BLACK);
 				}
 			}
-		}
-	}
-
-
-	/**
-		Creates a static effect by blending each Pixel between varying levels of gray.
-		WARNING: THIS ANIMATION MODIFIES THE COLOR ARRAY.
-	*/
-	void Section::animation_static() {
-		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (this->animation_opts_.static_alpha_blend) ) ));
-			setOne(pixel, &colors_[pixel]);
 		}
 	}
 
