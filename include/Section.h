@@ -18,6 +18,15 @@ namespace PixelMaestro {
 				VERTICAL
 			};
 
+			/// Extra parameters for the current animation. If you do not specify them, they will be set implicitly in Section::setColorAnimation().
+			union AnimationOpts {
+				/// Threshold for activating a Pixel using the SPARKLE animation. The higher the threshold, the fewer the number of lit Pixels (0 - 100).
+				unsigned char sparkle_threshold;
+
+				/// Maximum brightness level for STATIC animation (0.0 - 1.0)
+				float static_alpha_blend;
+			};
+
 			/// Set of animations usable by the Section.
 			enum ColorAnimations {
 				/// Sets each Pixel to its corresponding color.
@@ -118,6 +127,7 @@ namespace PixelMaestro {
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);
+			void setAnimationOpts(AnimationOpts opts);
 			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
@@ -136,6 +146,9 @@ namespace PixelMaestro {
 		private:
 			/// The orientation of the animation. Defaults to HORIZONTAL.
 			AnimationOrientations animation_orientation_ = AnimationOrientations(HORIZONTAL);
+
+			/// Extra parameters for running animations.
+			AnimationOpts animation_opts_;
 
 			/// The active Section animation. Defaults to SOLID.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);

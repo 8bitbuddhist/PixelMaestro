@@ -111,6 +111,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets extra parameters for the current animation.
+	 * @param opts Parameters to set.
+	 */
+	void Section::setAnimationOpts(AnimationOpts opts) {
+		this->animation_opts_ = opts;
+	}
+
+	/**
 		Changes the current color animation.
 
 		@param animation Animation selection.
@@ -132,6 +140,24 @@ namespace PixelMaestro {
 			}
 
 			color_animation_ = ColorAnimations(animationNum);
+		}
+
+		// Handle any extra options
+		switch (color_animation_) {
+			case SPARKLE:
+			{
+				if (!this->animation_opts_.sparkle_threshold) {
+					this->animation_opts_.sparkle_threshold = 60;
+				}
+				break;
+			}
+			case STATIC:
+			{
+				if (!this->animation_opts_.static_alpha_blend) {
+					this->animation_opts_.static_alpha_blend = 0.95;
+				}
+				break;
+			}
 		}
 
 		reverse_animation_ = reverseAnimation;
@@ -554,11 +580,7 @@ namespace PixelMaestro {
 	void Section::animation_sparkle() {
 		for (unsigned int row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
-				/*
-					Specify a threshold for the number of lit Pixels.
-					The number of lit Pixels is inversely proportional to the threshold (e.g. the higher the threshold, the fewer the lit Pixels)
-				*/
-				if ((rand() % 100) > 60) {
+				if ((rand() % 100) > this->animation_opts_.sparkle_threshold) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
@@ -575,7 +597,7 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_static() {
 		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (0.95) ) ));
+			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (this->animation_opts_.static_alpha_blend) ) ));
 			setOne(pixel, &colors_[pixel]);
 		}
 	}

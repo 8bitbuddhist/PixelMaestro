@@ -28,7 +28,12 @@ HEADERS += mainwindow.h \
 		drawingarea/simpledrawingarea.h \
 		widget/maestrocontrol.h \
 		drawingarea/controller/sectioncontroller.h \
-		drawingarea/controller/maestrocontroller.h
+		drawingarea/controller/maestrocontroller.h \
+    ../include/Colors.h \
+    ../include/Maestro.h \
+    ../include/Pixel.h \
+    ../include/Section.h \
+    ../include/Show.h
 
 FORMS	+= \
 		mainwindow.ui \
