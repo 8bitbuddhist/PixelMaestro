@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = PixelMaestro_QT
 TEMPLATE = app
-QMAKE_CXXFLAGS_WARN_OFF -= -Wunused-parameter
+QMAKE_CXXFLAGS = -Wno-unused-parameter
 
 SOURCES += main.cpp\
 		mainwindow.cpp \
@@ -20,7 +20,7 @@ SOURCES += main.cpp\
 		demo/blinkdemo.cpp \
 		widget/maestrocontrol.cpp \
 		drawingarea/controller/sectioncontroller.cpp \
-		drawingarea/controller/maestrocontroller.cpp
+		drawingarea/controller/maestrocontroller.cpp \
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -33,7 +33,8 @@ HEADERS += mainwindow.h \
     ../include/Maestro.h \
     ../include/Pixel.h \
     ../include/Section.h \
-    ../include/Show.h
+    ../include/Show.h \
+    ../include/Utility.h
 
 FORMS	+= \
 		mainwindow.ui \

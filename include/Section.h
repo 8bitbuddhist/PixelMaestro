@@ -66,7 +66,7 @@ namespace PixelMaestro {
 				Section *section = nullptr;
 
 				/// Method of blending the output from the Overlay with the base Section.
-				Colors::MixMode mixMode;
+				Colors::MixMode mixMode = Colors::MixMode::NONE;
 
 				/// Transparency level of the overlaid Section (if applicable).
 				float alpha;

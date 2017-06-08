@@ -20,9 +20,8 @@ void MaestroControl::initialize() {
 	this->maestro_controller_->addSectionController();
 
 	// Populate Section combo box
-	for (int section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
-		ui->sectionComboBox->addItem("Section " + QString::number(section + 1));
-	}
+	ui->sectionComboBox->addItem("Section");
+	ui->sectionComboBox->addItem("Overlay");
 	ui->sectionComboBox->setCurrentIndex(active_section_);
 
 	// Populate Animation combo box
@@ -50,8 +49,18 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	getActiveSectionController()->getSection()->setColorAnimation((Section::ColorAnimations)index, ui->reverseAnimationCheckBox->isChecked());
 }
 
-void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
-	this->active_section_ = index;
+void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
+	if (arg1 == "Overlay") {
+		// Switch the active Section to the Overlay
+		if (getActiveSectionController()->getOverlay() == nullptr) {
+			getActiveSectionController()->addOverlay(Colors::MixMode::OVERLAY, 0.5);
+		}
+
+		this->active_section_ = 1;
+	}
+	else {
+		this->active_section_ = 0;
+	}
 }
 
 MaestroControl::~MaestroControl() {

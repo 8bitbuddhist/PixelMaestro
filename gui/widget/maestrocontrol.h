@@ -39,7 +39,6 @@ class MaestroControl : public QWidget {
 	private slots:
 		void on_cycleSlider_valueChanged(int value);
 		void on_animationComboBox_currentIndexChanged(int index);
-		void on_sectionComboBox_currentIndexChanged(int index);
 		void on_colorComboBox_currentIndexChanged(int index);
 		void on_reverseAnimationCheckBox_toggled(bool checked);
 		void on_redDial_valueChanged(int value);
@@ -50,6 +49,7 @@ class MaestroControl : public QWidget {
 		void on_fadeCheckBox_toggled(bool checked);
 		void on_columnsSpinBox_valueChanged(int arg1);
 		void on_rowsSpinBox_valueChanged(int arg1);
+		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
 };
 
 #endif // MAESTROCONTROL_H

@@ -22,28 +22,52 @@
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QFormLayout" name="controlLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="sectionLabel">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Section</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="sectionComboBox">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>0</height>
-        </size>
-       </property>
-      </widget>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="sectionOptionsLayout">
+       <item>
+        <widget class="QLabel" name="rowsLabel">
+         <property name="text">
+          <string>Rows</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="rowsSpinBox">
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="value">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="columnLabel">
+         <property name="text">
+          <string>Columns</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="columnsSpinBox">
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::PlusMinus</enum>
+         </property>
+         <property name="maximum">
+          <number>255</number>
+         </property>
+         <property name="value">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="animationLabel">
@@ -67,6 +91,27 @@
         </size>
        </property>
       </widget>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="animationOptionsLayout">
+       <item>
+        <widget class="QCheckBox" name="reverseAnimationCheckBox">
+         <property name="text">
+          <string>Reverse</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="fadeCheckBox">
+         <property name="text">
+          <string>Fade</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </item>
      <item row="5" column="0">
       <widget class="QLabel" name="colorLabel">
@@ -247,73 +292,28 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
-      <layout class="QHBoxLayout" name="animationOptionsLayout">
-       <item>
-        <widget class="QCheckBox" name="reverseAnimationCheckBox">
-         <property name="text">
-          <string>Reverse</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="fadeCheckBox">
-         <property name="text">
-          <string>Fade</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <item row="0" column="0">
+      <widget class="QLabel" name="sectionLabel">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Active Area</string>
+       </property>
+      </widget>
      </item>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="sectionOptionsLayout">
-       <item>
-        <widget class="QLabel" name="rowsLabel">
-         <property name="text">
-          <string>Rows</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="rowsSpinBox">
-         <property name="frame">
-          <bool>true</bool>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::PlusMinus</enum>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-         <property name="value">
-          <number>10</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="columnLabel">
-         <property name="text">
-          <string>Columns</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="columnsSpinBox">
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::PlusMinus</enum>
-         </property>
-         <property name="maximum">
-          <number>255</number>
-         </property>
-         <property name="value">
-          <number>10</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="sectionComboBox">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

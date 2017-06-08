@@ -3,10 +3,10 @@
 	Requires Pixel and Colors classes.
 */
 
-#include <stdlib.h>
 #include "../include/Colors.h"
 #include "../include/Pixel.h"
 #include "../include/Section.h"
+#include "../include/Utility.h"
 
 namespace PixelMaestro {
 
@@ -151,6 +151,8 @@ namespace PixelMaestro {
 				}
 				break;
 			}
+			default:
+				break;
 		}
 
 		reverse_animation_ = reverseAnimation;
@@ -309,7 +311,7 @@ namespace PixelMaestro {
 	void Section::update(const unsigned long &currentTime) {
 
 		// If this Section has an Overlay, update it.
-		if (overlay_.section != nullptr) {
+		if (overlay_.mixMode != Colors::MixMode::NONE) {
 			overlay_.section->update(currentTime);
 		}
 
@@ -373,7 +375,7 @@ namespace PixelMaestro {
 		}
 	}
 
-	// Private animation functions
+	// Animation functions
 
 	/// Flashes all Pixels on and off.
 	void Section::animation_blink() {
@@ -553,7 +555,7 @@ namespace PixelMaestro {
 	/// Sets each Pixel to a random stored color .
 	void Section::animation_randomIndex() {
 		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			setOne(pixel, &colors_[rand() % num_colors_]);
+			setOne(pixel, &colors_[Utility::rand() % num_colors_]);
 		}
 	}
 
@@ -570,7 +572,7 @@ namespace PixelMaestro {
 	void Section::animation_sparkle() {
 		for (unsigned int row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
-				if ((rand() % 100) > this->animation_opts_.sparkle_threshold) {
+				if ((Utility::rand() % 100) > this->animation_opts_.sparkle_threshold) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
