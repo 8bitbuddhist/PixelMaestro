@@ -432,7 +432,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>PixelMaestro</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">

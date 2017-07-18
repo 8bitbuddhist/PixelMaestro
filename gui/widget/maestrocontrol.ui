@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>448</width>
-    <height>382</height>
+    <width>405</width>
+    <height>333</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,15 +22,8 @@
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QFormLayout" name="controlLayout">
-     <item row="1" column="1">
+     <item row="0" column="1">
       <layout class="QHBoxLayout" name="sectionOptionsLayout">
-       <item>
-        <widget class="QLabel" name="rowsLabel">
-         <property name="text">
-          <string>Rows</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="QSpinBox" name="rowsSpinBox">
          <property name="frame">
@@ -44,13 +37,6 @@
          </property>
          <property name="value">
           <number>10</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="columnLabel">
-         <property name="text">
-          <string>Columns</string>
          </property>
         </widget>
        </item>
@@ -69,7 +55,7 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="animationLabel">
        <property name="minimumSize">
         <size>
@@ -82,7 +68,7 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="1" column="1">
       <widget class="QComboBox" name="animationComboBox">
        <property name="minimumSize">
         <size>
@@ -92,7 +78,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="2" column="1">
       <layout class="QHBoxLayout" name="animationOptionsLayout">
        <item>
         <widget class="QCheckBox" name="reverseAnimationCheckBox">
@@ -113,7 +99,7 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="colorLabel">
        <property name="minimumSize">
         <size>
@@ -126,7 +112,7 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="1">
+     <item row="4" column="1">
       <widget class="QComboBox" name="colorComboBox">
        <property name="minimumSize">
         <size>
@@ -142,7 +128,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="5" column="1">
       <layout class="QVBoxLayout" name="customColorLayout">
        <item>
         <layout class="QHBoxLayout" name="colorDialLayout">
@@ -248,7 +234,7 @@
        </item>
       </layout>
      </item>
-     <item row="7" column="0">
+     <item row="6" column="0">
       <widget class="QLabel" name="cycleLabel">
        <property name="minimumSize">
         <size>
@@ -261,7 +247,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="6" column="1">
       <widget class="QSlider" name="cycleSlider">
        <property name="minimum">
         <number>10</number>
@@ -293,25 +279,9 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="sectionLabel">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
+      <widget class="QLabel" name="gridSizeLabel">
        <property name="text">
-        <string>Active Area</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QComboBox" name="sectionComboBox">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>0</height>
-        </size>
+        <string>Grid Size</string>
        </property>
       </widget>
      </item>

@@ -22,7 +22,7 @@ class MaestroControl : public QWidget {
 		~MaestroControl();
 
 	private:
-		int active_section_ = 1;
+		int active_section_ = 0;
 		Maestro *maestro_;
 		SimpleDrawingArea *drawing_area_;
 		Ui::MaestroControl *ui;
@@ -37,6 +37,7 @@ class MaestroControl : public QWidget {
 		void on_custom_color_changed();
 
 	private slots:
+		void setCustomColorControlsVisible(bool enabled);
 		void on_cycleSlider_valueChanged(int value);
 		void on_animationComboBox_currentIndexChanged(int index);
 		void on_colorComboBox_currentIndexChanged(int index);
