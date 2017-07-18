@@ -20,21 +20,29 @@ class MaestroDrawingArea : public QWidget {
 
 	public:
 		MaestroDrawingArea(QWidget *parent, MaestroController *maestroController);
-		//MaestroDrawingArea(QWidget *parent, Maestro *maestro, unsigned short rows, unsigned short columns);
 		Maestro *getMaestro();
 		MaestroController *getMaestroController();
 
 	protected:
+		/// Tracks the time elapsed since the DrawingArea's initialization.
 		QElapsedTimer elapsedTimer;
+		/// Handles calling the DrawingArea's refreshMaestro() method every 20ms (depending on the interval).
 		QTimer *timer;
 
-		// Maestro/grid variables
+		/*
+		 * Maestro/grid variables.
+		 * These define how the Maestro is rendered initially in the DrawingArea.
+		 */
 		Maestro *maestro_;
 		MaestroController *maestro_controller_;
 		unsigned short num_rows_ = 10;
 		unsigned short num_columns_ = 10;
 		unsigned short num_sections_ = 1;
 		unsigned int num_pixels_ = num_rows_ * num_columns_;
+
+	private:
+		/// Maestro's refresh rate (defaults to 20ms or 50Hz).
+		const unsigned char REFRESH_ = 20;
 
 	private slots:
 		void refreshMaestro();

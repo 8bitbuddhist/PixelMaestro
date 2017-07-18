@@ -1,3 +1,7 @@
+/*
+ * MaestroController - Wrapper class for assigning a Maestro to a DrawingArea.
+ */
+
 #ifndef MAESTROCONTROLLER_H
 #define MAESTROCONTROLLER_H
 
@@ -10,7 +14,6 @@ using namespace PixelMaestro;
 
 class MaestroController {
 	public:
-		MaestroController();
 		void addSectionController();
 		void deleteSectionController(int index);
 		Maestro *getMaestro();

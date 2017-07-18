@@ -37,7 +37,6 @@ class MaestroControl : public QWidget {
 		void on_custom_color_changed();
 
 	private slots:
-		void setCustomColorControlsVisible(bool enabled);
 		void on_cycleSlider_valueChanged(int value);
 		void on_animationComboBox_currentIndexChanged(int index);
 		void on_colorComboBox_currentIndexChanged(int index);
@@ -50,7 +49,7 @@ class MaestroControl : public QWidget {
 		void on_fadeCheckBox_toggled(bool checked);
 		void on_columnsSpinBox_valueChanged(int arg1);
 		void on_rowsSpinBox_valueChanged(int arg1);
-		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
+		void setCustomColorControlsVisible(bool enabled);
 };
 
 #endif // MAESTROCONTROL_H

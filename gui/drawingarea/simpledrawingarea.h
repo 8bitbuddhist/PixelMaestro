@@ -12,10 +12,12 @@ class SimpleDrawingArea : public MaestroDrawingArea {
 	protected:
 		void paintEvent(QPaintEvent *event) override;
 
-		// Window/drawing area variables
+		/// The size of each rendered Pixel.
 		unsigned short RADIUS_ = 20;
+		/// The amount of space between each Pixel.
 		unsigned short PAD_ = RADIUS_ * 2;
-		unsigned short OFFSET_ = RADIUS_ * 2;
+		/// The offset of the grid from its initial starting point.
+		unsigned short OFFSET_ = PAD_;
 };
 
 #endif // SIMPLEDRAWINGAREA_H

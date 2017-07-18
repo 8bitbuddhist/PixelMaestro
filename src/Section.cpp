@@ -410,7 +410,7 @@ namespace PixelMaestro {
 		@return Resulting index.
 	*/
 	unsigned int Section::animation_getColorIndex(unsigned int count) {
-		if (count >= num_colors_) {
+		if (num_colors_ > 0 && count >= num_colors_) {
 			count %= num_colors_;
 		}
 

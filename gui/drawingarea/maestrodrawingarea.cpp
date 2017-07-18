@@ -5,11 +5,15 @@
 
 using namespace PixelMaestro;
 
+/**
+ * Constructor.
+ * @param parent The parent QWidget.
+ * @param maestroController The MaestroController rendered by this DrawingArea.
+ */
 MaestroDrawingArea::MaestroDrawingArea(QWidget *parent, MaestroController *maestroController) : QWidget(parent) {
-	// Initialize the Maestro
 	this->maestro_controller_ = maestroController;
 
-	// Initialize refresh timer
+	// Initialize timers.
 	this->timer = new QTimer(this);
 	this->timer->setTimerType(Qt::PreciseTimer);
 	connect(this->timer, SIGNAL(timeout()), this, SLOT(refreshMaestro()));
@@ -17,8 +21,8 @@ MaestroDrawingArea::MaestroDrawingArea(QWidget *parent, MaestroController *maest
 	// Initialize runtime timer
 	this->elapsedTimer.start();
 
-	// Manually set refresh rate to 20ms, or 50Hz
-	this->timer->start(20);
+	// Set Maestro's refresh rate
+	this->timer->start(this->REFRESH_);
 }
 
 Maestro *MaestroDrawingArea::getMaestro() {
