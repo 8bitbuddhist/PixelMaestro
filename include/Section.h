@@ -18,8 +18,17 @@ namespace PixelMaestro {
 				VERTICAL
 			};
 
+			/// Extra parameters for the current animation. If you do not specify them, they will be set implicitly in Section::setColorAnimation().
+			union AnimationOpts {
+				/// Threshold for activating a Pixel using the SPARKLE animation. The higher the threshold, the fewer the number of lit Pixels (0 - 100).
+				unsigned char sparkle_threshold;
+			};
+
 			/// Set of animations usable by the Section.
 			enum ColorAnimations {
+				/// Placeholder used to skip to the next animation.
+				NEXT,
+
 				/// Sets each Pixel to its corresponding color.
 				SOLID,
 
@@ -47,9 +56,6 @@ namespace PixelMaestro {
 				/// Cycles all pixels through all stored colors.
 				CYCLE,
 
-				/// Blends each pixel between varying levels of gray. THIS MODIFIES THE COLOR ARRAY.
-				STATIC,
-
 				/// Turns off the Section. This should always be the last animation in the list.
 				NONE
 			};
@@ -63,7 +69,7 @@ namespace PixelMaestro {
 				Section *section = nullptr;
 
 				/// Method of blending the output from the Overlay with the base Section.
-				Colors::MixMode mixMode;
+				Colors::MixMode mixMode = Colors::MixMode::NONE;
 
 				/// Transparency level of the overlaid Section (if applicable).
 				float alpha;
@@ -118,24 +124,28 @@ namespace PixelMaestro {
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);
+			void setAnimationOpts(AnimationOpts opts);
 			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
-			void setCycleInterval(unsigned short rate, unsigned short pause = 0);
+			void setCycleInterval(unsigned short interval, unsigned short pause = 0);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Section *section, Colors::MixMode mixMode, float alpha = 0.0);
 			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
 			void setPattern(Pattern pattern);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
-			void setRefreshInterval(unsigned short rate);
+			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
-			void update(unsigned long currentTime);
+			void update(const unsigned long &currentTime);
 			void unsetOverlay();
 
 		private:
 			/// The orientation of the animation. Defaults to HORIZONTAL.
 			AnimationOrientations animation_orientation_ = AnimationOrientations(HORIZONTAL);
+
+			/// Extra parameters for running animations.
+			AnimationOpts animation_opts_;
 
 			/// The active Section animation. Defaults to SOLID.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);
@@ -149,7 +159,7 @@ namespace PixelMaestro {
 			/// The time between animation cycles in milliseconds. Defaults to 100.
 			unsigned short cycle_interval_ = 100;
 
-			/// The amount of time the Section will wait in milliseconds before starting an animation cycle. Defaults to 0.
+			/// The amount of time the Section waits in milliseconds before starting the next animation cycle, by finishing the current cycle early. Defaults to 0.
 			unsigned short pause_ = 0;
 
 			/// Whether to fade between cycles. Defaults to true.
@@ -192,7 +202,6 @@ namespace PixelMaestro {
 			void animation_randomIndex();
 			void animation_solid();
 			void animation_sparkle();
-			void animation_static();
 			void animation_updateCycle(unsigned int min, unsigned int max);
 			void animation_wave();
 	};

@@ -18,7 +18,7 @@ namespace PixelMaestro {
 			Section *getSection(unsigned short section);
 			void setSections(Section *sections, unsigned short numSections);
 			void toggleRunning();
-			void update(unsigned long currentTime);
+			void update(const unsigned long &currentTime);
 
 		private:
 			/// Active running state of the Maestro.

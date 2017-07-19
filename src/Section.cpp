@@ -3,10 +3,10 @@
 	Requires Pixel and Colors classes.
 */
 
-#include <stdlib.h>
 #include "../include/Colors.h"
 #include "../include/Pixel.h"
 #include "../include/Section.h"
+#include "../include/Utility.h"
 
 namespace PixelMaestro {
 
@@ -111,6 +111,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets extra parameters for the current animation.
+	 * @param opts Parameters to set.
+	 */
+	void Section::setAnimationOpts(AnimationOpts opts) {
+		this->animation_opts_ = opts;
+	}
+
+	/**
 		Changes the current color animation.
 
 		@param animation Animation selection.
@@ -118,8 +126,10 @@ namespace PixelMaestro {
 		@param orientation The orientation of the animation.
 	*/
 	void Section::setColorAnimation(ColorAnimations animation, bool reverseAnimation, AnimationOrientations orientation) {
-		// If animation was supplied, change to the desired animation.
-		// Otherwise, increment the current animation to the next one.
+		/*
+		 * If the animation != NEXT, change to the animation.
+		 * Otherwise, go to the next animation.
+		 */
 		if (animation) {
 			color_animation_ = animation;
 		}
@@ -128,10 +138,23 @@ namespace PixelMaestro {
 
 			// If we've hit the last animation (NONE), cycle back to the first
 			if (animationNum == Section::ColorAnimations::NONE) {
-				animationNum = 0;
+				animationNum = 1;
 			}
 
 			color_animation_ = ColorAnimations(animationNum);
+		}
+
+		// Handle any extra options
+		switch (color_animation_) {
+			case SPARKLE:
+			{
+				if (!this->animation_opts_.sparkle_threshold) {
+					this->animation_opts_.sparkle_threshold = 60;
+				}
+				break;
+			}
+			default:
+				break;
 		}
 
 		reverse_animation_ = reverseAnimation;
@@ -167,7 +190,7 @@ namespace PixelMaestro {
 		Sets the speed between animation cycles.
 
 		@param interval Rate in milliseconds between animation cycles.
-		@param pause Time in milliseconds to delay the cycle.
+		@param pause Specifies the amount of time to wait in milliseconds until the next animation cycle by speeding up the current cycle.
 	*/
 	void Section::setCycleInterval(unsigned short interval, unsigned short pause) {
 		cycle_interval_ = interval;
@@ -181,6 +204,10 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
+		/*
+			If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
+			This results in the Pixel finishing early and waiting until the next cycle.
+		*/
 		if (pause_ > 0) {
 			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
 		}
@@ -283,10 +310,10 @@ namespace PixelMaestro {
 
 		@param currentTime Program runtime.
 	*/
-	void Section::update(unsigned long currentTime) {
+	void Section::update(const unsigned long &currentTime) {
 
 		// If this Section has an Overlay, update it.
-		if (overlay_.section != nullptr) {
+		if (overlay_.mixMode != Colors::MixMode::NONE) {
 			overlay_.section->update(currentTime);
 		}
 
@@ -329,9 +356,6 @@ namespace PixelMaestro {
 					case Section::ColorAnimations::PATTERN:
 						animation_pattern();
 						break;
-					case Section::ColorAnimations::STATIC:
-						animation_static();
-						break;
 					default:
 						setAll(&Colors::BLACK);
 						break;
@@ -353,7 +377,7 @@ namespace PixelMaestro {
 		}
 	}
 
-	// Private animation functions
+	// Animation functions
 
 	/// Flashes all Pixels on and off.
 	void Section::animation_blink() {
@@ -388,7 +412,7 @@ namespace PixelMaestro {
 		@return Resulting index.
 	*/
 	unsigned int Section::animation_getColorIndex(unsigned int count) {
-		if (count >= num_colors_) {
+		if (num_colors_ > 0 && count >= num_colors_) {
 			count %= num_colors_;
 		}
 
@@ -475,9 +499,9 @@ namespace PixelMaestro {
 		If there is no pattern set, the Section blinks.
 	*/
 	void Section::animation_pattern() {
-		// If the pattern has not been set, blink the array.
+		// If the pattern has not been set, do nothing.
 		if (pattern_.pattern == nullptr) {
-			animation_blink();
+			setAll(&Colors::BLACK);
 			return;
 		}
 
@@ -533,7 +557,7 @@ namespace PixelMaestro {
 	/// Sets each Pixel to a random stored color .
 	void Section::animation_randomIndex() {
 		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			setOne(pixel, &colors_[rand() % num_colors_]);
+			setOne(pixel, &colors_[Utility::rand() % num_colors_]);
 		}
 	}
 
@@ -550,29 +574,13 @@ namespace PixelMaestro {
 	void Section::animation_sparkle() {
 		for (unsigned int row = 0; row < layout_.rows; row++) {
 			for (unsigned short column = 0; column < layout_.columns; column++) {
-				/*
-					Specify a threshold for the number of lit Pixels.
-					The number of lit Pixels is inversely proportional to the threshold (e.g. the higher the threshold, the fewer the lit Pixels)
-				*/
-				if ((rand() % 100) > 60) {
+				if ((Utility::rand() % 100) > this->animation_opts_.sparkle_threshold) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
 					setOne(row, column, &Colors::BLACK);
 				}
 			}
-		}
-	}
-
-
-	/**
-		Creates a static effect by blending each Pixel between varying levels of gray.
-		WARNING: THIS ANIMATION MODIFIES THE COLOR ARRAY.
-	*/
-	void Section::animation_static() {
-		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			colors_[pixel] = Colors::mixColors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.0 + (rand() / ( RAND_MAX / (0.95) ) ));
-			setOne(pixel, &colors_[pixel]);
 		}
 	}
 

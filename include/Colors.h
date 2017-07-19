@@ -54,6 +54,9 @@ namespace PixelMaestro {
 
 			/// Determines the blending algorithm used when mixing two colors.
 			enum MixMode {
+				/// Do not mix the colors. Used to determine whether a Section OVerlay has been activated.
+				NONE,
+
 				/// Simple 50/50 blending.
 				NORMAL,
 
