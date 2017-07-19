@@ -499,9 +499,9 @@ namespace PixelMaestro {
 		If there is no pattern set, the Section blinks.
 	*/
 	void Section::animation_pattern() {
-		// If the pattern has not been set, blink the array.
+		// If the pattern has not been set, do nothing.
 		if (pattern_.pattern == nullptr) {
-			animation_blink();
+			setAll(&Colors::BLACK);
 			return;
 		}
 
