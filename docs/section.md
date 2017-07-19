@@ -39,6 +39,7 @@ The animations available to you are stored in the `Section::ColorAnimations` enu
 * RANDOMINDEX: Changes each Pixel to a random color stored in the array.
 * SPARKLE: Quickly flashes a random Pixel on.
 * PATTERN: Displays a user-defined pattern.
+* NEXT: Shortcut for skipping to the next pattern.
 
 Select an animation using the `Section::setColorAnimation` method:
 ```c++
