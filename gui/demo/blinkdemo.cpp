@@ -1,3 +1,7 @@
+/*
+ * BlinkDemo - Displays a simple blink animation.
+ */
+
 #include "blinkdemo.h"
 #include "Colors.h"
 #include "drawingarea/controller/maestrocontroller.h"
@@ -7,8 +11,6 @@
 BlinkDemo::BlinkDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, this->maestro_controller_) {
 	this->maestro_controller_ = maestroController;
 
-	// Initialize Section.
-	// This example renders colors from the center of the grid to the top and bottom.
 	this->maestro_controller_->addSectionController();
 	SectionController *sectionController = this->maestro_controller_->getSectionController(0);
 

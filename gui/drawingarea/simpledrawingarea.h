@@ -1,3 +1,7 @@
+/*
+ * SimpleDrawingArea - Implementation of a MaestroDrawingArea as a simple 2D grid.
+ */
+
 #ifndef SIMPLEDRAWINGAREA_H
 #define SIMPLEDRAWINGAREA_H
 

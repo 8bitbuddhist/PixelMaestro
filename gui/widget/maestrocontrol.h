@@ -1,3 +1,7 @@
+/*
+ * MaestroControl - Interface for controlling a MaestroController.
+ */
+
 #ifndef MAESTROCONTROL_H
 #define MAESTROCONTROL_H
 

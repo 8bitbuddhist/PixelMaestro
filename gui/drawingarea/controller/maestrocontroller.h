@@ -1,5 +1,5 @@
 /*
- * MaestroController - Wrapper class for assigning a Maestro to a DrawingArea.
+ * MaestroController - Wrapper class for managing a Maestro using a DrawingArea.
  */
 
 #ifndef MAESTROCONTROLLER_H
@@ -21,8 +21,11 @@ class MaestroController {
 		SectionController *getSectionController(int index);
 
 	private:
+		/// Maestro controlled by this controller.
 		Maestro maestro_;
+		/// Sections belonging to the Maestro (points to section_controllers_[index].section_).
 		std::vector<Section*> sections_;
+		/// SectionControllers that this MaestroController handles.
 		std::vector<SectionController> section_controllers_;
 
 		void reassignSections();

@@ -1,3 +1,7 @@
+/*
+ * BlinkDemo - Displays a simple blink animation.
+ */
+
 #ifndef BLINKDEMO_H
 #define BLINKDEMO_H
 

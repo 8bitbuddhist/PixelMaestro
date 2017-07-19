@@ -1,3 +1,7 @@
+/*
+ * MaestroDrawingArea - Renders output from a MaestroController to a DrawingArea. Forms the basis for other DrawingAreas.
+ */
+
 #ifndef MAESTRODRAWINGAREA_H
 #define MAESTRODRAWINGAREA_H
 
@@ -26,7 +30,7 @@ class MaestroDrawingArea : public QWidget {
 	protected:
 		/// Tracks the time elapsed since the DrawingArea's initialization.
 		QElapsedTimer elapsedTimer;
-		/// Handles calling the DrawingArea's refreshMaestro() method every 20ms (depending on the interval).
+		/// Handles calling the DrawingArea's refreshMaestro() method.
 		QTimer *timer;
 
 		/*
@@ -35,10 +39,6 @@ class MaestroDrawingArea : public QWidget {
 		 */
 		Maestro *maestro_;
 		MaestroController *maestro_controller_;
-		unsigned short num_rows_ = 10;
-		unsigned short num_columns_ = 10;
-		unsigned short num_sections_ = 1;
-		unsigned int num_pixels_ = num_rows_ * num_columns_;
 
 	private:
 		/// Maestro's refresh rate (defaults to 20ms or 50Hz).
