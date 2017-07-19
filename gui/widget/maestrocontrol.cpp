@@ -10,16 +10,15 @@
 /**
  * Constructor.
  * @param parent The QWidget containing this controller.
- * @param drawingarea The DrawingArea that this controller will render to.
+ * @param maestroController The MaestroController being controlled.
  */
-MaestroControl::MaestroControl(QWidget *parent, SimpleDrawingArea *drawingarea) : QWidget(parent), ui(new Ui::MaestroControl) {
+MaestroControl::MaestroControl(QWidget *parent, MaestroController *maestroController) : QWidget(parent), ui(new Ui::MaestroControl) {
 
-	// Assign easy reference variables for the DrawingArea
-	this->drawing_area_ = drawingarea;
-	this->maestro_ = drawingarea->getMaestro();
-	this->maestro_controller_ = this->drawing_area_->getMaestroController();
+	// Assign easy reference variables for the Maestro
+	this->maestro_controller_ = maestroController;
+	this->maestro_ = this->maestro_controller_->getMaestro();
 
-	// Initialize Controller
+	// Initialize UI
 	ui->setupUi(this);
 	this->initialize();
 }
@@ -28,7 +27,7 @@ MaestroControl::MaestroControl(QWidget *parent, SimpleDrawingArea *drawingarea) 
  * Build the initial UI.
  */
 void MaestroControl::initialize() {
-	// Add a new SectionController to the DrawingArea's MaestroController. Later on this will allow us to add multiple Sections to a MaestroController.
+	// Add a new SectionController to the MaestroController. Later on this will allow us to add multiple Sections to a MaestroController.
 	this->maestro_controller_->addSectionController();
 
 	// Populate Animation combo box
@@ -216,7 +215,6 @@ void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
  */
 void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
 	getActiveSectionController()->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-	this->drawing_area_->resizePixels();
 }
 
 /**
@@ -225,7 +223,6 @@ void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
  */
 void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
 	getActiveSectionController()->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-	this->drawing_area_->resizePixels();
 }
 
 /**

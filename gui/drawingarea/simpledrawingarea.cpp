@@ -35,6 +35,7 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	 * Each Pixel is drawn as a solid, filled circle.
 	 *
 	 */
+	this->resizePixels();
 	for (unsigned short section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
 		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->rows; row++) {
 			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->columns; pixel++) {

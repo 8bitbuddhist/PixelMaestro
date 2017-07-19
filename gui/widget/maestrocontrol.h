@@ -1,5 +1,5 @@
 /*
- * MaestroControl - Interface for controlling a MaestroController.
+ * MaestroControl - Widget for interacting with a MaestroController.
  */
 
 #ifndef MAESTROCONTROL_H
@@ -22,13 +22,12 @@ class MaestroControl : public QWidget {
 	Q_OBJECT
 
 	public:
-		explicit MaestroControl(QWidget *parent, SimpleDrawingArea *drawingarea);
+		explicit MaestroControl(QWidget *parent, MaestroController *maestroController);
 		~MaestroControl();
 
 	private:
 		int active_section_ = 0;
 		Maestro *maestro_;
-		SimpleDrawingArea *drawing_area_;
 		Ui::MaestroControl *ui;
 
 		MaestroController *maestro_controller_;

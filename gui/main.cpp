@@ -1,4 +1,3 @@
-#include "demo/blinkdemo.h"
 #include "widget/maestrocontrol.h"
 #include "mainwindow.h"
 #include <QApplication>
@@ -18,14 +17,9 @@ int main(int argc, char *argv[]) {
 
 	MaestroController controller;
 
-	// Demo application showing a blinking 10x10 grid of Pixels
-	//w.resize(410, 410);
-	//BlinkDemo *demo = new BlinkDemo(mainLayout->widget(), &controller);
-	//mainLayout->addWidget(demo);
-
 	SimpleDrawingArea *drawingArea = new SimpleDrawingArea(mainLayout->widget(), &controller);
 	mainLayout->addWidget(drawingArea);
-	mainLayout->addWidget(new MaestroControl(mainLayout->widget(), drawingArea));
+	mainLayout->addWidget(new MaestroControl(mainLayout->widget(), &controller));
 
 	// Enable high DPI output
 	a.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);
