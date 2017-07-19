@@ -7,8 +7,8 @@
 
 #include "Colors.h"
 #include "Maestro.h"
-#include "drawingarea/controller/maestrocontroller.h"
-#include "drawingarea/controller/sectioncontroller.h"
+#include "controller/maestrocontroller.h"
+#include "controller/sectioncontroller.h"
 #include "drawingarea/simpledrawingarea.h"
 #include <QWidget>
 
@@ -26,14 +26,16 @@ class MaestroControl : public QWidget {
 		~MaestroControl();
 
 	private:
+		/// Index of the actively controlled SectionController.
 		int active_section_ = 0;
+		/// Pointer to Maestro being controlled.
 		Maestro *maestro_;
 		Ui::MaestroControl *ui;
 
+		/// MaestroController that this widget is controlling.
 		MaestroController *maestro_controller_;
 
 		SectionController *getActiveSectionController();
-
 		void changeScalingColorArray(Colors::RGB color);
 		void initialize();
 		void on_ui_changed();

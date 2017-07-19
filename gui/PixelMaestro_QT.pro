@@ -19,16 +19,16 @@ SOURCES += main.cpp\
 		drawingarea/simpledrawingarea.cpp \
 		demo/blinkdemo.cpp \
 		widget/maestrocontrol.cpp \
-		drawingarea/controller/sectioncontroller.cpp \
-		drawingarea/controller/maestrocontroller.cpp \
+		controller/sectioncontroller.cpp \
+		controller/maestrocontroller.cpp \
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
 		drawingarea/maestrodrawingarea.h \
 		drawingarea/simpledrawingarea.h \
 		widget/maestrocontrol.h \
-		drawingarea/controller/sectioncontroller.h \
-		drawingarea/controller/maestrocontroller.h \
+		controller/sectioncontroller.h \
+		controller/maestrocontroller.h \
 		../include/Colors.h \
 		../include/Maestro.h \
 		../include/Pixel.h \

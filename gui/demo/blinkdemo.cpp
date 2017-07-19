@@ -4,8 +4,8 @@
 
 #include "blinkdemo.h"
 #include "Colors.h"
-#include "drawingarea/controller/maestrocontroller.h"
-#include "drawingarea/controller/sectioncontroller.h"
+#include "controller/maestrocontroller.h"
+#include "controller/sectioncontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
 
 BlinkDemo::BlinkDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, this->maestro_controller_) {

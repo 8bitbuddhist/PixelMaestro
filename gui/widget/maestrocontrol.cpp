@@ -1,7 +1,7 @@
 #include "maestrocontrol.h"
 #include "ui_maestrocontrol.h"
-#include "drawingarea/controller/maestrocontroller.h"
-#include "drawingarea/controller/sectioncontroller.h"
+#include "controller/maestrocontroller.h"
+#include "controller/sectioncontroller.h"
 #include "drawingarea/simpledrawingarea.h"
 #include <QPalette>
 #include <QString>
@@ -60,7 +60,7 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-	getActiveSectionController()->getSection()->setColorAnimation((Section::ColorAnimations)index, ui->reverseAnimationCheckBox->isChecked());
+	getActiveSectionController()->getSection()->setColorAnimation((Section::ColorAnimations)(index + 1), ui->reverseAnimationCheckBox->isChecked());
 }
 
 /**

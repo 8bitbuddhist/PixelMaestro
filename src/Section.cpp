@@ -126,8 +126,10 @@ namespace PixelMaestro {
 		@param orientation The orientation of the animation.
 	*/
 	void Section::setColorAnimation(ColorAnimations animation, bool reverseAnimation, AnimationOrientations orientation) {
-		// If animation was supplied, change to the desired animation.
-		// Otherwise, increment the current animation to the next one.
+		/*
+		 * If the animation != NEXT, change to the animation.
+		 * Otherwise, go to the next animation.
+		 */
 		if (animation) {
 			color_animation_ = animation;
 		}
@@ -136,7 +138,7 @@ namespace PixelMaestro {
 
 			// If we've hit the last animation (NONE), cycle back to the first
 			if (animationNum == Section::ColorAnimations::NONE) {
-				animationNum = 0;
+				animationNum = 1;
 			}
 
 			color_animation_ = ColorAnimations(animationNum);

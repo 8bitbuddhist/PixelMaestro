@@ -26,6 +26,9 @@ namespace PixelMaestro {
 
 			/// Set of animations usable by the Section.
 			enum ColorAnimations {
+				/// Placeholder used to skip to the next animation.
+				NEXT,
+
 				/// Sets each Pixel to its corresponding color.
 				SOLID,
 
