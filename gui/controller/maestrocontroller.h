@@ -8,6 +8,7 @@
 #include "Maestro.h"
 #include "Section.h"
 #include "sectioncontroller.h"
+#include "Show.h"
 #include <vector>
 
 using namespace PixelMaestro;
@@ -15,10 +16,12 @@ using namespace PixelMaestro;
 class MaestroController {
 	public:
 		void addSectionController();
+		void addShow(Show::Transition *transitions, unsigned char numTransitions, Show::TimingModes timing, bool loop);
 		void deleteSectionController(int index);
 		Maestro *getMaestro();
 		int getNumSectionControllers();
 		SectionController *getSectionController(int index);
+		Show *getShow();
 
 	private:
 		/// Maestro controlled by this controller.
@@ -27,6 +30,7 @@ class MaestroController {
 		std::vector<Section*> sections_;
 		/// SectionControllers that this MaestroController handles.
 		std::vector<SectionController> section_controllers_;
+		Show show_;
 
 		void reassignSections();
 };

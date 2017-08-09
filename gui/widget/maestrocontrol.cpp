@@ -76,7 +76,6 @@ MaestroControl::~MaestroControl() {
  * @param index Index of the new color scheme.
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
-	// TODO: Hide custom controls when a pre-defined scheme is selected
 	switch (index) {
 		case 0:	// Custom
 			this->on_custom_color_changed();

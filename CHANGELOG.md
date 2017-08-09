@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.3.1] - 2017-08-09
+### Added
+- Added Show support to PixelMaestro_QT
+- Added Show demo to PixelMaestro_QT
+
 ## [v0.3] - 2017-07-19
 ### Added
 - Added QT-based GUI with controls for user input.

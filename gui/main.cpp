@@ -4,12 +4,15 @@
 #include <QFormLayout>
 #include <QVBoxLayout>
 
+#include "demo/showdemo.h"
+
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
 	MainWindow w;
 
-	// Set a starting window size
-	w.resize(410, 800);
+	// Set default window size
+	//w.resize(400, 800);
+	w.resize(400, 400);
 
 	// Add drawing area to form
 	QVBoxLayout *mainLayout = w.findChild<QVBoxLayout*>("mainLayout");
@@ -17,9 +20,10 @@ int main(int argc, char *argv[]) {
 
 	MaestroController controller;
 
-	SimpleDrawingArea *drawingArea = new SimpleDrawingArea(mainLayout->widget(), &controller);
+	//SimpleDrawingArea *drawingArea = new SimpleDrawingArea(mainLayout->widget(), &controller);
+	ShowDemo *drawingArea = new ShowDemo(mainLayout->widget(), &controller);
 	mainLayout->addWidget(drawingArea);
-	mainLayout->addWidget(new MaestroControl(mainLayout->widget(), &controller));
+	//mainLayout->addWidget(new MaestroControl(mainLayout->widget(), &controller));
 
 	// Enable high DPI output
 	a.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);
