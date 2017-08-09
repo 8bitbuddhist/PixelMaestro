@@ -134,6 +134,18 @@
         <layout class="QHBoxLayout" name="colorDialLayout">
          <item>
           <widget class="QDial" name="redDial">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 0, 0);</string>
            </property>
@@ -147,6 +159,18 @@
          </item>
          <item>
           <widget class="QDial" name="greenDial">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(0, 255, 0);</string>
            </property>
@@ -157,6 +181,18 @@
          </item>
          <item>
           <widget class="QDial" name="blueDial">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>100</width>
+             <height>100</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(0, 0, 255);</string>
            </property>

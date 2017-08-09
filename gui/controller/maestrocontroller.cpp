@@ -1,6 +1,7 @@
 #include "Maestro.h"
 #include "maestrocontroller.h"
 #include "sectioncontroller.h"
+#include "Show.h"
 
 using namespace PixelMaestro;
 
@@ -11,6 +12,15 @@ void MaestroController::addSectionController() {
 	this->section_controllers_.push_back(SectionController());
 	this->sections_.push_back(this->section_controllers_[this->section_controllers_.size() - 1].getSection());
 	reassignSections();
+}
+
+void MaestroController::addShow(Show::Transition *transitions, unsigned char numTransitions, Show::TimingModes timing, bool loop) {
+	this->show_.setTiming(timing);
+	this->show_.setTransitions(transitions, numTransitions);
+	if (loop) {
+		this->show_.toggleLooping();
+	}
+	this->show_.setMaestro(&this->maestro_);
 }
 
 /**
@@ -48,6 +58,19 @@ int MaestroController::getNumSectionControllers() {
  */
 SectionController *MaestroController::getSectionController(int index) {
 	return &this->section_controllers_[index];
+}
+
+/**
+ * Returns the Show managed in this Maestro (if applicable)
+ * @return Show managed by this Maestro.
+ */
+Show *MaestroController::getShow() {
+	if (this->show_.getMaestro() != nullptr) {
+		return &this->show_;
+	}
+	else {
+		return nullptr;
+	}
 }
 
 /**

@@ -1,7 +1,9 @@
 # Show
-Shows are used to schedule animation changes for Sections in a Maestro. To initialize a Show, use the `Show::setMaestro()` method, passing in a reference to the Maestro that you wish to control.
+Shows are used to modify a Maestro at a pre-defined moment over the course of its lifecycle. While they're designed for scheduling animation changes, they can be used for any event.
+To initialize a Show, use the `Show::setMaestro()` method, passing in a reference to the Maestro that you wish to control.
+Now, when you wish to update the Maestro, you'll call `Show.update()` instead of `Maestro::update()`.
 
-For an example of how to configure a Show, see [ShowDemo](../gui/demos/ShowDemo.cpp) in the PixelMaestro_GUI application.
+For an example of how to configure a Show, see [ShowDemo](../gui/demos/ShowDemo.cpp) in the PixelMaestro QT application.
 
 ## Transition
 A `Transition` is a set of instructions for changing the properties of a Section. Transitions are defined by:

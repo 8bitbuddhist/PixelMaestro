@@ -21,6 +21,8 @@ SOURCES += main.cpp\
 		widget/maestrocontrol.cpp \
 		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
+    demo/showdemo.cpp \
+    controller/showcontroller.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -34,7 +36,9 @@ HEADERS += mainwindow.h \
 		../include/Pixel.h \
 		../include/Section.h \
 		../include/Show.h \
-		../include/Utility.h
+		../include/Utility.h \
+    demo/showdemo.h \
+    controller/showcontroller.h
 
 FORMS	+= \
 		mainwindow.ui \
