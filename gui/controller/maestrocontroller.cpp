@@ -14,7 +14,7 @@ void MaestroController::addSectionController() {
 	reassignSections();
 }
 
-void MaestroController::addShow(Show::Transition *transitions, unsigned char numTransitions, Show::TimingModes timing, bool loop) {
+void MaestroController::addShow(Transition **transitions, unsigned char numTransitions, Show::TimingModes timing, bool loop) {
 	this->show_.setTiming(timing);
 	this->show_.setTransitions(transitions, numTransitions);
 	if (loop) {

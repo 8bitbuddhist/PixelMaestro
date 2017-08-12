@@ -3,12 +3,22 @@
 	Requires Pixel and Colors classes.
 */
 
-#include "../include/Colors.h"
-#include "../include/Pixel.h"
-#include "../include/Section.h"
-#include "../include/Utility.h"
+#include "Colors.h"
+#include "Pixel.h"
+#include "Section.h"
+#include "Utility.h"
 
 namespace PixelMaestro {
+
+	/**
+	 * Constructor. Assigns Pixels to the Section.
+	 * @param pixels Initial Pixel array.
+	 * @param rows Number of rows of Pixels.
+	 * @param columns Number of columns of Pixels.
+	 */
+	Section::Section(Pixel *pixels, unsigned short rows, unsigned short columns) {
+		this->setPixels(pixels, rows, columns);
+	}
 
 	/**
 		Returns the current color animation.
@@ -250,12 +260,10 @@ namespace PixelMaestro {
 		@param frames Number of frames in the pattern.
 	*/
 	void Section::setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames) {
-		pattern_ = {
-			pattern,
-			rows,
-			columns,
-			frames
-		};
+		pattern_.pattern = pattern;
+		pattern_.rows = rows;
+		pattern_.columns = columns;
+		pattern_.frames = frames;
 	}
 
 	/**

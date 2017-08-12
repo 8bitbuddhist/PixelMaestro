@@ -11,8 +11,7 @@ using namespace PixelMaestro;
  */
 SectionController::SectionController() {
 	this->pixels_.resize(layout_.rows * layout_.columns);
-	this->sections_.push_back(Section());
-	this->sections_[0].setPixels(&this->pixels_[0], layout_.rows, layout_.columns);
+	this->sections_.push_back(Section(&this->pixels_[0], layout_.rows, layout_.columns));
 }
 
 /**
@@ -26,8 +25,7 @@ void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
 	this->pixels_.resize(pixels * 2);
 
 	// Create overlay and assign Pixels
-	this->sections_.push_back(Section());
-	this->sections_[1].setPixels(&this->pixels_[pixels], layout_.rows, layout_.columns);
+	this->sections_.push_back(Section(&this->pixels_[pixels], layout_.rows, layout_.columns));
 	this->sections_[0].setOverlay(&this->sections_[1], mixMode, alpha);
 }
 

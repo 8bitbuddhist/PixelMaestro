@@ -102,7 +102,7 @@ namespace PixelMaestro {
 					The pattern to display when the PATTERN animation is active.
 					Stored as an array of bools where each bool corresponds to a Pixel.
 				*/
-				bool *pattern;
+				bool *pattern = nullptr;
 
 				/// The number of rows in a single frame.
 				unsigned short rows;
@@ -114,6 +114,7 @@ namespace PixelMaestro {
 				unsigned short frames;
 			};
 
+			Section(Pixel *pixels, unsigned short rows, unsigned short columns);
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
 			bool getFade();

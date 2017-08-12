@@ -12,7 +12,7 @@
 class ShowDemo : public SimpleDrawingArea {
 	public:
 		ShowDemo(QWidget *parent, MaestroController *maestroController);
-		std::vector<Show::Transition> transitions_;
+		std::vector<Transition*> transitions_;
 
 };
 

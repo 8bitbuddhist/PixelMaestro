@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.4] - In Progress
+
 ## [v0.3.1] - 2017-08-09
 ### Added
 - Added Show support to PixelMaestro_QT
