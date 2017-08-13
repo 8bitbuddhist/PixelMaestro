@@ -3,7 +3,7 @@
 */
 
 #include "Colors.h"
-#include <stdlib.h>
+#include "Utility.h"
 
 namespace PixelMaestro {
 	// Simple color set
@@ -111,9 +111,9 @@ namespace PixelMaestro {
 	void Colors::generateRandomColorArray(Colors::RGB newArray[], Colors::RGB baseColor, unsigned int numColors, float range) {
 		for (unsigned int newColorIndex = 0; newColorIndex < numColors; newColorIndex++) {
 			newArray[newColorIndex] = {
-				(unsigned char)(baseColor.r > 0 ? baseColor.r - (unsigned char)(rand() % (unsigned char)(baseColor.r * range)) : 0),
-				(unsigned char)(baseColor.g > 0 ? baseColor.g - (unsigned char)(rand() % (unsigned char)(baseColor.g * range)) : 0),
-				(unsigned char)(baseColor.b > 0 ? baseColor.b - (unsigned char)(rand() % (unsigned char)(baseColor.b * range)) : 0)
+				(unsigned char)(baseColor.r > 0 ? baseColor.r - (unsigned char)(Utility::rand() % (unsigned char)(baseColor.r * range)) : 0),
+				(unsigned char)(baseColor.g > 0 ? baseColor.g - (unsigned char)(Utility::rand() % (unsigned char)(baseColor.g * range)) : 0),
+				(unsigned char)(baseColor.b > 0 ? baseColor.b - (unsigned char)(Utility::rand() % (unsigned char)(baseColor.b * range)) : 0)
 			};
 		}
 	}
