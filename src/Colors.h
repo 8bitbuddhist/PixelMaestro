@@ -54,17 +54,17 @@ namespace PixelMaestro {
 
 			/// Determines the blending algorithm used when mixing two colors.
 			enum MixMode {
-				/// Do not mix the colors. Used to determine whether a Section OVerlay has been activated.
+				/// Do not mix the colors.
 				NONE,
 
 				/// Simple 50/50 blending.
 				NORMAL,
 
-				/// Overlays color 2 on top of color 1 with a specified blend percentage.
+				/// Mixes both colors with a specific blend percentage (blending is applied to the Overlay).
 				ALPHA_BLENDING,
 
-				/// Multiplies the base color by the overlay color, resulting in the base color "bleeding through" the overlay.
-				OVERLAY
+				/// Multiplies the base color by the overlay color.
+				MULTIPLY
 			};
 
 			// Basic color set.

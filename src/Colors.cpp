@@ -193,13 +193,9 @@ namespace PixelMaestro {
 		Colors::RGB mixedColor;
 
 		switch (mode) {
-			case MixMode::OVERLAY:
-			{
-				mixedColor.r = colorOne->r * (float)(colorTwo->r / (float)255);
-				mixedColor.g = colorOne->g * (float)(colorTwo->g / (float)255);
-				mixedColor.b = colorOne->b * (float)(colorTwo->b / (float)255);
-				break;
-			}
+			case MixMode::NORMAL:
+				alpha = 0.5;
+				// Fall through to alpha-blending
 			case MixMode::ALPHA_BLENDING:
 			{
 				mixedColor.r = (alpha * colorTwo->r) + ((1 - alpha) * colorOne->r);
@@ -207,12 +203,16 @@ namespace PixelMaestro {
 				mixedColor.b = (alpha * colorTwo->b) + ((1 - alpha) * colorOne->b);
 				break;
 			}
-			default:	// Normal blending
+			case MixMode::MULTIPLY:
 			{
-				mixedColor.r = (colorOne->r + colorTwo->r) / 2;
-				mixedColor.g = (colorOne->g + colorTwo->g) / 2;
-				mixedColor.b = (colorOne->b + colorTwo->b) / 2;
+				mixedColor.r = colorOne->r * (float)(colorTwo->r / (float)255);
+				mixedColor.g = colorOne->g * (float)(colorTwo->g / (float)255);
+				mixedColor.b = colorOne->b * (float)(colorTwo->b / (float)255);
+				break;
 			}
+			default:	// Return colorOne
+				mixedColor = *colorOne;
+				break;
 		};
 
 		return mixedColor;
