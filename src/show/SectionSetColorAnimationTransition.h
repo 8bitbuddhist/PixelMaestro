@@ -9,11 +9,14 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class SectionSetColorAnimationTransition : public Transition {
 		public:
-			SectionSetColorAnimationTransition(unsigned long time, Section *section, Section::ColorAnimations animation, bool reverseAnimation, Section::AnimationOrientations orientation);
+			SectionSetColorAnimationTransition(unsigned long time, Section *section, Section::ColorAnimations animation_, bool reverseAnimation, Section::AnimationOrientations orientation);
+			SectionSetColorAnimationTransition(unsigned long time, Section *section, Section::ColorAnimations *animations, unsigned int numAnimations, bool reverseAnimation, Section::AnimationOrientations orientation);
 			void run();
 
 		private:
-			Section::ColorAnimations animation;
+			Section::ColorAnimations animation_;;
+			Section::ColorAnimations *animations_ = nullptr;
+			unsigned int num_animations_;
 			Section::AnimationOrientations orientation;
 			bool reverseAnimation;
 			Section *section_;
