@@ -3,7 +3,18 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.4] - In Progress
+## [v0.4] - 2017-08-15
+### Added
+- Added working Arduino sketches for use in [PlatformIO](http://platformio.org/).
+- Added random color generator to Colors.
+- Added multiplication and division operators to Colors::RGB.
+
+### Changed
+- Restructured layout of source files (easier to manage in QT Creator).
+- Rebuilt Show class (again) using custom Transitions instead of functional.h. See the `src/show` folder for current available Transitions.
+- Removed stdlib dependency from Colors.h. The library is now completely self-contained.
+- Changed Sections to store Patterns as pointers.
+- Initialized pointer variables used in if statements (e.g. Show::maestro_) to nullptr.
 
 ## [v0.3.1] - 2017-08-09
 ### Added
