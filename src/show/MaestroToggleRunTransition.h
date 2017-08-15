@@ -8,7 +8,7 @@ namespace PixelMaestro {
 	class MaestroToggleRunTransition : public Transition {
 
 		public:
-			MaestroToggleRunTransition(Maestro *maestro, unsigned long time);
+			MaestroToggleRunTransition(unsigned long time, Maestro *maestro);
 			void run();
 
 		private:

@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class SectionSetCycleIntervalTransition : public Transition {
 		public:
-			SectionSetCycleIntervalTransition(Section *section, unsigned long time, unsigned short interval, unsigned short pause = 0);
+			SectionSetCycleIntervalTransition(unsigned long time, Section *section, unsigned short interval, unsigned short pause = 0);
 			void run();
 
 		private:

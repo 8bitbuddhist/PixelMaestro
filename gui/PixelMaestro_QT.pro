@@ -29,7 +29,8 @@ SOURCES += main.cpp\
 		../src/show/SectionSetCycleIntervalTransition.cpp \
     ../src/show/SectionSetColorAnimationTransition.cpp \
     ../src/show/ColorsGenerateRandomColorTransition.cpp \
-    ../src/show/ColorsGenerateScalingColorArray.cpp
+    ../src/show/ColorsGenerateScalingColorArray.cpp \
+    ../src/show/ColorsGenerateRandomColorArrayTransition.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -52,7 +53,8 @@ HEADERS += mainwindow.h \
 		../src/show/SectionSetCycleIntervalTransition.h \
     ../src/show/SectionSetColorAnimationTransition.h \
     ../src/show/ColorsGenerateRandomColorTransition.h \
-    ../src/show/ColorsGenerateScalingColorArray.h
+    ../src/show/ColorsGenerateScalingColorArray.h \
+    ../src/show/ColorsGenerateRandomColorArrayTransition.h
 
 FORMS	+= \
 		mainwindow.ui \

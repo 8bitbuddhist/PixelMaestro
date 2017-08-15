@@ -7,7 +7,7 @@
 namespace PixelMaestro {
 	class ColorsGenerateRandomColorTransition : public Transition {
 		public:
-			ColorsGenerateRandomColorTransition(Colors::RGB *color, unsigned long time);
+			ColorsGenerateRandomColorTransition(unsigned long time, Colors::RGB *color);
 			void run();
 
 		private:

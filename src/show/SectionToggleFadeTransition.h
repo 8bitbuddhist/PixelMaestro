@@ -9,7 +9,7 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class SectionToggleFadeTransition : public Transition {
 		public:
-			SectionToggleFadeTransition(Section *section, unsigned long time);
+			SectionToggleFadeTransition(unsigned long time, Section *section);
 			void run();
 
 		private:

@@ -9,7 +9,7 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class SectionSetColorAnimationTransition : public Transition {
 		public:
-			SectionSetColorAnimationTransition(Section *section, unsigned long time, Section::ColorAnimations animation, bool reverseAnimation, Section::AnimationOrientations orientation);
+			SectionSetColorAnimationTransition(unsigned long time, Section *section, Section::ColorAnimations animation, bool reverseAnimation, Section::AnimationOrientations orientation);
 			void run();
 
 		private:

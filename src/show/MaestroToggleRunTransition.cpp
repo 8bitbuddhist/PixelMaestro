@@ -2,7 +2,7 @@
 
 namespace PixelMaestro {
 
-	MaestroToggleRunTransition::MaestroToggleRunTransition(Maestro *maestro, unsigned long time) : Transition(time) {
+	MaestroToggleRunTransition::MaestroToggleRunTransition(unsigned long time, Maestro *maestro) : Transition(time) {
 		this->maestro_ = maestro;
 	}
 

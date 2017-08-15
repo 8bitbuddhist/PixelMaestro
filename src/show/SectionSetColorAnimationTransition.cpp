@@ -5,7 +5,7 @@ using namespace PixelMaestro;
 
 namespace PixelMaestro {
 
-	SectionSetColorAnimationTransition::SectionSetColorAnimationTransition(Section *section, unsigned long time, Section::ColorAnimations animation, bool reverseAnimation, Section::AnimationOrientations orientation) : Transition(time) {
+	SectionSetColorAnimationTransition::SectionSetColorAnimationTransition(unsigned long time, Section *section, Section::ColorAnimations animation, bool reverseAnimation, Section::AnimationOrientations orientation) : Transition(time) {
 		this->section_ = section;
 		this->animation = animation;
 		this->reverseAnimation = reverseAnimation;

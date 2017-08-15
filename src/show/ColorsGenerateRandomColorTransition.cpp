@@ -1,7 +1,7 @@
 #include "ColorsGenerateRandomColorTransition.h"
 
 namespace PixelMaestro {
-	ColorsGenerateRandomColorTransition::ColorsGenerateRandomColorTransition(Colors::RGB *color, unsigned long time) : Transition(time) {
+	ColorsGenerateRandomColorTransition::ColorsGenerateRandomColorTransition(unsigned long time, Colors::RGB *color) : Transition(time) {
 		this->color_ = color;
 	}
 
