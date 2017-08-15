@@ -29,8 +29,10 @@ Colors::RGB colors[NUM_COLORS];
 Colors::RGB baseColor, targetColor;	// These store random colors which are used to generate color schemes.
 
 // This array stores the base colors that we'll use to generate color schemes.
-const unsigned char NUM_SOURCE_COLORS = 8;
+const unsigned char NUM_SOURCE_COLORS = 10;
 Colors::RGB source_colors[] = {
+	Colors::BLACK,
+	Colors::WHITE,
 	{150, 0, 255},	// Deep purple
 	Colors::BLUE,
 	Colors::RED,
@@ -88,6 +90,9 @@ cRGB RGBtoCRGB(Colors::RGB rgbColor) {
 }
 
 void setup () {
+	// Due to wiring issues, sleep for 15 seconds to prevent powering LEDs over USB
+	delay(15000);
+
 	// Initialize the WS2812 LED strips.
 	for (unsigned char strip = 0; strip < NUM_WS_STRIPS; strip++) {
 		ws[strip].setOutput(WS_PINS[strip]);
