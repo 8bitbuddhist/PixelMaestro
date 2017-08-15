@@ -7,6 +7,6 @@ namespace PixelMaestro {
 	}
 
 	void SectionSetPatternTransition::run() {
-		this->section_->setPattern(*this->pattern_);
+		this->section_->setPattern(this->pattern_);
 	}
 }

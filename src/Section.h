@@ -133,7 +133,7 @@ namespace PixelMaestro {
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Section *overlay, Colors::MixMode mixMode, float alpha = 0.0);
 			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
-			void setPattern(Pattern pattern);
+			void setPattern(Pattern *pattern);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
 			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
@@ -177,8 +177,8 @@ namespace PixelMaestro {
 			/// The Section overlaying the current section (if applicable);
 			Overlay overlay_;
 
-			/// The layout of the pattern used in the PATTERN animation (if applicable).
-			Pattern pattern_;
+			/// The layout of the pattern used in the PATTERN animation.
+			Pattern *pattern_ = nullptr;
 
 			/// The Pixels managed by the Section.
 			Pixel *pixels_;

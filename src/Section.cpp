@@ -246,24 +246,9 @@ namespace PixelMaestro {
 	/**
 		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
 
-		@param pattern Pointer to the pattern array.
-		@param rows Number of rows in the array.
-		@param columns Number of bools in each row.
-		@param frames Number of frames in the pattern.
-	*/
-	void Section::setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames) {
-		pattern_.pattern = pattern;
-		pattern_.rows = rows;
-		pattern_.columns = columns;
-		pattern_.frames = frames;
-	}
-
-	/**
-		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
-
 		@param pattern New Pattern.
 	*/
-	void Section::setPattern(Pattern pattern) {
+	void Section::setPattern(Pattern *pattern) {
 		pattern_ = pattern;
 	}
 
@@ -344,6 +329,9 @@ namespace PixelMaestro {
 					case Section::ColorAnimations::MERGE:
 						animation_merge();
 						break;
+					case Section::ColorAnimations::PATTERN:
+						animation_pattern();
+						break;
 					case Section::ColorAnimations::PONG:
 						animation_pong();
 						break;
@@ -352,9 +340,6 @@ namespace PixelMaestro {
 						break;
 					case Section::ColorAnimations::RANDOMINDEX:
 						animation_randomIndex();
-						break;
-					case Section::ColorAnimations::PATTERN:
-						animation_pattern();
 						break;
 					default:
 						setAll(&Colors::BLACK);
@@ -500,20 +485,20 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_pattern() {
 		// If the pattern has not been set, do nothing.
-		if (pattern_.pattern == nullptr) {
+		if (pattern_ == nullptr) {
 			setAll(&Colors::BLACK);
 			return;
 		}
 
 		// Stores the beginning index of the active Frame.
-		unsigned int frameStart = (pattern_.rows * pattern_.columns) * cycle_index_;
+		unsigned int frameStart = (pattern_->rows * pattern_->columns) * cycle_index_;
 
 		// Stores the index of the current Pixel as we iterate through the Pattern.
 		unsigned int patternPixel = 0;
-		for (unsigned short row = 0; row < pattern_.rows; row++) {
-			for (unsigned short column = 0; column < pattern_.columns; column++) {
-				patternPixel = frameStart + ((row * pattern_.columns) + column);
-				if (pattern_.pattern[patternPixel] == 1) {
+		for (unsigned short row = 0; row < pattern_->rows; row++) {
+			for (unsigned short column = 0; column < pattern_->columns; column++) {
+				patternPixel = frameStart + ((row * pattern_->columns) + column);
+				if (pattern_->pattern[patternPixel] == 1) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
@@ -522,7 +507,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		animation_updateCycle(0, pattern_.frames);
+		animation_updateCycle(0, pattern_->frames);
 	}
 
 	/**
