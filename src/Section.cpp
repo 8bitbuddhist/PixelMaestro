@@ -121,14 +121,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets extra parameters for the current animation.
-	 * @param opts Parameters to set.
-	 */
-	void Section::setAnimationOpts(AnimationOpts opts) {
-		this->animation_opts_ = opts;
-	}
-
-	/**
 		Changes the current color animation.
 
 		@param animation Animation selection.
@@ -154,11 +146,11 @@ namespace PixelMaestro {
 			color_animation_ = ColorAnimations(animationNum);
 		}
 
-		// Handle any extra options
-		switch (color_animation_) {
+		// Handle any uninitialized options
+		switch (animation) {
 			case SPARKLE:
 			{
-				if (!this->animation_opts_.sparkle_threshold) {
+				if (this->animation_opts_.sparkle_threshold == 255) {
 					this->animation_opts_.sparkle_threshold = 60;
 				}
 				break;
