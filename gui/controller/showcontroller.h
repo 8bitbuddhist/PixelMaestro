@@ -18,7 +18,7 @@ class ShowController {
 		void setTransitions(Transition *transitions, unsigned int numTransitions);
 
 	private:
-		MaestroController *maestro_;
+		MaestroController *maestro_ = nullptr;
 		Show show_;
 		std::vector<Transition> transitions_;
 };

@@ -48,7 +48,7 @@ namespace PixelMaestro {
 			bool loop_ = false;
 
 			/// The Maestro that the Transitions apply to.
-			Maestro *maestro_;
+			Maestro *maestro_ = nullptr;
 
 			/// The number of Transitions in the array.
 			unsigned char num_transitions_;
