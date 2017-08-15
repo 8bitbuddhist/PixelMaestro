@@ -50,6 +50,22 @@ namespace PixelMaestro {
 						(unsigned char)((b - colorTwo.b) % 255)
 					};
 				}
+
+				RGB operator*(unsigned char multiplier) {
+					return {
+						(unsigned char)(r * multiplier),
+						(unsigned char)(g * multiplier),
+						(unsigned char)(b * multiplier)
+					};
+				}
+
+				RGB operator/(unsigned char divisor) {
+					return {
+						(unsigned char)(r / divisor),
+						(unsigned char)(g / divisor),
+						(unsigned char)(b / divisor)
+					};
+				}
 			};
 
 			/// Determines the blending algorithm used when mixing two colors.
@@ -91,9 +107,10 @@ namespace PixelMaestro {
 			static RGB RAINBOW[];
 
 			static RGB HSVtoRGB(unsigned int hue, unsigned int sat, unsigned int val);
-			static void generateRandomColorArray(RGB newArray[], RGB baseColor, unsigned int numColors, float range = 1.0);
-			static void generateScalingColorArray(RGB newArray[], RGB baseColor, RGB targetColor, unsigned int numColors, bool reverse = false);
-			static void generateScalingColorArray(RGB newArray[], RGB baseColor, unsigned int numColors, unsigned char threshold, bool reverse = false);
+			static RGB generateRandomColor();
+			static void generateRandomColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, float range = 1.0);
+			static void generateScalingColorArray(RGB newArray[], RGB *baseColor, RGB *targetColor, unsigned int numColors, bool reverse = false);
+			static void generateScalingColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, unsigned char threshold, bool reverse = false);
 			static RGB mixColors(RGB *colorOne, RGB *colorTwo, MixMode mode, float alpha = 0);
 	};
 }

@@ -27,7 +27,9 @@ SOURCES += main.cpp\
 		../src/show/SectionToggleFadeTransition.cpp \
 		../src/show/MaestroToggleRunTransition.cpp \
 		../src/show/SectionSetCycleIntervalTransition.cpp \
-    ../src/show/SectionSetColorAnimationTransition.cpp
+    ../src/show/SectionSetColorAnimationTransition.cpp \
+    ../src/show/ColorsGenerateRandomColorTransition.cpp \
+    ../src/show/ColorsGenerateScalingColorArray.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -48,7 +50,9 @@ HEADERS += mainwindow.h \
 		../src/show/SectionToggleFadeTransition.h \
 		../src/show/MaestroToggleRunTransition.h \
 		../src/show/SectionSetCycleIntervalTransition.h \
-    ../src/show/SectionSetColorAnimationTransition.h
+    ../src/show/SectionSetColorAnimationTransition.h \
+    ../src/show/ColorsGenerateRandomColorTransition.h \
+    ../src/show/ColorsGenerateScalingColorArray.h
 
 FORMS	+= \
 		mainwindow.ui \
