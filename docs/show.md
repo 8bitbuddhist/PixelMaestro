@@ -9,6 +9,8 @@ A `Transition` is a set of instructions for changing the properties of a Section
 * A `time` when the Transition will execute, based on the program's current runtime
 * An [action](#specifying_an_action) that will be performed when the Transition executes
 
+Transitions can be found in the [`src/show`](../src/show) folder. The name should be pretty self-explanatory, and the argument list essentially matches the argument list of the corresponding function.
+
 The action is dependent on the type of Transition being performed, and is executed when the Transition's `time` is matched or exceeded by the program's runtime. Each Show references an array of Transitions. As each Transition executes, the Show tracks the current index of the array and the time the last Transition ran.
 
 To set the Transitions in a Show, use the `Show::setTransitions()` method.

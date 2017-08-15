@@ -27,13 +27,13 @@ SOURCES += main.cpp\
 		../src/show/SectionToggleFadeTransition.cpp \
 		../src/show/MaestroToggleRunTransition.cpp \
 		../src/show/SectionSetCycleIntervalTransition.cpp \
-    ../src/show/SectionSetColorAnimationTransition.cpp \
-    ../src/show/ColorsGenerateRandomColorTransition.cpp \
-    ../src/show/ColorsGenerateScalingColorArray.cpp \
-    ../src/show/ColorsGenerateRandomColorArrayTransition.cpp \
-    ../src/show/SectionSetOverlayTransition.cpp \
-    ../src/show/SectionUnsetOverlayTransition.cpp \
-    ../src/show/SectionSetPatternTransition.cpp
+		../src/show/SectionSetColorAnimationTransition.cpp \
+		../src/show/ColorsGenerateRandomColorTransition.cpp \
+		../src/show/ColorsGenerateRandomColorArrayTransition.cpp \
+		../src/show/SectionSetOverlayTransition.cpp \
+		../src/show/SectionUnsetOverlayTransition.cpp \
+		../src/show/SectionSetPatternTransition.cpp \
+		../src/show/ColorsGenerateScalingColorArrayTransition.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -54,13 +54,13 @@ HEADERS += mainwindow.h \
 		../src/show/SectionToggleFadeTransition.h \
 		../src/show/MaestroToggleRunTransition.h \
 		../src/show/SectionSetCycleIntervalTransition.h \
-    ../src/show/SectionSetColorAnimationTransition.h \
-    ../src/show/ColorsGenerateRandomColorTransition.h \
-    ../src/show/ColorsGenerateScalingColorArray.h \
-    ../src/show/ColorsGenerateRandomColorArrayTransition.h \
-    ../src/show/SectionSetOverlayTransition.h \
-    ../src/show/SectionUnsetOverlayTransition.h \
-    ../src/show/SectionSetPatternTransition.h
+		../src/show/SectionSetColorAnimationTransition.h \
+		../src/show/ColorsGenerateRandomColorTransition.h \
+		../src/show/ColorsGenerateRandomColorArrayTransition.h \
+		../src/show/SectionSetOverlayTransition.h \
+		../src/show/SectionUnsetOverlayTransition.h \
+		../src/show/SectionSetPatternTransition.h \
+		../src/show/ColorsGenerateScalingColorArrayTransition.h
 
 FORMS	+= \
 		mainwindow.ui \
