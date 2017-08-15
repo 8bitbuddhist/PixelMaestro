@@ -38,7 +38,7 @@ void MaestroDrawingArea::refreshMaestro() {
 	 * Check if a Show has been created.
 	 * If so, run the Show. Otherwise, update the Maestro.
 	 */
-	if (this->maestro_controller_->getShow()->getMaestro() != nullptr) {
+	if (this->maestro_controller_->getShow()) {
 		this->maestro_controller_->getShow()->update(this->elapsedTimer.elapsed());
 	}
 	else {

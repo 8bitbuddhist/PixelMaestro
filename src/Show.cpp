@@ -2,9 +2,19 @@
 	Show.cpp - Library for scheduling PixelMaestro animations.
 */
 
-#include "../include/Show.h"
+#include "Show.h"
 
 namespace PixelMaestro {
+
+	Show::Show() {};
+
+	/**
+	 * Constructor.
+	 * @param maestro The Maestro to control using this Show.
+	 */
+	Show::Show(Maestro *maestro) {
+		this->maestro_ = maestro;
+	}
 
 	/**
 		Returns the index of the currently queued Transition.
@@ -72,7 +82,7 @@ namespace PixelMaestro {
 		@param transitions Array of Transitions to queue.
 		@param numTransitions The number of Transitions in the queue.
 	*/
-	void Show::setTransitions(Transition* transitions, unsigned char numTransitions) {
+	void Show::setTransitions(Transition** transitions, unsigned char numTransitions) {
 		transitions_ = transitions;
 		num_transitions_ = numTransitions;
 	}
@@ -98,9 +108,9 @@ namespace PixelMaestro {
 				If RELATIVE, compare the time since the last Transition to the queued Transition's start time.
 				After running the Transition, update the last run time and last run Transition index.
 			*/
-			if ((timing_ == TimingModes::ABSOLUTE && (currentTime >= transitions_[current_index_].time)) ||
-				(timing_ == TimingModes::RELATIVE && ((currentTime - last_time_) >= transitions_[current_index_].time))) {
-				transitions_[current_index_].action();
+			if ((timing_ == TimingModes::ABSOLUTE && (currentTime >= transitions_[current_index_]->getTime())) ||
+				(timing_ == TimingModes::RELATIVE && ((currentTime - last_time_) >= transitions_[current_index_]->getTime()))) {
+				transitions_[current_index_]->run();
 				last_index_ = current_index_;
 				last_time_ = currentTime;
 				current_index_ = getNextIndex();

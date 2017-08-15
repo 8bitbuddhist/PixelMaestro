@@ -9,6 +9,7 @@
 #include "Section.h"
 #include "sectioncontroller.h"
 #include "Show.h"
+#include "show/Transition.h"
 #include <vector>
 
 using namespace PixelMaestro;
@@ -16,7 +17,7 @@ using namespace PixelMaestro;
 class MaestroController {
 	public:
 		void addSectionController();
-		void addShow(Show::Transition *transitions, unsigned char numTransitions, Show::TimingModes timing, bool loop);
+		void addShow(Transition **transitions, unsigned char numTransitions, Show::TimingModes timing, bool loop);
 		void deleteSectionController(int index);
 		Maestro *getMaestro();
 		int getNumSectionControllers();

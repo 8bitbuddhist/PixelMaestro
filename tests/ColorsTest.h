@@ -1,7 +1,6 @@
 #ifndef COLORSTEST_H
 #define COLORSTEST_H
 
-
 class ColorsTest
 {
     public:

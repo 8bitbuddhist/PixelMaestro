@@ -102,7 +102,7 @@ namespace PixelMaestro {
 					The pattern to display when the PATTERN animation is active.
 					Stored as an array of bools where each bool corresponds to a Pixel.
 				*/
-				bool *pattern;
+				bool *pattern = nullptr;
 
 				/// The number of rows in a single frame.
 				unsigned short rows;
@@ -114,6 +114,7 @@ namespace PixelMaestro {
 				unsigned short frames;
 			};
 
+			Section(Pixel *pixels, unsigned short rows, unsigned short columns);
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
 			bool getFade();
@@ -124,16 +125,15 @@ namespace PixelMaestro {
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);
-			void setAnimationOpts(AnimationOpts opts);
 			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
 			void setCycleInterval(unsigned short interval, unsigned short pause = 0);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
-			void setOverlay(Section *section, Colors::MixMode mixMode, float alpha = 0.0);
+			void setOverlay(Section *overlay, Colors::MixMode mixMode, float alpha = 0.0);
 			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
-			void setPattern(Pattern pattern);
+			void setPattern(Pattern *pattern);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
 			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
@@ -177,8 +177,8 @@ namespace PixelMaestro {
 			/// The Section overlaying the current section (if applicable);
 			Overlay overlay_;
 
-			/// The layout of the pattern used in the PATTERN animation (if applicable).
-			Pattern pattern_;
+			/// The layout of the pattern used in the PATTERN animation.
+			Pattern *pattern_ = nullptr;
 
 			/// The Pixels managed by the Section.
 			Pixel *pixels_;

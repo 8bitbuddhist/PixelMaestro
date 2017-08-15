@@ -85,7 +85,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 			{
 				unsigned char numColors = 14;
 				Colors::RGB fire[numColors];
-				Colors::generateScalingColorArray(fire, Colors::RED, Colors::ORANGE, numColors, true);
+				Colors::generateScalingColorArray(fire, &Colors::RED, &Colors::ORANGE, numColors, true);
 				getActiveSectionController()->setControllerColors(fire, numColors);
 				this->setCustomColorControlsVisible(false);
 				break;
@@ -94,7 +94,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 			{
 				unsigned char numColors = 14;
 				Colors::RGB deepSea[numColors];
-				Colors::generateScalingColorArray(deepSea, Colors::BLUE, Colors::GREEN, numColors, true);
+				Colors::generateScalingColorArray(deepSea, &Colors::BLUE, &Colors::GREEN, numColors, true);
 				getActiveSectionController()->setControllerColors(deepSea, numColors);
 				this->setCustomColorControlsVisible(false);
 				break;
@@ -145,7 +145,7 @@ void MaestroControl::changeScalingColorArray(Colors::RGB color) {
 	tmpColors.resize(numColors);
 
 	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-	Colors::generateScalingColorArray(&tmpColors[0], color, numColors, threshold, true);
+	Colors::generateScalingColorArray(&tmpColors[0], &color, numColors, threshold, true);
 	getActiveSectionController()->setControllerColors(&tmpColors[0], numColors);
 
 	// Release tmpColors

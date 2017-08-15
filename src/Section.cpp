@@ -3,12 +3,22 @@
 	Requires Pixel and Colors classes.
 */
 
-#include "../include/Colors.h"
-#include "../include/Pixel.h"
-#include "../include/Section.h"
-#include "../include/Utility.h"
+#include "Colors.h"
+#include "Pixel.h"
+#include "Section.h"
+#include "Utility.h"
 
 namespace PixelMaestro {
+
+	/**
+	 * Constructor. Assigns Pixels to the Section.
+	 * @param pixels Initial Pixel array.
+	 * @param rows Number of rows of Pixels.
+	 * @param columns Number of columns of Pixels.
+	 */
+	Section::Section(Pixel *pixels, unsigned short rows, unsigned short columns) {
+		this->setPixels(pixels, rows, columns);
+	}
 
 	/**
 		Returns the current color animation.
@@ -111,14 +121,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets extra parameters for the current animation.
-	 * @param opts Parameters to set.
-	 */
-	void Section::setAnimationOpts(AnimationOpts opts) {
-		this->animation_opts_ = opts;
-	}
-
-	/**
 		Changes the current color animation.
 
 		@param animation Animation selection.
@@ -144,11 +146,11 @@ namespace PixelMaestro {
 			color_animation_ = ColorAnimations(animationNum);
 		}
 
-		// Handle any extra options
-		switch (color_animation_) {
+		// Handle any uninitialized options
+		switch (animation) {
 			case SPARKLE:
 			{
-				if (!this->animation_opts_.sparkle_threshold) {
+				if (this->animation_opts_.sparkle_threshold == 255) {
 					this->animation_opts_.sparkle_threshold = 60;
 				}
 				break;
@@ -231,12 +233,12 @@ namespace PixelMaestro {
 		Overlays another  Section on top of the current Section.
 		You can retrieve the blended output by using getPixelColor() on the base Section.
 
-		@param section The Section to overlay.
+		@param overlay The Section to overlay.
 		@param mixMode The method for blending the overlaid Section.
 		@param alpha The amount of blending to perform.
 	*/
-	void Section::setOverlay(Section *section, Colors::MixMode mixMode, float alpha) {
-		overlay_.section = section;
+	void Section::setOverlay(Section *overlay, Colors::MixMode mixMode, float alpha) {
+		overlay_.section = overlay;
 		overlay_.mixMode = mixMode;
 		overlay_.alpha = alpha;
 	}
@@ -244,26 +246,9 @@ namespace PixelMaestro {
 	/**
 		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
 
-		@param pattern Pointer to the pattern array.
-		@param rows Number of rows in the array.
-		@param columns Number of bools in each row.
-		@param frames Number of frames in the pattern.
-	*/
-	void Section::setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames) {
-		pattern_ = {
-			pattern,
-			rows,
-			columns,
-			frames
-		};
-	}
-
-	/**
-		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
-
 		@param pattern New Pattern.
 	*/
-	void Section::setPattern(Pattern pattern) {
+	void Section::setPattern(Pattern *pattern) {
 		pattern_ = pattern;
 	}
 
@@ -313,7 +298,7 @@ namespace PixelMaestro {
 	void Section::update(const unsigned long &currentTime) {
 
 		// If this Section has an Overlay, update it.
-		if (overlay_.mixMode != Colors::MixMode::NONE) {
+		if (overlay_.section) {
 			overlay_.section->update(currentTime);
 		}
 
@@ -344,6 +329,9 @@ namespace PixelMaestro {
 					case Section::ColorAnimations::MERGE:
 						animation_merge();
 						break;
+					case Section::ColorAnimations::PATTERN:
+						animation_pattern();
+						break;
 					case Section::ColorAnimations::PONG:
 						animation_pong();
 						break;
@@ -352,9 +340,6 @@ namespace PixelMaestro {
 						break;
 					case Section::ColorAnimations::RANDOMINDEX:
 						animation_randomIndex();
-						break;
-					case Section::ColorAnimations::PATTERN:
-						animation_pattern();
 						break;
 					default:
 						setAll(&Colors::BLACK);
@@ -500,20 +485,20 @@ namespace PixelMaestro {
 	*/
 	void Section::animation_pattern() {
 		// If the pattern has not been set, do nothing.
-		if (pattern_.pattern == nullptr) {
+		if (pattern_ == nullptr) {
 			setAll(&Colors::BLACK);
 			return;
 		}
 
 		// Stores the beginning index of the active Frame.
-		unsigned int frameStart = (pattern_.rows * pattern_.columns) * cycle_index_;
+		unsigned int frameStart = (pattern_->rows * pattern_->columns) * cycle_index_;
 
 		// Stores the index of the current Pixel as we iterate through the Pattern.
 		unsigned int patternPixel = 0;
-		for (unsigned short row = 0; row < pattern_.rows; row++) {
-			for (unsigned short column = 0; column < pattern_.columns; column++) {
-				patternPixel = frameStart + ((row * pattern_.columns) + column);
-				if (pattern_.pattern[patternPixel] == 1) {
+		for (unsigned short row = 0; row < pattern_->rows; row++) {
+			for (unsigned short column = 0; column < pattern_->columns; column++) {
+				patternPixel = frameStart + ((row * pattern_->columns) + column);
+				if (pattern_->pattern[patternPixel] == 1) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
@@ -522,7 +507,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		animation_updateCycle(0, pattern_.frames);
+		animation_updateCycle(0, pattern_->frames);
 	}
 
 	/**

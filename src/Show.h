@@ -5,26 +5,14 @@
 #ifndef SHOW_H
 #define SHOW_H
 
-#include <functional>
+#include "show/Transition.h"
 #include "Maestro.h"
 
-using namespace std;
 using namespace PixelMaestro;
 
 namespace PixelMaestro {
 	class Show {
 		public:
-
-			/// Defines an action that a Maestro will perform at a specific time.
-			struct Transition {
-
-				/// How long until the action will be performed.
-				unsigned long time;
-
-				/// The function to call when the Transition triggers.
-				function<void()> action;
-			};
-
 			/// The method used to measure time between Transitions.
 			enum TimingModes {
 
@@ -35,12 +23,14 @@ namespace PixelMaestro {
 				RELATIVE
 			};
 
+			Show();
+			Show (Maestro *maestro);
 			unsigned short getCurrentIndex();
 			bool getLooping();
 			Maestro *getMaestro();
 			void setMaestro(Maestro *maestro);
 			void setTiming(TimingModes timing);
-			void setTransitions(Transition *transitions, unsigned char numTransitions);
+			void setTransitions(Transition **transitions, unsigned char numTransitions);
 			void toggleLooping();
 			void update(const unsigned long &currentTime);
 
@@ -58,7 +48,7 @@ namespace PixelMaestro {
 			bool loop_ = false;
 
 			/// The Maestro that the Transitions apply to.
-			Maestro *maestro_;
+			Maestro *maestro_ = nullptr;
 
 			/// The number of Transitions in the array.
 			unsigned char num_transitions_;
@@ -67,7 +57,7 @@ namespace PixelMaestro {
 			TimingModes timing_ = TimingModes::ABSOLUTE;
 
 			/// Transitions used in the Show.
-			Transition *transitions_;
+			Transition **transitions_;
 
 			unsigned short getNextIndex();
 	};

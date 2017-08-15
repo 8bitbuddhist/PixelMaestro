@@ -1,7 +1,7 @@
 #include "catch/single_include/catch.hpp"
 #include "PixelTest.h"
-#include "../include/Pixel.h"
-#include "../include/Colors.h"
+#include "../src/Pixel.h"
+#include "../src/Colors.h"
 
 using namespace PixelMaestro;
 

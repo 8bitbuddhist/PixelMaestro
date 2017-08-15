@@ -21,8 +21,19 @@ SOURCES += main.cpp\
 		widget/maestrocontrol.cpp \
 		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
-    demo/showdemo.cpp \
-    controller/showcontroller.cpp
+		demo/showdemo.cpp \
+		controller/showcontroller.cpp \
+		../src/show/Transition.cpp \
+		../src/show/SectionToggleFadeTransition.cpp \
+		../src/show/MaestroToggleRunTransition.cpp \
+		../src/show/SectionSetCycleIntervalTransition.cpp \
+		../src/show/SectionSetColorAnimationTransition.cpp \
+		../src/show/ColorsGenerateRandomColorTransition.cpp \
+		../src/show/ColorsGenerateRandomColorArrayTransition.cpp \
+		../src/show/SectionSetOverlayTransition.cpp \
+		../src/show/SectionUnsetOverlayTransition.cpp \
+		../src/show/SectionSetPatternTransition.cpp \
+		../src/show/ColorsGenerateScalingColorArrayTransition.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -31,18 +42,29 @@ HEADERS += mainwindow.h \
 		widget/maestrocontrol.h \
 		controller/sectioncontroller.h \
 		controller/maestrocontroller.h \
-		../include/Colors.h \
-		../include/Maestro.h \
-		../include/Pixel.h \
-		../include/Section.h \
-		../include/Show.h \
-		../include/Utility.h \
-    demo/showdemo.h \
-    controller/showcontroller.h
+		demo/showdemo.h \
+		controller/showcontroller.h \
+		../src/show/Transition.h \
+		../src/Colors.h \
+		../src/Maestro.h \
+		../src/Pixel.h \
+		../src/Section.h \
+		../src/Show.h \
+		../src/Utility.h \
+		../src/show/SectionToggleFadeTransition.h \
+		../src/show/MaestroToggleRunTransition.h \
+		../src/show/SectionSetCycleIntervalTransition.h \
+		../src/show/SectionSetColorAnimationTransition.h \
+		../src/show/ColorsGenerateRandomColorTransition.h \
+		../src/show/ColorsGenerateRandomColorArrayTransition.h \
+		../src/show/SectionSetOverlayTransition.h \
+		../src/show/SectionUnsetOverlayTransition.h \
+		../src/show/SectionSetPatternTransition.h \
+		../src/show/ColorsGenerateScalingColorArrayTransition.h
 
 FORMS	+= \
 		mainwindow.ui \
 		widget/maestrocontrol.ui
 
 INCLUDEPATH += include \
-			$$PWD/../include
+			$$PWD/../src

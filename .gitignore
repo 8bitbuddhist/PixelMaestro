@@ -1,14 +1,8 @@
-*.cbp
-*.depend
-*.layout
 *bin/
+*build*/
 *obj/
 CMakeCache.txt
 CMakeFiles/
 Makefile
 cmake_install.cmake
-.pioenvs
-.piolibdeps
-.clang_complete
-.gcc-flags.json
 gui/PixelMaestro_QT.pro.user

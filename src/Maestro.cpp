@@ -2,8 +2,8 @@
 	Maestro.cpp - Library for controlling a collection of Pixels and Sections.
 */
 
-#include "../include/Maestro.h"
-#include "../include/Section.h"
+#include "Maestro.h"
+#include "Section.h"
 
 namespace PixelMaestro {
 	/**
