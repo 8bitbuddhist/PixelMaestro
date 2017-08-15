@@ -15,7 +15,7 @@ using namespace PixelMaestro;
 const unsigned char rows = 1;
 const unsigned char columns = 8;
 const unsigned char numPixels = rows * columns;
-const float MAX_BRIGHTNESS = 0.10;
+const float MAX_BRIGHTNESS = 0.05;
 
 Maestro maestro;
 Pixel pixels[numPixels];
@@ -26,7 +26,7 @@ Section sections[] = {
 Show show;
 const unsigned char NUM_TRANSITIONS = 1;
 Transition *transitions[] = {
-  new SectionSetColorAnimationTransition(&sections[0], 5000, Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL)
+  new SectionSetColorAnimationTransition(5000, &sections[0], Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL)
 };
 
 // WS1812 stuff
