@@ -298,7 +298,7 @@ namespace PixelMaestro {
 	void Section::update(const unsigned long &currentTime) {
 
 		// If this Section has an Overlay, update it.
-		if (overlay_.mixMode != Colors::MixMode::NONE) {
+		if (overlay_.section) {
 			overlay_.section->update(currentTime);
 		}
 
