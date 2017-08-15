@@ -30,7 +30,10 @@ SOURCES += main.cpp\
     ../src/show/SectionSetColorAnimationTransition.cpp \
     ../src/show/ColorsGenerateRandomColorTransition.cpp \
     ../src/show/ColorsGenerateScalingColorArray.cpp \
-    ../src/show/ColorsGenerateRandomColorArrayTransition.cpp
+    ../src/show/ColorsGenerateRandomColorArrayTransition.cpp \
+    ../src/show/SectionSetOverlayTransition.cpp \
+    ../src/show/SectionUnsetOverlayTransition.cpp \
+    ../src/show/SectionSetPatternTransition.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -54,7 +57,10 @@ HEADERS += mainwindow.h \
     ../src/show/SectionSetColorAnimationTransition.h \
     ../src/show/ColorsGenerateRandomColorTransition.h \
     ../src/show/ColorsGenerateScalingColorArray.h \
-    ../src/show/ColorsGenerateRandomColorArrayTransition.h
+    ../src/show/ColorsGenerateRandomColorArrayTransition.h \
+    ../src/show/SectionSetOverlayTransition.h \
+    ../src/show/SectionUnsetOverlayTransition.h \
+    ../src/show/SectionSetPatternTransition.h
 
 FORMS	+= \
 		mainwindow.ui \

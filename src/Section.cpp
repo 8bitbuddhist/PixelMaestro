@@ -233,12 +233,12 @@ namespace PixelMaestro {
 		Overlays another  Section on top of the current Section.
 		You can retrieve the blended output by using getPixelColor() on the base Section.
 
-		@param section The Section to overlay.
+		@param overlay The Section to overlay.
 		@param mixMode The method for blending the overlaid Section.
 		@param alpha The amount of blending to perform.
 	*/
-	void Section::setOverlay(Section *section, Colors::MixMode mixMode, float alpha) {
-		overlay_.section = section;
+	void Section::setOverlay(Section *overlay, Colors::MixMode mixMode, float alpha) {
+		overlay_.section = overlay;
 		overlay_.mixMode = mixMode;
 		overlay_.alpha = alpha;
 	}

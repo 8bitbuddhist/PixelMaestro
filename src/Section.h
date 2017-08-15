@@ -131,7 +131,7 @@ namespace PixelMaestro {
 			void setCycleInterval(unsigned short interval, unsigned short pause = 0);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
-			void setOverlay(Section *section, Colors::MixMode mixMode, float alpha = 0.0);
+			void setOverlay(Section *overlay, Colors::MixMode mixMode, float alpha = 0.0);
 			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
 			void setPattern(Pattern pattern);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
