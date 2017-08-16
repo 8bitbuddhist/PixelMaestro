@@ -17,16 +17,16 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the index of the currently queued Transition.
+		Returns the index of the currently queued Event.
 
-		@return Index of the current Transition.
+		@return Index of the current Event.
 	*/
 	unsigned short Show::getCurrentIndex() {
 		return current_index_;
 	}
 
 	/**
-		Returns whether the Show loops back over its Transitions, or if it just ends.
+		Returns whether the Show loops back over its Events, or if it just ends.
 
 		@return Whether or not the Show loops.
 	*/
@@ -44,13 +44,13 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Gets the index of the next Transition.
+		Gets the index of the next Event.
 
-		@return Index of the next Transition.
+		@return Index of the next Event.
 	*/
 	unsigned short Show::getNextIndex() {
 		// Get the next index. If we've exceeded the size of the array, start over from 0
-		if (current_index_ + 1 >= num_transitions_) {
+		if (current_index_ + 1 >= num_events_) {
 			return 0;
 		}
 		else {
@@ -77,18 +77,18 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets the Transitions in the Show.
+		Sets the Events in the Show.
 
-		@param transitions Array of Transitions to queue.
-		@param numTransitions The number of Transitions in the queue.
+		@param events Array of Events to queue.
+		@param numEvents The number of Events in the queue.
 	*/
-	void Show::setTransitions(Transition** transitions, unsigned char numTransitions) {
-		transitions_ = transitions;
-		num_transitions_ = numTransitions;
+	void Show::setEvents(Event** events, unsigned char numEvents) {
+		events_ = events;
+		num_events_ = numEvents;
 	}
 
 	/**
-		Toggles whether to loop when the Transitions are done running.
+		Toggles whether to loop when the Events are done running.
 	*/
 	void Show::toggleLooping() {
 		loop_ = !loop_;
@@ -100,17 +100,17 @@ namespace PixelMaestro {
 		@param currentTime Program runtime.
 	*/
 	void Show::update(const unsigned long &currentTime) {
-		// Only run if we're looping, or if we haven't reached the end of the Transition list yet.
-		if (loop_ || (!loop_ && last_index_ != (num_transitions_ - 1))) {
+		// Only run if we're looping, or if we haven't reached the end of the Event list yet.
+		if (loop_ || (!loop_ && last_index_ != (num_events_ - 1))) {
 			/*
-				Based on the timing method used, determine whether to run the Transition.
-				If ABSOLUTE, compare the current time to the queued Transition's start time.
-				If RELATIVE, compare the time since the last Transition to the queued Transition's start time.
-				After running the Transition, update the last run time and last run Transition index.
+				Based on the timing method used, determine whether to run the Event.
+				If ABSOLUTE, compare the current time to the queued Event's start time.
+				If RELATIVE, compare the time since the last Event to the queued Event's start time.
+				After running the Event, update the last run time and last run Event index.
 			*/
-			if ((timing_ == TimingModes::ABSOLUTE && (currentTime >= transitions_[current_index_]->getTime())) ||
-				(timing_ == TimingModes::RELATIVE && ((currentTime - last_time_) >= transitions_[current_index_]->getTime()))) {
-				transitions_[current_index_]->run();
+			if ((timing_ == TimingModes::ABSOLUTE && (currentTime >= events_[current_index_]->getTime())) ||
+				(timing_ == TimingModes::RELATIVE && ((currentTime - last_time_) >= events_[current_index_]->getTime()))) {
+				events_[current_index_]->run();
 				last_index_ = current_index_;
 				last_time_ = currentTime;
 				current_index_ = getNextIndex();

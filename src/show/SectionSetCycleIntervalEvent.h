@@ -1,12 +1,12 @@
 #ifndef SECTIONSETCYCLEINTERVAL_H
 #define SECTIONSETCYCLEINTERVAL_H
 
-#include "Transition.h"
+#include "Event.h"
 
 namespace PixelMaestro {
-	class SectionSetCycleIntervalTransition : public Transition {
+	class SectionSetCycleIntervalEvent : public Event {
 		public:
-			SectionSetCycleIntervalTransition(unsigned long time, Section *section, unsigned short interval, unsigned short pause = 0);
+			SectionSetCycleIntervalEvent(unsigned long time, Section *section, unsigned short interval, unsigned short pause = 0);
 			void run();
 
 		private:

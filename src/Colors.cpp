@@ -51,57 +51,6 @@ namespace PixelMaestro {
 	};
 
 	/**
-		Converts an HSV value to an RGB value.
-		Courtesy of Elco Jacobs' ShiftPWM library (http://www.elcojacobs.com/shiftpwm/)
-
-		@param hue The initial hue.
-		@param sat The initial saturation.
-		@param val The initial value.
-	*/
-	Colors::RGB Colors::HSVtoRGB(unsigned int hue, unsigned int sat, unsigned int val){
-		RGB newColor;
-		unsigned int accent = hue / 60;
-		unsigned int bottom = ((255 - sat) * val)>>8;
-		unsigned int top = val;
-		unsigned char rising  = ((top - bottom) * (hue % 60)) / 60 + bottom;
-		unsigned char falling = ((top - bottom) * (60 - hue % 60)) / 60 + bottom;
-
-		switch(accent) {
-			case 0:
-				newColor.r = top;
-				newColor.g = rising;
-				newColor.b = bottom;
-				break;
-			case 1:
-				newColor.r = falling;
-				newColor.g = top;
-				newColor.b = bottom;
-				break;
-			case 2:
-				newColor.r = bottom;
-				newColor.g = top;
-				newColor.b = rising;
-				break;
-			case 3:
-				newColor.r = bottom;
-				newColor.g = falling;
-				newColor.b = top;
-				break;
-			case 4:
-				newColor.r = rising;
-				newColor.g = bottom;
-				newColor.b = top;
-				break;
-			case 5:
-				newColor.r = top;
-				newColor.g = bottom;
-				newColor.b = falling;
-				break;
-		}
-		return newColor;
-	}
-
-	/**
 	 * Creates a random color.
 	 * @return Random color.
 	 */
@@ -137,7 +86,7 @@ namespace PixelMaestro {
 		@param baseColor The initial color.
 		@param targetColor The target color.
 		@param numColors Number of colors in the array.
-		@param reverse If true, the second half of the array will transition from targetColor back to baseColor.
+		@param reverse If true, the second half of the array will event from targetColor back to baseColor.
 	*/
 	void Colors::generateScalingColorArray(RGB newArray[], RGB *baseColor, RGB *targetColor, unsigned int numColors, bool reverse) {
 		if (reverse) {
@@ -181,7 +130,7 @@ namespace PixelMaestro {
 		@param baseColor The initial color.
 		@param numColors Number of colors in the array.
 		@param threshold The variation between the base color and the newly generated target color.
-		@param reverse If true, the array will be doubled to transition from baseColor to targetColor, then back to baseColor.
+		@param reverse If true, the array will be doubled to event from baseColor to targetColor, then back to baseColor.
 	*/
 	void Colors::generateScalingColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, unsigned char threshold, bool reverse) {
 		RGB newColor = {

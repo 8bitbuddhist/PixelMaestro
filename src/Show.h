@@ -5,7 +5,7 @@
 #ifndef SHOW_H
 #define SHOW_H
 
-#include "show/Transition.h"
+#include "show/Event.h"
 #include "Maestro.h"
 
 using namespace PixelMaestro;
@@ -13,13 +13,13 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class Show {
 		public:
-			/// The method used to measure time between Transitions.
+			/// The method used to measure time between Events.
 			enum TimingModes {
 
 				/// Counts time from when the Show starts.
 				ABSOLUTE,
 
-				/// Counts time since the last Transition.
+				/// Counts time since the last Event.
 				RELATIVE
 			};
 
@@ -30,34 +30,34 @@ namespace PixelMaestro {
 			Maestro *getMaestro();
 			void setMaestro(Maestro *maestro);
 			void setTiming(TimingModes timing);
-			void setTransitions(Transition **transitions, unsigned char numTransitions);
+			void setEvents(Event **events, unsigned char numEvents);
 			void toggleLooping();
 			void update(const unsigned long &currentTime);
 
 		private:
-			/// The index of the current Transition.
+			/// The index of the current Event.
 			unsigned short current_index_ = 0;
 
-			/// The index of the last run Transition.
+			/// The index of the last run Event.
 			unsigned short last_index_ = 0;
 
-			/// The time that the last Transition ran.
+			/// The time that the last Event ran.
 			unsigned long last_time_ = 0;
 
-			/// Whether to loop over the Transition.
+			/// Whether to loop over the Event.
 			bool loop_ = false;
 
-			/// The Maestro that the Transitions apply to.
+			/// The Maestro that the Events apply to.
 			Maestro *maestro_ = nullptr;
 
-			/// The number of Transitions in the array.
-			unsigned char num_transitions_;
+			/// The number of Events in the array.
+			unsigned char num_events_;
 
-			/// Method for measuring a Transition's start time. Defaults to Absolute.
+			/// Method for measuring a Event's start time. Defaults to Absolute.
 			TimingModes timing_ = TimingModes::ABSOLUTE;
 
-			/// Transitions used in the Show.
-			Transition **transitions_;
+			/// Events used in the Show.
+			Event **events_;
 
 			unsigned short getNextIndex();
 	};

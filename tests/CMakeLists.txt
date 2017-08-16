@@ -9,7 +9,7 @@ set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Bring in local header and source files
 include_directories("../src" "../src/show")
-file(GLOB SOURCES "*.cpp" "../src/*.cpp" "../src/show/*.cpp")
+file(GLOB SOURCES "tests/*.cpp" "../src/*.cpp" "../src/show/*.cpp")
 
 # Add Catch header files
 add_library(Catch INTERFACE)

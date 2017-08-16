@@ -5,10 +5,10 @@
 #include <Pixel.h>
 #include <Section.h>
 #include <Show.h>
-#include <show/Transition.h>
-#include <show/SectionSetColorAnimationTransition.h>
-#include <show/ColorsGenerateRandomColorTransition.h>
-#include <show/ColorsGenerateScalingColorArrayTransition.h>
+#include <show/Event.h>
+#include <show/SectionSetColorAnimationEvent.h>
+#include <show/ColorsGenerateRandomColorEvent.h>
+#include <show/ColorsGenerateScalingColorArrayEvent.h>
 
 #include <WS2812.h>
 
@@ -54,17 +54,17 @@ Section::ColorAnimations animations[] = {
 };
 
 Show show;
-const unsigned int INTERVAL = 10000;	// 10 seconds between each Transition.
-const unsigned char NUM_TRANSITIONS = 4;
-Transition *transitions[] = {
+const unsigned int INTERVAL = 10000;	// 10 seconds between each Event.
+const unsigned char NUM_EventS = 4;
+Event *Events[] = {
 	// Switch to the next animation.
-	new SectionSetColorAnimationTransition(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, false, Section::AnimationOrientations::HORIZONTAL),
+	new SectionSetColorAnimationEvent(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, false, Section::AnimationOrientations::HORIZONTAL),
 	// Select a new color scheme base color from the list of source colors.
-	new ColorsGenerateRandomColorTransition(0, &baseColor, source_colors, NUM_SOURCE_COLORS),
+	new ColorsGenerateRandomColorEvent(0, &baseColor, source_colors, NUM_SOURCE_COLORS),
 	// Select a new color scheme target color from the list of source colors.
-	new ColorsGenerateRandomColorTransition(0, &targetColor, source_colors, NUM_SOURCE_COLORS),
+	new ColorsGenerateRandomColorEvent(0, &targetColor, source_colors, NUM_SOURCE_COLORS),
 	// Create the new color scheme.
-	new ColorsGenerateScalingColorArrayTransition(0, colors, &baseColor, &targetColor, NUM_COLORS, false),
+	new ColorsGenerateScalingColorArrayEvent(0, colors, &baseColor, &targetColor, NUM_COLORS, false),
 };
 
 // Initialize WS2812 components.
@@ -108,7 +108,7 @@ void setup () {
 	// Initialize the Show.
 	show.setMaestro(&maestro);
 	show.setTiming(Show::TimingModes::RELATIVE);
-	show.setTransitions(transitions, NUM_TRANSITIONS);
+	show.setEvents(Events, NUM_EventS);
 	show.toggleLooping();
 }
 

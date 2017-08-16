@@ -74,10 +74,10 @@ namespace PixelMaestro {
 				/// Transparency level of the overlaid Section (if applicable).
 				float alpha;
 
-				void operator=(Overlay newLayer) {
-					section = newLayer.section;
-					mixMode = newLayer.mixMode;
-					alpha = newLayer.alpha;
+				Overlay (Section *section, Colors::MixMode mixMode, float alpha) {
+					this->section = section;
+					this->mixMode = mixMode;
+					this->alpha = alpha;
 				}
 			};
 
@@ -131,7 +131,7 @@ namespace PixelMaestro {
 			void setCycleInterval(unsigned short interval, unsigned short pause = 0);
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
-			void setOverlay(Section *overlay, Colors::MixMode mixMode, float alpha = 0.0);
+			void setOverlay(Overlay *overlay);
 			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
 			void setPattern(Pattern *pattern);
 			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
@@ -175,7 +175,7 @@ namespace PixelMaestro {
 			Layout layout_;
 
 			/// The Section overlaying the current section (if applicable);
-			Overlay overlay_;
+			Overlay *overlay_;
 
 			/// The layout of the pattern used in the PATTERN animation.
 			Pattern *pattern_ = nullptr;

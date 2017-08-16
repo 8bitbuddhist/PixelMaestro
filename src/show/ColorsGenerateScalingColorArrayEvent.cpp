@@ -1,7 +1,7 @@
-#include "ColorsGenerateScalingColorArrayTransition.h"
+#include "ColorsGenerateScalingColorArrayEvent.h"
 
 namespace PixelMaestro {
-	ColorsGenerateScalingColorArrayTransition::ColorsGenerateScalingColorArrayTransition(unsigned long time, Colors::RGB newArray[], Colors::RGB *baseColor, Colors::RGB *targetColor, unsigned int numColors, bool reverse) : Transition(time) {
+	ColorsGenerateScalingColorArrayEvent::ColorsGenerateScalingColorArrayEvent(unsigned long time, Colors::RGB newArray[], Colors::RGB *baseColor, Colors::RGB *targetColor, unsigned int numColors, bool reverse) : Event(time) {
 		this->new_array_ = newArray;
 		this->base_color_ = baseColor;
 		this->target_color_ = targetColor;
@@ -9,7 +9,7 @@ namespace PixelMaestro {
 		this->reverse_ = reverse;
 	}
 
-	ColorsGenerateScalingColorArrayTransition::ColorsGenerateScalingColorArrayTransition(unsigned long time, Colors::RGB newArray[], Colors::RGB *baseColor, unsigned int numColors, unsigned char threshold, bool reverse) : Transition(time) {
+	ColorsGenerateScalingColorArrayEvent::ColorsGenerateScalingColorArrayEvent(unsigned long time, Colors::RGB newArray[], Colors::RGB *baseColor, unsigned int numColors, unsigned char threshold, bool reverse) : Event(time) {
 		this->new_array_ = newArray;
 		this->base_color_ = baseColor;
 		this->num_colors_ = numColors;
@@ -17,7 +17,7 @@ namespace PixelMaestro {
 		this->reverse_ = reverse;
 	}
 
-	void ColorsGenerateScalingColorArrayTransition::run() {
+	void ColorsGenerateScalingColorArrayEvent::run() {
 		if (this->target_color_ != nullptr) {
 			Colors::generateScalingColorArray(this->new_array_, this->base_color_, this->target_color_, this->num_colors_, this->reverse_);
 		}

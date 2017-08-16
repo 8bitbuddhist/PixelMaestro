@@ -26,7 +26,7 @@ void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
 
 	// Create overlay and assign Pixels
 	this->sections_.push_back(Section(&this->pixels_[pixels], layout_.rows, layout_.columns));
-	this->sections_[0].setOverlay(&this->sections_[1], mixMode, alpha);
+	this->sections_[0].setOverlay(new Section::Overlay(&this->sections_[1], mixMode, alpha));
 }
 
 /**

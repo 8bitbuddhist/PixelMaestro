@@ -106,7 +106,6 @@ namespace PixelMaestro {
 			static RGB COLORWHEEL[];
 			static RGB RAINBOW[];
 
-			static RGB HSVtoRGB(unsigned int hue, unsigned int sat, unsigned int val);
 			static RGB generateRandomColor();
 			static void generateRandomColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, float range = 1.0);
 			static void generateScalingColorArray(RGB newArray[], RGB *baseColor, RGB *targetColor, unsigned int numColors, bool reverse = false);

@@ -81,8 +81,8 @@ namespace PixelMaestro {
 		@return RGB value of the Pixel's de facto color.
 	*/
 	Colors::RGB Section::getPixelColor(unsigned int pixel) {
-		if (overlay_.section != nullptr) {
-			return Colors::mixColors(this->getPixel(pixel)->getColor(), overlay_.section->getPixel(pixel)->getColor(), overlay_.mixMode, overlay_.alpha);
+		if (overlay_ != nullptr) {
+			return Colors::mixColors(this->getPixel(pixel)->getColor(), overlay_->section->getPixel(pixel)->getColor(), overlay_->mixMode, overlay_->alpha);
 		}
 		else {
 			return *this->getPixel(pixel)->getColor();
@@ -233,14 +233,10 @@ namespace PixelMaestro {
 		Overlays another  Section on top of the current Section.
 		You can retrieve the blended output by using getPixelColor() on the base Section.
 
-		@param overlay The Section to overlay.
-		@param mixMode The method for blending the overlaid Section.
-		@param alpha The amount of blending to perform.
+		@param overlay The Overlay to set.
 	*/
-	void Section::setOverlay(Section *overlay, Colors::MixMode mixMode, float alpha) {
-		overlay_.section = overlay;
-		overlay_.mixMode = mixMode;
-		overlay_.alpha = alpha;
+	void Section::setOverlay(Overlay *overlay) {
+		this->overlay_ = overlay;
 	}
 
 	/**
@@ -286,8 +282,7 @@ namespace PixelMaestro {
 		Removes the overlay from the Section.
 	*/
 	void Section::unsetOverlay() {
-		overlay_.section = nullptr;
-		overlay_.alpha = 0;
+		delete this->overlay_;
 	}
 
 	/**
@@ -298,8 +293,8 @@ namespace PixelMaestro {
 	void Section::update(const unsigned long &currentTime) {
 
 		// If this Section has an Overlay, update it.
-		if (overlay_.section) {
-			overlay_.section->update(currentTime);
+		if (overlay_ != nullptr) {
+			overlay_->section->update(currentTime);
 		}
 
 		if (currentTime - last_refresh_ >= (unsigned long)refresh_interval_) {

@@ -1,11 +1,11 @@
-#ifndef TRANSITION_H
-#define TRANSITION_H
+#ifndef EVENT_H
+#define EVENT_H
 
 namespace PixelMaestro {
-	class Transition {
+	class Event {
 
 		public:
-			Transition(unsigned long time);
+			Event(unsigned long time);
 			unsigned long getTime();
 			virtual void run() = 0;
 			void setTime(unsigned long time);
@@ -16,4 +16,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // TRANSITION_H
+#endif // EVENT_H
