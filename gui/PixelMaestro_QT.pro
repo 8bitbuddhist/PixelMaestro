@@ -23,17 +23,17 @@ SOURCES += main.cpp\
 		controller/maestrocontroller.cpp \
 		demo/showdemo.cpp \
 		controller/showcontroller.cpp \
-		../src/show/Transition.cpp \
-		../src/show/SectionToggleFadeTransition.cpp \
-		../src/show/MaestroToggleRunTransition.cpp \
-		../src/show/SectionSetCycleIntervalTransition.cpp \
-		../src/show/SectionSetColorAnimationTransition.cpp \
-		../src/show/ColorsGenerateRandomColorTransition.cpp \
-		../src/show/ColorsGenerateRandomColorArrayTransition.cpp \
-		../src/show/SectionSetOverlayTransition.cpp \
-		../src/show/SectionUnsetOverlayTransition.cpp \
-		../src/show/SectionSetPatternTransition.cpp \
-		../src/show/ColorsGenerateScalingColorArrayTransition.cpp
+		../src/show/Event.cpp \
+		../src/show/SectionToggleFadeEvent.cpp \
+		../src/show/MaestroToggleRunEvent.cpp \
+		../src/show/SectionSetCycleIntervalEvent.cpp \
+		../src/show/SectionSetColorAnimationEvent.cpp \
+		../src/show/ColorsGenerateRandomColorEvent.cpp \
+		../src/show/ColorsGenerateRandomColorArrayEvent.cpp \
+		../src/show/SectionSetOverlayEvent.cpp \
+		../src/show/SectionUnsetOverlayEvent.cpp \
+		../src/show/SectionSetPatternEvent.cpp \
+		../src/show/ColorsGenerateScalingColorArrayEvent.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -44,23 +44,23 @@ HEADERS += mainwindow.h \
 		controller/maestrocontroller.h \
 		demo/showdemo.h \
 		controller/showcontroller.h \
-		../src/show/Transition.h \
+		../src/show/Event.h \
 		../src/Colors.h \
 		../src/Maestro.h \
 		../src/Pixel.h \
 		../src/Section.h \
 		../src/Show.h \
 		../src/Utility.h \
-		../src/show/SectionToggleFadeTransition.h \
-		../src/show/MaestroToggleRunTransition.h \
-		../src/show/SectionSetCycleIntervalTransition.h \
-		../src/show/SectionSetColorAnimationTransition.h \
-		../src/show/ColorsGenerateRandomColorTransition.h \
-		../src/show/ColorsGenerateRandomColorArrayTransition.h \
-		../src/show/SectionSetOverlayTransition.h \
-		../src/show/SectionUnsetOverlayTransition.h \
-		../src/show/SectionSetPatternTransition.h \
-		../src/show/ColorsGenerateScalingColorArrayTransition.h
+		../src/show/SectionToggleFadeEvent.h \
+		../src/show/MaestroToggleRunEvent.h \
+		../src/show/SectionSetCycleIntervalEvent.h \
+		../src/show/SectionSetColorAnimationEvent.h \
+		../src/show/ColorsGenerateRandomColorEvent.h \
+		../src/show/ColorsGenerateRandomColorArrayEvent.h \
+		../src/show/SectionSetOverlayEvent.h \
+		../src/show/SectionUnsetOverlayEvent.h \
+		../src/show/SectionSetPatternEvent.h \
+		../src/show/ColorsGenerateScalingColorArrayEvent.h
 
 FORMS	+= \
 		mainwindow.ui \

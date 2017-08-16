@@ -1,5 +1,5 @@
 #include "../Section.h"
-#include "SectionSetColorAnimationTransition.h"
+#include "SectionSetColorAnimationEvent.h"
 
 using namespace PixelMaestro;
 
@@ -7,13 +7,13 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Changes to the specified animation.
-	 * @param time Time to run the Transition.
+	 * @param time Time to run the Event.
 	 * @param section Section to update.
 	 * @param animation Animation to display.
 	 * @param reverseAnimation Whether to reverse the animation.
 	 * @param orientation Animation orientation.
 	 */
-	SectionSetColorAnimationTransition::SectionSetColorAnimationTransition(unsigned long time, Section *section, Section::ColorAnimations animation, bool reverseAnimation, Section::AnimationOrientations orientation) : Transition(time) {
+	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section *section, Section::ColorAnimations animation, bool reverseAnimation, Section::AnimationOrientations orientation) : Event(time) {
 		this->section_ = section;
 		this->animation_ = animation;
 		this->reverseAnimation = reverseAnimation;
@@ -22,14 +22,14 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Automatically scrolls through a collection of animations.
-	 * @param time Time to run the Transition.
+	 * @param time Time to run the Event.
 	 * @param section Section to update.
 	 * @param animations Collection of animations to scroll through.
 	 * @param numAnimations Number of animations to scroll through.
 	 * @param reverseAnimation Whether to reverse the animation.
 	 * @param orientation Animation orientation.
 	 */
-	SectionSetColorAnimationTransition::SectionSetColorAnimationTransition(unsigned long time, Section *section, Section::ColorAnimations *animations, unsigned int numAnimations, bool reverseAnimation, Section::AnimationOrientations orientation) : Transition(time) {
+	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section *section, Section::ColorAnimations *animations, unsigned int numAnimations, bool reverseAnimation, Section::AnimationOrientations orientation) : Event(time) {
 		this->section_ = section;
 		this->animations_ = animations;
 		this->num_animations_ = numAnimations;
@@ -37,7 +37,7 @@ namespace PixelMaestro {
 		this->orientation = orientation;
 	}
 
-	void SectionSetColorAnimationTransition::run() {
+	void SectionSetColorAnimationEvent::run() {
 		// If we have a collection of animations, iterate through them, otherwise jump straight to the specified animation
 		if(this->animations_) {
 			this->section_->setColorAnimation(Section::ColorAnimations::NEXT, this->reverseAnimation, this->orientation);

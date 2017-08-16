@@ -5,8 +5,8 @@
 #include <Pixel.h>
 #include <Section.h>
 #include <Show.h>
-#include <show/Transition.h>
-#include <show/SectionSetColorAnimationTransition.h>
+#include <show/Event.h>
+#include <show/SectionSetColorAnimationEvent.h>
 
 #include <WS2812.h>
 
@@ -24,9 +24,9 @@ Section sections[] = {
 };
 
 Show show;
-const unsigned char NUM_TRANSITIONS = 1;
-Transition *transitions[] = {
-  new SectionSetColorAnimationTransition(5000, &sections[0], Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL)
+const unsigned char NUM_EventS = 1;
+Event *Events[] = {
+  new SectionSetColorAnimationEvent(5000, &sections[0], Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL)
 };
 
 // WS1812 stuff
@@ -50,7 +50,7 @@ void setup () {
 
     show.setMaestro(&maestro);
     show.setTiming(Show::TimingModes::RELATIVE);
-    show.setTransitions(transitions, NUM_TRANSITIONS);
+    show.setEvents(Events, NUM_EventS);
     show.toggleLooping();
 }
 

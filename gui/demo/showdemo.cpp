@@ -6,7 +6,7 @@
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
-#include "../src/show/SectionSetColorAnimationTransition.h"
+#include "../src/show/SectionSetColorAnimationEvent.h"
 
 ShowDemo::ShowDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, this->maestro_controller_) {
 	this->maestro_controller_ = maestroController;
@@ -19,11 +19,11 @@ ShowDemo::ShowDemo(QWidget *parent, MaestroController *maestroController) : Simp
 	section->setCycleInterval(300);
 
 	/*
-	 * Initialize Transition.
-	 * This show has just one Transition, which simply changes to the next animation every 5 seconds.
+	 * Initialize Event.
+	 * This show has just one Event, which simply changes to the next animation every 5 seconds.
 	 */
-	transitions_.push_back(new SectionSetColorAnimationTransition(5000, section, Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL));
+	events_.push_back(new SectionSetColorAnimationEvent(5000, section, Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL));
 
-	this->maestro_controller_->addShow(&transitions_[0], transitions_.size(), Show::TimingModes::RELATIVE, true);
+	this->maestro_controller_->addShow(&events_[0], events_.size(), Show::TimingModes::RELATIVE, true);
 
 }

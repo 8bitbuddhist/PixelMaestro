@@ -15,12 +15,12 @@ using namespace PixelMaestro;
 class ShowController {
 	public:
 		ShowController(MaestroController *maestro);
-		void setTransitions(Transition *transitions, unsigned int numTransitions);
+		void setEvents(Event *events, unsigned int numEvents);
 
 	private:
 		MaestroController *maestro_ = nullptr;
 		Show show_;
-		std::vector<Transition> transitions_;
+		std::vector<Event> events_;
 };
 
 #endif // SHOWCONTROLLER_H

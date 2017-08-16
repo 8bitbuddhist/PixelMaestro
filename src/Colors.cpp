@@ -86,7 +86,7 @@ namespace PixelMaestro {
 		@param baseColor The initial color.
 		@param targetColor The target color.
 		@param numColors Number of colors in the array.
-		@param reverse If true, the second half of the array will transition from targetColor back to baseColor.
+		@param reverse If true, the second half of the array will event from targetColor back to baseColor.
 	*/
 	void Colors::generateScalingColorArray(RGB newArray[], RGB *baseColor, RGB *targetColor, unsigned int numColors, bool reverse) {
 		if (reverse) {
@@ -130,7 +130,7 @@ namespace PixelMaestro {
 		@param baseColor The initial color.
 		@param numColors Number of colors in the array.
 		@param threshold The variation between the base color and the newly generated target color.
-		@param reverse If true, the array will be doubled to transition from baseColor to targetColor, then back to baseColor.
+		@param reverse If true, the array will be doubled to event from baseColor to targetColor, then back to baseColor.
 	*/
 	void Colors::generateScalingColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, unsigned char threshold, bool reverse) {
 		RGB newColor = {

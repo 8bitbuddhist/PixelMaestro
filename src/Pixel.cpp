@@ -33,7 +33,7 @@ namespace PixelMaestro {
 		@param color New color to store.
 		@param fade Whether to fade to the next color.
 		@param cycleInterval The amount of time to go from the current color to nextColor.
-		@param refreshRate The refresh rate of the section. Used to calculate color transitions (if fading).
+		@param refreshRate The refresh rate of the section. Used to calculate color events (if fading).
 	*/
 	void Pixel::setNextColor(Colors::RGB *nextColor, bool fade, unsigned short cycleInterval, unsigned short refreshRate) {
 		// Only trigger an update if the colors don't match.
@@ -42,7 +42,7 @@ namespace PixelMaestro {
 
 			/*
 				If fading, calculate the steps between the current color and the next color.
-				Use the refresh rate to determine the number of steps to take during the transition.
+				Use the refresh rate to determine the number of steps to take during the event.
 			*/
 			if (fade) {
 				float diff = cycleInterval / (float)refreshRate;
