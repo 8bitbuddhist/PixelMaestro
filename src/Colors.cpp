@@ -51,57 +51,6 @@ namespace PixelMaestro {
 	};
 
 	/**
-		Converts an HSV value to an RGB value.
-		Courtesy of Elco Jacobs' ShiftPWM library (http://www.elcojacobs.com/shiftpwm/)
-
-		@param hue The initial hue.
-		@param sat The initial saturation.
-		@param val The initial value.
-	*/
-	Colors::RGB Colors::HSVtoRGB(unsigned int hue, unsigned int sat, unsigned int val){
-		RGB newColor;
-		unsigned int accent = hue / 60;
-		unsigned int bottom = ((255 - sat) * val)>>8;
-		unsigned int top = val;
-		unsigned char rising  = ((top - bottom) * (hue % 60)) / 60 + bottom;
-		unsigned char falling = ((top - bottom) * (60 - hue % 60)) / 60 + bottom;
-
-		switch(accent) {
-			case 0:
-				newColor.r = top;
-				newColor.g = rising;
-				newColor.b = bottom;
-				break;
-			case 1:
-				newColor.r = falling;
-				newColor.g = top;
-				newColor.b = bottom;
-				break;
-			case 2:
-				newColor.r = bottom;
-				newColor.g = top;
-				newColor.b = rising;
-				break;
-			case 3:
-				newColor.r = bottom;
-				newColor.g = falling;
-				newColor.b = top;
-				break;
-			case 4:
-				newColor.r = rising;
-				newColor.g = bottom;
-				newColor.b = top;
-				break;
-			case 5:
-				newColor.r = top;
-				newColor.g = bottom;
-				newColor.b = falling;
-				break;
-		}
-		return newColor;
-	}
-
-	/**
 	 * Creates a random color.
 	 * @return Random color.
 	 */
