@@ -10,7 +10,7 @@ using namespace PixelMaestro;
  * Creates a new Section, initializes its Pixels, and assigns the Pixels to the Section.
  */
 SectionController::SectionController() {
-	this->pixels_.resize(layout_.rows * layout_.columns);
+	this->pixels_.resize(layout_.getSize());
 	this->sections_.push_back(Section(&this->pixels_[0], layout_.rows, layout_.columns));
 }
 
@@ -99,6 +99,6 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
  */
 void SectionController::setLayout(unsigned short rows, unsigned short columns) {
 	this->layout_ = {rows, columns};
-	this->pixels_.resize(layout_.rows * layout_.columns);
+	this->pixels_.resize(layout_.getSize());
 	this->sections_[0].setPixels(&this->pixels_[0], layout_.rows, layout_.columns);
 }

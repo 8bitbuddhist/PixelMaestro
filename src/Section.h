@@ -91,6 +91,10 @@ namespace PixelMaestro {
 
 				/// The number of columns in the Section.
 				unsigned short columns;
+
+				unsigned int getSize() {
+					return this->rows * this->columns;
+				}
 			};
 
 			/**
