@@ -14,12 +14,13 @@ void MaestroController::addSectionController() {
 }
 
 void MaestroController::addShow(Event **events, unsigned char numEvents, Show::TimingModes timing, bool loop) {
-	this->show_.setTiming(timing);
-	this->show_.setEvents(events, numEvents);
+	this->show_ = new Show(&this->maestro_);
+
+	this->show_->setTiming(timing);
+	this->show_->setEvents(events, numEvents);
 	if (loop) {
-		this->show_.toggleLooping();
+		this->show_->toggleLooping();
 	}
-	this->show_.setMaestro(&this->maestro_);
 }
 
 /**
@@ -66,12 +67,7 @@ SectionController *MaestroController::getSectionController(int index) {
  * @return Show managed by this Maestro.
  */
 Show *MaestroController::getShow() {
-	if (this->show_.getMaestro() != nullptr) {
-		return &this->show_;
-	}
-	else {
-		return nullptr;
-	}
+	return this->show_;
 }
 
 /**
@@ -85,4 +81,13 @@ void MaestroController::reassignSections() {
 	}
 
 	this->maestro_.setSections(this->sections_[0], this->sections_.size());
+}
+
+MaestroController::~MaestroController() {
+	// Delete SectionControllers
+	for (unsigned int i = 0; i < this->section_controllers_.size(); i++) {
+		delete this->section_controllers_[i];
+	}
+
+	delete this->show_;
 }

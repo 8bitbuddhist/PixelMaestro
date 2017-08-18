@@ -16,6 +16,7 @@ using namespace PixelMaestro;
 
 class MaestroController {
 	public:
+		~MaestroController();
 		void addSectionController();
 		void addShow(Event **events, unsigned char numEvents, Show::TimingModes timing, bool loop);
 		void deleteSectionController(int index);
@@ -27,11 +28,11 @@ class MaestroController {
 	private:
 		/// Maestro controlled by this controller.
 		Maestro maestro_;
-		/// Sections belonging to the Maestro (points to section_controllers_[index].section_).
+		/// Sections belonging to the Maestro (points to section_controllers_[index].section_). These are deleted automatically when their respective SectionController gets deleted.
 		std::vector<Section*> sections_;
 		/// SectionControllers that this MaestroController handles.
 		std::vector<SectionController*> section_controllers_;
-		Show show_;
+		Show *show_;
 
 		void reassignSections();
 };
