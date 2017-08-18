@@ -22,7 +22,6 @@ SOURCES += main.cpp\
 		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
 		demo/showdemo.cpp \
-		controller/showcontroller.cpp \
 		../src/show/Event.cpp \
 		../src/show/SectionToggleFadeEvent.cpp \
 		../src/show/MaestroToggleRunEvent.cpp \
@@ -43,7 +42,6 @@ HEADERS += mainwindow.h \
 		controller/sectioncontroller.h \
 		controller/maestrocontroller.h \
 		demo/showdemo.h \
-		controller/showcontroller.h \
 		../src/show/Event.h \
 		../src/Colors.h \
 		../src/Maestro.h \
