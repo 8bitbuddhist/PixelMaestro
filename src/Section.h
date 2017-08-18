@@ -123,6 +123,11 @@ namespace PixelMaestro {
 				unsigned short frames;
 			};
 
+			//TESTING
+			void setPixels(Pixel* pixels, Section::Layout *layout);
+			Section(Pixel *pixels, Section::Layout *layout);
+			//END TESTING
+
 			Section(Pixel *pixels, unsigned short rows, unsigned short columns);
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();

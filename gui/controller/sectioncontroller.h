@@ -32,7 +32,7 @@ class SectionController {
 		/// Stores the Section and an Overlay.
 		std::vector<Section> sections_;
 		/// Layout of the section (defaults to 10 x 10)
-		Section::Layout layout_ = {10, 10};
+		Section::Layout *layout_ = new Section::Layout(10, 10);
 };
 
 #endif // SECTIONCONTROLLER_H

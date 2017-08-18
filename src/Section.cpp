@@ -20,6 +20,10 @@ namespace PixelMaestro {
 		this->setPixels(pixels, rows, columns);
 	}
 
+	Section::Section(Pixel *pixels, Section::Layout *layout) {
+		this->setPixels(pixels, layout);
+	}
+
 	/**
 		Returns the current color animation.
 
@@ -275,6 +279,11 @@ namespace PixelMaestro {
 	void Section::setPixels(Pixel* pixels, unsigned short rows, unsigned short columns) {
         pixels_ = pixels;
 		this->layout_ = new Section::Layout(rows, columns);
+	}
+
+	void Section::setPixels(Pixel* pixels, Section::Layout *layout) {
+		pixels_ = pixels;
+		this->layout_ = layout;
 	}
 
 	/**

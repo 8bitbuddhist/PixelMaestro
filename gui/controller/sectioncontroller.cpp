@@ -10,8 +10,8 @@ using namespace PixelMaestro;
  * Creates a new Section, initializes its Pixels, and assigns the Pixels to the Section.
  */
 SectionController::SectionController() {
-	this->pixels_.resize(layout_.getSize());
-	this->sections_.push_back(Section(&this->pixels_[0], layout_.rows, layout_.columns));
+	this->pixels_.resize(layout_->getSize());
+	this->sections_.push_back(Section(&this->pixels_[0], layout_));
 }
 
 /**
@@ -25,7 +25,7 @@ void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
 	this->pixels_.resize(pixels * 2);
 
 	// Create overlay and assign Pixels
-	this->sections_.push_back(Section(&this->pixels_[pixels], layout_.rows, layout_.columns));
+	this->sections_.push_back(Section(&this->pixels_[pixels], layout_));
 	this->sections_[0].setOverlay(new Section::Overlay(&this->sections_[1], mixMode, alpha));
 }
 
@@ -42,7 +42,7 @@ Colors::RGB *SectionController::getColors() {
  * @return Section's Layout.
  */
 Section::Layout SectionController::getLayout() {
-	return this->layout_;
+	return *this->layout_;
 }
 
 /**
@@ -98,7 +98,8 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
  * @param columns Number of columns in the Layout.
  */
 void SectionController::setLayout(unsigned short rows, unsigned short columns) {
-	this->layout_ = {rows, columns};
-	this->pixels_.resize(layout_.getSize());
-	this->sections_[0].setPixels(&this->pixels_[0], layout_.rows, layout_.columns);
+	this->layout_->rows = rows;
+	this->layout_->columns = columns;
+	this->pixels_.resize(layout_->getSize());
+	this->sections_[0].setPixels(&this->pixels_[0], layout_);
 }
