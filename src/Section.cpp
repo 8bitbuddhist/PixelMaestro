@@ -13,13 +13,8 @@ namespace PixelMaestro {
 	/**
 	 * Constructor. Assigns Pixels to the Section.
 	 * @param pixels Initial Pixel array.
-	 * @param rows Number of rows of Pixels.
-	 * @param columns Number of columns of Pixels.
+	 * @param layout Initial layout (rows and columns) of the Pixels.
 	 */
-	Section::Section(Pixel *pixels, unsigned short rows, unsigned short columns) {
-		this->setPixels(pixels, rows, columns);
-	}
-
 	Section::Section(Pixel *pixels, Section::Layout *layout) {
 		this->setPixels(pixels, layout);
 	}
@@ -269,18 +264,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-        Sets the Pixel group used in the Section.
-        The Pixel collection is a standard array, while specifying the row and column count logically organizes the array into a grid.
+		Sets the Pixel array and layout used in the Section.
 
-        @param pixels Initial Pixel array.
-		@param rows Number of rows of Pixels.
-		@param columns Number of columns of Pixels.
+		@param pixels Pixel array.
+		@param layout Layout of the Pixels.
 	*/
-	void Section::setPixels(Pixel* pixels, unsigned short rows, unsigned short columns) {
-        pixels_ = pixels;
-		this->layout_ = new Section::Layout(rows, columns);
-	}
-
 	void Section::setPixels(Pixel* pixels, Section::Layout *layout) {
 		pixels_ = pixels;
 		this->layout_ = layout;

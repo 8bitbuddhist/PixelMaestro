@@ -123,12 +123,7 @@ namespace PixelMaestro {
 				unsigned short frames;
 			};
 
-			//TESTING
-			void setPixels(Pixel* pixels, Section::Layout *layout);
 			Section(Pixel *pixels, Section::Layout *layout);
-			//END TESTING
-
-			Section(Pixel *pixels, unsigned short rows, unsigned short columns);
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
 			bool getFade();
@@ -148,7 +143,7 @@ namespace PixelMaestro {
 			void setOverlay(Overlay *overlay);
 			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
 			void setPattern(Pattern *pattern);
-			void setPixels(Pixel *pixels, unsigned short rows, unsigned short columns);
+			void setPixels(Pixel* pixels, Section::Layout *layout);
 			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
 			void update(const unsigned long &currentTime);
