@@ -53,7 +53,7 @@ namespace PixelMaestro {
 		@return Number of Pixels.
 	*/
 	unsigned int Section::getNumPixels() {
-		return this->layout_.getSize();
+		return this->layout_->getSize();
 	}
 
 	/**
@@ -62,7 +62,7 @@ namespace PixelMaestro {
 		@return Layout of the array.
 	*/
 	Section::Layout *Section::getLayout() {
-		return &layout_;
+		return this->layout_;
 	}
 
 	/**
@@ -97,7 +97,7 @@ namespace PixelMaestro {
 		@return The index of the Pixel.
 	*/
 	unsigned int Section::getPixelIndex(unsigned short row, unsigned short column) {
-		return (row * layout_.columns) + column;
+		return (row * layout_->columns) + column;
 	}
 
 	/**
@@ -274,8 +274,7 @@ namespace PixelMaestro {
 	*/
 	void Section::setPixels(Pixel* pixels, unsigned short rows, unsigned short columns) {
         pixels_ = pixels;
-		layout_.rows = rows;
-		layout_.columns = columns;
+		this->layout_ = new Section::Layout(rows, columns);
 	}
 
 	/**
@@ -363,8 +362,8 @@ namespace PixelMaestro {
 	void Section::animation_blink() {
 		// Alternate the Pixel between its normal color and off (Colors::BLACK).
 		if (cycle_index_ == 0) {
-			for (unsigned short row = 0; row < layout_.rows; row++) {
-				for (unsigned short column = 0; column < layout_.columns; column++) {
+			for (unsigned short row = 0; row < layout_->rows; row++) {
+				for (unsigned short column = 0; column < layout_->columns; column++) {
 					this->setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 			}
@@ -411,8 +410,8 @@ namespace PixelMaestro {
 		unsigned short count;
 
 		if (animation_orientation_ == VERTICAL) {
-			for (unsigned short column = 0; column < layout_.columns; column++) {
-				midPoint = (layout_.rows / 2) - 1;
+			for (unsigned short column = 0; column < layout_->columns; column++) {
+				midPoint = (layout_->rows / 2) - 1;
 				count = 0;
 
 				// Note: column *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
@@ -434,15 +433,15 @@ namespace PixelMaestro {
 
 				// Go from the center to the last
 				count = 0;
-				for (unsigned int row = midPoint; row < layout_.rows; row++) {
+				for (unsigned int row = midPoint; row < layout_->rows; row++) {
 					setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
 					count++;
 				}
 			}
 		}
 		else {	// Horizontal
-			for (unsigned short row = 0; row < layout_.rows; row++) {
-				midPoint = (layout_.columns / 2) - 1;
+			for (unsigned short row = 0; row < layout_->rows; row++) {
+				midPoint = (layout_->columns / 2) - 1;
 				count = 0;
 
 				// Note: column *HAS* TO BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
@@ -464,7 +463,7 @@ namespace PixelMaestro {
 
 				// Go from the center to the last
 				count = 0;
-				for (unsigned int column = midPoint; column < layout_.columns; column++) {
+				for (unsigned int column = midPoint; column < layout_->columns; column++) {
 					setOne(row, column, &colors_[animation_getColorIndex(count + cycle_index_)]);
 					count++;
 				}
@@ -511,8 +510,8 @@ namespace PixelMaestro {
 		Supports vertical orientation
 	*/
 	void Section::animation_pong() {
-		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short column = 0; column < layout_.columns; column++) {
+		for (unsigned short row = 0; row < layout_->rows; row++) {
+			for (unsigned short column = 0; column < layout_->columns; column++) {
 				if (animation_orientation_ == VERTICAL) {
 					setOne(row, column, &colors_[animation_getColorIndex(row + cycle_index_)]);
 				}
@@ -543,8 +542,8 @@ namespace PixelMaestro {
 
 	/// Sets each Pixel to a solid color.
 	void Section::animation_solid() {
-		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short column = 0; column < layout_.columns; column++) {
+		for (unsigned short row = 0; row < layout_->rows; row++) {
+			for (unsigned short column = 0; column < layout_->columns; column++) {
 				setOne(row, column, &colors_[animation_getColorIndex(column)]);
 			}
 		}
@@ -552,8 +551,8 @@ namespace PixelMaestro {
 
 	/// Creates a shimmering effect by activating random Pixels.
 	void Section::animation_sparkle() {
-		for (unsigned int row = 0; row < layout_.rows; row++) {
-			for (unsigned short column = 0; column < layout_.columns; column++) {
+		for (unsigned int row = 0; row < layout_->rows; row++) {
+			for (unsigned short column = 0; column < layout_->columns; column++) {
 				if ((Utility::rand() % 100) > this->animation_opts_.sparkle_threshold) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
@@ -592,8 +591,8 @@ namespace PixelMaestro {
 		Vertical orientation
 	*/
 	void Section::animation_wave() {
-		for (unsigned short row = 0; row < layout_.rows; row++) {
-			for (unsigned short column = 0; column < layout_.columns; column++) {
+		for (unsigned short row = 0; row < layout_->rows; row++) {
+			for (unsigned short column = 0; column < layout_->columns; column++) {
 				if (animation_orientation_ == VERTICAL) {
 					setOne(row, column, &colors_[animation_getColorIndex(row + cycle_index_)]);
 				}

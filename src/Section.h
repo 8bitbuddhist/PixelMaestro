@@ -92,6 +92,11 @@ namespace PixelMaestro {
 				/// The number of columns in the Section.
 				unsigned short columns;
 
+				Layout(unsigned short rows, unsigned short columns) {
+					this->rows = rows;
+					this->columns = columns;
+				}
+
 				unsigned int getSize() {
 					return this->rows * this->columns;
 				}
@@ -155,7 +160,7 @@ namespace PixelMaestro {
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);
 
 			/// Array of colors used in animations. For some animations, the color index corresponds to the Pixel index (see ColorAnimations::SOLID).
-			Colors::RGB *colors_;
+			Colors::RGB *colors_ = nullptr;
 
 			///	The current stage of the animation cycle. Defaults to 0.
 			unsigned int cycle_index_ = 0;
@@ -176,16 +181,16 @@ namespace PixelMaestro {
 			unsigned long last_refresh_ = 0;
 
 			/// The 2D layout of the Pixels.
-			Layout layout_;
+			Layout *layout_ = nullptr;
 
 			/// The Section overlaying the current section (if applicable);
-			Overlay *overlay_;
+			Overlay *overlay_ = nullptr;
 
 			/// The layout of the pattern used in the PATTERN animation.
 			Pattern *pattern_ = nullptr;
 
 			/// The Pixels managed by the Section.
-			Pixel *pixels_;
+			Pixel *pixels_ = nullptr;
 
 			/// The number of colors in colors_.
 			unsigned int num_colors_;
