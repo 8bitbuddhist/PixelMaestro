@@ -491,13 +491,13 @@ namespace PixelMaestro {
 		}
 
 		// Stores the beginning index of the active Frame.
-		unsigned int frameStart = (pattern_->rows * pattern_->columns) * cycle_index_;
+		unsigned int frameStart = (pattern_->layout->rows * pattern_->layout->columns) * cycle_index_;
 
 		// Stores the index of the current Pixel as we iterate through the Pattern.
 		unsigned int patternPixel = 0;
-		for (unsigned short row = 0; row < pattern_->rows; row++) {
-			for (unsigned short column = 0; column < pattern_->columns; column++) {
-				patternPixel = frameStart + ((row * pattern_->columns) + column);
+		for (unsigned short row = 0; row < pattern_->layout->rows; row++) {
+			for (unsigned short column = 0; column < pattern_->layout->columns; column++) {
+				patternPixel = frameStart + ((row * pattern_->layout->columns) + column);
 				if (pattern_->pattern[patternPixel] == 1) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}

@@ -74,14 +74,16 @@ namespace PixelMaestro {
 				/// Transparency level of the overlaid Section (if applicable).
 				float alpha;
 
+				/**
+				 * Constructor. The Section will automatically be deleted when the Overlay is deleted.
+				 * @param section New Section to use.
+				 * @param mixMode Color mixing method to use.
+				 * @param alpha For MixMode::ALPHA, the amount of transparency that the Overlay will have.
+				 */
 				Overlay(Section *section, Colors::MixMode mixMode, float alpha) {
 					this->section = section;
 					this->mixMode = mixMode;
 					this->alpha = alpha;
-				}
-
-				~Overlay() {
-					delete this->section;
 				}
 			};
 
@@ -117,17 +119,22 @@ namespace PixelMaestro {
 				*/
 				bool *pattern = nullptr;
 
-				/// The number of rows in a single frame.
-				unsigned short rows;
-
-				/// The number of columns in a single frame.
-				unsigned short columns;
+				/// The Pixel layout of the Pattern.
+				Section::Layout *layout = nullptr;
 
 				/// The number of frames in the Pattern.
 				unsigned short frames;
 
-				~Pattern() {
-					delete this->pattern;
+				/**
+				 * Constructor.
+				 * @param pattern The array containing the full pattern.
+				 * @param layout The layout (rows and columns) of the Pattern.
+				 * @param numFrames The number of frames in the Pattern.
+				 */
+				Pattern(bool *pattern, Section::Layout *layout, unsigned short numFrames) {
+					this->pattern = pattern;
+					this->layout = layout;
+					this->frames = frames;
 				}
 			};
 
