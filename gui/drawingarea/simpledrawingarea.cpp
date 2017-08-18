@@ -28,9 +28,12 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	QRect tmpRect;		// Size and location of the Pixel to draw using tmpBrush
 
 	/*
-	 * TODO: This assumes we only have one section in the Maestro.
+	 * Note: This assumes we only have one section in the Maestro.
 	 * If there are more than one, the last Section will overwrite the first.
-	 *
+	 * For more complex layouts, create a custom MaestroDrawingArea or add multiple SimpleDrawingAreas to the window.
+	 */
+
+	/*
 	 * Render each Pixel in the Maestro by mapping its location in the Layout to a location on the DrawingArea.
 	 * Each Pixel is drawn as a solid, filled circle.
 	 *

@@ -27,9 +27,7 @@ class MaestroControl : public QWidget {
 
 	private:
 		/// Index of the actively controlled SectionController.
-		int active_section_ = 0;
-		/// Pointer to Maestro being controlled.
-		Maestro *maestro_;
+		int active_section_controller_ = 0;
 		Ui::MaestroControl *ui;
 
 		/// MaestroController that this widget is controlling.
@@ -38,22 +36,22 @@ class MaestroControl : public QWidget {
 		SectionController *getActiveSectionController();
 		void changeScalingColorArray(Colors::RGB color);
 		void initialize();
-		void on_ui_changed();
 		void on_custom_color_changed();
+		void on_ui_changed();
 
 	private slots:
-		void on_cycleSlider_valueChanged(int value);
 		void on_animationComboBox_currentIndexChanged(int index);
+		void on_blueDial_valueChanged(int value);
 		void on_colorComboBox_currentIndexChanged(int index);
+		void on_columnsSpinBox_valueChanged(int arg1);
+		void on_cycleSlider_valueChanged(int value);
+		void on_greenDial_valueChanged(int value);
+		void on_fadeCheckBox_toggled(bool checked);
+		void on_numColorsSpinBox_valueChanged(int arg1);
 		void on_reverseAnimationCheckBox_toggled(bool checked);
 		void on_redDial_valueChanged(int value);
-		void on_greenDial_valueChanged(int value);
-		void on_blueDial_valueChanged(int value);
-		void on_numColorsSpinBox_valueChanged(int arg1);
-		void on_thresholdSpinBox_valueChanged(int arg1);
-		void on_fadeCheckBox_toggled(bool checked);
-		void on_columnsSpinBox_valueChanged(int arg1);
 		void on_rowsSpinBox_valueChanged(int arg1);
+		void on_thresholdSpinBox_valueChanged(int arg1);
 		void setCustomColorControlsVisible(bool enabled);
 };
 

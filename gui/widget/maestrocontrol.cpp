@@ -16,7 +16,6 @@ MaestroControl::MaestroControl(QWidget *parent, MaestroController *maestroContro
 
 	// Assign easy reference variables for the Maestro
 	this->maestro_controller_ = maestroController;
-	this->maestro_ = this->maestro_controller_->getMaestro();
 
 	// Initialize UI
 	ui->setupUi(this);
@@ -46,13 +45,29 @@ void MaestroControl::initialize() {
 }
 
 /**
- * Changes the cycle speed.
- * @param value New cycle speed.
+ * Updates the color array based on changes to the color scheme and settings.
+ * @param color Base color to use when generating the array.
  */
-void MaestroControl::on_cycleSlider_valueChanged(int value) {
-	value = ui->cycleSlider->maximum() - value;
-	getActiveSectionController()->getSection()->setCycleInterval((unsigned short)value);
-	ui->cycleSlider->setToolTip(QString::number(value));
+void MaestroControl::changeScalingColorArray(Colors::RGB color) {
+	unsigned int numColors = (unsigned int)ui->numColorsSpinBox->value();
+
+	std::vector<Colors::RGB> tmpColors;
+	tmpColors.resize(numColors);
+
+	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
+	Colors::generateScalingColorArray(&tmpColors[0], &color, numColors, threshold, true);
+	getActiveSectionController()->setControllerColors(&tmpColors[0], numColors);
+
+	// Release tmpColors
+	std::vector<Colors::RGB>().swap(tmpColors);
+}
+
+/**
+ * Returns the active SectionController being modified.
+ * @return Active SectionController.
+ */
+SectionController *MaestroControl::getActiveSectionController() {
+	return this->maestro_controller_->getSectionController(active_section_controller_);
 }
 
 /**
@@ -61,13 +76,6 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	getActiveSectionController()->getSection()->setColorAnimation((Section::ColorAnimations)(index + 1), ui->reverseAnimationCheckBox->isChecked());
-}
-
-/**
- * Destructor.
- */
-MaestroControl::~MaestroControl() {
-	delete ui;
 }
 
 /**
@@ -106,12 +114,13 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 }
 
 /**
- * Toggles whether the color animation is shown in reverse.
- * @param checked If true, reverse the animation.
+ * Changes the number of columns in the display grid.
+ * @param arg1 New number of columns.
  */
-void MaestroControl::on_reverseAnimationCheckBox_toggled(bool checked) {
-	on_animationComboBox_currentIndexChanged(ui->animationComboBox->currentIndex());
+void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
+	getActiveSectionController()->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 }
+
 
 /**
  * Changes the custom color scheme.
@@ -129,43 +138,13 @@ void MaestroControl::on_custom_color_changed() {
 }
 
 /**
- * TODO: Update the UI based on changes to settings.
+ * Changes the cycle speed.
+ * @param value New cycle speed.
  */
-void MaestroControl::on_ui_changed() {
-}
-
-/**
- * Updates the color array based on changes to the color scheme and settings.
- * @param color Base color to use when generating the array.
- */
-void MaestroControl::changeScalingColorArray(Colors::RGB color) {
-	unsigned int numColors = (unsigned int)ui->numColorsSpinBox->value();
-
-	std::vector<Colors::RGB> tmpColors;
-	tmpColors.resize(numColors);
-
-	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-	Colors::generateScalingColorArray(&tmpColors[0], &color, numColors, threshold, true);
-	getActiveSectionController()->setControllerColors(&tmpColors[0], numColors);
-
-	// Release tmpColors
-	std::vector<Colors::RGB>().swap(tmpColors);
-}
-
-/**
- * Handles changes to the red dial.
- * @param value New value of the red dial.
- */
-void MaestroControl::on_redDial_valueChanged(int value) {
-	this->on_custom_color_changed();
-}
-
-/**
- * Handles changes to the green dial.
- * @param value New value of the green dial.
- */
-void MaestroControl::on_greenDial_valueChanged(int value) {
-	this->on_custom_color_changed();
+void MaestroControl::on_cycleSlider_valueChanged(int value) {
+	value = ui->cycleSlider->maximum() - value;
+	getActiveSectionController()->getSection()->setCycleInterval((unsigned short)value);
+	ui->cycleSlider->setToolTip(QString::number(value));
 }
 
 /**
@@ -173,6 +152,22 @@ void MaestroControl::on_greenDial_valueChanged(int value) {
  * @param value New value of the blue dial.
  */
 void MaestroControl::on_blueDial_valueChanged(int value) {
+	this->on_custom_color_changed();
+}
+
+/**
+ * Toggles fading.
+ * @param checked If true, fading is enabled.
+ */
+void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
+	getActiveSectionController()->getSection()->toggleFade();
+}
+
+/**
+ * Handles changes to the green dial.
+ * @param value New value of the green dial.
+ */
+void MaestroControl::on_greenDial_valueChanged(int value) {
 	this->on_custom_color_changed();
 }
 
@@ -185,35 +180,19 @@ void MaestroControl::on_numColorsSpinBox_valueChanged(int arg1) {
 }
 
 /**
- * Sets the variance of the colors in the color scheme.
- * @param arg1 New variance between colors (0-255).
+ * Handles changes to the red dial.
+ * @param value New value of the red dial.
  */
-void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
+void MaestroControl::on_redDial_valueChanged(int value) {
 	this->on_custom_color_changed();
 }
 
 /**
- * Returns the active SectionController being modified.
- * @return
+ * Toggles whether the color animation is shown in reverse.
+ * @param checked If true, reverse the animation.
  */
-SectionController *MaestroControl::getActiveSectionController() {
-	return this->maestro_controller_->getSectionController(active_section_);
-}
-
-/**
- * Toggles fading.
- * @param checked If true, fading is enabled.
- */
-void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
-	getActiveSectionController()->getSection()->toggleFade();
-}
-
-/**
- * Changes the number of columns in the display grid.
- * @param arg1 New number of columns.
- */
-void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
-	getActiveSectionController()->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+void MaestroControl::on_reverseAnimationCheckBox_toggled(bool checked) {
+	on_animationComboBox_currentIndexChanged(ui->animationComboBox->currentIndex());
 }
 
 /**
@@ -222,6 +201,14 @@ void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
  */
 void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
 	getActiveSectionController()->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+}
+
+/**
+ * Sets the variance of the colors in the color scheme.
+ * @param arg1 New variance between colors (0-255).
+ */
+void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
+	this->on_custom_color_changed();
 }
 
 /**
@@ -236,4 +223,11 @@ void MaestroControl::setCustomColorControlsVisible(bool enabled) {
 	ui->numColorsLabel->setVisible(enabled);
 	ui->thresholdSpinBox->setVisible(enabled);
 	ui->thresholdLabel->setVisible(enabled);
+}
+
+/**
+ * Destructor.
+ */
+MaestroControl::~MaestroControl() {
+	delete ui;
 }

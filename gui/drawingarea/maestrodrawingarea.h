@@ -24,7 +24,6 @@ class MaestroDrawingArea : public QWidget {
 
 	public:
 		MaestroDrawingArea(QWidget *parent, MaestroController *maestroController);
-		Maestro *getMaestro();
 		MaestroController *getMaestroController();
 
 	protected:
@@ -33,11 +32,7 @@ class MaestroDrawingArea : public QWidget {
 		/// Handles calling the DrawingArea's refreshMaestro() method.
 		QTimer *timer;
 
-		/*
-		 * Maestro/grid variables.
-		 * These define how the Maestro is rendered initially in the DrawingArea.
-		 */
-		Maestro *maestro_;
+		/// The MaestroController managed by this DrawingArea.
 		MaestroController *maestro_controller_;
 
 	private:

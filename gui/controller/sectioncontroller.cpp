@@ -99,5 +99,13 @@ void SectionController::setLayout(unsigned short rows, unsigned short columns) {
 }
 
 void SectionController::unsetOverlay() {
-	delete this->section_->getOverlay();
+	if (this->section_->getOverlay()) {
+		delete this->section_->getOverlay()->section;
+		delete this->section_->getOverlay();
+	}
+}
+
+SectionController::~SectionController() {
+	this->unsetOverlay();
+	delete this->section_;
 }

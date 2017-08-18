@@ -25,10 +25,6 @@ MaestroDrawingArea::MaestroDrawingArea(QWidget *parent, MaestroController *maest
 	this->timer->start(this->REFRESH_);
 }
 
-Maestro *MaestroDrawingArea::getMaestro() {
-	return this->maestro_;
-}
-
 MaestroController *MaestroDrawingArea::getMaestroController() {
 	return this->maestro_controller_;
 }

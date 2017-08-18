@@ -15,6 +15,7 @@ using namespace PixelMaestro;
 class SectionController {
 	public:
 		SectionController();
+		~SectionController();
 		void addOverlay(Colors::MixMode mixMode, float alpha);
 		Colors::RGB *getColors();
 		Section::Layout getLayout();
