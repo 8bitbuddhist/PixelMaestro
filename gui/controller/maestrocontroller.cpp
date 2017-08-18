@@ -9,8 +9,7 @@ using namespace PixelMaestro;
  * Adds a new Section to the Maestro.
  */
 void MaestroController::addSectionController() {
-	this->section_controllers_.push_back(SectionController());
-	this->sections_.push_back(this->section_controllers_[this->section_controllers_.size() - 1].getSection());
+	this->section_controllers_.push_back(new SectionController());
 	reassignSections();
 }
 
@@ -28,10 +27,12 @@ void MaestroController::addShow(Event **events, unsigned char numEvents, Show::T
  * @param index The index of the Section to remove.
  */
 void MaestroController::deleteSectionController(int index) {
-	delete &this->sections_[index];
-	delete &this->section_controllers_[index];
-	this->sections_.erase(this->sections_.begin() + index);
+	// Delete the SectionController
+	delete this->section_controllers_[index];
+
+	// Remove the reference from the SectionController array
 	this->section_controllers_.erase(this->section_controllers_.begin() + index);
+
 	reassignSections();
 }
 
@@ -57,7 +58,7 @@ int MaestroController::getNumSectionControllers() {
  * @return SectionController at the specified index.
  */
 SectionController *MaestroController::getSectionController(int index) {
-	return &this->section_controllers_[index];
+	return this->section_controllers_[index];
 }
 
 /**
@@ -77,5 +78,11 @@ Show *MaestroController::getShow() {
  * Re-sets the Maestro's Sections based on the number of SectionControllers.
  */
 void MaestroController::reassignSections() {
+	// Re-build the Sections vector
+	this->sections_.clear();
+	for (unsigned int i = 0; i < this->section_controllers_.size(); i++) {
+		this->sections_.push_back(this->section_controllers_[i]->getSection());
+	}
+
 	this->maestro_.setSections(this->sections_[0], this->sections_.size());
 }

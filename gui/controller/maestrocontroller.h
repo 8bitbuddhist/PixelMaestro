@@ -30,7 +30,7 @@ class MaestroController {
 		/// Sections belonging to the Maestro (points to section_controllers_[index].section_).
 		std::vector<Section*> sections_;
 		/// SectionControllers that this MaestroController handles.
-		std::vector<SectionController> section_controllers_;
+		std::vector<SectionController*> section_controllers_;
 		Show show_;
 
 		void reassignSections();
