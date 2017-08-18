@@ -11,7 +11,7 @@ using namespace PixelMaestro;
  */
 SectionController::SectionController() {
 	this->pixels_.resize(layout_->getSize());
-	this->sections_.push_back(Section(&this->pixels_[0], layout_));
+	this->section_ = new Section(&this->pixels_[0], layout_);
 }
 
 /**
@@ -25,8 +25,7 @@ void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
 	this->pixels_.resize(pixels * 2);
 
 	// Create overlay and assign Pixels
-	this->sections_.push_back(Section(&this->pixels_[pixels], layout_));
-	this->sections_[0].setOverlay(new Section::Overlay(&this->sections_[1], mixMode, alpha));
+	this->section_->setOverlay(new Section::Overlay(new Section(&this->pixels_[pixels], this->layout_), mixMode, alpha));
 }
 
 /**
@@ -57,13 +56,8 @@ unsigned short SectionController::getNumColors() {
  * Returns the Section's Overlay, if one exists.
  * @return Overlay (if it exists).
  */
-Section *SectionController::getOverlay() {
-	if (this->sections_.size() > 1) {
-		return &this->sections_[1];
-	}
-	else {
-		return nullptr;
-	}
+Section::Overlay *SectionController::getOverlay() {
+	return this->section_->getOverlay();
 }
 
 /**
@@ -71,7 +65,7 @@ Section *SectionController::getOverlay() {
  * @return Section controlled by the SectionController.
  */
 Section *SectionController::getSection() {
-	return &this->sections_[0];
+	return this->section_;
 }
 
 /**
@@ -89,7 +83,7 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
 		colors_[i].b = colors[i].b;
 	}
 
-	this->sections_[0].setColors(&this->colors_[0], numColors);
+	this->section_->setColors(&this->colors_[0], numColors);
 }
 
 /**
@@ -101,5 +95,9 @@ void SectionController::setLayout(unsigned short rows, unsigned short columns) {
 	this->layout_->rows = rows;
 	this->layout_->columns = columns;
 	this->pixels_.resize(layout_->getSize());
-	this->sections_[0].setPixels(&this->pixels_[0], layout_);
+	this->section_->setPixels(&this->pixels_[0], layout_);
+}
+
+void SectionController::unsetOverlay() {
+	delete this->section_->getOverlay();
 }

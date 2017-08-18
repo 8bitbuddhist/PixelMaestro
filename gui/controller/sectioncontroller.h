@@ -19,18 +19,19 @@ class SectionController {
 		Colors::RGB *getColors();
 		Section::Layout getLayout();
 		unsigned short getNumColors();
-		Section *getOverlay();
+		Section::Overlay *getOverlay();
 		Section *getSection();
 		void setControllerColors(Colors::RGB *colors, unsigned short numColors);
 		void setLayout(unsigned short rows, unsigned short columns);
+		void unsetOverlay();
 
 	private:
 		/// Colors used by the Section and its Overlay.
 		std::vector<Colors::RGB> colors_;
 		/// Pixels assigned to the Section and its Overlay.
 		std::vector<Pixel> pixels_;
-		/// Stores the Section and an Overlay.
-		std::vector<Section> sections_;
+		/// Stores the Section.
+		Section *section_ = nullptr;
 		/// Layout of the section (defaults to 10 x 10)
 		Section::Layout *layout_ = new Section::Layout(10, 10);
 };

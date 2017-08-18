@@ -65,6 +65,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Overlay (if one exists).
+	 *
+	 * @return Active Overlay.
+	 */
+	Section::Overlay *Section::getOverlay() {
+		return this->overlay_;
+	}
+
+	/**
 		Returns the Pixel at the specified index.
 
 		@param pixel The index of the Pixel in the pixels_ array.

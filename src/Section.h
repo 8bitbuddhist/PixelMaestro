@@ -74,10 +74,14 @@ namespace PixelMaestro {
 				/// Transparency level of the overlaid Section (if applicable).
 				float alpha;
 
-				Overlay (Section *section, Colors::MixMode mixMode, float alpha) {
+				Overlay(Section *section, Colors::MixMode mixMode, float alpha) {
 					this->section = section;
 					this->mixMode = mixMode;
 					this->alpha = alpha;
+				}
+
+				~Overlay() {
+					delete this->section;
 				}
 			};
 
@@ -121,6 +125,10 @@ namespace PixelMaestro {
 
 				/// The number of frames in the Pattern.
 				unsigned short frames;
+
+				~Pattern() {
+					delete this->pattern;
+				}
 			};
 
 			Section(Pixel *pixels, Section::Layout *layout);
@@ -128,6 +136,7 @@ namespace PixelMaestro {
 			unsigned short getCycleSpeed();
 			bool getFade();
 			Layout *getLayout();
+			Section::Overlay *getOverlay();
 			unsigned int getNumPixels();
 			Pixel *getPixel(unsigned int pixel);
 			Colors::RGB getPixelColor(unsigned int pixel);
