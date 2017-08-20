@@ -14,6 +14,9 @@ SectionController::SectionController(Section::Layout *layout) {
 	this->layout_ = layout;
 	this->pixels_.resize(this->layout_->getSize());
 	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], layout_));
+
+	// Initialize colors
+	this->setControllerColors(Colors::COLORWHEEL, 12);
 }
 
 SectionController::SectionController(Section::Layout *layout, Colors::MixMode mixMode, float alpha) : SectionController(layout){
@@ -29,7 +32,7 @@ SectionController::SectionController(Section::Layout *layout, Colors::MixMode mi
  */
 void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
 	this->overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(this->layout_, mixMode, alpha));
-	this->section_->setOverlay(this->overlay_controller_->getOverlay());
+	this->section_->setOverlay(new Section::Overlay(this->overlay_controller_->getSection().get(), mixMode, alpha));
 }
 
 /**

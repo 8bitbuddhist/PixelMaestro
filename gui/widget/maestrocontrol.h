@@ -27,7 +27,7 @@ class MaestroControl : public QWidget {
 
 	private:
 		/// Index of the actively controlled SectionController.
-		int active_section_controller_ = 0;
+		SectionController *active_section_controller_;;
 		Ui::MaestroControl *ui;
 
 		/// MaestroController that this widget is controlling.
@@ -53,6 +53,8 @@ class MaestroControl : public QWidget {
 		void on_rowsSpinBox_valueChanged(int arg1);
 		void on_thresholdSpinBox_valueChanged(int arg1);
 		void setCustomColorControlsVisible(bool enabled);
+		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
+		void on_addOverlayButton_clicked();
 };
 
 #endif // MAESTROCONTROL_H
