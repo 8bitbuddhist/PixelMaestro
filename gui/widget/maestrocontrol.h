@@ -38,6 +38,8 @@ class MaestroControl : public QWidget {
 		void initialize();
 		void on_custom_color_changed();
 		void on_ui_changed();
+		void setCustomColorControlsVisible(bool enabled);
+		void setOverlayControlsVisible(bool visible);
 
 	private slots:
 		void on_animationComboBox_currentIndexChanged(int index);
@@ -52,9 +54,10 @@ class MaestroControl : public QWidget {
 		void on_redDial_valueChanged(int value);
 		void on_rowsSpinBox_valueChanged(int arg1);
 		void on_thresholdSpinBox_valueChanged(int arg1);
-		void setCustomColorControlsVisible(bool enabled);
 		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
 		void on_addOverlayButton_clicked();
+		void on_mixModeComboBox_currentIndexChanged(int index);
+		void on_alphaSpinBox_valueChanged(double arg1);
 };
 
 #endif // MAESTROCONTROL_H

@@ -44,6 +44,10 @@ void MaestroControl::initialize() {
 	ui->rowsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->rows);
 	ui->columnsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->columns);
 	ui->sectionComboBox->addItem("Section 1");
+
+	// Overlay controls
+	ui->mixModeComboBox->addItems({"None", "Normal", "Alpha Blending", "Multiply"});
+	ui->mixModeComboBox->setCurrentIndex(2);
 }
 
 /**
@@ -72,6 +76,17 @@ SectionController *MaestroControl::getActiveSectionController() {
 	return this->active_section_controller_;
 }
 
+void MaestroControl::setOverlayControlsVisible(bool visible) {
+	// If visible, show Overlay controls
+	ui->mixModeComboBox->setVisible(visible);
+	ui->alphaSpinBox->setVisible(visible);
+
+	// Invert Layout controls
+	ui->gridSizeLabel->setVisible(!visible);
+	ui->columnsSpinBox->setVisible(!visible);
+	ui->rowsSpinBox->setVisible(!visible);
+}
+
 void MaestroControl::on_addOverlayButton_clicked() {
 	// Get info about the current Section
 	QStringList args = ui->sectionComboBox->currentText().split(" ");
@@ -92,7 +107,14 @@ void MaestroControl::on_addOverlayButton_clicked() {
 		this->active_section_controller_ = this->maestro_controller_->getSectionController(index)->getOverlayController().get();
 		QString overlayText = QString("Overlay %1").arg(num);
 		ui->sectionComboBox->addItem(overlayText);
+
+		// FIXME: Remove once Overlays can be removed dynamically
+		ui->addOverlayButton->hide();
 	}
+}
+
+void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
+	this->on_mixModeComboBox_currentIndexChanged(ui->mixModeComboBox->currentIndex());
 }
 
 /**
@@ -196,6 +218,25 @@ void MaestroControl::on_greenDial_valueChanged(int value) {
 	this->on_custom_color_changed();
 }
 
+void MaestroControl::on_mixModeComboBox_currentIndexChanged(int index) {
+	QStringList args = ui->sectionComboBox->currentText().split(" ");
+	int sectionIndex = args[1].toInt() -1;
+
+	if (this->maestro_controller_->getSectionController(sectionIndex)->getOverlayController()) {
+		float alpha = (float)ui->alphaSpinBox->value();
+
+		this->maestro_controller_->getSectionController(sectionIndex)->getOverlay()->mixMode = (Colors::MixMode)index;
+
+		// Show/hide spin box for alpha only
+		if (index == 2) {
+			ui->alphaSpinBox->setVisible(true);
+		}
+		else {
+			ui->alphaSpinBox->setVisible(false);
+		}
+	}
+}
+
 /**
  * Sets the number of colors in the color scheme.
  * @param arg1 New color count.
@@ -238,18 +279,22 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 		this->active_section_controller_ = this->maestro_controller_->getSectionController(num - 1);
 
 		// Check to see if an Overlay's already been added: if so, change the text of the Button
-		ui->addOverlayButton->show();
+		// FIXME: Fix removing Overlays. For now, just hide the button
+		//ui->addOverlayButton->show();
+		this->setOverlayControlsVisible(false);
 		if (this->active_section_controller_->getOverlayController()) {
-			ui->addOverlayButton->setText(QString("Remove Overlay"));
+			//ui->addOverlayButton->setText(QString("Remove Overlay"));
 		}
 		else {
 			ui->addOverlayButton->setText(QString("Add Overlay"));
 		}
 	}
 	else {	// Overlay
-		// Set active controller using MaestroController's SectionControllers list ->getOverlayController
-		this->active_section_controller_ = this->maestro_controller_->getSectionController(num - 1)->getOverlayController().get();
 		ui->addOverlayButton->hide();
+		// Set active controller to OverlayController
+		this->active_section_controller_ = this->maestro_controller_->getSectionController(num - 1)->getOverlayController().get();
+		// Hide layout buttons
+		this->setOverlayControlsVisible(true);
 	}
 }
 

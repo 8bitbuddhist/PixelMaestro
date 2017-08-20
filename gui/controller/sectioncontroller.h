@@ -29,11 +29,12 @@ class SectionController {
 		void setLayout(unsigned short rows, unsigned short columns);
 		void unsetOverlay();
 
+		bool is_overlay_ = false;
+
 	private:
 		/// Colors used by the Section and its Overlay.
 		std::vector<Colors::RGB> colors_;
 
-		bool is_overlay_ = false;
 		Colors::MixMode mix_mode_;
 		float alpha_ = 0.0;
 
