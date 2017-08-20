@@ -22,18 +22,18 @@ SOURCES += main.cpp\
 		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
 		demo/showdemo.cpp \
-		../src/show/Event.cpp \
-		../src/show/SectionToggleFadeEvent.cpp \
-		../src/show/MaestroToggleRunEvent.cpp \
-		../src/show/SectionSetCycleIntervalEvent.cpp \
-		../src/show/SectionSetColorAnimationEvent.cpp \
-		../src/show/ColorsGenerateRandomColorEvent.cpp \
-		../src/show/ColorsGenerateRandomColorArrayEvent.cpp \
-		../src/show/SectionSetOverlayEvent.cpp \
-		../src/show/SectionUnsetOverlayEvent.cpp \
-		../src/show/SectionSetPatternEvent.cpp \
-		../src/show/ColorsGenerateScalingColorArrayEvent.cpp \
-    demo/PatternDemo.cpp
+		demo/patterndemo.cpp \
+		../src/show/colorsgeneraterandomcolorarrayevent.cpp \
+		../src/show/colorsgeneraterandomcolorevent.cpp \
+		../src/show/colorsgeneratescalingcolorarrayevent.cpp \
+		../src/show/event.cpp \
+		../src/show/maestrotogglerunevent.cpp \
+		../src/show/sectionsetcoloranimationevent.cpp \
+		../src/show/sectionsetcycleintervalevent.cpp \
+		../src/show/sectionsetoverlayevent.cpp \
+		../src/show/sectionsetpatternevent.cpp \
+		../src/show/sectiontogglefadeevent.cpp \
+		../src/show/sectionunsetoverlayevent.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -43,24 +43,24 @@ HEADERS += mainwindow.h \
 		controller/sectioncontroller.h \
 		controller/maestrocontroller.h \
 		demo/showdemo.h \
-		../src/show/Event.h \
-		../src/Colors.h \
-		../src/Maestro.h \
-		../src/Pixel.h \
-		../src/Section.h \
-		../src/Show.h \
-		../src/Utility.h \
-		../src/show/SectionToggleFadeEvent.h \
-		../src/show/MaestroToggleRunEvent.h \
-		../src/show/SectionSetCycleIntervalEvent.h \
-		../src/show/SectionSetColorAnimationEvent.h \
-		../src/show/ColorsGenerateRandomColorEvent.h \
-		../src/show/ColorsGenerateRandomColorArrayEvent.h \
-		../src/show/SectionSetOverlayEvent.h \
-		../src/show/SectionUnsetOverlayEvent.h \
-		../src/show/SectionSetPatternEvent.h \
-		../src/show/ColorsGenerateScalingColorArrayEvent.h \
-    demo/PatternDemo.h
+		demo/patterndemo.h \
+		../src/show/colorsgeneraterandomcolorarrayevent.h \
+		../src/show/colorsgeneraterandomcolorevent.h \
+		../src/show/colorsgeneratescalingcolorarrayevent.h \
+		../src/show/event.h \
+		../src/show/maestrotogglerunevent.h \
+		../src/show/sectionsetcoloranimationevent.h \
+		../src/show/sectionsetcycleintervalevent.h \
+		../src/show/sectionsetoverlayevent.h \
+		../src/show/sectionsetpatternevent.h \
+		../src/show/sectiontogglefadeevent.h \
+		../src/show/sectionunsetoverlayevent.h \
+		../src/colors.h \
+		../src/maestro.h \
+		../src/pixel.h \
+		../src/section.h \
+		../src/show.h \
+		../src/utility.h
 
 FORMS	+= \
 		mainwindow.ui \

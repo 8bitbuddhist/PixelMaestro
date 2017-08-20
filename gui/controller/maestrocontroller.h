@@ -5,11 +5,11 @@
 #ifndef MAESTROCONTROLLER_H
 #define MAESTROCONTROLLER_H
 
-#include "Maestro.h"
-#include "Section.h"
+#include "maestro.h"
+#include "section.h"
 #include "sectioncontroller.h"
-#include "Show.h"
-#include "show/Event.h"
+#include "show.h"
+#include "show/event.h"
 #include <vector>
 
 using namespace PixelMaestro;

@@ -5,10 +5,10 @@
 #ifndef SECTIONCONTROLLER_H
 #define SECTIONCONTROLLER_H
 
-#include "Colors.h"
+#include "colors.h"
 #include <memory>
-#include "Pixel.h"
-#include "Section.h"
+#include "pixel.h"
+#include "section.h"
 #include <vector>
 
 using namespace PixelMaestro;

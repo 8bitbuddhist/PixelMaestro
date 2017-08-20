@@ -5,15 +5,15 @@
 #ifndef MAESTRODRAWINGAREA_H
 #define MAESTRODRAWINGAREA_H
 
-#include "Colors.h"
-#include "Maestro.h"
+#include "colors.h"
+#include "maestro.h"
 #include "controller/maestrocontroller.h"
 #include "maestrodrawingarea.h"
-#include "Pixel.h"
+#include "pixel.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QWidget>
-#include "Section.h"
+#include "section.h"
 #include "controller/sectioncontroller.h"
 #include <vector>
 

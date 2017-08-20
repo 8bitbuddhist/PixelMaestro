@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 
 #include "demo/showdemo.h"
+#include "demo/patterndemo.h"
 
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
@@ -21,7 +22,8 @@ int main(int argc, char *argv[]) {
 	MaestroController controller;
 
 	//SimpleDrawingArea *drawingArea = new SimpleDrawingArea(mainLayout->widget(), &controller);
-	ShowDemo *drawingArea = new ShowDemo(mainLayout->widget(), &controller);
+	//ShowDemo *drawingArea = new ShowDemo(mainLayout->widget(), &controller);
+	PatternDemo *drawingArea = new PatternDemo(mainLayout->widget(), &controller);
 	mainLayout->addWidget(drawingArea);
 	//mainLayout->addWidget(new MaestroControl(mainLayout->widget(), &controller));
 

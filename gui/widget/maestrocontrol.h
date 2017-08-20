@@ -5,8 +5,8 @@
 #ifndef MAESTROCONTROL_H
 #define MAESTROCONTROL_H
 
-#include "Colors.h"
-#include "Maestro.h"
+#include "colors.h"
+#include "maestro.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
 #include "drawingarea/simpledrawingarea.h"

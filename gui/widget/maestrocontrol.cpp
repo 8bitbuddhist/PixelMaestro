@@ -5,7 +5,7 @@
 #include "drawingarea/simpledrawingarea.h"
 #include <QPalette>
 #include <QString>
-#include "Section.h"
+#include "section.h"
 
 /**
  * Constructor.

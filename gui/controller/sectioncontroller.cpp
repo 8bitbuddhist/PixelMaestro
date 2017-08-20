@@ -1,7 +1,7 @@
-#include "Colors.h"
+#include "colors.h"
 #include <memory>
-#include "Pixel.h"
-#include "Section.h"
+#include "pixel.h"
+#include "section.h"
 #include "sectioncontroller.h"
 
 using namespace PixelMaestro;

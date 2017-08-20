@@ -1,5 +1,5 @@
 #include "maestrodrawingarea.h"
-#include "Maestro.h"
+#include "maestro.h"
 #include <QElapsedTimer>
 #include <QTimer>
 

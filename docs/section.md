@@ -35,7 +35,7 @@ The animations available to you are stored in the `Section::ColorAnimations` enu
 * MERGE: Converges colors into the center of the Section.
 * RANDOMINDEX: Changes each Pixel to a random color stored in the array.
 * SPARKLE: Quickly flashes a random Pixel on.
-* PATTERN: Displays a user-defined pattern.
+* PATTERN: Displays a pre-defined pattern. See [Displaying Patterns](#displaying_patterns).
 * NEXT: Shortcut for skipping to the next pattern.
 
 Select an animation using the `Section::setColorAnimation` method. The following code displays a vertical wave moving from the top of the grid to the bottom:
@@ -56,11 +56,50 @@ section.setCycleSpeed(500);
 ```
 
 ### Displaying Patterns
-A Pattern is an array of boolean values that maps to the Pixel array. Each boolean toggles whether or not its corresponding Pixel is turned on or off. For example, if index 10 of the Pattern = false, then the Pixel at index 10 of the Pixel array will not be activated. Patterns can store multiple frames, and the Section will switch to the next frame on the next animation cycle.
-This code snippet sets a 1-frame Pattern for a Pixel grid with dimensions 3x2.
+A Pattern is a 2D array of boolean values containing a representation of an animation. The array contains a collection of boolean arrays (called `frames`), each of which contains a set of boolean values that map directly to the Pixel grid. Each boolean value toggles whether or not its corresponding Pixel is turned on or off. For example, if frame 1, index 10 of the Pattern = false, then the Pixel at index 10 of the Pixel array will not be activated. However, if frame 2, index 10 = true, then on the next cycle the Pixel will be activated (e.g. display its normal color instead of black).
+
+Tip: See the [PatternDemo class](../gui/demo/patterndemo.cpp) in the PixelMaestro QT application for an example.
+
+This code snippet creates a single-frame Pattern for a Pixel grid with 10 rows and 10 columns. It displays a border around the grid, indicated by `1`. Note that when initializing a new Section::Pattern object, you must specify a custom Layout for the Pattern and the number of frames to display. The Pattern layout can be different than the Section Layout, and the number of frames can be less than the number of frames in the boolean array.
 ```c++
-unsigned char pattern[6] = {0, 1, 0, 0, 1, 0};
-section.setPattern(pattern, 3, 2, 1);
+bool** pattern_array_ = new bool*[5] {
+	// Frame 1: Border
+	new bool[100] {
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+	}
+}
+
+section->setColorAnimation(Section::ColorAnimations::PATTERN);
+section->setPattern(new Section::Pattern(this->pattern_array_, new Section::Layout(10, 10), 1));
+```
+
+#### Offsetting a Pattern
+Offsetting shifts the Pattern's starting point to another place on the Pixel grid. By default the offset is set to 0, meaning the starting point is the same as the Pixel grid's starting point. Changing `offset->x` changes the starting row, and changing `offset->y` changes the starting column. These values can be negative.
+
+The following code moves the Pattern 5 Pixels to the right and 1 Pixel down.
+```c++
+pattern->offset->x = 5;
+pattern->offset->y = 1;
+section->setPattern(pattern);
+```
+
+If the Pattern extends beyond the Pixel grid, the rest of the Pattern will be hidden from view. However, setting `Pattern::repeat` to true will wrap the hidden parts of the Pattern to the opposite end of the Pixel grid.
+
+#### Animating a Pattern
+You can set a Pattern to scroll horizontally, vertically, or both using the `Pattern::scrollRate` property. `scrollRate` defines the direction and number of Pixels that the Pattern should scroll per cycle. `scrollRate->x` scrolls along the horizontal axis, and `scrollRate->y` scrolls along the vertical axis. These values can be negative, which scrolls left instead of right for `scrollRate->x` and up instead of down for `scrollRate->y`.
+
+The following code scrolls 1 Pixel to the right and 2 Pixels up.
+```c++
+pattern->scrollRate = new Section::Offset(1, -2);
 ```
 
 ### Toggling Fading

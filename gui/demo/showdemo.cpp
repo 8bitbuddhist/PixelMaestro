@@ -7,7 +7,7 @@
 #include "controller/sectioncontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
 #include <memory>
-#include "../src/show/SectionSetColorAnimationEvent.h"
+#include "../src/show/sectionsetcoloranimationevent.h"
 
 ShowDemo::ShowDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, this->maestro_controller_) {
 	this->maestro_controller_ = maestroController;

@@ -3,7 +3,7 @@
  */
 
 #include "blinkdemo.h"
-#include "Colors.h"
+#include "colors.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
