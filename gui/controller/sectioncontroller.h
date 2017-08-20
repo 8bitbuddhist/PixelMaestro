@@ -6,6 +6,7 @@
 #define SECTIONCONTROLLER_H
 
 #include "Colors.h"
+#include <memory>
 #include "Pixel.h"
 #include "Section.h"
 #include <vector>
@@ -21,7 +22,7 @@ class SectionController {
 		Section::Layout getLayout();
 		unsigned short getNumColors();
 		Section::Overlay *getOverlay();
-		Section *getSection();
+		std::shared_ptr<Section> getSection();
 		void setControllerColors(Colors::RGB *colors, unsigned short numColors);
 		void setLayout(unsigned short rows, unsigned short columns);
 		void unsetOverlay();
@@ -32,7 +33,7 @@ class SectionController {
 		/// Pixels assigned to the Section and its Overlay.
 		std::vector<Pixel> pixels_;
 		/// Stores the Section.
-		Section *section_ = nullptr;
+		std::shared_ptr<Section> section_;
 		/// Layout of the section (defaults to 10 x 10)
 		Section::Layout *layout_ = new Section::Layout(10, 10);
 };

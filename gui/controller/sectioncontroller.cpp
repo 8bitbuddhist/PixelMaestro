@@ -1,4 +1,5 @@
 #include "Colors.h"
+#include <memory>
 #include "Pixel.h"
 #include "Section.h"
 #include "sectioncontroller.h"
@@ -11,7 +12,7 @@ using namespace PixelMaestro;
  */
 SectionController::SectionController() {
 	this->pixels_.resize(layout_->getSize());
-	this->section_ = new Section(&this->pixels_[0], layout_);
+	section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], layout_));
 }
 
 /**
@@ -64,7 +65,7 @@ Section::Overlay *SectionController::getOverlay() {
  * Returns the SectionController's underlying Section.
  * @return Section controlled by the SectionController.
  */
-Section *SectionController::getSection() {
+std::shared_ptr<Section> SectionController::getSection() {
 	return this->section_;
 }
 
@@ -99,13 +100,9 @@ void SectionController::setLayout(unsigned short rows, unsigned short columns) {
 }
 
 void SectionController::unsetOverlay() {
-	if (this->section_->getOverlay()) {
-		delete this->section_->getOverlay()->section;
-		delete this->section_->getOverlay();
-	}
+
 }
 
 SectionController::~SectionController() {
 	this->unsetOverlay();
-	delete this->section_;
 }

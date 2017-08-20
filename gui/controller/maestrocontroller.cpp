@@ -1,5 +1,6 @@
 #include "Maestro.h"
 #include "maestrocontroller.h"
+#include <memory>
 #include "sectioncontroller.h"
 #include "Show.h"
 
@@ -77,7 +78,7 @@ void MaestroController::reassignSections() {
 	// Re-build the Sections vector
 	this->sections_.clear();
 	for (unsigned int i = 0; i < this->section_controllers_.size(); i++) {
-		this->sections_.push_back(this->section_controllers_[i]->getSection());
+		this->sections_.push_back(this->section_controllers_[i]->getSection().get());
 	}
 
 	this->maestro_.setSections(this->sections_[0], this->sections_.size());
