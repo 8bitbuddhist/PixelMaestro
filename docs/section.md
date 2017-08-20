@@ -28,8 +28,8 @@ The animations available to you are listed in the `Section::ColorAnimations` enu
 * PONG: Moves a wave of colors back and forth across the Section.
 * MERGE: Converges colors into the center of the Section.
 * RANDOMINDEX: Changes each Pixel to a random color stored in the array.
-* SPARKLE: Quickly flashes a random Pixel on. The activated Pixel is randomly generated on each cycle update using a threshold that you can specify in the [AnimationOpts](#providing_additional_options) parameter.
-* PATTERN: Displays a pre-defined pattern. See [Displaying Patterns](#displaying_patterns).
+* SPARKLE: Quickly flashes a random Pixel on. The activated Pixel is randomly generated on each cycle update using a threshold that you can specify in the [AnimationOpts](#providing-additional-options) parameter.
+* PATTERN: Displays a pre-defined pattern. See [Displaying Patterns](#displaying-patterns).
 * NEXT: Shortcut for skipping to the next pattern.
 
 Select an animation using the `Section::setColorAnimation` method. The following code displays a vertical wave moving from the top of the grid to the bottom:

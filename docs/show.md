@@ -2,14 +2,14 @@
 Shows are used to modify Maestros at pre-defined moments. This can be anything from changing the animation displayed by a Section to adding an Overlay to stopping the Maestro from running.
 Shows sit one layer above a Maestro. To initialize a Show, use the `Show::setMaestro()` method, passing in a reference to the Maestro that you wish to control. Now, when you want to update the Maestro, you'll call `Show::update()` instead of `Maestro::update()`.
 
-For an example of how to configure a Show, see [ShowDemo](../gui/demos/ShowDemo.cpp).
+For an example of how to configure a Show, see [ShowDemo](../gui/demo/showdemo.cpp).
 
 ## Event
 A `Event` is a set of instructions for changing the properties of a Section. Events are defined by:
 * A `time` when the Event will execute, based on the program's current runtime
-* An [action](#specifying_an_action) that will be performed when the Event executes
+* An [action](#specifying-an-action) that will be performed when the Event executes
 
-Events can be found in the [`src/show`](../src/show) folder. The name should be pretty self-explanatory, and the argument list essentially matches the argument list of the corresponding function.
+Events can be found in the [src/show](../src/show) folder. The name should be pretty self-explanatory, and the argument list essentially matches the argument list of the corresponding function.
 
 The action is dependent on the type of Event being performed, and is executed when the Event's `time` is matched or exceeded by the program's runtime. Each Show references an array of Events. As each Event executes, the Show tracks the current index of the array and the time the last Event ran.
 
