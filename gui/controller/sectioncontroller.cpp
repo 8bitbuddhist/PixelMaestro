@@ -16,18 +16,20 @@ SectionController::SectionController(Section::Layout *layout) {
 	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], layout_));
 }
 
+SectionController::SectionController(Section::Layout *layout, Colors::MixMode mixMode, float alpha) : SectionController(layout){
+	this->is_overlay_ = true;
+	this->mix_mode_ = mixMode;
+	this->alpha_ = alpha;
+}
+
 /**
  * Adds an Overlay to the Section.
  * @param mixMode The blending mode of the Overlay.
  * @param alpha The transparency of the Overlay.
  */
 void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
-	// Resize Pixel grid
-	int pixels = this->pixels_.size();
-	this->pixels_.resize(pixels * 2);
-
-	// Create overlay and assign Pixels
-	this->section_->setOverlay(new Section::Overlay(new Section(&this->pixels_[pixels], this->layout_), mixMode, alpha));
+	this->overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(this->layout_, mixMode, alpha));
+	this->section_->setOverlay(this->overlay_controller_->getOverlay());
 }
 
 /**
@@ -52,6 +54,10 @@ Section::Layout SectionController::getLayout() {
  */
 unsigned short SectionController::getNumColors() {
 	return this->colors_.size();
+}
+
+Section::Overlay *SectionController::getOverlay() {
+	return this->section_->getOverlay();
 }
 
 /**
@@ -105,7 +111,7 @@ void SectionController::unsetOverlay() {
 }
 
 SectionController::~SectionController() {
-	if (this->overlay_controller_) {
+	if (!this->is_overlay_ && this->overlay_controller_) {
 		this->unsetOverlay();
 	}
 }
