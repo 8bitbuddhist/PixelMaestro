@@ -184,6 +184,7 @@ namespace PixelMaestro {
 			};
 
 			Section(Pixel *pixels, Section::Layout *layout);
+			AnimationOpts *getAnimationOpts();
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
 			bool getFade();

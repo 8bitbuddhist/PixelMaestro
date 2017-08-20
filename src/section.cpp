@@ -20,6 +20,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Section's active animation options.
+	 * @return Active animation option.
+	 */
+	Section::AnimationOpts *Section::getAnimationOpts() {
+		return &this->animation_opts_;
+	}
+
+	/**
 		Returns the current color animation.
 
 		@return Current color animation.

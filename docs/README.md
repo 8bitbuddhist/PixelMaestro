@@ -11,16 +11,16 @@ PixelMaestro also the following utility classes:
 # Basic Usage
 The following code creates a 10x10 grid of Pixels flashing a variety of colors:
 ```c++
-int rows = 10;
-int columns = 10;
-int numPixels = rows * columns;
-Pixel pixels[numPixels];
+const int rows = 10;
+const int columns = 10;
+Pixel pixels[rows * columns];
 
 int numSections = 1;
-Section sections[numSections];
-sections[0].setPixels(pixels, numPixels);
+Section sections[numSections] = {
+	Section(pixels, new Section::Layout(rows, columns))
+}
 sections[0].setColors(Colors::COLORWHEEL, 12);
-sections[0].setColorAnimation(ColorAnimations::BLINK, false, AnimationOrientations::HORIZONTAL);
+sections[0].setColorAnimation(ColorAnimations::BLINK);
 
 Maestro maestro;
 maestro.setSections(sections, numSections);

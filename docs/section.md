@@ -1,31 +1,25 @@
 # Section
-Sections are the primary interface for PixelMaestro. Their purpose is to coordinate the behavior of a group of Pixels. More specifically, they're used to update the color of a Pixel while rendering an animation.
+Sections are the primary interface for PixelMaestro. Their purpose is to coordinate the behavior of Pixels. More specifically, they're used to send colors to Pixels based on the current running animation.
 
-## Declaration
-Using the default constructor, you'll need to assign Pixels to the Section before using it.
+When creating a Section, you must assign a Pixel array to the Section as well as the logical layout of the array (e.g. rows and columns).
 ```c++
-Section section;
-section.setPixels(pixels, rows, columns);
-```
-
-### Implicit Constructor
-Alternatively, you can assign Pixels to the Section as part of the constructor.
-```c++
-Section section(pixels, rows, columns);
+Section *section = new Section(pixels, new Section::Layout(rows, columns));
 ```
 
 ## Animations
-Sections perform animations primarily by sending color values to individual Pixels. You can configure the type of animation performed, the colors used in the animation, and the speed of the animation from the Section.
+The main focus of a Section is to render an animation. They do this by calculating color values which are stored in individual Pixels. The Section manages the type of animation, the colors used in the animation, the speed of the animation, and more.
 
 ### Setting the Color Palette
-Sections require a pre-defined set of colors for use in animations. Colors are stored as a pointer to a `Colors::RGB` array. To set the color palette, use the `Section::setColors` method:
+Sections require you to specify a palatte of colors for use in animations. You should provide one or more Colors as pointers in a `Colors::RGB` array. To set the color palette, use the `Section::setColors` method.
+
+The following example sets a palette of three colors: red, green, and blue. Depending on the animation, one of these colors (or a mix) will be displayed in each Pixel.
 ```c++
-Colors::RGB colors = {Colors::RED, Colors::GREEN, Colors::BLUE};
+Colors::RGB *colors = {Colors::RED, Colors::GREEN, Colors::BLUE};
 section.setColors(colors, 3);
 ```
 
 ### Choosing an Animation
-The animations available to you are stored in the `Section::ColorAnimations` enum.
+The animations available to you are listed in the `Section::ColorAnimations` enum.
 * NONE: Nothing is displayed.
 * SOLID: Displays a solid color.
 * BLINK: Cycles all Pixels between on and off.
@@ -34,7 +28,7 @@ The animations available to you are stored in the `Section::ColorAnimations` enu
 * PONG: Moves a wave of colors back and forth across the Section.
 * MERGE: Converges colors into the center of the Section.
 * RANDOMINDEX: Changes each Pixel to a random color stored in the array.
-* SPARKLE: Quickly flashes a random Pixel on.
+* SPARKLE: Quickly flashes a random Pixel on. The activated Pixel is randomly generated on each cycle update using a threshold that you can specify in the [AnimationOpts](#providing_additional_options) parameter.
 * PATTERN: Displays a pre-defined pattern. See [Displaying Patterns](#displaying_patterns).
 * NEXT: Shortcut for skipping to the next pattern.
 
@@ -46,16 +40,26 @@ Section::AnimationOrientations orientation = AnimationOrientations::VERTICAL;
 section.setColorAnimation(animation, reverse, orientation);
 ```
 Changing `reverse` to `true` reverses the direction of the animation. Additionally, changing `orientation` rotates the orientation of the animation by 90 degrees.
-Calling this method without parameters switches to the next animation in the list. If you've reached the end of the list, the Section will jump back to the first animation.
 
 ### Changing the Animation's Speed
-The speed of an animation is determined by two different counters: the refresh rate and the cycle rate. The refresh rate is the rate at which each Pixel redraws (only when fading is enabled). The cycle rate is the rate at which the animation moves by one step, e.g. when it's time to change the current color. Both the refresh rate and cycle rate are measured in milliseconds. The following code refreshes the Section every 1/10th of a second and cycles the animation every 1/2 second:
+The speed of an animation is determined by two different counters: the refresh interval and the cycle interval. The refresh interval is the amount of time between Pixel redraws, and only applies when fading is enabled. The cycle interval is the amount of time between animation updates. Both the refresh and cycle intervals are measured in milliseconds.
+
+The following code refreshes the Section every 1/10th of a second and cycles the animation every 1/2 second. If fading is disabled, then only the cycle speed will factor into the animation.
 ```c++
-section.setRefreshRate(100);
-section.setCycleSpeed(500);
+section.setRefreshInterval(100);
+section.setCycleInterval(500);
 ```
 
-### Displaying Patterns
+### Providing Additional Options
+Some animations use additional parameters for further customization. These parameters are stored in the `Section::animation_opts_` union. You can only set one option at a time, and the option applied depends on the current active animation.
+
+The following code sets the threshold for the SPARKLE animation to 50%. SPARKLE determines whether to enable a Pixel by checking to see if a randomly generated number exceeds the threshold.
+```c++
+section.setColorAnimation(Section::ColorAnimations::SPARKLE);
+section.getAnimationOpts()->sparkle_threshold = 50;
+```
+
+## Displaying Patterns
 A Pattern is a 2D array of boolean values containing a representation of an animation. The array contains a collection of boolean arrays (called `frames`), each of which contains a set of boolean values that map directly to the Pixel grid. Each boolean value toggles whether or not its corresponding Pixel is turned on or off. For example, if frame 1, index 10 of the Pattern = false, then the Pixel at index 10 of the Pixel array will not be activated. However, if frame 2, index 10 = true, then on the next cycle the Pixel will be activated (e.g. display its normal color instead of black).
 
 Tip: See the [PatternDemo class](../gui/demo/patterndemo.cpp) in the PixelMaestro QT application for an example.
