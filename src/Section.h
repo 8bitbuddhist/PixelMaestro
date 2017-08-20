@@ -134,7 +134,7 @@ namespace PixelMaestro {
 				Pattern(bool *pattern, Section::Layout *layout, unsigned short numFrames) {
 					this->pattern = pattern;
 					this->layout = layout;
-					this->frames = frames;
+					this->frames = numFrames;
 				}
 			};
 
@@ -157,7 +157,6 @@ namespace PixelMaestro {
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Overlay *overlay);
-			void setPattern(bool *pattern, unsigned short rows, unsigned short columns, unsigned short frames);
 			void setPattern(Pattern *pattern);
 			void setPixels(Pixel* pixels, Section::Layout *layout);
 			void setRefreshInterval(unsigned short interval);

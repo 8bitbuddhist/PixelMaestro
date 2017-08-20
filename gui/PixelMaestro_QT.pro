@@ -32,7 +32,8 @@ SOURCES += main.cpp\
 		../src/show/SectionSetOverlayEvent.cpp \
 		../src/show/SectionUnsetOverlayEvent.cpp \
 		../src/show/SectionSetPatternEvent.cpp \
-		../src/show/ColorsGenerateScalingColorArrayEvent.cpp
+		../src/show/ColorsGenerateScalingColorArrayEvent.cpp \
+    demo/PatternDemo.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -58,7 +59,8 @@ HEADERS += mainwindow.h \
 		../src/show/SectionSetOverlayEvent.h \
 		../src/show/SectionUnsetOverlayEvent.h \
 		../src/show/SectionSetPatternEvent.h \
-		../src/show/ColorsGenerateScalingColorArrayEvent.h
+		../src/show/ColorsGenerateScalingColorArrayEvent.h \
+    demo/PatternDemo.h
 
 FORMS	+= \
 		mainwindow.ui \
