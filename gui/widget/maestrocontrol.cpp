@@ -223,8 +223,6 @@ void MaestroControl::on_mixModeComboBox_currentIndexChanged(int index) {
 	int sectionIndex = args[1].toInt() -1;
 
 	if (this->maestro_controller_->getSectionController(sectionIndex)->getOverlayController()) {
-		float alpha = (float)ui->alphaSpinBox->value();
-
 		this->maestro_controller_->getSectionController(sectionIndex)->getOverlay()->mixMode = (Colors::MixMode)index;
 
 		// Show/hide spin box for alpha only

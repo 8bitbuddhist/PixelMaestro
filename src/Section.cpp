@@ -214,15 +214,18 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
-		/*
-			If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
-			This results in the Pixel finishing early and waiting until the next cycle.
-		*/
-		if (pause_ > 0) {
-			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
-		}
-		else {
-			this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_, refresh_interval_);
+		// Only continue if Pixel is within the bounds of the array.
+		if (pixel < this->layout_->getSize()) {
+			/*
+				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
+				This results in the Pixel finishing early and waiting until the next cycle.
+			*/
+			if (pause_ > 0) {
+				this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
+			}
+			else {
+				this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_, refresh_interval_);
+			}
 		}
 	}
 
@@ -484,23 +487,63 @@ namespace PixelMaestro {
 		If there is no pattern set, the Section blinks.
 	*/
 	void Section::animation_pattern() {
+		setAll(&Colors::BLACK);
 		// If the pattern has not been set, do nothing.
 		if (pattern_ == nullptr) {
-			setAll(&Colors::BLACK);
 			return;
 		}
 
+		/*
+		 * Iterate over each bool in the current Pattern frame. The current frame is tracked via cycle_index_.
+		 * If the bool is true, activate the corresponding Pixel in the Pixel grid. If repeat is enabled, wrap the remainder of the Pattern to the opposite end of the grid.
+		 * If Pattern::offset is set, calculate the index of the Pixel that *should* be toggled by this bool.
+		 */
 		for (unsigned short row = 0; row < pattern_->layout->rows; row++) {
 			for (unsigned short column = 0; column < pattern_->layout->columns; column++) {
 				if (pattern_->pattern[cycle_index_][this->getPixelIndex(row, column)]) {
-					setOne(row, column, &colors_[animation_getColorIndex(column)]);
-				}
-				else {
-					setOne(row, column, &Colors::BLACK);
+					if (row + this->pattern_->offset->x < this->layout_->rows &&
+						column + this->pattern_->offset->y < this->layout_->columns) {
+						setOne(row + this->pattern_->offset->x,
+							column + this->pattern_->offset->y,
+							&colors_[animation_getColorIndex(column + this->pattern_->offset->y)]);
+					}
+					else if (this->pattern_->repeat) {
+						setOne((row + this->pattern_->offset->x) % this->layout_->rows,
+							(column + this->pattern_->offset->y) % this->layout_->columns,
+							&colors_[animation_getColorIndex((column + this->pattern_->offset->y) % this->layout_->columns)]);
+					}
 				}
 			}
 		}
 
+		/*
+		 * If Pattern::scrollRate is set, scroll the Pattern.
+		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
+		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
+		 */
+		if (this->pattern_->scrollRate) {
+			if (this->pattern_->scrollRate->x != 0) {
+				this->pattern_->offset->x += this->pattern_->scrollRate->x;
+				if (this->pattern_->offset->x >= this->layout_->rows) {
+					this->pattern_->offset->x = 0;
+				}
+				else if (this->pattern_->offset->x - 1 < 0) {
+					this->pattern_->offset->x = this->layout_->rows;
+				}
+			}
+
+			if (this->pattern_->scrollRate->y != 0) {
+				this->pattern_->offset->y += this->pattern_->scrollRate->y;
+				if (this->pattern_->offset->y >= this->layout_->columns) {
+					this->pattern_->offset->y = 0;
+				}
+				else if (this->pattern_->offset->y - 1 < 0) {
+					this->pattern_->offset->y = this->layout_->columns;
+				}
+			}
+		}
+
+		// Go to the next frame.
 		animation_updateCycle(0, pattern_->frames);
 	}
 

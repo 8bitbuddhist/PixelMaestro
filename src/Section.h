@@ -98,13 +98,42 @@ namespace PixelMaestro {
 				/// The number of columns in the Section.
 				unsigned short columns;
 
+				/**
+				 * Constructor.
+				 * @param rows Number of rows.
+				 * @param columns Number of columns.
+				 */
 				Layout(unsigned short rows, unsigned short columns) {
 					this->rows = rows;
 					this->columns = columns;
 				}
 
+				/**
+				 * Gets the number of elements in the Layout.
+				 * @return Number of elements (rows * columns).
+				 */
 				unsigned int getSize() {
 					return this->rows * this->columns;
+				}
+			};
+
+			/// Defines the offset of a Pattern on the Pixel grid.
+			struct Offset {
+
+				/// X-axis offset.
+				short x;
+
+				/// Y-axis offset.
+				short y;
+
+				/**
+				 * Constructor.
+				 * @param x X-axis offset.
+				 * @param y Y-axis offset.
+				 */
+				Offset(short x, short y) {
+					this->x = x;
+					this->y = y;
 				}
 			};
 
@@ -113,20 +142,29 @@ namespace PixelMaestro {
 				Patterns are encoded in an unsigned int corresponding to a single row of Pixels.
 			*/
 			struct Pattern {
+				/// The number of frames in the Pattern.
+				unsigned short frames;
+
+				/// The Pixel layout of the Pattern.
+				Section::Layout *layout = nullptr;
+
+				/// How far the Pattern is offset from the grid origin (where the origin is the first Pixel in the grid).
+				Section::Offset *offset = nullptr;
+
 				/**
 					The pattern to display when the PATTERN animation is active.
 					Stored as an array of bool arrays where each bool array is a separate frame.
 				*/
 				bool **pattern = nullptr;
 
-				/// The Pixel layout of the Pattern.
-				Section::Layout *layout = nullptr;
+				/// Whether to repeat the Pattern over the grid (requires offset to be set).
+				bool repeat = false;
 
-				/// The number of frames in the Pattern.
-				unsigned short frames;
+				/// Direction and rate for scrolling the Pattern (if applicable). Zero disables scrolling.
+				Section::Offset *scrollRate = nullptr;
 
 				/**
-				 * Constructor.
+				 * Constructor. This also initializes the Pattern's offset to 0.
 				 * @param pattern The array containing the full pattern.
 				 * @param layout The layout (rows and columns) of the Pattern.
 				 * @param numFrames The number of frames in the Pattern.
@@ -135,6 +173,13 @@ namespace PixelMaestro {
 					this->pattern = pattern;
 					this->layout = layout;
 					this->frames = numFrames;
+
+					// Initial offset is set to 0
+					this->offset = new Section::Offset(0, 0);
+				}
+
+				~Pattern() {
+					delete this->offset;
 				}
 			};
 

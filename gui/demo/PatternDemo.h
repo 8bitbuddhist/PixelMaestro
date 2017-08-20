@@ -1,5 +1,5 @@
 /*
- * PatternDemo - Demonstrates a Maestro using a Show.
+ * PatternDemo.cpp - Demonstrates PixelMaestro's Pattern features.
  */
 
 #ifndef PATTERNDEMO_H
@@ -12,10 +12,10 @@
 class PatternDemo : public SimpleDrawingArea {
 	public:
 		PatternDemo(QWidget *parent, MaestroController *maestroController);
-		bool **pattern_array_;
 
 	private:
 		Section::Pattern *pattern_;
+		bool **pattern_array_;
 
 };
 
