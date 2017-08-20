@@ -11,7 +11,7 @@
 
 ShowDemo::ShowDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, this->maestro_controller_) {
 	this->maestro_controller_ = maestroController;
-	this->maestro_controller_->addSectionController();
+	this->maestro_controller_->addSectionController(new Section::Layout(10, 10));
 
 	SectionController *sectionController = this->maestro_controller_->getSectionController(0);
 	std::shared_ptr<Section> section = sectionController->getSection();

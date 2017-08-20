@@ -10,9 +10,10 @@ using namespace PixelMaestro;
  * Constructor.
  * Creates a new Section, initializes its Pixels, and assigns the Pixels to the Section.
  */
-SectionController::SectionController() {
-	this->pixels_.resize(layout_->getSize());
-	section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], layout_));
+SectionController::SectionController(Section::Layout *layout) {
+	this->layout_ = layout;
+	this->pixels_.resize(this->layout_->getSize());
+	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], layout_));
 }
 
 /**
@@ -57,8 +58,8 @@ unsigned short SectionController::getNumColors() {
  * Returns the Section's Overlay, if one exists.
  * @return Overlay (if it exists).
  */
-Section::Overlay *SectionController::getOverlay() {
-	return this->section_->getOverlay();
+std::shared_ptr<SectionController> SectionController::getOverlayController() {
+	return this->overlay_controller_;
 }
 
 /**
@@ -100,9 +101,11 @@ void SectionController::setLayout(unsigned short rows, unsigned short columns) {
 }
 
 void SectionController::unsetOverlay() {
-
+	this->overlay_controller_.reset();
 }
 
 SectionController::~SectionController() {
-	this->unsetOverlay();
+	if (this->overlay_controller_) {
+		this->unsetOverlay();
+	}
 }

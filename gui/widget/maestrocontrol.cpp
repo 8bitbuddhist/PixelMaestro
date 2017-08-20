@@ -27,7 +27,7 @@ MaestroControl::MaestroControl(QWidget *parent, MaestroController *maestroContro
  */
 void MaestroControl::initialize() {
 	// Add a new SectionController to the MaestroController. Later on this will allow us to add multiple Sections to a MaestroController.
-	this->maestro_controller_->addSectionController();
+	this->maestro_controller_->addSectionController(new Section::Layout(10, 10));
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Solid", "Blink", "Wave", "Pong", "Merge", "RandomIndex", "Sparkle", "Pattern", "Cycle"});
