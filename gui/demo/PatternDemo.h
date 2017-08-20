@@ -12,7 +12,7 @@
 class PatternDemo : public SimpleDrawingArea {
 	public:
 		PatternDemo(QWidget *parent, MaestroController *maestroController);
-		bool *pattern_array_;
+		bool **pattern_array_;
 
 	private:
 		Section::Pattern *pattern_;

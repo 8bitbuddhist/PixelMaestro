@@ -115,9 +115,9 @@ namespace PixelMaestro {
 			struct Pattern {
 				/**
 					The pattern to display when the PATTERN animation is active.
-					Stored as an array of bools where each bool corresponds to a Pixel.
+					Stored as an array of bool arrays where each bool array is a separate frame.
 				*/
-				bool *pattern = nullptr;
+				bool **pattern = nullptr;
 
 				/// The Pixel layout of the Pattern.
 				Section::Layout *layout = nullptr;
@@ -131,7 +131,7 @@ namespace PixelMaestro {
 				 * @param layout The layout (rows and columns) of the Pattern.
 				 * @param numFrames The number of frames in the Pattern.
 				 */
-				Pattern(bool *pattern, Section::Layout *layout, unsigned short numFrames) {
+				Pattern(bool **pattern, Section::Layout *layout, unsigned short numFrames) {
 					this->pattern = pattern;
 					this->layout = layout;
 					this->frames = numFrames;
