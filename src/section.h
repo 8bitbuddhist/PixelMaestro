@@ -61,33 +61,6 @@ namespace PixelMaestro {
 			};
 
 			/**
-				Overlays a second Section on top of the current one.
-				NOTE: When getting color output, use getPixelColor(). This returns RGB values after blending the two Sections together.
-			*/
-			struct Overlay {
-				/// The Section to overlay.
-				Section *section = nullptr;
-
-				/// Method of blending the output from the Overlay with the base Section.
-				Colors::MixMode mixMode = Colors::MixMode::NONE;
-
-				/// Transparency level of the overlaid Section (if applicable).
-				float alpha;
-
-				/**
-				 * Constructor. The Section will automatically be deleted when the Overlay is deleted.
-				 * @param section New Section to use.
-				 * @param mixMode Color mixing method to use.
-				 * @param alpha For MixMode::ALPHA, the amount of transparency that the Overlay will have.
-				 */
-				Overlay(Section *section, Colors::MixMode mixMode, float alpha) {
-					this->section = section;
-					this->mixMode = mixMode;
-					this->alpha = alpha;
-				}
-			};
-
-			/**
 				Defines the Pixel layout of the Section.
 				The number of Pixels in this Section is determined by rows * columns.
 			*/
@@ -134,6 +107,33 @@ namespace PixelMaestro {
 				Offset(short x, short y) {
 					this->x = x;
 					this->y = y;
+				}
+			};
+
+			/**
+				Overlays a second Section on top of the current one.
+				NOTE: When getting color output, use getPixelColor(). This returns RGB values after blending the two Sections together.
+			*/
+			struct Overlay {
+				/// The Section to overlay.
+				Section *section = nullptr;
+
+				/// Method of blending the output from the Overlay with the base Section.
+				Colors::MixMode mixMode = Colors::MixMode::NONE;
+
+				/// Transparency level of the overlaid Section (if applicable).
+				float alpha;
+
+				/**
+				 * Constructor. The Section will automatically be deleted when the Overlay is deleted.
+				 * @param section New Section to use.
+				 * @param mixMode Color mixing method to use.
+				 * @param alpha For MixMode::ALPHA, the amount of transparency that the Overlay will have.
+				 */
+				Overlay(Section *section, Colors::MixMode mixMode, float alpha) {
+					this->section = section;
+					this->mixMode = mixMode;
+					this->alpha = alpha;
 				}
 			};
 
@@ -220,7 +220,7 @@ namespace PixelMaestro {
 			/// The active Section animation. Defaults to SOLID.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);
 
-			/// Array of colors used in animations. For some animations, the color index corresponds to the Pixel index (see ColorAnimations::SOLID).
+			/// Array of colors used in animations..
 			Colors::RGB *colors_ = nullptr;
 
 			///	The current stage of the animation cycle. Defaults to 0.
@@ -241,25 +241,25 @@ namespace PixelMaestro {
 			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
 			unsigned long last_refresh_ = 0;
 
-			/// The 2D layout of the Pixels.
+			/// The logical layout of the Pixels.
 			Layout *layout_ = nullptr;
 
-			/// The Section overlaying the current section (if applicable);
+			/// The Section overlaying the current section (if applicable).
 			Overlay *overlay_ = nullptr;
 
-			/// The layout of the pattern used in the PATTERN animation.
+			/// The Pattern used in the PATTERN animation (if applicable).
 			Pattern *pattern_ = nullptr;
 
-			/// The Pixels managed by the Section.
+			/// The array of Pixels managed by the Section.
 			Pixel *pixels_ = nullptr;
 
 			/// The number of colors in colors_.
 			unsigned int num_colors_;
 
-			/// The time between Pixel redraws in milliseconds. Defaults to 20.
+			/// The time between Pixel redraws in milliseconds. Only relevant when fading is enabled. Defaults to 20.
 			unsigned short refresh_interval_ = 20;
 
-			/// Whether to reverse the current animation. Defaults to false.
+			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_animation_ = false;
 
 			// Color animation functions
