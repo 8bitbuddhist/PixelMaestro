@@ -59,15 +59,24 @@ section.setColorAnimation(Section::ColorAnimations::SPARKLE);
 section.getAnimationOpts()->sparkle_threshold = 50;
 ```
 
+### Toggling Fading
+You can have Pixels fade during color changes by enabling fading. Otherwise, when the animation cycle changes, Pixels will immediately jump to the next color.
+```c++
+if (!section.getFade()) section.toggleFade();
+```
+
 ## Displaying Patterns
-A Pattern is a 2D array of boolean values containing a representation of an animation. The array contains a collection of boolean arrays (called `frames`), each of which contains a set of boolean values that map directly to the Pixel grid. Each boolean value toggles whether or not its corresponding Pixel is turned on or off. For example, if frame 1, index 10 of the Pattern = false, then the Pixel at index 10 of the Pixel array will not be activated. However, if frame 2, index 10 = true, then on the next cycle the Pixel will be activated (e.g. display its normal color instead of black).
+A Pattern is a 2D array of boolean values representing an image to render on the Section. Patterns consist of a set of boolean arrays (called `frames`), each of which contains a set of boolean values. Each of these values maps directly to a Section's Pixel grid and toggles the corresponding Pixel on or off depending on its value. For example, if frame 1, index 10 of the Pattern is 0 or false, then the Pixel at index 10 of the Pixel array is also turned off. However, if frame 2, index 10 is 1 or true, then on the next animation cycle the Pixel will be activated (e.g. display its normal color instead of just black).
+
+Patterns are initialized via the [Pattern class](../src/pattern.h).
 
 Tip: See the [PatternDemo class](../gui/demo/patterndemo.cpp) in the PixelMaestro QT application for an example.
 
-This code snippet creates a single-frame Pattern for a Pixel grid with 10 rows and 10 columns. It displays a border around the grid, indicated by `1`. Note that when initializing a new Section::Pattern object, you must specify a custom Layout for the Pattern and the number of frames to display. The Pattern layout can be different than the Section Layout, and the number of frames can be less than the number of frames in the boolean array.
+The following code creates a single-frame Pattern for a 10 x 10 Pixel grid and simply displays a border around the grid. Note that when initializing a new Pattern object, you must specify the dimensions and number of frames to display. The dimensions can be smaller than those of the Section, but making them larger could lead to undefined behavior. Ideally you should make them the same size.
 ```c++
-bool** pattern_array_ = new bool*[5] {
-	// Frame 1: Border
+Point *dimensions = new Point(10, 10);
+int numFrames = 1;
+bool** patternArray = new bool*[numFrames] {
 	new bool[100] {
 		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 		1, 0, 0, 0, 0, 0, 0, 0, 0, 1,
@@ -82,12 +91,23 @@ bool** pattern_array_ = new bool*[5] {
 	}
 }
 
+Pattern *pattern = new Pattern(patternArray, dimensions, numFrames);
+
 section->setColorAnimation(Section::ColorAnimations::PATTERN);
-section->setPattern(new Section::Pattern(this->pattern_array_, new Section::Layout(10, 10), 1));
+section->setPattern(pattern);
 ```
 
-#### Offsetting a Pattern
-Offsetting shifts the Pattern's starting point to another place on the Pixel grid. By default the offset is set to 0, meaning the starting point is the same as the Pixel grid's starting point. Changing `offset->x` changes the starting row, and changing `offset->y` changes the starting column. These values can be negative.
+### Animating a Pattern
+You can scroll a Pattern horizontally, vertically, or both using the `Pattern::scrollRate` property. `scrollRate` defines the direction and number of Pixels that the Pattern will scroll per animation cycle. `scrollRate->x` scrolls along the horizontal axis and `scrollRate->y` scrolls along the vertical axis. These values can be negative, which scrolls left instead of right for `scrollRate->x` and up instead of down for `scrollRate->y`.
+
+The following code scrolls 1 Pixel to the right and 2 Pixels up.
+```c++
+Point *offset = new Point (1, -2);
+pattern->scrollRate = offset;
+```
+
+### Offsetting a Pattern
+Offsetting shifts the Pattern's starting point to another place on the Pixel grid. By default the offset is set to 0, meaning the starting point is the same as the Pixel grid's starting point. These values can be negative.
 
 The following code moves the Pattern 5 Pixels to the right and 1 Pixel down.
 ```c++
@@ -96,21 +116,7 @@ pattern->offset->y = 1;
 section->setPattern(pattern);
 ```
 
-If the Pattern extends beyond the Pixel grid, the rest of the Pattern will be hidden from view. However, setting `Pattern::repeat` to true will wrap the hidden parts of the Pattern to the opposite end of the Pixel grid.
-
-#### Animating a Pattern
-You can set a Pattern to scroll horizontally, vertically, or both using the `Pattern::scrollRate` property. `scrollRate` defines the direction and number of Pixels that the Pattern should scroll per cycle. `scrollRate->x` scrolls along the horizontal axis, and `scrollRate->y` scrolls along the vertical axis. These values can be negative, which scrolls left instead of right for `scrollRate->x` and up instead of down for `scrollRate->y`.
-
-The following code scrolls 1 Pixel to the right and 2 Pixels up.
-```c++
-pattern->scrollRate = new Section::Offset(1, -2);
-```
-
-### Toggling Fading
-You can have Pixels fade during color changes by enabling fading. Otherwise, when the animation cycle changes, Pixels will immediately jump to the next color.
-```c++
-if (!section.getFade()) section.toggleFade();
-```
+By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will be hidden from view. However, setting `Pattern::repeat` to true wraps the Pattern to the opposite end of the grid.
 
 ## Getting a Pixel's Color
 At some point, you'll need to retrieve the color of a Pixel for output. You can do this using the `getPixelColor(index)` method, where `index` is the index of the Pixel in the array (demonstrated below in [Accessing the Pixel by Index](#accessing-the-pixel-by-index)). If you'd rather access the Pixel by specifying its coordinate in the grid, see [Accessing the Pixel by Coordinate](#accessing-the-pixel-by-coordinate).
