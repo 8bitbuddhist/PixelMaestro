@@ -60,6 +60,26 @@ namespace PixelMaestro {
 				NONE
 			};
 
+			/// Defines a point on the Pixel grid.
+			struct Coordinates {
+
+				/// X-coordinate.
+				short x;
+
+				/// Y-coordinate.
+				short y;
+
+				/**
+				 * Constructor.
+				 * @param x X-axis coordinate.
+				 * @param y Y-axis coordinate.
+				 */
+				Coordinates(short x, short y) {
+					this->x = x;
+					this->y = y;
+				}
+			};
+
 			/**
 				Defines the Pixel layout of the Section.
 				The number of Pixels in this Section is determined by rows * columns.
@@ -87,26 +107,6 @@ namespace PixelMaestro {
 				 */
 				unsigned int getSize() {
 					return this->rows * this->columns;
-				}
-			};
-
-			/// Defines the offset of a Pattern on the Pixel grid.
-			struct Offset {
-
-				/// X-axis offset.
-				short x;
-
-				/// Y-axis offset.
-				short y;
-
-				/**
-				 * Constructor.
-				 * @param x X-axis offset.
-				 * @param y Y-axis offset.
-				 */
-				Offset(short x, short y) {
-					this->x = x;
-					this->y = y;
 				}
 			};
 
@@ -149,7 +149,7 @@ namespace PixelMaestro {
 				Section::Layout *layout = nullptr;
 
 				/// How far the Pattern is offset from the grid origin (where the origin is the first Pixel in the grid).
-				Section::Offset *offset = nullptr;
+				Section::Coordinates *offset = nullptr;
 
 				/**
 					The pattern to display when the PATTERN animation is active.
@@ -160,8 +160,12 @@ namespace PixelMaestro {
 				/// Whether to repeat the Pattern over the grid (requires offset to be set).
 				bool repeat = false;
 
-				/// Direction and rate for scrolling the Pattern (if applicable). Zero disables scrolling.
-				Section::Offset *scrollRate = nullptr;
+				/**
+				 * Direction and rate for scrolling the Pattern (if applicable).
+				 * Scrolling occurs on every cycle update.
+				 * Setting an axis to 0 disables scrolling on that axis.
+				 */
+				Section::Coordinates *scrollRate = nullptr;
 
 				/**
 				 * Constructor. This also initializes the Pattern's offset to 0.
@@ -175,7 +179,7 @@ namespace PixelMaestro {
 					this->frames = numFrames;
 
 					// Initial offset is set to 0
-					this->offset = new Section::Offset(0, 0);
+					this->offset = new Section::Coordinates(0, 0);
 				}
 
 				~Pattern() {
