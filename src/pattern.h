@@ -5,6 +5,7 @@
 #ifndef PATTERN_H
 #define PATTERN_H
 
+#include "pattern/fonts/font.h"
 #include "point.h"
 
 namespace PixelMaestro {
@@ -37,6 +38,7 @@ namespace PixelMaestro {
 
 			Pattern(bool **pattern, Point *dimensions, unsigned short numFrames);
 			~Pattern();
+			void drawText(Font *font, int frame, const char *text, unsigned int numChars);
 	};
 }
 

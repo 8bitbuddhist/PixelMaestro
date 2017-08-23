@@ -5,7 +5,6 @@
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
-#include "pattern/fontutil.h"
 #include "pattern/fonts/font5x8.h"
 #include "point.h"
 
@@ -17,9 +16,8 @@ PatternDemo::PatternDemo(QWidget *parent, MaestroController *maestroController) 
 		new bool[layout->x * layout->y] {0}
 	};
 
-	FontUtil::printString(new Font5x8(), this->pattern_array_[0], layout, "Hello World!", 12);
-
 	this->pattern_ = new Pattern(this->pattern_array_, layout, 1);
+	this->pattern_->drawText(new Font5x8(), 0, "Hello World!", 12);
 	//this->pattern_->offset->x = 5;
 	//this->pattern_->offset->y = 5;
 	this->pattern_->scrollRate = new Point(-1, 0);

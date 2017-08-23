@@ -4,7 +4,7 @@
 #ifndef FONT_H
 #define FONT_H
 
-#include "../../section.h"
+#include "../../point.h"
 
 namespace PixelMaestro {
 	class Font {
