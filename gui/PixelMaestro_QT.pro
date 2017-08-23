@@ -14,7 +14,6 @@ QMAKE_CXXFLAGS = -Wunused -Wno-unused-parameter
 
 SOURCES += main.cpp\
 		mainwindow.cpp \
-		$$PWD/../src/*.cpp \
 		drawingarea/maestrodrawingarea.cpp \
 		drawingarea/simpledrawingarea.cpp \
 		demo/blinkdemo.cpp \
@@ -34,8 +33,15 @@ SOURCES += main.cpp\
 		../src/show/sectionsetpatternevent.cpp \
 		../src/show/sectiontogglefadeevent.cpp \
 		../src/show/sectionunsetoverlayevent.cpp \
-    ../src/pattern/fontutil.cpp \
-    ../src/pattern/fonts/font5x8.cpp
+		../src/colors.cpp \
+		../src/maestro.cpp \
+		../src/pixel.cpp \
+		../src/section.cpp \
+		../src/show.cpp \
+		../src/utility.cpp \
+		../src/pattern/fontutil.cpp \
+		../src/pattern/fonts/font5x8.cpp \
+		../src/point.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -64,8 +70,9 @@ HEADERS += mainwindow.h \
 		../src/show.h \
 		../src/utility.h \
 		../src/pattern/fonts/font5x8.h \
-    ../src/pattern/fontutil.h \
-    ../src/pattern/fonts/font.h
+		../src/pattern/fontutil.h \
+		../src/pattern/fonts/font.h \
+		../src/point.h
 
 FORMS	+= \
 		mainwindow.ui \
