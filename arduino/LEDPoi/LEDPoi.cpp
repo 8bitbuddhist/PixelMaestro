@@ -1,14 +1,9 @@
 #include <Arduino.h>
 
-#include <Colors.h>
-#include <Maestro.h>
-#include <Pixel.h>
-#include <Section.h>
-#include <Show.h>
-#include <show/Event.h>
-#include <show/SectionSetColorAnimationEvent.h>
-#include <show/ColorsGenerateRandomColorEvent.h>
-#include <show/ColorsGenerateScalingColorArrayEvent.h>
+#include <show.h>
+#include <show/sectionsetcoloranimationevent.h>
+#include <show/colorsgeneraterandomcolorevent.h>
+#include <show/colorsgeneratescalingcolorarrayevent.h>
 
 #include <WS2812.h>
 
@@ -23,7 +18,7 @@ const unsigned char NUM_COLORS = 16;
 Maestro maestro;
 Pixel pixels[NUM_PIXELS];
 Section sections[] = {
-	Section(pixels, ROWS, COLUMNS),
+	Section(pixels, new Point(ROWS, COLUMNS)),
 };
 Colors::RGB colors[NUM_COLORS];
 Colors::RGB baseColor, targetColor;	// These store random colors which are used to generate color schemes.
@@ -64,7 +59,7 @@ Event *Events[] = {
 	// Select a new color scheme target color from the list of source colors.
 	new ColorsGenerateRandomColorEvent(0, &targetColor, source_colors, NUM_SOURCE_COLORS),
 	// Create the new color scheme.
-	new ColorsGenerateScalingColorArrayEvent(0, colors, &baseColor, &targetColor, NUM_COLORS, false),
+	new ColorsGenerateScalingColorArrayEvent(0, colors, &baseColor, &targetColor, NUM_COLORS, false)
 };
 
 // Initialize WS2812 components.
@@ -90,9 +85,6 @@ cRGB RGBtoCRGB(Colors::RGB rgbColor) {
 }
 
 void setup () {
-	// Due to wiring issues, sleep for 15 seconds to prevent powering LEDs over USB
-	delay(15000);
-
 	// Initialize the WS2812 LED strips.
 	for (unsigned char strip = 0; strip < NUM_WS_STRIPS; strip++) {
 		ws[strip].setOutput(WS_PINS[strip]);
@@ -102,6 +94,8 @@ void setup () {
 	// Set the initial color array to all black.
 	Colors::generateScalingColorArray(colors, &Colors::BLACK, &Colors::BLACK, COLUMNS, false);
 	sections[0].setColors(colors, NUM_COLORS);
+	sections[0].setCycleInterval(100);
+	sections[0].toggleFade();
 
 	maestro.setSections(sections, 1);
 

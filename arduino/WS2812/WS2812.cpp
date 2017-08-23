@@ -1,11 +1,6 @@
 #include <Arduino.h>
 
-#include <colors.h>
-#include <maestro.h>
-#include <pixel.h>
-#include <section.h>
 #include <show.h>
-#include <show/event.h>
 #include <show/sectionsetcoloranimationevent.h>
 
 #include <WS2812.h>
@@ -20,7 +15,7 @@ const float MAX_BRIGHTNESS = 0.05;
 Maestro maestro;
 Pixel pixels[NUM_PIXELS];
 Section sections[] = {
-  Section(pixels, new Section::Layout(ROWS, COLUMNS))
+  Section(pixels, new Point(ROWS, COLUMNS))
 };
 
 Show show;
