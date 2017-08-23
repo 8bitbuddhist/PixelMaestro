@@ -17,7 +17,7 @@ using namespace PixelMaestro;
 class MaestroController {
 	public:
 		~MaestroController();
-		void addSectionController(Section::Layout *layout);
+		void addSectionController(Point *layout);
 		void addShow(Event **events, unsigned char numEvents, Show::TimingModes timing, bool loop);
 		void deleteSectionController(int index);
 		Maestro *getMaestro();

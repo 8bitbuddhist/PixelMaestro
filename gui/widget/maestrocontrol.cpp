@@ -27,7 +27,7 @@ MaestroControl::MaestroControl(QWidget *parent, MaestroController *maestroContro
  */
 void MaestroControl::initialize() {
 	// Add a new SectionController to the MaestroController. Later on this will allow us to add multiple Sections to a MaestroController.
-	this->maestro_controller_->addSectionController(new Section::Layout(10, 10));
+	this->maestro_controller_->addSectionController(new Point(10, 10));
 	this->active_section_controller_ = this->maestro_controller_->getSectionController(0);
 
 	// Populate Animation combo box
@@ -41,8 +41,8 @@ void MaestroControl::initialize() {
 	// Set default values
 	ui->animationComboBox->setCurrentIndex(2);
 	ui->cycleSlider->setValue(this->active_section_controller_->getSection()->getCycleSpeed());
-	ui->rowsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->rows);
-	ui->columnsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->columns);
+	ui->rowsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->y);
+	ui->columnsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->x);
 	ui->sectionComboBox->addItem("Section 1");
 
 	// Overlay controls

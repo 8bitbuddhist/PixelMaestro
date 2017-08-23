@@ -40,8 +40,8 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	 */
 	this->resizePixels();
 	for (unsigned short section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
-		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->rows; row++) {
-			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->columns; pixel++) {
+		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->y; row++) {
+			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->x; pixel++) {
 				tmpRGB = this->maestro_controller_->getSectionController(section)->getSection()->getPixelColor(this->maestro_controller_->getSectionController(section)->getSection()->getPixelIndex(row, pixel));
 				tmpColor.setRgb(tmpRGB.r, tmpRGB.g, tmpRGB.b);
 				tmpBrush.setColor(tmpColor);
@@ -76,12 +76,12 @@ void SimpleDrawingArea::resizePixels() {
 		minDimension = this->height();
 	}
 
-	Section::Layout *layout = this->maestro_controller_->getSectionController(0)->getSection()->getLayout();
-	if (layout->rows > layout->columns) {
-		minLayout = layout->rows;
+	Point *layout = this->maestro_controller_->getSectionController(0)->getSection()->getLayout();
+	if (layout->y > layout->x) {
+		minLayout = layout->y;
 	}
 	else {
-		minLayout = layout->columns;
+		minLayout = layout->x;
 	}
 
 	RADIUS_ = (minDimension / minLayout) / 2;

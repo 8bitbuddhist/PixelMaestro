@@ -10,7 +10,7 @@
 namespace PixelMaestro {
 	class FontUtil {
 		public:
-			static void printString(Font *font, bool *frame, Section::Layout *patternLayout, const char *string, int numChars);
+			static void printString(Font *font, bool *frame, Point *patternLayout, const char *string, int numChars);
 	};
 }
 

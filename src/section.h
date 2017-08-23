@@ -62,36 +62,6 @@ namespace PixelMaestro {
 			};
 
 			/**
-				Defines the Pixel layout of the Section.
-				The number of Pixels in this Section is determined by rows * columns.
-			*/
-			struct Layout {
-				/// The number of rows in the Section.
-				unsigned short rows;
-
-				/// The number of columns in the Section.
-				unsigned short columns;
-
-				/**
-				 * Constructor.
-				 * @param rows Number of rows.
-				 * @param columns Number of columns.
-				 */
-				Layout(unsigned short rows, unsigned short columns) {
-					this->rows = rows;
-					this->columns = columns;
-				}
-
-				/**
-				 * Gets the number of elements in the Layout.
-				 * @return Number of elements (rows * columns).
-				 */
-				unsigned int getSize() {
-					return this->rows * this->columns;
-				}
-			};
-
-			/**
 				Overlays a second Section on top of the current one.
 				NOTE: When getting color output, use getPixelColor(). This returns RGB values after blending the two Sections together.
 			*/
@@ -127,7 +97,7 @@ namespace PixelMaestro {
 				unsigned short frames;
 
 				/// The Pixel layout of the Pattern.
-				Section::Layout *layout = nullptr;
+				Point *layout = nullptr;
 
 				/// How far the Pattern is offset from the grid origin (where the origin is the first Pixel in the grid).
 				Point *offset = nullptr;
@@ -154,7 +124,7 @@ namespace PixelMaestro {
 				 * @param layout The layout (rows and columns) of the Pattern.
 				 * @param numFrames The number of frames in the Pattern.
 				 */
-				Pattern(bool **pattern, Section::Layout *layout, unsigned short numFrames) {
+				Pattern(bool **pattern, Point *layout, unsigned short numFrames) {
 					this->pattern = pattern;
 					this->layout = layout;
 					this->frames = numFrames;
@@ -168,12 +138,12 @@ namespace PixelMaestro {
 				}
 			};
 
-			Section(Pixel *pixels, Section::Layout *layout);
+			Section(Pixel *pixels, Point *layout);
 			AnimationOpts *getAnimationOpts();
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
 			bool getFade();
-			Layout *getLayout();
+			Point *getLayout();
 			Section::Overlay *getOverlay();
 			unsigned int getNumPixels();
 			Pixel *getPixel(unsigned int pixel);
@@ -189,7 +159,7 @@ namespace PixelMaestro {
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Overlay *overlay);
 			void setPattern(Pattern *pattern);
-			void setPixels(Pixel* pixels, Section::Layout *layout);
+			void setPixels(Pixel* pixels, Point *layout);
 			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
 			void update(const unsigned long &currentTime);
@@ -227,7 +197,7 @@ namespace PixelMaestro {
 			unsigned long last_refresh_ = 0;
 
 			/// The logical layout of the Pixels.
-			Layout *layout_ = nullptr;
+			Point *layout_ = nullptr;
 
 			/// The Section overlaying the current section (if applicable).
 			Overlay *overlay_ = nullptr;

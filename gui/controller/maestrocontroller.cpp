@@ -9,7 +9,7 @@ using namespace PixelMaestro;
 /**
  * Adds a new Section to the Maestro.
  */
-void MaestroController::addSectionController(Section::Layout *layout) {
+void MaestroController::addSectionController(Point *layout) {
 	this->section_controllers_.push_back(new SectionController(layout));
 	reassignSections();
 }

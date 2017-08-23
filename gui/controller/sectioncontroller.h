@@ -15,12 +15,12 @@ using namespace PixelMaestro;
 
 class SectionController {
 	public:
-		SectionController(Section::Layout *layout);
-		SectionController(Section::Layout *layout, Colors::MixMode mixMode, float alpha);
+		SectionController(Point *layout);
+		SectionController(Point *layout, Colors::MixMode mixMode, float alpha);
 		~SectionController();
 		void addOverlay(Colors::MixMode mixMode, float alpha);
 		Colors::RGB *getColors();
-		Section::Layout getLayout();
+		Point getLayout();
 		unsigned short getNumColors();
 		Section::Overlay *getOverlay();
 		std::shared_ptr<SectionController> getOverlayController();
@@ -45,7 +45,7 @@ class SectionController {
 		/// Stores the Section.
 		std::shared_ptr<Section> section_;
 		/// Layout of the section (defaults to 10 x 10)
-		Section::Layout *layout_;
+		Point *layout_;
 };
 
 #endif // SECTIONCONTROLLER_H

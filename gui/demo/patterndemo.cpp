@@ -11,10 +11,10 @@
 
 PatternDemo::PatternDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, this->maestro_controller_) {
 
-	Section::Layout *layout = new Section::Layout(8, 80);
+	Point *layout = new Point(80, 8);
 
 	this->pattern_array_ = new bool*[1] {
-		new bool[layout->getSize()] {0}
+		new bool[layout->x * layout->y] {0}
 	};
 
 	FontUtil::printString(new Font5x8(), this->pattern_array_[0], layout, "Hello World!", 12);

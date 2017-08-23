@@ -10,16 +10,16 @@ using namespace PixelMaestro;
  * Constructor.
  * Creates a new Section, initializes its Pixels, and assigns the Pixels to the Section.
  */
-SectionController::SectionController(Section::Layout *layout) {
+SectionController::SectionController(Point *layout) {
 	this->layout_ = layout;
-	this->pixels_.resize(this->layout_->getSize());
+	this->pixels_.resize(this->layout_->x * this->layout_->y);
 	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], layout_));
 
 	// Initialize colors
 	this->setControllerColors(Colors::COLORWHEEL, 12);
 }
 
-SectionController::SectionController(Section::Layout *layout, Colors::MixMode mixMode, float alpha) : SectionController(layout){
+SectionController::SectionController(Point *layout, Colors::MixMode mixMode, float alpha) : SectionController(layout){
 	this->is_overlay_ = true;
 	this->mix_mode_ = mixMode;
 	this->alpha_ = alpha;
@@ -47,7 +47,7 @@ Colors::RGB *SectionController::getColors() {
  * Returns the Section's Layout.
  * @return Section's Layout.
  */
-Section::Layout SectionController::getLayout() {
+Point SectionController::getLayout() {
 	return *this->layout_;
 }
 
@@ -103,9 +103,9 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
  * @param columns Number of columns in the Layout.
  */
 void SectionController::setLayout(unsigned short rows, unsigned short columns) {
-	this->layout_->rows = rows;
-	this->layout_->columns = columns;
-	this->pixels_.resize(layout_->getSize());
+	this->layout_->x = columns;
+	this->layout_->y = rows;
+	this->pixels_.resize(layout_->x * layout_->y);
 	this->section_->setPixels(&this->pixels_[0], layout_);
 }
 
