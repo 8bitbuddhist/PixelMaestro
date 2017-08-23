@@ -34,7 +34,8 @@ SOURCES += main.cpp\
 		../src/show/sectionsetpatternevent.cpp \
 		../src/show/sectiontogglefadeevent.cpp \
 		../src/show/sectionunsetoverlayevent.cpp \
-    ../src/pattern/font.cpp
+    ../src/pattern/fontutil.cpp \
+    ../src/pattern/fonts/font5x8.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -62,8 +63,9 @@ HEADERS += mainwindow.h \
 		../src/section.h \
 		../src/show.h \
 		../src/utility.h \
-    ../src/pattern/fonts/font5x8.h \
-    ../src/pattern/font.h
+		../src/pattern/fonts/font5x8.h \
+    ../src/pattern/fontutil.h \
+    ../src/pattern/fonts/font.h
 
 FORMS	+= \
 		mainwindow.ui \

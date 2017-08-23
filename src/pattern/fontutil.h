@@ -1,13 +1,17 @@
-#ifndef FONT_H
-#define FONT_H
+/*
+ * FontUtil.cpp - Tools for utilizing and interacting with fonts.
+ */
+#ifndef FONTUTIL_H
+#define FONTUTIL_H
 
+#include "fonts/font.h"
 #include "../section.h"
 
 namespace PixelMaestro {
-	class Font {
+	class FontUtil {
 		public:
-			static void printChars(bool *frame, Section::Layout *patternLayout, const char *string, int numChars);
+			static void printString(Font *font, bool *frame, Section::Layout *patternLayout, const char *string, int numChars);
 	};
 }
 
-#endif // FONT_H
+#endif // FONTUTIL_H

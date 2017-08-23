@@ -1,3 +1,7 @@
+/*
+ * Event.h - Base class for Show events.
+ */
+
 #ifndef EVENT_H
 #define EVENT_H
 
@@ -11,6 +15,7 @@ namespace PixelMaestro {
 			void setTime(unsigned long time);
 
 		protected:
+			/// Time that this Event will run.
 			unsigned long time_;
 
 	};
