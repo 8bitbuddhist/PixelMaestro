@@ -8,11 +8,11 @@ namespace PixelMaestro {
 	/**
 	 * Renders a string in the Frame.
 	 * @param frame The Pattern frame that the string will be rendered to.
-	 * @param patternLayout The Layout of the Pattern/frame.
+	 * @param patternSize The size of the Pattern/frame.
 	 * @param string The string to render.
 	 * @param numChars The length of the string.
 	 */
-	void FontUtil::printString(Font *font, bool *frame, Point *patternLayout, const char *string, int numChars) {
+	void FontUtil::printString(Font *font, bool *frame, Point *patternSize, const char *string, int numChars) {
 		unsigned char *currentChar;
 		Point *fontSize = font->size;
 
@@ -33,8 +33,8 @@ namespace PixelMaestro {
 			for (int column = 0; column < fontSize->x; column++) {
 				for (int row = 0; row < fontSize->y; row++) {
 					// Check to make sure we haven't exceeded the bounds of the Pattern
-					if (cursor.x + column < patternLayout->x && row < fontSize->y) {
-						frame[(row * patternLayout->x) + (cursor.x + column)] = ((currentChar[column] >> row) & 1);
+					if (cursor.x + column < patternSize->x && row < fontSize->y) {
+						frame[(row * patternSize->x) + (cursor.x + column)] = ((currentChar[column] >> row) & 1);
 					}
 					else {
 						break;

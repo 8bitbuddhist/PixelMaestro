@@ -11,9 +11,9 @@ using namespace PixelMaestro;
  * Creates a new Section, initializes its Pixels, and assigns the Pixels to the Section.
  */
 SectionController::SectionController(Point *layout) {
-	this->layout_ = layout;
-	this->pixels_.resize(this->layout_->x * this->layout_->y);
-	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], layout_));
+	this->dimensions_ = layout;
+	this->pixels_.resize(this->dimensions_->x * this->dimensions_->y);
+	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], dimensions_));
 
 	// Initialize colors
 	this->setControllerColors(Colors::COLORWHEEL, 12);
@@ -31,7 +31,7 @@ SectionController::SectionController(Point *layout, Colors::MixMode mixMode, flo
  * @param alpha The transparency of the Overlay.
  */
 void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
-	this->overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(this->layout_, mixMode, alpha));
+	this->overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(this->dimensions_, mixMode, alpha));
 	this->section_->setOverlay(new Section::Overlay(this->overlay_controller_->getSection().get(), mixMode, alpha));
 }
 
@@ -44,11 +44,11 @@ Colors::RGB *SectionController::getColors() {
 }
 
 /**
- * Returns the Section's Layout.
- * @return Section's Layout.
+ * Returns the Section's dimensions.
+ * @return Section's layout.
  */
-Point SectionController::getLayout() {
-	return *this->layout_;
+Point SectionController::getDimensions() {
+	return *this->dimensions_;
 }
 
 /**
@@ -59,6 +59,10 @@ unsigned short SectionController::getNumColors() {
 	return this->colors_.size();
 }
 
+/**
+ * Returns the Section's Overlay directly.
+ * @return Section's Overlay.
+ */
 Section::Overlay *SectionController::getOverlay() {
 	return this->section_->getOverlay();
 }
@@ -98,15 +102,15 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
 }
 
 /**
- * Initializes the Section's Layout.
- * @param rows Number of rows in the Layout.
- * @param columns Number of columns in the Layout.
+ * Initializes the Section's dimensions.
+ * @param x Size of the x-axis.
+ * @param y Size of the y-axis.
  */
-void SectionController::setLayout(unsigned short rows, unsigned short columns) {
-	this->layout_->x = columns;
-	this->layout_->y = rows;
-	this->pixels_.resize(layout_->x * layout_->y);
-	this->section_->setPixels(&this->pixels_[0], layout_);
+void SectionController::setDimensions(unsigned short x, unsigned short y) {
+	this->dimensions_->x = x;
+	this->dimensions_->y = y;
+	this->pixels_.resize(dimensions_->x * dimensions_->y);
+	this->section_->setPixels(&this->pixels_[0], dimensions_);
 }
 
 void SectionController::unsetOverlay() {

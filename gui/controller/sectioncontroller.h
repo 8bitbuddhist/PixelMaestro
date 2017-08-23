@@ -20,13 +20,13 @@ class SectionController {
 		~SectionController();
 		void addOverlay(Colors::MixMode mixMode, float alpha);
 		Colors::RGB *getColors();
-		Point getLayout();
+		Point getDimensions();
 		unsigned short getNumColors();
 		Section::Overlay *getOverlay();
 		std::shared_ptr<SectionController> getOverlayController();
 		std::shared_ptr<Section> getSection();
 		void setControllerColors(Colors::RGB *colors, unsigned short numColors);
-		void setLayout(unsigned short rows, unsigned short columns);
+		void setDimensions(unsigned short x, unsigned short y);
 		void unsetOverlay();
 
 		bool is_overlay_ = false;
@@ -45,7 +45,7 @@ class SectionController {
 		/// Stores the Section.
 		std::shared_ptr<Section> section_;
 		/// Layout of the section (defaults to 10 x 10)
-		Point *layout_;
+		Point *dimensions_;
 };
 
 #endif // SECTIONCONTROLLER_H

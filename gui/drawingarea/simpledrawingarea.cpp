@@ -29,19 +29,17 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 
 	/*
 	 * Note: This assumes we only have one section in the Maestro.
-	 * If there are more than one, the last Section will overwrite the first.
+	 * If there's more than one, the last Section will overwrite the first.
 	 * For more complex layouts, create a custom MaestroDrawingArea or add multiple SimpleDrawingAreas to the window.
 	 */
 
 	/*
-	 * Render each Pixel in the Maestro by mapping its location in the Layout to a location on the DrawingArea.
-	 * Each Pixel is drawn as a solid, filled circle.
-	 *
+	 * Render each Pixel in the Maestro by mapping its location in the grid to a location on the DrawingArea.
 	 */
 	this->resizePixels();
 	for (unsigned short section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
-		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->y; row++) {
-			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getLayout()->x; pixel++) {
+		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getDimensions()->y; row++) {
+			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getDimensions()->x; pixel++) {
 				tmpRGB = this->maestro_controller_->getSectionController(section)->getSection()->getPixelColor(this->maestro_controller_->getSectionController(section)->getSection()->getPixelIndex(row, pixel));
 				tmpColor.setRgb(tmpRGB.r, tmpRGB.g, tmpRGB.b);
 				tmpBrush.setColor(tmpColor);
@@ -67,7 +65,7 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
  * TODO: Smoother, more reliable scaling.
  */
 void SimpleDrawingArea::resizePixels() {
-	int minDimension, minLayout;
+	int minDimension, minPoint;
 	// Find the smallest dimension. We'll use this to determine whether (and in which direction) to reduce the size of the grid.
 	if (this->width() < this->height()) {
 		minDimension = this->width();
@@ -76,15 +74,15 @@ void SimpleDrawingArea::resizePixels() {
 		minDimension = this->height();
 	}
 
-	Point *layout = this->maestro_controller_->getSectionController(0)->getSection()->getLayout();
-	if (layout->y > layout->x) {
-		minLayout = layout->y;
+	Point *dimensions = this->maestro_controller_->getSectionController(0)->getSection()->getDimensions();
+	if (dimensions->y > dimensions->x) {
+		minPoint = dimensions->y;
 	}
 	else {
-		minLayout = layout->x;
+		minPoint = dimensions->x;
 	}
 
-	RADIUS_ = (minDimension / minLayout) / 2;
+	RADIUS_ = (minDimension / minPoint) / 2;
 	PAD_ = RADIUS_ * 2;
 	OFFSET_ = PAD_;
 }

@@ -93,11 +93,11 @@ namespace PixelMaestro {
 				Patterns are encoded in an unsigned int corresponding to a single row of Pixels.
 			*/
 			struct Pattern {
+				/// The number of rows and columns in the Pattern.
+				Point *dimensions = nullptr;
+
 				/// The number of frames in the Pattern.
 				unsigned short frames;
-
-				/// The Pixel layout of the Pattern.
-				Point *layout = nullptr;
 
 				/// How far the Pattern is offset from the grid origin (where the origin is the first Pixel in the grid).
 				Point *offset = nullptr;
@@ -124,9 +124,9 @@ namespace PixelMaestro {
 				 * @param layout The layout (rows and columns) of the Pattern.
 				 * @param numFrames The number of frames in the Pattern.
 				 */
-				Pattern(bool **pattern, Point *layout, unsigned short numFrames) {
+				Pattern(bool **pattern, Point *dimensions, unsigned short numFrames) {
 					this->pattern = pattern;
-					this->layout = layout;
+					this->dimensions = dimensions;
 					this->frames = numFrames;
 
 					// Initial offset is set to 0
@@ -142,8 +142,8 @@ namespace PixelMaestro {
 			AnimationOpts *getAnimationOpts();
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
+			Point *getDimensions();
 			bool getFade();
-			Point *getLayout();
 			Section::Overlay *getOverlay();
 			unsigned int getNumPixels();
 			Pixel *getPixel(unsigned int pixel);
@@ -197,7 +197,7 @@ namespace PixelMaestro {
 			unsigned long last_refresh_ = 0;
 
 			/// The logical layout of the Pixels.
-			Point *layout_ = nullptr;
+			Point *dimensions_ = nullptr;
 
 			/// The Section overlaying the current section (if applicable).
 			Overlay *overlay_ = nullptr;

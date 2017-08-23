@@ -1,5 +1,6 @@
 /*
  * Point.h - Defines a point on a grid.
+ * Also used to define the size of a grid.
  */
 
 #ifndef POINT_H

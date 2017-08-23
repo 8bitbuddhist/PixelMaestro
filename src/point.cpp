@@ -1,5 +1,6 @@
 /*
  * Point.cpp - Defines a point on a grid.
+ * Also used to define the size of a grid.
  */
 
 #include "point.h"

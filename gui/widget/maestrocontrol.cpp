@@ -41,8 +41,8 @@ void MaestroControl::initialize() {
 	// Set default values
 	ui->animationComboBox->setCurrentIndex(2);
 	ui->cycleSlider->setValue(this->active_section_controller_->getSection()->getCycleSpeed());
-	ui->rowsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->y);
-	ui->columnsSpinBox->setValue(this->active_section_controller_->getSection()->getLayout()->x);
+	ui->rowsSpinBox->setValue(this->active_section_controller_->getSection()->getDimensions()->y);
+	ui->columnsSpinBox->setValue(this->active_section_controller_->getSection()->getDimensions()->x);
 	ui->sectionComboBox->addItem("Section 1");
 
 	// Overlay controls
@@ -81,7 +81,7 @@ void MaestroControl::setOverlayControlsVisible(bool visible) {
 	ui->mixModeComboBox->setVisible(visible);
 	ui->alphaSpinBox->setVisible(visible);
 
-	// Invert Layout controls
+	// Invert layout controls
 	ui->gridSizeLabel->setVisible(!visible);
 	ui->columnsSpinBox->setVisible(!visible);
 	ui->rowsSpinBox->setVisible(!visible);
@@ -165,7 +165,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
  * @param arg1 New number of columns.
  */
 void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
-	this->active_section_controller_->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+	this->active_section_controller_->setDimensions(ui->columnsSpinBox->value(), ui->rowsSpinBox->value());
 }
 
 
@@ -264,7 +264,7 @@ void MaestroControl::on_reverseAnimationCheckBox_toggled(bool checked) {
  * @param arg1 New number of rows.
  */
 void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
-	this->active_section_controller_->setLayout(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+	this->active_section_controller_->setDimensions(ui->columnsSpinBox->value(), ui->rowsSpinBox->value());
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
