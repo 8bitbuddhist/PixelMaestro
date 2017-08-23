@@ -6,6 +6,7 @@
 #define SECTION_H
 
 #include "colors.h"
+#include "point.h"
 #include "pixel.h"
 
 namespace PixelMaestro {
@@ -58,26 +59,6 @@ namespace PixelMaestro {
 
 				/// Turns off the Section. This should always be the last animation in the list.
 				NONE
-			};
-
-			/// Defines a point on the Pixel grid.
-			struct Coordinates {
-
-				/// X-coordinate.
-				short x;
-
-				/// Y-coordinate.
-				short y;
-
-				/**
-				 * Constructor.
-				 * @param x X-axis coordinate.
-				 * @param y Y-axis coordinate.
-				 */
-				Coordinates(short x, short y) {
-					this->x = x;
-					this->y = y;
-				}
 			};
 
 			/**
@@ -149,7 +130,7 @@ namespace PixelMaestro {
 				Section::Layout *layout = nullptr;
 
 				/// How far the Pattern is offset from the grid origin (where the origin is the first Pixel in the grid).
-				Section::Coordinates *offset = nullptr;
+				Point *offset = nullptr;
 
 				/**
 					The pattern to display when the PATTERN animation is active.
@@ -165,7 +146,7 @@ namespace PixelMaestro {
 				 * Scrolling occurs on every cycle update.
 				 * Setting an axis to 0 disables scrolling on that axis.
 				 */
-				Section::Coordinates *scrollRate = nullptr;
+				Point *scrollRate = nullptr;
 
 				/**
 				 * Constructor. This also initializes the Pattern's offset to 0.
@@ -179,7 +160,7 @@ namespace PixelMaestro {
 					this->frames = numFrames;
 
 					// Initial offset is set to 0
-					this->offset = new Section::Coordinates(0, 0);
+					this->offset = new Point(0, 0);
 				}
 
 				~Pattern() {

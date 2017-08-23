@@ -2,6 +2,7 @@
  * FontUtil.cpp - Tools for utilizing and interacting with fonts.
  */
 #include "fontutil.h"
+#include "point.h"
 
 namespace PixelMaestro {
 	/**
@@ -19,7 +20,7 @@ namespace PixelMaestro {
 		 * Indicates where to draw the next letter.
 		 * TODO: Add word wrapping by adjusting the y-coordinate.
 		 */
-		Section::Coordinates cursor = {0, 0};
+		Point cursor = {0, 0};
 
 		for (int letter = 0; letter < numChars; letter++) {
 			/*
