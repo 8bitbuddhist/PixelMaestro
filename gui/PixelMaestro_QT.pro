@@ -33,7 +33,8 @@ SOURCES += main.cpp\
 		../src/show/sectionsetoverlayevent.cpp \
 		../src/show/sectionsetpatternevent.cpp \
 		../src/show/sectiontogglefadeevent.cpp \
-		../src/show/sectionunsetoverlayevent.cpp
+		../src/show/sectionunsetoverlayevent.cpp \
+    ../src/pattern/font.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -60,7 +61,9 @@ HEADERS += mainwindow.h \
 		../src/pixel.h \
 		../src/section.h \
 		../src/show.h \
-		../src/utility.h
+		../src/utility.h \
+    ../src/pattern/fonts/font5x8.h \
+    ../src/pattern/font.h
 
 FORMS	+= \
 		mainwindow.ui \
