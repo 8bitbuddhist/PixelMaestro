@@ -82,6 +82,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Section's Pattern.
+	 * @return Section's Pattern.
+	 */
+	Pattern *Section::getPattern() {
+		return this->pattern_;
+	}
+
+	/**
 		Returns the Pixel at the specified index.
 
 		@param pixel The index of the Pixel in the pixels_ array.

@@ -97,6 +97,7 @@ namespace PixelMaestro {
 			bool getFade();
 			Section::Overlay *getOverlay();
 			unsigned int getNumPixels();
+			Pattern *getPattern();
 			Pixel *getPixel(unsigned int pixel);
 			Colors::RGB getPixelColor(unsigned int pixel);
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
