@@ -14,7 +14,7 @@ class PatternDemo : public SimpleDrawingArea {
 		PatternDemo(QWidget *parent, MaestroController *maestroController);
 
 	private:
-		Section::Pattern *pattern_;
+		Pattern *pattern_;
 		bool **pattern_array_;
 
 };

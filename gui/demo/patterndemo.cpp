@@ -19,7 +19,7 @@ PatternDemo::PatternDemo(QWidget *parent, MaestroController *maestroController) 
 
 	FontUtil::printString(new Font5x8(), this->pattern_array_[0], layout, "Hello World!", 12);
 
-	this->pattern_ = new Section::Pattern(this->pattern_array_, layout, 1);
+	this->pattern_ = new Pattern(this->pattern_array_, layout, 1);
 	//this->pattern_->offset->x = 5;
 	//this->pattern_->offset->y = 5;
 	this->pattern_->scrollRate = new Point(-1, 0);

@@ -1,7 +1,7 @@
 #include "sectionsetpatternevent.h"
 
 namespace PixelMaestro {
-	SectionSetPatternEvent::SectionSetPatternEvent(unsigned long time, Section *section, Section::Pattern *pattern) : Event(time) {
+	SectionSetPatternEvent::SectionSetPatternEvent(unsigned long time, Section *section, Pattern *pattern) : Event(time) {
 		this->section_ = section;
 		this->pattern_ = pattern;
 	}

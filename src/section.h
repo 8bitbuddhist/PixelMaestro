@@ -6,6 +6,7 @@
 #define SECTION_H
 
 #include "colors.h"
+#include "pattern.h"
 #include "point.h"
 #include "pixel.h"
 
@@ -85,56 +86,6 @@ namespace PixelMaestro {
 					this->section = section;
 					this->mixMode = mixMode;
 					this->alpha = alpha;
-				}
-			};
-
-			/**
-				Defines a pattern displayed in the Section.
-				Patterns are encoded in an unsigned int corresponding to a single row of Pixels.
-			*/
-			struct Pattern {
-				/// The number of rows and columns in the Pattern.
-				Point *dimensions = nullptr;
-
-				/// The number of frames in the Pattern.
-				unsigned short frames;
-
-				/// How far the Pattern is offset from the grid origin (where the origin is the first Pixel in the grid).
-				Point *offset = nullptr;
-
-				/**
-					The pattern to display when the PATTERN animation is active.
-					Stored as an array of bool arrays where each bool array is a separate frame.
-				*/
-				bool **pattern = nullptr;
-
-				/// Whether to repeat the Pattern over the grid (requires offset to be set).
-				bool repeat = false;
-
-				/**
-				 * Direction and rate for scrolling the Pattern (if applicable).
-				 * Scrolling occurs on every cycle update.
-				 * Setting an axis to 0 disables scrolling on that axis.
-				 */
-				Point *scrollRate = nullptr;
-
-				/**
-				 * Constructor. This also initializes the Pattern's offset to 0.
-				 * @param pattern The array containing the full pattern.
-				 * @param layout The layout (rows and columns) of the Pattern.
-				 * @param numFrames The number of frames in the Pattern.
-				 */
-				Pattern(bool **pattern, Point *dimensions, unsigned short numFrames) {
-					this->pattern = pattern;
-					this->dimensions = dimensions;
-					this->frames = numFrames;
-
-					// Initial offset is set to 0
-					this->offset = new Point(0, 0);
-				}
-
-				~Pattern() {
-					delete this->offset;
 				}
 			};
 

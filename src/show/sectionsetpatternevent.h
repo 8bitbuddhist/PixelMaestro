@@ -7,11 +7,11 @@
 namespace PixelMaestro {
 	class SectionSetPatternEvent : public Event {
 		public:
-			SectionSetPatternEvent(unsigned long time, Section *section, Section::Pattern *pattern);
+			SectionSetPatternEvent(unsigned long time, Section *section, Pattern *pattern);
 			void run();
 
 		private:
-			Section::Pattern *pattern_;
+			Pattern *pattern_;
 			Section *section_;
 	};
 }

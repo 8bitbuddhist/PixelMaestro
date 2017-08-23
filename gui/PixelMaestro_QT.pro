@@ -41,7 +41,8 @@ SOURCES += main.cpp\
 		../src/utility.cpp \
 		../src/pattern/fontutil.cpp \
 		../src/pattern/fonts/font5x8.cpp \
-		../src/point.cpp
+		../src/point.cpp \
+    ../src/pattern.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -72,7 +73,8 @@ HEADERS += mainwindow.h \
 		../src/pattern/fonts/font5x8.h \
 		../src/pattern/fontutil.h \
 		../src/pattern/fonts/font.h \
-		../src/point.h
+		../src/point.h \
+    ../src/pattern.h
 
 FORMS	+= \
 		mainwindow.ui \
