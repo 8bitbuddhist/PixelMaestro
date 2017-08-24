@@ -25,8 +25,24 @@ namespace PixelMaestro {
 	 * @param font
 	 * @param character
 	 */
-	void drawChar(Font *font, const char *character) {
-
+	void Canvas::drawChar(Point *origin, Font *font, const char character) {
+		/*
+		 * Each char in the font corresponds to a column.
+		 * Each bit in the char corresponds to an individual pixel.
+		 * We use bitmasking to get the bit value, then enable/disable the pixel based on that bit.
+		 */
+		unsigned char *currentChar = font->getChar(character);
+		for (int column = 0; column < font->size->x; column++) {
+			for (int row = 0; row < font->size->y; row++) {
+				// Check to make sure we haven't exceeded the bounds of the Pattern
+				if ((origin->x + column < this->dimensions->x) && (origin->y + row < this->dimensions->y)) {
+					this->pattern[((origin->y + row) * this->dimensions->x) + (origin->x + column)] = ((currentChar[column] >> row) & 1);
+				}
+				else {
+					break;
+				}
+			}
+		}
 	}
 
 	/**
@@ -47,8 +63,7 @@ namespace PixelMaestro {
 	 * @param numChars The number of characters in the string.
 	 */
 	void Canvas::drawText(Point *origin, Font *font, const char *text, unsigned int numChars) {
-		unsigned char *currentChar;
-		Point *fontSize = font->size;
+		Point cursor = {origin->x, origin->y};
 
 		/*
 		 * Indicates where to draw the next letter.
@@ -56,25 +71,9 @@ namespace PixelMaestro {
 		 */
 
 		for (unsigned int letter = 0; letter < numChars; letter++) {
-			/*
-			 * Each char in the font corresponds to a column.
-			 * Each bit in the char corresponds to an individual pixel.
-			 * We use bitmasking to get the bit value, then enable/disable the pixel based on that bit.
-			 */
-			currentChar = font->getChar(text[letter]);
-			for (int column = 0; column < fontSize->x; column++) {
-				for (int row = 0; row < fontSize->y; row++) {
-					// Check to make sure we haven't exceeded the bounds of the Pattern
-					if ((origin->x + column < this->dimensions->x) && (origin->y + row < this->dimensions->y)) {
-						this->pattern[((origin->y + row) * this->dimensions->x) + (origin->x + column)] = ((currentChar[column] >> row) & 1);
-					}
-					else {
-						break;
-					}
-				}
-			}
+			this->drawChar(&cursor, font, text[letter]);
 			// Move cursor to the location of the next letter.
-			origin->x += fontSize->x;
+			cursor.x += font->size->x;
 		}
 	}
 
