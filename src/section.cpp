@@ -151,9 +151,9 @@ namespace PixelMaestro {
 		@param canvas New Canvas.
 		@param canvasCycleInterval The amount of time between frame changes in ms (defaults to 1000).
 	*/
-	void Section::setCanvas(Canvas *canvas, unsigned short canvasCycleInterval) {
+	void Section::setCanvas(Canvas *canvas) {
 		canvas_ = canvas;
-		canvas_cycle_interval_ = canvasCycleInterval;
+		canvas_->parent_section_ = this;
 	}
 
 	/**
@@ -619,7 +619,7 @@ namespace PixelMaestro {
 		for (unsigned short row = 0; row < canvas_->dimensions->y; row++) {
 			for (unsigned short column = 0; column < canvas_->dimensions->x; column++) {
 				// Iterate through disabled Pixels
-				if (!canvas_->pattern[canvas_cycle_index_][getPixelIndex(row, column)]) {
+				if (!canvas_->pattern[getPixelIndex(row, column)]) {
 					if (row + canvas_->offset->y < dimensions_->y &&
 						column + canvas_->offset->x < dimensions_->x) {
 						setOne(row + canvas_->offset->y,
@@ -660,12 +660,6 @@ namespace PixelMaestro {
 					canvas_->offset->y = dimensions_->y;
 				}
 			}
-		}
-
-		// Check the Canvas' update time and move to the next frame if necessary.
-		if (last_cycle_ - canvas_last_cycle_ >= canvas_cycle_interval_) {
-			canvas_last_cycle_ = last_cycle_;
-			canvas_->updateCycle(canvas_cycle_index_);
 		}
 	}
 }

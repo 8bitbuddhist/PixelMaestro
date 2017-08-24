@@ -7,26 +7,28 @@
 
 #include "canvas/fonts/font.h"
 #include "point.h"
+#include "section.h"
 
 namespace PixelMaestro {
+	class Section;
+
 	class Canvas {
 		public:
 			/// The size of the Canvas.
 			Point *dimensions = nullptr;
 
-			/// The number of frames in the Canvas.
-			unsigned short frames;
-
 			/// How far the Canvas is offset from the Pixel grid origin (where the origin is the first Pixel in the grid).
 			/// TODO: Remove this and instead make it a required parameter for each Canvas::draw() method.
 			Point *offset = nullptr;
 
+			Section *parent_section_ = nullptr;
+
 			/**
 				The pattern to display.
-				Stored as an array of bool arrays where each bool array is a separate frame.
+				Stored as an array of booleans where 1 indicates an active Pixel.
 				TODO: Use the Pixel array directly.
 			*/
-			bool **pattern = nullptr;
+			bool *pattern = nullptr;
 
 			/// Whether to repeat the Pattern over the grid (requires scrollRate to be set).
 			bool repeat = false;
@@ -38,10 +40,9 @@ namespace PixelMaestro {
 			 */
 			Point *scrollRate = nullptr;
 
-			Canvas(bool **pattern, Point *dimensions, unsigned short numFrames);
-			void drawText(Font *font, int frame, const char *text, unsigned int numChars);
-			void updateCycle(unsigned short &cycleIndex);
-			~Canvas();
+			Canvas(bool *pattern, Point *dimensions);
+			void drawText(Font *font, const char *text, unsigned int numChars);
+			~Canvas();			
 	};
 }
 

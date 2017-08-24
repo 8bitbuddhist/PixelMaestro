@@ -11,10 +11,9 @@ namespace PixelMaestro {
 	 * @param layout The layout (rows and columns) of the Canvas.
 	 * @param numFrames The number of frames in the Canvas.
 	 */
-	Canvas::Canvas(bool **pattern, Point *dimensions, unsigned short numFrames) {
+	Canvas::Canvas(bool *pattern, Point *dimensions) {
 		this->pattern = pattern;
 		this->dimensions = dimensions;
-		this->frames = numFrames;
 
 		// Initial offset is set to 0
 		this->offset = new Point(0, 0);
@@ -27,7 +26,7 @@ namespace PixelMaestro {
 	 * @param text The string to render.
 	 * @param numChars The number of characters in the string.
 	 */
-	void Canvas::drawText(Font *font, int frame, const char *text, unsigned int numChars) {
+	void Canvas::drawText(Font *font, const char *text, unsigned int numChars) {
 		unsigned char *currentChar;
 		Point *fontSize = font->size;
 
@@ -48,7 +47,7 @@ namespace PixelMaestro {
 				for (int row = 0; row < fontSize->y; row++) {
 					// Check to make sure we haven't exceeded the bounds of the Pattern
 					if (cursor.x + column < this->dimensions->x && row < fontSize->y) {
-						this->pattern[frame][(row * this->dimensions->x) + (cursor.x + column)] = ((currentChar[column] >> row) & 1);
+						this->pattern[(row * this->dimensions->x) + (cursor.x + column)] = ((currentChar[column] >> row) & 1);
 					}
 					else {
 						break;
@@ -57,17 +56,6 @@ namespace PixelMaestro {
 			}
 			// Move cursor to the location of the next letter.
 			cursor.x += fontSize->x;
-		}
-	}
-
-	/**
-	 * Updates the Canvas' cycle index by comparing it to the number of frames.
-	 * @param cycleIndex Address of the index tracker (provided by a Section).
-	 */
-	void Canvas::updateCycle(unsigned short &cycleIndex) {
-		cycleIndex++;
-		if (cycleIndex == this->frames) {
-			cycleIndex = 0;
 		}
 	}
 

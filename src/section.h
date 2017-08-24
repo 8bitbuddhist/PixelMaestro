@@ -11,6 +11,8 @@
 #include "pixel.h"
 
 namespace PixelMaestro {
+	class Canvas;
+
 	class Section {
 
 		public:
@@ -100,7 +102,7 @@ namespace PixelMaestro {
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);
-			void setCanvas(Canvas *canvas, unsigned short canvasCycleInterval = 1000);
+			void setCanvas(Canvas *canvas);
 			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
@@ -123,15 +125,6 @@ namespace PixelMaestro {
 
 			/// The Canvas to display (if applicable).
 			Canvas *canvas_ = nullptr;
-
-			/// The current frame (requires canvas_ to be set).
-			unsigned short canvas_cycle_index_ = 0;
-
-			/// The amount of time between Canvas frames in  ms (requires canvas_ to be set). Defaults to 1000.
-			unsigned short canvas_cycle_interval_ = 1000;
-
-			/// The amount of time since the last Canvas frame change (in ms).
-			unsigned long canvas_last_cycle_ = 0;
 
 			/// The active Section animation. Defaults to SOLID.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);
