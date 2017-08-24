@@ -21,7 +21,6 @@ SOURCES += main.cpp\
 		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
 		demo/showdemo.cpp \
-		demo/patterndemo.cpp \
 		../src/show/colorsgeneraterandomcolorarrayevent.cpp \
 		../src/show/colorsgeneraterandomcolorevent.cpp \
 		../src/show/colorsgeneratescalingcolorarrayevent.cpp \
@@ -30,7 +29,6 @@ SOURCES += main.cpp\
 		../src/show/sectionsetcoloranimationevent.cpp \
 		../src/show/sectionsetcycleintervalevent.cpp \
 		../src/show/sectionsetoverlayevent.cpp \
-		../src/show/sectionsetpatternevent.cpp \
 		../src/show/sectiontogglefadeevent.cpp \
 		../src/show/sectionunsetoverlayevent.cpp \
 		../src/colors.cpp \
@@ -39,9 +37,11 @@ SOURCES += main.cpp\
 		../src/section.cpp \
 		../src/show.cpp \
 		../src/utility.cpp \
-		../src/pattern/fonts/font5x8.cpp \
 		../src/point.cpp \
-    ../src/pattern.cpp
+    ../src/canvas.cpp \
+    ../src/canvas/fonts/font5x8.cpp \
+    ../src/show/sectionsetcanvasevent.cpp \
+    demo/canvasdemo.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -51,7 +51,6 @@ HEADERS += mainwindow.h \
 		controller/sectioncontroller.h \
 		controller/maestrocontroller.h \
 		demo/showdemo.h \
-		demo/patterndemo.h \
 		../src/show/colorsgeneraterandomcolorarrayevent.h \
 		../src/show/colorsgeneraterandomcolorevent.h \
 		../src/show/colorsgeneratescalingcolorarrayevent.h \
@@ -60,7 +59,6 @@ HEADERS += mainwindow.h \
 		../src/show/sectionsetcoloranimationevent.h \
 		../src/show/sectionsetcycleintervalevent.h \
 		../src/show/sectionsetoverlayevent.h \
-		../src/show/sectionsetpatternevent.h \
 		../src/show/sectiontogglefadeevent.h \
 		../src/show/sectionunsetoverlayevent.h \
 		../src/colors.h \
@@ -69,10 +67,12 @@ HEADERS += mainwindow.h \
 		../src/section.h \
 		../src/show.h \
 		../src/utility.h \
-		../src/pattern/fonts/font5x8.h \
-		../src/pattern/fonts/font.h \
 		../src/point.h \
-    ../src/pattern.h
+    ../src/canvas.h \
+    ../src/canvas/fonts/font.h \
+    ../src/canvas/fonts/font5x8.h \
+    ../src/show/sectionsetcanvasevent.h \
+    demo/canvasdemo.h
 
 FORMS	+= \
 		mainwindow.ui \

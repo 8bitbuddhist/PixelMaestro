@@ -4,6 +4,8 @@
 #include <QFormLayout>
 #include <QVBoxLayout>
 
+#include "demo/canvasdemo.h"
+
 int main(int argc, char *argv[]) {
 	QApplication a(argc, argv);
 	MainWindow w;
@@ -16,9 +18,10 @@ int main(int argc, char *argv[]) {
 	QVBoxLayout *mainLayout = w.findChild<QVBoxLayout*>("mainLayout");
 	Q_ASSERT(mainLayout);
 
-	SimpleDrawingArea *drawingArea = new SimpleDrawingArea(mainLayout->widget(), &controller);
+	//SimpleDrawingArea *drawingArea = new SimpleDrawingArea(mainLayout->widget(), &controller);
+	CanvasDemo *drawingArea = new CanvasDemo(mainLayout->widget(), &controller);
 	mainLayout->addWidget(drawingArea);
-	mainLayout->addWidget(new MaestroControl(mainLayout->widget(), &controller));
+	//mainLayout->addWidget(new MaestroControl(mainLayout->widget(), &controller));
 
 	// Enable high DPI output
 	a.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);

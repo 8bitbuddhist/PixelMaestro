@@ -28,6 +28,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Section's Canvas.
+	 * @return Section's Canvas.
+	 */
+	Canvas *Section::getCanvas() {
+		return canvas_;
+	}
+
+	/**
 		Returns the current color animation.
 
 		@return Current color animation.
@@ -79,14 +87,6 @@ namespace PixelMaestro {
 	 */
 	Section::Overlay *Section::getOverlay() {
 		return overlay_;
-	}
-
-	/**
-	 * Returns the Section's Pattern.
-	 * @return Section's Pattern.
-	 */
-	Pattern *Section::getPattern() {
-		return pattern_;
 	}
 
 	/**
@@ -142,6 +142,18 @@ namespace PixelMaestro {
 		for (unsigned int pixel = 0; pixel < getNumPixels(); pixel++) {
 			setOne(pixel, color);
 		}
+	}
+
+	/**
+		Sets the Canvas to display.
+		A Canvas is rendered on top of the ColorAnimation.
+
+		@param canvas New Canvas.
+		@param canvasCycleInterval The amount of time between frame changes in ms (defaults to 1000).
+	*/
+	void Section::setCanvas(Canvas *canvas, unsigned short canvasCycleInterval) {
+		canvas_ = canvas;
+		canvas_cycle_interval_ = canvasCycleInterval;
 	}
 
 	/**
@@ -267,17 +279,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
-
-		@param pattern New Pattern.
-		@param patternCycleInterval The amount of time between frame changes in ms (defaults to 1000).
-	*/
-	void Section::setPattern(Pattern *pattern, unsigned short patternCycleInterval) {
-		pattern_ = pattern;
-		pattern_cycle_interval_ = patternCycleInterval;
-	}
-
-	/**
 		Sets the refresh rate of the Section (how quickly the Pixels update).
 
 		@param interval Rate in milliseconds between Pixel redraws.
@@ -371,8 +372,8 @@ namespace PixelMaestro {
 			/*
 			 * Check to see if we need to redraw the pattern.
 			 */
-			if (pattern_) {
-				pattern_draw();
+			if (canvas_) {
+				canvas_draw();
 			}
 
 			/*
@@ -609,25 +610,25 @@ namespace PixelMaestro {
 	/**
 		Displays a pattern, drawing one full frame at a time.
 	*/
-	void Section::pattern_draw() {
+	void Section::canvas_draw() {
 		/*
 		 * Iterate over each bool in the current Pattern frame. The current frame is tracked via cycle_index_.
 		 * If the bool is false, deactivate the corresponding Pixel in the Pixel grid. If repeat is enabled, wrap the remainder of the Pattern to the opposite end of the grid.
-		 * If Pattern::offset is set, calculate the index of the Pixel that *should* be toggled by this bool.
+		 * If Canvas::offset is set, calculate the true index of the Pixel by adding the offset.
 		 */
-		for (unsigned short row = 0; row < pattern_->dimensions->y; row++) {
-			for (unsigned short column = 0; column < pattern_->dimensions->x; column++) {
+		for (unsigned short row = 0; row < canvas_->dimensions->y; row++) {
+			for (unsigned short column = 0; column < canvas_->dimensions->x; column++) {
 				// Iterate through disabled Pixels
-				if (!pattern_->pattern[pattern_cycle_index_][getPixelIndex(row, column)]) {
-					if (row + pattern_->offset->y < dimensions_->y &&
-						column + pattern_->offset->x < dimensions_->x) {
-						setOne(row + pattern_->offset->y,
-							column + pattern_->offset->x,
+				if (!canvas_->pattern[canvas_cycle_index_][getPixelIndex(row, column)]) {
+					if (row + canvas_->offset->y < dimensions_->y &&
+						column + canvas_->offset->x < dimensions_->x) {
+						setOne(row + canvas_->offset->y,
+							column + canvas_->offset->x,
 							&Colors::BLACK);
 					}
-					else if (pattern_->repeat) {
-						setOne((row + pattern_->offset->y) % dimensions_->y,
-							(column + pattern_->offset->x) % dimensions_->x,
+					else if (canvas_->repeat) {
+						setOne((row + canvas_->offset->y) % dimensions_->y,
+							(column + canvas_->offset->x) % dimensions_->x,
 							&Colors::BLACK);
 					}
 				}
@@ -635,36 +636,36 @@ namespace PixelMaestro {
 		}
 
 		/*
-		 * If Pattern::scrollRate is set, scroll the Pattern.
+		 * If Canvas::scrollRate is set, scroll the Canvas.
 		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
 		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
 		 */
-		if (pattern_->scrollRate) {
-			if (pattern_->scrollRate->x != 0) {
-				pattern_->offset->x += pattern_->scrollRate->x;
-				if (pattern_->offset->x >= dimensions_->x) {
-					pattern_->offset->x = 0;
+		if (canvas_->scrollRate) {
+			if (canvas_->scrollRate->x != 0) {
+				canvas_->offset->x += canvas_->scrollRate->x;
+				if (canvas_->offset->x >= dimensions_->x) {
+					canvas_->offset->x = 0;
 				}
-				else if (pattern_->offset->x - 1 < 0) {
-					pattern_->offset->x = dimensions_->x;
+				else if (canvas_->offset->x - 1 < 0) {
+					canvas_->offset->x = dimensions_->x;
 				}
 			}
 
-			if (pattern_->scrollRate->y != 0) {
-				pattern_->offset->y += pattern_->scrollRate->y;
-				if (pattern_->offset->y >= dimensions_->y) {
-					pattern_->offset->y = 0;
+			if (canvas_->scrollRate->y != 0) {
+				canvas_->offset->y += canvas_->scrollRate->y;
+				if (canvas_->offset->y >= dimensions_->y) {
+					canvas_->offset->y = 0;
 				}
-				else if (pattern_->offset->y - 1 < 0) {
-					pattern_->offset->y = dimensions_->y;
+				else if (canvas_->offset->y - 1 < 0) {
+					canvas_->offset->y = dimensions_->y;
 				}
 			}
 		}
 
-		// Check the pattern's update time and move to the next frame if necessary.
-		if (last_cycle_ - pattern_last_cycle_ >= pattern_cycle_interval_) {
-			pattern_last_cycle_ = last_cycle_;
-			pattern_->updateCycle(pattern_cycle_index_);
+		// Check the Canvas' update time and move to the next frame if necessary.
+		if (last_cycle_ - canvas_last_cycle_ >= canvas_cycle_interval_) {
+			canvas_last_cycle_ = last_cycle_;
+			canvas_->updateCycle(canvas_cycle_index_);
 		}
 	}
 }

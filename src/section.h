@@ -6,7 +6,7 @@
 #define SECTION_H
 
 #include "colors.h"
-#include "pattern.h"
+#include "canvas.h"
 #include "point.h"
 #include "pixel.h"
 
@@ -88,18 +88,19 @@ namespace PixelMaestro {
 
 			Section(Pixel *pixels, Point *layout);
 			AnimationOpts *getAnimationOpts();
+			Canvas *getCanvas();
 			Section::ColorAnimations getColorAnimation();
 			unsigned short getCycleSpeed();
 			Point *getDimensions();
 			bool getFade();
 			Section::Overlay *getOverlay();
 			unsigned int getNumPixels();
-			Pattern *getPattern();
 			Pixel *getPixel(unsigned int pixel);
 			Colors::RGB getPixelColor(unsigned int pixel);
 			unsigned int getPixelIndex(unsigned short row, unsigned short column);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);
+			void setCanvas(Canvas *canvas, unsigned short canvasCycleInterval = 1000);
 			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
 			void setColors(Colors::RGB *colors, unsigned int numColors);
 			void setCycleIndex(unsigned int index);
@@ -107,7 +108,6 @@ namespace PixelMaestro {
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Overlay *overlay);
-			void setPattern(Pattern *pattern, unsigned short patternCycleInterval = 1000);
 			void setPixels(Pixel* pixels, Point *layout);
 			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
@@ -120,6 +120,18 @@ namespace PixelMaestro {
 
 			/// Extra parameters for running animations.
 			AnimationOpts animation_opts_;
+
+			/// The Canvas to display (if applicable).
+			Canvas *canvas_ = nullptr;
+
+			/// The current frame (requires canvas_ to be set).
+			unsigned short canvas_cycle_index_ = 0;
+
+			/// The amount of time between Canvas frames in  ms (requires canvas_ to be set). Defaults to 1000.
+			unsigned short canvas_cycle_interval_ = 1000;
+
+			/// The amount of time since the last Canvas frame change (in ms).
+			unsigned long canvas_last_cycle_ = 0;
 
 			/// The active Section animation. Defaults to SOLID.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);
@@ -151,18 +163,6 @@ namespace PixelMaestro {
 			/// The Section overlaying the current section (if applicable).
 			Overlay *overlay_ = nullptr;
 
-			/// The Pattern used in the PATTERN animation (if applicable).
-			Pattern *pattern_ = nullptr;
-
-			/// The current pattern frame (requires pattern_ to be set).
-			unsigned short pattern_cycle_index_ = 0;
-
-			/// The amount of time between pattern frames in  ms (requires pattern_ to be set). Defaults to 1000.
-			unsigned short pattern_cycle_interval_ = 1000;
-
-			/// The amount of time since the last pattern frame change (in ms).
-			unsigned long pattern_last_cycle_ = 0;
-
 			/// The array of Pixels managed by the Section.
 			Pixel *pixels_ = nullptr;
 
@@ -187,8 +187,8 @@ namespace PixelMaestro {
 			void animation_updateCycle(unsigned int min, unsigned int max);
 			void animation_wave();
 
-			// Pattern animation functions
-			void pattern_draw();
+			// Canvas animation functions
+			void canvas_draw();
 	};
 }
 

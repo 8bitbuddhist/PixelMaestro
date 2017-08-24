@@ -1,17 +1,17 @@
 /*
- * Pattern.cpp - Defines a Pattern to display in a Section.
+ * Canvas.cpp - Utilities for drawing patterns on a Section.
  */
 
-#include "pattern.h"
+#include "canvas.h"
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. This also initializes the Pattern's offset to 0.
-	 * @param pattern The array containing the full pattern.
-	 * @param layout The layout (rows and columns) of the Pattern.
-	 * @param numFrames The number of frames in the Pattern.
+	 * Constructor. This also initializes the Canvas' offset to 0.
+	 * @param pattern The array containing the Canvas' individual pixels.
+	 * @param layout The layout (rows and columns) of the Canvas.
+	 * @param numFrames The number of frames in the Canvas.
 	 */
-	Pattern::Pattern(bool **pattern, Point *dimensions, unsigned short numFrames) {
+	Canvas::Canvas(bool **pattern, Point *dimensions, unsigned short numFrames) {
 		this->pattern = pattern;
 		this->dimensions = dimensions;
 		this->frames = numFrames;
@@ -21,13 +21,13 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Renders text in the specified frame.
+	 * Draws text in the Canvas.
 	 * @param font The Font to use when rendering the text.
-	 * @param frame The Pattern frame that the text will be rendered in.
+	 * @param frame The frame that the text will be rendered in.
 	 * @param text The string to render.
 	 * @param numChars The number of characters in the string.
 	 */
-	void Pattern::drawText(Font *font, int frame, const char *text, unsigned int numChars) {
+	void Canvas::drawText(Font *font, int frame, const char *text, unsigned int numChars) {
 		unsigned char *currentChar;
 		Point *fontSize = font->size;
 
@@ -40,9 +40,8 @@ namespace PixelMaestro {
 		for (unsigned int letter = 0; letter < numChars; letter++) {
 			/*
 			 * Each char in the font corresponds to a column.
-			 * For each char, iterate over each row of the Pattern.
-			 * Use bitmasking to check whether the Pixel should be turned on or off, then move to the next column.
-			 * Offset is used because by default, the char is printed upside-down. This inverts it by printing it from the bottom up.
+			 * Each bit in the char corresponds to an individual pixel.
+			 * We use bitmasking to get the bit value, then enable/disable the pixel based on that bit.
 			 */
 			currentChar = font->getChar(text[letter]);
 			for (int column = 0; column < fontSize->x; column++) {
@@ -62,17 +61,17 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Updates the pattern's cycle index by comparing it to the number of frames.
+	 * Updates the Canvas' cycle index by comparing it to the number of frames.
 	 * @param cycleIndex Address of the index tracker (provided by a Section).
 	 */
-	void Pattern::updateCycle(unsigned short &cycleIndex) {
+	void Canvas::updateCycle(unsigned short &cycleIndex) {
 		cycleIndex++;
 		if (cycleIndex == this->frames) {
 			cycleIndex = 0;
 		}
 	}
 
-	Pattern::~Pattern() {
+	Canvas::~Canvas() {
 		delete this->offset;
 	}
 }

@@ -9,12 +9,12 @@
 #include "../drawingarea/simpledrawingarea.h"
 #include <vector>
 
-class PatternDemo : public SimpleDrawingArea {
+class CanvasDemo : public SimpleDrawingArea {
 	public:
-		PatternDemo(QWidget *parent, MaestroController *maestroController);
+		CanvasDemo(QWidget *parent, MaestroController *maestroController);
 
 	private:
-		Pattern *pattern_;
+		Canvas *canvas_;
 		bool **pattern_array_;
 
 };
