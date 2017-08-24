@@ -61,6 +61,17 @@ namespace PixelMaestro {
 		}
 	}
 
+	/**
+	 * Updates the pattern's cycle index by comparing it to the number of frames.
+	 * @param cycleIndex Address of the index tracker (provided by a Section).
+	 */
+	void Pattern::updateCycle(unsigned short &cycleIndex) {
+		cycleIndex++;
+		if (cycleIndex == this->frames) {
+			cycleIndex = 0;
+		}
+	}
+
 	Pattern::~Pattern() {
 		delete this->offset;
 	}

@@ -17,6 +17,9 @@ namespace PixelMaestro {
 			/// The number of frames in the Pattern.
 			unsigned short frames;
 
+			/// The amount of time (in ms) since the last frame change.
+			unsigned long last_cycle = 0;
+
 			/// How far the Pattern is offset from the grid origin (where the origin is the first Pixel in the grid).
 			Point *offset = nullptr;
 
@@ -39,6 +42,7 @@ namespace PixelMaestro {
 			Pattern(bool **pattern, Point *dimensions, unsigned short numFrames);
 			~Pattern();
 			void drawText(Font *font, int frame, const char *text, unsigned int numChars);
+			void updateCycle(unsigned short &cycleIndex);
 	};
 }
 

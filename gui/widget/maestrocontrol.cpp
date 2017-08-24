@@ -31,7 +31,7 @@ void MaestroControl::initialize() {
 	this->active_section_controller_ = this->maestro_controller_->getSectionController(0);
 
 	// Populate Animation combo box
-	ui->animationComboBox->addItems({"Solid", "Blink", "Wave", "Pong", "Merge", "RandomIndex", "Sparkle", "Pattern", "Cycle"});
+	ui->animationComboBox->addItems({"Solid", "Blink", "Wave", "Pong", "Merge", "RandomIndex", "Sparkle", "Cycle"});
 
 	// Populate color combo box
 	ui->colorComboBox->addItems({"Custom", "Fire", "Deep Sea", "Color Wheel"});

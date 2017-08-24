@@ -52,9 +52,6 @@ namespace PixelMaestro {
 				/// Creates a shimmering effect by turning on random pixels.
 				SPARKLE,
 
-				/// Scrolls through a pattern defined in pattern_.
-				PATTERN,
-
 				/// Cycles all pixels through all stored colors.
 				CYCLE,
 
@@ -110,7 +107,7 @@ namespace PixelMaestro {
 			void setOne(unsigned int pixel, Colors::RGB *color);
 			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
 			void setOverlay(Overlay *overlay);
-			void setPattern(Pattern *pattern);
+			void setPattern(Pattern *pattern, unsigned short patternCycleInterval = 1000);
 			void setPixels(Pixel* pixels, Point *layout);
 			void setRefreshInterval(unsigned short interval);
 			void toggleFade();
@@ -157,6 +154,15 @@ namespace PixelMaestro {
 			/// The Pattern used in the PATTERN animation (if applicable).
 			Pattern *pattern_ = nullptr;
 
+			/// The current pattern frame (requires pattern_ to be set).
+			unsigned short pattern_cycle_index_ = 0;
+
+			/// The amount of time between pattern frames in  ms (requires pattern_ to be set). Defaults to 1000.
+			unsigned short pattern_cycle_interval_ = 1000;
+
+			/// The amount of time since the last pattern frame change (in ms).
+			unsigned long pattern_last_cycle_ = 0;
+
 			/// The array of Pixels managed by the Section.
 			Pixel *pixels_ = nullptr;
 
@@ -174,13 +180,15 @@ namespace PixelMaestro {
 			void animation_cycle();
 			unsigned int animation_getColorIndex(unsigned int count);
 			void animation_merge();
-			void animation_pattern();
 			void animation_pong();
 			void animation_randomIndex();
 			void animation_solid();
 			void animation_sparkle();
 			void animation_updateCycle(unsigned int min, unsigned int max);
 			void animation_wave();
+
+			// Pattern animation functions
+			void pattern_draw();
 	};
 }
 

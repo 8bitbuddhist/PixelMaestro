@@ -270,9 +270,11 @@ namespace PixelMaestro {
 		Displays a pattern by activating Pixels corresponding to individual bits in the pattern.
 
 		@param pattern New Pattern.
+		@param patternCycleInterval The amount of time between frame changes in ms (defaults to 1000).
 	*/
-	void Section::setPattern(Pattern *pattern) {
+	void Section::setPattern(Pattern *pattern, unsigned short patternCycleInterval) {
 		this->pattern_ = pattern;
+		this->pattern_cycle_interval_ = patternCycleInterval;
 	}
 
 	/**
@@ -348,9 +350,6 @@ namespace PixelMaestro {
 					case Section::ColorAnimations::MERGE:
 						animation_merge();
 						break;
-					case Section::ColorAnimations::PATTERN:
-						animation_pattern();
-						break;
 					case Section::ColorAnimations::PONG:
 						animation_pong();
 						break;
@@ -367,6 +366,13 @@ namespace PixelMaestro {
 
 				// Update the last cycle time.
 				last_cycle_ = currentTime;
+			}
+
+			/*
+			 * Check to see if we need to redraw the pattern.
+			 */
+			if (this->pattern_) {
+				this->pattern_draw();
 			}
 
 			/*
@@ -499,71 +505,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Displays a pattern, drawing one full frame at a time.
-		If there is no pattern set, the Section blinks.
-	*/
-	void Section::animation_pattern() {
-		setAll(&Colors::BLACK);
-		// If the pattern has not been set, do nothing.
-		if (pattern_ == nullptr) {
-			return;
-		}
-
-		/*
-		 * Iterate over each bool in the current Pattern frame. The current frame is tracked via cycle_index_.
-		 * If the bool is true, activate the corresponding Pixel in the Pixel grid. If repeat is enabled, wrap the remainder of the Pattern to the opposite end of the grid.
-		 * If Pattern::offset is set, calculate the index of the Pixel that *should* be toggled by this bool.
-		 */
-		for (unsigned short row = 0; row < pattern_->dimensions->y; row++) {
-			for (unsigned short column = 0; column < pattern_->dimensions->x; column++) {
-				if (pattern_->pattern[cycle_index_][this->getPixelIndex(row, column)]) {
-					if (row + this->pattern_->offset->y < this->dimensions_->y &&
-						column + this->pattern_->offset->x < this->dimensions_->x) {
-						setOne(row + this->pattern_->offset->y,
-							column + this->pattern_->offset->x,
-							&colors_[animation_getColorIndex(column + this->pattern_->offset->x)]);
-					}
-					else if (this->pattern_->repeat) {
-						setOne((row + this->pattern_->offset->y) % this->dimensions_->y,
-							(column + this->pattern_->offset->x) % this->dimensions_->x,
-							&colors_[animation_getColorIndex((column + this->pattern_->offset->x) % this->dimensions_->x)]);
-					}
-				}
-			}
-		}
-
-		/*
-		 * If Pattern::scrollRate is set, scroll the Pattern.
-		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
-		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
-		 */
-		if (this->pattern_->scrollRate) {
-			if (this->pattern_->scrollRate->x != 0) {
-				this->pattern_->offset->x += this->pattern_->scrollRate->x;
-				if (this->pattern_->offset->x >= this->dimensions_->x) {
-					this->pattern_->offset->x = 0;
-				}
-				else if (this->pattern_->offset->x - 1 < 0) {
-					this->pattern_->offset->x = this->dimensions_->x;
-				}
-			}
-
-			if (this->pattern_->scrollRate->y != 0) {
-				this->pattern_->offset->y += this->pattern_->scrollRate->y;
-				if (this->pattern_->offset->y >= this->dimensions_->y) {
-					this->pattern_->offset->y = 0;
-				}
-				else if (this->pattern_->offset->y - 1 < 0) {
-					this->pattern_->offset->y = this->dimensions_->y;
-				}
-			}
-		}
-
-		// Go to the next frame.
-		animation_updateCycle(0, pattern_->frames);
-	}
-
-	/**
 		Cycles colors back and forth in a ping-pong pattern.
 
 		Supports vertical orientation
@@ -663,5 +604,67 @@ namespace PixelMaestro {
 
 
 		animation_updateCycle(0, num_colors_);
+	}
+
+	/**
+		Displays a pattern, drawing one full frame at a time.
+	*/
+	void Section::pattern_draw() {
+		/*
+		 * Iterate over each bool in the current Pattern frame. The current frame is tracked via cycle_index_.
+		 * If the bool is false, deactivate the corresponding Pixel in the Pixel grid. If repeat is enabled, wrap the remainder of the Pattern to the opposite end of the grid.
+		 * If Pattern::offset is set, calculate the index of the Pixel that *should* be toggled by this bool.
+		 */
+		for (unsigned short row = 0; row < pattern_->dimensions->y; row++) {
+			for (unsigned short column = 0; column < pattern_->dimensions->x; column++) {
+				// Iterate through disabled Pixels
+				if (!pattern_->pattern[this->pattern_cycle_index_][this->getPixelIndex(row, column)]) {
+					if (row + this->pattern_->offset->y < this->dimensions_->y &&
+						column + this->pattern_->offset->x < this->dimensions_->x) {
+						setOne(row + this->pattern_->offset->y,
+							column + this->pattern_->offset->x,
+							&Colors::BLACK);
+					}
+					else if (this->pattern_->repeat) {
+						setOne((row + this->pattern_->offset->y) % this->dimensions_->y,
+							(column + this->pattern_->offset->x) % this->dimensions_->x,
+							&Colors::BLACK);
+					}
+				}
+			}
+		}
+
+		/*
+		 * If Pattern::scrollRate is set, scroll the Pattern.
+		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
+		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
+		 */
+		if (this->pattern_->scrollRate) {
+			if (this->pattern_->scrollRate->x != 0) {
+				this->pattern_->offset->x += this->pattern_->scrollRate->x;
+				if (this->pattern_->offset->x >= this->dimensions_->x) {
+					this->pattern_->offset->x = 0;
+				}
+				else if (this->pattern_->offset->x - 1 < 0) {
+					this->pattern_->offset->x = this->dimensions_->x;
+				}
+			}
+
+			if (this->pattern_->scrollRate->y != 0) {
+				this->pattern_->offset->y += this->pattern_->scrollRate->y;
+				if (this->pattern_->offset->y >= this->dimensions_->y) {
+					this->pattern_->offset->y = 0;
+				}
+				else if (this->pattern_->offset->y - 1 < 0) {
+					this->pattern_->offset->y = this->dimensions_->y;
+				}
+			}
+		}
+
+		// Check the pattern's update time and move to the next frame if necessary.
+		if (this->last_cycle_ - this->pattern_last_cycle_ >= this->pattern_cycle_interval_) {
+			pattern_last_cycle_ = this->last_cycle_;
+			this->pattern_->updateCycle(this->pattern_cycle_index_);
+		}
 	}
 }
