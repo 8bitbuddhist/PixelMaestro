@@ -22,8 +22,9 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a single character.
-	 * @param font
-	 * @param character
+	 * @param origin The starting coordinates.
+	 * @param font The Font to render the text in.
+	 * @param character The character to display.
 	 */
 	void Canvas::drawChar(Point *origin, Font *font, const char character) {
 		/*
@@ -49,16 +50,42 @@ namespace PixelMaestro {
 	 * Draws a rectangle.
 	 * @param origin The starting coordinates.
 	 * @param size The size of the rectangle.
+	 * @param fill Whether to fill the rectangle or leave it empty
 	 */
-	void Canvas::drawRect(Point *origin, Point *size) {
-
+	void Canvas::drawRect(Point *origin, Point *size, bool fill) {
+		Point cursor = { origin->x, origin->y };
+		// Draw by column
+		for (int column = 0; column < size->x; column++) {
+			// (Re-)Initialize cursor
+			cursor.x = origin->x + column;
+			cursor.y = origin->y;
+			for (int row = 0; row < size->y; row++) {
+				cursor.y = origin->y + row;
+				if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
+					// Check whether to fill
+					if (fill) {
+						this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+					}
+					else {
+						// Check to see if the cursor is still along the border
+						if ((cursor.x == origin->x || cursor.y == origin->y) ||
+							(column == size->x - 1 || row == size->y - 1)) {
+							this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+						}
+						else {
+							// Allow other layers to pass through.
+							continue;
+						}
+					}
+				}
+			}
+		}
 	}
 
 	/**
 	 * Draws a string of characters.
 	 * @param origin The starting point for the string.
-	 * @param font The Font to use when rendering the text.
-	 * @param frame The frame that the text will be rendered in.
+	 * @param font The Font to render the text in.
 	 * @param text The string to render.
 	 * @param numChars The number of characters in the string.
 	 */
