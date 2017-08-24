@@ -4,10 +4,11 @@
 namespace PixelMaestro {
 	class Utility {
 		public:
-			static unsigned char abs_char(int val);
+			static unsigned char abs_char(char val);
 			static int rand();
 
 		private:
+			/// Initial RNG seed.
 			static int seed_;
 	};
 }

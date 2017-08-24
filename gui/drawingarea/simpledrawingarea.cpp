@@ -62,7 +62,7 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 
 /**
  * Resize the grid based on the number of rows and columns.
- * TODO: Smoother, more reliable scaling.
+ * TODO: Improve dynamic scaling.
  */
 void SimpleDrawingArea::resizePixels() {
 	int minDimension, minPoint;

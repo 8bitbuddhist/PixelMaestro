@@ -16,7 +16,7 @@ namespace PixelMaestro {
 	 * @param layout Initial layout (rows and columns) of the Pixels.
 	 */
 	Section::Section(Pixel *pixels, Point *layout) {
-		this->setPixels(pixels, layout);
+		setPixels(pixels, layout);
 	}
 
 	/**
@@ -24,7 +24,7 @@ namespace PixelMaestro {
 	 * @return Active animation option.
 	 */
 	Section::AnimationOpts *Section::getAnimationOpts() {
-		return &this->animation_opts_;
+		return &animation_opts_;
 	}
 
 	/**
@@ -33,7 +33,7 @@ namespace PixelMaestro {
 		@return Current color animation.
 	*/
 	Section::ColorAnimations Section::getColorAnimation() {
-		return this->color_animation_;
+		return color_animation_;
 	}
 
 	/**
@@ -42,7 +42,7 @@ namespace PixelMaestro {
 		@return speed The amount of time between animation changes.
 	*/
 	unsigned short Section::getCycleSpeed() {
-		return this->cycle_interval_;
+		return cycle_interval_;
 	}
 
 	/**
@@ -51,7 +51,7 @@ namespace PixelMaestro {
 		@return Size of the Pixel grid.
 	*/
 	Point *Section::getDimensions() {
-		return this->dimensions_;
+		return dimensions_;
 	}
 
 	/**
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 		@return Whether the Section is fading.
 	*/
 	bool Section::getFade() {
-		return this->fade_;
+		return fade_;
 	}
 
 	/**
@@ -69,7 +69,7 @@ namespace PixelMaestro {
 		@return Number of Pixels.
 	*/
 	unsigned int Section::getNumPixels() {
-		return this->dimensions_->x * this->dimensions_->y;
+		return dimensions_->x * dimensions_->y;
 	}
 
 	/**
@@ -78,7 +78,7 @@ namespace PixelMaestro {
 	 * @return Active Overlay.
 	 */
 	Section::Overlay *Section::getOverlay() {
-		return this->overlay_;
+		return overlay_;
 	}
 
 	/**
@@ -86,7 +86,7 @@ namespace PixelMaestro {
 	 * @return Section's Pattern.
 	 */
 	Pattern *Section::getPattern() {
-		return this->pattern_;
+		return pattern_;
 	}
 
 	/**
@@ -95,7 +95,7 @@ namespace PixelMaestro {
 		@param pixel The index of the Pixel in the pixels_ array.
 	*/
 	Pixel *Section::getPixel(unsigned int pixel) {
-		return &this->pixels_[pixel];
+		return &pixels_[pixel];
 	}
 
 	/**
@@ -106,10 +106,10 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB Section::getPixelColor(unsigned int pixel) {
 		if (overlay_ != nullptr) {
-			return Colors::mixColors(this->getPixel(pixel)->getColor(), overlay_->section->getPixel(pixel)->getColor(), overlay_->mixMode, overlay_->alpha);
+			return Colors::mixColors(getPixel(pixel)->getColor(), overlay_->section->getPixel(pixel)->getColor(), overlay_->mixMode, overlay_->alpha);
 		}
 		else {
-			return *this->getPixel(pixel)->getColor();
+			return *getPixel(pixel)->getColor();
 		}
 	}
 
@@ -139,8 +139,8 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setAll(Colors::RGB *color) {
-		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-			this->setOne(pixel, color);
+		for (unsigned int pixel = 0; pixel < getNumPixels(); pixel++) {
+			setOne(pixel, color);
 		}
 	}
 
@@ -174,8 +174,8 @@ namespace PixelMaestro {
 		switch (animation) {
 			case SPARKLE:
 			{
-				if (this->animation_opts_.sparkle_threshold == 255) {
-					this->animation_opts_.sparkle_threshold = 60;
+				if (animation_opts_.sparkle_threshold == 255) {
+					animation_opts_.sparkle_threshold = 60;
 				}
 				break;
 			}
@@ -194,8 +194,8 @@ namespace PixelMaestro {
 		@param numColors Size of the array.
 	*/
 	void Section::setColors(Colors::RGB *colors, unsigned int numColors) {
-		this->colors_ = colors;
-		this->num_colors_ = numColors;
+		colors_ = colors;
+		num_colors_ = numColors;
 	}
 
 	/**
@@ -205,10 +205,10 @@ namespace PixelMaestro {
 	*/
 	void Section::setCycleIndex(unsigned int index) {
 		if (index > num_colors_) {
-			this->cycle_index_ = (index - 1) % num_colors_;
+			cycle_index_ = (index - 1) % num_colors_;
 		}
 		else {
-			this->cycle_index_ = index;
+			cycle_index_ = index;
 		}
 	}
 
@@ -219,8 +219,8 @@ namespace PixelMaestro {
 		@param pause Specifies the amount of time to wait in milliseconds until the next animation cycle by speeding up the current cycle.
 	*/
 	void Section::setCycleInterval(unsigned short interval, unsigned short pause) {
-		this->cycle_interval_ = interval;
-		this->pause_ = pause;
+		cycle_interval_ = interval;
+		pause_ = pause;
 	}
 
 	/**
@@ -231,16 +231,16 @@ namespace PixelMaestro {
 	*/
 	void Section::setOne(unsigned int pixel, Colors::RGB *color) {
 		// Only continue if Pixel is within the bounds of the array.
-		if (pixel < (unsigned int)(this->dimensions_->x * this->dimensions_->y)) {
+		if (pixel < (unsigned int)(dimensions_->x * dimensions_->y)) {
 			/*
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
 			if (pause_ > 0) {
-				this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
+				getPixel(pixel)->setNextColor(color, fade_, cycle_interval_ - pause_, refresh_interval_);
 			}
 			else {
-				this->getPixel(pixel)->setNextColor(color, fade_, cycle_interval_, refresh_interval_);
+				getPixel(pixel)->setNextColor(color, fade_, cycle_interval_, refresh_interval_);
 			}
 		}
 	}
@@ -253,7 +253,7 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setOne(unsigned short row, unsigned short column, Colors::RGB *color) {
-		this->setOne(this->getPixelIndex(row, column), color);
+		setOne(getPixelIndex(row, column), color);
 	}
 
 	/**
@@ -263,7 +263,7 @@ namespace PixelMaestro {
 		@param overlay The Overlay to set.
 	*/
 	void Section::setOverlay(Overlay *overlay) {
-		this->overlay_ = overlay;
+		overlay_ = overlay;
 	}
 
 	/**
@@ -273,8 +273,8 @@ namespace PixelMaestro {
 		@param patternCycleInterval The amount of time between frame changes in ms (defaults to 1000).
 	*/
 	void Section::setPattern(Pattern *pattern, unsigned short patternCycleInterval) {
-		this->pattern_ = pattern;
-		this->pattern_cycle_interval_ = patternCycleInterval;
+		pattern_ = pattern;
+		pattern_cycle_interval_ = patternCycleInterval;
 	}
 
 	/**
@@ -283,14 +283,14 @@ namespace PixelMaestro {
 		@param interval Rate in milliseconds between Pixel redraws.
 	*/
 	void Section::setRefreshInterval(unsigned short interval) {
-		this->refresh_interval_ = interval;
+		refresh_interval_ = interval;
 	}
 
 	/**
 		Toggles fading.
 	*/
 	void Section::toggleFade() {
-		this->fade_ = !fade_;
+		fade_ = !fade_;
 	}
 
 	/**
@@ -300,15 +300,15 @@ namespace PixelMaestro {
 		@param dimensions Dimensions of the Pixel array.
 	*/
 	void Section::setPixels(Pixel* pixels, Point *dimensions) {
-		this->pixels_ = pixels;
-		this->dimensions_ = dimensions;
+		pixels_ = pixels;
+		dimensions_ = dimensions;
 	}
 
 	/**
 		Removes the overlay from the Section.
 	*/
 	void Section::unsetOverlay() {
-		delete this->overlay_;
+		delete overlay_;
 	}
 
 	/**
@@ -371,15 +371,15 @@ namespace PixelMaestro {
 			/*
 			 * Check to see if we need to redraw the pattern.
 			 */
-			if (this->pattern_) {
-				this->pattern_draw();
+			if (pattern_) {
+				pattern_draw();
 			}
 
 			/*
 				Update each Pixel based on the last time the Section was refreshed.
 			*/
-			for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
-				this->getPixel(pixel)->update();
+			for (unsigned int pixel = 0; pixel < getNumPixels(); pixel++) {
+				getPixel(pixel)->update();
 			}
 
 			// Update the last refresh time.
@@ -395,7 +395,7 @@ namespace PixelMaestro {
 		if (cycle_index_ == 0) {
 			for (unsigned short row = 0; row < dimensions_->y; row++) {
 				for (unsigned short column = 0; column < dimensions_->x; column++) {
-					this->setOne(row, column, &colors_[animation_getColorIndex(column)]);
+					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 			}
 		}
@@ -455,7 +455,7 @@ namespace PixelMaestro {
 					Check for an odd number of Pixels.
 					If so, set the center one to index 0.
 				*/
-				if (this->getNumPixels() % 2 != 0) {
+				if (getNumPixels() % 2 != 0) {
 					midPoint += 1;
 					setOne(midPoint, column, &colors_[cycle_index_]);
 				}
@@ -485,7 +485,7 @@ namespace PixelMaestro {
 					Check for an odd number of Pixels.
 					If so, set the center one to index 0.
 				*/
-				if (this->getNumPixels() % 2 != 0) {
+				if (getNumPixels() % 2 != 0) {
 					midPoint += 1;
 					setOne(row, midPoint, &colors_[cycle_index_]);
 				}
@@ -535,7 +535,7 @@ namespace PixelMaestro {
 
 	/// Sets each Pixel to a random stored color .
 	void Section::animation_randomIndex() {
-		for (unsigned int pixel = 0; pixel < this->getNumPixels(); pixel++) {
+		for (unsigned int pixel = 0; pixel < getNumPixels(); pixel++) {
 			setOne(pixel, &colors_[Utility::rand() % num_colors_]);
 		}
 	}
@@ -553,7 +553,7 @@ namespace PixelMaestro {
 	void Section::animation_sparkle() {
 		for (short row = 0; row < dimensions_->y; row++) {
 			for (short column = 0; column < dimensions_->x; column++) {
-				if ((Utility::rand() % 100) > this->animation_opts_.sparkle_threshold) {
+				if ((Utility::rand() % 100) > animation_opts_.sparkle_threshold) {
 					setOne(row, column, &colors_[animation_getColorIndex(column)]);
 				}
 				else {
@@ -618,16 +618,16 @@ namespace PixelMaestro {
 		for (unsigned short row = 0; row < pattern_->dimensions->y; row++) {
 			for (unsigned short column = 0; column < pattern_->dimensions->x; column++) {
 				// Iterate through disabled Pixels
-				if (!pattern_->pattern[this->pattern_cycle_index_][this->getPixelIndex(row, column)]) {
-					if (row + this->pattern_->offset->y < this->dimensions_->y &&
-						column + this->pattern_->offset->x < this->dimensions_->x) {
-						setOne(row + this->pattern_->offset->y,
-							column + this->pattern_->offset->x,
+				if (!pattern_->pattern[pattern_cycle_index_][getPixelIndex(row, column)]) {
+					if (row + pattern_->offset->y < dimensions_->y &&
+						column + pattern_->offset->x < dimensions_->x) {
+						setOne(row + pattern_->offset->y,
+							column + pattern_->offset->x,
 							&Colors::BLACK);
 					}
-					else if (this->pattern_->repeat) {
-						setOne((row + this->pattern_->offset->y) % this->dimensions_->y,
-							(column + this->pattern_->offset->x) % this->dimensions_->x,
+					else if (pattern_->repeat) {
+						setOne((row + pattern_->offset->y) % dimensions_->y,
+							(column + pattern_->offset->x) % dimensions_->x,
 							&Colors::BLACK);
 					}
 				}
@@ -639,32 +639,32 @@ namespace PixelMaestro {
 		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
 		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
 		 */
-		if (this->pattern_->scrollRate) {
-			if (this->pattern_->scrollRate->x != 0) {
-				this->pattern_->offset->x += this->pattern_->scrollRate->x;
-				if (this->pattern_->offset->x >= this->dimensions_->x) {
-					this->pattern_->offset->x = 0;
+		if (pattern_->scrollRate) {
+			if (pattern_->scrollRate->x != 0) {
+				pattern_->offset->x += pattern_->scrollRate->x;
+				if (pattern_->offset->x >= dimensions_->x) {
+					pattern_->offset->x = 0;
 				}
-				else if (this->pattern_->offset->x - 1 < 0) {
-					this->pattern_->offset->x = this->dimensions_->x;
+				else if (pattern_->offset->x - 1 < 0) {
+					pattern_->offset->x = dimensions_->x;
 				}
 			}
 
-			if (this->pattern_->scrollRate->y != 0) {
-				this->pattern_->offset->y += this->pattern_->scrollRate->y;
-				if (this->pattern_->offset->y >= this->dimensions_->y) {
-					this->pattern_->offset->y = 0;
+			if (pattern_->scrollRate->y != 0) {
+				pattern_->offset->y += pattern_->scrollRate->y;
+				if (pattern_->offset->y >= dimensions_->y) {
+					pattern_->offset->y = 0;
 				}
-				else if (this->pattern_->offset->y - 1 < 0) {
-					this->pattern_->offset->y = this->dimensions_->y;
+				else if (pattern_->offset->y - 1 < 0) {
+					pattern_->offset->y = dimensions_->y;
 				}
 			}
 		}
 
 		// Check the pattern's update time and move to the next frame if necessary.
-		if (this->last_cycle_ - this->pattern_last_cycle_ >= this->pattern_cycle_interval_) {
-			pattern_last_cycle_ = this->last_cycle_;
-			this->pattern_->updateCycle(this->pattern_cycle_index_);
+		if (last_cycle_ - pattern_last_cycle_ >= pattern_cycle_interval_) {
+			pattern_last_cycle_ = last_cycle_;
+			pattern_->updateCycle(pattern_cycle_index_);
 		}
 	}
 }

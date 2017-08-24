@@ -13,7 +13,7 @@ namespace PixelMaestro {
 	 * @param maestro The Maestro to control using this Show.
 	 */
 	Show::Show(Maestro *maestro) {
-		this->maestro_ = maestro;
+		maestro_ = maestro;
 	}
 
 	/**

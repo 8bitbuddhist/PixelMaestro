@@ -61,7 +61,7 @@ namespace PixelMaestro {
 
 			/**
 				Overlays a second Section on top of the current one.
-				NOTE: When getting color output, use getPixelColor(). This returns RGB values after blending the two Sections together.
+				When getting color output, use getPixelColor(). This returns RGB values after blending the two Sections together.
 			*/
 			struct Overlay {
 				/// The Section to overlay.
