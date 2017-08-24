@@ -59,6 +59,63 @@ namespace PixelMaestro {
 		}
 	}
 
+	/**
+	 * Redraw the Canvas.
+	 */
+	void Canvas::update() {
+		/*
+		 * Iterate over each bool in the Canvas.
+		 * If the bool is false, deactivate the corresponding Pixel in the Pixel grid.
+		 * If repeat is enabled, wrap the Canvas to the opposite end of the grid.
+		 * If Canvas::offset is set, calculate the true index of the Pixel by adding the offset.
+		 */
+		for (unsigned short row = 0; row < dimensions->y; row++) {
+			for (unsigned short column = 0; column < dimensions->x; column++) {
+				// Iterate through disabled Pixels
+				if (!pattern[parent_section_->getPixelIndex(row, column)]) {
+					if (row + offset->y < parent_section_->getDimensions()->y &&
+						column + offset->x < parent_section_->getDimensions()->x) {
+						parent_section_->setOne(row + offset->y,
+												column + offset->x,
+												&Colors::BLACK);
+					}
+					else if (repeat) {
+						parent_section_->setOne((row + offset->y) % parent_section_->getDimensions()->y,
+												(column + offset->x) % parent_section_->getDimensions()->x,
+												&Colors::BLACK);
+					}
+				}
+			}
+		}
+
+		/*
+		 * If Canvas::scrollRate is set, scroll the Canvas.
+		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
+		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
+		 */
+		if (scrollRate) {
+			if (scrollRate->x != 0) {
+				offset->x += scrollRate->x;
+				if (offset->x >= parent_section_->getDimensions()->x) {
+					offset->x = 0;
+				}
+				else if (offset->x - 1 < 0) {
+					offset->x = parent_section_->getDimensions()->x;
+				}
+			}
+
+			if (scrollRate->y != 0) {
+				offset->y += scrollRate->y;
+				if (offset->y >= parent_section_->getDimensions()->y) {
+					offset->y = 0;
+				}
+				else if (offset->y - 1 < 0) {
+					offset->y = parent_section_->getDimensions()->y;
+				}
+			}
+		}
+	}
+
 	Canvas::~Canvas() {
 		delete this->offset;
 	}

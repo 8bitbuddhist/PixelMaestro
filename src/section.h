@@ -179,9 +179,6 @@ namespace PixelMaestro {
 			void animation_sparkle();
 			void animation_updateCycle(unsigned int min, unsigned int max);
 			void animation_wave();
-
-			// Canvas animation functions
-			void canvas_draw();
 	};
 }
 
