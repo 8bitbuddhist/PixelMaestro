@@ -17,9 +17,6 @@ namespace PixelMaestro {
 			/// The number of frames in the Canvas.
 			unsigned short frames;
 
-			/// The amount of time (in ms) since the last frame change.
-			unsigned long last_cycle = 0;
-
 			/// How far the Canvas is offset from the Pixel grid origin (where the origin is the first Pixel in the grid).
 			/// TODO: Remove this and instead make it a required parameter for each Canvas::draw() method.
 			Point *offset = nullptr;
