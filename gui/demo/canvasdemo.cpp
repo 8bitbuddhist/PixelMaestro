@@ -18,7 +18,7 @@ CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : 
 	canvas_->drawText(new Font5x8(),"Hello World!", 12);
 	//canvas_->offset->x = 5;
 	//canvas_->offset->y = 5;
-	//canvas_->scrollRate = new Point(-1, 0);
+	//canvas_->scrollRate = new Point(-5, 0);
 	canvas_->repeat = true;
 
 	maestro_controller_ = maestroController;
@@ -29,4 +29,5 @@ CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : 
 	sectionController->setControllerColors(Colors::COLORWHEEL, 12);
 	section->setColorAnimation(Section::ColorAnimations::WAVE);
 	section->setCanvas(canvas_);
+	section->toggleFade();
 }

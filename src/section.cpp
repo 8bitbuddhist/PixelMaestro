@@ -373,7 +373,7 @@ namespace PixelMaestro {
 			 * Check to see if we need to redraw the pattern.
 			 */
 			if (canvas_) {
-				canvas_->update();
+				canvas_->update(currentTime);
 			}
 
 			/*

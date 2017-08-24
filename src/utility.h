@@ -4,7 +4,7 @@
 namespace PixelMaestro {
 	class Utility {
 		public:
-			static unsigned char abs_char(char val);
+			static unsigned int abs(short val);
 			static int rand();
 
 		private:

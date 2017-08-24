@@ -3,6 +3,7 @@
  */
 
 #include "canvas.h"
+#include "utility.h"
 
 namespace PixelMaestro {
 	/**
@@ -62,7 +63,7 @@ namespace PixelMaestro {
 	/**
 	 * Redraw the Canvas.
 	 */
-	void Canvas::update() {
+	void Canvas::update(const unsigned long &currentTime) {
 		/*
 		 * Iterate over each bool in the Canvas.
 		 * If the bool is false, deactivate the corresponding Pixel in the Pixel grid.
@@ -90,11 +91,13 @@ namespace PixelMaestro {
 
 		/*
 		 * If Canvas::scrollRate is set, scroll the Canvas.
+		 * scrollRate dictates how many refreshes will occur before the Canvas is scrolled.
 		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
 		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
 		 */
+		unsigned long targetTime = currentTime - lastScroll;
 		if (scrollRate) {
-			if (scrollRate->x != 0) {
+			if (scrollRate->x != 0 && (Utility::abs(scrollRate->x) * parent_section_->getRefreshRate()) <= targetTime) {
 				offset->x += scrollRate->x;
 				if (offset->x >= parent_section_->getDimensions()->x) {
 					offset->x = 0;
@@ -102,9 +105,10 @@ namespace PixelMaestro {
 				else if (offset->x - 1 < 0) {
 					offset->x = parent_section_->getDimensions()->x;
 				}
+				lastScroll = currentTime;
 			}
 
-			if (scrollRate->y != 0) {
+			if (scrollRate->y != 0 && (Utility::abs(scrollRate->y) * parent_section_->getRefreshRate()) <= targetTime) {
 				offset->y += scrollRate->y;
 				if (offset->y >= parent_section_->getDimensions()->y) {
 					offset->y = 0;
@@ -112,6 +116,7 @@ namespace PixelMaestro {
 				else if (offset->y - 1 < 0) {
 					offset->y = parent_section_->getDimensions()->y;
 				}
+				lastScroll = currentTime;
 			}
 		}
 	}

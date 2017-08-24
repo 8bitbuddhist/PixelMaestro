@@ -6,12 +6,12 @@ namespace PixelMaestro {
 	int Utility::seed_ = 1;
 
 	/**
-	 * Returns the absolute value of a char.
-	 * @param val The char value to evaluate.
-	 * @return The absolute value of the char.
+	 * Returns the absolute value of a number.
+	 * @param val The number to evaluate.
+	 * @return The absolute value of the number.
 	 */
-	unsigned char Utility::abs_char(char val) {
-		return val > 0 ? val : -val;
+	unsigned int Utility::abs(short val) {
+		return val > 0 ? (unsigned int)val : (unsigned int)-val;
 	}
 
 	/**

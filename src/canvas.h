@@ -40,9 +40,11 @@ namespace PixelMaestro {
 			 */
 			Point *scrollRate = nullptr;
 
+			unsigned long lastScroll = 0;
+
 			Canvas(bool *pattern, Point *dimensions);
 			void drawText(Font *font, const char *text, unsigned int numChars);
-			void update();
+			void update(const unsigned long &currentTime);
 			~Canvas();			
 	};
 }
