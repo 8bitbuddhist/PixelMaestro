@@ -38,9 +38,9 @@ namespace PixelMaestro {
 			 * Scrolling occurs on every cycle update.
 			 * Setting an axis to 0 (default) disables scrolling on that axis.
 			 */
-			Point *scrollRate = nullptr;
+			Point *scroll_interval = nullptr;
 
-			unsigned long lastScroll = 0;
+			unsigned long last_scroll = 0;
 
 			Canvas(bool *pattern, Point *dimensions);
 			void drawText(Font *font, const char *text, unsigned int numChars);

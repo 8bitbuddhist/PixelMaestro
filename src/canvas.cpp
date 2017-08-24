@@ -95,28 +95,50 @@ namespace PixelMaestro {
 		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
 		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
 		 */
-		unsigned long targetTime = currentTime - lastScroll;
-		if (scrollRate) {
-			if (scrollRate->x != 0 && (Utility::abs(scrollRate->x) * parent_section_->getRefreshRate()) <= targetTime) {
-				offset->x += scrollRate->x;
+		unsigned long targetTime = currentTime - last_scroll;
+		if (scroll_interval) {
+			if (scroll_interval->x != 0 && (Utility::abs(scroll_interval->x) * parent_section_->getRefreshRate()) <= targetTime) {
+
+				// Increment or decrement the offset depending on the scroll direction.
+				if (scroll_interval->x > 0) {
+					offset->x++;
+				}
+				else {
+					offset->x--;
+				}
+
+				// Check the bounds of the parent Section.
 				if (offset->x >= parent_section_->getDimensions()->x) {
 					offset->x = 0;
 				}
 				else if (offset->x - 1 < 0) {
 					offset->x = parent_section_->getDimensions()->x;
 				}
-				lastScroll = currentTime;
+				last_scroll = currentTime;
 			}
 
-			if (scrollRate->y != 0 && (Utility::abs(scrollRate->y) * parent_section_->getRefreshRate()) <= targetTime) {
-				offset->y += scrollRate->y;
+			if (scroll_interval->y != 0 && (Utility::abs(scroll_interval->y) * parent_section_->getRefreshRate()) <= targetTime) {
+
+				// Increment or decrement the offset depending on the scroll direction.
+				if (scroll_interval->y > 0) {
+					offset->y++;
+				}
+				else {
+					offset->y--;
+				}
+
+				// Check the bounds of the parent Section.
 				if (offset->y >= parent_section_->getDimensions()->y) {
 					offset->y = 0;
 				}
 				else if (offset->y - 1 < 0) {
 					offset->y = parent_section_->getDimensions()->y;
 				}
-				lastScroll = currentTime;
+
+				// Check to see if lastScroll was already set by scrollRate->x
+				if (last_scroll != currentTime) {
+					last_scroll = currentTime;
+				}
 			}
 		}
 	}
