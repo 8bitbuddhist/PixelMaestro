@@ -365,15 +365,15 @@ namespace PixelMaestro {
 						break;
 				}
 
+				/*
+				 * Check to see if we need to redraw the canvas.
+				 */
+				if (canvas_) {
+					canvas_->update(currentTime);
+				}
+
 				// Update the last cycle time.
 				last_cycle_ = currentTime;
-			}
-
-			/*
-			 * Check to see if we need to redraw the pattern.
-			 */
-			if (canvas_) {
-				canvas_->update(currentTime);
 			}
 
 			/*

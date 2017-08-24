@@ -138,8 +138,8 @@ namespace PixelMaestro {
 			/// The time between animation cycles in milliseconds. Defaults to 100.
 			unsigned short cycle_interval_ = 100;
 
-			/// The amount of time the Section waits in milliseconds before starting the next animation cycle, by finishing the current cycle early. Defaults to 0.
-			unsigned short pause_ = 0;
+			/// The logical layout of the Pixels.
+			Point *dimensions_ = nullptr;
 
 			/// Whether to fade between cycles. Defaults to true.
 			bool fade_ = true;
@@ -150,17 +150,17 @@ namespace PixelMaestro {
 			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
 			unsigned long last_refresh_ = 0;
 
-			/// The logical layout of the Pixels.
-			Point *dimensions_ = nullptr;
+			/// The number of colors in colors_.
+			unsigned int num_colors_;
 
 			/// The Section overlaying the current section (if applicable).
 			Overlay *overlay_ = nullptr;
 
+			/// The amount of time the Section waits in milliseconds before starting the next animation cycle, by finishing the current cycle early. Defaults to 0.
+			unsigned short pause_ = 0;
+
 			/// The array of Pixels managed by the Section.
 			Pixel *pixels_ = nullptr;
-
-			/// The number of colors in colors_.
-			unsigned int num_colors_;
 
 			/// The time between Pixel redraws in milliseconds. Only relevant when fading is enabled. Defaults to 20.
 			unsigned short refresh_interval_ = 20;
