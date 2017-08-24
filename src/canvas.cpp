@@ -21,13 +21,32 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Draws text in the Canvas.
+	 * Draws a single character.
+	 * @param font
+	 * @param character
+	 */
+	void drawChar(Font *font, const char *character) {
+
+	}
+
+	/**
+	 * Draws a rectangle.
+	 * @param origin The starting coordinates.
+	 * @param size The size of the rectangle.
+	 */
+	void Canvas::drawRect(Point *origin, Point *size) {
+
+	}
+
+	/**
+	 * Draws a string of characters.
+	 * @param origin The starting point for the string.
 	 * @param font The Font to use when rendering the text.
 	 * @param frame The frame that the text will be rendered in.
 	 * @param text The string to render.
 	 * @param numChars The number of characters in the string.
 	 */
-	void Canvas::drawText(Font *font, const char *text, unsigned int numChars) {
+	void Canvas::drawText(Point *origin, Font *font, const char *text, unsigned int numChars) {
 		unsigned char *currentChar;
 		Point *fontSize = font->size;
 
@@ -35,7 +54,6 @@ namespace PixelMaestro {
 		 * Indicates where to draw the next letter.
 		 * TODO: Add word wrapping by adjusting the y-coordinate.
 		 */
-		Point cursor = {0, 0};
 
 		for (unsigned int letter = 0; letter < numChars; letter++) {
 			/*
@@ -47,8 +65,8 @@ namespace PixelMaestro {
 			for (int column = 0; column < fontSize->x; column++) {
 				for (int row = 0; row < fontSize->y; row++) {
 					// Check to make sure we haven't exceeded the bounds of the Pattern
-					if (cursor.x + column < this->dimensions->x && row < fontSize->y) {
-						this->pattern[(row * this->dimensions->x) + (cursor.x + column)] = ((currentChar[column] >> row) & 1);
+					if ((origin->x + column < this->dimensions->x) && (origin->y + row < this->dimensions->y)) {
+						this->pattern[((origin->y + row) * this->dimensions->x) + (origin->x + column)] = ((currentChar[column] >> row) & 1);
 					}
 					else {
 						break;
@@ -56,7 +74,7 @@ namespace PixelMaestro {
 				}
 			}
 			// Move cursor to the location of the next letter.
-			cursor.x += fontSize->x;
+			origin->x += fontSize->x;
 		}
 	}
 
