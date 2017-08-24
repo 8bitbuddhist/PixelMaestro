@@ -6,6 +6,7 @@
 #define CANVAS_H
 
 #include "canvas/fonts/font.h"
+#include "colors.h"
 #include "point.h"
 #include "section.h"
 
@@ -14,13 +15,21 @@ namespace PixelMaestro {
 
 	class Canvas {
 		public:
+
+			/// The background color of the Canvas.
+			Colors::RGB *bg_color = nullptr;
+
 			/// The size of the Canvas.
 			Point *dimensions = nullptr;
+
+			/// The foregound color of the Canvas.
+			Colors::RGB *fg_color = nullptr;
 
 			/// How far the Canvas is offset from the Pixel grid origin (where the origin is the first Pixel in the grid).
 			/// TODO: Remove this and instead make it a required parameter for each Canvas::draw() method.
 			Point *offset = nullptr;
 
+			/// The Canvas' parent Section. This is automatically set after using Section::setCanvas().
 			Section *parent_section_ = nullptr;
 
 			/**
@@ -40,6 +49,7 @@ namespace PixelMaestro {
 			 */
 			Point *scroll_interval = nullptr;
 
+			/// The last time the Canvas scrolled.
 			unsigned long last_scroll = 0;
 
 			Canvas(bool *pattern, Point *dimensions);
