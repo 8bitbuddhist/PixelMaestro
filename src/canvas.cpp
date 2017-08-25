@@ -137,6 +137,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Toggles the Pixel at the specified coordinates.
+	 * @param coordinates Location of the Pixel to toggle.
+	 */
+	void Canvas::togglePixel(Point *coordinates) {
+		pattern[(coordinates->y * this->dimensions->x) + coordinates->x] = !pattern[(coordinates->y * this->dimensions->x) + coordinates->x];
+	}
+
+	/**
 	 * Redraw the Canvas.
 	 * @param currentTime The program's current runtime (normally passed by a Section).
 	 */
