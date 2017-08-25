@@ -37,7 +37,7 @@ Note that you can draw multiple shapes on a single Canvas. Depending on the shap
 Options such as custom widths and colors per-shape are planned, but not currently implemented.
 
 ### Drawing Lines
-The `drawLine` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends. The Canva
+The `drawLine` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends.
 
 ### Drawing Text
 The `drawChar` and `drawText` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `drawText`, you must also specify the number of characters in the string.
