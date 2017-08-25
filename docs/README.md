@@ -8,6 +8,7 @@ PixelMaestro also includes the following utility classes:
 * [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.
 * [Colors](colors.md): Provides core utilities for managing colors including several pre-defined colors, color schemes, and methods for generating new colors.
 * [Show](show.md): Provides a way to schedule animation changes and other actions via a Maestro. These changes are triggered over the course of the program's runtime.
+* [Uitlity](utility.md): Shared utility methods.
 
 # Basic Usage
 The following code creates a 10x10 grid of Pixels flashing a variety of colors:
