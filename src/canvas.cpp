@@ -54,9 +54,8 @@ namespace PixelMaestro {
 	 */
 	void Canvas::drawRect(Point *origin, Point *size, bool fill) {
 		Point cursor = { origin->x, origin->y };
-		// Draw by column
 		for (int column = 0; column < size->x; column++) {
-			// (Re-)Initialize cursor
+			// (Re-)Initialize cursor coordinates.
 			cursor.x = origin->x + column;
 			cursor.y = origin->y;
 			for (int row = 0; row < size->y; row++) {
@@ -67,13 +66,16 @@ namespace PixelMaestro {
 						this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
 					}
 					else {
-						// Check to see if the cursor is still along the border
+						/*
+						 * Only draw if the cursor is at the border of the rectangle.
+						 * We do this by checking to see if the cursor is either horizontally or vertically aligned with the starting or end point.
+						 */
 						if ((cursor.x == origin->x || cursor.y == origin->y) ||
 							(column == size->x - 1 || row == size->y - 1)) {
 							this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
 						}
 						else {
-							// Allow other layers to pass through.
+							// Don't fill.
 							continue;
 						}
 					}
@@ -92,14 +94,11 @@ namespace PixelMaestro {
 	void Canvas::drawText(Point *origin, Font *font, const char *text, unsigned int numChars) {
 		Point cursor = {origin->x, origin->y};
 
-		/*
-		 * Indicates where to draw the next letter.
-		 * TODO: Add word wrapping by adjusting the y-coordinate.
-		 */
-
+		// Iterate over each letter and draw using drawChar().
 		for (unsigned int letter = 0; letter < numChars; letter++) {
 			this->drawChar(&cursor, font, text[letter]);
-			// Move cursor to the location of the next letter.
+
+			// Move cursor to the location of the next letter based on the font size.
 			cursor.x += font->size->x;
 		}
 	}
@@ -115,7 +114,7 @@ namespace PixelMaestro {
 		/*
 		 * Iterate over each bool in the Canvas.
 		 * If the bool is false, deactivate the corresponding Pixel in the Pixel grid.
-		 * If repeat is enabled, wrap the Canvas to the opposite end of the grid.
+		 * If repeat is enabled, wrap the out-of-bounds part of the Canvas to the opposite end.
 		 * If Canvas::offset is set, calculate the true index of the Pixel by adding the offset.
 		 */
 		for (unsigned short row = 0; row < dimensions->y; row++) {

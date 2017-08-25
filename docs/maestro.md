@@ -1,7 +1,14 @@
 # Maestro
 Maestros are responsible for coordinating multiple Sections. A Maestro isn't necessarily required, but it helps if you're controlling two or more Sections. Note that a Maestro has no idea about the physical layout of its Sections, just as a Section has no idea about the physical layout of its Pixels.
 
-## Declaration
+## Contents
+1. [Creating a Maestro](#creating-a-maestro)
+2. [Getting the Refresh Rate](#getting-the-refresh-rate)
+3. [nteracting with Sections](#interacting-with-sections)
+4. [Toggling the Running State](#toggling-the-running-state)
+5. [Updating the Maestro](#updating-the-maestro)
+
+## Creating a Maestro
 Declare a Maestro by passing in the Sections that it will be controlling.
 ```c++
 int numSections = 2;

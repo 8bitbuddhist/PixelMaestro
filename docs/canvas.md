@@ -5,6 +5,17 @@ At its core, a Canvas is a grid of pixels. Instead of containing a color value, 
 
 Tip: See the [CanvasDemo class](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
 
+## Contents
+1. [Creating a Canvas](#creating-a-canvas)
+2. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
+3. [Drawing Shapes](#drawing-shapes)
+	1. [Drawing Text](#drawing-text)
+	2. [Drawing Rectangles](#drawing-rectangles)
+4. [Scrolling](#scrolling)
+	1. [Repeated Scrolling](#repeated-scrolling)
+5. [Offsetting](#offsetting)
+
+## Creating a Canvas
 The following code creates a 10 x 10 Canvas grid and assigns it to a Section. Note that this doesn't display anything by default. The size of the Canvas *should* be the same as the size of the Section, but it doesn't have to be.
 
 ```c++
@@ -24,10 +35,10 @@ The Canvas class provides specific functions for drawing various shapes, element
 
 Note that you can draw multiple shapes on a single Canvas. Depending on the shape and Canvas configuration, any empty space is treated as transparency.
 
-### Text
+### Drawing Text
 The `drawChar` and `drawText` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `drawText`, you must also specify the number of characters in the string.
 
-### Rectangles
+### Drawing Rectangles
 The `drawRect` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
 
 ## Scrolling
@@ -41,17 +52,18 @@ canvas->scroll_interval = new Point(1, -2);
 ```
 
 ### Repeated Scrolling
-By default, the Canvas will "jump" back to its starting point when it reaches the end of the scroll. Setting the `repeat` property to `true` warps the Canvas from one end of the grid to the opposite end, making it appear to scroll infinitely.
+By default, the Canvas will "jump" back to its starting point when it reaches the end of the scroll. Setting the `repeat` property to `true` wraps the Canvas around from one end of the grid to the opposite end, making it appear to scroll infinitely.
 
 ## Offsetting
 Offsetting shifts the Canvas' starting point to another place on the Pixel grid. By default the offset is set to 0, meaning the starting point is the same as the Pixel grid's starting point. These values can be negative.
 
-The following code moves the Canvas 5 Pixels to the right and 1 Pixel down.
+The following code shifts the Canvas 5 Pixels to the right and 1 Pixel down.
 ```c++
 canvas->offset->x = 5;
 canvas->offset->y = 1;
 section->setCanvas(canvas);
 ```
 
-By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will be hidden from view. However, setting `Pattern::repeat` to true wraps the Pattern to the opposite end of the grid.
+By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will not be drawn. However, setting `Pattern::repeat` to true draws the hidden part by wrapping it to the opposite end of the Canvas.
 
+[Home](README.md)

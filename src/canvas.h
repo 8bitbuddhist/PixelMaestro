@@ -25,17 +25,18 @@ namespace PixelMaestro {
 			/// The foregound color of the Canvas.
 			Colors::RGB *fg_color = nullptr;
 
-			/// How far the Canvas is offset from the Pixel grid origin (where the origin is the first Pixel in the grid).
-			/// TODO: Remove this and instead make it a required parameter for each Canvas::draw() method.
+			/// How far the Canvas is offset from the Pixel grid origin.
 			Point *offset = nullptr;
 
-			/// The Canvas' parent Section. This is automatically set after using Section::setCanvas().
+			/**
+			 * The Canvas' parent Section.
+			 * This is automatically set after using Section::setCanvas().
+			 */
 			Section *parent_section_ = nullptr;
 
 			/**
 				The pattern to display.
 				Stored as an array of booleans where 1 indicates an active Pixel.
-				TODO: Use the Pixel array directly.
 			*/
 			bool *pattern = nullptr;
 
@@ -44,7 +45,7 @@ namespace PixelMaestro {
 
 			/**
 			 * Direction and rate to scroll the Canvas.
-			 * Scrolling occurs on every cycle update.
+			 * Scroll time is determined by the Section refresh rate * the scroll interval.
 			 * Setting an axis to 0 (default) disables scrolling on that axis.
 			 */
 			Point *scroll_interval = nullptr;
