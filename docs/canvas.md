@@ -7,8 +7,9 @@ See the [CanvasDemo class](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT ap
 1. [Creating a Canvas](#creating-a-canvas)
 2. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
 3. [Drawing Shapes](#drawing-shapes)
-	1. [Drawing Text](#drawing-text)
-	2. [Drawing Rectangles](#drawing-rectangles)
+	1. [Drawing Lines](#drawing-lines)
+	2. [Drawing Text](#drawing-text)
+	3. [Drawing Rectangles](#drawing-rectangles)
 4. [Scrolling](#scrolling)
 	1. [Repeated Scrolling](#repeated-scrolling)
 5. [Offsetting](#offsetting)
@@ -32,6 +33,11 @@ By default, any patterns displayed on the Canvas will display the color of the p
 The Canvas class provides specific functions for drawing various shapes, elements, and patterns. For each shape you must specify an origin on the grid, as well as any extra parameters that the shape requires.
 
 Note that you can draw multiple shapes on a single Canvas. Depending on the shape and Canvas configuration, any empty space is treated as transparency.
+
+Options such as custom widths and colors per-shape are planned, but not currently implemented.
+
+### Drawing Lines
+The `drawLine` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends. The Canva
 
 ### Drawing Text
 The `drawChar` and `drawText` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `drawText`, you must also specify the number of characters in the string.
