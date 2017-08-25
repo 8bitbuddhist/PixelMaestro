@@ -47,9 +47,9 @@ namespace PixelMaestro {
 			if (fade) {
 				float diff = cycleInterval / (float)refreshRate;
 				step_ = {
-					(unsigned char)(Utility::abs(next_color_->r - current_color_.r) / diff),
-					(unsigned char)(Utility::abs(next_color_->g - current_color_.g) / diff),
-					(unsigned char)(Utility::abs(next_color_->b - current_color_.b) / diff)
+					(unsigned char)(Utility::abs_int(next_color_->r - current_color_.r) / diff),
+					(unsigned char)(Utility::abs_int(next_color_->g - current_color_.g) / diff),
+					(unsigned char)(Utility::abs_int(next_color_->b - current_color_.b) / diff)
 				};
 
 				step_count_ = diff;

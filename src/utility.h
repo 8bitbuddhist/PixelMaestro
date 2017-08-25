@@ -4,7 +4,8 @@
 namespace PixelMaestro {
 	class Utility {
 		public:
-			static unsigned int abs(short val);
+			static float abs_float(float val);
+			static unsigned int abs_int(short val);
 			static int rand();
 
 		private:

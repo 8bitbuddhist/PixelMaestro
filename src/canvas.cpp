@@ -46,6 +46,34 @@ namespace PixelMaestro {
 		}
 	}
 
+	void Canvas::drawLine(Point *origin, Point *target) {
+		// Calculate slope
+		float slope;
+		if (target->x - origin->x == 0) {
+			slope = target->y - origin->y;
+		}
+		else {
+			slope = (target->y - origin->y) / (float)(target->x - origin->x);
+		}
+
+		Point cursor = { origin->x, origin->y };
+		float y_intercept = Utility::abs_float((slope * origin->x) - origin->y);
+
+		/*
+		 * Move the cursor along the x-axis.
+		 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
+		 */
+		while (cursor.x <= target->x) {
+			// Make sure we're still in bounds
+			if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
+				this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+			}
+
+			cursor.x++;
+			cursor.y = (slope * (float)cursor.x) + y_intercept;
+		}
+	}
+
 	/**
 	 * Draws a rectangle.
 	 * @param origin The starting coordinates.
@@ -163,7 +191,7 @@ namespace PixelMaestro {
 		 */
 		unsigned long targetTime = currentTime - last_scroll;
 		if (scroll_interval) {
-			if (scroll_interval->x != 0 && (Utility::abs(scroll_interval->x) * parent_section_->getRefreshRate()) <= targetTime) {
+			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section_->getRefreshRate()) <= targetTime) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_interval->x > 0) {
@@ -184,7 +212,7 @@ namespace PixelMaestro {
 				last_scroll = currentTime;
 			}
 
-			if (scroll_interval->y != 0 && (Utility::abs(scroll_interval->y) * parent_section_->getRefreshRate()) <= targetTime) {
+			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section_->getRefreshRate()) <= targetTime) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_interval->y > 0) {
