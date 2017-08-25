@@ -1,9 +1,7 @@
 # Canvas
-A Canvas is a special class for drawing custom shapes and patterns on a Section. Canvases are rendered independently from animations, making it possible to show both at the same time.
+The Canvas class lets you draw custom shapes and patterns on a Section. At its core, a Canvas is a grid of pixels. But instead of containing a color value, these pixels contain a boolean value. When you draw something on a Canvas, the pixels that have been drawn over are toggled from `false` to `true`. When the Section renders the Canvas, it draws all of the pixels that have been set to `true` and ignores the pixels that were set to `false`.
 
-At its core, a Canvas is a grid of pixels. Instead of containing a color value, these pixels contain a boolean value set to false. When you draw something on a canvas, the pixels that have been drawn over are set to true. When the Section renders the Canvas, it draws all of the pixels that have been set to true and ignores the pixels that were set to false.
-
-Tip: See the [CanvasDemo class](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
+See the [CanvasDemo class](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
 
 ## Contents
 1. [Creating a Canvas](#creating-a-canvas)

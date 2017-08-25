@@ -10,17 +10,20 @@
 
 CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, maestro_controller_) {
 
+	// Create a new Pixel grid 80 wide and 11 tall.
 	Point *layout = new Point(80, 11);
 
-	pattern_array_ = new bool[layout->x * layout->y] {0};
+	// Initializes our Canvas grid to thesame size of the Pixel grid. All values default to false.
+	canvas_grid_ = new bool[layout->x * layout->y] {0};
 
-	canvas_ = new Canvas(&pattern_array_[0], layout);
+	// Create the new Canvas.
+	canvas_ = new Canvas(&canvas_grid_[0], layout);
+
+	// Draw "Hello World!" and position it in the center of the Canvas.
 	canvas_->drawText(new Point(10, 2), new Font5x8(), "Hello World!", 12);
+
+	// Draw a border around the Canvas.
 	canvas_->drawRect(new Point(0, 0), new Point(80, 11), false);
-	//canvas_->offset->x = 5;
-	//canvas_->offset->y = 5;
-	//canvas_->scroll_interval = new Point(1, 1);
-	//canvas_->repeat = true;
 
 	maestro_controller_ = maestroController;
 	maestro_controller_->addSectionController(layout);

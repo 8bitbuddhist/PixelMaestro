@@ -15,7 +15,7 @@ class CanvasDemo : public SimpleDrawingArea {
 
 	private:
 		Canvas *canvas_;
-		bool *pattern_array_;
+		bool *canvas_grid_;
 
 };
 

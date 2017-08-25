@@ -2,7 +2,7 @@
 A Pixel represents a single RGB output. It stores a single RGB color value, a pointer to a target RGB value, and instructions on how to reach that target color when it's animating. Pixels are normally not used by themselves without being included in a Section.
 
 ## Contents
-1. [Creating a Pixel](#creating-pixels)
+1. [Creating a Pixel](#creating-a-pixel)
 2. [Updating a Pixel](#updating-a-pixel)
 3. [Common Methods](#common-methods)
 
