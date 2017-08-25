@@ -3,11 +3,14 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## TODO
+- Add Event(s) for drawing on the Canvas
+
 ## [v0.5] - In progress
 ### Added
-- Added text generator for Patterns. A sample 5x8 font is included. See Patterns::drawText().
-- Added Point class for storing x and y coordinates. Replaces Section::Layout.
-- Added Pattern demo to GUI.
+- New Canvas class for drawing shapes onto Sections (replaces the Pattern struct). Currently supports drawing text.
+- New Point class for storing x and y coordinates. Replaces Section::Layout.
+- Added Canvas demo to GUI.
 - Added Overlay support to GUI.
 
 ### Changed
@@ -17,6 +20,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Lots of documentation revisions.
 
 ### Removed
+- Removed Section::Pattern. Replaced by the Canvas class.
+- Removed Section::Layout. Replaced by the Point class.
+- Removed Section::ColorAnimations::Pattern. Patterns (or Canvases) are rendered separately from ColorAnimations, so you can display both simultaneously.
 - Removed several unused functions.
 
 ## [v0.4.1] - 2017-08-16
