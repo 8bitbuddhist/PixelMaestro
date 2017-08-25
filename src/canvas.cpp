@@ -46,6 +46,11 @@ namespace PixelMaestro {
 		}
 	}
 
+	/**
+	 * Draws a line.
+	 * @param origin The starting point.
+	 * @param target The target point.
+	 */
 	void Canvas::drawLine(Point *origin, Point *target) {
 		// Calculate slope
 		float slope;

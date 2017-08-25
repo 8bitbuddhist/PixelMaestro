@@ -41,7 +41,11 @@ SOURCES += main.cpp\
     ../src/canvas.cpp \
     ../src/canvas/fonts/font5x8.cpp \
     ../src/show/sectionsetcanvasevent.cpp \
-    demo/canvasdemo.cpp
+    demo/canvasdemo.cpp \
+    ../src/show/canvasdrawcharevent.cpp \
+    ../src/show/canvasdrawtextevent.cpp \
+    ../src/show/canvasdrawrectevent.cpp \
+    ../src/show/canvasdrawlineevent.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -72,7 +76,11 @@ HEADERS += mainwindow.h \
     ../src/canvas/fonts/font.h \
     ../src/canvas/fonts/font5x8.h \
     ../src/show/sectionsetcanvasevent.h \
-    demo/canvasdemo.h
+    demo/canvasdemo.h \
+    ../src/show/canvasdrawcharevent.h \
+    ../src/show/canvasdrawtextevent.h \
+    ../src/show/canvasdrawrectevent.h \
+    ../src/show/canvasdrawlineevent.h
 
 FORMS	+= \
 		mainwindow.ui \

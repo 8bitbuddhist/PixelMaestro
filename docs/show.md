@@ -49,6 +49,10 @@ When a Show completes its last Event, it does nothing except update the Maestro.
 
 ## Event List
 The parameters required by each Event should be pretty self-explanatory. You will also need to pass a pointer to the Maestro, Section, or other object being affected by this Event.
+* CanvasDrawCharEvent: Draws a single character onto a Canvas.
+* CanvasDrawLineEvent: Draws a line onto a Canvas.
+* CanvasDrawRectEvent: Draws a box onto a Canvas.
+* CanvasDrawTextEvent: Draws a string of characters onto a Canvas.
 * ColorsGenerateRandomColorArrayEvent: Generates a random color array within the specified array.
 * ColorsGenerateRandomColorEvent: Generates a single random color and saves it to the specified Colors::RGB variable.
 * ColorsGenerateScalingColorArrayEvent: Generates an array of colors gradually scaling from the starting color to the target color.
