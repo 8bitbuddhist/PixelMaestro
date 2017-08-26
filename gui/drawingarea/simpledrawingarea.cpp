@@ -40,7 +40,7 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	for (unsigned short section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
 		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getDimensions()->y; row++) {
 			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getDimensions()->x; pixel++) {
-				tmpRGB = this->maestro_controller_->getSectionController(section)->getSection()->getPixelColor(this->maestro_controller_->getSectionController(section)->getSection()->getPixelIndex(row, pixel));
+				tmpRGB = this->maestro_controller_->getSectionController(section)->getSection()->getPixelColor(this->maestro_controller_->getSectionController(section)->getSection()->getPixelIndex(pixel, row));
 				tmpColor.setRgb(tmpRGB.r, tmpRGB.g, tmpRGB.b);
 				tmpBrush.setColor(tmpColor);
 				tmpBrush.setStyle(Qt::BrushStyle::SolidPattern);

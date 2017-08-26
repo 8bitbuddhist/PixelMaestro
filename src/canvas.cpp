@@ -243,7 +243,7 @@ namespace PixelMaestro {
 				 * If the foregound color isn't set, skip over the Pixel and allow the ColorAnimation's color to pass through.
 				 * If the background color isn't set, just show black.
 				 */
-				if (pattern[parent_section->getPixelIndex(row, column)]) {
+				if (pattern[parent_section->getPixelIndex(column, row)]) {
 					if (fg_color) {
 						tmpColor = fg_color;
 					}

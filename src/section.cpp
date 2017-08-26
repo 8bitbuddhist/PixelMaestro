@@ -114,14 +114,14 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the index of a Pixel given the row and column.
+		Returns the index of a Pixel given the x and ycoordinates.
 
-		@param row The row that the Pixel is in.
-		@param column The column that the Pixel is in.
+		@param x The Pixel's x-coordinate.
+		@param y The Pixel's y-coordinate.
 		@return The index of the Pixel.
 	*/
-	unsigned int Section::getPixelIndex(unsigned short row, unsigned short column) {
-		return (row * dimensions_->x) + column;
+	unsigned int Section::getPixelIndex(unsigned short x, unsigned short y) {
+		return (y * dimensions_->x) + x;
 	}
 
 	/**
@@ -264,7 +264,7 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::setOne(unsigned short row, unsigned short column, Colors::RGB *color) {
-		setOne(getPixelIndex(row, column), color);
+		setOne(getPixelIndex(column, row), color);
 	}
 
 	/**
