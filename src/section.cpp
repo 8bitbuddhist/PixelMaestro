@@ -114,7 +114,16 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the index of a Pixel given the x and ycoordinates.
+	 * Returns the index of a Pixel given the Pixel's Point.
+	 * @param coordinates The Pixel's Point.
+	 * @return The index of the Pixel.
+	 */
+	unsigned int Section::getPixelIndex(Point *coordinates) {
+		return getPixelIndex(coordinates->x, coordinates->y);
+	}
+
+	/**
+		Returns the index of a Pixel given the x and y-coordinates.
 
 		@param x The Pixel's x-coordinate.
 		@param y The Pixel's y-coordinate.

@@ -99,6 +99,7 @@ namespace PixelMaestro {
 			unsigned int getNumPixels();
 			Pixel *getPixel(unsigned int pixel);
 			Colors::RGB getPixelColor(unsigned int pixel);
+			unsigned int getPixelIndex(Point *coordinates);
 			unsigned int getPixelIndex(unsigned short x, unsigned short y);
 			unsigned short getRefreshRate();
 			void setAll(Colors::RGB *color);

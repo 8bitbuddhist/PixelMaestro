@@ -34,7 +34,7 @@ namespace PixelMaestro {
 			for (int row = 0; row < font->size->y; row++) {
 				// Check to make sure we haven't exceeded the bounds of the Pattern
 				if ((origin->x + column < parent_section->getDimensions()->x) && (origin->y + row < parent_section->getDimensions()->y)) {
-					this->pattern[((origin->y + row) * parent_section->getDimensions()->x) + (origin->x + column)] = ((currentChar[column] >> row) & 1);
+					this->pattern[parent_section->getPixelIndex(origin->x + column, origin->y + row)] = (currentChar[column] >> row) & 1;
 				}
 				else {
 					break;
@@ -72,7 +72,7 @@ namespace PixelMaestro {
 					 * We use radius as a sort of tolerance, otherwise only a few pixels would activate.
 					 */
 					if (test_point >= radius_squared - radius && test_point <= radius_squared + radius) {
-						this->pattern[(cursor_y * parent_section->getDimensions()->x) + cursor_x] = 1;
+						this->pattern[parent_section->getPixelIndex(cursor_x, cursor_y)] = 1;
 					}
 
 					// TODO: Implement fill
@@ -107,7 +107,7 @@ namespace PixelMaestro {
 			while (cursor.y != target->y) {
 				// Make sure we're still in bounds
 				if ((cursor.x < parent_section->getDimensions()->x) && (cursor.y < parent_section->getDimensions()->y)) {
-					this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
+					this->pattern[parent_section->getPixelIndex(&cursor)] = 1;
 				}
 
 				if (target->y >= cursor.y) {
@@ -126,7 +126,7 @@ namespace PixelMaestro {
 			while (cursor.x != target->x) {
 				// Make sure we're still in bounds
 				if ((cursor.x < parent_section->getDimensions()->x) && (cursor.y < parent_section->getDimensions()->y)) {
-					this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
+					this->pattern[parent_section->getPixelIndex(&cursor)] = 1;
 				}
 
 				if (target->x >= origin->x) {
@@ -157,7 +157,7 @@ namespace PixelMaestro {
 				if ((cursor.x < parent_section->getDimensions()->x) && (cursor.y < parent_section->getDimensions()->y)) {
 					// Check whether to fill
 					if (fill) {
-						this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
+						this->pattern[parent_section->getPixelIndex(&cursor)] = 1;
 					}
 					else {
 						/*
@@ -166,7 +166,7 @@ namespace PixelMaestro {
 						 */
 						if ((cursor.x == origin->x || cursor.y == origin->y) ||
 							(column == size->x - 1 || row == size->y - 1)) {
-							this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
+							this->pattern[parent_section->getPixelIndex(&cursor)] = 1;
 						}
 						else {
 							// Don't fill.
@@ -217,7 +217,8 @@ namespace PixelMaestro {
 	 * @param coordinates Location of the Pixel to toggle.
 	 */
 	void Canvas::togglePixel(Point *coordinates) {
-		pattern[(coordinates->y * parent_section->getDimensions()->x) + coordinates->x] = !pattern[(coordinates->y * parent_section->getDimensions()->x) + coordinates->x];
+		int index = parent_section->getPixelIndex(coordinates);
+		pattern[index] = !pattern[index];
 	}
 
 	/**
