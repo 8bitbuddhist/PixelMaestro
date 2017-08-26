@@ -11,7 +11,7 @@
 CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : SimpleDrawingArea(parent, maestro_controller_) {
 
 	// Create a new Pixel grid 80 wide and 11 tall.
-	Point *layout = new Point(80, 11);
+	Point *layout = new Point(80, 80);
 
 	// Initializes our Canvas grid to thesame size of the Pixel grid. All values default to false.
 	canvas_grid_ = new bool[layout->x * layout->y] {0};
@@ -25,7 +25,12 @@ CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : 
 	// Draw a border around the Canvas.
 	//canvas_->drawRect(new Point(0, 0), new Point(80, 11), false);
 
-	canvas_->drawTriangle(new Point(40, 0), new Point(60, 5), new Point(20, 5), false);
+	canvas_->drawTriangle(new Point(40, 10), new Point(80, 70), new Point(0, 70), false);
+
+	canvas_->drawCircle(new Point(40, 40), 40, false);
+	canvas_->drawCircle(new Point(40, 40), 30, false);
+	canvas_->drawCircle(new Point(40, 40), 20, false);
+	canvas_->drawCircle(new Point(40, 40), 10, false);
 
 	maestro_controller_ = maestroController;
 	maestro_controller_->addSectionController(layout);

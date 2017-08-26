@@ -47,6 +47,45 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Draws a circle.
+	 * @param origin The center of the circle.
+	 * @param radius The circle's radius.
+	 * @param fill Whether to fill the circle (NOT IMPLEMENTED).
+	 */
+	void Canvas::drawCircle(Point *origin, unsigned short radius, bool fill) {
+		// (x – h)2 + (y – k)2 = r2
+		// r = radius, h = origin->x, k = origin->y
+
+		/*
+		 * First, get the min and max x-values, then the min and max y-values.
+		 * Then, scan over the rectangle created with these points and test each Pixel against the equation.
+		 * If the Pixel matches, activate it.
+		 * Horrible, yes, but it works.
+		 */
+
+		int test_point; // Placeholder for calculating points along the circle line
+		int radius_squared = Utility::square(radius);
+		for (int cursor_x = origin->x - radius; cursor_x <= origin->x + radius; cursor_x++) {
+			for (int cursor_y = origin->y - radius; cursor_y <= origin->y + radius; cursor_y++) {
+				// Bounds check!
+				if ((cursor_x < this->dimensions->x) && (cursor_y < this->dimensions->y)) {
+					// Check that cursor_x and cursor_y satisfy the equation
+					test_point = Utility::square(cursor_x - origin->x) + Utility::square(cursor_y - origin->y);
+					/*
+					 * Check if the test point lies along the line.
+					 * We use radius as a sort of tolerance, otherwise only a few pixels would activate.
+					 */
+					if (test_point >= radius_squared - radius && test_point <= radius_squared + radius) {
+						this->pattern[(cursor_y * this->dimensions->x) + cursor_x] = 1;
+					}
+
+					// TODO: Implement fill
+				}
+			}
+		}
+	}
+
+	/**
 	 * Draws a line.
 	 * @param origin The starting point.
 	 * @param target The target point.
@@ -174,7 +213,7 @@ namespace PixelMaestro {
 		this->drawLine(point_b, point_c);
 		this->drawLine(point_c, point_a);
 
-		// TODO: Fill triangle
+		// TODO: Implement fill
 	}
 
 	/**

@@ -7,6 +7,7 @@ namespace PixelMaestro {
 			static float abs_float(float val);
 			static unsigned int abs_int(short val);
 			static int rand();
+			static unsigned int square(short val);
 
 		private:
 			/// Initial RNG seed.

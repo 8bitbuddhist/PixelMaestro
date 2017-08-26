@@ -55,6 +55,7 @@ namespace PixelMaestro {
 
 			Canvas(bool *pattern, Point *dimensions);
 			void drawChar(Point *origin, Font *font, const char character);
+			void drawCircle(Point *origin, unsigned short radius, bool fill);
 			void drawLine(Point *origin, Point *target);
 			void drawRect(Point *origin, Point *size, bool fill);
 			void drawText(Point *origin, Font *font, const char *text, unsigned int numChars);

@@ -31,4 +31,13 @@ namespace PixelMaestro {
 		seed_ = (seed_ * 1103515245U + 12345U) & 0x7fffffffU;
 		return (int)seed_;
 	}
+
+	/**
+	 * Returns the square of an integer value.
+	 * @param val The integer to evaluate.
+	 * @return The integer squared.
+	 */
+	unsigned int Utility::square(short val) {
+		return val * val;
+	}
 }
