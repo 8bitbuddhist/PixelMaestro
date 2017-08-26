@@ -23,11 +23,11 @@ Colors::RGB fuchsia = red + blue;	// {255, 0, 255}
 ```
 
 ## Generating Colors
-The `generateRandomColorArray` and `generateScalingColorArray` methods are used to quickly create new color palettes. Pass in a starting color, a destination color array, and the number of colors you wish to generate. These methods automatically generate a new palette and populate the array based on your parameters.
+The `generate_random_color_array` and `generate_scaling_color_array` methods are used to quickly create new color palettes. Pass in a starting color, a destination color array, and the number of colors you wish to generate. These methods automatically generate a new palette and populate the array based on your parameters.
 
 ## Mixing Colors
-`mixColors` blends two colors together and returns the result. This is primarily used for Section Overlays, but it can also be used independently.
-The `MixMode` determines the type of blending performed:
+`mix_colors` blends two colors together and returns the result. This is primarily used for Section Overlays, but it can also be used independently.
+The `MixMode` struct provides a selection of different color mixing options:
 * ALPHA_BLENDING: Similar to Normal, but allows you to specify the percentage at which the first color is blended with the second.
 * MULTIPLY: Multiplies the first color by the second.
 * NORMAL: Same as `ALPHA_BLENDING`, but with a set blending level of 50%.

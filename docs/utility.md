@@ -6,3 +6,6 @@ Using the `abs_int()` or `abs_float()` method returns the absolute value of an i
 
 ## Getting a Random Number
 The `rand()` method returns a random integer in the range of 0 - Int.MAX.
+
+## Getting the Square of an integer
+The `square()` method returns an integer multiplied by itself.

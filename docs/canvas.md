@@ -23,11 +23,11 @@ bool *canvas_pixels = new bool[size->x * size->y] {0};
 
 Canvas canvas = new Canvas(&canvas_pixels[0], size);
 ...
-section->setCanvas(canvas);
+section->set_canvas(canvas);
 ```
 
 ## Setting Background and Foreground Colors
-By default, any patterns displayed on the Canvas will display the color of the parent Section's color animation, and any pixels not displayed by the Canvas will be set to black. The `bg_color` and `fc_color` properties let you override the color animation by setting a custom background and foreground color on the Canvas, respectively.
+By default, any patterns displayed on the Canvas will display the color of the parent Section's color animation, and any pixels not displayed by the Canvas will be set to black. The `bg_color` and `fg_color` properties let you override the color animation by setting a custom background and foreground color on the Canvas, respectively.
 
 ## Drawing Shapes
 The Canvas class provides specific functions for drawing various shapes, elements, and patterns. For each shape you must specify an origin on the grid, as well as any extra parameters that the shape requires.
@@ -37,18 +37,18 @@ Note that you can draw multiple shapes on a single Canvas. Depending on the shap
 Options such as custom widths and colors per-shape are planned, but not currently implemented.
 
 ### Drawing Lines
-The `drawLine` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends.
+The `draw_line` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends.
 
 ### Drawing Text
-The `drawChar` and `drawText` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `drawText`, you must also specify the number of characters in the string.
+The `draw_char` and `draw_text` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `draw_text`, you must also specify the number of characters in the string.
 
 ### Drawing Rectangles
-The `drawRect` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
+The `draw_rect` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
 
 ## Scrolling
 You can scroll a Canvas horizontally, vertically, or both by setting `Canvas::scroll_interval`. `scroll_interval` defines both the direction and amount of time before the Canvas is scrolled. Time is measured in terms of refresh cycles, e.g. a scroll interval of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. The same goes for `-2` as well.
 
- `scrollRate->x` scrolls along the horizontal axis and `scrollRate->y` scrolls along the vertical axis. These values can be negative, which scrolls left instead of right for `scrollRate->x` and up instead of down for `scrollRate->y`.
+ `scroll_rate->x` scrolls along the horizontal axis and `scroll_rate->y` scrolls along the vertical axis. These values can be negative, which scrolls left instead of right for `scroll_rate->x` and up instead of down for `scroll_rate->y`.
 
 The following code scrolls 1 Pixel to the right on each refresh cycle, and 1 Pixel up every other refresh cycle.
 ```c++
@@ -65,7 +65,7 @@ The following code shifts the Canvas 5 Pixels to the right and 1 Pixel down.
 ```c++
 canvas->offset->x = 5;
 canvas->offset->y = 1;
-section->setCanvas(canvas);
+section->set_canvas(canvas);
 ```
 
 By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will not be drawn. However, setting `Pattern::repeat` to true draws the hidden part by wrapping it to the opposite end of the Canvas.
