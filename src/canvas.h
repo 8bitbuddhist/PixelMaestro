@@ -19,9 +19,6 @@ namespace PixelMaestro {
 			/// The background color of the Canvas.
 			Colors::RGB *bg_color = nullptr;
 
-			/// The size of the Canvas.
-			Point *dimensions = nullptr;
-
 			/// The foregound color of the Canvas.
 			Colors::RGB *fg_color = nullptr;
 
@@ -32,7 +29,7 @@ namespace PixelMaestro {
 			 * The Canvas' parent Section.
 			 * This is automatically set after using Section::setCanvas().
 			 */
-			Section *parent_section_ = nullptr;
+			Section *parent_section = nullptr;
 
 			/**
 				The pattern to display.
@@ -53,7 +50,7 @@ namespace PixelMaestro {
 			/// The last time the Canvas scrolled.
 			unsigned long last_scroll = 0;
 
-			Canvas(bool *pattern, Point *dimensions);
+			Canvas(bool *pattern);
 			void drawChar(Point *origin, Font *font, const char character);
 			void drawCircle(Point *origin, unsigned short radius, bool fill);
 			void drawLine(Point *origin, Point *target);

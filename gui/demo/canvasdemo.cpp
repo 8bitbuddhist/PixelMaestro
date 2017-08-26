@@ -17,7 +17,16 @@ CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : 
 	canvas_grid_ = new bool[layout->x * layout->y] {0};
 
 	// Create the new Canvas.
-	canvas_ = new Canvas(&canvas_grid_[0], layout);
+	canvas_ = new Canvas(&canvas_grid_[0]);
+
+	maestro_controller_ = maestroController;
+	maestro_controller_->addSectionController(layout);
+
+	SectionController *sectionController = maestro_controller_->getSectionController(0);
+	std::shared_ptr<Section> section = sectionController->getSection();
+	sectionController->setControllerColors(Colors::COLORWHEEL, 12);
+	section->setColorAnimation(Section::ColorAnimations::WAVE);
+	section->setCanvas(canvas_);
 
 	// Draw "Hello World!" and position it in the center of the Canvas.
 	//canvas_->drawText(new Point(10, 2), new Font5x8(), "Hello World!", 12);
@@ -31,13 +40,4 @@ CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : 
 	canvas_->drawCircle(new Point(40, 40), 30, false);
 	canvas_->drawCircle(new Point(40, 40), 20, false);
 	canvas_->drawCircle(new Point(40, 40), 10, false);
-
-	maestro_controller_ = maestroController;
-	maestro_controller_->addSectionController(layout);
-
-	SectionController *sectionController = maestro_controller_->getSectionController(0);
-	std::shared_ptr<Section> section = sectionController->getSection();
-	sectionController->setControllerColors(Colors::COLORWHEEL, 12);
-	section->setColorAnimation(Section::ColorAnimations::WAVE);
-	section->setCanvas(canvas_);
 }

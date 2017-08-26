@@ -9,12 +9,9 @@ namespace PixelMaestro {
 	/**
 	 * Constructor. This also initializes the Canvas' offset to 0.
 	 * @param pattern The array containing the Canvas' individual pixels.
-	 * @param layout The layout (rows and columns) of the Canvas.
-	 * @param numFrames The number of frames in the Canvas.
 	 */
-	Canvas::Canvas(bool *pattern, Point *dimensions) {
+	Canvas::Canvas(bool *pattern) {
 		this->pattern = pattern;
-		this->dimensions = dimensions;
 
 		// Initial offset is set to 0
 		this->offset = new Point(0, 0);
@@ -36,8 +33,8 @@ namespace PixelMaestro {
 		for (int column = 0; column < font->size->x; column++) {
 			for (int row = 0; row < font->size->y; row++) {
 				// Check to make sure we haven't exceeded the bounds of the Pattern
-				if ((origin->x + column < this->dimensions->x) && (origin->y + row < this->dimensions->y)) {
-					this->pattern[((origin->y + row) * this->dimensions->x) + (origin->x + column)] = ((currentChar[column] >> row) & 1);
+				if ((origin->x + column < parent_section->getDimensions()->x) && (origin->y + row < parent_section->getDimensions()->y)) {
+					this->pattern[((origin->y + row) * parent_section->getDimensions()->x) + (origin->x + column)] = ((currentChar[column] >> row) & 1);
 				}
 				else {
 					break;
@@ -62,13 +59,12 @@ namespace PixelMaestro {
 		 * If the Pixel matches, activate it.
 		 * Horrible, yes, but it works.
 		 */
-
 		int test_point; // Placeholder for calculating points along the circle line
 		int radius_squared = Utility::square(radius);
 		for (int cursor_x = origin->x - radius; cursor_x <= origin->x + radius; cursor_x++) {
 			for (int cursor_y = origin->y - radius; cursor_y <= origin->y + radius; cursor_y++) {
 				// Bounds check!
-				if ((cursor_x < this->dimensions->x) && (cursor_y < this->dimensions->y)) {
+				if ((cursor_x < parent_section->getDimensions()->x) && (cursor_y < parent_section->getDimensions()->y)) {
 					// Check that cursor_x and cursor_y satisfy the equation
 					test_point = Utility::square(cursor_x - origin->x) + Utility::square(cursor_y - origin->y);
 					/*
@@ -76,7 +72,7 @@ namespace PixelMaestro {
 					 * We use radius as a sort of tolerance, otherwise only a few pixels would activate.
 					 */
 					if (test_point >= radius_squared - radius && test_point <= radius_squared + radius) {
-						this->pattern[(cursor_y * this->dimensions->x) + cursor_x] = 1;
+						this->pattern[(cursor_y * parent_section->getDimensions()->x) + cursor_x] = 1;
 					}
 
 					// TODO: Implement fill
@@ -110,8 +106,8 @@ namespace PixelMaestro {
 		if (target->x == origin->x) {
 			while (cursor.y != target->y) {
 				// Make sure we're still in bounds
-				if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
-					this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+				if ((cursor.x < parent_section->getDimensions()->x) && (cursor.y < parent_section->getDimensions()->y)) {
+					this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
 				}
 
 				if (target->y >= cursor.y) {
@@ -129,8 +125,8 @@ namespace PixelMaestro {
 			 */
 			while (cursor.x != target->x) {
 				// Make sure we're still in bounds
-				if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
-					this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+				if ((cursor.x < parent_section->getDimensions()->x) && (cursor.y < parent_section->getDimensions()->y)) {
+					this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
 				}
 
 				if (target->x >= origin->x) {
@@ -158,10 +154,10 @@ namespace PixelMaestro {
 			cursor.y = origin->y;
 			for (int row = 0; row < size->y; row++) {
 				cursor.y = origin->y + row;
-				if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
+				if ((cursor.x < parent_section->getDimensions()->x) && (cursor.y < parent_section->getDimensions()->y)) {
 					// Check whether to fill
 					if (fill) {
-						this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+						this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
 					}
 					else {
 						/*
@@ -170,7 +166,7 @@ namespace PixelMaestro {
 						 */
 						if ((cursor.x == origin->x || cursor.y == origin->y) ||
 							(column == size->x - 1 || row == size->y - 1)) {
-							this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+							this->pattern[(cursor.y * parent_section->getDimensions()->x) + cursor.x] = 1;
 						}
 						else {
 							// Don't fill.
@@ -221,7 +217,7 @@ namespace PixelMaestro {
 	 * @param coordinates Location of the Pixel to toggle.
 	 */
 	void Canvas::togglePixel(Point *coordinates) {
-		pattern[(coordinates->y * this->dimensions->x) + coordinates->x] = !pattern[(coordinates->y * this->dimensions->x) + coordinates->x];
+		pattern[(coordinates->y * parent_section->getDimensions()->x) + coordinates->x] = !pattern[(coordinates->y * parent_section->getDimensions()->x) + coordinates->x];
 	}
 
 	/**
@@ -238,17 +234,21 @@ namespace PixelMaestro {
 		 * If repeat is enabled, wrap the out-of-bounds part of the Canvas to the opposite end.
 		 * If Canvas::offset is set, calculate the true index of the Pixel by adding the offset.
 		 */
-		for (unsigned short row = 0; row < dimensions->y; row++) {
-			for (unsigned short column = 0; column < dimensions->x; column++) {
+		for (unsigned short row = 0; row < parent_section->getDimensions()->y; row++) {
+			for (unsigned short column = 0; column < parent_section->getDimensions()->x; column++) {
 
-				// Iterate through all Pixels. If the Pixel is enabled, assign it the foreground color, otherwise assign the background color.
-				// Iterate through disabled Pixels
-				if (pattern[parent_section_->getPixelIndex(row, column)]) {
+				/*
+				 * Iterate through all Pixels.
+				 * If the Pixel is enabled, assign it the foreground color, otherwise assign the background color.
+				 * If the foregound color isn't set, skip over the Pixel and allow the ColorAnimation's color to pass through.
+				 * If the background color isn't set, just show black.
+				 */
+				if (pattern[parent_section->getPixelIndex(row, column)]) {
 					if (fg_color) {
 						tmpColor = fg_color;
 					}
 					else {
-						// Skip this Pixel. This allows the colors already generated by the Section to "pass through" and display.
+						// Skip this Pixel.
 						continue;
 					}
 
@@ -262,29 +262,34 @@ namespace PixelMaestro {
 					}
 				}
 
-				if (row + offset->y < parent_section_->getDimensions()->y &&
-					column + offset->x < parent_section_->getDimensions()->x) {
-					parent_section_->setOne(row + offset->y,
+				/*
+				 * Set the Pixel's color.
+				 * First, check one more time to make sure the Pixel is still in bounds.
+				 * If it's out of bounds, check to make sure repeat is enabled. If it is, move the Pixel to the other side of the Canvas.
+				 */
+				if (row + offset->y < parent_section->getDimensions()->y &&
+					column + offset->x < parent_section->getDimensions()->x) {
+					parent_section->setOne(row + offset->y,
 											column + offset->x,
 											tmpColor);
 				}
 				else if (repeat) {
-					parent_section_->setOne((row + offset->y) % parent_section_->getDimensions()->y,
-											(column + offset->x) % parent_section_->getDimensions()->x,
+					parent_section->setOne((row + offset->y) % parent_section->getDimensions()->y,
+											(column + offset->x) % parent_section->getDimensions()->x,
 											tmpColor);
 				}
 			}
 		}
 
 		/*
-		 * If Canvas::scrollRate is set, scroll the Canvas.
-		 * scrollRate dictates how many refreshes will occur before the Canvas is scrolled.
-		 * For each axis, determine the impact of scrollRate-><axis> and make the change.
-		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the start/end.
+		 * If Canvas::scroll_interval is set, scroll the Canvas.
+		 * scroll_interval dictates how many refreshes will occur before the Canvas is scrolled.
+		 * For each axis, determine the impact of scroll_interval-><axis> and make the change.
+		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the opposite side.
 		 */
-		unsigned long targetTime = currentTime - last_scroll;
 		if (scroll_interval) {
-			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section_->getRefreshRate()) <= targetTime) {
+			unsigned long targetTime = currentTime - last_scroll;
+			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section->getRefreshRate()) <= targetTime) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_interval->x > 0) {
@@ -295,17 +300,17 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset->x >= parent_section_->getDimensions()->x) {
+				if (offset->x >= parent_section->getDimensions()->x) {
 					offset->x = 0;
 				}
 				else if (offset->x - 1 < 0) {
-					offset->x = parent_section_->getDimensions()->x;
+					offset->x = parent_section->getDimensions()->x;
 				}
 
 				last_scroll = currentTime;
 			}
 
-			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section_->getRefreshRate()) <= targetTime) {
+			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section->getRefreshRate()) <= targetTime) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_interval->y > 0) {
@@ -316,11 +321,11 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset->y >= parent_section_->getDimensions()->y) {
+				if (offset->y >= parent_section->getDimensions()->y) {
 					offset->y = 0;
 				}
 				else if (offset->y - 1 < 0) {
-					offset->y = parent_section_->getDimensions()->y;
+					offset->y = parent_section->getDimensions()->y;
 				}
 
 				last_scroll = currentTime;

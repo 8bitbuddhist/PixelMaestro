@@ -146,14 +146,13 @@ namespace PixelMaestro {
 
 	/**
 		Sets the Canvas to display.
-		A Canvas is rendered on top of the ColorAnimation.
+		Also sets the Canvas' parent Section to the current Section.
 
 		@param canvas New Canvas.
-		@param canvasCycleInterval The amount of time between frame changes in ms (defaults to 1000).
 	*/
 	void Section::setCanvas(Canvas *canvas) {
 		canvas_ = canvas;
-		canvas_->parent_section_ = this;
+		canvas_->parent_section = this;
 	}
 
 	/**
