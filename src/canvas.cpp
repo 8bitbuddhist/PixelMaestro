@@ -54,28 +54,54 @@ namespace PixelMaestro {
 	void Canvas::drawLine(Point *origin, Point *target) {
 		// Calculate slope
 		float slope;
-		if (target->x - origin->x == 0) {
-			slope = target->y - origin->y;
+		if (target->x == origin->x) {
+			slope = 1;
+		}
+		else if (target->y == origin->y) {
+			slope = 0;
 		}
 		else {
 			slope = (target->y - origin->y) / (float)(target->x - origin->x);
 		}
 
 		Point cursor = { origin->x, origin->y };
-		float y_intercept = Utility::abs_float((slope * origin->x) - origin->y);
+		float y_intercept = (slope * origin->x) - origin->y;
 
-		/*
-		 * Move the cursor along the x-axis.
-		 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
-		 */
-		while (cursor.x <= target->x) {
-			// Make sure we're still in bounds
-			if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
-				this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+		// Handle vertical lines right away
+		if (target->x == origin->x) {
+			while (cursor.y != target->y) {
+				// Make sure we're still in bounds
+				if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
+					this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+				}
+
+				if (target->y >= cursor.y) {
+					cursor.y++;
+				}
+				else {
+					cursor.y--;
+				}
 			}
+		}
+		else {
+			/*
+			 * Move the cursor along the x-axis.
+			 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
+			 */
+			while (cursor.x != target->x) {
+				// Make sure we're still in bounds
+				if ((cursor.x < this->dimensions->x) && (cursor.y < this->dimensions->y)) {
+					this->pattern[(cursor.y * this->dimensions->x) + cursor.x] = 1;
+				}
 
-			cursor.x++;
-			cursor.y = (slope * (float)cursor.x) + y_intercept;
+				if (target->x >= origin->x) {
+					cursor.x++;
+				}
+				else {
+					cursor.x--;
+				}
+				cursor.y = (slope * (float)cursor.x) - y_intercept;
+			}
 		}
 	}
 
@@ -134,6 +160,21 @@ namespace PixelMaestro {
 			// Move cursor to the location of the next letter based on the font size.
 			cursor.x += font->size->x;
 		}
+	}
+
+	/**
+	 * Draws a triangle. Points are drawn in a clockwise manner.
+	 * @param point_a The first point of the triangle.
+	 * @param point_b The next point clockwise from point a.
+	 * @param point_c The third point of the triangle.
+	 * @param fill Whether to fill the triangle (NOT IMPLEMENTED).
+	 */
+	void Canvas::drawTriangle(Point *point_a, Point *point_b, Point *point_c, bool fill) {
+		this->drawLine(point_a, point_b);
+		this->drawLine(point_b, point_c);
+		this->drawLine(point_c, point_a);
+
+		// TODO: Fill triangle
 	}
 
 	/**

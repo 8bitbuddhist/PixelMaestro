@@ -20,10 +20,12 @@ CanvasDemo::CanvasDemo(QWidget *parent, MaestroController *maestroController) : 
 	canvas_ = new Canvas(&canvas_grid_[0], layout);
 
 	// Draw "Hello World!" and position it in the center of the Canvas.
-	canvas_->drawText(new Point(10, 2), new Font5x8(), "Hello World!", 12);
+	//canvas_->drawText(new Point(10, 2), new Font5x8(), "Hello World!", 12);
 
 	// Draw a border around the Canvas.
-	canvas_->drawRect(new Point(0, 0), new Point(80, 11), false);
+	//canvas_->drawRect(new Point(0, 0), new Point(80, 11), false);
+
+	canvas_->drawTriangle(new Point(40, 0), new Point(60, 5), new Point(20, 5), false);
 
 	maestro_controller_ = maestroController;
 	maestro_controller_->addSectionController(layout);

@@ -58,6 +58,7 @@ namespace PixelMaestro {
 			void drawLine(Point *origin, Point *target);
 			void drawRect(Point *origin, Point *size, bool fill);
 			void drawText(Point *origin, Font *font, const char *text, unsigned int numChars);
+			void drawTriangle(Point *point_a, Point *point_b, Point *point_c, bool fill);
 			void togglePixel(Point *coordinate);
 			void update(const unsigned long &currentTime);
 			~Canvas();			
