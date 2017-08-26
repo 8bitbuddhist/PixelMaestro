@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	class Font5x8 : public Font {
 		public:
 			Font5x8();
-			unsigned char *getChar(unsigned char character);
+			unsigned char* get_char(unsigned char character);
 
 		private:
 			unsigned char font[96][5] = {

@@ -7,11 +7,11 @@
 namespace PixelMaestro {
 	class SectionUnsetOverlayEvent : public Event {
 		public:
-			SectionUnsetOverlayEvent(unsigned long time, Section *section);
+			SectionUnsetOverlayEvent(unsigned long time, Section* section);
 			void run();
 
 		private:
-			Section *section_;
+			Section* section_;
 	};
 }
 

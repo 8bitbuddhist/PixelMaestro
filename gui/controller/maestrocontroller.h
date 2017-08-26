@@ -17,13 +17,13 @@ using namespace PixelMaestro;
 class MaestroController {
 	public:
 		~MaestroController();
-		void addSectionController(Point *layout);
-		void addShow(Event **events, unsigned char numEvents, Show::TimingModes timing, bool loop);
-		void deleteSectionController(int index);
-		Maestro *getMaestro();
-		int getNumSectionControllers();
-		SectionController *getSectionController(int index);
-		Show *getShow();
+		void add_section_controller(Point* layout);
+		void add_show(Event **events, unsigned char num_events, Show::TimingModes timing, bool loop);
+		void delete_section_controller(int index);
+		Maestro* get_maestro();
+		int get_num_section_controllers();
+		SectionController *get_section_controller(int index);
+		Show *get_show();
 
 	private:
 		/// Maestro controlled by this controller.
@@ -34,7 +34,7 @@ class MaestroController {
 		std::vector<SectionController*> section_controllers_;
 		Show *show_;
 
-		void reassignSections();
+		void reassign_sections();
 };
 
 #endif // MAESTROCONTROLLER_H

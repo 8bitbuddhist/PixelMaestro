@@ -7,6 +7,11 @@
 
 namespace PixelMaestro {
 	/**
+	 * Constructor. Defaults to (0, 0).
+	 */
+	Point::Point() {}
+
+	/**
 	 * Constructor.
 	 * @param x X-axis coordinate.
 	 * @param y Y-axis coordinate.

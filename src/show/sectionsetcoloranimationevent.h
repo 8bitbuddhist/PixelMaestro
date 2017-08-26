@@ -9,17 +9,17 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class SectionSetColorAnimationEvent : public Event {
 		public:
-			SectionSetColorAnimationEvent(unsigned long time, Section *section, Section::ColorAnimations animation_, bool reverseAnimation, Section::AnimationOrientations orientation);
-			SectionSetColorAnimationEvent(unsigned long time, Section *section, Section::ColorAnimations *animations, unsigned int numAnimations, bool reverseAnimation, Section::AnimationOrientations orientation);
+			SectionSetColorAnimationEvent(unsigned long time, Section* section, Section::ColorAnimations animation_, bool reverse_animation, Section::AnimationOrientations orientation);
+			SectionSetColorAnimationEvent(unsigned long time, Section* section, Section::ColorAnimations *animations, unsigned int num_animations, bool reverse_animation, Section::AnimationOrientations orientation);
 			void run();
 
 		private:
-			Section::ColorAnimations animation_;;
+			Section::ColorAnimations animation_;
 			Section::ColorAnimations *animations_ = nullptr;
 			unsigned int num_animations_;
 			Section::AnimationOrientations orientation;
-			bool reverseAnimation;
-			Section *section_;
+			bool reverse_animation;
+			Section* section_;
 
 	};
 }

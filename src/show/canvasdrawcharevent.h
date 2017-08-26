@@ -2,20 +2,20 @@
 #define CANVASDRAWCHAREVENT_H
 
 #include "../canvas.h"
-#include "event.h"
 #include "../canvas/fonts/font.h"
 #include "../point.h"
+#include "event.h"
 
 namespace PixelMaestro {
 	class CanvasDrawCharEvent : public Event {
 		public:
-			CanvasDrawCharEvent(unsigned long time, Canvas *canvas, Point *origin, Font *font, char character);
+			CanvasDrawCharEvent(unsigned long time, Canvas* canvas, Point* origin, Font* font, char character);
 			void run();
 
 		private:
-			Canvas *canvas_;
-			Point *origin_;
-			Font *font_;
+			Canvas* canvas_;
+			Point* origin_;
+			Font* font_;
 			char character_;
 	};
 }

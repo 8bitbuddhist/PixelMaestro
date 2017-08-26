@@ -2,11 +2,11 @@
 
 namespace PixelMaestro {
 
-	MaestroToggleRunEvent::MaestroToggleRunEvent(unsigned long time, Maestro *maestro) : Event(time) {
+	MaestroToggleRunEvent::MaestroToggleRunEvent(unsigned long time, Maestro* maestro) : Event(time) {
 		this->maestro_ = maestro;
 	}
 
 	void MaestroToggleRunEvent::run() {
-		this->maestro_->toggleRunning();
+		this->maestro_->toggle_running();
 	}
 }

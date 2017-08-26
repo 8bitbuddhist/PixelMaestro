@@ -5,8 +5,8 @@
 #ifndef SHOW_H
 #define SHOW_H
 
-#include "show/event.h"
 #include "maestro.h"
+#include "show/event.h"
 
 using namespace PixelMaestro;
 
@@ -24,19 +24,22 @@ namespace PixelMaestro {
 			};
 
 			Show();
-			Show (Maestro *maestro);
-			unsigned short getCurrentIndex();
-			bool getLooping();
-			Maestro *getMaestro();
-			void setMaestro(Maestro *maestro);
-			void setTiming(TimingModes timing);
-			void setEvents(Event **events, unsigned char numEvents);
-			void toggleLooping();
-			void update(const unsigned long &currentTime);
+			Show(Maestro* maestro);
+			unsigned short get_current_index();
+			bool get_looping();
+			Maestro* get_maestro();
+			void set_events(Event **events, unsigned char num_events);
+			void set_maestro(Maestro* maestro);
+			void set_timing(TimingModes timing);
+			void toggle_looping();
+			void update(const unsigned long& current_time);
 
 		private:
 			/// The index of the current Event.
 			unsigned short current_index_ = 0;
+
+			/// Events used in the Show.
+			Event **events_;
 
 			/// The index of the last run Event.
 			unsigned short last_index_ = 0;
@@ -48,7 +51,7 @@ namespace PixelMaestro {
 			bool loop_ = false;
 
 			/// The Maestro that the Events apply to.
-			Maestro *maestro_ = nullptr;
+			Maestro* maestro_ = nullptr;
 
 			/// The number of Events in the array.
 			unsigned char num_events_;
@@ -56,10 +59,7 @@ namespace PixelMaestro {
 			/// Method for measuring a Event's start time. Defaults to Absolute.
 			TimingModes timing_ = TimingModes::ABSOLUTE;
 
-			/// Events used in the Show.
-			Event **events_;
-
-			unsigned short getNextIndex();
+			unsigned short get_next_index();
 	};
 }
 

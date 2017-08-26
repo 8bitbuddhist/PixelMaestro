@@ -7,10 +7,10 @@
 /**
  * Constructor.
  * @param parent The parent QWidget.
- * @param maestroController The MaestroController rendered by this DrawingArea.
+ * @param maestro_controller The MaestroController rendered by this DrawingArea.
  */
-SimpleDrawingArea::SimpleDrawingArea(QWidget *parent, MaestroController *maestroController) : MaestroDrawingArea(parent, maestroController) {
-	this->maestro_controller_ = maestroController;
+SimpleDrawingArea::SimpleDrawingArea(QWidget* parent, MaestroController* maestro_controller) : MaestroDrawingArea(parent, maestro_controller) {
+	this->maestro_controller_ = maestro_controller;
 }
 
 /**
@@ -22,10 +22,10 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 
-	Colors::RGB tmpRGB;	// RGB output from each Pixel
-	QColor tmpColor;	// tmpRGB converted to QColor
-	QBrush tmpBrush;	// Brush used to paint tmpColor
-	QRect tmpRect;		// Size and location of the Pixel to draw using tmpBrush
+	Colors::RGB tmp_rgb;	// RGB output from each Pixel
+	QColor tmp_color;		// tmpRGB converted to QColor
+	QBrush tmp_brush;		// Brush used to paint tmpColor
+	QRect tmp_rect;			// Size and location of the Pixel to draw using tmpBrush
 
 	/*
 	 * Note: This assumes we only have one section in the Maestro.
@@ -36,14 +36,14 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	/*
 	 * Render each Pixel in the Maestro by mapping its location in the grid to a location on the DrawingArea.
 	 */
-	this->resizePixels();
-	for (unsigned short section = 0; section < this->maestro_controller_->getNumSectionControllers(); section++) {
-		for (unsigned short row = 0; row < this->maestro_controller_->getSectionController(section)->getSection()->getDimensions()->y; row++) {
-			for (unsigned short pixel = 0; pixel < this->maestro_controller_->getSectionController(section)->getSection()->getDimensions()->x; pixel++) {
-				tmpRGB = this->maestro_controller_->getSectionController(section)->getSection()->getPixelColor(this->maestro_controller_->getSectionController(section)->getSection()->getPixelIndex(pixel, row));
-				tmpColor.setRgb(tmpRGB.r, tmpRGB.g, tmpRGB.b);
-				tmpBrush.setColor(tmpColor);
-				tmpBrush.setStyle(Qt::BrushStyle::SolidPattern);
+	this->resize_pixels();
+	for (unsigned short section = 0; section < this->maestro_controller_->get_num_section_controllers(); section++) {
+		for (unsigned short row = 0; row < this->maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
+			for (unsigned short pixel = 0; pixel < this->maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {
+				tmp_rgb = this->maestro_controller_->get_section_controller(section)->get_section()->get_pixel_color(this->maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
+				tmp_color.setRgb(tmp_rgb.r, tmp_rgb.g, tmp_rgb.b);
+				tmp_brush.setColor(tmp_color);
+				tmp_brush.setStyle(Qt::BrushStyle::SolidPattern);
 
 				/*
 				 * Draw the Pixel.
@@ -51,10 +51,10 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 				 * Then, set the color of the pen to the color of the Pixel.
 				 * Finally, draw the Pixel to the screen.
 				 */
-				tmpRect.setRect(pixel * PAD_, row * PAD_, RADIUS_, RADIUS_);
-				painter.setBrush(tmpBrush);
+				tmp_rect.setRect(pixel * pad_, row * pad_, radius_, radius_);
+				painter.setBrush(tmp_brush);
 				painter.setPen(Qt::PenStyle::NoPen);
-				painter.drawEllipse(tmpRect);
+				painter.drawEllipse(tmp_rect);
 			}
 		}
 	}
@@ -64,25 +64,25 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
  * Resize the grid based on the number of rows and columns.
  * TODO: Improve dynamic scaling.
  */
-void SimpleDrawingArea::resizePixels() {
-	int minDimension, minPoint;
+void SimpleDrawingArea::resize_pixels() {
+	int min_dimension, min_point;
 	// Find the smallest dimension. We'll use this to determine whether (and in which direction) to reduce the size of the grid.
 	if (this->width() < this->height()) {
-		minDimension = this->width();
+		min_dimension = this->width();
 	}
 	else {
-		minDimension = this->height();
+		min_dimension = this->height();
 	}
 
-	Point *dimensions = this->maestro_controller_->getSectionController(0)->getSection()->getDimensions();
+	Point* dimensions = this->maestro_controller_->get_section_controller(0)->get_section()->get_dimensions();
 	if (dimensions->y > dimensions->x) {
-		minPoint = dimensions->y;
+		min_point = dimensions->y;
 	}
 	else {
-		minPoint = dimensions->x;
+		min_point = dimensions->x;
 	}
 
-	RADIUS_ = (minDimension / minPoint) / 2;
-	PAD_ = RADIUS_ * 2;
-	OFFSET_ = PAD_;
+	radius_ = (min_dimension / min_point) / 2;
+	pad_ = radius_ * 2;
+	offset_ = pad_;
 }

@@ -5,13 +5,13 @@
 #ifndef SHOWDEMO_H
 #define SHOWDEMO_H
 
-#include "controller/maestrocontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
+#include "controller/maestrocontroller.h"
 #include <vector>
 
 class ShowDemo : public SimpleDrawingArea {
 	public:
-		ShowDemo(QWidget *parent, MaestroController *maestroController);
+		ShowDemo(QWidget* parent, MaestroController* maestro_controller);
 		std::vector<Event*> events_;
 
 };

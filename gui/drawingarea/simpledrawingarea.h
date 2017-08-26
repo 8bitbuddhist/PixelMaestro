@@ -10,18 +10,18 @@
 
 class SimpleDrawingArea : public MaestroDrawingArea {
 	public:
-		SimpleDrawingArea(QWidget *parent, MaestroController *maestroController);
-		void resizePixels();
+		SimpleDrawingArea(QWidget* parent, MaestroController* maestro_controller);
+		void resize_pixels();
 
 	protected:
 		void paintEvent(QPaintEvent *event) override;
 
 		/// The size of each rendered Pixel.
-		unsigned short RADIUS_ = 20;
+		unsigned short radius_ = 20;
 		/// The amount of space between each Pixel.
-		unsigned short PAD_ = RADIUS_ * 2;
+		unsigned short pad_ = radius_ * 2;
 		/// The offset of the grid from its initial starting point.
-		unsigned short OFFSET_ = PAD_;
+		unsigned short offset_ = pad_;
 };
 
 #endif // SIMPLEDRAWINGAREA_H

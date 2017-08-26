@@ -7,12 +7,12 @@
 namespace PixelMaestro {
 	class ColorsGenerateRandomColorArrayEvent : public Event {
 		public:
-			ColorsGenerateRandomColorArrayEvent(unsigned long time, Colors::RGB *newArray, Colors::RGB *baseColor, unsigned int numColors, float range = 1.0);
+			ColorsGenerateRandomColorArrayEvent(unsigned long time, Colors::RGB* new_array, Colors::RGB* base_color, unsigned int num_colors, float range = 1.0);
 			void run();
 
 		private:
-			Colors::RGB *new_array_;
-			Colors::RGB *base_color_;
+			Colors::RGB* base_color_;
+			Colors::RGB* new_array_;
 			unsigned int num_colors_;
 			float range_;
 

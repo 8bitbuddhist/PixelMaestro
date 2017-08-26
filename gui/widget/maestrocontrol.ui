@@ -109,7 +109,7 @@
      <item row="4" column="1">
       <layout class="QHBoxLayout" name="animationOptionsLayout">
        <item>
-        <widget class="QCheckBox" name="reverseAnimationCheckBox">
+        <widget class="QCheckBox" name="reverse_animationCheckBox">
          <property name="text">
           <string>Reverse</string>
          </property>
@@ -234,7 +234,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QLabel" name="numColorsLabel">
+          <widget class="QLabel" name="num_colorsLabel">
            <property name="minimumSize">
             <size>
              <width>50</width>
@@ -247,7 +247,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="numColorsSpinBox">
+          <widget class="QSpinBox" name="num_colorsSpinBox">
            <property name="readOnly">
             <bool>false</bool>
            </property>
@@ -345,7 +345,7 @@
      <item row="1" column="1">
       <layout class="QHBoxLayout" name="overlayLayout">
        <item>
-        <widget class="QComboBox" name="mixModeComboBox"/>
+        <widget class="QComboBox" name="mix_modeComboBox"/>
        </item>
        <item>
         <widget class="QDoubleSpinBox" name="alphaSpinBox">

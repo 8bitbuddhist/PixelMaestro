@@ -6,10 +6,10 @@
 
 namespace PixelMaestro {
 	Font5x8::Font5x8() : Font() {
-		this->size = new Point(5, 8);
+		size = new Point(5, 8);
 	}
 
-	unsigned char *Font5x8::getChar(unsigned char character) {
-		return this->font[character - 32];
+	unsigned char* Font5x8::get_char(unsigned char character) {
+		return font[character - 32];
 	}
 }

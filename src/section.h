@@ -67,10 +67,10 @@ namespace PixelMaestro {
 			*/
 			struct Overlay {
 				/// The Section to overlay.
-				Section *section = nullptr;
+				Section* section = nullptr;
 
 				/// Method of blending the output from the Overlay with the base Section.
-				Colors::MixMode mixMode = Colors::MixMode::NONE;
+				Colors::MixMode mix_mode = Colors::MixMode::NONE;
 
 				/// Transparency level of the overlaid Section (if applicable).
 				float alpha;
@@ -78,44 +78,44 @@ namespace PixelMaestro {
 				/**
 				 * Constructor. The Section will automatically be deleted when the Overlay is deleted.
 				 * @param section New Section to use.
-				 * @param mixMode Color mixing method to use.
+				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For MixMode::ALPHA, the amount of transparency that the Overlay will have.
 				 */
-				Overlay(Section *section, Colors::MixMode mixMode, float alpha) {
+				Overlay(Section* section, Colors::MixMode mix_mode, float alpha) {
 					this->section = section;
-					this->mixMode = mixMode;
+					this->mix_mode = mix_mode;
 					this->alpha = alpha;
 				}
 			};
 
-			Section(Pixel *pixels, Point *layout);
-			AnimationOpts *getAnimationOpts();
-			Canvas *getCanvas();
-			Section::ColorAnimations getColorAnimation();
-			unsigned short getCycleSpeed();
-			Point *getDimensions();
-			bool getFade();
-			Section::Overlay *getOverlay();
-			unsigned int getNumPixels();
-			Pixel *getPixel(unsigned int pixel);
-			Colors::RGB getPixelColor(unsigned int pixel);
-			unsigned int getPixelIndex(Point *coordinates);
-			unsigned int getPixelIndex(unsigned short x, unsigned short y);
-			unsigned short getRefreshRate();
-			void setAll(Colors::RGB *color);
-			void setCanvas(Canvas *canvas);
-			void setColorAnimation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverseAnimation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
-			void setColors(Colors::RGB *colors, unsigned int numColors);
-			void setCycleIndex(unsigned int index);
-			void setCycleInterval(unsigned short interval, unsigned short pause = 0);
-			void setOne(unsigned int pixel, Colors::RGB *color);
-			void setOne(unsigned short row, unsigned short column, Colors::RGB *color);
-			void setOverlay(Overlay *overlay);
-			void setPixels(Pixel* pixels, Point *layout);
-			void setRefreshInterval(unsigned short interval);
-			void toggleFade();
-			void update(const unsigned long &currentTime);
-			void unsetOverlay();
+			Section(Pixel* pixels, Point* layout);
+			AnimationOpts *get_animation_opts();
+			Canvas* get_canvas();
+			Section::ColorAnimations get_color_animation();
+			unsigned short get_cycle_speed();
+			Point* get_dimensions();
+			bool get_fade();
+			Section::Overlay* get_overlay();
+			unsigned int get_num_pixels();
+			Pixel* get_pixel(unsigned int pixel);
+			Colors::RGB get_pixel_color(unsigned int pixel);
+			unsigned int get_pixel_index(Point* coordinates);
+			unsigned int get_pixel_index(unsigned short x, unsigned short y);
+			unsigned short get_refresh_rate();
+			void set_all(Colors::RGB* color);
+			void set_canvas(Canvas* canvas);
+			void set_color_animation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverse_animation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
+			void set_colors(Colors::RGB* colors, unsigned int num_colors);
+			void set_cycle_index(unsigned int index);
+			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
+			void set_one(unsigned int pixel, Colors::RGB* color);
+			void set_one(unsigned short row, unsigned short column, Colors::RGB* color);
+			void set_overlay(Overlay* overlay);
+			void set_pixels(Pixel* pixels, Point* layout);
+			void set_refresh_interval(unsigned short interval);
+			void toggle_fade();
+			void update(const unsigned long& current_time);
+			void unset_overlay();
 
 		private:
 			/// The orientation of the animation. Defaults to HORIZONTAL.
@@ -125,13 +125,13 @@ namespace PixelMaestro {
 			AnimationOpts animation_opts_;
 
 			/// The Canvas to display (if applicable).
-			Canvas *canvas_ = nullptr;
+			Canvas* canvas_ = nullptr;
 
 			/// The active Section animation. Defaults to SOLID.
 			Section::ColorAnimations color_animation_ = ColorAnimations(SOLID);
 
 			/// Array of colors used in animations..
-			Colors::RGB *colors_ = nullptr;
+			Colors::RGB* colors_ = nullptr;
 
 			///	The current stage of the animation cycle. Defaults to 0.
 			unsigned int cycle_index_ = 0;
@@ -140,7 +140,7 @@ namespace PixelMaestro {
 			unsigned short cycle_interval_ = 100;
 
 			/// The logical layout of the Pixels.
-			Point *dimensions_ = nullptr;
+			Point* dimensions_ = nullptr;
 
 			/// Whether to fade between cycles. Defaults to true.
 			bool fade_ = true;
@@ -155,13 +155,13 @@ namespace PixelMaestro {
 			unsigned int num_colors_;
 
 			/// The Section overlaying the current section (if applicable).
-			Overlay *overlay_ = nullptr;
+			Overlay* overlay_ = nullptr;
 
 			/// The amount of time the Section waits in milliseconds before starting the next animation cycle, by finishing the current cycle early. Defaults to 0.
 			unsigned short pause_ = 0;
 
 			/// The array of Pixels managed by the Section.
-			Pixel *pixels_ = nullptr;
+			Pixel* pixels_ = nullptr;
 
 			/// The time between Pixel redraws in milliseconds. Only relevant when fading is enabled. Defaults to 20.
 			unsigned short refresh_interval_ = 20;
@@ -172,10 +172,10 @@ namespace PixelMaestro {
 			// Color animation functions
 			void animation_blink();
 			void animation_cycle();
-			unsigned int animation_getColorIndex(unsigned int count);
+			unsigned int animation_get_color_index(unsigned int count);
 			void animation_merge();
 			void animation_pong();
-			void animation_randomIndex();
+			void animation_random_index();
 			void animation_solid();
 			void animation_sparkle();
 			void animation_updateCycle(unsigned int min, unsigned int max);

@@ -1,7 +1,7 @@
 #include "canvasdrawcharevent.h"
 
 namespace PixelMaestro {
-	CanvasDrawCharEvent::CanvasDrawCharEvent(unsigned long time, Canvas *canvas, Point *origin, Font *font, char character) : Event(time) {
+	CanvasDrawCharEvent::CanvasDrawCharEvent(unsigned long time, Canvas* canvas, Point* origin, Font* font, char character) : Event(time) {
 		this->canvas_ = canvas;
 		this->origin_ = origin;
 		this->font_ = font;
@@ -9,6 +9,6 @@ namespace PixelMaestro {
 	}
 
 	void CanvasDrawCharEvent::run() {
-		canvas_->drawChar(origin_, font_, character_);
+		canvas_->draw_char(origin_, font_, character_);
 	}
 }

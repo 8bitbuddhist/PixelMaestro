@@ -8,11 +8,11 @@ namespace PixelMaestro {
 	class MaestroToggleRunEvent : public Event {
 
 		public:
-			MaestroToggleRunEvent(unsigned long time, Maestro *maestro);
+			MaestroToggleRunEvent(unsigned long time, Maestro* maestro);
 			void run();
 
 		private:
-			Maestro *maestro_;
+			Maestro* maestro_;
 	};
 }
 

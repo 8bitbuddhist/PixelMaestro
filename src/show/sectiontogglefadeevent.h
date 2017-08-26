@@ -9,11 +9,11 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 	class SectionToggleFadeEvent : public Event {
 		public:
-			SectionToggleFadeEvent(unsigned long time, Section *section);
+			SectionToggleFadeEvent(unsigned long time, Section* section);
 			void run();
 
 		private:
-			Section *section_;
+			Section* section_;
 	};
 }
 

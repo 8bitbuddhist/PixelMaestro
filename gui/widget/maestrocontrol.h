@@ -22,7 +22,7 @@ class MaestroControl : public QWidget {
 	Q_OBJECT
 
 	public:
-		explicit MaestroControl(QWidget *parent, MaestroController *maestroController);
+		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
 
 	private:
@@ -31,7 +31,7 @@ class MaestroControl : public QWidget {
 		Ui::MaestroControl *ui;
 
 		/// MaestroController that this widget is controlling.
-		MaestroController *maestro_controller_;
+		MaestroController* maestro_controller_;
 
 		SectionController *getActiveSectionController();
 		void changeScalingColorArray(Colors::RGB color);
@@ -49,14 +49,14 @@ class MaestroControl : public QWidget {
 		void on_cycleSlider_valueChanged(int value);
 		void on_greenDial_valueChanged(int value);
 		void on_fadeCheckBox_toggled(bool checked);
-		void on_numColorsSpinBox_valueChanged(int arg1);
-		void on_reverseAnimationCheckBox_toggled(bool checked);
+		void on_num_colorsSpinBox_valueChanged(int arg1);
+		void on_reverse_animationCheckBox_toggled(bool checked);
 		void on_redDial_valueChanged(int value);
 		void on_rowsSpinBox_valueChanged(int arg1);
 		void on_thresholdSpinBox_valueChanged(int arg1);
 		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
 		void on_addOverlayButton_clicked();
-		void on_mixModeComboBox_currentIndexChanged(int index);
+		void on_mix_modeComboBox_currentIndexChanged(int index);
 		void on_alphaSpinBox_valueChanged(double arg1);
 };
 

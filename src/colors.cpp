@@ -54,7 +54,7 @@ namespace PixelMaestro {
 	 * Creates a random color.
 	 * @return Random color.
 	 */
-	Colors::RGB Colors::generateRandomColor() {
+	Colors::RGB Colors::generate_random_color() {
 		return RGB {
 			(unsigned char)(Utility::rand() % 255),
 			(unsigned char)(Utility::rand() % 255),
@@ -65,16 +65,16 @@ namespace PixelMaestro {
 	/**
 		Creates a randomly generated array of colors based off of a base color.
 
-		@param newArray Array to populate.
-		@param baseColor The initial color.
-		@param numColors Number of colors to generate.
+		@param new_array Array to populate.
+		@param base_color The initial color.
+		@param num_colors Number of colors to generate.
 	*/
-	void Colors::generateRandomColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, float range) {
-		for (unsigned int newColorIndex = 0; newColorIndex < numColors; newColorIndex++) {
-			newArray[newColorIndex] = {
-				(unsigned char)(baseColor->r > 0 ? baseColor->r - (unsigned char)(Utility::rand() % (unsigned char)(baseColor->r * range)) : 0),
-				(unsigned char)(baseColor->g > 0 ? baseColor->g - (unsigned char)(Utility::rand() % (unsigned char)(baseColor->g * range)) : 0),
-				(unsigned char)(baseColor->b > 0 ? baseColor->b - (unsigned char)(Utility::rand() % (unsigned char)(baseColor->b * range)) : 0)
+	void Colors::generate_random_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, float range) {
+		for (unsigned int new_color_index = 0; new_color_index < num_colors; new_color_index++) {
+			new_array[new_color_index] = {
+				(unsigned char)(base_color->r > 0 ? base_color->r - (unsigned char)(Utility::rand() % (unsigned char)(base_color->r * range)) : 0),
+				(unsigned char)(base_color->g > 0 ? base_color->g - (unsigned char)(Utility::rand() % (unsigned char)(base_color->g * range)) : 0),
+				(unsigned char)(base_color->b > 0 ? base_color->b - (unsigned char)(Utility::rand() % (unsigned char)(base_color->b * range)) : 0)
 			};
 		}
 	}
@@ -82,42 +82,42 @@ namespace PixelMaestro {
 	/**
 		Creates an array of colors that gradually merge from a base color to a target color.
 
-		@param newArray Array to populate.
-		@param baseColor The initial color.
-		@param targetColor The target color.
-		@param numColors Number of colors in the array.
-		@param reverse If true, the second half of the array will event from targetColor back to baseColor.
+		@param new_array Array to populate.
+		@param base_color The initial color.
+		@param target_color The target color.
+		@param num_colors Number of colors in the array.
+		@param reverse If true, the second half of the array will event from target_color back to base_color.
 	*/
-	void Colors::generateScalingColorArray(RGB newArray[], RGB *baseColor, RGB *targetColor, unsigned int numColors, bool reverse) {
+	void Colors::generate_scaling_color_array(RGB new_array[], RGB* base_color, RGB* target_color, unsigned int num_colors, bool reverse) {
 		if (reverse) {
-			numColors /= 2;
+			num_colors /= 2;
 		}
 
 		// Calculate the distance between each color.
 		signed short step[] = {
-			(signed short)((targetColor->r - baseColor->r) / (float)numColors),
-			(signed short)((targetColor->g - baseColor->g) / (float)numColors),
-			(signed short)((targetColor->b - baseColor->b) / (float)numColors)
+			(signed short)((target_color->r - base_color->r) / (float)num_colors),
+			(signed short)((target_color->g - base_color->g) / (float)num_colors),
+			(signed short)((target_color->b - base_color->b) / (float)num_colors)
 		};
 
 		// Apply the step distance to each index of the array.
-		for (unsigned int i = 0; i < numColors; i++) {
-			newArray[i].r =	baseColor->r + (step[0] * i);
-			newArray[i].g = baseColor->g + (step[1] * i);
-			newArray[i].b = baseColor->b + (step[2] * i);
+		for (unsigned int i = 0; i < num_colors; i++) {
+			new_array[i].r =	base_color->r + (step[0] * i);
+			new_array[i].g = base_color->g + (step[1] * i);
+			new_array[i].b = base_color->b + (step[2] * i);
 		}
 
 		if (reverse) {
 			// Handle the middle color.
-			newArray[numColors].r = baseColor->r + (step[0] * numColors);
-			newArray[numColors].g = baseColor->g + (step[1] * numColors);
-			newArray[numColors].b = baseColor->b + (step[2] * numColors);
+			new_array[num_colors].r = base_color->r + (step[0] * num_colors);
+			new_array[num_colors].g = base_color->g + (step[1] * num_colors);
+			new_array[num_colors].b = base_color->b + (step[2] * num_colors);
 
 			// Repeat the first half of the array in reverse for each remaining color.
-			for (unsigned int i = numColors + 1; i < (numColors * 2); i++) {
-				newArray[i].r = newArray[numColors - (i - numColors)].r;
-				newArray[i].g = newArray[numColors - (i - numColors)].g;
-				newArray[i].b = newArray[numColors - (i - numColors)].b;
+			for (unsigned int i = num_colors + 1; i < (num_colors * 2); i++) {
+				new_array[i].r = new_array[num_colors - (i - num_colors)].r;
+				new_array[i].g = new_array[num_colors - (i - num_colors)].g;
+				new_array[i].b = new_array[num_colors - (i - num_colors)].b;
 			}
 		}
 	}
@@ -126,32 +126,32 @@ namespace PixelMaestro {
 		Creates an array of colors that gradually merge from a base color to a target color.
 		The threshold determines the difference between the target color and the base color.
 
-		@param newArray Array to populate.
-		@param baseColor The initial color.
-		@param numColors Number of colors in the array.
+		@param new_array Array to populate.
+		@param base_color The initial color.
+		@param num_colors Number of colors in the array.
 		@param threshold The variation between the base color and the newly generated target color.
-		@param reverse If true, the array will be doubled to event from baseColor to targetColor, then back to baseColor.
+		@param reverse If true, the array will be doubled to event from base_color to target_color, then back to base_color.
 	*/
-	void Colors::generateScalingColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, unsigned char threshold, bool reverse) {
-		RGB newColor = {
-			(unsigned char)(baseColor->r - threshold),
-			(unsigned char)(baseColor->g - threshold),
-			(unsigned char)(baseColor->b - threshold)
+	void Colors::generate_scaling_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, unsigned char threshold, bool reverse) {
+		RGB new_color = {
+			(unsigned char)(base_color->r - threshold),
+			(unsigned char)(base_color->g - threshold),
+			(unsigned char)(base_color->b - threshold)
 		};
-		generateScalingColorArray(newArray, baseColor, &newColor, numColors, reverse);
+		generate_scaling_color_array(new_array, base_color, &new_color, num_colors, reverse);
 	}
 
 	/**
 		Mixes two colors.
 
-		@param colorOne The first color to mix.
-		@param colorTwo The second color to mix.
+		@param color_one The first color to mix.
+		@param color_two The second color to mix.
 		@param mode The type of mixing to perform.
 		@param alpha Color two alpha factor.
 		@return The mixed color.
 	*/
-	Colors::RGB Colors::mixColors(RGB *colorOne, RGB *colorTwo, MixMode mode, float alpha) {
-		RGB mixedColor;
+	Colors::RGB Colors::mixColors(RGB* color_one, RGB* color_two, MixMode mode, float alpha) {
+		RGB mixed_color;
 
 		switch (mode) {
 			case MixMode::NORMAL:
@@ -159,23 +159,23 @@ namespace PixelMaestro {
 				// Fall through to alpha-blending
 			case MixMode::ALPHA_BLENDING:
 			{
-				mixedColor.r = (alpha * colorTwo->r) + ((1 - alpha) * colorOne->r);
-				mixedColor.g = (alpha * colorTwo->g) + ((1 - alpha) * colorOne->g);
-				mixedColor.b = (alpha * colorTwo->b) + ((1 - alpha) * colorOne->b);
+				mixed_color.r = (alpha * color_two->r) + ((1 - alpha) * color_one->r);
+				mixed_color.g = (alpha * color_two->g) + ((1 - alpha) * color_one->g);
+				mixed_color.b = (alpha * color_two->b) + ((1 - alpha) * color_one->b);
 				break;
 			}
 			case MixMode::MULTIPLY:
 			{
-				mixedColor.r = colorOne->r * (float)(colorTwo->r / (float)255);
-				mixedColor.g = colorOne->g * (float)(colorTwo->g / (float)255);
-				mixedColor.b = colorOne->b * (float)(colorTwo->b / (float)255);
+				mixed_color.r = color_one->r * (float)(color_two->r / (float)255);
+				mixed_color.g = color_one->g * (float)(color_two->g / (float)255);
+				mixed_color.b = color_one->b * (float)(color_two->b / (float)255);
 				break;
 			}
-			default:	// Return colorOne
-				mixedColor = *colorOne;
+			default:	// Return color_one
+				mixed_color = *color_one;
 				break;
 		};
 
-		return mixedColor;
+		return mixed_color;
 	}
 }

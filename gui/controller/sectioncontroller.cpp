@@ -10,36 +10,36 @@ using namespace PixelMaestro;
  * Constructor.
  * Creates a new Section, initializes its Pixels, and assigns the Pixels to the Section.
  */
-SectionController::SectionController(Point *layout) {
+SectionController::SectionController(Point* layout) {
 	this->dimensions_ = layout;
 	this->pixels_.resize(this->dimensions_->x * this->dimensions_->y);
 	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], dimensions_));
 
 	// Initialize colors
-	this->setControllerColors(Colors::COLORWHEEL, 12);
+	this->set_controller_colors(Colors::COLORWHEEL, 12);
 }
 
-SectionController::SectionController(Point *layout, Colors::MixMode mixMode, float alpha) : SectionController(layout){
+SectionController::SectionController(Point* layout, Colors::MixMode mix_mode, float alpha) : SectionController(layout){
 	this->is_overlay_ = true;
-	this->mix_mode_ = mixMode;
+	this->mix_mode_ = mix_mode;
 	this->alpha_ = alpha;
 }
 
 /**
  * Adds an Overlay to the Section.
- * @param mixMode The blending mode of the Overlay.
+ * @param mix_mode The blending mode of the Overlay.
  * @param alpha The transparency of the Overlay.
  */
-void SectionController::addOverlay(Colors::MixMode mixMode, float alpha) {
-	this->overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(this->dimensions_, mixMode, alpha));
-	this->section_->setOverlay(new Section::Overlay(this->overlay_controller_->getSection().get(), mixMode, alpha));
+void SectionController::add_overlay(Colors::MixMode mix_mode, float alpha) {
+	this->overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(this->dimensions_, mix_mode, alpha));
+	this->section_->set_overlay(new Section::Overlay(this->overlay_controller_->get_section().get(), mix_mode, alpha));
 }
 
 /**
  * Returns the colors used in the Section.
  * @return Sections's Colors::RGB array.
  */
-Colors::RGB *SectionController::getColors() {
+Colors::RGB* SectionController::get_colors() {
 	return &this->colors_[0];
 }
 
@@ -47,7 +47,7 @@ Colors::RGB *SectionController::getColors() {
  * Returns the Section's dimensions.
  * @return Section's layout.
  */
-Point SectionController::getDimensions() {
+Point SectionController::get_dimensions() {
 	return *this->dimensions_;
 }
 
@@ -55,7 +55,7 @@ Point SectionController::getDimensions() {
  * Returns the number of Colors in the Section.
  * @return Number of colors.
  */
-unsigned short SectionController::getNumColors() {
+unsigned short SectionController::get_num_colors() {
 	return this->colors_.size();
 }
 
@@ -63,15 +63,15 @@ unsigned short SectionController::getNumColors() {
  * Returns the Section's Overlay directly.
  * @return Section's Overlay.
  */
-Section::Overlay *SectionController::getOverlay() {
-	return this->section_->getOverlay();
+Section::Overlay* SectionController::get_overlay() {
+	return this->section_->get_overlay();
 }
 
 /**
  * Returns the Section's Overlay, if one exists.
  * @return Overlay (if it exists).
  */
-std::shared_ptr<SectionController> SectionController::getOverlayController() {
+std::shared_ptr<SectionController> SectionController::get_overlay_controller() {
 	return this->overlay_controller_;
 }
 
@@ -79,26 +79,26 @@ std::shared_ptr<SectionController> SectionController::getOverlayController() {
  * Returns the SectionController's underlying Section.
  * @return Section controlled by the SectionController.
  */
-std::shared_ptr<Section> SectionController::getSection() {
+std::shared_ptr<Section> SectionController::get_section() {
 	return this->section_;
 }
 
 /**
  * Copies an array of Colors into the SectionController's color array.
  * @param colors Colors to store in the SectionController.
- * @param numColors Number of colors in the array.
+ * @param num_colors Number of colors in the array.
  */
-void SectionController::setControllerColors(Colors::RGB *colors, unsigned short numColors) {
-	colors_.resize(numColors);
+void SectionController::set_controller_colors(Colors::RGB* colors, unsigned short num_colors) {
+	colors_.resize(num_colors);
 
 	// Copy provided colors to controller
-	for (int i = 0; i < numColors; i++) {
+	for (int i = 0; i < num_colors; i++) {
 		colors_[i].r = colors[i].r;
 		colors_[i].g = colors[i].g;
 		colors_[i].b = colors[i].b;
 	}
 
-	this->section_->setColors(&this->colors_[0], numColors);
+	this->section_->set_colors(&this->colors_[0], num_colors);
 }
 
 /**
@@ -106,19 +106,19 @@ void SectionController::setControllerColors(Colors::RGB *colors, unsigned short 
  * @param x Size of the x-axis.
  * @param y Size of the y-axis.
  */
-void SectionController::setDimensions(unsigned short x, unsigned short y) {
+void SectionController::set_dimensions(unsigned short x, unsigned short y) {
 	this->dimensions_->x = x;
 	this->dimensions_->y = y;
 	this->pixels_.resize(dimensions_->x * dimensions_->y);
-	this->section_->setPixels(&this->pixels_[0], dimensions_);
+	this->section_->set_pixels(&this->pixels_[0], dimensions_);
 }
 
-void SectionController::unsetOverlay() {
+void SectionController::unset_overlay() {
 	this->overlay_controller_.reset();
 }
 
 SectionController::~SectionController() {
 	if (!this->is_overlay_ && this->overlay_controller_) {
-		this->unsetOverlay();
+		this->unset_overlay();
 	}
 }

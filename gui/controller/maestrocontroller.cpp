@@ -9,18 +9,18 @@ using namespace PixelMaestro;
 /**
  * Adds a new Section to the Maestro.
  */
-void MaestroController::addSectionController(Point *layout) {
+void MaestroController::add_section_controller(Point* layout) {
 	this->section_controllers_.push_back(new SectionController(layout));
-	reassignSections();
+	reassign_sections();
 }
 
-void MaestroController::addShow(Event **events, unsigned char numEvents, Show::TimingModes timing, bool loop) {
+void MaestroController::add_show(Event **events, unsigned char num_events, Show::TimingModes timing, bool loop) {
 	this->show_ = new Show(&this->maestro_);
 
-	this->show_->setTiming(timing);
-	this->show_->setEvents(events, numEvents);
+	this->show_->set_timing(timing);
+	this->show_->set_events(events, num_events);
 	if (loop) {
-		this->show_->toggleLooping();
+		this->show_->toggle_looping();
 	}
 }
 
@@ -28,21 +28,21 @@ void MaestroController::addShow(Event **events, unsigned char numEvents, Show::T
  * Removes a Section from the Maestro.
  * @param index The index of the Section to remove.
  */
-void MaestroController::deleteSectionController(int index) {
+void MaestroController::delete_section_controller(int index) {
 	// Delete the SectionController
 	delete this->section_controllers_[index];
 
 	// Remove the reference from the SectionController array
 	this->section_controllers_.erase(this->section_controllers_.begin() + index);
 
-	reassignSections();
+	reassign_sections();
 }
 
 /**
  * Returns the Maestro handled by this MaestroController.
  * @return Underlying Maestro.
  */
-Maestro *MaestroController::getMaestro() {
+Maestro* MaestroController::get_maestro() {
 	return &this->maestro_;
 }
 
@@ -50,7 +50,7 @@ Maestro *MaestroController::getMaestro() {
  * Returns the number of Sections handled by this Maestro.
  * @return Number of Sections.
  */
-int MaestroController::getNumSectionControllers() {
+int MaestroController::get_num_section_controllers() {
 	return this->section_controllers_.size();
 }
 
@@ -59,7 +59,7 @@ int MaestroController::getNumSectionControllers() {
  * @param index Index of the desired SectionController.
  * @return SectionController at the specified index.
  */
-SectionController *MaestroController::getSectionController(int index) {
+SectionController *MaestroController::get_section_controller(int index) {
 	return this->section_controllers_[index];
 }
 
@@ -67,21 +67,21 @@ SectionController *MaestroController::getSectionController(int index) {
  * Returns the Show managed in this Maestro (if applicable)
  * @return Show managed by this Maestro.
  */
-Show *MaestroController::getShow() {
+Show *MaestroController::get_show() {
 	return this->show_;
 }
 
 /**
  * Re-sets the Maestro's Sections based on the number of SectionControllers.
  */
-void MaestroController::reassignSections() {
+void MaestroController::reassign_sections() {
 	// Re-build the Sections vector
 	this->sections_.clear();
 	for (unsigned int i = 0; i < this->section_controllers_.size(); i++) {
-		this->sections_.push_back(this->section_controllers_[i]->getSection().get());
+		this->sections_.push_back(this->section_controllers_[i]->get_section().get());
 	}
 
-	this->maestro_.setSections(this->sections_[0], this->sections_.size());
+	this->maestro_.set_sections(this->sections_[0], this->sections_.size());
 }
 
 MaestroController::~MaestroController() {

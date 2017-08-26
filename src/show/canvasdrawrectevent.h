@@ -2,19 +2,19 @@
 #define CANVASDRAWRECTEVENT_H
 
 #include "../canvas.h"
-#include "event.h"
 #include "../point.h"
+#include "event.h"
 
 namespace PixelMaestro {
 	class CanvasDrawRectEvent : public Event {
 		public:
-			CanvasDrawRectEvent(unsigned long time, Canvas *canvas, Point *origin, Point *size, bool fill);
+			CanvasDrawRectEvent(unsigned long time, Canvas* canvas, Point* origin, Point* size, bool fill);
 			void run();
 
 		private:
-			Canvas *canvas_;
-			Point *origin_;
-			Point *size_;
+			Canvas* canvas_;
+			Point* origin_;
+			Point* size_;
 			bool fill_;
 	};
 }

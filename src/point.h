@@ -10,11 +10,12 @@ namespace PixelMaestro {
 	class Point {
 		public:
 			/// X-coordinate.
-			short x;
+			short x = 0;
 
 			/// Y-coordinate.
-			short y;
+			short y = 0;
 
+			Point();
 			Point(short x, short y);
 	};
 }

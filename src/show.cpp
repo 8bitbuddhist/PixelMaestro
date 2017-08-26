@@ -12,7 +12,7 @@ namespace PixelMaestro {
 	 * Constructor.
 	 * @param maestro The Maestro to control using this Show.
 	 */
-	Show::Show(Maestro *maestro) {
+	Show::Show(Maestro* maestro) {
 		maestro_ = maestro;
 	}
 
@@ -21,7 +21,7 @@ namespace PixelMaestro {
 
 		@return Index of the current Event.
 	*/
-	unsigned short Show::getCurrentIndex() {
+	unsigned short Show::get_current_index() {
 		return current_index_;
 	}
 
@@ -30,7 +30,7 @@ namespace PixelMaestro {
 
 		@return Whether or not the Show loops.
 	*/
-	bool Show::getLooping() {
+	bool Show::get_looping() {
 		return loop_;
 	}
 
@@ -39,7 +39,7 @@ namespace PixelMaestro {
 
 		@return Maestro.
 	*/
-	Maestro *Show::getMaestro() {
+	Maestro* Show::get_maestro() {
 		return maestro_;
 	}
 
@@ -48,7 +48,7 @@ namespace PixelMaestro {
 
 		@return Index of the next Event.
 	*/
-	unsigned short Show::getNextIndex() {
+	unsigned short Show::get_next_index() {
 		// Get the next index. If we've exceeded the size of the array, start over from 0
 		if (current_index_ + 1 >= num_events_) {
 			return 0;
@@ -63,7 +63,7 @@ namespace PixelMaestro {
 
 		@param maestro Pointer to the Maestro that the show will control.
 	*/
-	void Show::setMaestro(Maestro *maestro) {
+	void Show::set_maestro(Maestro* maestro) {
 		maestro_ = maestro;
 	}
 
@@ -72,7 +72,7 @@ namespace PixelMaestro {
 
 		@param timing Timing mode used.
 	*/
-	void Show::setTiming(TimingModes timing) {
+	void Show::set_timing(TimingModes timing) {
 		timing_ = timing;
 	}
 
@@ -80,26 +80,26 @@ namespace PixelMaestro {
 		Sets the Events in the Show.
 
 		@param events Array of Events to queue.
-		@param numEvents The number of Events in the queue.
+		@param num_events The number of Events in the queue.
 	*/
-	void Show::setEvents(Event** events, unsigned char numEvents) {
+	void Show::set_events(Event** events, unsigned char num_events) {
 		events_ = events;
-		num_events_ = numEvents;
+		num_events_ = num_events;
 	}
 
 	/**
 		Toggles whether to loop when the Events are done running.
 	*/
-	void Show::toggleLooping() {
+	void Show::toggle_looping() {
 		loop_ = !loop_;
 	}
 
 	/**
 		Main update routine.
 
-		@param currentTime Program runtime.
+		@param current_time Program runtime.
 	*/
-	void Show::update(const unsigned long &currentTime) {
+	void Show::update(const unsigned long& current_time) {
 		// Only run if we're looping, or if we haven't reached the end of the Event list yet.
 		if (loop_ || (!loop_ && last_index_ != (num_events_ - 1))) {
 			/*
@@ -108,16 +108,16 @@ namespace PixelMaestro {
 				If RELATIVE, compare the time since the last Event to the queued Event's start time.
 				After running the Event, update the last run time and last run Event index.
 			*/
-			if ((timing_ == TimingModes::ABSOLUTE && (currentTime >= events_[current_index_]->getTime())) ||
-				(timing_ == TimingModes::RELATIVE && ((currentTime - last_time_) >= events_[current_index_]->getTime()))) {
+			if ((timing_ == TimingModes::ABSOLUTE && (current_time >= events_[current_index_]->get_time())) ||
+				(timing_ == TimingModes::RELATIVE && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
 				events_[current_index_]->run();
 				last_index_ = current_index_;
-				last_time_ = currentTime;
-				current_index_ = getNextIndex();
+				last_time_ = current_time;
+				current_index_ = get_next_index();
 			}
 		}
 
 		// Finally, update the Maestro
-		maestro_->update(currentTime);
+		maestro_->update(current_time);
 	}
 }

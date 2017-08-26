@@ -7,14 +7,14 @@
 namespace PixelMaestro {
 	class ColorsGenerateRandomColorEvent : public Event {
 		public:
-			ColorsGenerateRandomColorEvent(unsigned long time, Colors::RGB *color);
-			ColorsGenerateRandomColorEvent(unsigned long time, Colors::RGB *color, Colors::RGB *selection, unsigned int numOptions);
+			ColorsGenerateRandomColorEvent(unsigned long time, Colors::RGB* color);
+			ColorsGenerateRandomColorEvent(unsigned long time, Colors::RGB* color, Colors::RGB* selection, unsigned int num_options);
 			void run();
 
 		private:
-			Colors::RGB *color_;
+			Colors::RGB* color_;
 			unsigned int num_options_;
-			Colors::RGB *selection_ = nullptr;
+			Colors::RGB* selection_ = nullptr;
 	};
 }
 

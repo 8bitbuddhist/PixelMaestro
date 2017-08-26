@@ -17,25 +17,25 @@ namespace PixelMaestro {
 		public:
 
 			/// The background color of the Canvas.
-			Colors::RGB *bg_color = nullptr;
+			Colors::RGB* bg_color = nullptr;
 
 			/// The foregound color of the Canvas.
-			Colors::RGB *fg_color = nullptr;
+			Colors::RGB* fg_color = nullptr;
 
 			/// How far the Canvas is offset from the Pixel grid origin.
-			Point *offset = nullptr;
+			Point* offset = nullptr;
 
 			/**
 			 * The Canvas' parent Section.
 			 * This is automatically set after using Section::setCanvas().
 			 */
-			Section *parent_section = nullptr;
+			Section* parent_section = nullptr;
 
 			/**
 				The pattern to display.
 				Stored as an array of booleans where 1 indicates an active Pixel.
 			*/
-			bool *pattern = nullptr;
+			bool* pattern = nullptr;
 
 			/// Whether to repeat the Pattern over the grid (requires scrollRate to be set).
 			bool repeat = false;
@@ -45,21 +45,22 @@ namespace PixelMaestro {
 			 * Scroll time is determined by the Section refresh rate * the scroll interval.
 			 * Setting an axis to 0 (default) disables scrolling on that axis.
 			 */
-			Point *scroll_interval = nullptr;
+			Point* scroll_interval = nullptr;
 
 			/// The last time the Canvas scrolled.
 			unsigned long last_scroll = 0;
 
-			Canvas(bool *pattern);
-			void drawChar(Point *origin, Font *font, const char character);
-			void drawCircle(Point *origin, unsigned short radius, bool fill);
-			void drawLine(Point *origin, Point *target);
-			void drawRect(Point *origin, Point *size, bool fill);
-			void drawText(Point *origin, Font *font, const char *text, unsigned int numChars);
-			void drawTriangle(Point *point_a, Point *point_b, Point *point_c, bool fill);
-			void togglePixel(Point *coordinate);
-			void update(const unsigned long &currentTime);
-			~Canvas();			
+			Canvas(bool* pattern);
+			void draw_char(Point* origin, Font* font, const char character);
+			void draw_circle(Point* origin, unsigned short radius, bool fill);
+			void draw_line(Point* origin, Point* target);
+			void draw_rect(Point* origin, Point* size, bool fill);
+			void draw_text(Point* origin, Font* font, const char* text, unsigned int num_chars);
+			void draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill);
+			bool in_bounds(Point* point);
+			void toggle_pixel(Point* coordinate);
+			void update(const unsigned long& current_time);
+			~Canvas();
 	};
 }
 

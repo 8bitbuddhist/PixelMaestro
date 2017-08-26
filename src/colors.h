@@ -21,33 +21,33 @@ namespace PixelMaestro {
 				/// The color's blue value.
 				unsigned char b;
 
-				void operator=(RGB colorTwo) {
-					r = colorTwo.r;
-					g = colorTwo.g;
-					b = colorTwo.b;
+				void operator=(RGB color_two) {
+					r = color_two.r;
+					g = color_two.g;
+					b = color_two.b;
 				}
 
-				bool operator==(RGB colorTwo) {
-					return r == colorTwo.r && g == colorTwo.g && b == colorTwo.b;
+				bool operator==(RGB color_two) {
+					return r == color_two.r && g == color_two.g && b == color_two.b;
 				}
 
-				bool operator!=(RGB colorTwo) {
-					return !operator==(colorTwo);
+				bool operator!=(RGB color_two) {
+					return !operator==(color_two);
 				}
 
-				RGB operator+(RGB colorTwo) {
+				RGB operator+(RGB color_two) {
 					return {
-						(unsigned char)((r + colorTwo.r) % 255),
-						(unsigned char)((g + colorTwo.g) % 255),
-						(unsigned char)((b + colorTwo.b) % 255)
+						(unsigned char)((r + color_two.r) % 255),
+						(unsigned char)((g + color_two.g) % 255),
+						(unsigned char)((b + color_two.b) % 255)
 					};
 				}
 
-				RGB operator-(RGB colorTwo) {
+				RGB operator-(RGB color_two) {
 					return {
-						(unsigned char)((r - colorTwo.r) % 255),
-						(unsigned char)((g - colorTwo.g) % 255),
-						(unsigned char)((b - colorTwo.b) % 255)
+						(unsigned char)((r - color_two.r) % 255),
+						(unsigned char)((g - color_two.g) % 255),
+						(unsigned char)((b - color_two.b) % 255)
 					};
 				}
 
@@ -106,11 +106,11 @@ namespace PixelMaestro {
 			static RGB COLORWHEEL[];
 			static RGB RAINBOW[];
 
-			static RGB generateRandomColor();
-			static void generateRandomColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, float range = 1.0);
-			static void generateScalingColorArray(RGB newArray[], RGB *baseColor, RGB *targetColor, unsigned int numColors, bool reverse = false);
-			static void generateScalingColorArray(RGB newArray[], RGB *baseColor, unsigned int numColors, unsigned char threshold, bool reverse = false);
-			static RGB mixColors(RGB *colorOne, RGB *colorTwo, MixMode mode, float alpha = 0);
+			static RGB generate_random_color();
+			static void generate_random_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, float range = 1.0);
+			static void generate_scaling_color_array(RGB new_array[], RGB* base_color, RGB* target_color, unsigned int num_colors, bool reverse = false);
+			static void generate_scaling_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, unsigned char threshold, bool reverse = false);
+			static RGB mixColors(RGB* color_one, RGB* color_two, MixMode mode, float alpha = 0);
 	};
 }
 

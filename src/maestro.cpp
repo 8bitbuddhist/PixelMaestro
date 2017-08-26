@@ -11,7 +11,7 @@ namespace PixelMaestro {
 
 		@return Number of Sections.
 	*/
-	unsigned short Maestro::getNumSections() {
+	unsigned short Maestro::get_num_sections() {
 		return num_sections_;
 	}
 
@@ -20,18 +20,18 @@ namespace PixelMaestro {
 
 		@return Refresh rate of the fastest Section.
 	*/
-	unsigned short Maestro::getRefreshRate() {
+	unsigned short Maestro::get_refresh_rate() {
 		// Start off at the slowest possible speed
-		unsigned short minRefreshRate = 65535;
+		unsigned short min_refresh_rate = 65535;
 
 		// The Maestro must be at least as fast as the fastest animation.
 		for (unsigned short section = 0; section < num_sections_; section++) {
-			if (sections_[section].getRefreshRate() < minRefreshRate) {
-				minRefreshRate = sections_[section].getRefreshRate();
+			if (sections_[section].get_refresh_rate() < min_refresh_rate) {
+				min_refresh_rate = sections_[section].get_refresh_rate();
 			}
 		}
 
-		return minRefreshRate;
+		return min_refresh_rate;
 	}
 
 	/**
@@ -39,7 +39,7 @@ namespace PixelMaestro {
 
 		@return Whether the Maestro is running.
 	*/
-	bool Maestro::getRunning() {
+	bool Maestro::get_running() {
 		return running_;
 	}
 
@@ -49,7 +49,7 @@ namespace PixelMaestro {
 		@param section Index of the Section to return.
 		@return Section at the specified index.
 	*/
-	Section *Maestro::getSection(unsigned short section) {
+	Section* Maestro::get_section(unsigned short section) {
 		return &sections_[section];
 	}
 
@@ -57,30 +57,30 @@ namespace PixelMaestro {
 		Sets the Sections used in the Maestro.
 
 		@param sections Array of Sections.
-		@param numSections Number of Sections in the array.
+		@param num_sections Number of Sections in the array.
 	*/
-	void Maestro::setSections(Section *sections, unsigned short numSections) {
+	void Maestro::set_sections(Section* sections, unsigned short num_sections) {
 		sections_ = sections;
-		num_sections_ = numSections;
+		num_sections_ = num_sections;
 	}
 
 	/**
 		Toggles whether the Maestro is conducting (running).
 	*/
-	void Maestro::toggleRunning() {
+	void Maestro::toggle_running() {
 		running_ = !running_;
 	}
 
 	/**
 		Main update routine.
 
-		@param currentTime Program runtime.
+		@param current_time Program runtime.
 	*/
-	void Maestro::update(const unsigned long &currentTime) {
+	void Maestro::update(const unsigned long& current_time) {
 		// Call each Section's update method.
 		if (running_) {
 			for (unsigned short section = 0; section < num_sections_; section++) {
-				sections_[section].update(currentTime);
+				sections_[section].update(current_time);
 			}
 		}
 	}
