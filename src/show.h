@@ -41,9 +41,6 @@ namespace PixelMaestro {
 			/// Events used in the Show.
 			Event **events_;
 
-			/// The index of the last run Event.
-			unsigned short last_index_ = 0;
-
 			/// The time that the last Event ran.
 			unsigned long last_time_ = 0;
 

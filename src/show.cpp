@@ -50,7 +50,7 @@ namespace PixelMaestro {
 	*/
 	unsigned short Show::get_next_index() {
 		// Get the next index. If we've exceeded the size of the array, start over from 0
-		if (current_index_ + 1 >= num_events_) {
+		if (loop_ && (current_index_ + 1 >= num_events_)) {
 			return 0;
 		}
 		else {
@@ -99,9 +99,9 @@ namespace PixelMaestro {
 
 		@param current_time Program runtime.
 	*/
-	void Show::update(const unsigned long& current_time) {
+	void Show::update(const unsigned long& current_time) {		
 		// Only run if we're looping, or if we haven't reached the end of the Event list yet.
-		if (loop_ || (!loop_ && last_index_ != (num_events_ - 1))) {
+		if (loop_ || (!loop_ && current_index_ != num_events_)) {
 			/*
 				Based on the timing method used, determine whether to run the Event.
 				If ABSOLUTE, compare the current time to the queued Event's start time.
@@ -111,7 +111,6 @@ namespace PixelMaestro {
 			if ((timing_ == TimingModes::ABSOLUTE && (current_time >= events_[current_index_]->get_time())) ||
 				(timing_ == TimingModes::RELATIVE && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
 				events_[current_index_]->run();
-				last_index_ = current_index_;
 				last_time_ = current_time;
 				current_index_ = get_next_index();
 			}
