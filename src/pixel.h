@@ -13,7 +13,6 @@ namespace PixelMaestro {
 
 		public:
 			Colors::RGB* get_color();
-			unsigned char get_step_count();
 			void set_next_color(Colors::RGB* next_color, bool fade, unsigned short cycle_speed, unsigned short refresh_rate);
 			void update();
 
@@ -24,7 +23,7 @@ namespace PixelMaestro {
 			/// The Pixel's next (i.e. target) color.
 			Colors::RGB* next_color_ = &Colors::BLACK;
 
-			/// The size of each individual step from current_color_ to next_color_ (only applicable when fading).
+			/// The size of each step from current_color_ to next_color_ (only applicable when fading).
 			Colors::RGB step_ = {0, 0, 0};
 
 			/// The number of steps from current_color_ to next_color_ (only applicable when fading).

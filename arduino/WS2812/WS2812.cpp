@@ -39,21 +39,21 @@ void setup () {
     ws.setOutput(LED_PIN);
     ws.setColorOrderGRB();
 
-    sections[0].setColors(Colors::COLORWHEEL, 12);
+    sections[0].set_colors(Colors::COLORWHEEL, 12);
 
-    maestro.setSections(sections, 1);
+    maestro.set_sections(sections, 1);
 
-    show.setMaestro(&maestro);
-    show.setTiming(Show::TimingModes::RELATIVE);
-    show.setEvents(Events, NUM_EventS);
-    show.toggleLooping();
+    show.set_maestro(&maestro);
+    show.set_timing(Show::TimingModes::RELATIVE);
+    show.set_events(Events, NUM_EventS);
+    show.toggle_looping();
 }
 
 void loop() {
     show.update(millis());
 
     for (unsigned char pixel = 0; pixel < NUM_PIXELS; pixel++) {
-      ws.set_crgb_at(pixel, RGBtoCRGB(sections[0].getPixelColor(pixel)));
+      ws.set_crgb_at(pixel, RGBtoCRGB(sections[0].get_pixel_color(pixel)));
     }
 
     ws.sync();

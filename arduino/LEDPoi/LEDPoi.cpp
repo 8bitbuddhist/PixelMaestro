@@ -1,11 +1,10 @@
 #include <Arduino.h>
+#include <WS2812.h>
 
 #include <show.h>
 #include <show/sectionsetcoloranimationevent.h>
 #include <show/colorsgeneraterandomcolorevent.h>
 #include <show/colorsgeneratescalingcolorarrayevent.h>
-
-#include <WS2812.h>
 
 using namespace PixelMaestro;
 
@@ -21,7 +20,7 @@ Section sections[] = {
 	Section(pixels, new Point(ROWS, COLUMNS)),
 };
 Colors::RGB colors[NUM_COLORS];
-Colors::RGB baseColor, targetColor;	// These store random colors which are used to generate color schemes.
+Colors::RGB base_color, target_color;	// These store random colors which are used to generate color schemes.
 
 // This array stores the base colors that we'll use to generate color schemes.
 const unsigned char NUM_SOURCE_COLORS = 10;
@@ -50,16 +49,16 @@ Section::ColorAnimations animations[] = {
 
 Show show;
 const unsigned int INTERVAL = 10000;	// 10 seconds between each Event.
-const unsigned char NUM_EventS = 4;
-Event *Events[] = {
+const unsigned char NUM_EVENTS = 4;
+Event *events[] = {
 	// Switch to the next animation.
 	new SectionSetColorAnimationEvent(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, false, Section::AnimationOrientations::HORIZONTAL),
 	// Select a new color scheme base color from the list of source colors.
-	new ColorsGenerateRandomColorEvent(0, &baseColor, source_colors, NUM_SOURCE_COLORS),
+	new ColorsGenerateRandomColorEvent(0, &base_color, source_colors, NUM_SOURCE_COLORS),
 	// Select a new color scheme target color from the list of source colors.
-	new ColorsGenerateRandomColorEvent(0, &targetColor, source_colors, NUM_SOURCE_COLORS),
+	new ColorsGenerateRandomColorEvent(0, &target_color, source_colors, NUM_SOURCE_COLORS),
 	// Create the new color scheme.
-	new ColorsGenerateScalingColorArrayEvent(0, colors, &baseColor, &targetColor, NUM_COLORS, false)
+	new ColorsGenerateScalingColorArrayEvent(0, colors, &base_color, &target_color, NUM_COLORS, false)
 };
 
 // Initialize WS2812 components.
@@ -92,18 +91,18 @@ void setup () {
 	}
 
 	// Set the initial color array to all black.
-	Colors::generateScalingColorArray(colors, &Colors::BLACK, &Colors::BLACK, COLUMNS, false);
-	sections[0].setColors(colors, NUM_COLORS);
-	sections[0].setCycleInterval(100);
-	sections[0].toggleFade();
+	Colors::generate_scaling_color_array(colors, &Colors::BLACK, &Colors::BLACK, COLUMNS, false);
+	sections[0].set_colors(colors, NUM_COLORS);
+	sections[0].set_cycle_interval(100);
+	sections[0].toggle_fade();
 
-	maestro.setSections(sections, 1);
+	maestro.set_sections(sections, 1);
 
 	// Initialize the Show.
-	show.setMaestro(&maestro);
-	show.setTiming(Show::TimingModes::RELATIVE);
-	show.setEvents(Events, NUM_EventS);
-	show.toggleLooping();
+	show.set_maestro(&maestro);
+	show.set_timing(Show::TimingModes::RELATIVE);
+	show.set_events(events, NUM_EVENTS);
+	show.toggle_looping();
 }
 
 void loop() {
@@ -112,7 +111,7 @@ void loop() {
 	// For each Pixel, set the corresponding WS2812 pixel to the Pixel's color.
 	for (unsigned char pixel = 0; pixel < NUM_PIXELS; pixel++) {
 		for (unsigned char strip = 0; strip < NUM_WS_STRIPS; strip++) {
-			ws[strip].set_crgb_at(pixel, RGBtoCRGB(sections[0].getPixelColor(pixel)));
+			ws[strip].set_crgb_at(pixel, RGBtoCRGB(sections[0].get_pixel_color(pixel)));
 		}
 	}
 

@@ -18,16 +18,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the current step count.
-		Used by RGBArray to determine when the LED has finished its cycle.
-
-		@return The current step count.
-	*/
-	unsigned char Pixel::get_step_count() {
-		return step_count_;
-	}
-
-	/**
 		Sets the LED's target color.
 
 		@param color New color to store.
