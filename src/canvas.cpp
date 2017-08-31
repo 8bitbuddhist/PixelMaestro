@@ -18,6 +18,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Blanks out the Canvas (all drawn entities will be lost!).
+	 */
+	void Canvas::clear() {
+		for (int pixel = 0; pixel < (parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
+			pattern[pixel] = false;
+		}
+	}
+
+	/**
 	 * Draws a single character.
 	 * @param origin The starting coordinates.
 	 * @param font The Font to render the text in.

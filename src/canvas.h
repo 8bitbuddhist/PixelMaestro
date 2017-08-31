@@ -33,7 +33,7 @@ namespace PixelMaestro {
 
 			/**
 				The pattern to display.
-				Stored as an array of booleans where 1 indicates an active Pixel.
+				Stored as an array of booleans where 'true' indicates an active Pixel.
 			*/
 			bool* pattern = nullptr;
 
@@ -51,6 +51,7 @@ namespace PixelMaestro {
 			unsigned long last_scroll = 0;
 
 			Canvas(bool* pattern);
+			void clear();
 			void draw_char(Point* origin, Font* font, const char character);
 			void draw_circle(Point* origin, unsigned short radius, bool fill);
 			void draw_line(Point* origin, Point* target);
