@@ -48,7 +48,7 @@ namespace PixelMaestro {
 			Point* scroll_interval = nullptr;
 
 			/// The last time the Canvas scrolled.
-			unsigned long last_scroll = 0;
+			unsigned long last_scroll_x, last_scroll_y = 0;
 
 			Canvas(bool* pattern);
 			void clear();
@@ -59,6 +59,7 @@ namespace PixelMaestro {
 			void draw_text(Point* origin, Font* font, const char* text, unsigned int num_chars);
 			void draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill);
 			bool in_bounds(Point* point);
+			void scroll(const unsigned long& current_time);
 			void toggle_pixel(Point* coordinate);
 			void update(const unsigned long& current_time);
 			~Canvas();

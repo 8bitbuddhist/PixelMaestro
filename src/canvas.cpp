@@ -228,6 +228,64 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Scrolls the Canvas by 1 increment.
+	 * @param current_time The program's current runtime).
+	 */
+	void Canvas::scroll(const unsigned long& current_time) {
+		/*
+		 * If Canvas::scroll_interval is set, scroll the Canvas.
+		 * scroll_interval dictates how many refreshes will occur before the Canvas is scrolled.
+		 * For each axis, determine the impact of scroll_interval-><axis> and make the change.
+		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the opposite side.
+		 */
+		if (scroll_interval) {
+			unsigned long target_time = current_time - last_scroll_x;
+			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section->get_refresh_rate()) <= target_time) {
+
+				// Increment or decrement the offset depending on the scroll direction.
+				if (scroll_interval->x > 0) {
+					offset->x++;
+				}
+				else {
+					offset->x--;
+				}
+
+				// Check the bounds of the parent Section.
+				if (offset->x >= parent_section->get_dimensions()->x) {
+					offset->x = 0;
+				}
+				else if (offset->x - 1 < 0) {
+					offset->x = parent_section->get_dimensions()->x;
+				}
+
+				last_scroll_x = current_time;
+			}
+
+			target_time = current_time - last_scroll_y;
+			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section->get_refresh_rate()) <= target_time) {
+
+				// Increment or decrement the offset depending on the scroll direction.
+				if (scroll_interval->y > 0) {
+					offset->y++;
+				}
+				else {
+					offset->y--;
+				}
+
+				// Check the bounds of the parent Section.
+				if (offset->y >= parent_section->get_dimensions()->y) {
+					offset->y = 0;
+				}
+				else if (offset->y - 1 < 0) {
+					offset->y = parent_section->get_dimensions()->y;
+				}
+
+				last_scroll_y = current_time;
+			}
+		}
+	}
+
+	/**
 	 * Toggles the Pixel at the specified coordinates.
 	 * @param coordinates Location of the Pixel to toggle.
 	 */
@@ -297,56 +355,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		/*
-		 * If Canvas::scroll_interval is set, scroll the Canvas.
-		 * scroll_interval dictates how many refreshes will occur before the Canvas is scrolled.
-		 * For each axis, determine the impact of scroll_interval-><axis> and make the change.
-		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the opposite side.
-		 */
-		if (scroll_interval) {
-			unsigned long target_time = current_time - last_scroll;
-			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section->get_refresh_rate()) <= target_time) {
-
-				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_interval->x > 0) {
-					offset->x++;
-				}
-				else {
-					offset->x--;
-				}
-
-				// Check the bounds of the parent Section.
-				if (offset->x >= parent_section->get_dimensions()->x) {
-					offset->x = 0;
-				}
-				else if (offset->x - 1 < 0) {
-					offset->x = parent_section->get_dimensions()->x;
-				}
-
-				last_scroll = current_time;
-			}
-
-			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section->get_refresh_rate()) <= target_time) {
-
-				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_interval->y > 0) {
-					offset->y++;
-				}
-				else {
-					offset->y--;
-				}
-
-				// Check the bounds of the parent Section.
-				if (offset->y >= parent_section->get_dimensions()->y) {
-					offset->y = 0;
-				}
-				else if (offset->y - 1 < 0) {
-					offset->y = parent_section->get_dimensions()->y;
-				}
-
-				last_scroll = current_time;
-			}
-		}
+		scroll(current_time);
 	}
 
 	Canvas::~Canvas() {
