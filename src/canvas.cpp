@@ -55,7 +55,7 @@ namespace PixelMaestro {
 	 * Draws a circle.
 	 * @param origin The center of the circle.
 	 * @param radius The circle's radius.
-	 * @param fill Whether to fill the circle (NOT IMPLEMENTED).
+	 * @param fill Whether to fill the circle or leave it empty.
 	 */
 	void Canvas::draw_circle(Point* origin, unsigned short radius, bool fill) {
 		// (x – h)2 + (y – k)2 = r2
@@ -63,13 +63,13 @@ namespace PixelMaestro {
 
 		/*
 		 * First, get the min and max x-values, then the min and max y-values.
-		 * Then, scan over the rectangle created with these points and test each Pixel against the equation.
-		 * If the Pixel matches, activate it.
-		 * Horrible, yes, but it works.
+		 * Then, create a hypothetical square using these points and iterate over each pixel in the square.
+		 * If the pixel satisfies the equation, activate it:
+		 *		(cursor.x – origin.x)^2 + (cursor.y – origin.y)^2 = radius^2
 		 */
 		Point cursor = { 0, 0 };
-		int test_point; // Placeholder for calculating points along the circle line
-		int radius_squared = Utility::square(radius);
+		unsigned int test_point; // Placeholder for calculating points along the circle line
+		unsigned int radius_squared = Utility::square(radius);
 		for (cursor.x = origin->x - radius; cursor.x <= origin->x + radius; cursor.x++) {
 			for (cursor.y = origin->y - radius; cursor.y <= origin->y + radius; cursor.y++) {
 				if (in_bounds(&cursor)) {
@@ -78,12 +78,12 @@ namespace PixelMaestro {
 					/*
 					 * Check if the test point lies along the line.
 					 * We use radius as a sort of tolerance, otherwise only a few pixels would activate.
+					 * Or, if fill is enabled, check to see if the point lies inside the circle
 					 */
-					if (test_point >= radius_squared - radius && test_point <= radius_squared + radius) {
+					if ((test_point >= radius_squared - radius && test_point <= radius_squared + radius) ||
+						(fill && test_point < Utility::square(radius))) {
 						this->pattern[parent_section->get_pixel_index(&cursor)] = 1;
 					}
-
-					// TODO: Implement fill
 				}
 			}
 		}
@@ -150,7 +150,7 @@ namespace PixelMaestro {
 	 * Draws a rectangle.
 	 * @param origin The starting coordinates.
 	 * @param size The size of the rectangle.
-	 * @param fill Whether to fill the rectangle or leave it empty
+	 * @param fill Whether to fill the rectangle or leave it empty.
 	 */
 	void Canvas::draw_rect(Point* origin, Point* size, bool fill) {
 		Point cursor = { origin->x, origin->y };
@@ -208,14 +208,39 @@ namespace PixelMaestro {
 	 * @param point_a The first point of the triangle.
 	 * @param point_b The next point clockwise from point a.
 	 * @param point_c The third point of the triangle.
-	 * @param fill Whether to fill the triangle (NOT IMPLEMENTED).
+	 * @param fill Whether to fill the triangle or leave it empty.
 	 */
 	void Canvas::draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill) {
 		this->draw_line(point_a, point_b);
 		this->draw_line(point_b, point_c);
 		this->draw_line(point_c, point_a);
 
-		// TODO: Implement fill
+		if (fill) {
+			/*
+			 * Create a hypothetical square using the points of the triangle.
+			 * Then, iterate over each point in that square.
+			 * If the square lies within the triangle, fill it.
+			 *
+			 * This uses barycentric coordinates to check whether the cursor is inside the triangle.
+			 *		https://en.wikipedia.org/wiki/Barycentric_coordinate_system_(mathematics)
+			 *		https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+			 */
+			Point cursor = { 0, 0 };
+			float area, s, t;
+			area = 0.5 *(-point_b->y*point_c->x + point_a->y*(-point_b->x + point_c->x) + point_a->x*(point_b->y - point_c->y) + point_b->x*point_c->y);
+
+			// Until I find a more efficient way to do this, we're just gonna iterate through each pixel in the grid.
+			for (cursor.x = 0; cursor.x < parent_section->get_dimensions()->x; cursor.x++) {
+				for (cursor.y = 0; cursor.y < parent_section->get_dimensions()->y; cursor.y++) {
+					s = 1/(2*area)*(point_a->y*point_c->x - point_a->x*point_c->y + (point_c->y - point_a->y)*cursor.x + (point_a->x - point_c->x)*cursor.y);
+					t = 1/(2*area)*(point_a->x*point_b->y - point_a->y*point_b->x + (point_a->y - point_b->y)*cursor.x + (point_b->x - point_a->x)*cursor.y);
+
+					if (s > 0 && t > 0 && 1-s-t > 0) {
+						this->pattern[parent_section->get_pixel_index(&cursor)] = 1;
+					}
+				}
+			}
+		}
 	}
 
 	/**

@@ -8,8 +8,10 @@ See the [CanvasDemo class](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT ap
 2. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
 3. [Drawing Shapes](#drawing-shapes)
 	1. [Drawing Lines](#drawing-lines)
-	2. [Drawing Text](#drawing-text)
-	3. [Drawing Rectangles](#drawing-rectangles)
+	2. [Drawing Rectangles](#drawing-rectangles)
+	3. [Drawing Text](#drawing-text)
+	4. [Drawing Triangles](#drawing-triangles)
+	5. [Clearing the Canvas](#clearing-the-canvas)
 4. [Scrolling](#scrolling)
 	1. [Repeated Scrolling](#repeated-scrolling)
 5. [Offsetting](#offsetting)
@@ -39,16 +41,24 @@ Options such as custom widths and colors per-shape are planned, but not currentl
 ### Drawing Lines
 The `draw_line` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends.
 
+### Drawing Rectangles
+The `draw_rect` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
+
 ### Drawing Text
 The `draw_char` and `draw_text` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `draw_text`, you must also specify the number of characters in the string.
 
-### Drawing Rectangles
-The `draw_rect` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
+### Drawing Triangles
+The `draw_triangle` method draws a triangle using the three specified coordinates. You can also `fill` the triangle or leave the center transparent.
+
+### Clearing the Canvas
+The `clear()` method returns the Canvas to a blank slate by setting each pixel to `false`.
 
 ## Scrolling
 You can scroll a Canvas horizontally, vertically, or both by setting `Canvas::scroll_interval`. `scroll_interval` defines both the direction and amount of time before the Canvas is scrolled. Time is measured in terms of refresh cycles, e.g. a scroll interval of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. The same goes for `-2` as well.
 
  `scroll_rate->x` scrolls along the horizontal axis and `scroll_rate->y` scrolls along the vertical axis. These values can be negative, which scrolls left instead of right for `scroll_rate->x` and up instead of down for `scroll_rate->y`.
+
+Call `Canvas::scroll()` to trigger a scroll. A scroll is also triggered automatically on `Canvas::update()`. Setting `scroll_interval` to 0 on either axis disables scrolling on that axis altogether.
 
 The following code scrolls 1 Pixel to the right on each refresh cycle, and 1 Pixel up every other refresh cycle.
 ```c++
@@ -56,7 +66,7 @@ canvas->scroll_interval = new Point(1, -2);
 ```
 
 ### Repeated Scrolling
-By default, the Canvas will "jump" back to its starting point when it reaches the end of the scroll. Setting the `repeat` property to `true` wraps the Canvas around from one end of the grid to the opposite end, making it appear to scroll infinitely.
+By default, the Canvas will "jump" back to its starting point when it reaches the end of the scroll, i.e, when the scroll amount becomes equivalent to the width of the Canvas. Setting the `repeat` property to `true` wraps the Canvas around from one end of the grid to the opposite end, making it appear to scroll infinitely.
 
 ## Offsetting
 Offsetting shifts the Canvas' starting point to another place on the Pixel grid. By default the offset is set to 0, meaning the starting point is the same as the Pixel grid's starting point. These values can be negative.
@@ -68,6 +78,6 @@ canvas->offset->y = 1;
 section->set_canvas(canvas);
 ```
 
-By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will not be drawn. However, setting `Pattern::repeat` to true draws the hidden part by wrapping it to the opposite end of the Canvas.
+By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will not be drawn, and the empty space is filled by the Section's ColorAnimation. However, setting `Pattern::repeat` to true wraps the Canvas to the opposite end of the grid, filling in this empty space.
 
 [Home](README.md)
