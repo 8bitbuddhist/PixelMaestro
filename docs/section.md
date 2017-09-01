@@ -50,7 +50,7 @@ The animations available to you are listed in the `Section::ColorAnimations` enu
 * WAVE: Displays colors as a wave moving across the Section.
 * PONG: Moves a wave of colors back and forth across the Section.
 * MERGE: Converges colors into the center of the Section.
-* RANDOMINDEX: Changes each Pixel to a random color stored in the array.
+* RANDOM: Changes each Pixel to a random color stored in the array.
 * SPARKLE: Quickly flashes a random Pixel on. The activated Pixel is randomly generated on each cycle update using a threshold that you can specify in the [AnimationOpts](#providing-additional-options) parameter.
 * NEXT: Shortcut for skipping to the next animation.
 

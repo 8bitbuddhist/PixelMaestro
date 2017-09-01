@@ -40,7 +40,7 @@ void MaestroControl::initialize() {
 
 	// Set default values
 	ui->animationComboBox->setCurrentIndex(2);
-	ui->cycleSlider->setValue(this->active_section_controller_->get_section()->get_cycle_speed());
+	ui->cycleSlider->setValue(this->active_section_controller_->get_section()->get_cycle_interval());
 	ui->rowsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->y);
 	ui->columnsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->x);
 	ui->sectionComboBox->addItem("Section 1");

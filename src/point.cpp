@@ -21,7 +21,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the x and y coordinates.
+	 * Shortcut for setting the x and y coordinates.
 	 * @param x X-axis coordinate.
 	 * @param y Y-axis coordinate.
 	 */

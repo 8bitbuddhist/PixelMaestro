@@ -30,7 +30,7 @@ namespace PixelMaestro {
 
 			/// Set of animations usable by the Section.
 			enum ColorAnimations {
-				/// Placeholder used to skip to the next animation.
+				/// Placeholder used to skip to the next animation. This should always be the first animation in the list.
 				NEXT,
 
 				/// Sets each Pixel to its corresponding color.
@@ -38,6 +38,9 @@ namespace PixelMaestro {
 
 				/// Alternates Pixels between their default color and black (off).
 				BLINK,
+
+				/// Cycles Pixels through all stored colors.
+				CYCLE,
 
 				/// Scrolls the color array across the Section.
 				WAVE,
@@ -48,14 +51,11 @@ namespace PixelMaestro {
 				/// Converges the color array into the center of the Section.
 				MERGE,
 
-				/// Sets each Pixel to a random color stored in colors_.
-				RANDOMINDEX,
+				/// Sets each Pixel to a random color.
+				RANDOM,
 
 				/// Creates a shimmering effect by turning on random pixels.
 				SPARKLE,
-
-				/// Cycles all pixels through all stored colors.
-				CYCLE,
 
 				/// Turns off the Section. This should always be the last animation in the list.
 				NONE
@@ -66,7 +66,10 @@ namespace PixelMaestro {
 				When getting color output, use getPixelColor(). This returns RGB values after blending the two Sections together.
 			*/
 			struct Overlay {
-				/// The Section to overlay.
+				/**
+				 * The Section to use as the overlay.
+				 * This is different from the Section containing the Overlay object.
+				 */
 				Section* section = nullptr;
 
 				/// Method of blending the output from the Overlay with the base Section.
@@ -76,8 +79,8 @@ namespace PixelMaestro {
 				float alpha;
 
 				/**
-				 * Constructor. The Section will automatically be deleted when the Overlay is deleted.
-				 * @param section New Section to use.
+				 * Constructor.
+				 * @param section Section to use as the Overlay.
 				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For MixMode::ALPHA, the amount of transparency that the Overlay will have.
 				 */
@@ -92,7 +95,7 @@ namespace PixelMaestro {
 			AnimationOpts *get_animation_opts();
 			Canvas* get_canvas();
 			Section::ColorAnimations get_color_animation();
-			unsigned short get_cycle_speed();
+			unsigned short get_cycle_interval();
 			Point* get_dimensions();
 			bool get_fade();
 			Section::Overlay* get_overlay();
@@ -101,12 +104,12 @@ namespace PixelMaestro {
 			Colors::RGB get_pixel_color(unsigned int pixel);
 			unsigned int get_pixel_index(Point* coordinates);
 			unsigned int get_pixel_index(unsigned short x, unsigned short y);
-			unsigned short get_refresh_rate();
+			unsigned short get_refresh_interval();
 			void set_all(Colors::RGB* color);
 			void set_canvas(Canvas* canvas);
 			void set_color_animation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverse_animation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL));
-			void set_colors(Colors::RGB* colors, unsigned int num_colors);
-			void set_cycle_index(unsigned int index);
+			void set_colors(Colors::RGB* colors, unsigned short num_colors);
+			void set_cycle_index(unsigned short index);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short row, unsigned short column, Colors::RGB* color);
@@ -134,7 +137,7 @@ namespace PixelMaestro {
 			Colors::RGB* colors_ = nullptr;
 
 			///	The current stage of the animation cycle. Defaults to 0.
-			unsigned int cycle_index_ = 0;
+			unsigned short cycle_index_ = 0;
 
 			/// The time between animation cycles in milliseconds. Defaults to 100.
 			unsigned short cycle_interval_ = 100;
@@ -152,7 +155,7 @@ namespace PixelMaestro {
 			unsigned long last_refresh_ = 0;
 
 			/// The number of colors in colors_.
-			unsigned int num_colors_;
+			unsigned short num_colors_ = 0;
 
 			/// The Section overlaying the current section (if applicable).
 			Overlay* overlay_ = nullptr;
@@ -172,13 +175,13 @@ namespace PixelMaestro {
 			// Color animation functions
 			void animation_blink();
 			void animation_cycle();
-			unsigned int animation_get_color_index(unsigned int count);
+			unsigned short animation_get_color_index(unsigned short count);
 			void animation_merge();
 			void animation_pong();
-			void animation_random_index();
+			void animation_random();
 			void animation_solid();
 			void animation_sparkle();
-			void animation_updateCycle(unsigned int min, unsigned int max);
+			void animation_update_cycle(unsigned short min, unsigned short max);
 			void animation_wave();
 	};
 }

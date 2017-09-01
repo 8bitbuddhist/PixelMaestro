@@ -21,7 +21,7 @@ namespace PixelMaestro {
 	 * Blanks out the Canvas (all drawn entities will be lost!).
 	 */
 	void Canvas::clear() {
-		for (unsigned int pixel = 0; pixel < (parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
+		for (unsigned short pixel = 0; pixel < (parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
 			pattern[pixel] = false;
 		}
 	}
@@ -277,7 +277,7 @@ namespace PixelMaestro {
 		 */
 		if (scroll_interval) {
 			unsigned long target_time = current_time - last_scroll_x;
-			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section->get_refresh_rate()) <= target_time) {
+			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section->get_refresh_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_interval->x > 0) {
@@ -299,7 +299,7 @@ namespace PixelMaestro {
 			}
 
 			target_time = current_time - last_scroll_y;
-			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section->get_refresh_rate()) <= target_time) {
+			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section->get_refresh_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_interval->y > 0) {

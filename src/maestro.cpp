@@ -26,8 +26,8 @@ namespace PixelMaestro {
 
 		// The Maestro must be at least as fast as the fastest animation.
 		for (unsigned short section = 0; section < num_sections_; section++) {
-			if (sections_[section].get_refresh_rate() < min_refresh_rate) {
-				min_refresh_rate = sections_[section].get_refresh_rate();
+			if (sections_[section].get_refresh_interval() < min_refresh_rate) {
+				min_refresh_rate = sections_[section].get_refresh_interval();
 			}
 		}
 

@@ -25,7 +25,7 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 	SectionController *sectionController = maestro_controller_->get_section_controller(0);
 	std::shared_ptr<Section> section = sectionController->get_section();
 	sectionController->set_controller_colors(Colors::COLORWHEEL, 12);
-	section->set_color_animation(Section::ColorAnimations::WAVE);
+	section->set_color_animation(Section::ColorAnimations::MERGE, true, Section::AnimationOrientations::VERTICAL);
 	section->set_canvas(canvas_);
 
 	// Start drawing stuff
