@@ -6,8 +6,6 @@
 
 namespace PixelMaestro {
 
-	Show::Show() {};
-
 	/**
 	 * Constructor.
 	 * @param maestro The Maestro to control using this Show.
@@ -17,45 +15,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the index of the currently queued Event.
-
-		@return Index of the current Event.
-	*/
-	unsigned short Show::get_current_index() {
-		return current_index_;
-	}
-
-	/**
 		Returns whether the Show loops back over its Events, or if it just ends.
 
 		@return Whether or not the Show loops.
 	*/
 	bool Show::get_looping() {
 		return loop_;
-	}
-
-	/**
-		Returns the Maestro controlled by the Show.
-
-		@return Maestro.
-	*/
-	Maestro* Show::get_maestro() {
-		return maestro_;
-	}
-
-	/**
-		Gets the index of the next Event.
-
-		@return Index of the next Event.
-	*/
-	unsigned short Show::get_next_index() {
-		// Get the next index. If we've exceeded the size of the array, start over from 0
-		if (loop_ && (current_index_ + 1 >= num_events_)) {
-			return 0;
-		}
-		else {
-			return current_index_ + 1;
-		}
 	}
 
 	/**
@@ -104,19 +69,34 @@ namespace PixelMaestro {
 		if (loop_ || (!loop_ && current_index_ != num_events_)) {
 			/*
 				Based on the timing method used, determine whether to run the Event.
-				If ABSOLUTE, compare the current time to the queued Event's start time.
-				If RELATIVE, compare the time since the last Event to the queued Event's start time.
-				After running the Event, update the last run time and last run Event index.
+				If ABSOLUTE, compare the current time to the next Event's start time.
+				If RELATIVE, compare the time since the last Event to the next Event's start time.
+				After running the Event, update the last run time and current Event index.
 			*/
 			if ((timing_ == TimingModes::ABSOLUTE && (current_time >= events_[current_index_]->get_time())) ||
 				(timing_ == TimingModes::RELATIVE && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
 				events_[current_index_]->run();
 				last_time_ = current_time;
-				current_index_ = get_next_index();
+				update_event_index();
 			}
 		}
 
 		// Finally, update the Maestro
 		maestro_->update(current_time);
+	}
+
+	// Private methods
+
+	/**
+		Updates the Event index.
+	*/
+	void Show::update_event_index() {
+		// If we've exceeded the size of the array, start over from 0
+		if (loop_ && (current_index_ + 1 >= num_events_)) {
+			current_index_ = 0;
+		}
+		else {
+			current_index_++;
+		}
 	}
 }

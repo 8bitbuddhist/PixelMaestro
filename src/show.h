@@ -23,11 +23,8 @@ namespace PixelMaestro {
 				RELATIVE
 			};
 
-			Show();
 			Show(Maestro* maestro);
-			unsigned short get_current_index();
 			bool get_looping();
-			Maestro* get_maestro();
 			void set_events(Event **events, unsigned char num_events);
 			void set_maestro(Maestro* maestro);
 			void set_timing(TimingModes timing);
@@ -56,7 +53,7 @@ namespace PixelMaestro {
 			/// Method for measuring a Event's start time. Defaults to Absolute.
 			TimingModes timing_ = TimingModes::ABSOLUTE;
 
-			unsigned short get_next_index();
+			void update_event_index();
 	};
 }
 

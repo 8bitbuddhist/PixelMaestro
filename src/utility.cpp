@@ -6,15 +6,6 @@ namespace PixelMaestro {
 	int Utility::seed_ = 1;
 
 	/**
-	 * Returns the absolute value of a float.
-	 * @param val The float to evaluate.
-	 * @return The absolute value of the float.
-	 */
-	float Utility::abs_float(float val) {
-		return val > 0 ? (float)val : (float)-val;
-	}
-
-	/**
 	 * Returns the absolute value of an integer.
 	 * @param val The integer to evaluate.
 	 * @return The absolute value of the integer.

@@ -51,6 +51,8 @@ The `draw_rect` method draws a box with the specified `origin` coordinates, the 
 ### Drawing Text
 The `draw_char` and `draw_text` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `draw_text`, you must also specify the number of characters in the string.
 
+PixelMaestro uses bitmap fonts when rendering text. All fonts inherit from the [Font](../src/canvas/fonts/font.h) class and require you to specify their size and character map. For an example, see the included [5x8 font](../src/canvas/fonts/font5x8.h).
+
 ### Drawing Triangles
 The `draw_triangle` method draws a triangle using the three specified coordinates. You can also `fill` the triangle or leave the center transparent.
 
