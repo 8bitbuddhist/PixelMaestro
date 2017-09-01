@@ -15,6 +15,7 @@ See the [CanvasDemo class](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT ap
 4. [Scrolling](#scrolling)
 	1. [Repeated Scrolling](#repeated-scrolling)
 5. [Offsetting](#offsetting)
+6. [Interactive Canvases](#interactive-canvases)
 
 ## Creating a Canvas
 The following code creates a 10 x 10 Canvas grid and assigns it to a Section. Note that this doesn't display anything by default. The size of the Canvas *should* be the same as the size of the Section, but it doesn't have to be.
@@ -36,10 +37,13 @@ The Canvas class provides specific functions for drawing various shapes, element
 
 Note that you can draw multiple shapes on a single Canvas. Depending on the shape and Canvas configuration, any empty space is treated as transparency.
 
-Options such as custom widths and colors per-shape are planned, but not currently implemented.
+Options such as line widths and colors per-shape are planned, but not currently implemented.
 
 ### Drawing Lines
 The `draw_line` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends.
+
+### Drawing Points
+The `draw_point` method lets you activate a single pixel at a time. You can deactivate a pixel using the `erase` method.
 
 ### Drawing Rectangles
 The `draw_rect` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
@@ -79,5 +83,8 @@ section->set_canvas(canvas);
 ```
 
 By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will not be drawn, and the empty space is filled by the Section's ColorAnimation. However, setting `Pattern::repeat` to true wraps the Canvas to the opposite end of the grid, filling in this empty space.
+
+## Interactive Canvases
+For a demo on how to create an interactive Canvas, see the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class in the PixelMaestro GUI.
 
 [Home](README.md)

@@ -55,12 +55,13 @@ namespace PixelMaestro {
 			void draw_char(Point* origin, Font* font, const char character);
 			void draw_circle(Point* origin, unsigned short radius, bool fill);
 			void draw_line(Point* origin, Point* target);
+			void draw_point(Point* cursor);
 			void draw_rect(Point* origin, Point* size, bool fill);
 			void draw_text(Point* origin, Font* font, const char* text, unsigned int num_chars);
 			void draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill);
+			void erase(Point* cursor);
 			bool in_bounds(Point* point);
 			void scroll(const unsigned long& current_time);
-			void draw_point(Point* coordinate);
 			void update(const unsigned long& current_time);
 			~Canvas();
 	};

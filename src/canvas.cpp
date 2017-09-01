@@ -147,12 +147,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Toggles the Pixel at the specified coordinates.
-	 * @param coordinates Location of the Pixel to toggle.
+	 * Enables the pixel at the specified coordinates.
+	 * @param cursor Location of the pixel to toggle.
 	 */
-	void Canvas::draw_point(Point* coordinates) {
-		unsigned int index = parent_section->get_pixel_index(coordinates);
-		pattern[index] = !pattern[index];
+	void Canvas::draw_point(Point* cursor) {
+		pattern[parent_section->get_pixel_index(cursor)] = 1;
 	}
 
 	/**
@@ -246,6 +245,14 @@ namespace PixelMaestro {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Disables the pixel at the specified coordinate.
+	 * @param cursor The location of the pixel to disable.
+	 */
+	void Canvas::erase(Point* cursor) {
+		pattern[parent_section->get_pixel_index(cursor)] = 0;
 	}
 
 	/**

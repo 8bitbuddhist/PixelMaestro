@@ -10,10 +10,10 @@
 
 CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller_) {
 
-	// Create a new Pixel grid 80 wide and 11 tall.
+	// Create a new Pixel grid.
 	Point* layout = new Point(80, 80);
 
-	// Initializes our Canvas grid to thesame size of the Pixel grid. All values default to false.
+	// Initializes our Canvas grid to the same size of the Pixel grid. All values default to false.
 	canvas_grid_ = new bool[layout->x * layout->y] {0};
 
 	// Create the new Canvas.
@@ -28,16 +28,71 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 	section->set_color_animation(Section::ColorAnimations::WAVE);
 	section->set_canvas(canvas_);
 
-	// Draw "Hello World!" and position it in the center of the Canvas.
-	canvas_->draw_text(new Point(10, 2), new Font5x8(), "Hello World!", 12);
+	// Start drawing stuff
+	Point* cursor = new Point(0, 0);
+	Point* target = new Point(0, 0);
+	// First, box off the Canvas into 4 quadrants
+	cursor->set(40, 0);
+	target->set(40, 80);
+	canvas_->draw_line(cursor, target);
 
-	// Draw a border around the Canvas.
-	//canvas_->drawRect(new Point(0, 0), new Point(80, 11), false);
+	cursor->set(0, 40);
+	target->set(80, 40);
+	canvas_->draw_line(cursor, target);
 
-	canvas_->draw_triangle(new Point(40, 10), new Point(80, 70), new Point(0, 70), false);
+	// Draw "PixelMaestro" in the top-left corner
+	cursor->set(2, 8);
+	target->set(38, 8);
+	canvas_->draw_line(cursor, target);
 
-	canvas_->draw_circle(new Point(40, 40), 40, false);
-	canvas_->draw_circle(new Point(40, 40), 30, false);
-	canvas_->draw_circle(new Point(40, 40), 20, false);
-	canvas_->draw_circle(new Point(40, 40), 10, true);
+	Font *font = new Font5x8();
+	cursor->set(7, 10);
+	canvas_->draw_text(cursor, font, "Pixel", 5);
+
+	cursor->set(2, 20);
+	canvas_->draw_text(cursor, font, "Maestro", 7);
+
+	cursor->set(2, 30);
+	target->set(38, 30);
+	canvas_->draw_line(cursor, target);
+
+	// Draw a few concentric circles in the top-right corner
+	cursor->set(60, 20);
+	canvas_->draw_circle(cursor, 5, true);
+	canvas_->draw_circle(cursor, 10, false);
+	canvas_->draw_circle(cursor, 15, false);
+	canvas_->draw_circle(cursor, 19, false);
+
+	// Draw triangles in the bottom-left corner
+	cursor->set(11, 71);
+	target->set(31, 51);
+	canvas_->draw_triangle(cursor, target, new Point(26, 66), true);
+
+	cursor->set(9, 69);
+	//target->set(9, 49);
+	target->set(14, 54);
+	canvas_->draw_triangle(cursor, target, new Point(29, 49), true);
+
+	cursor->set(0, 80);
+	target->set(40, 40);
+	canvas_->draw_line(cursor, target);
+
+	cursor->set(7, 47);
+	canvas_->draw_rect(cursor, new Point(27, 27), false);
+
+	// Draw a peace symbol in the final quadrant
+	cursor->set(60, 60);
+	canvas_->draw_circle(cursor, 15, false);
+
+	cursor->set(60, 45);
+	target->set(60, 75);
+	canvas_->draw_line(cursor, target);
+
+	// Draw v-lines
+	target->set(60, 60);
+	cursor->set(50, 50);
+	canvas_->draw_line(cursor, target);
+
+	cursor->set(70, 50);
+	canvas_->draw_line(cursor, target);
 }
