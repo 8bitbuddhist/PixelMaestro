@@ -46,7 +46,11 @@ SOURCES += main.cpp\
     ../src/show/canvasdrawtextevent.cpp \
     ../src/show/canvasdrawrectevent.cpp \
     ../src/show/canvasdrawlineevent.cpp \
-    drawingarea/canvasdrawingarea.cpp
+    drawingarea/canvasdrawingarea.cpp \
+    ../src/show/canvasdrawcircleevent.cpp \
+    ../src/show/canvasdrawtriangleevent.cpp \
+    ../src/show/canvasdrawpointevent.cpp \
+    ../src/show/canvasclearevent.cpp
 
 HEADERS += mainwindow.h \
 		demo/blinkdemo.h \
@@ -82,7 +86,11 @@ HEADERS += mainwindow.h \
     ../src/show/canvasdrawtextevent.h \
     ../src/show/canvasdrawrectevent.h \
     ../src/show/canvasdrawlineevent.h \
-    drawingarea/canvasdrawingarea.h
+    drawingarea/canvasdrawingarea.h \
+    ../src/show/canvasdrawcircleevent.h \
+    ../src/show/canvasdrawtriangleevent.h \
+    ../src/show/canvasdrawpointevent.h \
+    ../src/show/canvasclearevent.h
 
 FORMS	+= \
 		mainwindow.ui \

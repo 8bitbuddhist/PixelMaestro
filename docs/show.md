@@ -48,20 +48,24 @@ When a Show completes its last Event, it does nothing except update the Maestro.
 * `Event\* Show::get_current_event()`: Returns the next queued Event.
 
 ## Event List
-The parameters required by each Event should be pretty self-explanatory. You will also need to pass a pointer to the Maestro, Section, or other object being affected by this Event.
+The parameters required by each Event should be pretty self-explanatory. The first parameter is always the time that the Event will start. The second parameter is typically a pointer to the object being manipulated by this Event (e.g. a Maestro, Section, Canvas, etc.) Any other parameters will depend on the action being performed.
+* CanvasClearEvent: Clears everything displayed on Canvas.
 * CanvasDrawCharEvent: Draws a single character onto a Canvas.
+* CanvasDrawCircleEvent: Draws a circle onto a Canvas.
 * CanvasDrawLineEvent: Draws a line onto a Canvas.
+* CanvasDrawPointEvent: Activates a single pixel on a Canvas.
 * CanvasDrawRectEvent: Draws a box onto a Canvas.
 * CanvasDrawTextEvent: Draws a string of characters onto a Canvas.
-* ColorsGenerateRandomColorArrayEvent: Generates a random color array within the specified array.
-* ColorsGenerateRandomColorEvent: Generates a single random color and saves it to the specified Colors::RGB variable.
+* CanvasDrawTriangleEvent: Draws a triangle onto a Canvas.
+* ColorsGenerateRandomColorArrayEvent: Generates a random color array and stores it in the specified array.
+* ColorsGenerateRandomColorEvent: Generates a single random color and stores it in the specified variable.
 * ColorsGenerateScalingColorArrayEvent: Generates an array of colors gradually scaling from the starting color to the target color.
 * MaestroToggleRunEvent: Toggles a Maestro's running state.
-* Sectionset_canvasEvent: Applies a Canvas to a Section.
-* Sectionset_color_animationEvent: Changes a Section's current animation.
+* SectionSetCanvasEvent: Applies a Canvas to a Section.
+* SectionSetColorAnimationEvent: Changes a Section's current animation.
 * SectionSetCycleIntervalEvent: Changes a Section's interval between animation cycles.
 * SectionSetOverlayEvent: Applies an Overlay to a Section.
 * SectionToggleFadeEvent: Toggles animation fading on a Section.
-* SectionUnset_overlayEvent: Removes an Overlay from a Section.
+* SectionUnsetOverlayEvent: Removes an Overlay from a Section.
 
 [Home](README.md)
