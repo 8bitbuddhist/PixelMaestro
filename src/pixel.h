@@ -25,6 +25,10 @@ namespace PixelMaestro {
 
 			/// The size of each step from current_color_ to next_color_ (only applicable when fading).
 			Colors::RGB step_ = {0, 0, 0};
+
+			/// The number of steps from current_color_ to next_color_ (only applicable when fading).
+			unsigned char step_count_ = 0;
+
 	};
 }
 

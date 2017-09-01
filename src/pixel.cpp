@@ -41,10 +41,7 @@ namespace PixelMaestro {
 					(unsigned char)(Utility::abs_int(next_color_->g - current_color_.g) / diff),
 					(unsigned char)(Utility::abs_int(next_color_->b - current_color_.b) / diff)
 				};
-			}
-			else {
-				// Set step_ to 0. This triggers an immediate jump from current_color_ to next_color_.
-				step_ = Colors::BLACK;
+				step_count_ = diff;
 			}
 		}
 	}
@@ -58,7 +55,7 @@ namespace PixelMaestro {
 		 * The existence of step_ means that we are fading.
 		 * If the current color don't match the target color, increment by a step, otherwise jump to target color.
 		 */
-		if ((current_color_ != *next_color_) && (step_.r + step_.g + step_.b > 0)) {
+		if (step_count_ > 0) {
 			// Red
 			if (next_color_->r > current_color_.r) {
 				current_color_.r += step_.r;
@@ -82,6 +79,8 @@ namespace PixelMaestro {
 			else if (next_color_->b < current_color_.b) {
 				current_color_.b -= step_.b;
 			}
+
+			step_count_--;
 		}
 		else {
 			current_color_ = *next_color_;

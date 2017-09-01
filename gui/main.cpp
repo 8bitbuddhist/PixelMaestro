@@ -4,6 +4,7 @@
 #include <QFormLayout>
 #include <QVBoxLayout>
 
+#include "demo/blinkdemo.h"
 #include "demo/canvasdemo.h"
 #include "demo/showdemo.h"
 #include "drawingarea/canvasdrawingarea.h"
@@ -20,7 +21,8 @@ int main(int argc, char* argv[]) {
 	QVBoxLayout *main_layout = w.findChild<QVBoxLayout*>("mainLayout");
 	Q_ASSERT(main_layout);
 
-	CanvasDemo *drawing_area = new CanvasDemo(main_layout->widget(), &controller);
+	BlinkDemo *drawing_area = new BlinkDemo(main_layout->widget(), &controller);
+	// CanvasDemo *drawing_area = new CanvasDemo(main_layout->widget(), &controller);
 	// ShowDemo *drawing_area = new ShowDemo(main_layout->widget(), &controller);
 
 	//CanvasDrawingArea *drawing_area = new CanvasDrawingArea(main_layout->widget(), &controller);
@@ -30,7 +32,7 @@ int main(int argc, char* argv[]) {
 	main_layout->addWidget(drawing_area);
 
 	// Uncomment the following line to add user controls
-	//main_layout->addWidget(new MaestroControl(main_layout->widget(), &controller));
+	main_layout->addWidget(new MaestroControl(main_layout->widget(), &controller));
 
 	// Enable high DPI output
 	a.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);
