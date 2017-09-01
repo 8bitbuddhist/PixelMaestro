@@ -60,7 +60,7 @@ namespace PixelMaestro {
 			void draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill);
 			bool in_bounds(Point* point);
 			void scroll(const unsigned long& current_time);
-			void toggle_pixel(Point* coordinate);
+			void draw_point(Point* coordinate);
 			void update(const unsigned long& current_time);
 			~Canvas();
 	};

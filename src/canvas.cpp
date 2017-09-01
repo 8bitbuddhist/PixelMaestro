@@ -147,6 +147,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Toggles the Pixel at the specified coordinates.
+	 * @param coordinates Location of the Pixel to toggle.
+	 */
+	void Canvas::draw_point(Point* coordinates) {
+		unsigned int index = parent_section->get_pixel_index(coordinates);
+		pattern[index] = !pattern[index];
+	}
+
+	/**
 	 * Draws a rectangle.
 	 * @param origin The starting coordinates.
 	 * @param size The size of the rectangle.
@@ -217,10 +226,6 @@ namespace PixelMaestro {
 
 		if (fill) {
 			/*
-			 * Create a hypothetical square using the points of the triangle.
-			 * Then, iterate over each point in that square.
-			 * If the square lies within the triangle, fill it.
-			 *
 			 * This uses barycentric coordinates to check whether the cursor is inside the triangle.
 			 *		https://en.wikipedia.org/wiki/Barycentric_coordinate_system_(mathematics)
 			 *		https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
@@ -308,15 +313,6 @@ namespace PixelMaestro {
 				last_scroll_y = current_time;
 			}
 		}
-	}
-
-	/**
-	 * Toggles the Pixel at the specified coordinates.
-	 * @param coordinates Location of the Pixel to toggle.
-	 */
-	void Canvas::toggle_pixel(Point* coordinates) {
-		int index = parent_section->get_pixel_index(coordinates);
-		pattern[index] = !pattern[index];
 	}
 
 	/**
