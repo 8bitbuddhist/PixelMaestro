@@ -37,12 +37,13 @@ namespace PixelMaestro {
 			*/
 			bool* pattern = nullptr;
 
-			/// Whether to repeat the Pattern over the grid (requires scrollRate to be set).
+			/// Whether to repeat the Pattern while scrolling over the grid.
 			bool repeat = false;
 
 			/**
-			 * Direction and rate to scroll the Canvas.
-			 * Scroll time is determined by the Section refresh rate * the scroll interval.
+			 * The direction and rate that the Canvas will scroll in.
+			 * Scroll time is determined by the Section refresh rate * the scroll interval, so an interval of '5' means scrolling occurs once on that axis every 5 refreshes.
+			 *
 			 * Setting an axis to 0 (default) disables scrolling on that axis.
 			 */
 			Point* scroll_interval = nullptr;
@@ -57,7 +58,7 @@ namespace PixelMaestro {
 			void draw_line(Point* origin, Point* target);
 			void draw_point(Point* cursor);
 			void draw_rect(Point* origin, Point* size, bool fill);
-			void draw_text(Point* origin, Font* font, const char* text, unsigned int num_chars);
+			void draw_text(Point* origin, Font* font, const char* text, unsigned short num_chars);
 			void draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill);
 			void erase(Point* cursor);
 			bool in_bounds(Point* point);

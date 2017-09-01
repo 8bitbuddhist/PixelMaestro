@@ -21,7 +21,7 @@ namespace PixelMaestro {
 	 * Blanks out the Canvas (all drawn entities will be lost!).
 	 */
 	void Canvas::clear() {
-		for (int pixel = 0; pixel < (parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
+		for (unsigned int pixel = 0; pixel < (parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
 			pattern[pixel] = false;
 		}
 	}
@@ -108,9 +108,8 @@ namespace PixelMaestro {
 		}
 
 		Point cursor = { origin->x, origin->y };
-		float y_intercept = (slope * origin->x) - origin->y;
 
-		// Handle vertical lines right away
+		// Handle vertical lines
 		if (target->x == origin->x) {
 			while (cursor.y != target->y) {
 				if (in_bounds(&cursor)) {
@@ -126,6 +125,7 @@ namespace PixelMaestro {
 			}
 		}
 		else {
+			float y_intercept = (slope * origin->x) - origin->y;
 			/*
 			 * Move the cursor along the x-axis.
 			 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
@@ -162,11 +162,11 @@ namespace PixelMaestro {
 	 */
 	void Canvas::draw_rect(Point* origin, Point* size, bool fill) {
 		Point cursor = { origin->x, origin->y };
-		for (int column = 0; column < size->x; column++) {
+		for (unsigned short column = 0; column < size->x; column++) {
 			// (Re-)Initialize cursor coordinates.
 			cursor.x = origin->x + column;
 			cursor.y = origin->y;
-			for (int row = 0; row < size->y; row++) {
+			for (unsigned short row = 0; row < size->y; row++) {
 				cursor.y = origin->y + row;
 				if (in_bounds(&cursor)) {
 					// Check whether to fill
@@ -199,11 +199,11 @@ namespace PixelMaestro {
 	 * @param text The string to render.
 	 * @param num_chars The number of characters in the string.
 	 */
-	void Canvas::draw_text(Point* origin, Font* font, const char* text, unsigned int num_chars) {
+	void Canvas::draw_text(Point* origin, Font* font, const char* text, unsigned short num_chars) {
 		Point cursor = {origin->x, origin->y};
 
 		// Iterate over each letter and draw using drawChar().
-		for (unsigned int letter = 0; letter < num_chars; letter++) {
+		for (unsigned short letter = 0; letter < num_chars; letter++) {
 			this->draw_char(&cursor, font, text[letter]);
 
 			// Move cursor to the location of the next letter based on the font size.

@@ -32,7 +32,7 @@ class MaestroController {
 		std::vector<Section*> sections_;
 		/// SectionControllers that this MaestroController handles.
 		std::vector<SectionController*> section_controllers_;
-		Show *show_;
+		Show *show_ = nullptr;
 
 		void reassign_sections();
 };
