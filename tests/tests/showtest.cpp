@@ -1,5 +1,5 @@
 #include "../catch/single_include/catch.hpp"
-#include "Maestro.h"
+#include "show.h"
 
 using namespace PixelMaestro;
 

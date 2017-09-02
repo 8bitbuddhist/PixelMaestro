@@ -106,7 +106,7 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB Section::get_pixel_color(unsigned int pixel) {
 		if (overlay_ != nullptr) {
-			return Colors::mixColors(get_pixel(pixel)->get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha);
+			return Colors::mix_colors(get_pixel(pixel)->get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha);
 		}
 		else {
 			return *get_pixel(pixel)->get_color();

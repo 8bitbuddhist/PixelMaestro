@@ -150,7 +150,7 @@ namespace PixelMaestro {
 		@param alpha Color two alpha factor.
 		@return The mixed color.
 	*/
-	Colors::RGB Colors::mixColors(RGB* color_one, RGB* color_two, MixMode mode, float alpha) {
+	Colors::RGB Colors::mix_colors(RGB* color_one, RGB* color_two, MixMode mode, float alpha) {
 		RGB mixed_color;
 
 		switch (mode) {

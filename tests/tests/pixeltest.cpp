@@ -1,7 +1,7 @@
 #include "../catch/single_include/catch.hpp"
-#include "Colors.h"
-#include "Pixel.h"
-#include "PixelTest.h"
+#include "colors.h"
+#include "pixel.h"
+#include "pixeltest.h"
 
 using namespace PixelMaestro;
 
@@ -13,26 +13,22 @@ TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
     bool fade = true;
 
     SECTION("Set a new color.") {
-        pixel.setNextColor(&color, false, 0, 0);
+        pixel.set_next_color(&color, false, 0, 0);
         pixel.update();
-        REQUIRE(*pixel.getColor() == Colors::RED);
+        REQUIRE(*pixel.get_color() == Colors::RED);
     }
 
     // Change to red, allow fading, finish a transition every 10 ms
-    pixel.setNextColor(&color, fade, cycleSpeed, refreshRate);
+    pixel.set_next_color(&color, fade, cycleSpeed, refreshRate);
 
     // Calculate the diff between the refresh and cycle rates
     unsigned short diff = (unsigned short)(cycleSpeed / (float)refreshRate);
-
-    SECTION("Get the step count. It should equal the cycle speed and refresh rate we set in the previous section.") {
-        REQUIRE(pixel.getStepCount() == diff);
-    }
 
     // Update the Pixel
     pixel.update();
 
     SECTION("Update and check the current color.") {
-        Colors::RGB currentColor = *pixel.getColor();
+        Colors::RGB currentColor = *pixel.get_color();
         REQUIRE(currentColor.r == (color.r > 0 ? color.r / diff : 0));
         REQUIRE(currentColor.g == (color.g > 0 ? color.g / diff : 0));
         REQUIRE(currentColor.b == (color.b > 0 ? color.b / diff : 0));
