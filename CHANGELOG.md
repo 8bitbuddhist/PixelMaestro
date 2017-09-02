@@ -8,22 +8,21 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.5] - In progress
 ### Added
-- New Canvas class for drawing shapes onto Sections (replaces the Pattern struct). Currently supports drawing text.
+- New Canvas class for drawing text and shapes over Sections (replaces Section::Pattern).
 - New Point class for storing x and y coordinates. Replaces Section::Layout.
-- Added Canvas demo to GUI.
-- Added Overlay support to GUI.
+- Added Canvas demo to GUI application.
+- Added Overlay support to GUI application.
 
 ### Changed
-- Split Patterns into a separate class.
+- Revamped GUI to allow switching between the main animation screen and various demo animations.
+- Reorganized file and code structure.
 - Layouts use the new Point class and are referred to as "dimensions".
-- Reorganized file names and structure.
-- Lots of documentation revisions.
 
 ### Removed
 - Removed Section::Pattern. Replaced by the Canvas class.
 - Removed Section::Layout. Replaced by the Point class.
-- Removed Section::ColorAnimations::Pattern. Patterns (or Canvases) are rendered separately from ColorAnimations, so you can display both simultaneously.
-- Removed several unused functions.
+- Removed Section::ColorAnimations::Pattern. Patterns are now stored in a Canvas.
+- Removed several unused variables and functions.
 
 ## [v0.4.1] - 2017-08-16
 ### Added

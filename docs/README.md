@@ -19,7 +19,7 @@ Pixel pixels[rows * columns];
 
 int num_sections = 1;
 Section sections[num_sections] = {
-	Section(pixels, new Section::Layout(rows, columns))
+	Section(pixels, new Point(rows, columns))
 }
 sections[0].set_colors(Colors::COLORWHEEL, 12);
 sections[0].set_color_animation(ColorAnimations::BLINK);
