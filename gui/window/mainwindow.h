@@ -31,6 +31,8 @@ class MainWindow : public QMainWindow {
 
 		void on_action_Open_Animation_Editor_triggered();
 
+		void on_actionDrawing_Demo_triggered();
+
 	private:
 		MaestroController *controller_ = nullptr;
 		QWidget *drawing_area_ = nullptr;

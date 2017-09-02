@@ -1,4 +1,5 @@
 #include "../demo/blinkdemo.h"
+#include "../demo/canvasdemo.h"
 #include "../demo/showdemo.h"
 #include "../drawingarea/canvasdrawingarea.h"
 #include "mainwindow.h"
@@ -68,10 +69,9 @@ void MainWindow::on_action_Show_Demo_triggered() {
 void MainWindow::on_action_Canvas_Demo_triggered() {
 	reset_drawing_area();
 
-	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_);
-	installEventFilter(drawing_area_);
+	drawing_area_ = new CanvasDemo(main_layout_->widget(), controller_);
 	main_layout_->addWidget(drawing_area_);
-	statusBar()->showMessage(QString("Left-click to draw, right-click to erase, Delete to clear."));
+	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Canvas."));
 }
 
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
@@ -83,4 +83,13 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	main_layout_->addWidget(maestro_control_);
 	statusBar()->showMessage(QString("Use the controls to modify the Section."));
+}
+
+void MainWindow::on_actionDrawing_Demo_triggered() {
+	reset_drawing_area();
+
+	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_);
+	installEventFilter(drawing_area_);
+	main_layout_->addWidget(drawing_area_);
+	statusBar()->showMessage(QString("Left-click to draw, right-click to erase, Delete to clear."));
 }
