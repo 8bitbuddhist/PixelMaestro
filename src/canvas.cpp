@@ -151,7 +151,9 @@ namespace PixelMaestro {
 	 * @param cursor Location of the pixel to toggle.
 	 */
 	void Canvas::draw_point(Point* cursor) {
-		pattern[parent_section->get_pixel_index(cursor)] = 1;
+		if (in_bounds(cursor)) {
+			pattern[parent_section->get_pixel_index(cursor)] = 1;
+		}
 	}
 
 	/**
@@ -261,7 +263,7 @@ namespace PixelMaestro {
 	 * @return Whether the Point is in bounds.
 	 */
 	bool Canvas::in_bounds(Point* point) {
-		return (point->x < parent_section->get_dimensions()->x) && (point->y < parent_section->get_dimensions()->y);
+		return ((point->x >= 0 && point->x < parent_section->get_dimensions()->x)) && ((point->y >= 0 && point->y < parent_section->get_dimensions()->y));
 	}
 
 	/**

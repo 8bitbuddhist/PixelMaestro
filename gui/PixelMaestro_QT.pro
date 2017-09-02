@@ -13,7 +13,6 @@ TEMPLATE = app
 QMAKE_CXXFLAGS = -Wunused -Wno-unused-parameter
 
 SOURCES += main.cpp\
-		mainwindow.cpp \
 		drawingarea/maestrodrawingarea.cpp \
 		drawingarea/simpledrawingarea.cpp \
 		demo/blinkdemo.cpp \
@@ -38,21 +37,22 @@ SOURCES += main.cpp\
 		../src/show.cpp \
 		../src/utility.cpp \
 		../src/point.cpp \
-    ../src/canvas.cpp \
-    ../src/canvas/fonts/font5x8.cpp \
-    ../src/show/sectionsetcanvasevent.cpp \
-    demo/canvasdemo.cpp \
-    ../src/show/canvasdrawcharevent.cpp \
-    ../src/show/canvasdrawtextevent.cpp \
-    ../src/show/canvasdrawrectevent.cpp \
-    ../src/show/canvasdrawlineevent.cpp \
-    drawingarea/canvasdrawingarea.cpp \
-    ../src/show/canvasdrawcircleevent.cpp \
-    ../src/show/canvasdrawtriangleevent.cpp \
-    ../src/show/canvasdrawpointevent.cpp \
-    ../src/show/canvasclearevent.cpp
+		../src/canvas.cpp \
+		../src/canvas/fonts/font5x8.cpp \
+		../src/show/sectionsetcanvasevent.cpp \
+		demo/canvasdemo.cpp \
+		../src/show/canvasdrawcharevent.cpp \
+		../src/show/canvasdrawtextevent.cpp \
+		../src/show/canvasdrawrectevent.cpp \
+		../src/show/canvasdrawlineevent.cpp \
+		drawingarea/canvasdrawingarea.cpp \
+		../src/show/canvasdrawcircleevent.cpp \
+		../src/show/canvasdrawtriangleevent.cpp \
+		../src/show/canvasdrawpointevent.cpp \
+		../src/show/canvasclearevent.cpp \
+		window/mainwindow.cpp
 
-HEADERS += mainwindow.h \
+HEADERS += \
 		demo/blinkdemo.h \
 		drawingarea/maestrodrawingarea.h \
 		drawingarea/simpledrawingarea.h \
@@ -77,24 +77,25 @@ HEADERS += mainwindow.h \
 		../src/show.h \
 		../src/utility.h \
 		../src/point.h \
-    ../src/canvas.h \
-    ../src/canvas/fonts/font.h \
-    ../src/canvas/fonts/font5x8.h \
-    ../src/show/sectionsetcanvasevent.h \
-    demo/canvasdemo.h \
-    ../src/show/canvasdrawcharevent.h \
-    ../src/show/canvasdrawtextevent.h \
-    ../src/show/canvasdrawrectevent.h \
-    ../src/show/canvasdrawlineevent.h \
-    drawingarea/canvasdrawingarea.h \
-    ../src/show/canvasdrawcircleevent.h \
-    ../src/show/canvasdrawtriangleevent.h \
-    ../src/show/canvasdrawpointevent.h \
-    ../src/show/canvasclearevent.h
+		../src/canvas.h \
+		../src/canvas/fonts/font.h \
+		../src/canvas/fonts/font5x8.h \
+		../src/show/sectionsetcanvasevent.h \
+		demo/canvasdemo.h \
+		../src/show/canvasdrawcharevent.h \
+		../src/show/canvasdrawtextevent.h \
+		../src/show/canvasdrawrectevent.h \
+		../src/show/canvasdrawlineevent.h \
+		drawingarea/canvasdrawingarea.h \
+		../src/show/canvasdrawcircleevent.h \
+		../src/show/canvasdrawtriangleevent.h \
+		../src/show/canvasdrawpointevent.h \
+		../src/show/canvasclearevent.h \
+		window/mainwindow.h
 
 FORMS	+= \
-		mainwindow.ui \
-		widget/maestrocontrol.ui
+		widget/maestrocontrol.ui \
+		window/mainwindow.ui
 
 INCLUDEPATH += include \
 			$$PWD/../src

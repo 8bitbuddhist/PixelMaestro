@@ -872,6 +872,78 @@
     </item>
    </layout>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_File">
+    <property name="title">
+     <string>&amp;File</string>
+    </property>
+    <widget class="QMenu" name="menuOpen_Demo">
+     <property name="title">
+      <string>Open &amp;Demo</string>
+     </property>
+     <addaction name="action_Blink_Demo"/>
+     <addaction name="action_Canvas_Demo"/>
+     <addaction name="action_Show_Demo"/>
+    </widget>
+    <addaction name="action_Open_Animation_Editor"/>
+    <addaction name="menuOpen_Demo"/>
+    <addaction name="separator"/>
+    <addaction name="action_Exit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Help">
+    <property name="title">
+     <string>&amp;Help</string>
+    </property>
+    <addaction name="action_Online_Help"/>
+    <addaction name="action_About"/>
+   </widget>
+   <addaction name="menu_File"/>
+   <addaction name="menu_Help"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="action_Online_Help">
+   <property name="text">
+    <string>&amp;Online Help</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="text">
+    <string>&amp;About</string>
+   </property>
+  </action>
+  <action name="action_Exit">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
+  <action name="action_Canvas_Demo">
+   <property name="text">
+    <string>&amp;Canvas Demo</string>
+   </property>
+  </action>
+  <action name="action_Blink_Demo">
+   <property name="text">
+    <string>&amp;Blink Demo</string>
+   </property>
+  </action>
+  <action name="action_Show_Demo">
+   <property name="text">
+    <string>&amp;Show Demo</string>
+   </property>
+  </action>
+  <action name="action_Open_Animation_Editor">
+   <property name="text">
+    <string>Open &amp;Animation Editor</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

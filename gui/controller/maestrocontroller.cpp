@@ -7,6 +7,11 @@
 using namespace PixelMaestro;
 
 /**
+ * Empty constructor.
+ */
+MaestroController::MaestroController() { }
+
+/**
  * Adds a new Section to the Maestro.
  */
 void MaestroController::add_section_controller(Point* layout) {
