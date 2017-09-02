@@ -3,6 +3,38 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## TODO
+- Add Event(s) for drawing on the Canvas
+
+## [v0.5] - In progress
+### Added
+- New Canvas class for drawing text and shapes over Sections (replaces Section::Pattern).
+- New Point class for storing x and y coordinates. Replaces Section::Layout.
+- Added Canvas demo to GUI application.
+- Added Overlay support to GUI application.
+
+### Changed
+- Revamped GUI to allow switching between the main animation screen and various demo animations.
+- Reorganized file and code structure.
+- Layouts use the new Point class and are referred to as "dimensions".
+
+### Removed
+- Removed Section::Pattern. Replaced by the Canvas class.
+- Removed Section::Layout. Replaced by the Point class.
+- Removed Section::ColorAnimations::Pattern. Patterns are now stored in a Canvas.
+- Removed several unused variables and functions.
+
+## [v0.4.1] - 2017-08-16
+### Added
+- Added several Color, Section, and Utility unit tests.
+
+### Changed
+- Changed the name of "Transitions" to "Events".
+- Changed Section::Overlay to pointers.
+
+### Removed
+- Removed unused Colors::HSVtoRGB function.
+
 ## [v0.4] - 2017-08-15
 ### Added
 - Added working Arduino sketches for use in [PlatformIO](http://platformio.org/).

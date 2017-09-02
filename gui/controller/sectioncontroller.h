@@ -5,34 +5,53 @@
 #ifndef SECTIONCONTROLLER_H
 #define SECTIONCONTROLLER_H
 
-#include "Colors.h"
-#include "Pixel.h"
-#include "Section.h"
+#include "colors.h"
+#include <memory>
+#include "pixel.h"
+#include "section.h"
 #include <vector>
 
 using namespace PixelMaestro;
 
 class SectionController {
 	public:
-		SectionController();
-		void addOverlay(Colors::MixMode mixMode, float alpha);
-		Colors::RGB *getColors();
-		Section::Layout getLayout();
-		unsigned short getNumColors();
-		Section *getOverlay();
-		Section *getSection();
-		void setControllerColors(Colors::RGB *colors, unsigned short numColors);
-		void setLayout(unsigned short rows, unsigned short columns);
+		SectionController(Point* layout);
+		SectionController(Point* layout, Colors::MixMode mix_mode, float alpha);
+		~SectionController();
+		void add_overlay(Colors::MixMode mix_mode, float alpha);
+		Colors::RGB* get_colors();
+		Point get_dimensions();
+		unsigned short get_num_colors();
+		Section::Overlay* get_overlay();
+		std::shared_ptr<SectionController> get_overlay_controller();
+		std::shared_ptr<Section> get_section();
+		void set_controller_colors(Colors::RGB* colors, unsigned short num_colors);
+		void set_dimensions(unsigned short x, unsigned short y);
+		void unset_overlay();
+
+		bool is_overlay_ = false;
 
 	private:
+		/// The amount of blending to apply to the Overlay.
+		float alpha_ = 0.0;
+
 		/// Colors used by the Section and its Overlay.
 		std::vector<Colors::RGB> colors_;
+
+		/// Layout of the section (defaults to 10 x 10)
+		Point* dimensions_;
+
+		/// Overlay MixMode to use.
+		Colors::MixMode mix_mode_;
+
+		/// Controller for the Overlay Section.
+		std::shared_ptr<SectionController> overlay_controller_;
+
 		/// Pixels assigned to the Section and its Overlay.
 		std::vector<Pixel> pixels_;
-		/// Stores the Section and an Overlay.
-		std::vector<Section> sections_;
-		/// Layout of the section (defaults to 10 x 10)
-		Section::Layout layout_ = {10, 10};
+
+		/// Stores the Section.
+		std::shared_ptr<Section> section_;
 };
 
 #endif // SECTIONCONTROLLER_H

@@ -4,24 +4,26 @@ PixelMaestro is split into three main components:
 * [Section](section.md): A collection of multiple Pixels. Provides the core functionality for animating Pixels.
 * [Maestro](maestro.md): A collection of Sections. Handles the synchronization and updating of one or more Sections.
 
-PixelMaestro also the following utility classes:
-* [Colors](colors.md): Provides core utilities for managing colors including an RGB struct, several pre-defined colors and color schemes, and methods for generating new colors and color arrays.
-* [Show](show.md): Allows you to schedule animation changes and other actions to be performed by a Maestro. These changes are triggered over the course of the program's runtime.
+PixelMaestro also includes the following support classes:
+* [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.
+* [Colors](colors.md): Provides core utilities for managing colors including several pre-defined colors, color schemes, and methods for generating new colors.
+* [Show](show.md): Provides a way to schedule animation changes and other actions via a Maestro. These changes are triggered over the course of the program's runtime.
+* [Utility](utility.md): Shared (mostly mathematic) methods.
 
 # Basic Usage
 The following code creates a 10x10 grid of Pixels flashing a variety of colors:
 ```c++
-int rows = 10;
-int columns = 10;
-int numPixels = rows * columns;
-Pixel pixels[numPixels];
+const int rows = 10;
+const int columns = 10;
+Pixel pixels[rows * columns];
 
-int numSections = 1;
-Section sections[numSections];
-sections[0].setPixels(pixels, numPixels);
-sections[0].setColors(Colors::COLORWHEEL, 12);
-sections[0].setColorAnimation(ColorAnimations::BLINK, false, AnimationOrientations::HORIZONTAL);
+int num_sections = 1;
+Section sections[num_sections] = {
+	Section(pixels, new Point(rows, columns))
+}
+sections[0].set_colors(Colors::COLORWHEEL, 12);
+sections[0].set_color_animation(ColorAnimations::BLINK);
 
 Maestro maestro;
-maestro.setSections(sections, numSections);
+maestro.set_sections(sections, num_sections);
 ```

@@ -1,26 +1,21 @@
 #include <Arduino.h>
 
-#include <Colors.h>
-#include <Maestro.h>
-#include <Pixel.h>
-#include <Section.h>
-#include <Show.h>
-#include <show/Event.h>
-#include <show/SectionSetColorAnimationEvent.h>
+#include <show.h>
+#include <show/sectionsetcoloranimationevent.h>
 
 #include <WS2812.h>
 
 using namespace PixelMaestro;
 
-const unsigned char rows = 1;
-const unsigned char columns = 8;
-const unsigned char numPixels = rows * columns;
+const unsigned char ROWS = 1;
+const unsigned char COLUMNS = 8;
+const unsigned char NUM_PIXELS = ROWS * COLUMNS;
 const float MAX_BRIGHTNESS = 0.05;
 
 Maestro maestro;
-Pixel pixels[numPixels];
+Pixel pixels[NUM_PIXELS];
 Section sections[] = {
-  Section(pixels, rows, columns)
+  Section(pixels, new Point(ROWS, COLUMNS))
 };
 
 Show show;
@@ -31,7 +26,7 @@ Event *Events[] = {
 
 // WS1812 stuff
 const unsigned char LED_PIN = 10;
-WS2812 ws = WS2812(numPixels);
+WS2812 ws = WS2812(NUM_PIXELS);
 cRGB RGBtoCRGB(Colors::RGB rgbColor) {
   cRGB cRGBColor;
   cRGBColor.r = rgbColor.r * MAX_BRIGHTNESS;
@@ -44,21 +39,21 @@ void setup () {
     ws.setOutput(LED_PIN);
     ws.setColorOrderGRB();
 
-    sections[0].setColors(Colors::COLORWHEEL, 12);
+    sections[0].set_colors(Colors::COLORWHEEL, 12);
 
-    maestro.setSections(sections, 1);
+    maestro.set_sections(sections, 1);
 
-    show.setMaestro(&maestro);
-    show.setTiming(Show::TimingModes::RELATIVE);
-    show.setEvents(Events, NUM_EventS);
-    show.toggleLooping();
+    show.set_maestro(&maestro);
+    show.set_timing(Show::TimingModes::RELATIVE);
+    show.set_events(Events, NUM_EventS);
+    show.toggle_looping();
 }
 
 void loop() {
     show.update(millis());
 
-    for (unsigned char pixel = 0; pixel < numPixels; pixel++) {
-      ws.set_crgb_at(pixel, RGBtoCRGB(sections[0].getPixelColor(pixel)));
+    for (unsigned char pixel = 0; pixel < NUM_PIXELS; pixel++) {
+      ws.set_crgb_at(pixel, RGBtoCRGB(sections[0].get_pixel_color(pixel)));
     }
 
     ws.sync();

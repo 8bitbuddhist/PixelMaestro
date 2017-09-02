@@ -1,29 +1,18 @@
-#include "widget/maestrocontrol.h"
-#include "mainwindow.h"
+#include "window/mainwindow.h"
 #include <QApplication>
 #include <QFormLayout>
 #include <QVBoxLayout>
 
-#include "demo/showdemo.h"
-
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
 	MainWindow w;
 
 	// Set default window size
-	//w.resize(400, 800);
-	w.resize(400, 400);
+	w.resize(400, 500);
 
 	// Add drawing area to form
-	QVBoxLayout *mainLayout = w.findChild<QVBoxLayout*>("mainLayout");
-	Q_ASSERT(mainLayout);
-
-	MaestroController controller;
-
-	//SimpleDrawingArea *drawingArea = new SimpleDrawingArea(mainLayout->widget(), &controller);
-	ShowDemo *drawingArea = new ShowDemo(mainLayout->widget(), &controller);
-	mainLayout->addWidget(drawingArea);
-	//mainLayout->addWidget(new MaestroControl(mainLayout->widget(), &controller));
+	QVBoxLayout *main_layout = w.findChild<QVBoxLayout*>("mainLayout");
+	Q_ASSERT(main_layout);
 
 	// Enable high DPI output
 	a.setAttribute(Qt::ApplicationAttribute::AA_EnableHighDpiScaling, true);

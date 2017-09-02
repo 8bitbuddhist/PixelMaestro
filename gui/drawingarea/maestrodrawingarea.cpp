@@ -1,5 +1,5 @@
 #include "maestrodrawingarea.h"
-#include "Maestro.h"
+#include "maestro.h"
 #include <QElapsedTimer>
 #include <QTimer>
 
@@ -8,41 +8,37 @@ using namespace PixelMaestro;
 /**
  * Constructor.
  * @param parent The parent QWidget.
- * @param maestroController The MaestroController rendered by this DrawingArea.
+ * @param maestro_controller The MaestroController rendered by this DrawingArea.
  */
-MaestroDrawingArea::MaestroDrawingArea(QWidget *parent, MaestroController *maestroController) : QWidget(parent) {
-	this->maestro_controller_ = maestroController;
+MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent) {
+	this->maestro_controller_ = maestro_controller;
 
 	// Initialize timers.
 	this->timer = new QTimer(this);
 	this->timer->setTimerType(Qt::PreciseTimer);
-	connect(this->timer, SIGNAL(timeout()), this, SLOT(refreshMaestro()));
+	connect(this->timer, SIGNAL(timeout()), this, SLOT(refresh_maestro()));
 
 	// Initialize runtime timer
-	this->elapsedTimer.start();
+	this->elapsed_timer.start();
 
 	// Set Maestro's refresh rate
-	this->timer->start(this->REFRESH_);
+	this->timer->start(this->refresh_);
 }
 
-Maestro *MaestroDrawingArea::getMaestro() {
-	return this->maestro_;
-}
-
-MaestroController *MaestroDrawingArea::getMaestroController() {
+MaestroController* MaestroDrawingArea::get_maestro_controller() {
 	return this->maestro_controller_;
 }
 
-void MaestroDrawingArea::refreshMaestro() {
+void MaestroDrawingArea::refresh_maestro() {
 	/*
 	 * Check if a Show has been created.
 	 * If so, run the Show. Otherwise, update the Maestro.
 	 */
-	if (this->maestro_controller_->getShow()) {
-		this->maestro_controller_->getShow()->update(this->elapsedTimer.elapsed());
+	if (this->maestro_controller_->get_show()) {
+		this->maestro_controller_->get_show()->update(this->elapsed_timer.elapsed());
 	}
 	else {
-		this->maestro_controller_->getMaestro()->update(this->elapsedTimer.elapsed());
+		this->maestro_controller_->get_maestro()->update(this->elapsed_timer.elapsed());
 	}
 	this->update();
 }

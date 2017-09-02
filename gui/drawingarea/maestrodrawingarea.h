@@ -5,16 +5,16 @@
 #ifndef MAESTRODRAWINGAREA_H
 #define MAESTRODRAWINGAREA_H
 
-#include "Colors.h"
-#include "Maestro.h"
 #include "controller/maestrocontroller.h"
+#include "controller/sectioncontroller.h"
+#include "colors.h"
+#include "maestro.h"
 #include "maestrodrawingarea.h"
-#include "Pixel.h"
+#include "pixel.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QWidget>
-#include "Section.h"
-#include "controller/sectioncontroller.h"
+#include "section.h"
 #include <vector>
 
 using namespace PixelMaestro;
@@ -23,29 +23,25 @@ class MaestroDrawingArea : public QWidget {
 	Q_OBJECT
 
 	public:
-		MaestroDrawingArea(QWidget *parent, MaestroController *maestroController);
-		Maestro *getMaestro();
-		MaestroController *getMaestroController();
+		MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller);
+		MaestroController* get_maestro_controller();
 
 	protected:
 		/// Tracks the time elapsed since the DrawingArea's initialization.
-		QElapsedTimer elapsedTimer;
+		QElapsedTimer elapsed_timer;
+
 		/// Handles calling the DrawingArea's refreshMaestro() method.
 		QTimer *timer;
 
-		/*
-		 * Maestro/grid variables.
-		 * These define how the Maestro is rendered initially in the DrawingArea.
-		 */
-		Maestro *maestro_;
-		MaestroController *maestro_controller_;
+		/// The MaestroController managed by this DrawingArea.
+		MaestroController* maestro_controller_;
 
 	private:
 		/// Maestro's refresh rate (defaults to 20ms or 50Hz).
-		const unsigned char REFRESH_ = 20;
+		const unsigned char refresh_ = 20;
 
 	private slots:
-		void refreshMaestro();
+		void refresh_maestro();
 };
 
 #endif // MAESTRODRAWINGAREA_H
