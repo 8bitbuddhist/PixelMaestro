@@ -171,7 +171,7 @@ namespace PixelMaestro {
 		@param reverse_animation Whether to display the animation in reverse (only works for certain animations).
 		@param orientation The orientation of the animation.
 	*/
-	void Section::set_color_animation(ColorAnimations animation, bool reverse_animation, AnimationOrientations orientation) {
+	void Section::set_color_animation(ColorAnimations animation, bool reverse_animation, AnimationOrientations orientation, AnimationOpts* opts) {
 		/*
 		 * If the animation != NEXT, change to the animation.
 		 * Otherwise, go to the next animation.
@@ -194,7 +194,10 @@ namespace PixelMaestro {
 		switch (animation) {
 			case SPARKLE:
 			{
-				if (animation_opts_.sparkle_threshold == 255) {
+				if (opts != nullptr && opts->sparkle_threshold) {
+					animation_opts_.sparkle_threshold = opts->sparkle_threshold;
+				}
+				else {
 					animation_opts_.sparkle_threshold = 60;
 				}
 				break;

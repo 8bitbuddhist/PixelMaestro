@@ -56,7 +56,7 @@ The animations available to you are listed in the `Section::ColorAnimations` enu
 
 Select an animation using the `Section::set_color_animation` method. The following code displays a vertical wave moving from the top of the grid to the bottom:
 ```c++
-Section::ColorAnimations anmation = ColorAnimations::WAVE;
+Section::ColorAnimations animation = ColorAnimations::WAVE;
 bool reverse = false;
 Section::AnimationOrientations orientation = AnimationOrientations::VERTICAL;
 section.set_color_animation(animation, reverse, orientation);
@@ -77,8 +77,9 @@ Some animations use additional parameters for further customization. These param
 
 The following code sets the threshold for the SPARKLE animation to 50%. SPARKLE determines whether to enable a Pixel by checking to see if a randomly generated number exceeds the threshold.
 ```c++
-section.set_color_animation(Section::ColorAnimations::SPARKLE);
-section.get_animation_opts()->sparkle_threshold = 50;
+Section::AnimationOpts opts;
+opts.sparkle_threshold = 50;
+section.set_color_animation(Section::ColorAnimations::SPARKLE, false, AnimationOrientations::HORIZONTAL, &opts);
 ```
 
 ### Toggling Fading
