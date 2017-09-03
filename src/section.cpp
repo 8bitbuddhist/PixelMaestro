@@ -72,6 +72,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the number of Colors available to the Section.
+	 *
+	 * @return Number of Colors in the Color palette.
+	 */
+	unsigned short Section::get_num_colors() {
+		return num_colors_;
+	}
+
+	/**
 		Returns the number of Pixels in the Section.
 
 		@return Number of Pixels.
@@ -140,6 +149,15 @@ namespace PixelMaestro {
 	*/
 	unsigned short Section::get_refresh_interval() {
 		return refresh_interval_;
+	}
+
+	/**
+	 * Returns whether the current ColorAnimation is running in reverse.
+	 *
+	 * @return Whether the current ColorAnimation is running in reverse.
+	 */
+	bool Section::get_reverse() {
+		return reverse_animation_;
 	}
 
 	/**

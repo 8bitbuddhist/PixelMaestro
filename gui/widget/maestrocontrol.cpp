@@ -23,6 +23,26 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 }
 
 /**
+ * Applies the active Section settings to the UI.
+ */
+void MaestroControl::get_section_settings() {
+	ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_color_animation() - 1);
+	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_reverse());
+	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_fade());
+	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_num_colors());
+
+	ui->cycleSlider->setValue(this->active_section_controller_->get_section()->get_cycle_interval());
+	ui->rowsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->y);
+	ui->columnsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->x);
+
+	QStringList section_type = ui->sectionComboBox->currentText().split(" ");
+	if (QString::compare(section_type[0], "overlay", Qt::CaseInsensitive) == 0) {
+		ui->mix_modeComboBox->setCurrentIndex(this->maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->mix_mode);
+		ui->alphaSpinBox->setValue(this->maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->alpha);
+	}
+}
+
+/**
  * Build the initial UI.
  */
 void MaestroControl::initialize() {
@@ -37,15 +57,12 @@ void MaestroControl::initialize() {
 	this->setCustomColorControlsVisible(false);
 
 	// Set default values
-	ui->animationComboBox->setCurrentIndex(2);
-	ui->cycleSlider->setValue(this->active_section_controller_->get_section()->get_cycle_interval());
-	ui->rowsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->y);
-	ui->columnsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->x);
 	ui->sectionComboBox->addItem("Section 1");
 
 	// Overlay controls
 	ui->mix_modeComboBox->addItems({"None", "Normal", "Alpha Blending", "Multiply"});
-	ui->mix_modeComboBox->setCurrentIndex(2);
+
+	get_section_settings();
 }
 
 /**
@@ -66,14 +83,6 @@ void MaestroControl::changeScalingColorArray(Colors::RGB color) {
 	std::vector<Colors::RGB>().swap(tmpColors);
 }
 
-/**
- * Returns the active SectionController being modified.
- * @return Active SectionController.
- */
-SectionController *MaestroControl::getActiveSectionController() {
-	return this->active_section_controller_;
-}
-
 void MaestroControl::setOverlayControlsVisible(bool visible) {
 	// If visible, show Overlay controls
 	ui->mix_modeComboBox->setVisible(visible);
@@ -92,7 +101,8 @@ void MaestroControl::on_addOverlayButton_clicked() {
 	int index = num - 1;
 
 	// Check to see if an Overlay has already been added
-	if(this->maestro_controller_->get_section_controller(index)->get_overlay_controller()) {
+	/*
+	 * if(this->maestro_controller_->get_section_controller(index)->get_overlay_controller()) {
 		// Has an Overlay: let's remove it
 		this->maestro_controller_->get_section_controller(index)->unset_overlay();
 		ui->addOverlayButton->setText("Add Overlay");
@@ -100,6 +110,7 @@ void MaestroControl::on_addOverlayButton_clicked() {
 		ui->sectionComboBox->removeItem(ui->sectionComboBox->findText(overlayText));
 	}
 	else {
+	*/
 		// No Overlay - let's add one
 		this->maestro_controller_->get_section_controller(index)->add_overlay(Colors::MixMode::NORMAL, 0.5);
 		this->active_section_controller_ = this->maestro_controller_->get_section_controller(index)->get_overlay_controller().get();
@@ -108,11 +119,13 @@ void MaestroControl::on_addOverlayButton_clicked() {
 
 		// FIXME: Remove once Overlays can be removed dynamically
 		ui->addOverlayButton->hide();
-	}
+	//}
 }
 
 void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
-	this->on_mix_modeComboBox_currentIndexChanged(ui->mix_modeComboBox->currentIndex());
+	QStringList section = ui->sectionComboBox->currentText().split(" ");
+
+	this->maestro_controller_->get_section_controller(section[1].toInt() - 1)->get_overlay()->alpha = arg1;
 }
 
 /**
@@ -164,6 +177,11 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
 	this->active_section_controller_->set_dimensions(ui->columnsSpinBox->value(), ui->rowsSpinBox->value());
+
+	// Set Overlay if applicable
+	if (this->active_section_controller_->get_overlay_controller() != nullptr) {
+		this->active_section_controller_->get_overlay_controller()->set_dimensions(ui->columnsSpinBox->value(), ui->rowsSpinBox->value());
+	}
 }
 
 
@@ -262,7 +280,7 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
  * @param arg1 New number of rows.
  */
 void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
-	this->active_section_controller_->set_dimensions(ui->columnsSpinBox->value(), ui->rowsSpinBox->value());
+	this->on_columnsSpinBox_valueChanged(arg1);
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
@@ -286,12 +304,15 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 		}
 	}
 	else {	// Overlay
-		ui->addOverlayButton->hide();
 		// Set active controller to OverlayController
 		this->active_section_controller_ = this->maestro_controller_->get_section_controller(num - 1)->get_overlay_controller().get();
-		// Hide layout buttons
+
+		// Hide layout controls
+		ui->addOverlayButton->hide();
 		this->setOverlayControlsVisible(true);
 	}
+
+	get_section_settings();
 }
 
 /**

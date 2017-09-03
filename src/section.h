@@ -99,12 +99,14 @@ namespace PixelMaestro {
 			Point* get_dimensions();
 			bool get_fade();
 			Section::Overlay* get_overlay();
+			unsigned short get_num_colors();
 			unsigned int get_num_pixels();
 			Pixel* get_pixel(unsigned int pixel);
 			Colors::RGB get_pixel_color(unsigned int pixel);
 			unsigned int get_pixel_index(Point* coordinates);
 			unsigned int get_pixel_index(unsigned short x, unsigned short y);
 			unsigned short get_refresh_interval();
+			bool get_reverse();
 			void set_all(Colors::RGB* color);
 			void set_canvas(Canvas* canvas);
 			void set_color_animation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverse_animation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL), AnimationOpts* opts = nullptr);

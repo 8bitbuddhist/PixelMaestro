@@ -27,14 +27,14 @@ class MaestroControl : public QWidget {
 
 	private:
 		/// Index of the actively controlled SectionController.
-		SectionController *active_section_controller_;;
+		SectionController *active_section_controller_;
 		Ui::MaestroControl *ui;
 
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_;
 
-		SectionController *getActiveSectionController();
 		void changeScalingColorArray(Colors::RGB color);
+		void get_section_settings();
 		void initialize();
 		void on_custom_color_changed();
 		void on_ui_changed();
@@ -42,6 +42,8 @@ class MaestroControl : public QWidget {
 		void setOverlayControlsVisible(bool visible);
 
 	private slots:
+		void on_addOverlayButton_clicked();
+		void on_alphaSpinBox_valueChanged(double arg1);
 		void on_animationComboBox_currentIndexChanged(int index);
 		void on_blueDial_valueChanged(int value);
 		void on_colorComboBox_currentIndexChanged(int index);
@@ -49,15 +51,13 @@ class MaestroControl : public QWidget {
 		void on_cycleSlider_valueChanged(int value);
 		void on_greenDial_valueChanged(int value);
 		void on_fadeCheckBox_toggled(bool checked);
+		void on_mix_modeComboBox_currentIndexChanged(int index);
 		void on_num_colorsSpinBox_valueChanged(int arg1);
 		void on_reverse_animationCheckBox_toggled(bool checked);
 		void on_redDial_valueChanged(int value);
 		void on_rowsSpinBox_valueChanged(int arg1);
-		void on_thresholdSpinBox_valueChanged(int arg1);
 		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
-		void on_addOverlayButton_clicked();
-		void on_mix_modeComboBox_currentIndexChanged(int index);
-		void on_alphaSpinBox_valueChanged(double arg1);
+		void on_thresholdSpinBox_valueChanged(int arg1);
 };
 
 #endif // MAESTROCONTROL_H

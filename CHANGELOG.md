@@ -3,10 +3,9 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## TODO
-- Add Event(s) for drawing on the Canvas
+## [v0.6] - In Progress
 
-## [v0.5] - In progress
+## [v0.5] - 2017-09-02
 ### Added
 - New Canvas class for drawing text and shapes over Sections (replaces Section::Pattern).
 - New Point class for storing x and y coordinates. Replaces Section::Layout.

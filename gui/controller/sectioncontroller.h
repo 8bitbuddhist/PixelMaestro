@@ -39,19 +39,19 @@ class SectionController {
 		std::vector<Colors::RGB> colors_;
 
 		/// Layout of the section (defaults to 10 x 10)
-		Point* dimensions_;
+		Point* dimensions_ = nullptr;
 
 		/// Overlay MixMode to use.
 		Colors::MixMode mix_mode_;
 
 		/// Controller for the Overlay Section.
-		std::shared_ptr<SectionController> overlay_controller_;
+		std::shared_ptr<SectionController> overlay_controller_ = nullptr;
 
 		/// Pixels assigned to the Section and its Overlay.
 		std::vector<Pixel> pixels_;
 
 		/// Stores the Section.
-		std::shared_ptr<Section> section_;
+		std::shared_ptr<Section> section_ = nullptr;
 };
 
 #endif // SECTIONCONTROLLER_H
