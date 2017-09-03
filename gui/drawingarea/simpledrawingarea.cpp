@@ -35,9 +35,15 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 
 	/*
 	 * Render each Pixel in the Maestro by mapping its location in the grid to a location on the DrawingArea.
-	 */
-	this->resize_pixels();
+	 */	
+	last_pixel_count_ = this->maestro_controller_->get_section_controller(0)->get_section()->get_num_pixels();
+
 	for (unsigned short section = 0; section < this->maestro_controller_->get_num_section_controllers(); section++) {
+
+		if (last_pixel_count_ != this->maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels()) {
+			this->resizeEvent(nullptr);
+		}
+
 		for (unsigned short row = 0; row < this->maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
 			for (unsigned short pixel = 0; pixel < this->maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {
 				tmp_rgb = this->maestro_controller_->get_section_controller(section)->get_section()->get_pixel_color(this->maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
@@ -64,8 +70,8 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
  * Resize the grid based on the number of rows and columns.
  * TODO: Improve dynamic scaling.
  */
-void SimpleDrawingArea::resize_pixels() {
-	int min_dimension, min_point;
+void SimpleDrawingArea::resizeEvent(QResizeEvent *event) {
+	int min_dimension, min_count;
 	// Find the smallest dimension. We'll use this to determine whether (and in which direction) to reduce the size of the grid.
 	if (this->width() < this->height()) {
 		min_dimension = this->width();
@@ -76,13 +82,13 @@ void SimpleDrawingArea::resize_pixels() {
 
 	Point* dimensions = this->maestro_controller_->get_section_controller(0)->get_section()->get_dimensions();
 	if (dimensions->y > dimensions->x) {
-		min_point = dimensions->y;
+		min_count = dimensions->y;
 	}
 	else {
-		min_point = dimensions->x;
+		min_count = dimensions->x;
 	}
 
-	radius_ = (min_dimension / min_point) / 2;
-	pad_ = radius_ * 2;
+	radius_ = (min_dimension / min_count) / 2;
+	pad_ = (min_dimension / min_count);
 	offset_ = pad_;
 }
