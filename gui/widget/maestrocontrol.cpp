@@ -46,7 +46,7 @@ void MaestroControl::get_section_settings() {
  * Build the initial UI.
  */
 void MaestroControl::initialize() {
-	this->active_section_controller_ = this->maestro_controller_->get_section_controller(0);
+	active_section_controller_ = maestro_controller_->get_section_controller(0);
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Pong", "Merge", "Random", "Sparkle"});
@@ -59,7 +59,12 @@ void MaestroControl::initialize() {
 	// Set default values
 	ui->sectionComboBox->addItem("Section 1");
 
-	// Overlay controls
+
+	// Add an Overlay
+	active_section_controller_->add_overlay(Colors::MixMode::NONE);
+	ui->sectionComboBox->addItem(QString("Overlay 1"));
+
+	// Initialize Overlay controls
 	ui->mix_modeComboBox->addItems({"None", "Normal", "Alpha Blending", "Multiply"});
 
 	get_section_settings();
@@ -81,45 +86,6 @@ void MaestroControl::changeScalingColorArray(Colors::RGB color) {
 
 	// Release tmpColors
 	std::vector<Colors::RGB>().swap(tmpColors);
-}
-
-void MaestroControl::setOverlayControlsVisible(bool visible) {
-	// If visible, show Overlay controls
-	ui->mix_modeComboBox->setVisible(visible);
-	ui->alphaSpinBox->setVisible(visible);
-
-	// Invert layout controls
-	ui->gridSizeLabel->setVisible(!visible);
-	ui->columnsSpinBox->setVisible(!visible);
-	ui->rowsSpinBox->setVisible(!visible);
-}
-
-void MaestroControl::on_addOverlayButton_clicked() {
-	// Get info about the current Section
-	QStringList args = ui->sectionComboBox->currentText().split(" ");
-	int num = args[1].toInt();
-	int index = num - 1;
-
-	// Check to see if an Overlay has already been added
-	/*
-	 * if(this->maestro_controller_->get_section_controller(index)->get_overlay_controller()) {
-		// Has an Overlay: let's remove it
-		this->maestro_controller_->get_section_controller(index)->unset_overlay();
-		ui->addOverlayButton->setText("Add Overlay");
-		QString overlayText = "Overlay " + num;
-		ui->sectionComboBox->removeItem(ui->sectionComboBox->findText(overlayText));
-	}
-	else {
-	*/
-		// No Overlay - let's add one
-		this->maestro_controller_->get_section_controller(index)->add_overlay(Colors::MixMode::NORMAL, 0.5);
-		this->active_section_controller_ = this->maestro_controller_->get_section_controller(index)->get_overlay_controller().get();
-		QString overlayText = QString("Overlay %1").arg(num);
-		ui->sectionComboBox->addItem(overlayText);
-
-		// FIXME: Remove once Overlays can be removed dynamically
-		ui->addOverlayButton->hide();
-	//}
 }
 
 void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
@@ -293,23 +259,14 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 		// Set active controller using MaestroController's SectionControllers list
 		this->active_section_controller_ = this->maestro_controller_->get_section_controller(num - 1);
 
-		// Check to see if an Overlay's already been added: if so, change the text of the Button
-		// FIXME: Fix removing Overlays. For now, just hide the button
-		//ui->addOverlayButton->show();
+		// Hide Overlay controls
 		this->setOverlayControlsVisible(false);
-		if (this->active_section_controller_->get_overlay_controller()) {
-			//ui->addOverlayButton->setText(QString("Remove Overlay"));
-		}
-		else {
-			ui->addOverlayButton->setText(QString("Add Overlay"));
-		}
 	}
 	else {	// Overlay
 		// Set active controller to OverlayController
 		this->active_section_controller_ = this->maestro_controller_->get_section_controller(num - 1)->get_overlay_controller().get();
 
-		// Hide layout controls
-		ui->addOverlayButton->hide();
+		// Show Overlay controls
 		this->setOverlayControlsVisible(true);
 	}
 
@@ -336,6 +293,22 @@ void MaestroControl::setCustomColorControlsVisible(bool enabled) {
 	ui->num_colorsLabel->setVisible(enabled);
 	ui->thresholdSpinBox->setVisible(enabled);
 	ui->thresholdLabel->setVisible(enabled);
+}
+
+/**
+ * Sets the visibility of Overlay-related controls.
+ * @param visible True if you want to show the controls.
+ */
+void MaestroControl::setOverlayControlsVisible(bool visible) {
+	// If visible, show Overlay controls
+	ui->mixModeLabel->setVisible(visible);
+	ui->mix_modeComboBox->setVisible(visible);
+	ui->alphaSpinBox->setVisible(visible);
+
+	// Invert layout controls
+	ui->gridSizeLabel->setVisible(!visible);
+	ui->columnsSpinBox->setVisible(!visible);
+	ui->rowsSpinBox->setVisible(!visible);
 }
 
 /**

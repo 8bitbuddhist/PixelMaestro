@@ -42,7 +42,6 @@ class MaestroControl : public QWidget {
 		void setOverlayControlsVisible(bool visible);
 
 	private slots:
-		void on_addOverlayButton_clicked();
 		void on_alphaSpinBox_valueChanged(double arg1);
 		void on_animationComboBox_currentIndexChanged(int index);
 		void on_blueDial_valueChanged(int value);

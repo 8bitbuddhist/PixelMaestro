@@ -25,7 +25,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="sectionSelectLabel">
        <property name="text">
-        <string>Select Section</string>
+        <string>Active Section</string>
        </property>
       </widget>
      </item>
@@ -33,13 +33,6 @@
       <layout class="QHBoxLayout" name="sectionSelectLayout">
        <item>
         <widget class="QComboBox" name="sectionComboBox"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="addOverlayButton">
-         <property name="text">
-          <string>Add Overlay</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </item>
@@ -370,6 +363,13 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="mixModeLabel">
+       <property name="text">
+        <string>Mix Mode / Alpha</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

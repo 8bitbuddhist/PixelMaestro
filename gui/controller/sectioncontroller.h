@@ -18,7 +18,7 @@ class SectionController {
 		SectionController(Point* layout);
 		SectionController(Point* layout, Colors::MixMode mix_mode, float alpha);
 		~SectionController();
-		void add_overlay(Colors::MixMode mix_mode, float alpha);
+		void add_overlay(Colors::MixMode mix_mode, float alpha = 0.5);
 		Colors::RGB* get_colors();
 		Point get_dimensions();
 		unsigned short get_num_colors();
