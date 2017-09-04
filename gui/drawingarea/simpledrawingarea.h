@@ -21,8 +21,6 @@ class SimpleDrawingArea : public MaestroDrawingArea {
 		unsigned short radius_ = 20;
 		/// The amount of space between each Pixel.
 		unsigned short pad_ = radius_ * 2;
-		/// The offset of the grid from its initial starting point.
-		unsigned short offset_ = pad_;
 
 		/// Used to determine whether the Maestro's size has changed.
 		unsigned int last_pixel_count_ = 0;

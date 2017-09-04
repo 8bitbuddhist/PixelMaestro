@@ -36,12 +36,11 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	/*
 	 * Render each Pixel in the Maestro by mapping its location in the grid to a location on the DrawingArea.
 	 */	
-	last_pixel_count_ = this->maestro_controller_->get_section_controller(0)->get_section()->get_num_pixels();
-
 	for (unsigned short section = 0; section < this->maestro_controller_->get_num_section_controllers(); section++) {
 
 		if (last_pixel_count_ != this->maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels()) {
 			this->resizeEvent(nullptr);
+			last_pixel_count_ = this->maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels();
 		}
 
 		for (unsigned short row = 0; row < this->maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
@@ -68,27 +67,25 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 
 /**
  * Resize the grid based on the number of rows and columns.
- * TODO: Improve dynamic scaling.
  */
 void SimpleDrawingArea::resizeEvent(QResizeEvent *event) {
-	int min_dimension, min_count;
-	// Find the smallest dimension. We'll use this to determine whether (and in which direction) to reduce the size of the grid.
-	if (this->width() < this->height()) {
-		min_dimension = this->width();
+	/*
+	 * Check to see if either axis is out of bounds.
+	 * If so, resize the grid.
+	 */
+	QSize widget_size = this->size();
+
+	// Find the optimal radius
+	int optimal_width = ((widget_size.width() - pad_) / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->x) / 2;
+	int optimal_height = ((widget_size.height() - pad_) / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->y) / 2;
+
+	// Apply the smallest optimal radius, then recalculate the pad and offset.
+	if (optimal_width < optimal_height) {
+		radius_ = optimal_width;
 	}
 	else {
-		min_dimension = this->height();
+		radius_ = optimal_height;
 	}
 
-	Point* dimensions = this->maestro_controller_->get_section_controller(0)->get_section()->get_dimensions();
-	if (dimensions->y > dimensions->x) {
-		min_count = dimensions->y;
-	}
-	else {
-		min_count = dimensions->x;
-	}
-
-	radius_ = (min_dimension / min_count) / 2;
-	pad_ = (min_dimension / min_count);
-	offset_ = pad_;
+	pad_ = (radius_ * 2);
 }
