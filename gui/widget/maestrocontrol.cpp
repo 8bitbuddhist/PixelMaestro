@@ -54,7 +54,7 @@ void MaestroControl::initialize() {
 	// Populate color combo box
 	ui->colorComboBox->addItems({"Custom", "Fire", "Deep Sea", "Color Wheel"});
 	ui->colorComboBox->setCurrentIndex(2);
-	this->setCustomColorControlsVisible(false);
+	this->set_custom_color_controls_visible(false);
 
 	// Set default values
 	ui->sectionComboBox->addItem("Section 1");
@@ -74,24 +74,26 @@ void MaestroControl::initialize() {
  * Updates the color array based on changes to the color scheme and settings.
  * @param color Base color to use when generating the array.
  */
-void MaestroControl::changeScalingColorArray(Colors::RGB color) {
+void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 	unsigned int num_colors = (unsigned int)ui->num_colorsSpinBox->value();
 
-	std::vector<Colors::RGB> tmpColors;
-	tmpColors.resize(num_colors);
+	std::vector<Colors::RGB> tmp_colors;
+	tmp_colors.resize(num_colors);
 
 	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-	Colors::generate_scaling_color_array(&tmpColors[0], &color, num_colors, threshold, true);
-	this->active_section_controller_->set_controller_colors(&tmpColors[0], num_colors);
+	Colors::generate_scaling_color_array(&tmp_colors[0], &color, num_colors, threshold, true);
+	active_section_controller_->set_controller_colors(&tmp_colors[0], num_colors);
 
-	// Release tmpColors
-	std::vector<Colors::RGB>().swap(tmpColors);
+	// Release tmp_colors
+	std::vector<Colors::RGB>().swap(tmp_colors);
 }
 
+/**
+ * Sets the Overlay's transparency level.
+ * @param arg1 Transparency level from 0 - 1.
+ */
 void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
-	QStringList section = ui->sectionComboBox->currentText().split(" ");
-
-	this->maestro_controller_->get_section_controller(section[1].toInt() - 1)->get_overlay()->alpha = arg1;
+	maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
 }
 
 /**
@@ -99,41 +101,41 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-	this->active_section_controller_->get_section()->set_color_animation((Section::ColorAnimations)(index + 1), ui->reverse_animationCheckBox->isChecked());
+	active_section_controller_->get_section()->set_color_animation((Section::ColorAnimations)(index + 1), ui->reverse_animationCheckBox->isChecked());
 }
 
 /**
  * Changes the color scheme.
- * If 'Custom' is selected, this sets the custom color controls to visible. Otherwise it hides them.
+ * If 'Custom' is selected, this also displays controls for adjusting the custom color scheme.
  * @param index Index of the new color scheme.
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 	switch (index) {
 		case 0:	// Custom
-			this->on_custom_color_changed();
-			this->setCustomColorControlsVisible(true);
+			on_custom_color_changed();
+			set_custom_color_controls_visible(true);
 			break;
 		case 1:	// Fire
 			{
 				unsigned char num_colors = 14;
 				Colors::RGB fire[num_colors];
 				Colors::generate_scaling_color_array(fire, &Colors::RED, &Colors::ORANGE, num_colors, true);
-				this->active_section_controller_->set_controller_colors(fire, num_colors);
-				this->setCustomColorControlsVisible(false);
+				active_section_controller_->set_controller_colors(fire, num_colors);
+				set_custom_color_controls_visible(false);
 				break;
 			}
 		case 2:	// Deep Sea
 			{
 				unsigned char num_colors = 14;
-				Colors::RGB deepSea[num_colors];
-				Colors::generate_scaling_color_array(deepSea, &Colors::BLUE, &Colors::GREEN, num_colors, true);
-				this->active_section_controller_->set_controller_colors(deepSea, num_colors);
-				this->setCustomColorControlsVisible(false);
+				Colors::RGB deep_sea[num_colors];
+				Colors::generate_scaling_color_array(deep_sea, &Colors::BLUE, &Colors::GREEN, num_colors, true);
+				active_section_controller_->set_controller_colors(deep_sea, num_colors);
+				set_custom_color_controls_visible(false);
 				break;
 			}
 		default:// Color Wheel
-			this->active_section_controller_->get_section()->set_colors(Colors::COLORWHEEL, 12);
-			this->setCustomColorControlsVisible(false);
+			active_section_controller_->get_section()->set_colors(Colors::COLORWHEEL, 12);
+			set_custom_color_controls_visible(false);
 	}
 }
 
@@ -160,11 +162,14 @@ void MaestroControl::on_custom_color_changed() {
 		return;
 	}
 
-	unsigned char r = ui->redDial->value();
-	unsigned char g = ui->greenDial->value();
-	unsigned char b = ui->blueDial->value();
+	unsigned char r = ui->redSlider->value();
+	unsigned char g = ui->greenSlider->value();
+	unsigned char b = ui->blueSlider->value();
 
-	changeScalingColorArray(Colors::RGB {r, g, b});
+	change_scaling_color_array(Colors::RGB {r, g, b});
+
+	ui->baseColorPreviewLabel->setText(QString("{%1, %2, %3}").arg(r).arg(g).arg(b));
+	ui->baseColorPreviewLabel->setStyleSheet(QString("QLabel { color: rgb(%1, %2, %3); font-weight: bold; }").arg(r).arg(g).arg(b));
 }
 
 /**
@@ -178,11 +183,11 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
 }
 
 /**
- * Handles changes to the blue dial.
- * @param value New value of the blue dial.
+ * Handles changes to the blue custom color slider.
+ * @param value New value of the blue slider.
  */
-void MaestroControl::on_blueDial_valueChanged(int value) {
-	this->on_custom_color_changed();
+void MaestroControl::on_blueSlider_valueChanged(int value) {
+	on_custom_color_changed();
 }
 
 /**
@@ -190,23 +195,24 @@ void MaestroControl::on_blueDial_valueChanged(int value) {
  * @param checked If true, fading is enabled.
  */
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
-	this->active_section_controller_->get_section()->toggle_fade();
+	active_section_controller_->get_section()->toggle_fade();
 }
 
 /**
- * Handles changes to the green dial.
- * @param value New value of the green dial.
+ * Handles changes to the green custom color slider.
+ * @param value New value of the green slider.
  */
-void MaestroControl::on_greenDial_valueChanged(int value) {
-	this->on_custom_color_changed();
+void MaestroControl::on_greenSlider_valueChanged(int value) {
+	on_custom_color_changed();
 }
 
+/**
+ * Changes the Overlay's mix mode.
+ * @param index
+ */
 void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
-	QStringList args = ui->sectionComboBox->currentText().split(" ");
-	int sectionIndex = args[1].toInt() -1;
-
-	if (this->maestro_controller_->get_section_controller(sectionIndex)->get_overlay_controller()) {
-		this->maestro_controller_->get_section_controller(sectionIndex)->get_overlay()->mix_mode = (Colors::MixMode)index;
+	if (maestro_controller_->get_section_controller(0)->get_overlay_controller()) {
+		maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode = (Colors::MixMode)index;
 
 		// Show/hide spin box for alpha only
 		if (index == 2) {
@@ -223,15 +229,15 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
  * @param arg1 New color count.
  */
 void MaestroControl::on_num_colorsSpinBox_valueChanged(int arg1) {
-	this->on_custom_color_changed();
+	on_custom_color_changed();
 }
 
 /**
- * Handles changes to the red dial.
- * @param value New value of the red dial.
+ * Handles changes to the red custom color slider.
+ * @param value New value of the red slider.
  */
-void MaestroControl::on_redDial_valueChanged(int value) {
-	this->on_custom_color_changed();
+void MaestroControl::on_redSlider_valueChanged(int value) {
+	on_custom_color_changed();
 }
 
 /**
@@ -247,27 +253,25 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
  * @param arg1 New number of rows.
  */
 void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
-	this->on_columnsSpinBox_valueChanged(arg1);
+	on_columnsSpinBox_valueChanged(arg1);
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
-	QStringList args = arg1.split(" ");
-	QString type = args[0];
-	int num = args[1].toInt();
+	QString type = arg1.split(" ")[0];
 
 	if(QString::compare(type, "section", Qt::CaseInsensitive) == 0) {
-		// Set active controller using MaestroController's SectionControllers list
-		this->active_section_controller_ = this->maestro_controller_->get_section_controller(num - 1);
+		// Set active controller
+		active_section_controller_ = maestro_controller_->get_section_controller(0);
 
 		// Hide Overlay controls
-		this->setOverlayControlsVisible(false);
+		this->set_overlay_controls_visible(false);
 	}
 	else {	// Overlay
 		// Set active controller to OverlayController
-		this->active_section_controller_ = this->maestro_controller_->get_section_controller(num - 1)->get_overlay_controller().get();
+		active_section_controller_ = active_section_controller_->get_overlay_controller().get();
 
 		// Show Overlay controls
-		this->setOverlayControlsVisible(true);
+		set_overlay_controls_visible(true);
 	}
 
 	get_section_settings();
@@ -278,28 +282,30 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
  * @param arg1 New variance between colors (0-255).
  */
 void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
-	this->on_custom_color_changed();
+	on_custom_color_changed();
 }
 
 /**
  * Toggles the visibility of the custom color scheme controls.
- * @param enabled If true, display custom controls.
+ * @param visible If true, display custom controls.
  */
-void MaestroControl::setCustomColorControlsVisible(bool enabled) {
-	ui->redDial->setVisible(enabled);
-	ui->greenDial->setVisible(enabled);
-	ui->blueDial->setVisible(enabled);
-	ui->num_colorsSpinBox->setVisible(enabled);
-	ui->num_colorsLabel->setVisible(enabled);
-	ui->thresholdSpinBox->setVisible(enabled);
-	ui->thresholdLabel->setVisible(enabled);
+void MaestroControl::set_custom_color_controls_visible(bool visible) {
+	ui->baseColorLabel->setVisible(visible);
+	ui->baseColorPreviewLabel->setVisible(visible);
+	ui->redSlider->setVisible(visible);
+	ui->greenSlider->setVisible(visible);
+	ui->blueSlider->setVisible(visible);
+	ui->num_colorsSpinBox->setVisible(visible);
+	ui->num_colorsLabel->setVisible(visible);
+	ui->thresholdSpinBox->setVisible(visible);
+	ui->thresholdLabel->setVisible(visible);
 }
 
 /**
  * Sets the visibility of Overlay-related controls.
  * @param visible True if you want to show the controls.
  */
-void MaestroControl::setOverlayControlsVisible(bool visible) {
+void MaestroControl::set_overlay_controls_visible(bool visible) {
 	// If visible, show Overlay controls
 	ui->mixModeLabel->setVisible(visible);
 	ui->mix_modeComboBox->setVisible(visible);
