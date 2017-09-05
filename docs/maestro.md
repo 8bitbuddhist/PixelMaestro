@@ -13,21 +13,21 @@ Declare a Maestro by passing in the Sections that it will be controlling.
 ```c++
 int num_sections = 2;
 Section sections[num_sections];
-Maestro maestro = new Maestro(sections, num_sections);
+Maestro* maestro = new Maestro(sections, num_sections);
 ```
-You can also use the `set_sections` method to update the Maestro's Sections.
+You can also use the `set_sections()` method to update the Maestro's Sections.
 
 ## Getting the Refresh Rate
-The `get_refresh_rate` method takes the refresh rate of all the Sections in the Maestro and returns the lowest one. The purpose of this is to ensure that even the fastest Section is being updated properly. Note that this doesn't guarantee that all Sections will be updated at their intended rate (for example, if Section 1 refreshes every 50ms and Section 2 every 75ms, Section 2 won't refresh until 100ms).
+The `get_refresh_rate()` method takes the refresh rate of all the Sections in the Maestro and returns the lowest one. The purpose of this is for creating timers that call `Maestro::update()` at pre-determined intervals, while ensuring that even the fastest Section is being updated properly. Note that this doesn't guarantee that all Sections will be updated at their intended rate (for example, if Section 1 refreshes every 50ms and Section 2 every 75ms, Section 2 won't refresh until 100ms).
 
 ## Interacting with Sections
-You can call a Section using the `get_section` method and passing in the index of the Section.
+You can call a Section using the `get_section()` method and passing in the index of the Section.
 
 ## Toggling the Running State
-You can pause the Maestro using the `toggle_running` method. When the Maestro is paused, it won't refresh any of its Sections.
+You can pause the Maestro using the `toggle_running()` method. When the Maestro is paused, it won't update any of its Sections.
 
 ## Updating the Maestro
-To update the Maestro, call the `update` method while passing in the program's current runtime in milliseconds. The Maestro will call each Section's `update` method while forwarding the runtime to each Section.
+To update the Maestro, call the `update()` method while passing in the program's current runtime in milliseconds. The Maestro will pass the runtime down to each Section's `update()` method.
 ```c++
 maestro.update(runtime);
 ```

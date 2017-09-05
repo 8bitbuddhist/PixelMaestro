@@ -11,7 +11,7 @@ PixelMaestro also includes the following support classes:
 * [Utility](utility.md): Shared (mostly mathematic) methods.
 
 # Basic Usage
-The following code creates a 10x10 grid of Pixels flashing a variety of colors:
+The following code manages a 10x10 grid of Pixels cycling through a set of 12 various colors.
 ```c++
 const int rows = 10;
 const int columns = 10;
@@ -19,11 +19,13 @@ Pixel pixels[rows * columns];
 
 int num_sections = 1;
 Section sections[num_sections] = {
-	Section(pixels, new Point(rows, columns))
+	new Section(&pixels_section_1[0], new Point(rows, columns)),
 }
 sections[0].set_colors(Colors::COLORWHEEL, 12);
 sections[0].set_color_animation(ColorAnimations::BLINK);
 
-Maestro maestro;
-maestro.set_sections(sections, num_sections);
+Maestro* maestro = new Maestro(sections, num_sections);
+
+// Define a timer or loop method that also tracks the program's runtime in milliseconds
+maestro->update(runtime);
 ```

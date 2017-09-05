@@ -1,5 +1,5 @@
 # Colors
-The Colors class provides methods for creating and interacting with colors. Colors are based on the RGB color model and are stored as 24-bit variables with 8 bits dedicated to each color channel. Colors are defined by the `Colors::RGB` struct.
+The Colors class provides methods for creating and managing colors. Colors are based on the RGB color model and are stored as 24-bit objects with 8 bits dedicated to each color channel. Colors are defined by the `Colors::RGB` struct.
 
 ## Contents
 1. [Creating Colors](#creating-colors)
@@ -9,13 +9,13 @@ The Colors class provides methods for creating and interacting with colors. Colo
 5. [Sample Colors](#sample-colors)
 
 ## Creating Colors
-The following example creates a new color called `blue`. The red and green channels are set to 0, but the blue channel is set to 255 (full).
+The following example creates a solid blue color by setting the blue channel to full (255) and the red and green channels to 0.
 ```c++
 Colors::RGB blue = {0, 0, 255};
 ```
 
 ## Manipulating Colors
-The `Colors::RGB` struct contains overridden operators for setting, adding, subtracting, and comparing colors.
+You can directly set, add, subtract, multiply, and divide Colors:
 ```c++
 Colors::RGB red = {255, 0, 0};
 Colors::RGB blue = {0, 0, 255};
@@ -23,12 +23,11 @@ Colors::RGB fuchsia = red + blue;	// {255, 0, 255}
 ```
 
 ## Generating Colors
-The `generate_random_color_array` and `generate_scaling_color_array` methods are used to quickly create new color palettes. Pass in a starting color, a destination color array, and the number of colors you wish to generate. These methods automatically generate a new palette and populate the array based on your parameters.
+The `generate_random_color_array()` and `generate_scaling_color_array()` methods can quickly create new color palettes. Pass in a starting color, the array that you want to populate, and the number of colors you wish to generate. You can also provide additional parameters to tweak the output of the palette.
 
 ## Mixing Colors
-`mix_colors` blends two colors together and returns the result. This is primarily used for Section Overlays, but it can also be used independently.
-The `MixMode` struct provides a selection of different color mixing options:
-* ALPHA_BLENDING: Similar to Normal, but allows you to specify the percentage at which the first color is blended with the second.
+`mix_colors()` blends two colors together and returns the result. This is primarily used for Section Overlays, but it can also be used on its own. You can use a variety of different color mixing options provided by the `MixMode` enum:
+* ALPHA_BLENDING: Blends the second color with the first color by the specified percentage (e.g. 0.5 = 50%).
 * MULTIPLY: Multiplies the first color by the second.
 * NORMAL: Same as `ALPHA_BLENDING`, but with a set blending level of 50%.
 
