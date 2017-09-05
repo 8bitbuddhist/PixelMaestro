@@ -33,6 +33,8 @@ class MainWindow : public QMainWindow {
 
 		void on_actionDrawing_Demo_triggered();
 
+		void on_action_Close_Workspace_triggered();
+
 	private:
 		MaestroController *controller_ = nullptr;
 		QWidget *drawing_area_ = nullptr;

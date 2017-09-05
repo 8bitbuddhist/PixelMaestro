@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.6] - In Progress
+### Changed
+- Temporary change: Removed dynamic add/remove Sections and Overlays from animation editor.
 
 ## [v0.5] - 2017-09-02
 ### Added

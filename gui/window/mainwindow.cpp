@@ -10,7 +10,8 @@
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
-	main_layout_ = this->findChild<QLayout*>("mainLayout");
+	this->main_layout_ = this->findChild<QLayout*>("mainLayout");
+	reset_drawing_area();
 }
 
 MainWindow::~MainWindow() {
@@ -22,7 +23,7 @@ void MainWindow::on_action_About_triggered() {
 }
 
 void MainWindow::on_action_Exit_triggered() {
-	this->close();
+	close();
 }
 
 void MainWindow::on_action_Online_Help_triggered() {
@@ -33,6 +34,13 @@ void MainWindow::reset_drawing_area() {
 	main_layout_->removeWidget(drawing_area_);
 	main_layout_->removeWidget(maestro_control_);
 	removeEventFilter(drawing_area_);
+
+	ui->action_Blink_Demo->setEnabled(true);
+	ui->action_Canvas_Demo->setEnabled(true);
+	ui->action_Close_Workspace->setEnabled(false);
+	ui->action_Open_Animation_Editor->setEnabled(true);
+	ui->action_Show_Demo->setEnabled(true);
+	ui->actionDrawing_Demo->setEnabled(true);
 
 	if (drawing_area_) {
 		delete drawing_area_;
@@ -55,6 +63,8 @@ void MainWindow::on_action_Blink_Demo_triggered() {
 
 	drawing_area_ = new BlinkDemo(main_layout_->widget(), controller_);
 	main_layout_->addWidget(drawing_area_);
+	ui->action_Blink_Demo->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Demonstrates the Blink animation."));
 }
 
@@ -63,6 +73,8 @@ void MainWindow::on_action_Show_Demo_triggered() {
 
 	drawing_area_ = new ShowDemo(main_layout_->widget(), controller_);
 	main_layout_->addWidget(drawing_area_);
+	ui->action_Show_Demo->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Demonstrates using Shows to change animations."));
 }
 
@@ -71,6 +83,8 @@ void MainWindow::on_action_Canvas_Demo_triggered() {
 
 	drawing_area_ = new CanvasDemo(main_layout_->widget(), controller_);
 	main_layout_->addWidget(drawing_area_);
+	ui->action_Canvas_Demo->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Canvas."));
 }
 
@@ -82,7 +96,13 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	maestro_control_ = new MaestroControl(main_layout_->widget(), controller_);
 	main_layout_->addWidget(drawing_area_);
 	main_layout_->addWidget(maestro_control_);
+	ui->action_Open_Animation_Editor->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Use the controls to modify the Section."));
+}
+
+void MainWindow::on_action_Close_Workspace_triggered() {
+	reset_drawing_area();
 }
 
 void MainWindow::on_actionDrawing_Demo_triggered() {
@@ -91,5 +111,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_);
 	installEventFilter(drawing_area_);
 	main_layout_->addWidget(drawing_area_);
+	ui->actionDrawing_Demo->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Left-click to draw, right-click to erase, Delete to clear."));
 }

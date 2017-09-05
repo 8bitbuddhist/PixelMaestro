@@ -141,15 +141,13 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 
 /**
  * Changes the number of columns in the display grid.
- * @param arg1 New number of columns.
  */
 void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
-	// This is intentionally backwards
 	this->active_section_controller_->set_dimensions(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 
 	// Set Overlay if applicable
-	if (this->active_section_controller_->get_overlay_controller() != nullptr) {
-		this->active_section_controller_->get_overlay_controller()->set_dimensions(ui->columnsSpinBox->value(), ui->rowsSpinBox->value());
+	if (active_section_controller_->get_overlay_controller() != nullptr) {
+		active_section_controller_->get_overlay_controller()->set_dimensions(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 	}
 }
 
