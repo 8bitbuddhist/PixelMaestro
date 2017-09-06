@@ -1,3 +1,11 @@
+#include "coloranimation/blinkanimation.h"
+#include "coloranimation/cycleanimation.h"
+#include "coloranimation/mergeanimation.h"
+#include "coloranimation/ponganimation.h"
+#include "coloranimation/randomanimation.h"
+#include "coloranimation/solidanimation.h"
+#include "coloranimation/sparkleanimation.h"
+#include "coloranimation/waveanimation.h"
 #include "maestrocontrol.h"
 #include "ui_maestrocontrol.h"
 #include "controller/maestrocontroller.h"
@@ -26,7 +34,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
  * Applies the active Section settings to the UI.
  */
 void MaestroControl::get_section_settings() {
-	ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_color_animation() - 1);
+	//ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_color_animation() - 1);
 	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_reverse());
 	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_fade());
 	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_num_colors());
@@ -82,7 +90,7 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 
 	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
 	Colors::generate_scaling_color_array(&tmp_colors[0], &color, num_colors, threshold, true);
-	active_section_controller_->set_controller_colors(&tmp_colors[0], num_colors);
+	active_section_controller_->get_section()->new_color_animation->set_colors(&tmp_colors[0], num_colors);
 
 	// Release tmp_colors
 	std::vector<Colors::RGB>().swap(tmp_colors);
@@ -101,7 +109,42 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-	active_section_controller_->get_section()->set_color_animation((Section::ColorAnimations)(index + 1), ui->reverse_animationCheckBox->isChecked());
+	//active_section_controller_->get_section()->set_color_animation((Section::ColorAnimations)(index + 1), ui->reverse_animationCheckBox->isChecked());
+
+	bool reverse = ui->reverse_animationCheckBox->isChecked();
+
+	if (active_section_controller_->get_section()->new_color_animation != nullptr) {
+		delete active_section_controller_->get_section()->new_color_animation;
+	}
+
+	switch(index) {
+		case 0:
+			active_section_controller_->get_section()->new_color_animation = new SolidAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		case 1:
+			active_section_controller_->get_section()->new_color_animation = new BlinkAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		case 2:
+			active_section_controller_->get_section()->new_color_animation = new CycleAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		case 3:
+			active_section_controller_->get_section()->new_color_animation = new WaveAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		case 4:
+			active_section_controller_->get_section()->new_color_animation = new PongAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		case 5:
+			active_section_controller_->get_section()->new_color_animation = new MergeAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		case 6:
+			active_section_controller_->get_section()->new_color_animation = new RandomAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		case 7:
+			active_section_controller_->get_section()->new_color_animation = new SparkleAnimation(active_section_controller_->get_section().get(), reverse);
+			break;
+		default:
+			break;
+	}
 }
 
 /**
@@ -120,7 +163,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 				unsigned char num_colors = 14;
 				Colors::RGB fire[num_colors];
 				Colors::generate_scaling_color_array(fire, &Colors::RED, &Colors::ORANGE, num_colors, true);
-				active_section_controller_->set_controller_colors(fire, num_colors);
+				active_section_controller_->get_section()->new_color_animation->set_colors(fire, num_colors);
 				set_custom_color_controls_visible(false);
 				break;
 			}
@@ -129,12 +172,12 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 				unsigned char num_colors = 14;
 				Colors::RGB deep_sea[num_colors];
 				Colors::generate_scaling_color_array(deep_sea, &Colors::BLUE, &Colors::GREEN, num_colors, true);
-				active_section_controller_->set_controller_colors(deep_sea, num_colors);
+				active_section_controller_->get_section()->new_color_animation->set_colors(deep_sea, num_colors);
 				set_custom_color_controls_visible(false);
 				break;
 			}
 		default:// Color Wheel
-			active_section_controller_->get_section()->set_colors(Colors::COLORWHEEL, 12);
+			active_section_controller_->get_section()->new_color_animation->set_colors(Colors::COLORWHEEL, 12);
 			set_custom_color_controls_visible(false);
 	}
 }

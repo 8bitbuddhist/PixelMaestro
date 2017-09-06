@@ -5,6 +5,7 @@
 #ifndef SECTION_H
 #define SECTION_H
 
+#include "coloranimation.h"
 #include "colors.h"
 #include "canvas.h"
 #include "point.h"
@@ -13,19 +14,21 @@
 namespace PixelMaestro {
 	class Canvas;
 
+	class ColorAnimation;
+
 	class Section {
 
-		public:
-			/// The orientation of the current animation. Does not affect animations that don't have a specific direction (e.g. BLINK).
-			enum AnimationOrientations {
-				HORIZONTAL,
-				VERTICAL
-			};
-
+		public:			
 			/// Extra parameters for the current animation. If you do not specify them, they will be set implicitly in Section::setColorAnimation().
 			union AnimationOpts {
 				/// Threshold for activating a Pixel using the SPARKLE animation. The higher the threshold, the fewer the number of lit Pixels (0 - 100).
 				unsigned char sparkle_threshold;
+			};
+
+			/// The orientation of the current animation. Does not affect animations that don't have a specific direction (e.g. BLINK).
+			enum AnimationOrientations {
+				HORIZONTAL,
+				VERTICAL
 			};
 
 			/// Set of animations usable by the Section.
@@ -90,6 +93,8 @@ namespace PixelMaestro {
 					this->alpha = alpha;
 				}
 			};
+
+			ColorAnimation* new_color_animation = nullptr;
 
 			Section(Pixel* pixels, Point* layout);
 			AnimationOpts *get_animation_opts();
@@ -173,18 +178,6 @@ namespace PixelMaestro {
 
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_animation_ = false;
-
-			// Color animation functions
-			void animation_blink();
-			void animation_cycle();
-			unsigned short animation_get_color_index(unsigned short count);
-			void animation_merge();
-			void animation_pong();
-			void animation_random();
-			void animation_solid();
-			void animation_sparkle();
-			void animation_update_cycle(unsigned short min, unsigned short max);
-			void animation_wave();
 	};
 }
 

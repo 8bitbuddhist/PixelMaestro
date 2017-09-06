@@ -49,7 +49,16 @@ SOURCES += main.cpp\
 		../src/show/canvasdrawpointevent.cpp \
 		../src/show/canvasclearevent.cpp \
 		window/mainwindow.cpp \
-    ../src/show/runfunctionevent.cpp
+    ../src/show/runfunctionevent.cpp \
+    ../src/coloranimation.cpp \
+    ../src/coloranimation/blinkanimation.cpp \
+    ../src/coloranimation/solidanimation.cpp \
+    ../src/coloranimation/cycleanimation.cpp \
+    ../src/coloranimation/mergeanimation.cpp \
+    ../src/coloranimation/ponganimation.cpp \
+    ../src/coloranimation/randomanimation.cpp \
+    ../src/coloranimation/sparkleanimation.cpp \
+    ../src/coloranimation/waveanimation.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -91,7 +100,16 @@ HEADERS += \
 		../src/show/canvasdrawpointevent.h \
 		../src/show/canvasclearevent.h \
 		window/mainwindow.h \
-    ../src/show/runfunctionevent.h
+    ../src/show/runfunctionevent.h \
+    ../src/coloranimation.h \
+    ../src/coloranimation/blinkanimation.h \
+    ../src/coloranimation/solidanimation.h \
+    ../src/coloranimation/cycleanimation.h \
+    ../src/coloranimation/mergeanimation.h \
+    ../src/coloranimation/ponganimation.h \
+    ../src/coloranimation/randomanimation.h \
+    ../src/coloranimation/sparkleanimation.h \
+    ../src/coloranimation/waveanimation.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

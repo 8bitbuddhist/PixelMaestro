@@ -347,7 +347,6 @@ namespace PixelMaestro {
 		@param current_time Program runtime.
 	*/
 	void Section::update(const unsigned long& current_time) {
-
 		// If this Section has an Overlay, update it.
 		if (overlay_ != nullptr) {
 			overlay_->section->update(current_time);
@@ -362,38 +361,15 @@ namespace PixelMaestro {
 			*/
 			if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
 
-				// Determine which animation to run, then run it.
-				// Defaults to off.
-				switch (color_animation_) {
-					case ColorAnimations::NEXT:
-						break;
-					case ColorAnimations::SOLID:
-						animation_solid();
-						break;
-					case ColorAnimations::BLINK:
-						animation_blink();
-						break;
-					case ColorAnimations::CYCLE:
-						animation_cycle();
-						break;
-					case ColorAnimations::WAVE:
-						animation_wave();
-						break;
-					case ColorAnimations::PONG:
-						animation_pong();
-						break;
-					case ColorAnimations::MERGE:
-						animation_merge();
-						break;
-					case ColorAnimations::RANDOM:
-						animation_random();
-						break;
-					case ColorAnimations::SPARKLE:
-						animation_sparkle();
-						break;
-					default:
-						set_all(&Colors::BLACK);
-						break;
+				/*
+				 * Run the animation.
+				 * If no animation is set, turn off the grid.
+				 */
+				if (this->new_color_animation != nullptr) {
+					new_color_animation->update();
+				}
+				else {
+					set_all(&Colors::BLACK);
 				}
 
 				/*
@@ -408,7 +384,7 @@ namespace PixelMaestro {
 			}
 
 			/*
-				Update each Pixel based on the last time the Section was refreshed.
+				Update each Pixel.
 			*/
 			for (unsigned short pixel = 0; pixel < get_num_pixels(); pixel++) {
 				get_pixel(pixel)->update();
@@ -417,232 +393,5 @@ namespace PixelMaestro {
 			// Update the last refresh time.
 			last_refresh_ = current_time;
 		}
-	}
-
-	// Animation functions
-
-	/// Flashes all Pixels on and off.
-	void Section::animation_blink() {
-		// Alternate the Pixel between its normal color and off (Colors::BLACK).
-		if (cycle_index_ == 0) {
-			for (unsigned short row = 0; row < dimensions_->y; row++) {
-				for (unsigned short column = 0; column < dimensions_->x; column++) {
-					set_one(row, column, &colors_[animation_get_color_index(column)]);
-				}
-			}
-		}
-		else {
-			set_all(&Colors::BLACK);
-		}
-
-		// Only run for two cycles.
-		animation_update_cycle(0, 2);
-	}
-
-	/// Cycles all Pixels through all stored colors.
-	void Section::animation_cycle() {
-		set_all(&colors_[cycle_index_]);
-		animation_update_cycle(0, num_colors_);
-	}
-
-	/**
-		Calculates the index of a color.
-		Used mainly to determine which color a Pixel should use during an animation based on where it is in the array.
-		For example, if the Section has 10 Pixels and 5 Colors, the Pixel at index 7 (count) will use the Color at index 2 (7 % 5 == 2).
-
-		@param count Number to resolve to an index.
-		@return Resulting index.
-	*/
-	unsigned short Section::animation_get_color_index(unsigned short count) {
-		if (num_colors_ > 0 && count >= num_colors_) {
-			count %= num_colors_;
-		}
-
-		return count;
-	}
-
-	/**
-		Converges colors into the center of the Section.
-
-		Supports vertical orientation.
-	*/
-	void Section::animation_merge() {
-
-		// Store the center of the array and the current Pixel index.
-		unsigned short mid_point, count;
-
-		if (animation_orientation_ == VERTICAL) {
-			for (unsigned short column = 0; column < dimensions_->x; column++) {
-				mid_point = (dimensions_->y / 2) - 1;
-				count = 0;
-
-				// Note: COLUMN MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
-				for (signed int row = mid_point; row >= 0; row--) {
-					set_one(row, column, &colors_[animation_get_color_index(count + cycle_index_)]);
-					count++;
-				}
-
-				/*
-					Check for an odd number of Pixels.
-					If so, set the center one to index 0.
-				*/
-				if (get_num_pixels() % 2 != 0) {
-					mid_point += 1;
-					set_one(mid_point, column, &colors_[cycle_index_]);
-				}
-
-				mid_point += 1;
-
-				// Go from the center to the last
-				count = 0;
-				for (short row = mid_point; row < dimensions_->y; row++) {
-					set_one(row, column, &colors_[animation_get_color_index(count + cycle_index_)]);
-					count++;
-				}
-			}
-		}
-		else {	// Horizontal
-			for (unsigned short row = 0; row < dimensions_->y; row++) {
-				mid_point = (dimensions_->x / 2) - 1;
-				count = 0;
-
-				// Note: COLUMN MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
-				for (signed int column = mid_point; column >= 0; column--) {
-					set_one(row, column, &colors_[animation_get_color_index(count + cycle_index_)]);
-					count++;
-				}
-
-				/*
-					Check for an odd number of Pixels.
-					If so, set the center one to index 0.
-				*/
-				if (get_num_pixels() % 2 != 0) {
-					mid_point += 1;
-					set_one(row, mid_point, &colors_[cycle_index_]);
-				}
-
-				mid_point += 1;
-
-				// Go from the center to the last
-				count = 0;
-				for (short column = mid_point; column < dimensions_->x; column++) {
-					set_one(row, column, &colors_[animation_get_color_index(count + cycle_index_)]);
-					count++;
-				}
-			}
-		}
-
-		animation_update_cycle(0, num_colors_);
-	}
-
-	/**
-		Cycles colors back and forth in a ping-pong pattern.
-
-		Supports vertical orientation.
-	*/
-	void Section::animation_pong() {
-		for (unsigned short row = 0; row < dimensions_->y; row++) {
-			for (unsigned short column = 0; column < dimensions_->x; column++) {
-				if (animation_orientation_ == VERTICAL) {
-					set_one(row, column, &colors_[animation_get_color_index(row + cycle_index_)]);
-				}
-				else {	// Horizontal
-					set_one(row, column, &colors_[animation_get_color_index(column + cycle_index_)]);
-				}
-			}
-		}
-
-		if (cycle_index_ == 0) {
-			// Start ping
-			reverse_animation_ = false;
-		}
-		if (cycle_index_ == num_colors_ - 1) {
-			// Start pong
-			reverse_animation_ = true;
-		}
-
-		animation_update_cycle(0, num_colors_);
-	}
-
-	/// Sets each Pixel to a random stored color.
-	void Section::animation_random() {
-		for (unsigned int pixel = 0; pixel < get_num_pixels(); pixel++) {
-			set_one(pixel, &colors_[Utility::rand() % num_colors_]);
-		}
-	}
-
-	/// Sets each Pixel to its corresponding color.
-	void Section::animation_solid() {
-		for (unsigned short row = 0; row < dimensions_->y; row++) {
-			for (unsigned short column = 0; column < dimensions_->x; column++) {
-				set_one(row, column, &colors_[animation_get_color_index(column)]);
-			}
-		}
-	}
-
-	/**
-	 * Creates a shimmering effect by activating random Pixels.
-	 * Set animation_opts_.sparkle_threshold to change the ratio of active Pixels.
-	 */
-	void Section::animation_sparkle() {
-		for (short row = 0; row < dimensions_->y; row++) {
-			for (short column = 0; column < dimensions_->x; column++) {
-				if ((Utility::rand() % 100) > animation_opts_.sparkle_threshold) {
-					set_one(row, column, &colors_[animation_get_color_index(column)]);
-				}
-				else {
-					set_one(row, column, &Colors::BLACK);
-				}
-			}
-		}
-	}
-
-	/**
-		Incremnets the current animation cycle.
-		If reverse_animation_ is true, this decrements the cycle, moving the animation backwards.
-		If the animation reaches the end of its cycle, it will jump back (or forward) to the start (or end).
-
-		@param min The minimum possible value of cycle_index_.
-		@param max The maximum possible value of cycle_index_.
-	*/
-	void Section::animation_update_cycle(unsigned short min, unsigned short max) {
-		last_cycle_ = last_refresh_;
-		if (reverse_animation_) {
-			if (cycle_index_ == 0) {
-				cycle_index_ = max - 1;
-			}
-			else {
-				cycle_index_--;
-			}
-		}
-		else {
-			if (cycle_index_ >= max - 1) {
-				cycle_index_ = min;
-			}
-			else {
-				cycle_index_++;
-			}
-		}
-	}
-
-	/**
-		Creates a wave effect by scrolling each Color across the Section.
-
-		Supports vertical orientation.
-	*/
-	void Section::animation_wave() {
-		for (unsigned short row = 0; row < dimensions_->y; row++) {
-			for (unsigned short column = 0; column < dimensions_->x; column++) {
-				if (animation_orientation_ == VERTICAL) {
-					set_one(row, column, &colors_[animation_get_color_index(row + cycle_index_)]);
-				}
-				else {	// Horizontal
-					set_one(row, column, &colors_[animation_get_color_index(column + cycle_index_)]);
-				}
-			}
-		}
-
-
-		animation_update_cycle(0, num_colors_);
 	}
 }

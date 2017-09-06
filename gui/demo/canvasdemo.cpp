@@ -2,6 +2,7 @@
  * PatternDemo.cpp - Demonstrates PixelMaestro's Pattern features.
  */
 #include "canvasdemo.h"
+#include "coloranimation/mergeanimation.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
 #include "../drawingarea/simpledrawingarea.h"
@@ -24,8 +25,11 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 
 	SectionController *sectionController = maestro_controller_->get_section_controller(0);
 	std::shared_ptr<Section> section = sectionController->get_section();
-	sectionController->set_controller_colors(Colors::COLORWHEEL, 12);
-	section->set_color_animation(Section::ColorAnimations::MERGE, true, Section::AnimationOrientations::VERTICAL);
+
+	MergeAnimation* animation = new MergeAnimation(section.get(), true, ColorAnimation::Orientations::VERTICAL);
+	animation->set_colors(Colors::COLORWHEEL, 12);
+	section->new_color_animation = animation;
+
 	section->set_canvas(canvas_);
 
 	// Start drawing stuff

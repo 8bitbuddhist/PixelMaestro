@@ -14,9 +14,6 @@ SectionController::SectionController(Point* layout) {
 	this->dimensions_ = layout;
 	this->pixels_.resize(this->dimensions_->x * this->dimensions_->y);
 	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], dimensions_));
-
-	// Initialize colors
-	this->set_controller_colors(Colors::COLORWHEEL, 12);
 }
 
 SectionController::SectionController(Point* layout, Colors::MixMode mix_mode, float alpha) : SectionController(layout){
@@ -98,7 +95,7 @@ void SectionController::set_controller_colors(Colors::RGB* colors, unsigned shor
 		colors_[i].b = colors[i].b;
 	}
 
-	this->section_->set_colors(&this->colors_[0], num_colors);
+	section_->new_color_animation->set_colors(&this->colors_[0], num_colors);
 }
 
 /**
