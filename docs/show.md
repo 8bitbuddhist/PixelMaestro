@@ -69,6 +69,7 @@ The parameters required by each Event should be pretty self-explanatory.
 * ColorsGenerateRandomColorEvent: Generates a single random color and stores it in the specified variable.
 * ColorsGenerateScalingColorArrayEvent: Generates a color color gradient and stores it in the specified array.
 * MaestroToggleRunEvent: Toggles a Maestro's running state.
+* RunFunctionEvent: Uses std::functional to run a function (not available on Arduino).
 * SectionSetCanvasEvent: Sets a Canvas to a Section.
 * SectionSetColorAnimationEvent: Changes a Section's current color animation.
 * SectionSetCycleIntervalEvent: Changes the interval between animation cycles for a Section.

@@ -48,7 +48,8 @@ SOURCES += main.cpp\
 		../src/show/canvasdrawtriangleevent.cpp \
 		../src/show/canvasdrawpointevent.cpp \
 		../src/show/canvasclearevent.cpp \
-		window/mainwindow.cpp
+		window/mainwindow.cpp \
+    ../src/show/runfunctionevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -89,7 +90,8 @@ HEADERS += \
 		../src/show/canvasdrawtriangleevent.h \
 		../src/show/canvasdrawpointevent.h \
 		../src/show/canvasclearevent.h \
-		window/mainwindow.h
+		window/mainwindow.h \
+    ../src/show/runfunctionevent.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

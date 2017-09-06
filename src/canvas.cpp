@@ -21,7 +21,7 @@ namespace PixelMaestro {
 	 * Blanks out the Canvas (all drawn entities will be lost!).
 	 */
 	void Canvas::clear() {
-		for (unsigned short pixel = 0; pixel < (parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
+		for (unsigned int pixel = 0; pixel < (unsigned int)(parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
 			pattern[pixel] = false;
 		}
 	}
