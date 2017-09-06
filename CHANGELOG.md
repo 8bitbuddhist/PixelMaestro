@@ -3,9 +3,26 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.6] - In Progress
+## [v0.5.1] - In Progress
+### Added
+- Animation Editor:
+	- Added color preview to custom color controls.
+	- Added Overlay by default.
+- Show:
+	- Added RunFunctionEvent, which uses std::functional to trigger a custom function call at runtime.
+
 ### Changed
-- Temporary change: Removed dynamic add/remove Sections and Overlays from animation editor.
+- Animation Editor:
+	- Replaced custom color dials with sliders.
+	- Fixed broken Overlay behavior.
+	- Set default ColorAnimation to SOLID.
+	- Set default Overlay MixMode to NONE.
+	- Improved SimpleDrawingArea dynamic scaling.
+
+### Removed
+- Animation Editor:
+	- Temporarily removed ability to dynamically add and remove Sections and Overlays.
+
 
 ## [v0.5] - 2017-09-02
 ### Added

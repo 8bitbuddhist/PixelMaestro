@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-#include <show.h>
-#include <show/sectionsetcoloranimationevent.h>
+#include <PixelMaestro/show.h>
+#include <PixelMaestro/show/sectionsetcoloranimationevent.h>
 
 #include <WS2812.h>
 
@@ -18,9 +18,9 @@ Section sections[] = {
   Section(pixels, new Point(ROWS, COLUMNS))
 };
 
-Show show;
-const unsigned char NUM_EventS = 1;
-Event *Events[] = {
+Show show(&maestro);
+const unsigned char NUM_EVENTS = 1;
+Event *events[] = {
   new SectionSetColorAnimationEvent(5000, &sections[0], Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL)
 };
 
@@ -45,7 +45,7 @@ void setup () {
 
     show.set_maestro(&maestro);
     show.set_timing(Show::TimingModes::RELATIVE);
-    show.set_events(Events, NUM_EventS);
+    show.set_events(events, NUM_EVENTS);
     show.toggle_looping();
 }
 

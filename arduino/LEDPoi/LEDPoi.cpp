@@ -1,10 +1,10 @@
 #include <Arduino.h>
 #include <WS2812.h>
 
-#include <show.h>
-#include <show/sectionsetcoloranimationevent.h>
-#include <show/colorsgeneraterandomcolorevent.h>
-#include <show/colorsgeneratescalingcolorarrayevent.h>
+#include <PixelMaestro/show.h>
+#include <PixelMaestro/show/sectionsetcoloranimationevent.h>
+#include <PixelMaestro/show/colorsgeneraterandomcolorevent.h>
+#include <PixelMaestro/show/colorsgeneratescalingcolorarrayevent.h>
 
 using namespace PixelMaestro;
 
@@ -42,12 +42,12 @@ const unsigned char NUM_ANIMATIONS = 5;
 Section::ColorAnimations animations[] = {
 	Section::ColorAnimations::SPARKLE,
 	Section::ColorAnimations::WAVE,
-	Section::ColorAnimations::RANDOMINDEX,
+	Section::ColorAnimations::RANDOM,
 	Section::ColorAnimations::MERGE,
 	Section::ColorAnimations::CYCLE
 };
 
-Show show;
+Show show(&maestro);
 const unsigned int INTERVAL = 10000;	// 10 seconds between each Event.
 const unsigned char NUM_EVENTS = 4;
 Event *events[] = {
