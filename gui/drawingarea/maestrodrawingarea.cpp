@@ -14,19 +14,19 @@ MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maest
 	this->maestro_controller_ = maestro_controller;
 
 	// Initialize timers.
-	this->timer = new QTimer(this);
-	this->timer->setTimerType(Qt::PreciseTimer);
-	connect(this->timer, SIGNAL(timeout()), this, SLOT(refresh_maestro()));
+	timer_ = new QTimer(this);
+	timer_->setTimerType(Qt::PreciseTimer);
+	connect(timer_, SIGNAL(timeout()), this, SLOT(refresh_maestro()));
 
 	// Initialize runtime timer
-	this->elapsed_timer.start();
+	elapsed_timer_.start();
 
 	// Set Maestro's refresh rate
-	this->timer->start(this->refresh_);
+	timer_->start(refresh_);
 }
 
 MaestroController* MaestroDrawingArea::get_maestro_controller() {
-	return this->maestro_controller_;
+	return maestro_controller_;
 }
 
 void MaestroDrawingArea::refresh_maestro() {
@@ -34,11 +34,11 @@ void MaestroDrawingArea::refresh_maestro() {
 	 * Check if a Show has been created.
 	 * If so, run the Show. Otherwise, update the Maestro.
 	 */
-	if (this->maestro_controller_->get_show()) {
-		this->maestro_controller_->get_show()->update(this->elapsed_timer.elapsed());
+	if (maestro_controller_->get_show()) {
+		maestro_controller_->get_show()->update(elapsed_timer_.elapsed());
 	}
 	else {
-		this->maestro_controller_->get_maestro()->update(this->elapsed_timer.elapsed());
+		maestro_controller_->get_maestro()->update(elapsed_timer_.elapsed());
 	}
-	this->update();
+	update();
 }

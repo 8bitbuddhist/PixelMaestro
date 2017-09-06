@@ -22,45 +22,35 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 
-	Colors::RGB tmp_rgb;	// RGB output from each Pixel
-	QColor tmp_color;		// tmpRGB converted to QColor
-	QBrush tmp_brush;		// Brush used to paint tmpColor
-	QRect tmp_rect;			// Size and location of the Pixel to draw using tmpBrush
-
 	/*
+	 * Render each Pixel in the Maestro by mapping its location in the grid to a location on the DrawingArea.
 	 * Note: This assumes we only have one section in the Maestro.
 	 * If there's more than one, the last Section will overwrite the first.
 	 * For more complex layouts, create a custom MaestroDrawingArea or add multiple SimpleDrawingAreas to the window.
 	 */
+	unsigned short section = 0;
+	if (last_pixel_count_ != maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels()) {
+		resizeEvent(nullptr);
+		last_pixel_count_ = maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels();
+	}
 
-	/*
-	 * Render each Pixel in the Maestro by mapping its location in the grid to a location on the DrawingArea.
-	 */	
-	for (unsigned short section = 0; section < this->maestro_controller_->get_num_section_controllers(); section++) {
+	for (unsigned short row = 0; row < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
+		for (unsigned short pixel = 0; pixel < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {
+			tmp_rgb_ = maestro_controller_->get_section_controller(section)->get_section()->get_pixel_color(maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
+			tmp_color_.setRgb(tmp_rgb_.r, tmp_rgb_.g, tmp_rgb_.b);
+			tmp_brush_.setColor(tmp_color_);
+			tmp_brush_.setStyle(Qt::BrushStyle::SolidPattern);
 
-		if (last_pixel_count_ != this->maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels()) {
-			this->resizeEvent(nullptr);
-			last_pixel_count_ = this->maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels();
-		}
-
-		for (unsigned short row = 0; row < this->maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
-			for (unsigned short pixel = 0; pixel < this->maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {
-				tmp_rgb = this->maestro_controller_->get_section_controller(section)->get_section()->get_pixel_color(this->maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
-				tmp_color.setRgb(tmp_rgb.r, tmp_rgb.g, tmp_rgb.b);
-				tmp_brush.setColor(tmp_color);
-				tmp_brush.setStyle(Qt::BrushStyle::SolidPattern);
-
-				/*
-				 * Draw the Pixel.
-				 * First, calculate the bounds of the Pixel.
-				 * Then, set the color of the pen to the color of the Pixel.
-				 * Finally, draw the Pixel to the screen.
-				 */
-				tmp_rect.setRect(pixel * pad_, row * pad_, radius_, radius_);
-				painter.setBrush(tmp_brush);
-				painter.setPen(Qt::PenStyle::NoPen);
-				painter.drawEllipse(tmp_rect);
-			}
+			/*
+			 * Draw the Pixel.
+			 * First, calculate the bounds of the Pixel.
+			 * Then, set the color of the pen to the color of the Pixel.
+			 * Finally, draw the Pixel to the screen.
+			 */
+			tmp_rect_.setRect(pixel * pad_, row * pad_, radius_, radius_);
+			painter.setBrush(tmp_brush_);
+			painter.setPen(Qt::PenStyle::NoPen);
+			painter.drawEllipse(tmp_rect_);
 		}
 	}
 }
