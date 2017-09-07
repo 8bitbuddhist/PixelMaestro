@@ -45,6 +45,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Returns the current color animation.
+
+		@return Current color animation.
+	*/
+	ColorAnimation* Section::get_new_color_animation() {
+		return new_color_animation;
+	}
+
+	/**
 		Returns the amount of time between animation changes.
 
 		@return speed The amount of time between animation changes.
@@ -226,6 +235,15 @@ namespace PixelMaestro {
 
 		reverse_animation_ = reverse_animation;
 		animation_orientation_ = orientation;
+	}
+
+	/**
+		Changes the current color animation.
+
+		@param animation New ColorAnimation.
+	*/
+	void Section::set_new_color_animation(ColorAnimation* animation) {
+		new_color_animation = animation;
 	}
 
 	/**

@@ -28,7 +28,7 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 
 	MergeAnimation* animation = new MergeAnimation(section.get(), true, ColorAnimation::Orientations::VERTICAL);
 	animation->set_colors(Colors::COLORWHEEL, 12);
-	section->new_color_animation = animation;
+	section->set_new_color_animation(animation);
 
 	section->set_canvas(canvas_);
 

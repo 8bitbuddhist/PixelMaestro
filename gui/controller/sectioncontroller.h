@@ -25,7 +25,7 @@ class SectionController {
 		Section::Overlay* get_overlay();
 		std::shared_ptr<SectionController> get_overlay_controller();
 		std::shared_ptr<Section> get_section();
-		void set_controller_colors(Colors::RGB* colors, unsigned short num_colors);
+		void set_colors(Colors::RGB* colors, unsigned short num_colors);
 		void set_dimensions(unsigned short x, unsigned short y);
 		void unset_overlay();
 

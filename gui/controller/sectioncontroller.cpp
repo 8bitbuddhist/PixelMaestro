@@ -85,7 +85,7 @@ std::shared_ptr<Section> SectionController::get_section() {
  * @param colors Colors to store in the SectionController.
  * @param num_colors Number of colors in the array.
  */
-void SectionController::set_controller_colors(Colors::RGB* colors, unsigned short num_colors) {
+void SectionController::set_colors(Colors::RGB* colors, unsigned short num_colors) {
 	colors_.resize(num_colors);
 
 	// Copy provided colors to controller
@@ -95,7 +95,7 @@ void SectionController::set_controller_colors(Colors::RGB* colors, unsigned shor
 		colors_[i].b = colors[i].b;
 	}
 
-	section_->new_color_animation->set_colors(&this->colors_[0], num_colors);
+	section_->get_new_color_animation()->set_colors(&this->colors_[0], num_colors);
 }
 
 /**

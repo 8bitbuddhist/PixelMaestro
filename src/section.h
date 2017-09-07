@@ -100,6 +100,7 @@ namespace PixelMaestro {
 			AnimationOpts *get_animation_opts();
 			Canvas* get_canvas();
 			Section::ColorAnimations get_color_animation();
+			ColorAnimation* get_new_color_animation();
 			unsigned short get_cycle_interval();
 			Point* get_dimensions();
 			bool get_fade();
@@ -115,6 +116,7 @@ namespace PixelMaestro {
 			void set_all(Colors::RGB* color);
 			void set_canvas(Canvas* canvas);
 			void set_color_animation(Section::ColorAnimations animation = ColorAnimations(NONE), bool reverse_animation = false, AnimationOrientations = AnimationOrientations(HORIZONTAL), AnimationOpts* opts = nullptr);
+			void set_new_color_animation(ColorAnimation* animation);
 			void set_colors(Colors::RGB* colors, unsigned short num_colors);
 			void set_cycle_index(unsigned short index);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
