@@ -20,14 +20,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the Section's active animation options.
-	 * @return Active animation option.
-	 */
-	Section::AnimationOpts *Section::get_animation_opts() {
-		return &animation_opts_;
-	}
-
-	/**
 	 * Returns the Section's Canvas.
 	 * @return Section's Canvas.
 	 */
@@ -40,17 +32,8 @@ namespace PixelMaestro {
 
 		@return Current color animation.
 	*/
-	Section::ColorAnimations Section::get_color_animation() {
+	ColorAnimation* Section::get_color_animation() {
 		return color_animation_;
-	}
-
-	/**
-		Returns the current color animation.
-
-		@return Current color animation.
-	*/
-	ColorAnimation* Section::get_new_color_animation() {
-		return new_color_animation;
 	}
 
 	/**
@@ -69,24 +52,6 @@ namespace PixelMaestro {
 	*/
 	Point* Section::get_dimensions() {
 		return dimensions_;
-	}
-
-	/**
-		Returns whether the Section is fading.
-
-		@return Whether the Section is fading.
-	*/
-	bool Section::get_fade() {
-		return fade_;
-	}
-
-	/**
-	 * Returns the number of Colors available to the Section.
-	 *
-	 * @return Number of Colors in the Color palette.
-	 */
-	unsigned short Section::get_num_colors() {
-		return num_colors_;
 	}
 
 	/**
@@ -161,15 +126,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns whether the current ColorAnimation is running in reverse.
-	 *
-	 * @return Whether the current ColorAnimation is running in reverse.
-	 */
-	bool Section::get_reverse() {
-		return reverse_animation_;
-	}
-
-	/**
 		Sets all Pixels to the specified color.
 
 		@param color New color.
@@ -194,81 +150,10 @@ namespace PixelMaestro {
 	/**
 		Changes the current color animation.
 
-		@param animation Animation selection.
-		@param reverse_animation Whether to display the animation in reverse (only works for certain animations).
-		@param orientation The orientation of the animation.
-	*/
-	void Section::set_color_animation(ColorAnimations animation, bool reverse_animation, AnimationOrientations orientation, AnimationOpts* opts) {
-		/*
-		 * If the animation != NEXT, change to the animation.
-		 * Otherwise, go to the next animation.
-		 */
-		if (animation != ColorAnimations::NEXT) {
-			color_animation_ = animation;
-		}
-		else {
-			unsigned char animationNum = color_animation_ + 1;
-
-			// If we've hit the last animation (NONE), cycle back to the first
-			if (animationNum == ColorAnimations::NONE) {
-				animationNum = 1;
-			}
-
-			color_animation_ = ColorAnimations(animationNum);
-		}
-
-		// Handle any uninitialized options
-		switch (animation) {
-			case SPARKLE:
-			{
-				if (opts != nullptr && opts->sparkle_threshold) {
-					animation_opts_.sparkle_threshold = opts->sparkle_threshold;
-				}
-				else {
-					animation_opts_.sparkle_threshold = 60;
-				}
-				break;
-			}
-			default:
-				break;
-		}
-
-		reverse_animation_ = reverse_animation;
-		animation_orientation_ = orientation;
-	}
-
-	/**
-		Changes the current color animation.
-
 		@param animation New ColorAnimation.
 	*/
 	void Section::set_new_color_animation(ColorAnimation* animation) {
-		new_color_animation = animation;
-	}
-
-	/**
-		Replaces the current color array.
-
-		@param colors New color array.
-		@param num_colors Size of the array.
-	*/
-	void Section::set_colors(Colors::RGB* colors, unsigned short num_colors) {
-		colors_ = colors;
-		num_colors_ = num_colors;
-	}
-
-	/**
-		Jumps ahead to the specified point in the cycle.
-
-		@param index Where the cycle should start.
-	*/
-	void Section::set_cycle_index(unsigned short index) {
-		if (index > num_colors_) {
-			cycle_index_ = (index - 1) % num_colors_;
-		}
-		else {
-			cycle_index_ = index;
-		}
+		color_animation_ = animation;
 	}
 
 	/**
@@ -291,15 +176,21 @@ namespace PixelMaestro {
 	void Section::set_one(unsigned int pixel, Colors::RGB* color) {
 		// Only continue if Pixel is within the bounds of the array.
 		if (pixel < get_num_pixels()) {
+			// Check fading
+			bool fade = false;
+			if (color_animation_ != nullptr) {
+				fade = color_animation_->get_fade();
+			}
+
 			/*
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
 			if (pause_ > 0) {
-				get_pixel(pixel)->set_next_color(color, fade_, cycle_interval_ - pause_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, fade, cycle_interval_ - pause_, refresh_interval_);
 			}
 			else {
-				get_pixel(pixel)->set_next_color(color, fade_, cycle_interval_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, fade, cycle_interval_, refresh_interval_);
 			}
 		}
 	}
@@ -332,13 +223,6 @@ namespace PixelMaestro {
 	*/
 	void Section::set_refresh_interval(unsigned short interval) {
 		refresh_interval_ = interval;
-	}
-
-	/**
-		Toggles fading.
-	*/
-	void Section::toggle_fade() {
-		fade_ = !fade_;
 	}
 
 	/**
@@ -383,8 +267,8 @@ namespace PixelMaestro {
 				 * Run the animation.
 				 * If no animation is set, turn off the grid.
 				 */
-				if (this->new_color_animation != nullptr) {
-					new_color_animation->update();
+				if (this->color_animation_ != nullptr) {
+					color_animation_->update();
 				}
 				else {
 					set_all(&Colors::BLACK);

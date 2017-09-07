@@ -35,7 +35,7 @@ namespace PixelMaestro {
 			section_->set_new_color_animation(animation_);
 			bool isEnabled = false;
 			for (unsigned int animation = 0; animation < num_animations_; animation++) {
-				if(&animations_[animation] == section_->get_new_color_animation()) {
+				if(&animations_[animation] == section_->get_color_animation()) {
 					isEnabled = true;
 					break;
 				}

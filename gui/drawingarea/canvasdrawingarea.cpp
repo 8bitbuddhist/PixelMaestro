@@ -20,7 +20,7 @@ CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro
 	maestro_controller->get_section_controller(0)->get_section()->set_new_color_animation(new SolidAnimation(maestro_controller_->get_section_controller(0)->get_section().get()));
 	maestro_controller->get_section_controller(0)->set_colors(Colors::COLORWHEEL, 12);
 	maestro_controller->get_section_controller(0)->get_section()->set_canvas(canvas_);
-	maestro_controller->get_section_controller(0)->get_section()->toggle_fade();
+	maestro_controller->get_section_controller(0)->get_section()->get_color_animation()->set_fade(false);
 }
 
 bool CanvasDrawingArea::eventFilter(QObject* obj, QEvent* event)

@@ -35,9 +35,9 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
  */
 void MaestroControl::get_section_settings() {
 	//ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_color_animation() - 1);
-	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_reverse());
-	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_fade());
-	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_num_colors());
+	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_color_animation()->get_reverse());
+	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_color_animation()->get_fade());
+	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_color_animation()->get_num_colors());
 
 	ui->cycleSlider->setValue(this->active_section_controller_->get_section()->get_cycle_interval());
 	ui->rowsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->y);
@@ -110,8 +110,8 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-	if (active_section_controller_->get_section()->get_new_color_animation() != nullptr) {
-		delete active_section_controller_->get_section()->get_new_color_animation();
+	if (active_section_controller_->get_section()->get_color_animation() != nullptr) {
+		delete active_section_controller_->get_section()->get_color_animation();
 	}
 
 	switch(index) {
@@ -236,7 +236,7 @@ void MaestroControl::on_blueSlider_valueChanged(int value) {
  * @param checked If true, fading is enabled.
  */
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
-	active_section_controller_->get_section()->toggle_fade();
+	active_section_controller_->get_section()->get_color_animation()->set_fade(checked);
 }
 
 /**
@@ -286,7 +286,7 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
  * @param checked If true, reverse the animation.
  */
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
-	active_section_controller_->get_section()->get_new_color_animation()->set_reverse(checked);
+	active_section_controller_->get_section()->get_color_animation()->set_reverse(checked);
 }
 
 /**

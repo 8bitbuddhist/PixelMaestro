@@ -52,10 +52,12 @@ namespace PixelMaestro {
 			Colors::RGB* colors_ = nullptr;
 
 			ColorAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			bool get_fade();
 			unsigned short get_num_colors();
 			unsigned int get_num_pixels();
-			unsigned int get_pixel_index(unsigned short x, unsigned short y);
+			bool get_reverse();
 			void set_colors(Colors::RGB* colors, unsigned short num_colors);
+			void set_fade(bool fade);
 			void set_reverse(bool reverse);
 			virtual void update() = 0;
 
@@ -63,29 +65,14 @@ namespace PixelMaestro {
 			///	The current stage of the animation cycle. Defaults to 0.
 			unsigned short cycle_index_ = 0;
 
-			/// The time between animation cycles in milliseconds. Defaults to 100.
-			unsigned short cycle_interval_ = 100;
-
 			/// Whether to fade between cycles. Defaults to true.
 			bool fade_ = true;
-
-			/// The time since the last animation cycle change in milliseconds. Defaults to 0.
-			unsigned long last_cycle_ = 0;
-
-			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
-			unsigned long last_refresh_ = 0;
 
 			/// The number of colors in colors_.
 			unsigned short num_colors_ = 0;
 
 			/// The orientation of the animation. Defaults to HORIZONTAL.
 			Orientations orientation_ = Orientations::HORIZONTAL;
-
-			/// The amount of time to wait in milliseconds before starting the next animation cycle by finishing the current cycle early. Defaults to 0.
-			unsigned short pause_ = 0;
-
-			/// The time between Pixel redraws in milliseconds. Only relevant when fading is enabled. Defaults to 20.
-			unsigned short refresh_interval_ = 20;
 
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_ = false;

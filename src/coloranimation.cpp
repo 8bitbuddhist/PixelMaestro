@@ -8,7 +8,15 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the number of Colors available to the Section.
+	 * Returns whether the animation is fading.
+	 * @return True if fading.
+	 */
+	bool ColorAnimation::get_fade() {
+		return fade_;
+	}
+
+	/**
+	 * Returns the number of Colors in the animation's palette.
 	 *
 	 * @return Number of Colors in the Color palette.
 	 */
@@ -17,14 +25,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the index of a Pixel given the x and y-coordinates.
-
-		@param x The Pixel's x-coordinate.
-		@param y The Pixel's y-coordinate.
-		@return The index of the Pixel.
-	*/
-	unsigned int ColorAnimation::get_pixel_index(unsigned short x, unsigned short y) {
-		return (y * section_->get_dimensions()->x) + x;
+	 * Returns whether the animation is running in reverse.
+	 * @return True if running in reverse.
+	 */
+	bool ColorAnimation::get_reverse() {
+		return reverse_;
 	}
 
 	/**
@@ -39,6 +44,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Toggles fading the animation.
+	 * @param fade If true, fade between cycles.
+	 */
+	void ColorAnimation::set_fade(bool fade) {
+		fade_ = fade;
+	}
+
+	/**
 		Sets whether to run the animation in reverse.
 
 		@param reverse If true, run in reverse.
@@ -48,6 +61,7 @@ namespace PixelMaestro {
 	}
 
 	// Private methods
+
 	/**
 		Calculates the index of a color.
 		Used mainly to determine which color a Pixel should use during an animation based on where it is in the array.
@@ -73,7 +87,6 @@ namespace PixelMaestro {
 		@param max The maximum possible value of cycle_index_.
 	*/
 	void ColorAnimation::update_cycle(unsigned short min, unsigned short max) {
-		last_cycle_ = last_refresh_;
 		if (reverse_) {
 			if (cycle_index_ == 0) {
 				cycle_index_ = max - 1;
