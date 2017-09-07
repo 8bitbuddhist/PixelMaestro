@@ -32,7 +32,7 @@ namespace PixelMaestro {
 	void SectionSetColorAnimationEvent::run() {
 		// If we have a collection of animations, iterate through them, otherwise jump straight to the specified animation
 		if(animations_) {
-			section_->set_new_color_animation(animation_);
+			section_->set_color_animation(animation_);
 			bool isEnabled = false;
 			for (unsigned int animation = 0; animation < num_animations_; animation++) {
 				if(&animations_[animation] == section_->get_color_animation()) {
@@ -47,7 +47,7 @@ namespace PixelMaestro {
 			}
 		}
 		else {
-			section_->set_new_color_animation(animation_);
+			section_->set_color_animation(animation_);
 		}
 	}
 }

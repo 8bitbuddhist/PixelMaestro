@@ -1,10 +1,25 @@
 #include "coloranimation.h"
 
 namespace PixelMaestro {
+	/**
+	 * Constructor.
+	 * @param section The Section that this animation will render in.
+	 * @param colors Initial color palette.
+	 * @param num_colors The number of colors in the palette.
+	 */
 	ColorAnimation::ColorAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) {
 		this->section_ = section;
 		this->colors_ = colors;
 		this->num_colors_ = num_colors;
+	}
+
+	/**
+	 * Returns the current cycle index.
+	 *
+	 * @return Cycle index.
+	 */
+	unsigned short ColorAnimation::get_cycle_index() {
+		return cycle_index_;
 	}
 
 	/**
@@ -16,9 +31,9 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the number of Colors in the animation's palette.
+	 * Returns the number of colors in the animation's palette.
 	 *
-	 * @return Number of Colors in the Color palette.
+	 * @return Number of colors in the color palette.
 	 */
 	unsigned short ColorAnimation::get_num_colors() {
 		return num_colors_;
@@ -26,6 +41,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Returns whether the animation is running in reverse.
+	 *
 	 * @return True if running in reverse.
 	 */
 	bool ColorAnimation::get_reverse() {
@@ -33,10 +49,10 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Replaces the current color array.
+		Replaces the current color palette.
 
-		@param colors New color array.
-		@param num_colors Size of the array.
+		@param colors New color palette.
+		@param num_colors Number of colors in the palette.
 	*/
 	void ColorAnimation::set_colors(Colors::RGB* colors, unsigned short num_colors) {
 		colors_ = colors;
@@ -44,7 +60,22 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the cycle index to the specified index.
+	 * To be safe, we keep it under num_colors_.
+	 *
+	 * @param index New cycle index.
+	 */
+	void ColorAnimation::set_cycle_index(unsigned short index) {
+		if (index > num_colors_) {
+			index %= num_colors_;
+		}
+
+		cycle_index_ = index;
+	}
+
+	/**
 	 * Toggles fading the animation.
+	 *
 	 * @param fade If true, fade between cycles.
 	 */
 	void ColorAnimation::set_fade(bool fade) {
@@ -63,19 +94,20 @@ namespace PixelMaestro {
 	// Private methods
 
 	/**
-		Calculates the index of a color.
+		Returns the color at the specified index.
+		If the index exceeds the size of the color palette, the index will wrap around to the start of the array and count the remainder.
+		For example, if the Section has 10 Pixels and 5 Colors, the Pixel at index 7 will use the color at index 2 (7 % 5 == 2).
 		Used mainly to determine which color a Pixel should use during an animation based on where it is in the array.
-		For example, if the Section has 10 Pixels and 5 Colors, the Pixel at index 7 (count) will use the Color at index 2 (7 % 5 == 2).
 
-		@param count Number to resolve to an index.
-		@return Resulting index.
+		@param index Desired index.
+		@return Color at the specified index.
 	*/
-	unsigned short ColorAnimation::get_color_index(unsigned short count) {
-		if (num_colors_ > 0 && count >= num_colors_) {
-			count %= num_colors_;
+	Colors::RGB* ColorAnimation::get_color_at_index(unsigned short index) {
+		if (index >= num_colors_) {
+			index %= num_colors_;
 		}
 
-		return count;
+		return &colors_[index];
 	}
 
 	/**

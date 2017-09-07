@@ -12,6 +12,7 @@ using namespace PixelMaestro;
  */
 MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent) {
 	this->maestro_controller_ = maestro_controller;
+	this->refresh_ = maestro_controller_->get_maestro()->get_refresh_rate();
 
 	// Initialize timers.
 	timer_ = new QTimer(this);

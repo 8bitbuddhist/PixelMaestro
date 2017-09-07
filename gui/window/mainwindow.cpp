@@ -91,13 +91,17 @@ void MainWindow::on_action_Canvas_Demo_triggered() {
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	reset_drawing_area();
 
-	drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), controller_);
 	controller_->add_section_controller(new Point(10, 10));
 	maestro_control_ = new MaestroControl(main_layout_->widget(), controller_);
+
+	drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), controller_);
+
 	main_layout_->addWidget(drawing_area_);
 	main_layout_->addWidget(maestro_control_);
+
 	ui->action_Open_Animation_Editor->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
+
 	statusBar()->showMessage(QString("Use the controls to modify the Section."));
 }
 

@@ -149,10 +149,11 @@ namespace PixelMaestro {
 
 	/**
 		Changes the current color animation.
+		// TODO: Switch animations in a way that preserves cycle_index_. Do the same for SectionSetColorAnimationEvent.
 
 		@param animation New ColorAnimation.
 	*/
-	void Section::set_new_color_animation(ColorAnimation* animation) {
+	void Section::set_color_animation(ColorAnimation* animation) {
 		color_animation_ = animation;
 	}
 
@@ -176,21 +177,15 @@ namespace PixelMaestro {
 	void Section::set_one(unsigned int pixel, Colors::RGB* color) {
 		// Only continue if Pixel is within the bounds of the array.
 		if (pixel < get_num_pixels()) {
-			// Check fading
-			bool fade = false;
-			if (color_animation_ != nullptr) {
-				fade = color_animation_->get_fade();
-			}
-
 			/*
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
 			if (pause_ > 0) {
-				get_pixel(pixel)->set_next_color(color, fade, cycle_interval_ - pause_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, color_animation_->get_fade(), cycle_interval_ - pause_, refresh_interval_);
 			}
 			else {
-				get_pixel(pixel)->set_next_color(color, fade, cycle_interval_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, color_animation_->get_fade(), cycle_interval_, refresh_interval_);
 			}
 		}
 	}
@@ -249,33 +244,35 @@ namespace PixelMaestro {
 		@param current_time Program runtime.
 	*/
 	void Section::update(const unsigned long& current_time) {
-		// If this Section has an Overlay, update it.
+
+		// If no ColorAnimation is set, do nothing.
+		if (this->color_animation_ == nullptr) {
+			return;
+		}
+
+		// If this Section has an Overlay, update it first.
 		if (overlay_ != nullptr) {
 			overlay_->section->update(current_time);
 		}
 
+		/*
+		 * Refresh the Pixels.
+		 * refresh_interval_ tracks the amount of time between Pixel draws, and last_refresh_ tracks the time of the last refresh.
+		 */
 		if (current_time - last_refresh_ >= (unsigned long)refresh_interval_) {
 
 			/*
 				Update the animation cycle.
-				cycle_index_ tracks the Section's current position in the animation, while last_cycle_ tracks the time since the last position.
-				If we've exceed our cycle time (indicated by speed_), calculate and move to the next animation position.
+				cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
+				If it's time for the next cycle, update the ColorAnimation.
 			*/
 			if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
 
-				/*
-				 * Run the animation.
-				 * If no animation is set, turn off the grid.
-				 */
-				if (this->color_animation_ != nullptr) {
-					color_animation_->update();
-				}
-				else {
-					set_all(&Colors::BLACK);
-				}
+				// Run the animation.
+				color_animation_->update();
 
 				/*
-				 * Check to see if we need to redraw the canvas.
+				 * If a Canvas is set, update it.
 				 */
 				if (canvas_ != nullptr) {
 					canvas_->update(current_time);
@@ -285,12 +282,13 @@ namespace PixelMaestro {
 				last_cycle_ = current_time;
 			}
 
-			/*
-				Update each Pixel.
-			*/
-			for (unsigned short pixel = 0; pixel < get_num_pixels(); pixel++) {
-				get_pixel(pixel)->update();
-			}
+			// Only update each Pixel if we're fading or if the cycle has changed.
+			// TODO: More efficient way to do this?
+			//if (color_animation_->get_fade() || (!color_animation_->get_fade() && last_cycle_ == current_time)) {
+				for (unsigned short pixel = 0; pixel < get_num_pixels(); pixel++) {
+					get_pixel(pixel)->update();
+				}
+			//}
 
 			// Update the last refresh time.
 			last_refresh_ = current_time;

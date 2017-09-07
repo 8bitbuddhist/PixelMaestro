@@ -63,15 +63,15 @@ namespace PixelMaestro {
 			unsigned short get_refresh_interval();
 			void set_all(Colors::RGB* color);
 			void set_canvas(Canvas* canvas);
-			void set_new_color_animation(ColorAnimation* animation);
+			void set_color_animation(ColorAnimation* animation);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short row, unsigned short column, Colors::RGB* color);
 			void set_overlay(Overlay* overlay);
 			void set_pixels(Pixel* pixels, Point* layout);
 			void set_refresh_interval(unsigned short interval);
-			void update(const unsigned long& current_time);
 			void unset_overlay();
+			void update(const unsigned long& current_time);
 
 		private:
 			/// The animation displayed in this Section.

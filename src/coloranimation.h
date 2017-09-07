@@ -42,26 +42,28 @@ namespace PixelMaestro {
 				NONE
 			};
 
-			/// The orientation of the current animation. Does not affect animations that don't have a specific direction (e.g. BLINK).
+			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. Blink).
 			enum Orientations {
 				HORIZONTAL,
 				VERTICAL
 			};
 
-			/// Array of colors used in the animation.
-			Colors::RGB* colors_ = nullptr;
-
 			ColorAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			unsigned short get_cycle_index();
 			bool get_fade();
 			unsigned short get_num_colors();
 			unsigned int get_num_pixels();
 			bool get_reverse();
 			void set_colors(Colors::RGB* colors, unsigned short num_colors);
+			void set_cycle_index(unsigned short index);
 			void set_fade(bool fade);
 			void set_reverse(bool reverse);
 			virtual void update() = 0;
 
 		protected:
+			/// Array of colors used in the animation.
+			Colors::RGB* colors_ = nullptr;
+
 			///	The current stage of the animation cycle. Defaults to 0.
 			unsigned short cycle_index_ = 0;
 
@@ -77,9 +79,10 @@ namespace PixelMaestro {
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_ = false;
 
+			/// The Section where the animation will display.
 			Section* section_ = nullptr;
 
-			unsigned short get_color_index(unsigned short count);
+			Colors::RGB* get_color_at_index(unsigned short index);
 			void update_cycle(unsigned short min, unsigned short max);
 	};
 }

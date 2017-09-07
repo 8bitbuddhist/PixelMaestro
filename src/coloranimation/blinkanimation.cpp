@@ -8,7 +8,7 @@ namespace PixelMaestro {
 		if (cycle_index_ == 0) {
 			for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
 				for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
-					section_->set_one(row, column, &colors_[get_color_index(column)]);
+					section_->set_one(row, column, get_color_at_index(column));
 				}
 			}
 		}

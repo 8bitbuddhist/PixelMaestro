@@ -143,7 +143,10 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			return;
 	}
 
-	on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
+
+	// Set fade, reverse, and color palette
+	active_section_controller_->get_section()->get_color_animation()->set_fade(ui->fadeCheckBox->isChecked());
+	active_section_controller_->get_section()->get_color_animation()->set_reverse(ui->reverse_animationCheckBox->isChecked());
 	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
 }
 
