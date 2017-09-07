@@ -1,7 +1,7 @@
 #include "cycleanimation.h"
 
 namespace PixelMaestro {
-	CycleAnimation::CycleAnimation(Section* section, bool reverse, Orientations orientation) : ColorAnimation(section, reverse, orientation) { }
+	CycleAnimation::CycleAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : ColorAnimation(section, colors, num_colors) { }
 
 	void CycleAnimation::update() {
 		section_->set_all(&colors_[cycle_index_]);

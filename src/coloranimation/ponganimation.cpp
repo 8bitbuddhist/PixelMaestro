@@ -1,7 +1,7 @@
 #include "ponganimation.h"
 
 namespace PixelMaestro {
-	PongAnimation::PongAnimation(Section* section, bool reverse, Orientations orientation) : ColorAnimation(section, reverse, orientation) { }
+	PongAnimation::PongAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : ColorAnimation(section, colors, num_colors) { }
 
 	void PongAnimation::update() {
 		for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
@@ -17,11 +17,11 @@ namespace PixelMaestro {
 
 		if (cycle_index_ == 0) {
 			// Start ping
-			ping_ = true;
+			reverse_ = false;
 		}
 		if (cycle_index_ == num_colors_ - 1) {
 			// Start pong
-			ping_ = false;
+			reverse_ = true;
 		}
 
 		update_cycle(0, num_colors_);

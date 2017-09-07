@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class SparkleAnimation : public ColorAnimation {
 		public:
-			SparkleAnimation(Section* section, bool reverse = false, Orientations orientation = Orientations::HORIZONTAL, unsigned char threshold = 50);
+			SparkleAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0, unsigned char threshold = 50);
 			void update();
 
 		private:

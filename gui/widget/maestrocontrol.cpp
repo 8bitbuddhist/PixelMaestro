@@ -110,41 +110,40 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-	bool reverse = ui->reverse_animationCheckBox->isChecked();
-
 	if (active_section_controller_->get_section()->get_new_color_animation() != nullptr) {
 		delete active_section_controller_->get_section()->get_new_color_animation();
 	}
 
 	switch(index) {
 		case 0:
-			active_section_controller_->get_section()->set_new_color_animation(new SolidAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new SolidAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 1:
-			active_section_controller_->get_section()->set_new_color_animation(new BlinkAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new BlinkAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 2:
-			active_section_controller_->get_section()->set_new_color_animation(new CycleAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new CycleAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 3:
-			active_section_controller_->get_section()->set_new_color_animation(new WaveAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new WaveAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 4:
-			active_section_controller_->get_section()->set_new_color_animation(new PongAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new PongAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 5:
-			active_section_controller_->get_section()->set_new_color_animation(new MergeAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new MergeAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 6:
-			active_section_controller_->get_section()->set_new_color_animation(new RandomAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new RandomAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 7:
-			active_section_controller_->get_section()->set_new_color_animation(new SparkleAnimation(active_section_controller_->get_section().get(), reverse));
+			active_section_controller_->get_section()->set_new_color_animation(new SparkleAnimation(active_section_controller_->get_section().get()));
 			break;
 		default:
 			return;
 	}
 
+	on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
 	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
 }
 
@@ -287,7 +286,7 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
  * @param checked If true, reverse the animation.
  */
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
-	on_animationComboBox_currentIndexChanged(ui->animationComboBox->currentIndex());
+	active_section_controller_->get_section()->get_new_color_animation()->set_reverse(checked);
 }
 
 /**

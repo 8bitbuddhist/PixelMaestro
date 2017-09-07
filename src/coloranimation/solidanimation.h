@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class SolidAnimation : public ColorAnimation {
 		public:
-			SolidAnimation(Section* section, bool reverse = false, Orientations orientation = Orientations::HORIZONTAL);
+			SolidAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();
 	};
 }

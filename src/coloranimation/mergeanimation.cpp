@@ -1,7 +1,7 @@
 #include "mergeanimation.h"
 
 namespace PixelMaestro {
-	MergeAnimation::MergeAnimation(Section* section, bool reverse, Orientations orientation) : ColorAnimation(section, reverse, orientation) { }
+	MergeAnimation::MergeAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : ColorAnimation(section, colors, num_colors) { }
 
 	void MergeAnimation::update() {
 		if (orientation_ == VERTICAL) {

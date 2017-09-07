@@ -6,12 +6,8 @@
 namespace PixelMaestro {
 	class PongAnimation : public ColorAnimation {
 		public:
-			PongAnimation(Section* section, bool reverse = false, Orientations orientation = Orientations::HORIZONTAL);
+			PongAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();
-
-		private:
-			/// Determines whether the animation is moving forwards or backwards.
-			bool ping_ = true;
 	};
 }
 

@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class MergeAnimation : public ColorAnimation {
 		public:
-			MergeAnimation(Section* section, bool reverse = false, Orientations orientation = Orientations::HORIZONTAL);
+			MergeAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();
 
 		private:

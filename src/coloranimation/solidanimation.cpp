@@ -1,7 +1,7 @@
 #include "solidanimation.h"
 
 namespace PixelMaestro {
-	SolidAnimation::SolidAnimation(Section* section, bool reverse, Orientations orientation) : ColorAnimation(section, reverse, orientation) { }
+	SolidAnimation::SolidAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : ColorAnimation(section, colors, num_colors) { }
 
 	void SolidAnimation::update() {
 		for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {

@@ -51,11 +51,12 @@ namespace PixelMaestro {
 			/// Array of colors used in the animation.
 			Colors::RGB* colors_ = nullptr;
 
-			ColorAnimation(Section *section, bool reverse = false, Orientations orientation = Orientations::HORIZONTAL);
+			ColorAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			unsigned short get_num_colors();
 			unsigned int get_num_pixels();
 			unsigned int get_pixel_index(unsigned short x, unsigned short y);
 			void set_colors(Colors::RGB* colors, unsigned short num_colors);
+			void set_reverse(bool reverse);
 			virtual void update() = 0;
 
 		protected:

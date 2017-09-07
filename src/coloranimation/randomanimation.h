@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class RandomAnimation : public ColorAnimation {
 		public:
-			RandomAnimation(Section* section, bool reverse = false, Orientations orientation = Orientations::HORIZONTAL);
+			RandomAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();
 	};
 }

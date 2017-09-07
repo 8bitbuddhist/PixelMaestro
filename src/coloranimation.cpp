@@ -1,10 +1,10 @@
 #include "coloranimation.h"
 
 namespace PixelMaestro {
-	ColorAnimation::ColorAnimation(Section* section, bool reverse, Orientations orientation) {
+	ColorAnimation::ColorAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) {
 		this->section_ = section;
-		this->reverse_ = reverse;
-		this->orientation_ = orientation;
+		this->colors_ = colors;
+		this->num_colors_ = num_colors;
 	}
 
 	/**
@@ -36,6 +36,15 @@ namespace PixelMaestro {
 	void ColorAnimation::set_colors(Colors::RGB* colors, unsigned short num_colors) {
 		colors_ = colors;
 		num_colors_ = num_colors;
+	}
+
+	/**
+		Sets whether to run the animation in reverse.
+
+		@param reverse If true, run in reverse.
+	 */
+	void ColorAnimation::set_reverse(bool reverse) {
+		reverse_ = reverse;
 	}
 
 	// Private methods

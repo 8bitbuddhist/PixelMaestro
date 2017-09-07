@@ -3,6 +3,7 @@
  * Left mouse enables a pixel, right mouse disables a pixel, and Delete key clears the Canvas.
  */
 
+#include "coloranimation/solidanimation.h"
 #include "canvasdrawingarea.h"
 #include "QMouseEvent"
 #include "QString"
@@ -16,8 +17,8 @@ CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro
 	canvas_ = new Canvas(new bool[50 * 50] {0});
 
 	maestro_controller->add_section_controller(new Point(50, 50));
+	maestro_controller->get_section_controller(0)->get_section()->set_new_color_animation(new SolidAnimation(maestro_controller_->get_section_controller(0)->get_section().get()));
 	maestro_controller->get_section_controller(0)->set_colors(Colors::COLORWHEEL, 12);
-	maestro_controller->get_section_controller(0)->get_section()->set_color_animation(Section::ColorAnimations::SOLID);
 	maestro_controller->get_section_controller(0)->get_section()->set_canvas(canvas_);
 	maestro_controller->get_section_controller(0)->get_section()->toggle_fade();
 }
