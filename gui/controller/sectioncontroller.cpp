@@ -95,7 +95,7 @@ void SectionController::set_colors(Colors::RGB* colors, unsigned short num_color
 		colors_[i].b = colors[i].b;
 	}
 
-	section_->get_color_animation()->set_colors(&this->colors_[0], num_colors);
+	section_->get_animation()->set_colors(&this->colors_[0], num_colors);
 }
 
 /**

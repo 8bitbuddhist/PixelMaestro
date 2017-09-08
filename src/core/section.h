@@ -50,8 +50,8 @@ namespace PixelMaestro {
 			};
 
 			Section(Pixel* pixels, Point* layout);
+			Animation* get_animation();
 			Canvas* get_canvas();
-			Animation* get_color_animation();
 			unsigned short get_cycle_interval();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
@@ -62,8 +62,8 @@ namespace PixelMaestro {
 			unsigned int get_pixel_index(unsigned short x, unsigned short y);
 			unsigned short get_refresh_interval();
 			void set_all(Colors::RGB* color);
+			void set_animation(Animation* animation, bool preserve_cycle_index = false);
 			void set_canvas(Canvas* canvas);
-			void set_color_animation(Animation* animation, bool preserve_cycle_index = false);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short row, unsigned short column, Colors::RGB* color);

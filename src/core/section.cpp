@@ -20,20 +20,20 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Returns the current animation.
+
+		@return Current animation.
+	*/
+	Animation* Section::get_animation() {
+		return animation_;
+	}
+
+	/**
 	 * Returns the Section's Canvas.
 	 * @return Section's Canvas.
 	 */
 	Canvas* Section::get_canvas() {
 		return canvas_;
-	}
-
-	/**
-		Returns the current color animation.
-
-		@return Current color animation.
-	*/
-	Animation* Section::get_color_animation() {
-		return animation_;
 	}
 
 	/**
@@ -137,6 +137,20 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Changes the current animation.
+
+		@param animation New animation.
+		@param preserve_cycle_index If true, resume from the cycle_index of the previous animation.
+	*/
+	void Section::set_animation(Animation* animation, bool preserve_cycle_index) {
+		if (preserve_cycle_index && animation_) {
+			animation->set_cycle_index(animation_->get_cycle_index());
+		}
+
+		animation_ = animation;
+	}
+
+	/**
 		Sets the Canvas to display.
 		Also sets the Canvas' parent Section to the current Section.
 
@@ -145,21 +159,6 @@ namespace PixelMaestro {
 	void Section::set_canvas(Canvas* canvas) {
 		canvas_ = canvas;
 		canvas_->parent_section = this;
-	}
-
-	/**
-		Changes the current color animation.
-		// TODO: Switch animations in a way that preserves cycle_index_. Do the same for SectionSetAnimationEvent.
-
-		@param animation New animation.
-		@param preserve_cycle_index If true, resume from the cycle_index of the previous animation.
-	*/
-	void Section::set_color_animation(Animation* animation, bool preserve_cycle_index) {
-		if (preserve_cycle_index && animation_) {
-			animation->set_cycle_index(animation_->get_cycle_index());
-		}
-
-		animation_ = animation;
 	}
 
 	/**
@@ -288,12 +287,11 @@ namespace PixelMaestro {
 			}
 
 			// Only update each Pixel if we're fading or if the cycle has changed.
-			// TODO: More efficient way to do this?
-			//if (color_animation_->get_fade() || (!color_animation_->get_fade() && last_cycle_ == current_time)) {
+			if (animation_->get_fade() || last_cycle_ == current_time) {
 				for (unsigned short pixel = 0; pixel < get_num_pixels(); pixel++) {
 					get_pixel(pixel)->update();
 				}
-			//}
+			}
 
 			// Update the last refresh time.
 			last_refresh_ = current_time;

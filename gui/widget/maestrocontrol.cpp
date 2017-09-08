@@ -34,10 +34,18 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
  * Applies the active Section settings to the UI.
  */
 void MaestroControl::get_section_settings() {
-	//ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_color_animation() - 1);
-	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_color_animation()->get_reverse());
-	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_color_animation()->get_fade());
-	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_color_animation()->get_num_colors());
+	// Get the animation type
+	std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
+	for (unsigned int index = 0; index < ui->animationComboBox->count(); index++) {
+		if (type.find(ui->animationComboBox->itemText(index).toStdString()) != std::string::npos) {
+			ui->animationComboBox->setCurrentIndex(index);
+			continue;
+		}
+	}
+
+	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_animation()->get_reverse());
+	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_animation()->get_fade());
+	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_animation()->get_num_colors());
 
 	ui->cycleSlider->setValue(this->active_section_controller_->get_section()->get_cycle_interval());
 	ui->rowsSpinBox->setValue(this->active_section_controller_->get_section()->get_dimensions()->y);
@@ -55,7 +63,7 @@ void MaestroControl::get_section_settings() {
  */
 void MaestroControl::initialize() {
 	active_section_controller_ = maestro_controller_->get_section_controller(0);
-	active_section_controller_->get_section()->set_color_animation(new SolidAnimation(active_section_controller_->get_section().get()));
+	active_section_controller_->get_section()->set_animation(new SolidAnimation(active_section_controller_->get_section().get()));
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Pong", "Merge", "Random", "Sparkle"});
@@ -68,9 +76,10 @@ void MaestroControl::initialize() {
 	// Set default values
 	ui->sectionComboBox->addItem("Section 1");
 
-
 	// Add an Overlay
 	active_section_controller_->add_overlay(Colors::MixMode::NONE);
+	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation(active_section_controller_->get_overlay()->section));
+	active_section_controller_->get_overlay_controller()->set_colors(Colors::COLORWHEEL, 12);
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
 
 	// Initialize Overlay controls
@@ -110,34 +119,37 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
-	if (active_section_controller_->get_section()->get_color_animation() != nullptr) {
-		delete active_section_controller_->get_section()->get_color_animation();
+	if (active_section_controller_->get_section()->get_animation() != nullptr) {
+		delete active_section_controller_->get_section()->get_animation();
 	}
+
+	// Preserve the animation cycle between changes
+	bool preserve_cycle_index = true;
 
 	switch(index) {
 		case 0:
-			active_section_controller_->get_section()->set_color_animation(new SolidAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new SolidAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		case 1:
-			active_section_controller_->get_section()->set_color_animation(new BlinkAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new BlinkAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		case 2:
-			active_section_controller_->get_section()->set_color_animation(new CycleAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new CycleAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		case 3:
-			active_section_controller_->get_section()->set_color_animation(new WaveAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new WaveAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		case 4:
-			active_section_controller_->get_section()->set_color_animation(new PongAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new PongAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		case 5:
-			active_section_controller_->get_section()->set_color_animation(new MergeAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new MergeAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		case 6:
-			active_section_controller_->get_section()->set_color_animation(new RandomAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new RandomAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		case 7:
-			active_section_controller_->get_section()->set_color_animation(new SparkleAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_animation(new SparkleAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		default:
 			return;
@@ -145,8 +157,8 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 
 	// Set fade, reverse, and color palette
-	active_section_controller_->get_section()->get_color_animation()->set_fade(ui->fadeCheckBox->isChecked());
-	active_section_controller_->get_section()->get_color_animation()->set_reverse(ui->reverse_animationCheckBox->isChecked());
+	active_section_controller_->get_section()->get_animation()->set_fade(ui->fadeCheckBox->isChecked());
+	active_section_controller_->get_section()->get_animation()->set_reverse(ui->reverse_animationCheckBox->isChecked());
 	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
 }
 
@@ -239,7 +251,7 @@ void MaestroControl::on_blueSlider_valueChanged(int value) {
  * @param checked If true, fading is enabled.
  */
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
-	active_section_controller_->get_section()->get_color_animation()->set_fade(checked);
+	active_section_controller_->get_section()->get_animation()->set_fade(checked);
 }
 
 /**
@@ -289,7 +301,7 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
  * @param checked If true, reverse the animation.
  */
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
-	active_section_controller_->get_section()->get_color_animation()->set_reverse(checked);
+	active_section_controller_->get_section()->get_animation()->set_reverse(checked);
 }
 
 /**

@@ -19,5 +19,5 @@ BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : S
 	section->set_cycle_interval(500);
 
 	Animation* blink_animation = new BlinkAnimation(section.get(), Colors::COLORWHEEL, 12);
-	section->set_color_animation(blink_animation);
+	section->set_animation(blink_animation);
 }

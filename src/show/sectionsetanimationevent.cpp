@@ -35,11 +35,11 @@ namespace PixelMaestro {
 		// If we have a collection of animations, iterate through them.
 		if(animations_) {
 			// If necessary, transfer cycle_index over to the next animation.
-			if (preserve_cycle_index_ && section_->get_color_animation()) {
-				animations_[current_animation_]->set_cycle_index(section_->get_color_animation()->get_cycle_index());
+			if (preserve_cycle_index_ && section_->get_animation()) {
+				animations_[current_animation_]->set_cycle_index(section_->get_animation()->get_cycle_index());
 			}
 
-			section_->set_color_animation(animations_[current_animation_]);
+			section_->set_animation(animations_[current_animation_]);
 			current_animation_++;
 
 			// If we've reached the end of the list, reset the animation index.
@@ -48,7 +48,7 @@ namespace PixelMaestro {
 			}
 		}
 		else {	// Only run one animation.
-			section_->set_color_animation(animation_);
+			section_->set_animation(animation_);
 		}
 	}
 }
