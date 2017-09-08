@@ -149,9 +149,9 @@ namespace PixelMaestro {
 
 	/**
 		Changes the current color animation.
-		// TODO: Switch animations in a way that preserves cycle_index_. Do the same for SectionSetColorAnimationEvent.
+		// TODO: Switch animations in a way that preserves cycle_index_. Do the same for SectionSetAnimationEvent.
 
-		@param animation New ColorAnimation.
+		@param animation New animation.
 	*/
 	void Section::set_color_animation(Animation* animation) {
 		animation_ = animation;
@@ -245,7 +245,7 @@ namespace PixelMaestro {
 	*/
 	void Section::update(const unsigned long& current_time) {
 
-		// If no ColorAnimation is set, do nothing.
+		// If no animation is set, do nothing.
 		if (this->animation_ == nullptr) {
 			return;
 		}
@@ -264,7 +264,7 @@ namespace PixelMaestro {
 			/*
 				Update the animation cycle.
 				cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
-				If it's time for the next cycle, update the ColorAnimation.
+				If it's time for the next cycle, run the animation.
 			*/
 			if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
 

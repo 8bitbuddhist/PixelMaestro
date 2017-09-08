@@ -344,7 +344,7 @@ namespace PixelMaestro {
 				/*
 				 * Iterate through all Pixels.
 				 * If the Pixel is enabled, assign it the foreground color, otherwise assign the background color.
-				 * If the foregound color isn't set, skip over the Pixel and allow the ColorAnimation's color to pass through.
+				 * If the foregound color isn't set, skip over the Pixel and allow the Animation's color to pass through.
 				 * If the background color isn't set, just show black.
 				 */
 				if (pattern[parent_section->get_pixel_index(column, row)]) {

@@ -3,7 +3,7 @@
 using namespace PixelMaestro;
 
 namespace PixelMaestro {
-	// TODO: Rename this Event (and Events like it) to ColorAnimation
+	// TODO: Move this Event (and Events like it) from Section to Animation
 	SectionToggleFadeEvent::SectionToggleFadeEvent(unsigned long time, Section* section) : Event(time) {
 		this->section_ = section;
 	}
