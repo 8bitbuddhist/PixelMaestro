@@ -1,5 +1,5 @@
-#ifndef SECTIONSETCOLORANIMATIONEVENT_H
-#define SECTIONSETCOLORANIMATIONEVENT_H
+#ifndef SECTIONSETANIMATIONEVENT_H
+#define SECTIONSETANIMATIONEVENT_H
 
 #include "../animation/animation.h"
 #include "../section.h"
@@ -8,19 +8,18 @@
 using namespace PixelMaestro;
 
 namespace PixelMaestro {
-	class SectionSetColorAnimationEvent : public Event {
+	class SectionSetAnimationEvent : public Event {
 		public:
-			SectionSetColorAnimationEvent(unsigned long time, Section* section, Animation* animation);
-			SectionSetColorAnimationEvent(unsigned long time, Section* section, Animation* animations, unsigned int num_animations);
+			SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animation);
+			SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animations, unsigned int num_animations);
 			void run();
 
 		private:
 			Animation *animation_ = nullptr;
-			Animation *animations_ = nullptr;
-			unsigned int num_animations_;
+			unsigned int num_animations_ = 0;
 			Section* section_;
 
 	};
 }
 
-#endif // SECTIONSETCOLORANIMATIONEVENT_H
+#endif // SECTIONSETANIMATIONEVENT_H

@@ -27,14 +27,7 @@ SOURCES += main.cpp\
 		../src/show/sectionsetoverlayevent.cpp \
 		../src/show/sectiontogglefadeevent.cpp \
 		../src/show/sectionunsetoverlayevent.cpp \
-		../src/colors.cpp \
-		../src/maestro.cpp \
-		../src/pixel.cpp \
-		../src/section.cpp \
-		../src/show.cpp \
 		../src/utility.cpp \
-		../src/point.cpp \
-		../src/canvas.cpp \
 		../src/canvas/fonts/font5x8.cpp \
 		../src/show/sectionsetcanvasevent.cpp \
 		demo/canvasdemo.cpp \
@@ -58,7 +51,14 @@ SOURCES += main.cpp\
     ../src/animation/sparkleanimation.cpp \
     ../src/animation/waveanimation.cpp \
     ../src/animation/animation.cpp \
-    ../src/show/sectionsetanimationevent.cpp
+    ../src/show/sectionsetanimationevent.cpp \
+    ../src/canvas/canvas.cpp \
+    ../src/core/colors.cpp \
+    ../src/core/maestro.cpp \
+    ../src/core/pixel.cpp \
+    ../src/core/point.cpp \
+    ../src/core/section.cpp \
+    ../src/show/show.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -77,14 +77,7 @@ HEADERS += \
 		../src/show/sectionsetoverlayevent.h \
 		../src/show/sectiontogglefadeevent.h \
 		../src/show/sectionunsetoverlayevent.h \
-		../src/colors.h \
-		../src/maestro.h \
-		../src/pixel.h \
-		../src/section.h \
-		../src/show.h \
 		../src/utility.h \
-		../src/point.h \
-		../src/canvas.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
 		../src/show/sectionsetcanvasevent.h \
@@ -109,7 +102,14 @@ HEADERS += \
     ../src/animation/sparkleanimation.h \
     ../src/animation/waveanimation.h \
     ../src/animation/animation.h \
-    ../src/show/sectionsetanimationevent.h
+    ../src/show/sectionsetanimationevent.h \
+    ../src/canvas/canvas.h \
+    ../src/core/colors.h \
+    ../src/core/maestro.h \
+    ../src/core/pixel.h \
+    ../src/core/point.h \
+    ../src/core/section.h \
+    ../src/core/show.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

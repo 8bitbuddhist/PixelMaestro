@@ -1,5 +1,5 @@
 #include "../section.h"
-#include "sectionsetcoloranimationevent.h"
+#include "sectionsetanimationevent.h"
 
 using namespace PixelMaestro;
 
@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	 * @param section Section to update.
 	 * @param animation Animation to display.
 	 */
-	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section* section, Animation* animation) : Event(time) {
+	SectionSetAnimationEvent::SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animation) : Event(time) {
 		this->section_ = section;
 		this->animation_ = animation;
 	}
@@ -23,19 +23,19 @@ namespace PixelMaestro {
 	 * @param animations Collection of animations to scroll through.
 	 * @param num_animations Number of animations to scroll through.
 	 */
-	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section* section, Animation* animations, unsigned int num_animations) : Event(time) {
+	SectionSetAnimationEvent::SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animations, unsigned int num_animations) : Event(time) {
 		this->section_ = section;
-		this->animations_ = animations;
+		this->animation_ = animations;
 		this->num_animations_ = num_animations;
 	}
 
-	void SectionSetColorAnimationEvent::run() {
-		// If we have a collection of animations, iterate through them, otherwise jump straight to the specified animation
-		if(animations_) {
+	void SectionSetAnimationEvent::run() {
+		// If we have a collection of animations, iterate through them.
+		if(num_animations_ > 0) {
 			section_->set_color_animation(animation_);
 			bool isEnabled = false;
-			for (unsigned int animation = 0; animation < num_animations_; animation++) {
-				if(&animations_[animation] == section_->get_color_animation()) {
+			for (unsigned int index = 0; index < num_animations_; index++) {
+				if(&animation_[index] == section_->get_color_animation()) {
 					isEnabled = true;
 					break;
 				}
@@ -46,7 +46,7 @@ namespace PixelMaestro {
 				this->run();
 			}
 		}
-		else {
+		else {	// Only one animation set.
 			section_->set_color_animation(animation_);
 		}
 	}
