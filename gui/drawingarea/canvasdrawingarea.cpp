@@ -3,7 +3,7 @@
  * Left mouse enables a pixel, right mouse disables a pixel, and Delete key clears the Canvas.
  */
 
-#include "coloranimation/solidanimation.h"
+#include "animation/solidanimation.h"
 #include "canvasdrawingarea.h"
 #include "QMouseEvent"
 #include "QString"

@@ -50,15 +50,15 @@ SOURCES += main.cpp\
 		../src/show/canvasclearevent.cpp \
 		window/mainwindow.cpp \
     ../src/show/runfunctionevent.cpp \
-    ../src/coloranimation.cpp \
-    ../src/coloranimation/blinkanimation.cpp \
-    ../src/coloranimation/solidanimation.cpp \
-    ../src/coloranimation/cycleanimation.cpp \
-    ../src/coloranimation/mergeanimation.cpp \
-    ../src/coloranimation/ponganimation.cpp \
-    ../src/coloranimation/randomanimation.cpp \
-    ../src/coloranimation/sparkleanimation.cpp \
-    ../src/coloranimation/waveanimation.cpp
+    ../src/animation/blinkanimation.cpp \
+    ../src/animation/cycleanimation.cpp \
+    ../src/animation/mergeanimation.cpp \
+    ../src/animation/ponganimation.cpp \
+    ../src/animation/randomanimation.cpp \
+    ../src/animation/solidanimation.cpp \
+    ../src/animation/sparkleanimation.cpp \
+    ../src/animation/waveanimation.cpp \
+    ../src/animation/animation.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -101,15 +101,15 @@ HEADERS += \
 		../src/show/canvasclearevent.h \
 		window/mainwindow.h \
     ../src/show/runfunctionevent.h \
-    ../src/coloranimation.h \
-    ../src/coloranimation/blinkanimation.h \
-    ../src/coloranimation/solidanimation.h \
-    ../src/coloranimation/cycleanimation.h \
-    ../src/coloranimation/mergeanimation.h \
-    ../src/coloranimation/ponganimation.h \
-    ../src/coloranimation/randomanimation.h \
-    ../src/coloranimation/sparkleanimation.h \
-    ../src/coloranimation/waveanimation.h
+    ../src/animation/blinkanimation.h \
+    ../src/animation/cycleanimation.h \
+    ../src/animation/mergeanimation.h \
+    ../src/animation/ponganimation.h \
+    ../src/animation/randomanimation.h \
+    ../src/animation/solidanimation.h \
+    ../src/animation/sparkleanimation.h \
+    ../src/animation/waveanimation.h \
+    ../src/animation/animation.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

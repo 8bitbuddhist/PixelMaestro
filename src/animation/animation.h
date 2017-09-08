@@ -1,5 +1,5 @@
-#ifndef COLORANIMATION_H
-#define COLORANIMATION_H
+#ifndef ANIMATION_H
+#define ANIMATION_H
 
 #include "colors.h"
 #include "section.h"
@@ -7,7 +7,7 @@
 namespace PixelMaestro {
 	class Section;
 
-	class ColorAnimation {
+	class Animation {
 		public:
 			/// Set of animations usable by the Section.
 			enum Animations {
@@ -48,7 +48,7 @@ namespace PixelMaestro {
 				VERTICAL
 			};
 
-			ColorAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			Animation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			unsigned short get_cycle_index();
 			bool get_fade();
 			unsigned short get_num_colors();
@@ -64,7 +64,7 @@ namespace PixelMaestro {
 			/// Array of colors used in the animation.
 			Colors::RGB* colors_ = nullptr;
 
-			///	The current stage of the animation cycle. Defaults to 0.
+			///	The current stage in the animation cycle. Defaults to 0.
 			unsigned short cycle_index_ = 0;
 
 			/// Whether to fade between cycles. Defaults to true.
@@ -79,7 +79,7 @@ namespace PixelMaestro {
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_ = false;
 
-			/// The Section where the animation will display.
+			/// The Section where the animation will be displayed.
 			Section* section_ = nullptr;
 
 			Colors::RGB* get_color_at_index(unsigned short index);
@@ -87,4 +87,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // COLORANIMATION_H
+#endif // ANIMATION_H

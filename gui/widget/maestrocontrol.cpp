@@ -1,11 +1,11 @@
-#include "coloranimation/blinkanimation.h"
-#include "coloranimation/cycleanimation.h"
-#include "coloranimation/mergeanimation.h"
-#include "coloranimation/ponganimation.h"
-#include "coloranimation/randomanimation.h"
-#include "coloranimation/solidanimation.h"
-#include "coloranimation/sparkleanimation.h"
-#include "coloranimation/waveanimation.h"
+#include "animation/blinkanimation.h"
+#include "animation/cycleanimation.h"
+#include "animation/mergeanimation.h"
+#include "animation/ponganimation.h"
+#include "animation/randomanimation.h"
+#include "animation/solidanimation.h"
+#include "animation/sparkleanimation.h"
+#include "animation/waveanimation.h"
 #include "maestrocontrol.h"
 #include "ui_maestrocontrol.h"
 #include "controller/maestrocontroller.h"
@@ -55,7 +55,7 @@ void MaestroControl::get_section_settings() {
  */
 void MaestroControl::initialize() {
 	active_section_controller_ = maestro_controller_->get_section_controller(0);
-	active_section_controller_->get_section()->set_new_color_animation(new SolidAnimation(active_section_controller_->get_section().get()));
+	active_section_controller_->get_section()->set_color_animation(new SolidAnimation(active_section_controller_->get_section().get()));
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Pong", "Merge", "Random", "Sparkle"});
@@ -116,28 +116,28 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	switch(index) {
 		case 0:
-			active_section_controller_->get_section()->set_new_color_animation(new SolidAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new SolidAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 1:
-			active_section_controller_->get_section()->set_new_color_animation(new BlinkAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new BlinkAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 2:
-			active_section_controller_->get_section()->set_new_color_animation(new CycleAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new CycleAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 3:
-			active_section_controller_->get_section()->set_new_color_animation(new WaveAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new WaveAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 4:
-			active_section_controller_->get_section()->set_new_color_animation(new PongAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new PongAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 5:
-			active_section_controller_->get_section()->set_new_color_animation(new MergeAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new MergeAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 6:
-			active_section_controller_->get_section()->set_new_color_animation(new RandomAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new RandomAnimation(active_section_controller_->get_section().get()));
 			break;
 		case 7:
-			active_section_controller_->get_section()->set_new_color_animation(new SparkleAnimation(active_section_controller_->get_section().get()));
+			active_section_controller_->get_section()->set_color_animation(new SparkleAnimation(active_section_controller_->get_section().get()));
 			break;
 		default:
 			return;

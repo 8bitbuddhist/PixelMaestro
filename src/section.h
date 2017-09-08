@@ -5,7 +5,7 @@
 #ifndef SECTION_H
 #define SECTION_H
 
-#include "coloranimation.h"
+#include "animation/animation.h"
 #include "colors.h"
 #include "canvas.h"
 #include "point.h"
@@ -14,7 +14,7 @@
 namespace PixelMaestro {
 	class Canvas;
 
-	class ColorAnimation;
+	class Animation;
 
 	class Section {
 
@@ -51,7 +51,7 @@ namespace PixelMaestro {
 
 			Section(Pixel* pixels, Point* layout);
 			Canvas* get_canvas();
-			ColorAnimation* get_color_animation();
+			Animation* get_color_animation();
 			unsigned short get_cycle_interval();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
@@ -63,7 +63,7 @@ namespace PixelMaestro {
 			unsigned short get_refresh_interval();
 			void set_all(Colors::RGB* color);
 			void set_canvas(Canvas* canvas);
-			void set_color_animation(ColorAnimation* animation);
+			void set_color_animation(Animation* animation);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short row, unsigned short column, Colors::RGB* color);
@@ -75,16 +75,10 @@ namespace PixelMaestro {
 
 		private:
 			/// The animation displayed in this Section.
-			ColorAnimation* color_animation_ = nullptr;
+			Animation* animation_ = nullptr;
 
 			/// The Canvas to display (if applicable).
 			Canvas* canvas_ = nullptr;
-
-			/// Array of colors used in animations..
-			Colors::RGB* colors_ = nullptr;
-
-			///	The current stage of the animation cycle. Defaults to 0.
-			unsigned short cycle_index_ = 0;
 
 			/// The time between animation cycles in milliseconds. Defaults to 100.
 			unsigned short cycle_interval_ = 100;

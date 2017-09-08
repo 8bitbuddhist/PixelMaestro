@@ -32,8 +32,8 @@ namespace PixelMaestro {
 
 		@return Current color animation.
 	*/
-	ColorAnimation* Section::get_color_animation() {
-		return color_animation_;
+	Animation* Section::get_color_animation() {
+		return animation_;
 	}
 
 	/**
@@ -153,8 +153,8 @@ namespace PixelMaestro {
 
 		@param animation New ColorAnimation.
 	*/
-	void Section::set_color_animation(ColorAnimation* animation) {
-		color_animation_ = animation;
+	void Section::set_color_animation(Animation* animation) {
+		animation_ = animation;
 	}
 
 	/**
@@ -182,10 +182,10 @@ namespace PixelMaestro {
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
 			if (pause_ > 0) {
-				get_pixel(pixel)->set_next_color(color, color_animation_->get_fade(), cycle_interval_ - pause_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_ - pause_, refresh_interval_);
 			}
 			else {
-				get_pixel(pixel)->set_next_color(color, color_animation_->get_fade(), cycle_interval_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_, refresh_interval_);
 			}
 		}
 	}
@@ -246,7 +246,7 @@ namespace PixelMaestro {
 	void Section::update(const unsigned long& current_time) {
 
 		// If no ColorAnimation is set, do nothing.
-		if (this->color_animation_ == nullptr) {
+		if (this->animation_ == nullptr) {
 			return;
 		}
 
@@ -269,7 +269,7 @@ namespace PixelMaestro {
 			if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
 
 				// Run the animation.
-				color_animation_->update();
+				animation_->update();
 
 				/*
 				 * If a Canvas is set, update it.

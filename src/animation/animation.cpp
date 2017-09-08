@@ -1,4 +1,4 @@
-#include "coloranimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
 	/**
@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	 * @param colors Initial color palette.
 	 * @param num_colors The number of colors in the palette.
 	 */
-	ColorAnimation::ColorAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) {
+	Animation::Animation(Section *section, Colors::RGB* colors, unsigned short num_colors) {
 		this->section_ = section;
 		this->colors_ = colors;
 		this->num_colors_ = num_colors;
@@ -18,7 +18,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Cycle index.
 	 */
-	unsigned short ColorAnimation::get_cycle_index() {
+	unsigned short Animation::get_cycle_index() {
 		return cycle_index_;
 	}
 
@@ -26,7 +26,7 @@ namespace PixelMaestro {
 	 * Returns whether the animation is fading.
 	 * @return True if fading.
 	 */
-	bool ColorAnimation::get_fade() {
+	bool Animation::get_fade() {
 		return fade_;
 	}
 
@@ -35,7 +35,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Number of colors in the color palette.
 	 */
-	unsigned short ColorAnimation::get_num_colors() {
+	unsigned short Animation::get_num_colors() {
 		return num_colors_;
 	}
 
@@ -44,7 +44,7 @@ namespace PixelMaestro {
 	 *
 	 * @return True if running in reverse.
 	 */
-	bool ColorAnimation::get_reverse() {
+	bool Animation::get_reverse() {
 		return reverse_;
 	}
 
@@ -54,7 +54,7 @@ namespace PixelMaestro {
 		@param colors New color palette.
 		@param num_colors Number of colors in the palette.
 	*/
-	void ColorAnimation::set_colors(Colors::RGB* colors, unsigned short num_colors) {
+	void Animation::set_colors(Colors::RGB* colors, unsigned short num_colors) {
 		colors_ = colors;
 		num_colors_ = num_colors;
 	}
@@ -65,7 +65,7 @@ namespace PixelMaestro {
 	 *
 	 * @param index New cycle index.
 	 */
-	void ColorAnimation::set_cycle_index(unsigned short index) {
+	void Animation::set_cycle_index(unsigned short index) {
 		if (index > num_colors_) {
 			index %= num_colors_;
 		}
@@ -78,7 +78,7 @@ namespace PixelMaestro {
 	 *
 	 * @param fade If true, fade between cycles.
 	 */
-	void ColorAnimation::set_fade(bool fade) {
+	void Animation::set_fade(bool fade) {
 		fade_ = fade;
 	}
 
@@ -87,7 +87,7 @@ namespace PixelMaestro {
 
 		@param reverse If true, run in reverse.
 	 */
-	void ColorAnimation::set_reverse(bool reverse) {
+	void Animation::set_reverse(bool reverse) {
 		reverse_ = reverse;
 	}
 
@@ -102,7 +102,7 @@ namespace PixelMaestro {
 		@param index Desired index.
 		@return Color at the specified index.
 	*/
-	Colors::RGB* ColorAnimation::get_color_at_index(unsigned short index) {
+	Colors::RGB* Animation::get_color_at_index(unsigned short index) {
 		if (index >= num_colors_) {
 			index %= num_colors_;
 		}
@@ -118,7 +118,7 @@ namespace PixelMaestro {
 		@param min The minimum possible value of cycle_index_.
 		@param max The maximum possible value of cycle_index_.
 	*/
-	void ColorAnimation::update_cycle(unsigned short min, unsigned short max) {
+	void Animation::update_cycle(unsigned short min, unsigned short max) {
 		if (reverse_) {
 			if (cycle_index_ == 0) {
 				cycle_index_ = max - 1;

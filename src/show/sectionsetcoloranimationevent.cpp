@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	 * @param section Section to update.
 	 * @param animation Animation to display.
 	 */
-	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section* section, ColorAnimation* animation) : Event(time) {
+	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section* section, Animation* animation) : Event(time) {
 		this->section_ = section;
 		this->animation_ = animation;
 	}
@@ -23,7 +23,7 @@ namespace PixelMaestro {
 	 * @param animations Collection of animations to scroll through.
 	 * @param num_animations Number of animations to scroll through.
 	 */
-	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section* section, ColorAnimation* animations, unsigned int num_animations) : Event(time) {
+	SectionSetColorAnimationEvent::SectionSetColorAnimationEvent(unsigned long time, Section* section, Animation* animations, unsigned int num_animations) : Event(time) {
 		this->section_ = section;
 		this->animations_ = animations;
 		this->num_animations_ = num_animations;

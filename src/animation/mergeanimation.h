@@ -1,10 +1,10 @@
 #ifndef MERGEANIMATION_H
 #define MERGEANIMATION_H
 
-#include "coloranimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class MergeAnimation : public ColorAnimation {
+	class MergeAnimation : public Animation {
 		public:
 			MergeAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();

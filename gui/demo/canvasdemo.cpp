@@ -2,7 +2,7 @@
  * PatternDemo.cpp - Demonstrates PixelMaestro's Pattern features.
  */
 #include "canvasdemo.h"
-#include "coloranimation/mergeanimation.h"
+#include "animation/mergeanimation.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
 #include "../drawingarea/simpledrawingarea.h"

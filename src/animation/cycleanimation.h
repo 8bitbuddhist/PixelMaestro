@@ -1,10 +1,10 @@
 #ifndef CYCLEANIMATION_H
 #define CYCLEANIMATION_H
 
-#include "coloranimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class CycleAnimation : public ColorAnimation {
+	class CycleAnimation : public Animation {
 		public:
 			CycleAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();

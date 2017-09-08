@@ -1,10 +1,10 @@
 #ifndef SPARKLEANIMATION_H
 #define SPARKLEANIMATION_H
 
-#include "coloranimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class SparkleAnimation : public ColorAnimation {
+	class SparkleAnimation : public Animation {
 		public:
 			SparkleAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0, unsigned char threshold = 50);
 			void update();

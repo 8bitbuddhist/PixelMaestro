@@ -1,10 +1,10 @@
 #ifndef RANDOMANIMATION_H
 #define RANDOMANIMATION_H
 
-#include "coloranimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class RandomAnimation : public ColorAnimation {
+	class RandomAnimation : public Animation {
 		public:
 			RandomAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();

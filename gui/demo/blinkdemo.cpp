@@ -2,7 +2,7 @@
  * BlinkDemo - Displays a simple blink animation.
  */
 
-#include "coloranimation/blinkanimation.h"
+#include "animation/blinkanimation.h"
 #include "blinkdemo.h"
 #include "colors.h"
 #include "controller/maestrocontroller.h"
@@ -19,7 +19,7 @@ BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : S
 	std::shared_ptr<Section> section(sectionController->get_section());
 	section->set_cycle_interval(500);
 
-	ColorAnimation* blink_animation = new BlinkAnimation(section.get());
+	Animation* blink_animation = new BlinkAnimation(section.get());
 	blink_animation->set_colors(Colors::COLORWHEEL, 12);
 	section->set_color_animation(blink_animation);
 }
