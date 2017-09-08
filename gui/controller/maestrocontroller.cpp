@@ -19,7 +19,7 @@ void MaestroController::add_section_controller(Point* layout) {
 	reassign_sections();
 }
 
-void MaestroController::add_show(Event **events, unsigned char num_events, Show::TimingModes timing, bool loop) {
+void MaestroController::add_show(Event** events, unsigned char num_events, Show::TimingModes timing, bool loop) {
 	this->show_ = new Show(&this->maestro_);
 
 	this->show_->set_timing(timing);

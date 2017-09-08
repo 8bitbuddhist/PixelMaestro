@@ -1,7 +1,7 @@
 #ifndef TOGGLERUNEVENT_H
 #define TOGGLERUNEVENT_H
 
-#include "../maestro.h"
+#include "../core/maestro.h"
 #include "event.h"
 
 namespace PixelMaestro {

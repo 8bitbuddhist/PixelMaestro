@@ -10,7 +10,7 @@
 #include "controller/sectioncontroller.h"
 #include "core/point.h"
 
-CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller_) {
+CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
 
 	// Create a new Pixel grid.
 	Point* layout = new Point(80, 80);

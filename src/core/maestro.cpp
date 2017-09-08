@@ -16,22 +16,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the refresh rate based on the fastest running Section.
+		Returns the refresh interval.
 
-		@return Refresh rate of the fastest Section.
+		@return Amount of time between refreshes (in ms).
 	*/
-	unsigned short Maestro::get_refresh_rate() {
-		// Start off at the slowest possible speed
-		unsigned short min_refresh_rate = 65535;
-
-		// The Maestro must be at least as fast as the fastest animation.
-		for (unsigned short section = 0; section < num_sections_; section++) {
-			if (sections_[section].get_refresh_interval() < min_refresh_rate) {
-				min_refresh_rate = sections_[section].get_refresh_interval();
-			}
-		}
-
-		return min_refresh_rate;
+	unsigned short Maestro::get_refresh_interval() {
+		return refresh_interval_;
 	}
 
 	/**

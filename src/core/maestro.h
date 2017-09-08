@@ -13,7 +13,7 @@ namespace PixelMaestro {
 
 		public:
 			unsigned short get_num_sections();
-			unsigned short get_refresh_rate();
+			unsigned short get_refresh_interval();
 			bool get_running();
 			Section* get_section(unsigned short section);
 			void set_sections(Section* sections, unsigned short num_sections);
@@ -21,6 +21,9 @@ namespace PixelMaestro {
 			void update(const unsigned long& current_time);
 
 		private:
+			/// The time between Pixel redraws in milliseconds. Only relevant when fading is enabled. Defaults to 20.
+			unsigned short refresh_interval_ = 20;
+
 			/// Active running state of the Maestro.
 			bool running_ = true;
 

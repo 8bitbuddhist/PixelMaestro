@@ -11,11 +11,13 @@ namespace PixelMaestro {
 	class SectionSetAnimationEvent : public Event {
 		public:
 			SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animation);
-			SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animations, unsigned int num_animations);
+			SectionSetAnimationEvent(unsigned long time, Section* section, Animation** animations, unsigned int num_animations);
 			void run();
 
 		private:
-			Animation *animation_ = nullptr;
+			Animation* animation_ = nullptr;
+			Animation** animations_ = nullptr;
+			unsigned int current_animation_ = 0;
 			unsigned int num_animations_ = 0;
 			Section* section_;
 
