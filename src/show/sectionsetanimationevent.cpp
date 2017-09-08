@@ -11,9 +11,10 @@ namespace PixelMaestro {
 	 * @param section Section to update.
 	 * @param animation Animation to display.
 	 */
-	SectionSetAnimationEvent::SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animation) : Event(time) {
+	SectionSetAnimationEvent::SectionSetAnimationEvent(unsigned long time, Section* section, Animation* animation, bool preserve_cycle_index) : Event(time) {
 		this->section_ = section;
 		this->animation_ = animation;
+		this->preserve_cycle_index_ = preserve_cycle_index;
 	}
 
 	/**
@@ -23,15 +24,21 @@ namespace PixelMaestro {
 	 * @param animations Collection of animations to iterate through.
 	 * @param num_animations Number of animations to iterate through.
 	 */
-	SectionSetAnimationEvent::SectionSetAnimationEvent(unsigned long time, Section* section, Animation** animations, unsigned int num_animations) : Event(time) {
+	SectionSetAnimationEvent::SectionSetAnimationEvent(unsigned long time, Section* section, Animation** animations, unsigned int num_animations, bool preserve_cycle_index) : Event(time) {
 		this->section_ = section;
 		this->animations_ = animations;
 		this->num_animations_ = num_animations;
+		this->preserve_cycle_index_ = preserve_cycle_index;
 	}
 
 	void SectionSetAnimationEvent::run() {
 		// If we have a collection of animations, iterate through them.
 		if(animations_) {
+			// If necessary, transfer cycle_index over to the next animation.
+			if (preserve_cycle_index_ && section_->get_color_animation()) {
+				animations_[current_animation_]->set_cycle_index(section_->get_color_animation()->get_cycle_index());
+			}
+
 			section_->set_color_animation(animations_[current_animation_]);
 			current_animation_++;
 

@@ -63,7 +63,7 @@ namespace PixelMaestro {
 			unsigned short get_refresh_interval();
 			void set_all(Colors::RGB* color);
 			void set_canvas(Canvas* canvas);
-			void set_color_animation(Animation* animation);
+			void set_color_animation(Animation* animation, bool preserve_cycle_index = false);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short row, unsigned short column, Colors::RGB* color);

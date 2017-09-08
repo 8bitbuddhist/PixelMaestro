@@ -42,7 +42,7 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	 * Initialize Event.
 	 * This show has just one Event, which simply changes to the next animation every 5 seconds.
 	 */
-	events_.push_back(new SectionSetAnimationEvent(5000, section_controller->get_section().get(), &animations_[0], animations_.size()));
+	events_.push_back(new SectionSetAnimationEvent(5000, section_controller->get_section().get(), &animations_[0], animations_.size(), true));
 
 	maestro_controller_->add_show(&events_[0], events_.size(), Show::TimingModes::RELATIVE, true);
 }
