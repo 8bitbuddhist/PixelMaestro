@@ -1,8 +1,8 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
 
-#include "colors.h"
-#include "section.h"
+#include "../core/colors.h"
+#include "../core/section.h"
 
 namespace PixelMaestro {
 	class Section;

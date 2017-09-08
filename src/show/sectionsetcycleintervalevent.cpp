@@ -1,4 +1,4 @@
-#include "../section.h"
+#include "../core/section.h"
 #include "sectionsetcycleintervalevent.h"
 
 using namespace PixelMaestro;

@@ -5,10 +5,10 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include "canvas/fonts/font.h"
-#include "colors.h"
-#include "point.h"
-#include "section.h"
+#include "../core/colors.h"
+#include "../core/point.h"
+#include "../core/section.h"
+#include "fonts/font.h"
 
 namespace PixelMaestro {
 	class Section;

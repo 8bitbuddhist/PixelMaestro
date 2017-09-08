@@ -1,4 +1,4 @@
-#include "../section.h"
+#include "../core/section.h"
 #include "sectionsetanimationevent.h"
 
 using namespace PixelMaestro;

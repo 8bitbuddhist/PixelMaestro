@@ -6,14 +6,14 @@
 #include "animation/solidanimation.h"
 #include "animation/sparkleanimation.h"
 #include "animation/waveanimation.h"
-#include "maestrocontrol.h"
-#include "ui_maestrocontrol.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
+#include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
+#include "maestrocontrol.h"
 #include <QPalette>
 #include <QString>
-#include "section.h"
+#include "ui_maestrocontrol.h"
 
 /**
  * Constructor.

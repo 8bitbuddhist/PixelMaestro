@@ -1,8 +1,8 @@
 #ifndef SECTIONSETOVERLAYEVENT_H
 #define SECTIONSETOVERLAYEVENT_H
 
-#include "../colors.h"
-#include "../section.h"
+#include "../core/colors.h"
+#include "../core/section.h"
 #include "event.h"
 
 namespace PixelMaestro {

@@ -1,8 +1,8 @@
 #ifndef CANVASDRAWCIRCLEEVENT_H
 #define CANVASDRAWCIRCLEEVENT_H
 
-#include "../canvas.h"
-#include "../point.h"
+#include "../canvas/canvas.h"
+#include "../core/point.h"
 #include "event.h"
 
 namespace PixelMaestro {

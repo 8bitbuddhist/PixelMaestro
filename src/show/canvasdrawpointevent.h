@@ -1,8 +1,8 @@
 #ifndef CANVASDRAWPOINTEVENT_H
 #define CANVASDRAWPOINTEVENT_H
 
-#include "../canvas.h"
-#include "../point.h"
+#include "../canvas/canvas.h"
+#include "../core/point.h"
 #include "event.h"
 
 namespace PixelMaestro {

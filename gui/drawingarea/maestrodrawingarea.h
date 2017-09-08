@@ -7,14 +7,14 @@
 
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
-#include "colors.h"
-#include "maestro.h"
+#include "core/colors.h"
+#include "core/maestro.h"
+#include "core/pixel.h"
+#include "core/section.h"
 #include "maestrodrawingarea.h"
-#include "pixel.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QWidget>
-#include "section.h"
 #include <vector>
 
 using namespace PixelMaestro;

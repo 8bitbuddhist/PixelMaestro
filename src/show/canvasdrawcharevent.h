@@ -1,9 +1,9 @@
 #ifndef CANVASDRAWCHAREVENT_H
 #define CANVASDRAWCHAREVENT_H
 
-#include "../canvas.h"
+#include "../canvas/canvas.h"
 #include "../canvas/fonts/font.h"
-#include "../point.h"
+#include "../core/point.h"
 #include "event.h"
 
 namespace PixelMaestro {

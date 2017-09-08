@@ -1,7 +1,7 @@
 #ifndef SECTIONSETCANVASEVENT_H
 #define SECTIONSETCANVASEVENT_H
 
-#include "../section.h"
+#include "../core/section.h"
 #include "event.h"
 
 namespace PixelMaestro {

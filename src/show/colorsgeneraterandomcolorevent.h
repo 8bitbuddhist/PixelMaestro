@@ -1,7 +1,7 @@
 #ifndef COLORSGENERATERANDOMCOLOR_H
 #define COLORSGENERATERANDOMCOLOR_H
 
-#include "../colors.h"
+#include "../core/colors.h"
 #include "event.h"
 
 namespace PixelMaestro {

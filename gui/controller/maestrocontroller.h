@@ -5,10 +5,10 @@
 #ifndef MAESTROCONTROLLER_H
 #define MAESTROCONTROLLER_H
 
-#include "maestro.h"
-#include "section.h"
+#include "core/maestro.h"
+#include "core/section.h"
 #include "sectioncontroller.h"
-#include "show.h"
+#include "show/show.h"
 #include "show/event.h"
 #include <vector>
 

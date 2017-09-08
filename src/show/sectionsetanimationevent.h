@@ -2,7 +2,7 @@
 #define SECTIONSETANIMATIONEVENT_H
 
 #include "../animation/animation.h"
-#include "../section.h"
+#include "../core/section.h"
 #include "event.h"
 
 using namespace PixelMaestro;

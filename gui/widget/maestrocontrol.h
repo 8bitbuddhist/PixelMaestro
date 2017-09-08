@@ -5,10 +5,10 @@
 #ifndef MAESTROCONTROL_H
 #define MAESTROCONTROL_H
 
-#include "colors.h"
-#include "maestro.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
+#include "core/colors.h"
+#include "core/maestro.h"
 #include "drawingarea/simpledrawingarea.h"
 #include <QWidget>
 

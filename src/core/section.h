@@ -5,9 +5,9 @@
 #ifndef SECTION_H
 #define SECTION_H
 
-#include "animation/animation.h"
+#include "../animation/animation.h"
+#include "../canvas/canvas.h"
 #include "colors.h"
-#include "canvas.h"
 #include "point.h"
 #include "pixel.h"
 

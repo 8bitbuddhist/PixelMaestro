@@ -8,7 +8,7 @@
 #ifndef CANVASDRAWINGAREA_H
 #define CANVASDRAWINGAREA_H
 
-#include "../src/point.h"
+#include "core/point.h"
 #include "simpledrawingarea.h"
 
 class CanvasDrawingArea : public SimpleDrawingArea {

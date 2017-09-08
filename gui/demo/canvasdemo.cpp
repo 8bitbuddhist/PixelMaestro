@@ -1,13 +1,14 @@
 /*
  * PatternDemo.cpp - Demonstrates PixelMaestro's Pattern features.
  */
+
+#include "../drawingarea/simpledrawingarea.h"
 #include "canvasdemo.h"
 #include "animation/mergeanimation.h"
+#include "canvas/fonts/font5x8.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
-#include "../drawingarea/simpledrawingarea.h"
-#include "canvas/fonts/font5x8.h"
-#include "point.h"
+#include "core/point.h"
 
 CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller_) {
 

@@ -2,12 +2,12 @@
  * BlinkDemo - Displays a simple blink animation.
  */
 
+#include "../drawingarea/simpledrawingarea.h"
 #include "animation/blinkanimation.h"
 #include "blinkdemo.h"
-#include "colors.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
-#include "../drawingarea/simpledrawingarea.h"
+#include "core/colors.h"
 #include <memory>
 
 BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, this->maestro_controller_) {
