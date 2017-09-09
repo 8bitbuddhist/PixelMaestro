@@ -40,6 +40,7 @@ namespace PixelMaestro {
 			};
 
 			Animation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			Colors::RGB* get_color_at_index(unsigned short index);
 			unsigned short get_cycle_index();
 			bool get_fade();
 			unsigned short get_num_colors();
@@ -75,7 +76,6 @@ namespace PixelMaestro {
 			/// The Section where the animation will be displayed.
 			Section* section_ = nullptr;
 
-			Colors::RGB* get_color_at_index(unsigned short index);
 			void update_cycle(unsigned short min, unsigned short max);
 	};
 }

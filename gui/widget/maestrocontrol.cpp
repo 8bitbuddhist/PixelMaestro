@@ -58,7 +58,27 @@ void MaestroControl::get_section_settings() {
 		ui->alphaSpinBox->setValue(this->maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->alpha);
 	}
 
-	// TODO: Color scheme
+	// TODO: Fix color scheme selection
+	Colors::RGB* color = active_section_controller_->get_section()->get_animation()->get_color_at_index(0);
+	if (*color == Colors::RED){
+		if (active_section_controller_->get_section()->get_animation()->get_num_colors() == 12) {
+			// Colorwheel
+			on_colorComboBox_currentIndexChanged(3);
+		}
+		else {
+			// Fire
+			on_colorComboBox_currentIndexChanged(1);
+		}
+	}
+	else if (*color == Colors::BLUE) {
+		on_colorComboBox_currentIndexChanged(2);
+	}
+	else {
+		ui->redSlider->setValue(color->r);
+		ui->greenSlider->setValue(color->g);
+		ui->blueSlider->setValue(color->b);
+		on_custom_color_changed();
+	}
 }
 
 /**

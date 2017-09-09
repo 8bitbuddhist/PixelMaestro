@@ -14,6 +14,23 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Returns the color at the specified index.
+		If the index exceeds the size of the color palette, the index will wrap around to the start of the array and count the remainder.
+		For example, if the Section has 10 Pixels and 5 Colors, the Pixel at index 7 will use the color at index 2 (7 % 5 == 2).
+		Used mainly to determine which color a Pixel should use during an animation based on where it is in the array.
+
+		@param index Desired index.
+		@return Color at the specified index.
+	*/
+	Colors::RGB* Animation::get_color_at_index(unsigned short index) {
+		if (index >= num_colors_) {
+			index %= num_colors_;
+		}
+
+		return &colors_[index];
+	}
+
+	/**
 	 * Returns the current cycle index.
 	 *
 	 * @return Cycle index.
@@ -109,23 +126,6 @@ namespace PixelMaestro {
 	}
 
 	// Private methods
-
-	/**
-		Returns the color at the specified index.
-		If the index exceeds the size of the color palette, the index will wrap around to the start of the array and count the remainder.
-		For example, if the Section has 10 Pixels and 5 Colors, the Pixel at index 7 will use the color at index 2 (7 % 5 == 2).
-		Used mainly to determine which color a Pixel should use during an animation based on where it is in the array.
-
-		@param index Desired index.
-		@return Color at the specified index.
-	*/
-	Colors::RGB* Animation::get_color_at_index(unsigned short index) {
-		if (index >= num_colors_) {
-			index %= num_colors_;
-		}
-
-		return &colors_[index];
-	}
 
 	/**
 		Incremnets the current animation cycle.
