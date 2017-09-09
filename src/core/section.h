@@ -80,8 +80,8 @@ namespace PixelMaestro {
 			/// The Canvas to display (if applicable).
 			Canvas* canvas_ = nullptr;
 
-			/// The time between animation cycles in milliseconds. Defaults to 100.
-			unsigned short cycle_interval_ = 100;
+			/// The time between animation cycles in milliseconds. Defaults to 250.
+			unsigned short cycle_interval_ = 250;
 
 			/// The logical layout of the Pixels.
 			Point* dimensions_ = nullptr;
