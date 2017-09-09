@@ -6,7 +6,7 @@
 #define SHOW_H
 
 #include "../core/maestro.h"
-#include "show/event.h"
+#include "event.h"
 
 using namespace PixelMaestro;
 

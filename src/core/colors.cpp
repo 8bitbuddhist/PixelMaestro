@@ -3,7 +3,7 @@
 */
 
 #include "colors.h"
-#include "utility.h"
+#include "../utility.h"
 
 namespace PixelMaestro {
 	// Simple color set

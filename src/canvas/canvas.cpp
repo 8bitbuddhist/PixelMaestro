@@ -3,7 +3,7 @@
  */
 
 #include "canvas.h"
-#include "utility.h"
+#include "../utility.h"
 
 namespace PixelMaestro {
 	/**

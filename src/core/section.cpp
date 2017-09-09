@@ -3,10 +3,10 @@
 	Requires Pixel and Colors classes.
 */
 
+#include "../utility.h"
 #include "colors.h"
 #include "pixel.h"
 #include "section.h"
-#include "utility.h"
 
 namespace PixelMaestro {
 

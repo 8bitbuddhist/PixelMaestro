@@ -3,9 +3,9 @@
 	Inspired by RGBMood (http://forum.arduino.cc/index.php?topic=90160.0)
 */
 
+#include "../utility.h"
 #include "colors.h"
 #include "pixel.h"
-#include "utility.h"
 
 namespace PixelMaestro {
 	/**

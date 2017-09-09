@@ -1,8 +1,13 @@
 #include <Arduino.h>
 #include <WS2812.h>
 
-#include <PixelMaestro/show.h>
-#include <PixelMaestro/show/sectionsetcoloranimationevent.h>
+#include <PixelMaestro/animation/cycleanimation.h>
+#include <PixelMaestro/animation/mergeanimation.h>
+#include <PixelMaestro/animation/randomanimation.h>
+#include <PixelMaestro/animation/sparkleanimation.h>
+#include <PixelMaestro/animation/waveanimation.h>
+#include <PixelMaestro/show/show.h>
+#include <PixelMaestro/show/sectionsetanimationevent.h>
 #include <PixelMaestro/show/colorsgeneraterandomcolorevent.h>
 #include <PixelMaestro/show/colorsgeneratescalingcolorarrayevent.h>
 
@@ -39,20 +44,20 @@ Colors::RGB source_colors[] = {
 
 // Specify the animations that you wish to display.
 const unsigned char NUM_ANIMATIONS = 5;
-Section::ColorAnimations animations[] = {
-	Section::ColorAnimations::SPARKLE,
-	Section::ColorAnimations::WAVE,
-	Section::ColorAnimations::RANDOM,
-	Section::ColorAnimations::MERGE,
-	Section::ColorAnimations::CYCLE
+Animation* animations[] = {
+	new SparkleAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
+	new WaveAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
+	new RandomAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
+	new MergeAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
+	new CycleAnimation(&sections[0], colors, NUM_SOURCE_COLORS)
 };
 
 Show show(&maestro);
-const unsigned int INTERVAL = 10000;	// 10 seconds between each Event.
+const unsigned int INTERVAL = 10000;	// 10 seconds between each animation.
 const unsigned char NUM_EVENTS = 4;
 Event *events[] = {
 	// Switch to the next animation.
-	new SectionSetColorAnimationEvent(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, false, Section::AnimationOrientations::HORIZONTAL),
+	new SectionSetAnimationEvent(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, true),
 	// Select a new color scheme base color from the list of source colors.
 	new ColorsGenerateRandomColorEvent(0, &base_color, source_colors, NUM_SOURCE_COLORS),
 	// Select a new color scheme target color from the list of source colors.
@@ -92,9 +97,7 @@ void setup () {
 
 	// Set the initial color array to all black.
 	Colors::generate_scaling_color_array(colors, &Colors::BLACK, &Colors::BLACK, COLUMNS, false);
-	sections[0].set_colors(colors, NUM_COLORS);
 	sections[0].set_cycle_interval(100);
-	sections[0].toggle_fade();
 
 	maestro.set_sections(sections, 1);
 
