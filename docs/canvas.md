@@ -68,13 +68,13 @@ canvas_->draw_rect(cursor, size, fill);
 ```
 
 ### Drawing Text
-The `draw_char()` and `draw_text()` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `draw_text()`, you must also specify the number of characters in the string.
+The `draw_text()` method lets you draw text to a Canvas. Specify the `origin`, a `Font`, and the `text` to display.
 
 ```c++
-// Draws the text "PixelMaestro" at the Canvas' origin
+// Draws "PixelMaestro" at the Canvas' origin
 Point* cursor = new Point(0, 0);
 Font *font = new Font5x8();
-canvas_->draw_text(cursor, font, "PixelMaestro", 12);
+canvas_->draw_text(cursor, font, "PixelMaestro");
 ```
 
 PixelMaestro uses bitmap fonts when rendering text. All fonts inherit from the [Font](../src/canvas/fonts/font.h) class and require you to specify their size and character map. For an example, see the included [5x8 font](../src/canvas/fonts/font5x8.h).

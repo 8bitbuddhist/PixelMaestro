@@ -51,10 +51,10 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 
 	Font *font = new Font5x8();
 	cursor->set(7, 10);
-	canvas_->draw_text(cursor, font, "Pixel", 5);
+	canvas_->draw_text(cursor, font, "Pixel");
 
 	cursor->set(2, 20);
-	canvas_->draw_text(cursor, font, "Maestro", 7);
+	canvas_->draw_text(cursor, font, "Maestro");
 
 	cursor->set(2, 30);
 	target->set(38, 30);

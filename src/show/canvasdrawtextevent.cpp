@@ -8,17 +8,15 @@ namespace PixelMaestro {
 	 * @param origin The starting point of the text.
 	 * @param font The font to use.
 	 * @param text The text to draw.
-	 * @param num_chars The number of characters.
 	 */
-	CanvasDrawTextEvent::CanvasDrawTextEvent(unsigned long time, Canvas* canvas, Point* origin, Font* font, char* text, unsigned int num_chars) : Event(time) {
+	CanvasDrawTextEvent::CanvasDrawTextEvent(unsigned long time, Canvas* canvas, Point* origin, Font* font, char* text) : Event(time) {
 		this->canvas_ = canvas;
 		this->origin_ = origin;
 		this->font_ = font;
 		this->text_ = text;
-		this->num_chars_ = num_chars;
 	}
 
 	void CanvasDrawTextEvent::run() {
-		canvas_->draw_text(origin_, font_, text_, num_chars_);
+		canvas_->draw_text(origin_, font_, text_);
 	}
 }
