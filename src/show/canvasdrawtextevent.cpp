@@ -1,6 +1,15 @@
 #include "canvasdrawtextevent.h"
 
 namespace PixelMaestro {
+	/**
+	 * Constructor. Draws text onto a Canvas.
+	 * @param time Time until the Event runs.
+	 * @param canvas Canvas to draw on.
+	 * @param origin The starting point of the text.
+	 * @param font The font to use.
+	 * @param text The text to draw.
+	 * @param num_chars The number of characters.
+	 */
 	CanvasDrawTextEvent::CanvasDrawTextEvent(unsigned long time, Canvas* canvas, Point* origin, Font* font, char* text, unsigned int num_chars) : Event(time) {
 		this->canvas_ = canvas;
 		this->origin_ = origin;

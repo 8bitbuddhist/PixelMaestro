@@ -30,7 +30,6 @@ SOURCES += main.cpp\
 		../src/canvas/fonts/font5x8.cpp \
 		../src/show/sectionsetcanvasevent.cpp \
 		demo/canvasdemo.cpp \
-		../src/show/canvasdrawcharevent.cpp \
 		../src/show/canvasdrawtextevent.cpp \
 		../src/show/canvasdrawrectevent.cpp \
 		../src/show/canvasdrawlineevent.cpp \
@@ -81,7 +80,6 @@ HEADERS += \
 		../src/canvas/fonts/font5x8.h \
 		../src/show/sectionsetcanvasevent.h \
 		demo/canvasdemo.h \
-		../src/show/canvasdrawcharevent.h \
 		../src/show/canvasdrawtextevent.h \
 		../src/show/canvasdrawrectevent.h \
 		../src/show/canvasdrawlineevent.h \

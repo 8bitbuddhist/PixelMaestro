@@ -68,6 +68,7 @@ namespace PixelMaestro {
 		@param new_array Array to populate.
 		@param base_color The initial color.
 		@param num_colors Number of colors to generate.
+		@param range Range of possible new values.
 	*/
 	void Colors::generate_random_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, float range) {
 		for (unsigned int new_color_index = 0; new_color_index < num_colors; new_color_index++) {

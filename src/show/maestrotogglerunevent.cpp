@@ -2,6 +2,11 @@
 
 namespace PixelMaestro {
 
+	/**
+	 * Constructor. Toggles the running state of a Maestro.
+	 * @param time Time until the Event runs.
+	 * @param maestro Maestro to toggle.
+	 */
 	MaestroToggleRunEvent::MaestroToggleRunEvent(unsigned long time, Maestro* maestro) : Event(time) {
 		this->maestro_ = maestro;
 	}
