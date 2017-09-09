@@ -35,7 +35,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 void MaestroControl::get_section_settings() {
 	// Get the animation type
 	std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
-	for (unsigned int index = 0; index < ui->animationComboBox->count(); index++) {
+	for (unsigned int index = 0; index < (unsigned int)ui->animationComboBox->count(); index++) {
 		if (type.find(ui->animationComboBox->itemText(index).toStdString()) != std::string::npos) {
 			ui->animationComboBox->setCurrentIndex(index);
 			continue;

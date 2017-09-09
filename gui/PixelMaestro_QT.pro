@@ -26,7 +26,6 @@ SOURCES += main.cpp\
 		../src/show/sectionsetcycleintervalevent.cpp \
 		../src/show/sectionsetoverlayevent.cpp \
 		../src/show/sectionunsetoverlayevent.cpp \
-		../src/utility.cpp \
 		../src/canvas/fonts/font5x8.cpp \
 		../src/show/sectionsetcanvasevent.cpp \
 		demo/canvasdemo.cpp \
@@ -56,7 +55,8 @@ SOURCES += main.cpp\
     ../src/core/point.cpp \
     ../src/core/section.cpp \
     ../src/show/show.cpp \
-    ../src/show/animationsetfadeevent.cpp
+    ../src/show/animationsetfadeevent.cpp \
+    ../src/utility.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -74,7 +74,6 @@ HEADERS += \
 		../src/show/sectionsetcycleintervalevent.h \
 		../src/show/sectionsetoverlayevent.h \
 		../src/show/sectionunsetoverlayevent.h \
-		../src/utility.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
 		../src/show/sectionsetcanvasevent.h \
@@ -105,7 +104,8 @@ HEADERS += \
     ../src/core/point.h \
     ../src/core/section.h \
     ../src/show/animationsetfadeevent.h \
-    ../src/show/show.h
+    ../src/show/show.h \
+    ../src/utility.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
