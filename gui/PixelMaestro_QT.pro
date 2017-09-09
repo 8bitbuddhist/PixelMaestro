@@ -43,7 +43,6 @@ SOURCES += main.cpp\
     ../src/animation/blinkanimation.cpp \
     ../src/animation/cycleanimation.cpp \
     ../src/animation/mergeanimation.cpp \
-    ../src/animation/ponganimation.cpp \
     ../src/animation/randomanimation.cpp \
     ../src/animation/solidanimation.cpp \
     ../src/animation/sparkleanimation.cpp \
@@ -93,7 +92,6 @@ HEADERS += \
     ../src/animation/blinkanimation.h \
     ../src/animation/cycleanimation.h \
     ../src/animation/mergeanimation.h \
-    ../src/animation/ponganimation.h \
     ../src/animation/randomanimation.h \
     ../src/animation/solidanimation.h \
     ../src/animation/sparkleanimation.h \

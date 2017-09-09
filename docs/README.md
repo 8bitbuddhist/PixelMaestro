@@ -1,6 +1,7 @@
 # Structure
 PixelMaestro is split into three main components:
 * [Pixel](pixel.md): A single RGB output.
+* [Animation](animation.md): An animation to render in a Section.
 * [Section](section.md): A collection of multiple Pixels. Provides the core functionality for animating Pixels.
 * [Maestro](maestro.md): A collection of Sections. Handles the synchronization and updating of one or more Sections.
 
@@ -21,8 +22,7 @@ int num_sections = 1;
 Section sections[num_sections] = {
 	new Section(&pixels_section_1[0], new Point(rows, columns)),
 }
-sections[0].set_colors(Colors::COLORWHEEL, 12);
-sections[0].set_color_animation(ColorAnimations::BLINK);
+sections[0].set_animation(new BlinkAnimation(section.get(), Colors::COLORWHEEL, 12));
 
 Maestro* maestro = new Maestro(sections, num_sections);
 

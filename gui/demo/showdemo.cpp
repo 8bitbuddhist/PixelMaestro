@@ -5,7 +5,6 @@
 #include "animation/blinkanimation.h"
 #include "animation/cycleanimation.h"
 #include "animation/mergeanimation.h"
-#include "animation/ponganimation.h"
 #include "animation/randomanimation.h"
 #include "animation/solidanimation.h"
 #include "animation/sparkleanimation.h"
@@ -27,7 +26,6 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	animations_.push_back(new BlinkAnimation(section_controller->get_section().get()));
 	animations_.push_back(new CycleAnimation(section_controller->get_section().get()));
 	animations_.push_back(new WaveAnimation(section_controller->get_section().get()));
-	animations_.push_back(new PongAnimation(section_controller->get_section().get()));
 	animations_.push_back(new MergeAnimation(section_controller->get_section().get()));
 	animations_.push_back(new RandomAnimation(section_controller->get_section().get()));
 	animations_.push_back(new SparkleAnimation(section_controller->get_section().get()));

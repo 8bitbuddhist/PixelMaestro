@@ -66,7 +66,7 @@ namespace PixelMaestro {
 	 * @param index New cycle index.
 	 */
 	void Animation::set_cycle_index(unsigned short index) {
-		if (index > num_colors_) {
+		if (num_colors_ && index > num_colors_) {
 			index %= num_colors_;
 		}
 
@@ -80,6 +80,15 @@ namespace PixelMaestro {
 	 */
 	void Animation::set_fade(bool fade) {
 		fade_ = fade;
+	}
+
+	/**
+	 * Sets the animation's orientation.
+	 *
+	 * @param orientation New orientation.
+	 */
+	void Animation::set_orientation(Orientations orientation) {
+		orientation_ = orientation;
 	}
 
 	/**

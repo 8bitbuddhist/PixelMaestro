@@ -56,9 +56,8 @@ Absolute time measures the amount of time that has passed since the program star
 After a Show completes its last Event, it won't do anything except update the Maestro. However, with looping enabled, the Show will repeat its Events indefinitely. To enable looping, call `Show::toggle_looping()`. To determine whether a Show is looping, call `Show::get_looping()`. Looping only works when using relative time.
 
 ## Event List
-The parameters required by each Event should be pretty self-explanatory.
+* AnimationSetFadeEvent: Toggles fading on an animation.
 * CanvasClearEvent: Clears everything displayed on a Canvas.
-* CanvasDrawCharEvent: Draws a single text character onto a Canvas.
 * CanvasDrawCircleEvent: Draws a circle onto a Canvas.
 * CanvasDrawLineEvent: Draws a line onto a Canvas.
 * CanvasDrawPointEvent: Draws a single point on a Canvas.
@@ -70,11 +69,10 @@ The parameters required by each Event should be pretty self-explanatory.
 * ColorsGenerateScalingColorArrayEvent: Generates a color color gradient and stores it in the specified array.
 * MaestroToggleRunEvent: Toggles a Maestro's running state.
 * RunFunctionEvent: Uses std::functional to run a function (not available on Arduino).
+* SectionSetAnimationEvent: Changes a Section's current animation.
 * SectionSetCanvasEvent: Sets a Canvas to a Section.
-* SectionSetColorAnimationEvent: Changes a Section's current color animation.
 * SectionSetCycleIntervalEvent: Changes the interval between animation cycles for a Section.
 * SectionSetOverlayEvent: Sets an Overlay to a Section.
-* SectionToggleFadeEvent: Toggles fading on a Section's color animation.
 * SectionUnsetOverlayEvent: Removes an Overlay from a Section.
 
 [Home](README.md)

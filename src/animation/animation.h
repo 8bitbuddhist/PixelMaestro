@@ -11,9 +11,6 @@ namespace PixelMaestro {
 		public:
 			/// Set of animations usable by the Section.
 			enum Animations {
-				/// Placeholder used to skip to the next animation. This should always be the first animation in the list.
-				NEXT,
-
 				/// Sets each Pixel to its corresponding color.
 				SOLID,
 
@@ -26,9 +23,6 @@ namespace PixelMaestro {
 				/// Scrolls the color array across the Section.
 				WAVE,
 
-				/// Scrolls the color array back and forth ping-pong style.
-				PONG,
-
 				/// Converges the color array into the center of the Section.
 				MERGE,
 
@@ -36,10 +30,7 @@ namespace PixelMaestro {
 				RANDOM,
 
 				/// Creates a shimmering effect by turning on random pixels.
-				SPARKLE,
-
-				/// Turns off the Section. This should always be the last animation in the list.
-				NONE
+				SPARKLE
 			};
 
 			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. Blink).
@@ -57,6 +48,7 @@ namespace PixelMaestro {
 			void set_colors(Colors::RGB* colors, unsigned short num_colors);
 			void set_cycle_index(unsigned short index);
 			void set_fade(bool fade);
+			void set_orientation(Orientations orientation);
 			void set_reverse(bool reverse);
 			virtual void update() = 0;
 
