@@ -40,6 +40,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the animation's orientation.
+	 * @return Animation's orientation
+	 */
+	Animation::Orientations Animation::get_orientation() {
+		return orientation_;
+	}
+
+	/**
 	 * Returns whether the animation is running in reverse.
 	 *
 	 * @return True if running in reverse.

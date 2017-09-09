@@ -42,6 +42,8 @@ void MaestroControl::get_section_settings() {
 		}
 	}
 
+	ui->orientationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_animation()->get_orientation());
+
 	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_animation()->get_reverse());
 	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_animation()->get_fade());
 	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_animation()->get_num_colors());
@@ -55,6 +57,8 @@ void MaestroControl::get_section_settings() {
 		ui->mix_modeComboBox->setCurrentIndex(this->maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->mix_mode);
 		ui->alphaSpinBox->setValue(this->maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->alpha);
 	}
+
+	// TODO: Color scheme
 }
 
 /**
@@ -66,6 +70,7 @@ void MaestroControl::initialize() {
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle"});
+	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
 	// Populate color combo box
 	ui->colorComboBox->addItems({"Custom", "Fire", "Deep Sea", "Color Wheel"});
@@ -152,7 +157,8 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	}
 
 
-	// Set fade, reverse, and color palette
+	// Set orientation, fade, reverse, and color palette
+	active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientations)ui->orientationComboBox->currentIndex());
 	active_section_controller_->get_section()->get_animation()->set_fade(ui->fadeCheckBox->isChecked());
 	active_section_controller_->get_section()->get_animation()->set_reverse(ui->reverse_animationCheckBox->isChecked());
 	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
@@ -282,6 +288,16 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_num_colorsSpinBox_valueChanged(int arg1) {
 	on_custom_color_changed();
+}
+
+/**
+ * Sets the animation's orientation
+ * @param index New orientation.
+ */
+void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
+	if (active_section_controller_->get_section()->get_animation()) {
+		active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientations)index);
+	}
 }
 
 /**

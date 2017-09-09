@@ -44,6 +44,7 @@ namespace PixelMaestro {
 			bool get_fade();
 			unsigned short get_num_colors();
 			unsigned int get_num_pixels();
+			Orientations get_orientation();
 			bool get_reverse();
 			void set_colors(Colors::RGB* colors, unsigned short num_colors);
 			void set_cycle_index(unsigned short index);
