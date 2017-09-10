@@ -23,12 +23,19 @@ namespace PixelMaestro {
 			/// The center of the image.
 			Point center_ = {0, 0};
 
+			/// Stores the calculated width of the image.
 			double image_width_;
 
-			int iterations_;
+			/// Tracks the number of runs through the Mandelbrot function for each Pixel.
+			int iterations_ = 0;
 
-			const int max_ = 10;
+			/// Maximum number of iterations to run.
+			const int max_iterations_ = 10;
 
+			/// Stores grid size for comparison.
+			Point size_ = {0, 0};
+
+			/// Temporary holders for Mandelbrot function.
 			double x_, y_;
 	};
 }
