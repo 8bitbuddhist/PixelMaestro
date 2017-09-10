@@ -15,6 +15,47 @@ namespace PixelMaestro {
 			/// Y-coordinate.
 			short y = 0;
 
+			void operator=(Point point_two) {
+				x = point_two.x;
+				y = point_two.y;
+			}
+
+			bool operator==(Point point_two) {
+				return (x == point_two.x && y == point_two.y);
+			}
+
+			bool operator!=(Point point_two) {
+				return !operator==(point_two);
+			}
+
+			Point operator+(Point point_two) {
+				return {
+					(short)(x + point_two.x),
+					(short)(y + point_two.y)
+				};
+			}
+
+			Point operator-(Point point_two) {
+				return {
+					(short)(x - point_two.x),
+					(short)(y - point_two.y)
+				};
+			}
+
+			Point operator*(Point point_two) {
+				return {
+					(short)(x * point_two.x),
+					(short)(y * point_two.y)
+				};
+			}
+
+			Point operator/(Point point_two) {
+				return {
+					(short)(x / point_two.x),
+					(short)(y / point_two.y)
+				};
+			}
+
 			Point(short x, short y);
 			void set(short x, short y);
 	};

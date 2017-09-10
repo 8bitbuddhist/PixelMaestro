@@ -33,7 +33,7 @@ namespace PixelMaestro {
 	 * @param fill Whether to fill the circle or leave it empty.
 	 */
 	void Canvas::draw_circle(Point* origin, unsigned short radius, bool fill) {
-		// (x – h)2 + (y – k)2 = r2
+		// (x – h)^2 + (y – k)^2 = r^2
 		// r = radius, h = origin->x, k = origin->y
 
 		/*

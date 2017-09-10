@@ -30,7 +30,10 @@ namespace PixelMaestro {
 				RANDOM,
 
 				/// Creates a shimmering effect by turning on random pixels.
-				SPARKLE
+				SPARKLE,
+
+				/// Radiates colors towards or away from the center of the grid.
+				RADIAL
 			};
 
 			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. Blink).

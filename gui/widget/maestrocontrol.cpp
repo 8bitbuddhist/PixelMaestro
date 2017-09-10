@@ -1,6 +1,7 @@
 #include "animation/blinkanimation.h"
 #include "animation/cycleanimation.h"
 #include "animation/mergeanimation.h"
+#include "animation/radialanimation.h"
 #include "animation/randomanimation.h"
 #include "animation/solidanimation.h"
 #include "animation/sparkleanimation.h"
@@ -86,7 +87,7 @@ void MaestroControl::initialize() {
 	active_section_controller_->get_section()->set_animation(new SolidAnimation(active_section_controller_->get_section().get()));
 
 	// Populate Animation combo box
-	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle"});
+	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle", "Radial"});
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
 	// Populate color combo box
@@ -177,6 +178,9 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 		case 6:
 			active_section_controller_->get_section()->set_animation(new SparkleAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
+		case 7:
+			active_section_controller_->get_section()->set_animation(new RadialAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			break;
 		default:
 			return;
 	}
@@ -228,7 +232,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
  * Changes the number of columns in the display grid.
  */
 void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
-	if (arg1 != active_section_controller_->get_dimensions().x) {
+	if (arg1 != active_section_controller_->get_dimensions().y || ui->rowsSpinBox->value() != active_section_controller_->get_dimensions().x) {
 		active_section_controller_->set_dimensions(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 
 		// Set Overlay if applicable
@@ -363,9 +367,7 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
  * @param arg1 New number of rows.
  */
 void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
-	if (arg1 != active_section_controller_->get_section()->get_dimensions()->x) {
-		on_columnsSpinBox_valueChanged(arg1);
-	}
+	on_columnsSpinBox_valueChanged(arg1);
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {

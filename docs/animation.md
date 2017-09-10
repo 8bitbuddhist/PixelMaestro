@@ -15,10 +15,11 @@ The following animation types are available:
 * SOLID: Displays the color palette without changing.
 * BLINK: Displays the color palette and cycles it on and off.
 * CYCLE: Cycles the grid through each of the colors stored in the palette.
-* WAVE: Displays palette as a wave moving across the Section.
+* WAVE: Displays color palette as a wave moving across the Section.
 * MERGE: Converges palette colors into the center of the Section.
 * RANDOM: Changes each Pixel to a random color in the palette.
 * SPARKLE: Randomly activates different Pixels.
+* RADIAL: Displays palette colors radiating from the center of the grid.
 
 ## Creating an Animation
 All animations are derived from the [Animations](src/animation/animation.h) class. To create an animation, import the desired animation class.

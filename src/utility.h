@@ -6,6 +6,7 @@ namespace PixelMaestro {
 		public:
 			static unsigned int abs_int(short val);
 			static int rand();
+			static float sqrt(float val);
 			static unsigned int square(short val);
 
 		private:
