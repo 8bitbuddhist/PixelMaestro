@@ -55,10 +55,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Toggles whether the Maestro is conducting (running).
+		Sets whether the Maestro is running.
+
+		@param running Whether or not the Maestro is running.
 	*/
-	void Maestro::toggle_running() {
-		running_ = !running_;
+	void Maestro::set_running(bool running) {
+		running_ = running;
 	}
 
 	/**
@@ -67,7 +69,7 @@ namespace PixelMaestro {
 		@param current_time Program runtime.
 	*/
 	void Maestro::update(const unsigned long& current_time) {
-		// Call each Section's update method.
+		// If running, call each Section's update method.
 		if (running_) {
 			for (unsigned short section = 0; section < num_sections_; section++) {
 				sections_[section].update(current_time);

@@ -22,7 +22,6 @@ SOURCES += main.cpp\
 		../src/show/colorsgeneraterandomcolorevent.cpp \
 		../src/show/colorsgeneratescalingcolorarrayevent.cpp \
 		../src/show/event.cpp \
-		../src/show/maestrotogglerunevent.cpp \
 		../src/show/sectionsetcycleintervalevent.cpp \
 		../src/show/sectionsetoverlayevent.cpp \
 		../src/show/sectionunsetoverlayevent.cpp \
@@ -56,7 +55,8 @@ SOURCES += main.cpp\
     ../src/core/section.cpp \
     ../src/show/show.cpp \
     ../src/show/animationsetfadeevent.cpp \
-    ../src/utility.cpp
+    ../src/utility.cpp \
+    ../src/show/maestrosetrunningevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -70,7 +70,6 @@ HEADERS += \
 		../src/show/colorsgeneraterandomcolorevent.h \
 		../src/show/colorsgeneratescalingcolorarrayevent.h \
 		../src/show/event.h \
-		../src/show/maestrotogglerunevent.h \
 		../src/show/sectionsetcycleintervalevent.h \
 		../src/show/sectionsetoverlayevent.h \
 		../src/show/sectionunsetoverlayevent.h \
@@ -105,7 +104,8 @@ HEADERS += \
     ../src/core/section.h \
     ../src/show/animationsetfadeevent.h \
     ../src/show/show.h \
-    ../src/utility.h
+    ../src/utility.h \
+    ../src/show/maestrosetrunningevent.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

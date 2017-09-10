@@ -130,14 +130,14 @@ namespace PixelMaestro {
 		@param new_array Array to populate.
 		@param base_color The initial color.
 		@param num_colors Number of colors in the array.
-		@param threshold The variation between the base color and the newly generated target color.
+		@param range The difference in color values between the base color and the newly generated target color.
 		@param reverse If true, the array will be doubled to event from base_color to target_color, then back to base_color.
 	*/
-	void Colors::generate_scaling_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, unsigned char threshold, bool reverse) {
+	void Colors::generate_scaling_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, unsigned char range, bool reverse) {
 		RGB new_color = {
-			(unsigned char)(base_color->r - threshold),
-			(unsigned char)(base_color->g - threshold),
-			(unsigned char)(base_color->b - threshold)
+			(unsigned char)(base_color->r - range),
+			(unsigned char)(base_color->g - range),
+			(unsigned char)(base_color->b - range)
 		};
 		generate_scaling_color_array(new_array, base_color, &new_color, num_colors, reverse);
 	}

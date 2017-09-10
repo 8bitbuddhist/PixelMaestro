@@ -51,34 +51,13 @@ namespace PixelMaestro {
 	*/
 	void Pixel::update() {
 		/*
-		 * If we're fading, increment by a step.
-		 * The existence of step_ means that we are fading.
-		 * If the current color don't match the target color, increment by a step, otherwise jump to target color.
+		 * If fading, run through each step and add (or subtract) the step amount.
+		 * At the end of the run (or if we're not fading), set current_color_ = next_color_.
 		 */
 		if (step_count_ > 0) {
-			// Red
-			if (next_color_->r > current_color_.r) {
-				current_color_.r += step_.r;
-			}
-			else if (next_color_->r < current_color_.r) {
-				current_color_.r -= step_.r;
-			}
-
-			// Green
-			if (next_color_->g > current_color_.g) {
-				current_color_.g += step_.g;
-			}
-			else if (next_color_->g < current_color_.g) {
-				current_color_.g -= step_.g;
-			}
-
-			// Blue
-			if (next_color_->b > current_color_.b) {
-				current_color_.b += step_.b;
-			}
-			else if (next_color_->b < current_color_.b) {
-				current_color_.b -= step_.b;
-			}
+			current_color_.r += ((next_color_->r < current_color_.r) ? -1 : 1) * step_.r;
+			current_color_.g += ((next_color_->g < current_color_.g) ? -1 : 1) * step_.g;
+			current_color_.b += ((next_color_->g < current_color_.b) ? -1 : 1) * step_.b;
 
 			step_count_--;
 		}
