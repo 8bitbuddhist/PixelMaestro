@@ -7,7 +7,7 @@
 namespace PixelMaestro {
 	class RadialAnimation : public Animation {
 		public:
-			RadialAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			RadialAnimation(Section* section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			void update();
 
 		private:

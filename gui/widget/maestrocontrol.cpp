@@ -1,6 +1,7 @@
 #include "animation/blinkanimation.h"
 #include "animation/cycleanimation.h"
 #include "animation/mergeanimation.h"
+#include "animation/mandelbrotanimation.h"
 #include "animation/radialanimation.h"
 #include "animation/randomanimation.h"
 #include "animation/solidanimation.h"
@@ -87,7 +88,7 @@ void MaestroControl::initialize() {
 	active_section_controller_->get_section()->set_animation(new SolidAnimation(active_section_controller_->get_section().get()));
 
 	// Populate Animation combo box
-	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle", "Radial"});
+	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle", "Radial", "Mandelbrot"});
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
 	// Populate color combo box
@@ -180,6 +181,9 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			break;
 		case 7:
 			active_section_controller_->get_section()->set_animation(new RadialAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			break;
+		case 8:
+			active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
 			break;
 		default:
 			return;

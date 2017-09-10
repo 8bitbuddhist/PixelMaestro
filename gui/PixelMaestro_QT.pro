@@ -57,7 +57,8 @@ SOURCES += main.cpp\
     ../src/show/animationsetfadeevent.cpp \
     ../src/utility.cpp \
     ../src/show/maestrosetrunningevent.cpp \
-    ../src/animation/radialanimation.cpp
+    ../src/animation/radialanimation.cpp \
+    ../src/animation/mandelbrotanimation.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -107,7 +108,8 @@ HEADERS += \
     ../src/show/show.h \
     ../src/utility.h \
     ../src/show/maestrosetrunningevent.h \
-    ../src/animation/radialanimation.h
+    ../src/animation/radialanimation.h \
+    ../src/animation/mandelbrotanimation.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

@@ -5,6 +5,8 @@ namespace PixelMaestro {
 	RadialAnimation::RadialAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : Animation(section, colors, num_colors) { }
 
 	void RadialAnimation::update() {
+		// TODO: Vertical animation shows colors in vertical strips radiating from the center
+
 		// Check if the size of the grid has changed.
 		if (size != *section_->get_dimensions()) {
 			size = *section_->get_dimensions();
