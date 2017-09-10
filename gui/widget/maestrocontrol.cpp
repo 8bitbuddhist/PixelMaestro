@@ -114,19 +114,17 @@ void MaestroControl::initialize() {
  * @param color Base color to use when generating the array.
  */
 void MaestroControl::change_scaling_color_array(Colors::RGB color) {
-	if (color != active_section_controller_->get_colors()[0]) {
-		unsigned int num_colors = (unsigned int)ui->num_colorsSpinBox->value();
+	unsigned int num_colors = (unsigned int)ui->num_colorsSpinBox->value();
 
-		std::vector<Colors::RGB> tmp_colors;
-		tmp_colors.resize(num_colors);
+	std::vector<Colors::RGB> tmp_colors;
+	tmp_colors.resize(num_colors);
 
-		unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-		Colors::generate_scaling_color_array(&tmp_colors[0], &color, num_colors, threshold, true);
-		active_section_controller_->set_colors(&tmp_colors[0], num_colors);
+	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
+	Colors::generate_scaling_color_array(&tmp_colors[0], &color, num_colors, threshold, true);
+	active_section_controller_->set_colors(&tmp_colors[0], num_colors);
 
-		// Release tmp_colors
-		std::vector<Colors::RGB>().swap(tmp_colors);
-	}
+	// Release tmp_colors
+	std::vector<Colors::RGB>().swap(tmp_colors);
 }
 
 /**
@@ -245,7 +243,7 @@ void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
  * Changes the custom color scheme.
  */
 void MaestroControl::on_custom_color_changed() {
-	// Verify that the custom color scheme option is selected.
+	// Verify that the custom color scheme option is selected, and that the color is different from the one used in the Section.
 	if (ui->colorComboBox->currentIndex() != 0) {
 		return;
 	}
@@ -256,10 +254,12 @@ void MaestroControl::on_custom_color_changed() {
 		(unsigned char)ui->blueSlider->value()
 	};
 
-	change_scaling_color_array(new_color);
+	if (active_section_controller_->get_section()->get_animation()->get_num_colors() == 0 || (new_color != *active_section_controller_->get_section()->get_animation()->get_color_at_index(0))) {
+		change_scaling_color_array(new_color);
 
-	ui->baseColorPreviewLabel->setText(QString("{%1, %2, %3}").arg(new_color.r).arg(new_color.g).arg(new_color.b));
-	ui->baseColorPreviewLabel->setStyleSheet(QString("QLabel { color: rgb(%1, %2, %3); font-weight: bold; }").arg(new_color.r).arg(new_color.g).arg(new_color.b));
+		ui->baseColorPreviewLabel->setText(QString("{%1, %2, %3}").arg(new_color.r).arg(new_color.g).arg(new_color.b));
+		ui->baseColorPreviewLabel->setStyleSheet(QString("QLabel { color: rgb(%1, %2, %3); font-weight: bold; }").arg(new_color.r).arg(new_color.g).arg(new_color.b));
+	}
 }
 
 /**

@@ -29,8 +29,6 @@ class SectionController {
 		void set_dimensions(unsigned short x, unsigned short y);
 		void unset_overlay();
 
-		bool is_overlay_ = false;
-
 	private:
 		/// The amount of blending to apply to the Overlay.
 		float alpha_ = 0.0;
@@ -40,6 +38,9 @@ class SectionController {
 
 		/// Layout of the section (defaults to 10 x 10)
 		Point* dimensions_ = nullptr;
+
+		/// Determines whether this Section is an Overlay.
+		bool is_overlay_ = false;
 
 		/// Overlay MixMode to use.
 		Colors::MixMode mix_mode_;

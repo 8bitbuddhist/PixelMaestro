@@ -15,7 +15,6 @@ namespace PixelMaestro {
 			/// Y-coordinate.
 			short y = 0;
 
-			Point();
 			Point(short x, short y);
 			void set(short x, short y);
 	};
