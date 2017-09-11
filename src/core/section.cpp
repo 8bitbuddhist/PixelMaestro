@@ -197,12 +197,12 @@ namespace PixelMaestro {
 	/**
 		Sets the specified Pixel to a new color.
 
-		@param row The row number of the Pixel.
-		@param column The column number of the Pixel.
+		@param x The column number of the Pixel.
+		@param y The row number of the Pixel.
 		@param color New color.
 	*/
-	void Section::set_one(unsigned short row, unsigned short column, Colors::RGB* color) {
-		set_one(get_pixel_index(column, row), color);
+	void Section::set_one(unsigned short x, unsigned short y, Colors::RGB* color) {
+		set_one(get_pixel_index(x, y), color);
 	}
 
 	/**

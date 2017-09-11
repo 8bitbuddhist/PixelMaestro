@@ -66,7 +66,7 @@ namespace PixelMaestro {
 			void set_canvas(Canvas* canvas);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
-			void set_one(unsigned short row, unsigned short column, Colors::RGB* color);
+			void set_one(unsigned short x, unsigned short y, Colors::RGB* color);
 			void set_overlay(Overlay* overlay);
 			void set_pixels(Pixel* pixels, Point* layout);
 			void set_refresh_interval(unsigned short interval);

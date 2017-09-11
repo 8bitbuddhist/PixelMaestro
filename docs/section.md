@@ -58,7 +58,7 @@ section.update(runtime);
 ```
 
 ## Other Methods
-* `Section::get_pixel_index(unsigned short row, unsigned short column)`: Translates a Pixel's x and y coordinates into its index in the Pixel array. This method also accepts a Point.
+* `Section::get_pixel_index(unsigned short x, unsigned short y)`: Translates a Pixel's x and y coordinates into its index in the Pixel array. This method also accepts a Point.
 * `Section::set_all(Colors::RGB\* color)`: Sets all Pixels to the specified color.
 * `Section::set_one(unsigned int index, Colors::RGB\* color)`: Sets the Pixel at the specified array index to the specified color.
 

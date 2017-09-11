@@ -8,25 +8,25 @@ namespace PixelMaestro {
 
 	void SparkleAnimation::update() {
 		if (orientation_ == VERTICAL) {
-			for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
-				for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
+			for (unsigned short x = 0; x < section_->get_dimensions()->x; x++) {
+				for (unsigned short y = 0; y < section_->get_dimensions()->y; y++) {
 					if ((Utility::rand() % 100) > threshold_) {
-						section_->set_one(column, row, get_color_at_index(column));
+						section_->set_one(y, x, get_color_at_index(x));
 					}
 					else {
-						section_->set_one(column, row, &Colors::BLACK);
+						section_->set_one(y, x, &Colors::BLACK);
 					}
 				}
 			}
 		}
 		else {	// Horizontal
-			for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
-				for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
+			for (unsigned short y = 0; y < section_->get_dimensions()->y; y++) {
+				for (unsigned short x = 0; x < section_->get_dimensions()->x; x++) {
 					if ((Utility::rand() % 100) > threshold_) {
-						section_->set_one(row, column, get_color_at_index(column));
+						section_->set_one(x, y, get_color_at_index(x));
 					}
 					else {
-						section_->set_one(row, column, &Colors::BLACK);
+						section_->set_one(x, y, &Colors::BLACK);
 					}
 				}
 			}

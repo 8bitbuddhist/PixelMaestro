@@ -7,17 +7,18 @@ namespace PixelMaestro {
 		// Alternate the Pixel between its normal color and off (Colors::BLACK).
 		if (cycle_index_ == 0) {
 
-			if (orientation_ == Orientations::HORIZONTAL) {
-				for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
-					for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
-						section_->set_one(row, column, get_color_at_index(column));
+			if (orientation_ == Orientations::VERTICAL) {
+				for (unsigned short x = 0; x < section_->get_dimensions()->x; x++) {
+					for (unsigned short y = 0; y < section_->get_dimensions()->y; y++) {
+						section_->set_one(x, y, get_color_at_index(y));
 					}
 				}
 			}
-			else {	// Vertical
-				for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
-					for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
-						section_->set_one(column, row, get_color_at_index(column));
+			else {	// Horizontal
+
+				for (unsigned short y = 0; y < section_->get_dimensions()->y; y++) {
+					for (unsigned short x = 0; x < section_->get_dimensions()->x; x++) {
+						section_->set_one(x, y, get_color_at_index(x));
 					}
 				}
 			}

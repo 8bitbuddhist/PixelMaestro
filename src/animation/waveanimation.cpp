@@ -4,13 +4,13 @@ namespace PixelMaestro {
 	WaveAnimation::WaveAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : Animation(section, colors, num_colors) { }
 
 	void WaveAnimation::update() {
-		for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
-			for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
+		for (unsigned short y = 0; y < section_->get_dimensions()->y; y++) {
+			for (unsigned short x = 0; x < section_->get_dimensions()->x; x++) {
 				if (orientation_ == VERTICAL) {
-					section_->set_one(row, column, get_color_at_index(row + cycle_index_));
+					section_->set_one(x, y, get_color_at_index(y + cycle_index_));
 				}
 				else {	// Horizontal
-					section_->set_one(row, column, get_color_at_index(column + cycle_index_));
+					section_->set_one(x, y, get_color_at_index(x + cycle_index_));
 				}
 			}
 		}

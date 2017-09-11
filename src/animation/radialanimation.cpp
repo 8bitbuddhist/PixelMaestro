@@ -23,7 +23,8 @@ namespace PixelMaestro {
 						slope_ = 0;
 					}
 					else {
-						slope_ = ((center_.y - y) / (float)(center_.x - x)) * 10;
+						//slope_ = ((center_.y - y) / (float)(center_.x - x)) * 10;
+						slope_ = ((y - center_.y) / (float)(x - center_.x)) * 10;
 					}
 
 					section_->set_one(x, y, get_color_at_index(slope_ + cycle_index_));
@@ -36,7 +37,7 @@ namespace PixelMaestro {
 				y_squared_ = Utility::square(y - center_.y);
 				for (unsigned short x = 0; x < size_.x; x++) {
 					distance_ = Utility::sqrt(Utility::square(x - center_.x) + y_squared_);
-					section_->set_one(y, x, get_color_at_index(distance_ + cycle_index_));
+					section_->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
 				}
 			}
 		}

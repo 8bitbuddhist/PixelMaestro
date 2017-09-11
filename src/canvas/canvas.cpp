@@ -366,13 +366,11 @@ namespace PixelMaestro {
 				 */
 				if (row + offset->y < parent_section->get_dimensions()->y &&
 					column + offset->x < parent_section->get_dimensions()->x) {
-					parent_section->set_one(row + offset->y,
-						column + offset->x,
-						tmp_color);
+					parent_section->set_one(column + offset->x, row + offset->y, tmp_color);
 				}
 				else if (repeat) {
-					parent_section->set_one((row + offset->y) % parent_section->get_dimensions()->y,
-						(column + offset->x) % parent_section->get_dimensions()->x,
+					parent_section->set_one((column + offset->x) % parent_section->get_dimensions()->x,
+						(row + offset->y) % parent_section->get_dimensions()->y,
 						tmp_color);
 				}
 			}

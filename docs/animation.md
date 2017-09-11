@@ -20,6 +20,7 @@ The following animation types are available:
 * RANDOM: Changes each Pixel to a random color in the palette.
 * SPARKLE: Randomly activates different Pixels.
 * RADIAL: Displays palette colors radiating from the center of the grid.
+* MANDELBROT: Displays a mandelbrot set.
 
 ## Creating an Animation
 All animations are derived from the [Animations](src/animation/animation.h) class. To create an animation, import the desired animation class.
