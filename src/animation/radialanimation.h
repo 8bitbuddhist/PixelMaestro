@@ -18,11 +18,13 @@ namespace PixelMaestro {
 			unsigned short distance_ = 0;
 
 			/// Stores the size of the array to check for resizes.
-			Point size = {0, 0};
+			Point size_ = {0, 0};
 
-			// Temporary storage for caluclating distances
-			unsigned short x_squared = 0;
-			unsigned short y_squared = 0;
+			/// Stores the slope between a Pixel and the center of the grid.
+			unsigned short slope_;
+
+			/// Stores the square of the current x-axis.
+			unsigned short y_squared_ = 0;
 	};
 }
 

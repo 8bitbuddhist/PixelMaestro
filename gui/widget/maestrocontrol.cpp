@@ -145,7 +145,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	if (active_section_controller_->get_section()->get_animation() != nullptr) {
-		// TODO: Only change if the animation is different
+		// Only change if the animation is different
 		std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
 		if (type.compare(ui->animationComboBox->itemText(index).toStdString()) == 0) {
 			return;

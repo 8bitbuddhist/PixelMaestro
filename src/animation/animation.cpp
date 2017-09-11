@@ -24,7 +24,7 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB* Animation::get_color_at_index(unsigned short index) {
 		if (num_colors_ > 0 && index >= num_colors_) {
-			index %= num_colors_;
+			return &colors_[index % num_colors_];
 		}
 
 		return &colors_[index];

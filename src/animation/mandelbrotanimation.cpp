@@ -13,12 +13,12 @@ namespace PixelMaestro {
 				(short)(section_->get_dimensions()->x * 0.8),
 				(short)(section_->get_dimensions()->y / 2)
 			};
-			image_width_ = 4.0 / section_->get_dimensions()->x;
+			image_width_ = 4.0 / size_.x;
 		}
 
 		// TODO: Fix image generation. Results are not quite what you'd expect from a Mandelbrot
-		for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
-			for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
+		for (unsigned short row = 0; row < size_.y; row++) {
+			for (unsigned short column = 0; column < size_.x; column++) {
 				c_real_ = (column - center_.x) * image_width_;
 				c_imaginary_ = (row - center_.y) * image_width_;
 
@@ -33,11 +33,21 @@ namespace PixelMaestro {
 				}
 
 				// TODO: Support vertical orientation
-				if (iterations_ < max_iterations_) {
-					section_->set_one(row, column, get_color_at_index(iterations_ + cycle_index_));
+				if (orientation_ == Orientations::VERTICAL) {
+					if (iterations_ < max_iterations_) {
+						section_->set_one(column, row, get_color_at_index(iterations_ + cycle_index_));
+					}
+					else {
+						section_->set_one(column, row, &Colors::BLACK);
+					}
 				}
 				else {
-					section_->set_one(row, column, &Colors::BLACK);
+					if (iterations_ < max_iterations_) {
+						section_->set_one(row, column, get_color_at_index(iterations_ + cycle_index_));
+					}
+					else {
+						section_->set_one(row, column, &Colors::BLACK);
+					}
 				}
 			}
 		}
