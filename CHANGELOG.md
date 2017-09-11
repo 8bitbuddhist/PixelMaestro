@@ -3,25 +3,40 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.5.1] - In Progress
+## [v0.6] - In Progress
 ### Added
+- Animations:
+	- New Animations interface which splits all animations into separate classes.
+	- Added Radial, Mandelbrot, and Plasma animations.
 - Animation Editor:
 	- Added color preview to custom color controls.
 	- Added Overlay by default.
+	- Added Orientation support.
 - Show:
 	- Added RunFunctionEvent, which uses std::functional to trigger a custom function call at runtime.
 
 ### Changed
+- New Animations class:
+	- Moved animation logic from Sections into separate Animations class.
 - Animation Editor:
 	- Replaced custom color dials with sliders.
 	- Fixed broken Overlay behavior.
+	- Fixed switching between Sections.
 	- Set default ColorAnimation to SOLID.
 	- Set default Overlay MixMode to NONE.
 	- Improved SimpleDrawingArea dynamic scaling.
+- Pixel:
+	- Optimized Pixel updates.
+- Section:
+	- Swapped set_one() parameters.
 
 ### Removed
+- Animations:
+	- Removed Pong, Next, and None animations.
 - Animation Editor:
 	- Temporarily removed ability to dynamically add and remove Sections and Overlays.
+- Canvas:
+	- Removed num_chars parameter from draw_text().
 
 
 ## [v0.5] - 2017-09-02

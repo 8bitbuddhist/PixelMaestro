@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     ../src/utility.cpp \
     ../src/show/maestrosetrunningevent.cpp \
     ../src/animation/radialanimation.cpp \
-    ../src/animation/mandelbrotanimation.cpp
+    ../src/animation/mandelbrotanimation.cpp \
+    ../src/animation/plasmaanimation.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -109,7 +110,8 @@ HEADERS += \
     ../src/utility.h \
     ../src/show/maestrosetrunningevent.h \
     ../src/animation/radialanimation.h \
-    ../src/animation/mandelbrotanimation.h
+    ../src/animation/mandelbrotanimation.h \
+    ../src/animation/plasmaanimation.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
