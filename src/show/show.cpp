@@ -53,10 +53,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Toggles whether to loop when the Events are done running.
+		Sets whether to loop when the Events are done running.
+
+		@param loop If true, events will loop over from the beginning.
 	*/
-	void Show::toggle_looping() {
-		loop_ = !loop_;
+	void Show::set_looping(bool loop) {
+		loop_ = loop;
 	}
 
 	/**

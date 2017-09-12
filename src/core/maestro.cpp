@@ -6,6 +6,16 @@
 #include "section.h"
 
 namespace PixelMaestro {
+
+	/**
+	 * Constructor. Creates the Maestro with the specified Sections.
+	 * @param sections Array of Sections to manage.
+	 * @param num_sections Number of Sections in the array.
+	 */
+	Maestro::Maestro(Section* sections, unsigned short num_sections) {
+		set_sections(sections, num_sections);
+	}
+
 	/**
 		Returns the number of Sections.
 
@@ -41,6 +51,18 @@ namespace PixelMaestro {
 	*/
 	Section* Maestro::get_section(unsigned short section) {
 		return &sections_[section];
+	}
+
+	/**
+	 * Sets each Section's cycle interval.
+	 * @param interval Amount of time between animation steps.
+	 * @param pause Delay between animation step changes.
+	 */
+	void Maestro::set_cycle_interval(unsigned short interval, unsigned short pause) {
+		for (unsigned short section; section < num_sections_; section++) {
+			sections_[section].set_cycle_interval(interval, pause);
+		}
+
 	}
 
 	/**

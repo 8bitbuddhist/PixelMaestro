@@ -37,29 +37,30 @@ SOURCES += main.cpp\
 		../src/show/canvasdrawpointevent.cpp \
 		../src/show/canvasclearevent.cpp \
 		window/mainwindow.cpp \
-    ../src/show/runfunctionevent.cpp \
-    ../src/animation/blinkanimation.cpp \
-    ../src/animation/cycleanimation.cpp \
-    ../src/animation/mergeanimation.cpp \
-    ../src/animation/randomanimation.cpp \
-    ../src/animation/solidanimation.cpp \
-    ../src/animation/sparkleanimation.cpp \
-    ../src/animation/waveanimation.cpp \
-    ../src/animation/animation.cpp \
-    ../src/show/sectionsetanimationevent.cpp \
-    ../src/canvas/canvas.cpp \
-    ../src/core/colors.cpp \
-    ../src/core/maestro.cpp \
-    ../src/core/pixel.cpp \
-    ../src/core/point.cpp \
-    ../src/core/section.cpp \
-    ../src/show/show.cpp \
-    ../src/show/animationsetfadeevent.cpp \
-    ../src/utility.cpp \
-    ../src/show/maestrosetrunningevent.cpp \
-    ../src/animation/radialanimation.cpp \
-    ../src/animation/mandelbrotanimation.cpp \
-    ../src/animation/plasmaanimation.cpp
+		../src/show/runfunctionevent.cpp \
+		../src/animation/blinkanimation.cpp \
+		../src/animation/cycleanimation.cpp \
+		../src/animation/mergeanimation.cpp \
+		../src/animation/randomanimation.cpp \
+		../src/animation/solidanimation.cpp \
+		../src/animation/sparkleanimation.cpp \
+		../src/animation/waveanimation.cpp \
+		../src/animation/animation.cpp \
+		../src/show/sectionsetanimationevent.cpp \
+		../src/canvas/canvas.cpp \
+		../src/core/colors.cpp \
+		../src/core/maestro.cpp \
+		../src/core/pixel.cpp \
+		../src/core/point.cpp \
+		../src/core/section.cpp \
+		../src/show/show.cpp \
+		../src/show/animationsetfadeevent.cpp \
+		../src/utility.cpp \
+		../src/show/maestrosetrunningevent.cpp \
+		../src/animation/radialanimation.cpp \
+		../src/animation/mandelbrotanimation.cpp \
+		../src/animation/plasmaanimation.cpp \
+		../src/renderer/renderer.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -89,33 +90,33 @@ HEADERS += \
 		../src/show/canvasdrawpointevent.h \
 		../src/show/canvasclearevent.h \
 		window/mainwindow.h \
-    ../src/show/runfunctionevent.h \
-    ../src/animation/blinkanimation.h \
-    ../src/animation/cycleanimation.h \
-    ../src/animation/mergeanimation.h \
-    ../src/animation/randomanimation.h \
-    ../src/animation/solidanimation.h \
-    ../src/animation/sparkleanimation.h \
-    ../src/animation/waveanimation.h \
-    ../src/animation/animation.h \
-    ../src/show/sectionsetanimationevent.h \
-    ../src/canvas/canvas.h \
-    ../src/core/colors.h \
-    ../src/core/maestro.h \
-    ../src/core/pixel.h \
-    ../src/core/point.h \
-    ../src/core/section.h \
-    ../src/show/animationsetfadeevent.h \
-    ../src/show/show.h \
-    ../src/utility.h \
-    ../src/show/maestrosetrunningevent.h \
-    ../src/animation/radialanimation.h \
-    ../src/animation/mandelbrotanimation.h \
-    ../src/animation/plasmaanimation.h
+		../src/show/runfunctionevent.h \
+		../src/animation/blinkanimation.h \
+		../src/animation/cycleanimation.h \
+		../src/animation/mergeanimation.h \
+		../src/animation/randomanimation.h \
+		../src/animation/solidanimation.h \
+		../src/animation/sparkleanimation.h \
+		../src/animation/waveanimation.h \
+		../src/animation/animation.h \
+		../src/show/sectionsetanimationevent.h \
+		../src/canvas/canvas.h \
+		../src/core/colors.h \
+		../src/core/maestro.h \
+		../src/core/pixel.h \
+		../src/core/point.h \
+		../src/core/section.h \
+		../src/show/animationsetfadeevent.h \
+		../src/show/show.h \
+		../src/utility.h \
+		../src/show/maestrosetrunningevent.h \
+		../src/animation/radialanimation.h \
+		../src/animation/mandelbrotanimation.h \
+		../src/animation/plasmaanimation.h \
+		../src/renderer/renderer.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
 		window/mainwindow.ui
 
-INCLUDEPATH += include \
-			$$PWD/../src
+INCLUDEPATH += $$PWD/../src

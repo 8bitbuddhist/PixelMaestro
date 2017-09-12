@@ -12,10 +12,13 @@ namespace PixelMaestro {
 	class Maestro {
 
 		public:
+			// TODO: Dynamic memory management: automatically create Sections, Pixels, etc. when initializing Maestros and Sections.
+			Maestro(Section* sections, unsigned short num_sections);
 			unsigned short get_num_sections();
 			unsigned short get_refresh_interval();
 			bool get_running();
 			Section* get_section(unsigned short section);
+			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_running(bool running);
 			void set_sections(Section* sections, unsigned short num_sections);
 			void update(const unsigned long& current_time);

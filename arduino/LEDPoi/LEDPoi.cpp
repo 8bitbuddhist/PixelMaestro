@@ -1,11 +1,14 @@
 #include <Arduino.h>
 #include <WS2812.h>
 
+#include <PixelMaestro/core/maestro.h>
+
 #include <PixelMaestro/animation/cycleanimation.h>
 #include <PixelMaestro/animation/mergeanimation.h>
 #include <PixelMaestro/animation/randomanimation.h>
 #include <PixelMaestro/animation/sparkleanimation.h>
 #include <PixelMaestro/animation/waveanimation.h>
+
 #include <PixelMaestro/show/show.h>
 #include <PixelMaestro/show/sectionsetanimationevent.h>
 #include <PixelMaestro/show/colorsgeneraterandomcolorevent.h>
@@ -19,15 +22,17 @@ const unsigned char COLUMNS = 8;
 const unsigned char NUM_PIXELS = ROWS * COLUMNS;
 const unsigned char NUM_COLORS = 16;
 
-Maestro maestro;
+// This declares the number of Pixels used, assigns them to a Section, then assigns that Section to a Maestro.
 Pixel pixels[NUM_PIXELS];
 Section sections[] = {
 	Section(pixels, new Point(ROWS, COLUMNS)),
 };
-Colors::RGB colors[NUM_COLORS];
-Colors::RGB base_color, target_color;	// These store random colors which are used to generate color schemes.
+Maestro maestro(sections, 1);
 
-// This array stores the base colors that we'll use to generate color schemes.
+Colors::RGB colors[NUM_COLORS] = {Colors::BLACK};	// Stores the color array used by the Section.
+Colors::RGB base_color, target_color;							// These store random colors which are used to generate color palettes for the colors array.
+
+// Stores the base colors that we'll use to generate color palettes.
 const unsigned char NUM_SOURCE_COLORS = 10;
 Colors::RGB source_colors[] = {
 	Colors::BLACK,
@@ -35,14 +40,14 @@ Colors::RGB source_colors[] = {
 	{150, 0, 255},	// Deep purple
 	Colors::BLUE,
 	Colors::RED,
-	{0, 50, 255},	// Royal blue
+	{0, 50, 255},		// Royal blue
 	Colors::GREEN,
 	{255, 125, 0},	// Deep orange
 	Colors::AZURE,
-	{255, 0, 200}	// Pink
+	{255, 0, 200}		// Pink
 };
 
-// Specify the animations that you wish to display.
+// Initializes the animations that the Section will cycle through.
 const unsigned char NUM_ANIMATIONS = 5;
 Animation* animations[] = {
 	new SparkleAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
@@ -52,17 +57,18 @@ Animation* animations[] = {
 	new CycleAnimation(&sections[0], colors, NUM_SOURCE_COLORS)
 };
 
+// Initializes the Show.
 Show show(&maestro);
 const unsigned int INTERVAL = 10000;	// 10 seconds between each animation.
-const unsigned char NUM_EVENTS = 4;
+const unsigned char NUM_EVENTS = 4;		// 4 events total (declared in the events array below).
 Event *events[] = {
-	// Switch to the next animation.
+	// Switches to the next animation in the list.
 	new SectionSetAnimationEvent(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, true),
-	// Select a new color scheme base color from the list of source colors.
+	// Selects a new base color from the list of source colors.
 	new ColorsGenerateRandomColorEvent(0, &base_color, source_colors, NUM_SOURCE_COLORS),
-	// Select a new color scheme target color from the list of source colors.
+	// Selects a new target color from the list of source colors.
 	new ColorsGenerateRandomColorEvent(0, &target_color, source_colors, NUM_SOURCE_COLORS),
-	// Create the new color scheme.
+	// Generates a new color scheme using the base and target colors.
 	new ColorsGenerateScalingColorArrayEvent(0, colors, &base_color, &target_color, NUM_COLORS, false)
 };
 
@@ -95,17 +101,13 @@ void setup () {
 		ws[strip].setColorOrderGRB();
 	}
 
-	// Set the initial color array to all black.
-	Colors::generate_scaling_color_array(colors, &Colors::BLACK, &Colors::BLACK, COLUMNS, false);
-	sections[0].set_cycle_interval(100);
-
-	maestro.set_sections(sections, 1);
+	// Sets the Section's cycle interval to 100ms
+	maestro.set_cycle_interval(100);
 
 	// Initialize the Show.
-	show.set_maestro(&maestro);
-	show.set_timing(Show::TimingModes::RELATIVE);
 	show.set_events(events, NUM_EVENTS);
-	show.toggle_looping();
+	show.set_timing(Show::TimingModes::RELATIVE);
+	show.set_looping(true);
 }
 
 void loop() {

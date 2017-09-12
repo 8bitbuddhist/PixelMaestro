@@ -28,7 +28,7 @@ namespace PixelMaestro {
 			void set_events(Event **events, unsigned char num_events);
 			void set_maestro(Maestro* maestro);
 			void set_timing(TimingModes timing);
-			void toggle_looping();
+			void set_looping(bool loop);
 			void update(const unsigned long& current_time);
 
 		private:

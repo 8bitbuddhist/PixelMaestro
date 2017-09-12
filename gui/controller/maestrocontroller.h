@@ -28,7 +28,7 @@ class MaestroController {
 
 	private:
 		/// Maestro controlled by this controller.
-		Maestro maestro_;
+		Maestro* maestro_ = nullptr;
 
 		/// Sections belonging to the Maestro (points to section_controllers_[index].section_). These are deleted automatically when their respective SectionController gets deleted.
 		std::vector<Section*> sections_;
