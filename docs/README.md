@@ -14,18 +14,15 @@ PixelMaestro also includes the following support classes:
 # Basic Usage
 The following code manages a 10x10 grid of Pixels cycling through a set of 12 various colors.
 ```c++
-const int rows = 10;
-const int columns = 10;
-Pixel pixels[rows * columns];
+Point layout = (10, 10);
 
-int num_sections = 1;
-Section sections[num_sections] = {
-	new Section(&pixels_section_1[0], new Point(rows, columns)),
+Section sections[] = {
+	new Section(&layout)
 }
-sections[0].set_animation(new BlinkAnimation(section.get(), Colors::COLORWHEEL, 12));
+maestro.get_section(0)->set_animation(new BlinkAnimation(maestro.get_section(0), Colors::COLORWHEEL, 12));
 
-Maestro* maestro = new Maestro(sections, num_sections);
+Maestro maestro(sections, num_sections);
 
 // Define a timer or loop method that also tracks the program's runtime in milliseconds
-maestro->update(runtime);
+maestro.update(runtime);
 ```

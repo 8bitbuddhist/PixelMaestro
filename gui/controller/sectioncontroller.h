@@ -48,9 +48,6 @@ class SectionController {
 		/// Controller for the Overlay Section.
 		std::shared_ptr<SectionController> overlay_controller_ = nullptr;
 
-		/// Pixels assigned to the Section and its Overlay.
-		std::vector<Pixel> pixels_;
-
 		/// Stores the Section.
 		std::shared_ptr<Section> section_ = nullptr;
 };

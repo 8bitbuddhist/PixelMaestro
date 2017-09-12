@@ -23,7 +23,7 @@ namespace PixelMaestro {
 				RELATIVE
 			};
 
-			Show(Maestro* maestro);
+			Show(Maestro* maestro, Event **events, unsigned char num_events);
 			bool get_looping();
 			void set_events(Event **events, unsigned char num_events);
 			void set_maestro(Maestro* maestro);

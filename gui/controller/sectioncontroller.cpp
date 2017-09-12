@@ -12,8 +12,7 @@ using namespace PixelMaestro;
  */
 SectionController::SectionController(Point* layout) {
 	this->dimensions_ = layout;
-	this->pixels_.resize(this->dimensions_->x * this->dimensions_->y);
-	this->section_ = std::shared_ptr<Section>(new Section(&this->pixels_[0], dimensions_));
+	this->section_ = std::shared_ptr<Section>(new Section(dimensions_));
 }
 
 SectionController::SectionController(Point* layout, Colors::MixMode mix_mode, float alpha) : SectionController(layout){
@@ -106,8 +105,7 @@ void SectionController::set_colors(Colors::RGB* colors, unsigned short num_color
 void SectionController::set_dimensions(unsigned short x, unsigned short y) {
 	this->dimensions_->x = x;
 	this->dimensions_->y = y;
-	this->pixels_.resize(dimensions_->x * dimensions_->y);
-	this->section_->set_pixels(&this->pixels_[0], dimensions_);
+	this->section_->set_pixels( dimensions_);
 }
 
 void SectionController::unset_overlay() {

@@ -49,7 +49,8 @@ namespace PixelMaestro {
 				}
 			};
 
-			Section(Pixel* pixels, Point* layout);
+			Section(Point* layout);
+			~Section();
 			Animation* get_animation();
 			Canvas* get_canvas();
 			unsigned short get_cycle_interval();
@@ -68,7 +69,7 @@ namespace PixelMaestro {
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short x, unsigned short y, Colors::RGB* color);
 			void set_overlay(Overlay* overlay);
-			void set_pixels(Pixel* pixels, Point* layout);
+			void set_pixels(Point* layout);
 			void set_refresh_interval(unsigned short interval);
 			void unset_overlay();
 			void update(const unsigned long& current_time);

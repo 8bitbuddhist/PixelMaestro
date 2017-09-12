@@ -9,9 +9,12 @@ namespace PixelMaestro {
 	/**
 	 * Constructor.
 	 * @param maestro The Maestro to control using this Show.
+	 * @param events Array of Events to queue.
+	 * @param num_events The number of Events in the queue.
 	 */
-	Show::Show(Maestro* maestro) {
+	Show::Show(Maestro* maestro, Event **events, unsigned char num_events) {
 		maestro_ = maestro;
+		set_events(events, num_events);
 	}
 
 	/**
@@ -21,24 +24,6 @@ namespace PixelMaestro {
 	*/
 	bool Show::get_looping() {
 		return loop_;
-	}
-
-	/**
-		Sets the Maestro that the Show will control.
-
-		@param maestro Pointer to the Maestro that the show will control.
-	*/
-	void Show::set_maestro(Maestro* maestro) {
-		maestro_ = maestro;
-	}
-
-	/**
-		Sets the timing mode.
-
-		@param timing Timing mode used.
-	*/
-	void Show::set_timing(TimingModes timing) {
-		timing_ = timing;
 	}
 
 	/**
@@ -59,6 +44,24 @@ namespace PixelMaestro {
 	*/
 	void Show::set_looping(bool loop) {
 		loop_ = loop;
+	}
+
+	/**
+		Sets the Maestro that the Show will control.
+
+		@param maestro Pointer to the Maestro that the show will control.
+	*/
+	void Show::set_maestro(Maestro* maestro) {
+		maestro_ = maestro;
+	}
+
+	/**
+		Sets the timing mode.
+
+		@param timing Timing mode used.
+	*/
+	void Show::set_timing(TimingModes timing) {
+		timing_ = timing;
 	}
 
 	/**

@@ -22,10 +22,9 @@ void MaestroController::add_section_controller(Point* layout) {
 }
 
 void MaestroController::add_show(Event** events, unsigned char num_events, Show::TimingModes timing, bool loop) {
-	show_ = new Show(maestro_);
+	show_ = new Show(maestro_, events, num_events);
 
 	show_->set_timing(timing);
-	show_->set_events(events, num_events);
 	if (loop) {
 		show_->set_looping(true);
 	}

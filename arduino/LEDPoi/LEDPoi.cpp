@@ -19,13 +19,11 @@ using namespace PixelMaestro;
 // Single strip of 8 LEDs with 16 colors
 const unsigned char ROWS = 1;
 const unsigned char COLUMNS = 8;
-const unsigned char NUM_PIXELS = ROWS * COLUMNS;
 const unsigned char NUM_COLORS = 16;
 
 // This declares the number of Pixels used, assigns them to a Section, then assigns that Section to a Maestro.
-Pixel pixels[NUM_PIXELS];
 Section sections[] = {
-	Section(pixels, new Point(ROWS, COLUMNS)),
+	Section(new Point(ROWS, COLUMNS)),
 };
 Maestro maestro(sections, 1);
 
@@ -73,14 +71,14 @@ Event *events[] = {
 };
 
 // Initialize WS2812 components.
+const unsigned char WS_PINS[] = {5, 6, 9, 10};
 const unsigned char NUM_WS_STRIPS = 4;
 WS2812 ws[] = {
-	WS2812(COLUMNS),
-	WS2812(COLUMNS),
-	WS2812(COLUMNS),
-	WS2812(COLUMNS)
+	WS2812(ROWS * COLUMNS),
+	WS2812(ROWS * COLUMNS),
+	WS2812(ROWS * COLUMNS),
+	WS2812(ROWS * COLUMNS)
 };
-const unsigned char WS_PINS[] = {5, 6, 9, 10};
 
 // Set the maximum brightness of the LEDs.
 const float MAX_BRIGHTNESS = 0.1;
@@ -114,9 +112,9 @@ void loop() {
 	show.update(millis());
 
 	// For each Pixel, set the corresponding WS2812 pixel to the Pixel's color.
-	for (unsigned char pixel = 0; pixel < NUM_PIXELS; pixel++) {
+	for (unsigned char pixel = 0; pixel < ROWS * COLUMNS; pixel++) {
 		for (unsigned char strip = 0; strip < NUM_WS_STRIPS; strip++) {
-			ws[strip].set_crgb_at(pixel, RGBtoCRGB(sections[0].get_pixel_color(pixel)));
+			ws[strip].set_crgb_at(pixel, RGBtoCRGB(maestro.get_section(0)->get_pixel_color(pixel)));
 		}
 	}
 

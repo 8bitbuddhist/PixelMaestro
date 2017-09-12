@@ -12,11 +12,10 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Assigns Pixels to the Section.
-	 * @param pixels Initial Pixel array.
 	 * @param layout Initial layout (rows and columns) of the Pixels.
 	 */
-	Section::Section(Pixel* pixels, Point* layout) {
-		set_pixels(pixels, layout);
+	Section::Section(Point* layout) {
+		set_pixels(layout);
 	}
 
 	/**
@@ -216,23 +215,25 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Sets the Pixel array and layout used in the Section.
+
+		@param dimensions Dimensions of the Pixel array.
+	*/
+	void Section::set_pixels(Point* dimensions) {
+		if (pixels_ != nullptr) {
+			delete pixels_;
+		}
+		pixels_ = new Pixel[dimensions->x * dimensions->y];
+		dimensions_ = dimensions;
+	}
+
+	/**
 		Sets the refresh rate of the Section (how quickly the Pixels update).
 
 		@param interval Rate in milliseconds between Pixel redraws.
 	*/
 	void Section::set_refresh_interval(unsigned short interval) {
 		refresh_interval_ = interval;
-	}
-
-	/**
-		Sets the Pixel array and layout used in the Section.
-
-		@param pixels Pixel array.
-		@param dimensions Dimensions of the Pixel array.
-	*/
-	void Section::set_pixels(Pixel* pixels, Point* dimensions) {
-		pixels_ = pixels;
-		dimensions_ = dimensions;
 	}
 
 	/**
@@ -295,6 +296,12 @@ namespace PixelMaestro {
 
 			// Update the last refresh time.
 			last_refresh_ = current_time;
+		}
+	}
+
+	Section::~Section() {
+		if (pixels_ != nullptr) {
+			delete pixels_;
 		}
 	}
 }
