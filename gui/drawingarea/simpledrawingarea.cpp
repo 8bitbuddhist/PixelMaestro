@@ -36,7 +36,7 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 
 	for (unsigned short row = 0; row < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
 		for (unsigned short pixel = 0; pixel < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {			
-			tmp_rgb_ = maestro_controller_->get_section_controller(section)->get_section()->get_pixel_color(maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
+			tmp_rgb_ = maestro_controller_->get_maestro()->get_pixel_color(section, maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
 			tmp_color_.setRgb(tmp_rgb_.r, tmp_rgb_.g, tmp_rgb_.b);
 			tmp_brush_.setColor(tmp_color_);
 			tmp_brush_.setStyle(Qt::BrushStyle::SolidPattern);

@@ -80,15 +80,12 @@ WS2812 ws[] = {
 	WS2812(ROWS * COLUMNS)
 };
 
-// Set the maximum brightness of the LEDs.
-const float MAX_BRIGHTNESS = 0.1;
-
 // Convert from Colors::RGB to WS2812::cRGB
 cRGB RGBtoCRGB(Colors::RGB rgbColor) {
 	cRGB cRGBColor;
-	cRGBColor.r = rgbColor.r * MAX_BRIGHTNESS;
-	cRGBColor.g = rgbColor.g * MAX_BRIGHTNESS;
-	cRGBColor.b = rgbColor.b * MAX_BRIGHTNESS;
+	cRGBColor.r = rgbColor.r;
+	cRGBColor.g = rgbColor.g;
+	cRGBColor.b = rgbColor.b;
 	return cRGBColor;
 }
 
@@ -99,8 +96,9 @@ void setup () {
 		ws[strip].setColorOrderGRB();
 	}
 
-	// Sets the Section's cycle interval to 100ms
+	// Sets the Section's cycle interval to 100ms and the brightness to 10%
 	maestro.set_cycle_interval(100);
+	maestro.set_brightness(0.1);
 
 	// Loop the show every INTERVAL
 	show.set_timing(Show::TimingModes::RELATIVE);
@@ -113,7 +111,7 @@ void loop() {
 	// For each Pixel, set the corresponding WS2812 pixel to the Pixel's color.
 	for (unsigned char pixel = 0; pixel < ROWS * COLUMNS; pixel++) {
 		for (unsigned char strip = 0; strip < NUM_WS_STRIPS; strip++) {
-			ws[strip].set_crgb_at(pixel, RGBtoCRGB(maestro.get_section(0)->get_pixel_color(pixel)));
+			ws[strip].set_crgb_at(pixel, RGBtoCRGB(maestro.get_pixel_color(0, pixel)));
 		}
 	}
 

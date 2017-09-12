@@ -51,7 +51,7 @@ namespace PixelMaestro {
 					};
 				}
 
-				RGB operator*(unsigned char multiplier) {
+				RGB operator*(float multiplier) {
 					return {
 						(unsigned char)(r * multiplier),
 						(unsigned char)(g * multiplier),
@@ -59,7 +59,7 @@ namespace PixelMaestro {
 					};
 				}
 
-				RGB operator/(unsigned char divisor) {
+				RGB operator/(float divisor) {
 					return {
 						(unsigned char)(r / divisor),
 						(unsigned char)(g / divisor),

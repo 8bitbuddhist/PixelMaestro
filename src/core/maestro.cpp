@@ -26,6 +26,16 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the color of the specified Pixel in the specified Section after applying post-processing.
+	 * @param section Section to retrieve the Pixel from.
+	 * @param pixel Index of the Pixel to retrieve.
+	 * @return Pixel color after adjusting for Overlays and brightness.
+	 */
+	Colors::RGB Maestro::get_pixel_color(unsigned short section, unsigned int pixel) {
+		return sections_[section].get_pixel_color(pixel) * brightness_;
+	}
+
+	/**
 		Returns the refresh interval.
 
 		@return Amount of time between refreshes (in ms).
@@ -51,6 +61,22 @@ namespace PixelMaestro {
 	*/
 	Section* Maestro::get_section(unsigned short section) {
 		return &sections_[section];
+	}
+
+	/**
+	 * Sets the Maestro's global brightness level.
+	 * @param brightness Brightness level from 0.0 (completely dark) to 1.0 (completely lit).
+	 */
+	void Maestro::set_brightness(float brightness) {
+		if (brightness < 0.0) {
+			brightness_ = 0.0;
+		}
+		else if (brightness > 1.0) {
+			brightness_ = 1.0;
+		}
+		else {
+			brightness_ = brightness;
+		}
 	}
 
 	/**
