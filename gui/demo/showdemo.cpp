@@ -22,13 +22,13 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 
 	SectionController *section_controller = maestro_controller_->get_section_controller(0);
 
-	animations_.push_back(new SolidAnimation(section_controller->get_section().get()));
-	animations_.push_back(new BlinkAnimation(section_controller->get_section().get()));
-	animations_.push_back(new CycleAnimation(section_controller->get_section().get()));
-	animations_.push_back(new WaveAnimation(section_controller->get_section().get()));
-	animations_.push_back(new MergeAnimation(section_controller->get_section().get()));
-	animations_.push_back(new RandomAnimation(section_controller->get_section().get()));
-	animations_.push_back(new SparkleAnimation(section_controller->get_section().get()));
+	animations_.push_back(new SolidAnimation());
+	animations_.push_back(new BlinkAnimation());
+	animations_.push_back(new CycleAnimation());
+	animations_.push_back(new WaveAnimation());
+	animations_.push_back(new MergeAnimation());
+	animations_.push_back(new RandomAnimation());
+	animations_.push_back(new SparkleAnimation());
 
 	for (unsigned int index = 0; index < animations_.size(); index++) {
 		animations_[index]->set_colors(Colors::COLORWHEEL, 12);

@@ -6,8 +6,8 @@
 namespace PixelMaestro {
 	class SolidAnimation : public Animation {
 		public:
-			SolidAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
-			void update();
+			SolidAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			void update(Section* section);
 	};
 }
 

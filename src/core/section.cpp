@@ -274,7 +274,7 @@ namespace PixelMaestro {
 			if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
 
 				// Run the animation.
-				animation_->update();
+				animation_->update(this);
 
 				/*
 				 * If a Canvas is set, update it.

@@ -42,7 +42,7 @@ namespace PixelMaestro {
 				VERTICAL
 			};
 
-			Animation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			Animation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
 			Colors::RGB* get_color_at_index(unsigned short index);
 			unsigned short get_cycle_index();
 			bool get_fade();
@@ -55,7 +55,7 @@ namespace PixelMaestro {
 			void set_fade(bool fade);
 			void set_orientation(Orientations orientation);
 			void set_reverse(bool reverse);
-			virtual void update() = 0;
+			virtual void update(Section* section) = 0;
 
 		protected:
 			/// Array of colors used in the animation.
@@ -75,9 +75,6 @@ namespace PixelMaestro {
 
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_ = false;
-
-			/// The Section where the animation will be displayed.
-			Section* section_ = nullptr;
 
 			void update_cycle(unsigned short min, unsigned short max);
 	};

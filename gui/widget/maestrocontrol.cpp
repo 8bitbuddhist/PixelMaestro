@@ -86,7 +86,7 @@ void MaestroControl::get_section_settings() {
  */
 void MaestroControl::initialize() {
 	active_section_controller_ = maestro_controller_->get_section_controller(0);
-	active_section_controller_->get_section()->set_animation(new SolidAnimation(active_section_controller_->get_section().get()));
+	active_section_controller_->get_section()->set_animation(new SolidAnimation());
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle", "Radial", "Mandelbrot", "Plasma"});
@@ -102,7 +102,7 @@ void MaestroControl::initialize() {
 
 	// Add an Overlay
 	active_section_controller_->add_overlay(Colors::MixMode::NONE);
-	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation(active_section_controller_->get_overlay()->section));
+	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation());
 	active_section_controller_->get_overlay_controller()->set_colors(Colors::COLORWHEEL, 12);
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
 
@@ -160,34 +160,34 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	switch(index) {
 		case 0:
-			active_section_controller_->get_section()->set_animation(new SolidAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new SolidAnimation(), preserve_cycle_index);
 			break;
 		case 1:
-			active_section_controller_->get_section()->set_animation(new BlinkAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new BlinkAnimation(), preserve_cycle_index);
 			break;
 		case 2:
-			active_section_controller_->get_section()->set_animation(new CycleAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new CycleAnimation(), preserve_cycle_index);
 			break;
 		case 3:
-			active_section_controller_->get_section()->set_animation(new WaveAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new WaveAnimation(), preserve_cycle_index);
 			break;
 		case 4:
-			active_section_controller_->get_section()->set_animation(new MergeAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new MergeAnimation(), preserve_cycle_index);
 			break;
 		case 5:
-			active_section_controller_->get_section()->set_animation(new RandomAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new RandomAnimation(), preserve_cycle_index);
 			break;
 		case 6:
-			active_section_controller_->get_section()->set_animation(new SparkleAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
 			break;
 		case 7:
-			active_section_controller_->get_section()->set_animation(new RadialAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new RadialAnimation(), preserve_cycle_index);
 			break;
 		case 8:
-			active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(), preserve_cycle_index);
 			break;
 		case 9:
-			active_section_controller_->get_section()->set_animation(new PlasmaAnimation(active_section_controller_->get_section().get()), preserve_cycle_index);
+			active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
 			break;
 		default:
 			return;

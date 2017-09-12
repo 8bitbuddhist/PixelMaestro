@@ -7,8 +7,7 @@ namespace PixelMaestro {
 	 * @param colors Initial color palette.
 	 * @param num_colors The number of colors in the palette.
 	 */
-	Animation::Animation(Section *section, Colors::RGB* colors, unsigned short num_colors) {
-		this->section_ = section;
+	Animation::Animation(Colors::RGB* colors, unsigned short num_colors) {
 		this->colors_ = colors;
 		this->num_colors_ = num_colors;
 	}

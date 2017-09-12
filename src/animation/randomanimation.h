@@ -6,8 +6,8 @@
 namespace PixelMaestro {
 	class RandomAnimation : public Animation {
 		public:
-			RandomAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
-			void update();
+			RandomAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			void update(Section* section);
 	};
 }
 

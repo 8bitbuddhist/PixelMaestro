@@ -12,8 +12,8 @@
 namespace PixelMaestro {
 	class MandelbrotAnimation : public Animation {
 		public:
-			MandelbrotAnimation(Section* section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
-			void update();
+			MandelbrotAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			void update(Section* section);
 
 		private:
 

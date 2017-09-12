@@ -6,8 +6,8 @@
 namespace PixelMaestro {
 	class BlinkAnimation : public Animation {
 		public:
-			BlinkAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
-			void update();
+			BlinkAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			void update(Section* section);
 	};
 }
 

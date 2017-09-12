@@ -6,8 +6,8 @@
 namespace PixelMaestro {
 	class MergeAnimation : public Animation {
 		public:
-			MergeAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
-			void update();
+			MergeAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			void update(Section* section);
 
 		private:
 			/// Counter for the current Pixel index.

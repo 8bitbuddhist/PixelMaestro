@@ -2,16 +2,16 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : Animation(section, colors, num_colors) { }
+	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned short num_colors) : Animation(colors, num_colors) { }
 
-	void MandelbrotAnimation::update() {
-		if (size_ != *section_->get_dimensions()) {
-			size_ = *section_->get_dimensions();
+	void MandelbrotAnimation::update(Section* section) {
+		if (size_ != *section->get_dimensions()) {
+			size_ = *section->get_dimensions();
 
 			// Recalculate center and width in case the Section size has changed.
 			center_ = {
-				(short)(section_->get_dimensions()->x / 2),
-				(short)(section_->get_dimensions()->y / 2)
+				(short)(section->get_dimensions()->x / 2),
+				(short)(section->get_dimensions()->y / 2)
 			};
 
 			// Calculate the scale of the pattern
@@ -37,10 +37,10 @@ namespace PixelMaestro {
 
 				// TODO: Support vertical orientation
 				if (iterations_ < max_iterations_) {
-					section_->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
+					section->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
 				}
 				else {
-					section_->set_one(x, y, &Colors::BLACK);
+					section->set_one(x, y, &Colors::BLACK);
 				}
 			}
 		}

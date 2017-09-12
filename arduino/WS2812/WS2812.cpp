@@ -31,7 +31,7 @@ void setup () {
     ws.setOutput(LED_PIN);
     ws.setColorOrderGRB();
 
-    maestro.get_section(0)->set_animation(new SolidAnimation(&sections[0], Colors::COLORWHEEL, 12));
+    maestro.get_section(0)->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12));
 }
 
 void loop() {

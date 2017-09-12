@@ -6,8 +6,8 @@
 namespace PixelMaestro {
 	class SparkleAnimation : public Animation {
 		public:
-			SparkleAnimation(Section *section, Colors::RGB* colors = nullptr, unsigned short num_colors = 0, unsigned char threshold = 50);
-			void update();
+			SparkleAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0, unsigned char threshold = 50);
+			void update(Section* section);
 
 		private:
 			/**

@@ -2,13 +2,12 @@
 #include "radialanimation.h"
 
 namespace PixelMaestro {
-	RadialAnimation::RadialAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : Animation(section, colors, num_colors) { }
+	RadialAnimation::RadialAnimation(Colors::RGB* colors, unsigned short num_colors) : Animation(colors, num_colors) { }
 
-	void RadialAnimation::update() {
-
+	void RadialAnimation::update(Section* section) {
 		// Check if the size of the grid has changed.
-		if (size_ != *section_->get_dimensions()) {
-			size_ = *section_->get_dimensions();
+		if (size_ != *section->get_dimensions()) {
+			size_ = *section->get_dimensions();
 			center_ = {
 				(short)(size_.x / 2),
 				(short)(size_.y / 2)
@@ -27,7 +26,7 @@ namespace PixelMaestro {
 						slope_ = ((y - center_.y) / (float)(x - center_.x)) * 10;
 					}
 
-					section_->set_one(x, y, get_color_at_index(slope_ + cycle_index_));
+					section->set_one(x, y, get_color_at_index(slope_ + cycle_index_));
 				}
 			}
 		}
@@ -37,7 +36,7 @@ namespace PixelMaestro {
 				y_squared_ = Utility::square(y - center_.y);
 				for (unsigned short x = 0; x < size_.x; x++) {
 					distance_ = Utility::sqrt(Utility::square(x - center_.x) + y_squared_);
-					section_->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
+					section->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
 				}
 			}
 		}

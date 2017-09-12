@@ -2,11 +2,11 @@
 #include "../utility.h"
 
 namespace PixelMaestro {
-	RandomAnimation::RandomAnimation(Section *section, Colors::RGB* colors, unsigned short num_colors) : Animation(section, colors, num_colors) { }
+	RandomAnimation::RandomAnimation(Colors::RGB* colors, unsigned short num_colors) : Animation(colors, num_colors) { }
 
-	void RandomAnimation::update() {
-		for (unsigned int pixel = 0; pixel < section_->get_num_pixels(); pixel++) {
-			section_->set_one(pixel, &colors_[Utility::rand() % num_colors_]);
+	void RandomAnimation::update(Section* section) {
+		for (unsigned int pixel = 0; pixel < section->get_num_pixels(); pixel++) {
+			section->set_one(pixel, &colors_[Utility::rand() % num_colors_]);
 		}
 	}
 }

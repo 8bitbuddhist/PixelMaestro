@@ -48,15 +48,14 @@ Colors::RGB source_colors[] = {
 // Initializes the animations that the Section will cycle through.
 const unsigned char NUM_ANIMATIONS = 5;
 Animation* animations[] = {
-	new SparkleAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
-	new WaveAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
-	new RandomAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
-	new MergeAnimation(&sections[0], colors, NUM_SOURCE_COLORS),
-	new CycleAnimation(&sections[0], colors, NUM_SOURCE_COLORS)
+	new SparkleAnimation(colors, NUM_SOURCE_COLORS),
+	new WaveAnimation(colors, NUM_SOURCE_COLORS),
+	new RandomAnimation(colors, NUM_SOURCE_COLORS),
+	new MergeAnimation(colors, NUM_SOURCE_COLORS),
+	new CycleAnimation(colors, NUM_SOURCE_COLORS)
 };
 
 // Initializes the Show.
-Show show(&maestro);
 const unsigned int INTERVAL = 10000;	// 10 seconds between each animation.
 const unsigned char NUM_EVENTS = 4;		// 4 events total (declared in the events array below).
 Event *events[] = {
@@ -69,6 +68,7 @@ Event *events[] = {
 	// Generates a new color scheme using the base and target colors.
 	new ColorsGenerateScalingColorArrayEvent(0, colors, &base_color, &target_color, NUM_COLORS, false)
 };
+Show show(&maestro, events, NUM_EVENTS);
 
 // Initialize WS2812 components.
 const unsigned char WS_PINS[] = {5, 6, 9, 10};
@@ -102,8 +102,7 @@ void setup () {
 	// Sets the Section's cycle interval to 100ms
 	maestro.set_cycle_interval(100);
 
-	// Initialize the Show.
-	show.set_events(events, NUM_EVENTS);
+	// Loop the show every INTERVAL
 	show.set_timing(Show::TimingModes::RELATIVE);
 	show.set_looping(true);
 }
