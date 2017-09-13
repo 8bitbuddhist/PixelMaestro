@@ -18,7 +18,7 @@ namespace PixelMaestro {
 			image_width_ = 4.0 / size_.x;
 		}
 
-		// TODO: Fix image generation. Results are not quite what you'd expect from a Mandelbrot
+		// FIXME: Fix image generation. Results are not quite what you'd expect from a Mandelbrot
 		for (unsigned short y = 0; y < size_.y; y++) {
 			c_imaginary_ = (y - center_.y) * image_width_;
 			for (unsigned short x = 0; x < size_.x; x++) {

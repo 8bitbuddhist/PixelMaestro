@@ -12,7 +12,6 @@ namespace PixelMaestro {
 	class Maestro {
 
 		public:
-			// TODO: Dynamic memory management: automatically create Sections, Pixels, etc. when initializing Maestros and Sections.
 			Maestro(Section* sections, unsigned short num_sections);
 			Colors::RGB get_pixel_color(unsigned short section, unsigned int pixel);
 			unsigned short get_num_sections();

@@ -7,7 +7,6 @@
 
 #include "../core/section.h"
 
-// TODO: Look into c++ templates and see how FastLED uses them
 namespace PixelMaestro {
 	class Renderer {
 		public:

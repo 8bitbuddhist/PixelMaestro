@@ -10,7 +10,6 @@ namespace PixelMaestro {
 	}
 
 	void LightningAnimation::update(Section *section) {
-		// TODO: For some reason, this only works when fading
 		// Clear the grid
 		section->set_all(&Colors::BLACK);
 
@@ -18,35 +17,40 @@ namespace PixelMaestro {
 		Point start = {0, Utility::rand(section->get_dimensions()->y)};
 
 		for (unsigned short bolt = 0; bolt < num_bolts_; bolt++) {
-			draw_bolt(section, &start, fork_chance_);
+			draw_bolt(section, &start, up_threshold_, down_threshold_, fork_chance_);
 		}
 
 		update_cycle(0, num_colors_);
 	}
 
-	void LightningAnimation::draw_bolt(Section* section, Point* start, unsigned char fork_chance) {
-		int roll;
+	void LightningAnimation::draw_bolt(Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
+		int direction_roll;
 		Point cursor = {start->x, start->y};
 
 		/*
 		 * For each increment in x-axis, roll the dice and compare it to the down/up thresholds.
-		 * For off-shoots, we cap the distance at 10% of the distance of the grid.
+		 * For off-shoots, we cap the distance at 25% of the grid length.
 		 */
-		unsigned int max_length;
+		unsigned int length;
 		if (cursor.x == 0) {	// If x==0, then this is the initial/main bolt.
-			max_length = section->get_dimensions()->x;
+			length = section->get_dimensions()->x;
 		}
 		else {
-			max_length = section->get_dimensions()->x * 0.1;
+			if (cursor.x + ((section->get_dimensions()->x * 0.25)) > section->get_dimensions()->x) {
+				length = section->get_dimensions()->x - cursor.x;
+			}
+			else {
+				length = cursor.x + (section->get_dimensions()->x * 0.25);
+			}
 		}
-		for (unsigned int x = cursor.x; x < max_length; x++) {
-			roll = Utility::rand(100);
-			if (roll > up_threshold_) {
+		for (unsigned int x = cursor.x; x < length; x++) {
+			direction_roll = Utility::rand(100);
+			if (direction_roll > up_threshold) {
 				if (cursor.y + 1 < section->get_dimensions()->y) {
 					cursor.y += 1;
 				}
 			}
-			else if (roll < down_threshold_) {
+			else if (direction_roll < down_threshold) {
 				if (cursor.y - 1 >= 0) {
 					cursor.y -=1;
 				}
@@ -56,12 +60,24 @@ namespace PixelMaestro {
 			section->set_one(x, cursor.y, &colors_[cycle_index_]);
 
 			// Check to see if we should fork the bolt
-			if (x != max_length) {
-				roll = Utility::rand(100);
-				if (roll < fork_chance) {
-					// TODO: Handle bolts correctly
-					// If we fork, reduce the fork chance by 50%.
-					draw_bolt(section, &cursor, fork_chance / 2);
+			if (x < section->get_dimensions()->x) {
+				int chance_roll = Utility::rand(100);
+				if (chance_roll < fork_chance) {
+					// FIXME: Can only draw bolts in one direction
+					/*
+					 * If we fork, reduce the fork chance by 50%.
+					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.
+					 */
+					if (direction_roll > up_threshold) {
+						draw_bolt(section, &cursor, up_threshold, down_threshold + 40, fork_chance / 2);
+					}
+					//else if (direction_roll < down_threshold) {
+					else {
+						draw_bolt(section, &cursor, up_threshold - 40, down_threshold, fork_chance / 2);
+					}
+					/*else {
+						draw_bolt(section, &cursor, up_threshold, down_threshold, fork_chance / 2);
+					}*/
 				}
 			}
 		}
