@@ -5,6 +5,7 @@ namespace PixelMaestro {
 	class Utility {
 		public:
 			static unsigned int abs_int(short val);
+			static int gcd(int a, int b);
 			static int rand(int max = 0);
 			static float sqrt(float val);
 			static unsigned int square(short val);

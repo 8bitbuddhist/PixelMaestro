@@ -32,10 +32,6 @@ namespace PixelMaestro {
 			/// Number of Sections managed by the Maestro.
 			unsigned short num_sections_;
 
-			/// The time between Pixel redraws in milliseconds. Only relevant when fading is enabled. Defaults to 20.
-			// TODO: Delegate to Sections
-			unsigned short refresh_interval_ = 20;
-
 			/// Active running state of the Maestro.
 			bool running_ = true;
 

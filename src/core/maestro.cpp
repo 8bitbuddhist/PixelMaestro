@@ -2,6 +2,7 @@
 	Maestro.cpp - Library for controlling a collection of Pixels and Sections.
 */
 
+#include "../utility.h"
 #include "maestro.h"
 #include "section.h"
 
@@ -36,12 +37,17 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the refresh interval.
+		Returns the greatest common factor of the refresh_interval of all Sections.
 
 		@return Amount of time between refreshes (in ms).
 	*/
 	unsigned short Maestro::get_refresh_interval() {
-		return refresh_interval_;
+		int gcd = 0;
+		for (unsigned short section = 1; section < num_sections_; section++) {
+			gcd = Utility::gcd(sections_[section].get_refresh_interval(), sections_[section - 1].get_refresh_interval());
+		}
+
+		return Utility::abs_int(gcd);
 	}
 
 	/**
