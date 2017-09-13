@@ -15,7 +15,7 @@ namespace PixelMaestro {
 		section->set_all(&Colors::BLACK);
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
-		Point start = {0, Utility::rand() % section->get_dimensions()->y};
+		Point start = {0, Utility::rand(section->get_dimensions()->y)};
 
 		for (unsigned short bolt = 0; bolt < num_bolts_; bolt++) {
 			draw_bolt(section, &start, fork_chance_);
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 			max_length = section->get_dimensions()->x * 0.1;
 		}
 		for (unsigned int x = cursor.x; x < max_length; x++) {
-			roll = Utility::rand() % 100;
+			roll = Utility::rand(100);
 			if (roll > up_threshold_) {
 				if (cursor.y + 1 < section->get_dimensions()->y) {
 					cursor.y += 1;
@@ -57,7 +57,7 @@ namespace PixelMaestro {
 
 			// Check to see if we should fork the bolt
 			if (x != max_length) {
-				roll = Utility::rand() % 100;
+				roll = Utility::rand(100);
 				if (roll < fork_chance) {
 					// TODO: Handle bolts correctly
 					// If we fork, reduce the fork chance by 50%.

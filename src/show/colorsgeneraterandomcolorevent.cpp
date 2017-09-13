@@ -26,7 +26,7 @@ namespace PixelMaestro {
 
 	void ColorsGenerateRandomColorEvent::run() {
 		if (selection_) {
-			*color_ = selection_[Utility::rand() % num_options_];
+			*color_ = selection_[Utility::rand(num_options_)];
 		}
 		else {
 			*color_ = Colors::generate_random_color();

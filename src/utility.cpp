@@ -16,11 +16,17 @@ namespace PixelMaestro {
 
 	/**
 	 * Generates a pseudo-random integer value.
+	 * @param max Max limit of the RNG range.
 	 * @return Random integer value.
 	 */
-	int Utility::rand() {
+	int Utility::rand(int max) {
 		seed_ = (seed_ * 1103515245U + 12345U) & 0x7fffffffU;
-		return (int)seed_;
+		if (max == 0) {
+			return (int)seed_;
+		}
+		else {
+			return (int)seed_ % max;
+		}
 	}
 
 	/**

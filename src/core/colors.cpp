@@ -56,9 +56,9 @@ namespace PixelMaestro {
 	 */
 	Colors::RGB Colors::generate_random_color() {
 		return RGB {
-			(unsigned char)(Utility::rand() % 255),
-			(unsigned char)(Utility::rand() % 255),
-			(unsigned char)(Utility::rand() % 255)
+			(unsigned char)(Utility::rand(255)),
+			(unsigned char)(Utility::rand(255)),
+			(unsigned char)(Utility::rand(255))
 		};
 	}
 
@@ -73,9 +73,9 @@ namespace PixelMaestro {
 	void Colors::generate_random_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, float range) {
 		for (unsigned int new_color_index = 0; new_color_index < num_colors; new_color_index++) {
 			new_array[new_color_index] = {
-				(unsigned char)(base_color->r > 0 ? base_color->r - (unsigned char)(Utility::rand() % (unsigned char)(base_color->r * range)) : 0),
-				(unsigned char)(base_color->g > 0 ? base_color->g - (unsigned char)(Utility::rand() % (unsigned char)(base_color->g * range)) : 0),
-				(unsigned char)(base_color->b > 0 ? base_color->b - (unsigned char)(Utility::rand() % (unsigned char)(base_color->b * range)) : 0)
+				(unsigned char)(base_color->r > 0 ? base_color->r - (unsigned char)(Utility::rand((unsigned char)(base_color->r * range))) : 0),
+				(unsigned char)(base_color->g > 0 ? base_color->g - (unsigned char)(Utility::rand((unsigned char)(base_color->g * range))) : 0),
+				(unsigned char)(base_color->b > 0 ? base_color->b - (unsigned char)(Utility::rand((unsigned char)(base_color->b * range))) : 0)
 			};
 		}
 	}
