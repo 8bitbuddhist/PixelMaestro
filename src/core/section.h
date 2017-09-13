@@ -51,12 +51,12 @@ namespace PixelMaestro {
 
 			Section(Point* layout);
 			~Section();
+			Canvas* add_canvas();
 			Animation* get_animation();
 			Canvas* get_canvas();
 			unsigned short get_cycle_interval();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
-			unsigned int get_num_pixels();
 			Pixel* get_pixel(unsigned int pixel);
 			Colors::RGB get_pixel_color(unsigned int pixel);
 			unsigned int get_pixel_index(Point* coordinates);

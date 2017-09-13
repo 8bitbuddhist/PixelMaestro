@@ -24,4 +24,12 @@ namespace PixelMaestro {
 		this->x = x;
 		this->y = y;
 	}
+
+	/**
+	 * When used as a dimension, returns x * y.
+	 * @return X value multiplied by the Y value.
+	 */
+	int Point::size() {
+		return x * y;
+	}
 }

@@ -19,6 +19,17 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Creates a new Canvas with the dimensions of the array.
+	 * @return New Canvas.
+	 */
+	Canvas* Section::add_canvas() {
+		if (canvas_ == nullptr) {
+			canvas_ = new Canvas(this);
+		}
+		return canvas_;
+	}
+
+	/**
 		Returns the current animation.
 
 		@return Current animation.
@@ -51,15 +62,6 @@ namespace PixelMaestro {
 	*/
 	Point* Section::get_dimensions() {
 		return dimensions_;
-	}
-
-	/**
-		Returns the number of Pixels in the Section.
-
-		@return Number of Pixels.
-	*/
-	unsigned int Section::get_num_pixels() {
-		return dimensions_->x * dimensions_->y;
 	}
 
 	/**
@@ -130,7 +132,7 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::set_all(Colors::RGB* color) {
-		for (unsigned int pixel = 0; pixel < get_num_pixels(); pixel++) {
+		for (unsigned int pixel = 0; pixel < dimensions_->size(); pixel++) {
 			set_one(pixel, color);
 		}
 	}
@@ -179,7 +181,7 @@ namespace PixelMaestro {
 	*/
 	void Section::set_one(unsigned int pixel, Colors::RGB* color) {
 		// Only continue if Pixel is within the bounds of the array.
-		if (pixel < get_num_pixels()) {
+		if (pixel < dimensions_->size()) {
 			/*
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
@@ -220,9 +222,33 @@ namespace PixelMaestro {
 		@param dimensions Dimensions of the Pixel array.
 	*/
 	void Section::set_pixels(Point* dimensions) {
+		// Resize the Pixel grid
 		if (pixels_ != nullptr) {
 			delete pixels_;
 		}
+
+		// Resize the Canvas while preserving as much data as possible.
+		if (canvas_ != nullptr) {
+			// Create a temporary array for storing the pattern.
+			bool tmp[dimensions_->x * dimensions_->y] = {0};
+			for (int pixel = 0; pixel < dimensions_->x * dimensions_->y; pixel++) {
+				tmp[pixel] = canvas_->pattern[pixel];
+			}
+			// Delete the current array, then create a new one and copy back as many of the original values as possible.
+			delete canvas_->pattern;
+
+			// Make sure we don't exceed the bounds of either the new grid or the old grid.
+			int max = dimensions_->x * dimensions_->y;
+			if (dimensions->x * dimensions->y < max) {
+				max = dimensions->x * dimensions->y;
+			}
+			canvas_->pattern = new bool[max];
+			for (unsigned int pixel = 0; pixel < (unsigned int)max; pixel++) {
+				tmp[pixel] = canvas_->pattern[pixel];
+			}
+		}
+
+		// Rebuild Pixels
 		pixels_ = new Pixel[dimensions->x * dimensions->y];
 		dimensions_ = dimensions;
 	}
@@ -289,7 +315,7 @@ namespace PixelMaestro {
 
 			// Only update each Pixel if we're fading or if the cycle has changed.
 			if (animation_->get_fade() || last_cycle_ == current_time) {
-				for (unsigned short pixel = 0; pixel < get_num_pixels(); pixel++) {
+				for (unsigned short pixel = 0; pixel < dimensions_->size(); pixel++) {
 					get_pixel(pixel)->update();
 				}
 			}
@@ -300,6 +326,9 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
+		if (canvas_ != nullptr) {
+			delete canvas_;
+		}
 		if (pixels_ != nullptr) {
 			delete pixels_;
 		}

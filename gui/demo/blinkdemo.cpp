@@ -13,11 +13,10 @@
 BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
 	maestro_controller_ = maestro_controller;
 	maestro_controller_->add_section_controller(new Point(10, 10));
-	SectionController *sectionController = this->maestro_controller_->get_section_controller(0);
+	SectionController *section_controller = this->maestro_controller_->get_section_controller(0);
 
-	std::shared_ptr<Section> section(sectionController->get_section());
+	std::shared_ptr<Section> section(section_controller->get_section());
 	section->set_cycle_interval(500);
 
-	Animation* blink_animation = new BlinkAnimation(Colors::COLORWHEEL, 12);
-	section->set_animation(blink_animation);
+	section->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
 }

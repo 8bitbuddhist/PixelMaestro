@@ -13,14 +13,14 @@ CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro
 	// Enable mouse tracking
 	this->setMouseTracking(true);
 
-	// Create a simple 10 x 10 Canvas
-	canvas_ = new Canvas(new bool[50 * 50] {0});
-
 	maestro_controller->add_section_controller(new Point(50, 50));
 	maestro_controller->get_section_controller(0)->get_section()->set_animation(new SolidAnimation());
 	maestro_controller->get_section_controller(0)->set_colors(Colors::COLORWHEEL, 12);
-	maestro_controller->get_section_controller(0)->get_section()->set_canvas(canvas_);
 	maestro_controller->get_section_controller(0)->get_section()->get_animation()->set_fade(false);
+
+	// Create the Canvas
+	maestro_controller->get_section_controller(0)->get_section()->add_canvas();
+	canvas_ = maestro_controller->get_section_controller(0)->get_section()->get_canvas();
 }
 
 bool CanvasDrawingArea::eventFilter(QObject* obj, QEvent* event)

@@ -29,9 +29,9 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	 * For more complex layouts, create a custom MaestroDrawingArea or add multiple SimpleDrawingAreas to the window.
 	 */
 	unsigned short section = 0;
-	if (last_pixel_count_ != maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels()) {
+	if (last_pixel_count_ != maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->size()) {
 		resizeEvent(nullptr);
-		last_pixel_count_ = maestro_controller_->get_section_controller(section)->get_section()->get_num_pixels();
+		last_pixel_count_ = maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->size();
 	}
 
 	for (unsigned short row = 0; row < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {

@@ -19,7 +19,7 @@ namespace PixelMaestro {
 					Check for an odd number of Pixels.
 					If so, set the center one to index 0.
 				*/
-				if (section->get_num_pixels() % 2 != 0) {
+				if (section->get_dimensions()->size() % 2 != 0) {
 					mid_point_ += 1;
 					section->set_one(x, mid_point_, &colors_[cycle_index_]);
 				}
@@ -49,7 +49,7 @@ namespace PixelMaestro {
 					Check for an odd number of Pixels.
 					If so, set the center one to index 0.
 				*/
-				if (section->get_num_pixels() % 2 != 0) {
+				if (section->get_dimensions()->size() % 2 != 0) {
 					mid_point_ += 1;
 					section->set_one(mid_point_, y, &colors_[cycle_index_]);
 				}

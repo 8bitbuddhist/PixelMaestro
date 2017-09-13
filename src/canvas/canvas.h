@@ -51,7 +51,7 @@ namespace PixelMaestro {
 			/// The last time the Canvas scrolled.
 			unsigned long last_scroll_x, last_scroll_y = 0;
 
-			Canvas(bool* pattern);
+			Canvas(Section* section);
 			void clear();
 			void draw_circle(Point* origin, unsigned short radius, bool fill);
 			void draw_line(Point* origin, Point* target);

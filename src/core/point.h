@@ -58,6 +58,7 @@ namespace PixelMaestro {
 
 			Point(short x, short y);
 			void set(short x, short y);
+			int size();
 	};
 }
 

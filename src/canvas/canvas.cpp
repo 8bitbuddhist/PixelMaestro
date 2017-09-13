@@ -8,10 +8,11 @@
 namespace PixelMaestro {
 	/**
 	 * Constructor. This also initializes the Canvas' offset to 0.
-	 * @param pattern The array containing the Canvas' individual pixels.
+	 * @param section The Canvas' parent Section.
 	 */
-	Canvas::Canvas(bool* pattern) {
-		this->pattern = pattern;
+	Canvas::Canvas(Section* section) {
+		parent_section = section;
+		pattern = new bool[section->get_dimensions()->size()];
 
 		// Initial offset is set to 0
 		offset = new Point(0, 0);
@@ -21,7 +22,7 @@ namespace PixelMaestro {
 	 * Blanks out the Canvas (all drawn entities will be lost!).
 	 */
 	void Canvas::clear() {
-		for (unsigned int pixel = 0; pixel < (unsigned int)(parent_section->get_dimensions()->x * parent_section->get_dimensions()->y); pixel++) {
+		for (unsigned int pixel = 0; pixel < (unsigned int)(parent_section->get_dimensions()->size()); pixel++) {
 			pattern[pixel] = false;
 		}
 	}
@@ -221,8 +222,8 @@ namespace PixelMaestro {
 		if (fill) {
 			/*
 			 * This uses barycentric coordinates to check whether the cursor is inside the triangle.
-			 *		https://en.wikipedia.org/wiki/Barycentric_coordinate_system_(mathematics)
-			 *		https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
+			 * https://en.wikipedia.org/wiki/Barycentric_coordinate_system_(mathematics)
+			 * https://stackoverflow.com/questions/2049582/how-to-determine-if-a-point-is-in-a-2d-triangle
 			 */
 			Point cursor = { 0, 0 };
 			float area, s, t;
@@ -380,6 +381,7 @@ namespace PixelMaestro {
 	}
 
 	Canvas::~Canvas() {
-		delete this->offset;
+		delete offset;
+		delete pattern;
 	}
 }

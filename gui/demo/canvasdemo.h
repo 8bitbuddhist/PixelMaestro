@@ -12,11 +12,6 @@
 class CanvasDemo : public SimpleDrawingArea {
 	public:
 		CanvasDemo(QWidget* parent, MaestroController* maestro_controller);
-
-	private:
-		Canvas* canvas_;
-		bool* canvas_grid_;
-
 };
 
 #endif // PATTERNDEMO_H
