@@ -14,7 +14,7 @@ namespace PixelMaestro {
 		section->set_all(&Colors::BLACK);
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
-		Point start = {0, Utility::rand(section->get_dimensions()->y)};
+		Point start = {0, (short)Utility::rand(section->get_dimensions()->y)};
 
 		for (unsigned short bolt = 0; bolt < num_bolts_; bolt++) {
 			draw_bolt(section, &start, up_threshold_, down_threshold_, fork_chance_);
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 			section->set_one(x, cursor.y, &colors_[cycle_index_]);
 
 			// Check to see if we should fork the bolt
-			if (x < section->get_dimensions()->x) {
+			if (x < (unsigned short)section->get_dimensions()->x) {
 				int chance_roll = Utility::rand(100);
 				if (chance_roll < fork_chance) {
 					// FIXME: Can only draw bolts in one direction

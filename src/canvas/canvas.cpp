@@ -12,7 +12,7 @@ namespace PixelMaestro {
 	 */
 	Canvas::Canvas(Section* section) {
 		parent_section = section;
-		pattern = new bool[section->get_dimensions()->size()];
+		pattern = new bool[section->get_dimensions()->size()] {0};
 
 		// Initial offset is set to 0
 		offset = new Point(0, 0);
