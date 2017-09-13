@@ -25,7 +25,7 @@ The action is dependent on the type of Event being performed, and is executed wh
 To set the Events in a Show, use the `Show::set_events()` method.
 
 ### Event Parameters
-The first parameter is typically a pointer to the object being manipulated by this Event (e.g. a Maestro, Section, Canvas, etc.) The second parameter is the time that the Event is scheduled to occur. Any other parameters will depend on the action being performed.
+The first parameter is typically a pointer to the object being manipulated by this Event (e.g. a Maestro, Section, Canvas, or Animation) The second parameter is the time that the Event is scheduled to occur. Any other parameters will depend on the type of Event.
 
 ```c++
 int event_time = 5000;		// Trigger the Event after 5 seconds (5000ms).
@@ -36,13 +36,13 @@ Event* event = new SectionSetCycleIntervalEvent(section, event_time, cycle_inter
 ### Event Actions
 Actions are pre-defined calls to other methods in the PixelMaestro suite. These calls are primarily to Maestros or Sections. For example, an Action can disable a Maestro, change a Section's Pixel layout, or generate a new color scheme. The action performed is based on the type of Event, and each Event performs a different action than the others.
 
-For example, changing a Section's color animation is handled by the `SectionSetColorAnimationEvent` Event. When you declare the Event, you specify the animation options as part of the constructor. Then, you store that Event in an array with whatever other Events you want to pass to the Show. When the Show runs, it executes the Event's `run()` method, which calls the Section's `set_color_animation()` method with the parameters you specified in the constructor.
+For example, changing a Section's Animation is handled by the `SectionSetAnimationEvent` Event. When you declare the Event, you pass the target Animation in the constructor. Then, you store that Event in an array with whatever other Events you want to pass to the Show. When the Show runs, it executes the Event's `run()` method, which calls the Section's `set_color_animation()` method with the parameters you specified in the constructor. The sample Show created below will change the Animation and cycle interval after 5 seconds.
 
 ```c++
 int num_events = 2;
 Event* events[] = {
 	new SectionSetCycleIntervalEvent(section, 5000, 1000),
-	new SectionSetColorAnimationEvent(section, 5000, Section::ColorAnimations::NEXT, false, Section::AnimationOrientations::HORIZONTAL)
+	new SectionSetAnimationEvent(section, 5000, new CycleAnimation(Colors::COLORHWEEL, 12))
 }
 show.set_events(events, num_events);
 ```

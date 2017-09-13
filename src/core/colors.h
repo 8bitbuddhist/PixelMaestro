@@ -80,7 +80,10 @@ namespace PixelMaestro {
 				ALPHA_BLENDING,
 
 				/// Multiplies the base color by the overlay color.
-				MULTIPLY
+				MULTIPLY,
+
+				/// Draws lit Pixels, but treats black Pixels as transparent.
+				OVERLAY
 			};
 
 			// Basic color set.

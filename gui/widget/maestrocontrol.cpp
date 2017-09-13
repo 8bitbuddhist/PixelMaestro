@@ -1,5 +1,6 @@
 #include "animation/blinkanimation.h"
 #include "animation/cycleanimation.h"
+#include "animation/lightninganimation.h"
 #include "animation/mergeanimation.h"
 #include "animation/mandelbrotanimation.h"
 #include "animation/plasmaanimation.h"
@@ -89,7 +90,7 @@ void MaestroControl::initialize() {
 	active_section_controller_->get_section()->set_animation(new SolidAnimation());
 
 	// Populate Animation combo box
-	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle", "Radial", "Mandelbrot", "Plasma"});
+	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle", "Radial", "Mandelbrot", "Plasma", "Lightning"});
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
 	// Populate color combo box
@@ -107,7 +108,7 @@ void MaestroControl::initialize() {
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
 
 	// Initialize Overlay controls
-	ui->mix_modeComboBox->addItems({"None", "Normal", "Alpha Blending", "Multiply"});
+	ui->mix_modeComboBox->addItems({"None", "Normal", "Alpha Blending", "Multiply", "Overlay"});
 
 	get_section_settings();
 }
@@ -188,6 +189,9 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			break;
 		case 9:
 			active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
+			break;
+		case 10:
+			active_section_controller_->get_section()->set_animation(new LightningAnimation(1), preserve_cycle_index);
 			break;
 		default:
 			return;

@@ -22,15 +22,16 @@ The following animation types are available:
 * RADIAL: Displays palette colors radiating from the center of the grid.
 * MANDELBROT: Displays a mandelbrot set.
 * PLASMA: Displays a plasma effect.
+* LIGHTNING: Displays lightning bolts branching from one end of the grid to the other.
 
 ## Creating an Animation
-All animations are derived from the [Animations](src/animation/animation.h) class. To create an animation, import the desired animation class.
+All animations are derived from the [Animations](src/animation/animation.h) class. To create an animation, import the desired animation class and initialize the animation along with a color scheme.
 
 ```c++
 #include "animation/blinkanimation.h"
 
 Section *section = new Section(new Point(10, 10));
-Animation* blink_animation = new BlinkAnimation(section, Colors::COLORWHEEL, 12);
+Animation* blink_animation = new BlinkAnimation(Colors::COLORWHEEL, 12);
 section->set_animation(blink_animation);
 ``` 
 
@@ -38,24 +39,24 @@ Some animations (such as SPARKLE) support the use of additional parameters. You 
 
 
 ### Setting the Color Palette
-All animations require you to set a color palette. The palette provides a reference to all of the colors used during the animation. You can pass an array of colors during the animation constructor, or by using `Animation::set_colors()`.
+All animations require you to set a color palette. The palette provides a list of the colors that the animation can use during its cycle. You can set the palette in the constructor, or by using `Animation::set_colors()`.
 
 The following example sets a palette of three colors: red, green, and blue. Depending on the animation, one of these colors (or a mix) will be displayed in each Pixel.
 ```c++
 Colors::RGB *colors = {Colors::RED, Colors::GREEN, Colors::BLUE};
-section.set_colors(colors, 3);
+animation->set_colors(colors, 3);
 ```
 
 ## Setting the Orientation
-The orientation determines the direction (vertical or horizontal) that the animation travels in. Animations are horizontal by default, but some animations support a vertical orientation. You can change the orientation using `Animation::set_orientation()`.
+The orientation determines the direction (vertical or horizontal) that some animations move in. Animations are horizontal by default. You can change the orientation using `Animation::set_orientation()`.
 
 ```c++
-// Declare new WaveAnimation
+Animation* animation = new WaveAnimation();
 animation->set_orientation(Animation::Orientations::VERTICAL);
 ```
 
 ## Changing the Animation Speed
-The speed of an animation is determined by the Section rather than the animation itself. There are two different counters: the refresh interval and the cycle interval. The refresh interval is the amount of time between Pixel redraws and only applies when fading is enabled. The cycle interval is the amount of time between animation updates. Both the refresh and cycle intervals are measured in milliseconds.
+The speed of an animation is determined by the Section rather than the animation itself. There are two different counters: the `refresh interval` and the `cycle interval`. The `refresh interval` is the amount of time between Pixel redraws and only applies when fading is enabled. The `cycle interval` is the amount of time between animation updates. For example, in the Cycle animation, the `cycle interval` is the amount of time it takes to switch to the next color.  Both the refresh and cycle intervals are measured in milliseconds.
 
 The following code refreshes the Section every 1/10th of a second and cycles the animation every 1/2 second. If fading is disabled, then only the cycle speed will factor into the animation.
 ```c++

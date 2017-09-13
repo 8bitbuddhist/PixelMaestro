@@ -60,7 +60,8 @@ SOURCES += main.cpp\
 		../src/animation/radialanimation.cpp \
 		../src/animation/mandelbrotanimation.cpp \
 		../src/animation/plasmaanimation.cpp \
-		../src/renderer/renderer.cpp
+		../src/renderer/renderer.cpp \
+    ../src/animation/lightninganimation.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -113,7 +114,8 @@ HEADERS += \
 		../src/animation/radialanimation.h \
 		../src/animation/mandelbrotanimation.h \
 		../src/animation/plasmaanimation.h \
-		../src/renderer/renderer.h
+		../src/renderer/renderer.h \
+    ../src/animation/lightninganimation.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

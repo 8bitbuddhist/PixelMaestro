@@ -172,6 +172,15 @@ namespace PixelMaestro {
 				mixed_color.b = color_one->b * (float)(color_two->b / (float)255);
 				break;
 			}
+			case MixMode::OVERLAY:
+			{
+				if (color_two == &Colors::BLACK) {
+					mixed_color = *color_two;
+				}
+				else {
+					mixed_color = *color_one;
+				}
+			}
 			default:	// Return color_one
 				mixed_color = *color_one;
 				break;

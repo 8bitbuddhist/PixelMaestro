@@ -13,23 +13,25 @@ Sections are the primary interface for PixelMaestro. Their main function is to b
 7. [Other Methods](#other-methods)
 
 ## Creating a Section
-When creating a Section, you must assign a Pixel array to the Section as well as the logical layout of the array (e.g. rows and columns).
+When creating a Section, pass the logical layout of the array (e.g. rows and columns) as part of the constructor.
 ```c++
-Section *section = new Section(pixels, new Point(rows, columns));
+Section *section = new Section(new Point(rows, columns));
 ```
 
 ## Animating a Section
-The main purpose of a Section is to render an animation. They do this by taking calculated color values from the animation and passing them to individual Pixels.
-
-Note: the Section manages the speed of the animation, but is otherwise unaware of the underlying logic.
+The main purpose of a Section is to render Animations. It does this by taking calculated color values from the Animation and passing them to individual Pixels. The Section is responsible for managing the speed at which Animations update, but is otherwise unaware of the underlying Animation logic.
 
 For more information, see the [Animation](animation.md) document.
 
 ## Displaying Custom Shapes and Patterns
-You can display custom shapes using the [Canvas](canvas.md) class.
+Sections can also display Canvases. A Canvas lets you "draw" shapes, which are then rendered on top of the Section's Animation.
+
+For more information, see the [Canvas](canvas.md) document.
 
 ## Retrieving Pixels and Colors
 At some point, you'll need to retrieve the color of a Pixel for output. You can do this using the `get_pixel_color(index)` method, where `index` is the index of the Pixel in the array (demonstrated below in [Accessing the Pixel by Index](#accessing-the-pixel-by-index)). If you'd rather access the Pixel by specifying its coordinate in the grid, see [Accessing the Pixel by Coordinate](#accessing-the-pixel-by-coordinate).
+
+You can also retrieve a Pixel's color by using the `Maestro::get_pixel_color(section, index)` method. You should use this method instead if you have set a global brightness level in the Maestro.
 
 ### Accessing Pixels by Index
 If you know the array index of the Pixel, you can use the `get_pixel(index)` method to retrieve the Pixel directly:

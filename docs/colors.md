@@ -30,10 +30,11 @@ The `generate_random_color_array()` and `generate_scaling_color_array()` methods
 * ALPHA_BLENDING: Blends the second color with the first color by the specified percentage (e.g. 0.5 = 50%).
 * MULTIPLY: Multiplies the first color by the second.
 * NORMAL: Same as `ALPHA_BLENDING`, but with a set blending level of 50%.
+* OVERLAY: Returns the second color if the second color is not black. If the second color is black, then it returns the first color.
 
 ## Sample Colors
 PixelMaestro comes with several predefined colors. These include primary colors (red, green, blue) as well as secondary and tertiary colors.
-There are also two sample color arrays:
+There are also two sample color palettes:
 * `COLORWHEEL` contains a total of 12 primary, secondary, and tertiary colors.
 * `RAINBOW` contains 7 varying colors.
 

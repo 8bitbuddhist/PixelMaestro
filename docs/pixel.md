@@ -8,11 +8,9 @@ A Pixel represents a single RGB output. It stores an RGB color value, a pointer 
 4. [Common Methods](#common-methods)
 
 ## Creating Pixels
-The following code creates a 1x10 line of Pixels and assigns it to a Section:
+Pixels don't take a constructor.
 ```c++
-Point* grid_size = new Point(1, 10);
-Pixel pixels[grid_size->x * grid_size->y];
-Section section = new Section(&pixels[0], grid_size);
+Pixel pixel;
 ```
 
 ## Animating Pixels
@@ -20,12 +18,12 @@ Each Pixel stores three key bits of information: its `current_color_`, its `next
 
 The `current_color_` is the color that the Pixel is displaying right now. This is the value that gets rendered to your output device and can be accessed using the `get_color()` method. This is also the value that gets updated when the Pixel's `update()` method is called.
 
-The `next_color_` is the color that the Pixel will switch to on the next animation cycle. At the end of a cycle, the value of `current_color_` equals the value of `next_color_`.
+The `next_color_` is the color that the Pixel will switch to on the next animation cycle. At the end of a cycle, the value of `current_color_` equals the value of `next_color_`. During a cycle, if fading is enabled, `current_color_` will gradually approach `next_color_` until the cycle is complete, at which point the RGB values of `current_color_` are equal to those of `next_color_`.
 
 When fading is enabled, `step_` is used to calculate the degree of change between the Pixel's `current_color_` and its `next_color_` at the start of each animation cycle. On each refresh, the `step_` amount is applied to the `current_color_`, which blends the Pixel in the direction of `next_color_`. The number of steps is tracked in `step_count_` and is equal to the animation cycle interval divided by the refresh rate.
 
 ## Updating Pixels
-To update a Pixel, simply call the Pixel's `update()` method. This triggers a single refresh of the Pixel. A refresh tells the Pixel to move one step from its current color towards its target color. If fading is enabled, this adds blending to the Pixel's current color bringing it closer to its target color. If fading is not enabled, this causes the Pixel to immediately jump to its next color.
+Calling a Pixel's `update()` method triggers a single refresh of the Pixel. A refresh tells the Pixel to move one step from its current color towards its target color. If fading is enabled, this adds blending to the Pixel's current color and brings it closer to its target color. If fading is not enabled, the Pixel immediately jumps to its next color.
 
 ## Common methods
 * `Pixel::get_color()`: Retrieves the Pixel's current RGB color value.
