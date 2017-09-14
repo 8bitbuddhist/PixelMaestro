@@ -55,9 +55,29 @@ namespace PixelMaestro {
 		 * At the end of the run (or if we're not fading), set current_color_ = next_color_.
 		 */
 		if (step_count_ > 0) {
-			current_color_.r += ((next_color_->r < current_color_.r) ? -1 : 1) * step_.r;
-			current_color_.g += ((next_color_->g < current_color_.g) ? -1 : 1) * step_.g;
-			current_color_.b += ((next_color_->g < current_color_.b) ? -1 : 1) * step_.b;
+			// Red
+			if (next_color_->r > current_color_.r) {
+				current_color_.r += step_.r;
+			}
+			else if (next_color_->r < current_color_.r) {
+				current_color_.r -= step_.r;
+			}
+
+			// Green
+			if (next_color_->g > current_color_.g) {
+				current_color_.g += step_.g;
+			}
+			else if (next_color_->g < current_color_.g) {
+				current_color_.g -= step_.g;
+			}
+
+			// Blue
+			if (next_color_->b > current_color_.b) {
+				current_color_.b += step_.b;
+			}
+			else if (next_color_->b < current_color_.b) {
+				current_color_.b -= step_.b;
+			}
 
 			step_count_--;
 		}
