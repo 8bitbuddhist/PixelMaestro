@@ -10,8 +10,8 @@ namespace PixelMaestro {
 
 			// Recalculate center and width in case the Section size has changed.
 			center_ = {
-				(short)(section->get_dimensions()->x / 2),
-				(short)(section->get_dimensions()->y / 2)
+				(unsigned short)(section->get_dimensions()->x / 2),
+				(unsigned short)(section->get_dimensions()->y / 2)
 			};
 
 			// Calculate the scale of the pattern

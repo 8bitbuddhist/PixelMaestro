@@ -16,11 +16,10 @@ CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro
 	maestro_controller->add_section_controller(new Point(50, 50));
 	maestro_controller->get_section_controller(0)->get_section()->set_animation(new SolidAnimation());
 	maestro_controller->get_section_controller(0)->set_colors(Colors::COLORWHEEL, 12);
-	maestro_controller->get_section_controller(0)->get_section()->get_animation()->set_fade(false);
+	maestro_controller_->get_section_controller(0)->get_section()->set_cycle_interval(100);
 
 	// Create the Canvas
-	maestro_controller->get_section_controller(0)->get_section()->add_canvas();
-	canvas_ = maestro_controller->get_section_controller(0)->get_section()->get_canvas();
+	canvas_ = maestro_controller->get_section_controller(0)->get_section()->add_canvas();
 }
 
 bool CanvasDrawingArea::eventFilter(QObject* obj, QEvent* event)

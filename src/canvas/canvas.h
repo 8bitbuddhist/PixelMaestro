@@ -22,8 +22,13 @@ namespace PixelMaestro {
 			/// The foregound color of the Canvas.
 			Colors::RGB* fg_color = nullptr;
 
+			/// The last time the Canvas scrolled.
+			unsigned long last_scroll_x = 0;
+			unsigned long last_scroll_y = 0;
+
 			/// How far the Canvas is offset from the Pixel grid origin.
-			Point* offset = nullptr;
+			signed int offset_x = 0;
+			signed int offset_y = 0;
 
 			/**
 			 * The Canvas' parent Section.
@@ -40,16 +45,9 @@ namespace PixelMaestro {
 			/// Whether to repeat the Pattern while scrolling over the grid.
 			bool repeat = false;
 
-			/**
-			 * The direction and rate that the Canvas will scroll in.
-			 * Scroll time is determined by the Section refresh rate * the scroll interval, so an interval of '5' means scrolling occurs once on that axis every 5 refreshes.
-			 *
-			 * Setting an axis to 0 (default) disables scrolling on that axis.
-			 */
-			Point* scroll_interval = nullptr;
-
-			/// The last time the Canvas scrolled.
-			unsigned long last_scroll_x, last_scroll_y = 0;
+			/// The direction and rate that the Canvas will scroll in.
+			signed short scroll_interval_x = 0;
+			signed short scroll_interval_y = 0;
 
 			Canvas(Section* section);
 			void clear();
@@ -62,6 +60,8 @@ namespace PixelMaestro {
 			void erase(Point* cursor);
 			bool in_bounds(Point* point);
 			void scroll(const unsigned long& current_time);
+			void set_scroll_interval(signed short x, signed short y);
+			void set_offset(signed short x, signed short y);
 			void update(const unsigned long& current_time);
 			~Canvas();
 	};

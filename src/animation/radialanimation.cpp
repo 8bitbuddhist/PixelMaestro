@@ -9,8 +9,8 @@ namespace PixelMaestro {
 		if (size_ != *section->get_dimensions()) {
 			size_ = *section->get_dimensions();
 			center_ = {
-				(short)(size_.x / 2),
-				(short)(size_.y / 2)
+				(unsigned short)(size_.x / 2),
+				(unsigned short)(size_.y / 2)
 			};
 		}
 

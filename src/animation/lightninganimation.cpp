@@ -14,7 +14,7 @@ namespace PixelMaestro {
 		section->set_all(&Colors::BLACK);
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
-		Point start = {0, (short)Utility::rand(section->get_dimensions()->y)};
+		Point start = {0, (unsigned short)Utility::rand(section->get_dimensions()->y)};
 
 		for (unsigned short bolt = 0; bolt < num_bolts_; bolt++) {
 			draw_bolt(section, &start, up_threshold_, down_threshold_, fork_chance_);

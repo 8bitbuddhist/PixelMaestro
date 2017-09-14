@@ -10,10 +10,10 @@ namespace PixelMaestro {
 	class Point {
 		public:
 			/// X-coordinate.
-			short x = 0;
+			unsigned short x = 0;
 
 			/// Y-coordinate.
-			short y = 0;
+			unsigned short y = 0;
 
 			void operator=(Point point_two) {
 				x = point_two.x;
@@ -30,35 +30,35 @@ namespace PixelMaestro {
 
 			Point operator+(Point point_two) {
 				return {
-					(short)(x + point_two.x),
-					(short)(y + point_two.y)
+					(unsigned short)(x + point_two.x),
+					(unsigned short)(y + point_two.y)
 				};
 			}
 
 			Point operator-(Point point_two) {
 				return {
-					(short)(x - point_two.x),
-					(short)(y - point_two.y)
+					(unsigned short)(x - point_two.x),
+					(unsigned short)(y - point_two.y)
 				};
 			}
 
 			Point operator*(Point point_two) {
 				return {
-					(short)(x * point_two.x),
-					(short)(y * point_two.y)
+					(unsigned short)(x * point_two.x),
+					(unsigned short)(y * point_two.y)
 				};
 			}
 
 			Point operator/(Point point_two) {
 				return {
-					(short)(x / point_two.x),
-					(short)(y / point_two.y)
+					(unsigned short)(x / point_two.x),
+					(unsigned short)(y / point_two.y)
 				};
 			}
 
-			Point(short x, short y);
-			void set(short x, short y);
-			int size();
+			Point(unsigned short x, unsigned short y);
+			void set(unsigned short x, unsigned short y);
+			unsigned int size();
 	};
 }
 

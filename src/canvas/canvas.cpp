@@ -13,9 +13,6 @@ namespace PixelMaestro {
 	Canvas::Canvas(Section* section) {
 		parent_section = section;
 		pattern = new bool[section->get_dimensions()->size()] {0};
-
-		// Initial offset is set to 0
-		offset = new Point(0, 0);
 	}
 
 	/**
@@ -257,7 +254,7 @@ namespace PixelMaestro {
 	 * @return Whether the Point is in bounds.
 	 */
 	bool Canvas::in_bounds(Point* point) {
-		return ((point->x >= 0 && point->x < parent_section->get_dimensions()->x)) && ((point->y >= 0 && point->y < parent_section->get_dimensions()->y));
+		return (point->x < parent_section->get_dimensions()->x) && (point->y < parent_section->get_dimensions()->y);
 	}
 
 	/**
@@ -271,51 +268,76 @@ namespace PixelMaestro {
 		 * For each axis, determine the impact of scroll_interval-><axis> and make the change.
 		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the opposite side.
 		 */
-		if (scroll_interval) {
+		if (scroll_interval_x != 0 || scroll_interval_y != 0) {
 			unsigned long target_time = current_time - last_scroll_x;
-			if (scroll_interval->x != 0 && (Utility::abs_int(scroll_interval->x) * parent_section->get_refresh_interval()) <= target_time) {
+			if (scroll_interval_x != 0 && (Utility::abs_int(scroll_interval_x) * parent_section->get_refresh_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_interval->x > 0) {
-					offset->x++;
+				if (scroll_interval_x > 0) {
+					offset_x++;
 				}
-				else {
-					offset->x--;
+				else if (scroll_interval_x < 0) {
+					offset_x--;
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset->x >= parent_section->get_dimensions()->x) {
-					offset->x = 0;
+				if (offset_x >= parent_section->get_dimensions()->x) {
+					offset_x = 0;
 				}
-				else if (offset->x - 1 < 0) {
-					offset->x = parent_section->get_dimensions()->x;
+				else if (offset_x + 1 == 0) {	// Buffer overflow
+					offset_x = parent_section->get_dimensions()->x;
 				}
 
 				last_scroll_x = current_time;
 			}
 
 			target_time = current_time - last_scroll_y;
-			if (scroll_interval->y != 0 && (Utility::abs_int(scroll_interval->y) * parent_section->get_refresh_interval()) <= target_time) {
+			if (scroll_interval_y != 0 && (Utility::abs_int(scroll_interval_y) * parent_section->get_refresh_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_interval->y > 0) {
-					offset->y++;
+				if (scroll_interval_y > 0) {
+					offset_y++;
 				}
-				else {
-					offset->y--;
+				else if (scroll_interval_y < 0) {
+					offset_y--;
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset->y >= parent_section->get_dimensions()->y) {
-					offset->y = 0;
+				if (offset_y >= parent_section->get_dimensions()->y) {
+					offset_y = 0;
 				}
-				else if (offset->y - 1 < 0) {
-					offset->y = parent_section->get_dimensions()->y;
+				else if (offset_y + 1 == 0) {	// Buffer overflow
+					offset_y = parent_section->get_dimensions()->y;
 				}
 
 				last_scroll_y = current_time;
 			}
 		}
+	}
+
+	/**
+	 * Sets the distance that the Canvas is offset from the Pixel grid origin.
+	 * Note: This can't be used in combination with set_scroll_interval().
+	 * @param x Offset along the x-axis.
+	 * @param y Offset along the y-axis.
+	 */
+	void Canvas::set_offset(signed short x, signed short y) {
+		offset_x = x;
+		offset_y = y;
+	}
+
+	/**
+	 * Sets the direction and rate that the Canvas will scroll in.
+	 * Note: This can't be used in combination with set_offset().
+	 * Scroll time is determined by the Section refresh rate * the scroll interval, so an interval of '5' means scrolling occurs once on that axis every 5 refreshes.
+	 * Setting an axis to 0 (default) disables scrolling on that axis.
+	 *
+	 * @param x Scrolling interval along the x-axis.
+	 * @param y Scrolling interval along the y-axis.
+	 */
+	void Canvas::set_scroll_interval(signed short x, signed short y) {
+		scroll_interval_x = x;
+		scroll_interval_y = y;
 	}
 
 	/**
@@ -365,13 +387,13 @@ namespace PixelMaestro {
 				 * First, check one more time to make sure the Pixel is still in bounds.
 				 * If it's out of bounds, check to make sure repeat is enabled. If it is, move the Pixel to the other side of the Canvas.
 				 */
-				if (row + offset->y < parent_section->get_dimensions()->y &&
-					column + offset->x < parent_section->get_dimensions()->x) {
-					parent_section->set_one(column + offset->x, row + offset->y, tmp_color);
+				if (row + offset_y < parent_section->get_dimensions()->y &&
+					column + offset_x < parent_section->get_dimensions()->x) {
+					parent_section->set_one(column + offset_x, row + offset_y, tmp_color);
 				}
 				else if (repeat) {
-					parent_section->set_one((column + offset->x) % parent_section->get_dimensions()->x,
-						(row + offset->y) % parent_section->get_dimensions()->y,
+					parent_section->set_one((column + offset_x) % parent_section->get_dimensions()->x,
+						(row + offset_y) % parent_section->get_dimensions()->y,
 						tmp_color);
 				}
 			}
@@ -381,7 +403,6 @@ namespace PixelMaestro {
 	}
 
 	Canvas::~Canvas() {
-		delete offset;
 		delete pattern;
 	}
 }
