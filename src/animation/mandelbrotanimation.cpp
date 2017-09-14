@@ -2,7 +2,7 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned short num_colors) : Animation(colors, num_colors) { }
+	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned char num_colors) : Animation(colors, num_colors) { }
 
 	void MandelbrotAnimation::update(Section* section) {
 		if (size_ != *section->get_dimensions()) {

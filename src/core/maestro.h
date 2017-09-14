@@ -12,16 +12,16 @@ namespace PixelMaestro {
 	class Maestro {
 
 		public:
-			Maestro(Section* sections, unsigned short num_sections);
-			Colors::RGB get_pixel_color(unsigned short section, unsigned int pixel);
-			unsigned short get_num_sections();
+			Maestro(Section* sections, unsigned char num_sections);
+			Colors::RGB get_pixel_color(unsigned char section, unsigned int pixel);
+			unsigned char get_num_sections();
 			unsigned short get_refresh_interval();
 			bool get_running();
-			Section* get_section(unsigned short section);
+			Section* get_section(unsigned char section);
 			void set_brightness(float brightness);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_running(bool running);
-			void set_sections(Section* sections, unsigned short num_sections);
+			void set_sections(Section* sections, unsigned char num_sections);
 			void update(const unsigned long& current_time);
 
 		private:
@@ -29,7 +29,7 @@ namespace PixelMaestro {
 			float brightness_ = 1.0;
 
 			/// Number of Sections managed by the Maestro.
-			unsigned short num_sections_;
+			unsigned char num_sections_;
 
 			/// Active running state of the Maestro.
 			bool running_ = true;

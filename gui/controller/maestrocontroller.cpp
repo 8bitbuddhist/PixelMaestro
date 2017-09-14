@@ -34,7 +34,7 @@ void MaestroController::add_show(Event** events, unsigned char num_events, Show:
  * Removes a Section from the Maestro.
  * @param index The index of the Section to remove.
  */
-void MaestroController::delete_section_controller(int index) {
+void MaestroController::delete_section_controller(unsigned char index) {
 	// Delete the SectionController
 	delete section_controllers_[index];
 
@@ -56,7 +56,7 @@ Maestro* MaestroController::get_maestro() {
  * Returns the number of Sections handled by this Maestro.
  * @return Number of Sections.
  */
-int MaestroController::get_num_section_controllers() {
+unsigned char MaestroController::get_num_section_controllers() {
 	return section_controllers_.size();
 }
 
@@ -65,7 +65,7 @@ int MaestroController::get_num_section_controllers() {
  * @param index Index of the desired SectionController.
  * @return SectionController at the specified index.
  */
-SectionController *MaestroController::get_section_controller(int index) {
+SectionController *MaestroController::get_section_controller(unsigned char index) {
 	return section_controllers_[index];
 }
 
@@ -83,7 +83,7 @@ Show *MaestroController::get_show() {
 void MaestroController::reassign_sections() {
 	// Re-build the Sections vector
 	this->sections_.clear();
-	for (unsigned int i = 0; i < section_controllers_.size(); i++) {
+	for (unsigned char i = 0; i < section_controllers_.size(); i++) {
 		sections_.push_back(section_controllers_[i]->get_section().get());
 	}
 
@@ -92,7 +92,7 @@ void MaestroController::reassign_sections() {
 
 MaestroController::~MaestroController() {
 	// Delete SectionControllers
-	for (unsigned int i = 0; i < section_controllers_.size(); i++) {
+	for (unsigned char i = 0; i < section_controllers_.size(); i++) {
 		delete section_controllers_[i];
 	}
 

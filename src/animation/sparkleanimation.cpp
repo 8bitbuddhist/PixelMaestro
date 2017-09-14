@@ -2,7 +2,7 @@
 #include "sparkleanimation.h"
 
 namespace PixelMaestro {
-	SparkleAnimation::SparkleAnimation(Colors::RGB* colors, unsigned short num_colors, unsigned char threshold) : Animation(colors, num_colors) {
+	SparkleAnimation::SparkleAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned char threshold) : Animation(colors, num_colors) {
 		this->threshold_ = threshold;
 	}
 

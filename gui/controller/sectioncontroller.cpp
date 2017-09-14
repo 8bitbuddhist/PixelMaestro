@@ -51,7 +51,7 @@ Point SectionController::get_dimensions() {
  * Returns the number of Colors in the color palette.
  * @return Number of colors.
  */
-unsigned short SectionController::get_num_colors() {
+unsigned char SectionController::get_num_colors() {
 	return this->colors_.size();
 }
 
@@ -84,7 +84,7 @@ std::shared_ptr<Section> SectionController::get_section() {
  * @param colors Colors to store in the SectionController.
  * @param num_colors Number of colors in the array.
  */
-void SectionController::set_colors(Colors::RGB* colors, unsigned short num_colors) {
+void SectionController::set_colors(Colors::RGB* colors, unsigned char num_colors) {
 	colors_.resize(num_colors);
 
 	// Copy provided colors to controller

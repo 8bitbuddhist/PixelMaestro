@@ -12,7 +12,7 @@
 namespace PixelMaestro {
 	class MandelbrotAnimation : public Animation {
 		public:
-			MandelbrotAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
+			MandelbrotAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
 			void update(Section* section);
 
 		private:
@@ -27,10 +27,10 @@ namespace PixelMaestro {
 			double image_width_;
 
 			/// Tracks the number of runs through the Mandelbrot function for each Pixel.
-			int iterations_ = 0;
+			unsigned char iterations_ = 0;
 
 			/// Maximum number of iterations to run.
-			const int max_iterations_ = 10;
+			const unsigned char max_iterations_ = 10;
 
 			/// Stores grid size for comparison.
 			Point size_ = {0, 0};

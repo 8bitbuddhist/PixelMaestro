@@ -1,7 +1,7 @@
 #include "waveanimation.h"
 
 namespace PixelMaestro {
-	WaveAnimation::WaveAnimation(Colors::RGB* colors, unsigned short num_colors) : Animation(colors, num_colors) { }
+	WaveAnimation::WaveAnimation(Colors::RGB* colors, unsigned char num_colors) : Animation(colors, num_colors) { }
 
 	void WaveAnimation::update(Section* section) {
 		for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {

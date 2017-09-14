@@ -6,7 +6,7 @@
 namespace  PixelMaestro {
 	class PlasmaAnimation : public Animation {
 		public:
-			PlasmaAnimation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0, float size = 32.0, float resolution = 4.0);
+			PlasmaAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, float size = 32.0, float resolution = 4.0);
 			void update(Section* section);
 
 		private:

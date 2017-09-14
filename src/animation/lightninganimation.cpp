@@ -2,7 +2,7 @@
 #include "lightninganimation.h"
 
 namespace PixelMaestro {
-	LightningAnimation::LightningAnimation(unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold,  unsigned char fork_chance, Colors::RGB* colors, unsigned short num_colors) {
+	LightningAnimation::LightningAnimation(unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold,  unsigned char fork_chance, Colors::RGB* colors, unsigned char num_colors) {
 		this->num_bolts_ = num_bolts;
 		this->down_threshold_ = down_threshold;
 		this->up_threshold_ = up_threshold;

@@ -33,10 +33,10 @@ namespace PixelMaestro {
 	/**
 	 * Creates a new Overlay.
 	 * @param mix_mode The method for blending the Overlay.
-	 * @param alpha The Overlay's transparency.
+	 * @param alpha The Overlay's transparency (0 - 255.
 	 * @return New Overlay.
 	 */
-	Section::Overlay* Section::add_overlay(Colors::MixMode mix_mode, float alpha) {
+	Section::Overlay* Section::add_overlay(Colors::MixMode mix_mode, unsigned char alpha) {
 		if (overlay_ == nullptr) {
 			overlay_ = new Overlay(dimensions_, mix_mode, alpha);
 		}
@@ -105,7 +105,7 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB Section::get_pixel_color(unsigned int pixel) {
 		if (overlay_ != nullptr) {
-			return Colors::mix_colors(get_pixel(pixel)->get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha);
+			return Colors::mix_colors(get_pixel(pixel)->get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha / 255);
 		}
 		else {
 			return *get_pixel(pixel)->get_color();
@@ -253,7 +253,7 @@ namespace PixelMaestro {
 			delete canvas_->pattern;
 
 			// Make sure we don't exceed the bounds of either the new grid or the old grid.
-			int max = dimensions_->x * dimensions_->y;
+			int max = dimensions_->size();
 			if (dimensions->x * dimensions->y < max) {
 				max = dimensions->x * dimensions->y;
 			}

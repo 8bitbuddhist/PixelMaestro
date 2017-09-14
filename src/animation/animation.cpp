@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	 * @param colors Initial color palette.
 	 * @param num_colors The number of colors in the palette.
 	 */
-	Animation::Animation(Colors::RGB* colors, unsigned short num_colors) {
+	Animation::Animation(Colors::RGB* colors, unsigned char num_colors) {
 		this->colors_ = colors;
 		this->num_colors_ = num_colors;
 	}
@@ -21,7 +21,7 @@ namespace PixelMaestro {
 		@param index Desired index.
 		@return Color at the specified index.
 	*/
-	Colors::RGB* Animation::get_color_at_index(unsigned short index) {
+	Colors::RGB* Animation::get_color_at_index(unsigned char index) {
 		if (num_colors_ > 0 && index >= num_colors_) {
 			return &colors_[index % num_colors_];
 		}
@@ -34,7 +34,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Cycle index.
 	 */
-	unsigned short Animation::get_cycle_index() {
+	unsigned char Animation::get_cycle_index() {
 		return cycle_index_;
 	}
 
@@ -51,7 +51,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Number of colors in the color palette.
 	 */
-	unsigned short Animation::get_num_colors() {
+	unsigned char Animation::get_num_colors() {
 		return num_colors_;
 	}
 
@@ -78,7 +78,7 @@ namespace PixelMaestro {
 		@param colors New color palette.
 		@param num_colors Number of colors in the palette.
 	*/
-	void Animation::set_colors(Colors::RGB* colors, unsigned short num_colors) {
+	void Animation::set_colors(Colors::RGB* colors, unsigned char num_colors) {
 		colors_ = colors;
 		num_colors_ = num_colors;
 	}
@@ -89,7 +89,7 @@ namespace PixelMaestro {
 	 *
 	 * @param index New cycle index.
 	 */
-	void Animation::set_cycle_index(unsigned short index) {
+	void Animation::set_cycle_index(unsigned char index) {
 		if (num_colors_ && index > num_colors_) {
 			index %= num_colors_;
 		}
@@ -134,7 +134,7 @@ namespace PixelMaestro {
 		@param min The minimum possible value of cycle_index_.
 		@param max The maximum possible value of cycle_index_.
 	*/
-	void Animation::update_cycle(unsigned short min, unsigned short max) {
+	void Animation::update_cycle(unsigned char min, unsigned char max) {
 		if (reverse_) {
 			if (cycle_index_ == 0) {
 				cycle_index_ = max - 1;

@@ -13,7 +13,7 @@ namespace PixelMaestro {
 	 * @param sections Array of Sections to manage.
 	 * @param num_sections Number of Sections in the array.
 	 */
-	Maestro::Maestro(Section* sections, unsigned short num_sections) {
+	Maestro::Maestro(Section* sections, unsigned char num_sections) {
 		set_sections(sections, num_sections);
 	}
 
@@ -22,7 +22,7 @@ namespace PixelMaestro {
 
 		@return Number of Sections.
 	*/
-	unsigned short Maestro::get_num_sections() {
+	unsigned char Maestro::get_num_sections() {
 		return num_sections_;
 	}
 
@@ -32,7 +32,7 @@ namespace PixelMaestro {
 	 * @param pixel Index of the Pixel to retrieve.
 	 * @return Pixel color after adjusting for Overlays and brightness.
 	 */
-	Colors::RGB Maestro::get_pixel_color(unsigned short section, unsigned int pixel) {
+	Colors::RGB Maestro::get_pixel_color(unsigned char section, unsigned int pixel) {
 		return sections_[section].get_pixel_color(pixel) * brightness_;
 	}
 
@@ -42,9 +42,12 @@ namespace PixelMaestro {
 		@return Amount of time between refreshes (in ms).
 	*/
 	unsigned short Maestro::get_refresh_interval() {
-		int gcd = 0;
-		for (unsigned short section = 1; section < num_sections_; section++) {
-			gcd = Utility::gcd(sections_[section].get_refresh_interval(), sections_[section - 1].get_refresh_interval());
+		unsigned short gcd = 0;
+		if (num_sections_ > 0) {
+			gcd = sections_[0].get_refresh_interval();
+			for (unsigned short section = 1; section < num_sections_; section++) {
+				gcd = Utility::gcd(sections_[section].get_refresh_interval(), sections_[section - 1].get_refresh_interval());
+			}
 		}
 
 		return Utility::abs_int(gcd);
@@ -65,7 +68,7 @@ namespace PixelMaestro {
 		@param section Index of the Section to return.
 		@return Section at the specified index.
 	*/
-	Section* Maestro::get_section(unsigned short section) {
+	Section* Maestro::get_section(unsigned char section) {
 		return &sections_[section];
 	}
 
@@ -103,7 +106,7 @@ namespace PixelMaestro {
 		@param sections Array of Sections.
 		@param num_sections Number of Sections in the array.
 	*/
-	void Maestro::set_sections(Section* sections, unsigned short num_sections) {
+	void Maestro::set_sections(Section* sections, unsigned char num_sections) {
 		sections_ = sections;
 		num_sections_ = num_sections;
 	}
@@ -125,7 +128,7 @@ namespace PixelMaestro {
 	void Maestro::update(const unsigned long& current_time) {
 		// If running, call each Section's update method.
 		if (running_) {
-			for (unsigned short section = 0; section < num_sections_; section++) {
+			for (unsigned char section = 0; section < num_sections_; section++) {
 				sections_[section].update(current_time);
 			}
 		}

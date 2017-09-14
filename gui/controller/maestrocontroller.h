@@ -20,10 +20,10 @@ class MaestroController {
 		~MaestroController();
 		void add_section_controller(Point* layout);
 		void add_show(Event **events, unsigned char num_events, Show::TimingModes timing, bool loop);
-		void delete_section_controller(int index);
+		void delete_section_controller(unsigned char index);
 		Maestro* get_maestro();
-		int get_num_section_controllers();
-		SectionController *get_section_controller(int index);
+		unsigned char get_num_section_controllers();
+		SectionController *get_section_controller(unsigned char index);
 		Show *get_show();
 
 	private:

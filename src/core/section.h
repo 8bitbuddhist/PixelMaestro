@@ -34,15 +34,15 @@ namespace PixelMaestro {
 				Colors::MixMode mix_mode = Colors::MixMode::NONE;
 
 				/// Transparency level of the overlaid Section (if applicable).
-				float alpha;
+				unsigned char alpha;
 
 				/**
 				 * Constructor.
 				 * @param section Section to use as the Overlay.
 				 * @param mix_mode Color mixing method to use.
-				 * @param alpha For MixMode::ALPHA, the amount of transparency that the Overlay will have.
+				 * @param alpha For The amount of transparency that the Overlay will have (0 - 255).
 				 */
-				Overlay(Point* dimensions, Colors::MixMode mix_mode, float alpha) {
+				Overlay(Point* dimensions, Colors::MixMode mix_mode, unsigned char alpha) {
 					this->section = new Section(dimensions);
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
@@ -56,7 +56,7 @@ namespace PixelMaestro {
 			Section(Point* layout);
 			~Section();
 			Canvas* add_canvas();
-			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::NORMAL, float alpha = 0.5);
+			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::NORMAL, unsigned char alpha = 128);
 			Animation* get_animation();
 			Canvas* get_canvas();
 			unsigned short get_cycle_interval();

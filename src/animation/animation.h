@@ -42,16 +42,16 @@ namespace PixelMaestro {
 				VERTICAL
 			};
 
-			Animation(Colors::RGB* colors = nullptr, unsigned short num_colors = 0);
-			Colors::RGB* get_color_at_index(unsigned short index);
-			unsigned short get_cycle_index();
+			Animation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
+			Colors::RGB* get_color_at_index(unsigned char index);
+			unsigned char get_cycle_index();
 			bool get_fade();
-			unsigned short get_num_colors();
+			unsigned char get_num_colors();
 			unsigned int get_num_pixels();
 			Orientations get_orientation();
 			bool get_reverse();
-			void set_colors(Colors::RGB* colors, unsigned short num_colors);
-			void set_cycle_index(unsigned short index);
+			void set_colors(Colors::RGB* colors, unsigned char num_colors);
+			void set_cycle_index(unsigned char index);
 			void set_fade(bool fade);
 			void set_orientation(Orientations orientation);
 			void set_reverse(bool reverse);
@@ -62,13 +62,13 @@ namespace PixelMaestro {
 			Colors::RGB* colors_ = nullptr;
 
 			///	The current stage in the animation cycle. Defaults to 0.
-			unsigned short cycle_index_ = 0;
+			unsigned char cycle_index_ = 0;
 
 			/// Whether to fade between cycles. Defaults to true.
 			bool fade_ = true;
 
 			/// The number of colors in colors_.
-			unsigned short num_colors_ = 0;
+			unsigned char num_colors_ = 0;
 
 			/// The orientation of the animation. Defaults to HORIZONTAL.
 			Orientations orientation_ = Orientations::HORIZONTAL;
@@ -76,7 +76,7 @@ namespace PixelMaestro {
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_ = false;
 
-			void update_cycle(unsigned short min, unsigned short max);
+			void update_cycle(unsigned char min, unsigned char max);
 	};
 }
 
