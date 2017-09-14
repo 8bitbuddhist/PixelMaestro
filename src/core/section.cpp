@@ -26,7 +26,22 @@ namespace PixelMaestro {
 		if (canvas_ == nullptr) {
 			canvas_ = new Canvas(this);
 		}
+
 		return canvas_;
+	}
+
+	/**
+	 * Creates a new Overlay.
+	 * @param mix_mode The method for blending the Overlay.
+	 * @param alpha The Overlay's transparency.
+	 * @return New Overlay.
+	 */
+	Section::Overlay* Section::add_overlay(Colors::MixMode mix_mode, float alpha) {
+		if (overlay_ == nullptr) {
+			overlay_ = new Overlay(dimensions_, mix_mode, alpha);
+		}
+
+		return overlay_;
 	}
 
 	/**
@@ -260,13 +275,6 @@ namespace PixelMaestro {
 	*/
 	void Section::set_refresh_interval(unsigned short interval) {
 		refresh_interval_ = interval;
-	}
-
-	/**
-		Removes the overlay from the Section.
-	*/
-	void Section::unset_overlay() {
-		overlay_ = nullptr;
 	}
 
 	/**

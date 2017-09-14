@@ -16,8 +16,7 @@ using namespace PixelMaestro;
 class SectionController {
 	public:
 		SectionController(Point* layout);
-		SectionController(Point* layout, Colors::MixMode mix_mode, float alpha);
-		~SectionController();
+		SectionController(Section* section, bool is_overlay = false);
 		void add_overlay(Colors::MixMode mix_mode, float alpha = 0.5);
 		Colors::RGB* get_colors();
 		Point get_dimensions();
@@ -30,20 +29,14 @@ class SectionController {
 		void unset_overlay();
 
 	private:
-		/// The amount of blending to apply to the Overlay.
-		float alpha_ = 0.0;
-
 		/// Colors used by the Section and its Overlay.
 		std::vector<Colors::RGB> colors_;
 
-		/// Layout of the section (defaults to 10 x 10)
-		Point* dimensions_ = nullptr;
+		/// Stores the size of the grid.
+		Point dimensions_ = {0, 0};
 
 		/// Determines whether this Section is an Overlay.
 		bool is_overlay_ = false;
-
-		/// Overlay MixMode to use.
-		Colors::MixMode mix_mode_;
 
 		/// Controller for the Overlay Section.
 		std::shared_ptr<SectionController> overlay_controller_ = nullptr;

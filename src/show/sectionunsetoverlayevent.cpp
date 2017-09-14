@@ -11,6 +11,7 @@ namespace PixelMaestro {
 	}
 
 	void SectionUnsetOverlayEvent::run() {
-		section_->unset_overlay();
+		// TODO: Delete meh
+		//section_->unset_overlay();
 	}
 }

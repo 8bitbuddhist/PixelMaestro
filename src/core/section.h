@@ -42,16 +42,21 @@ namespace PixelMaestro {
 				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For MixMode::ALPHA, the amount of transparency that the Overlay will have.
 				 */
-				Overlay(Section* section, Colors::MixMode mix_mode, float alpha) {
-					this->section = section;
+				Overlay(Point* dimensions, Colors::MixMode mix_mode, float alpha) {
+					this->section = new Section(dimensions);
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
+				}
+
+				~Overlay() {
+					delete this->section;
 				}
 			};
 
 			Section(Point* layout);
 			~Section();
 			Canvas* add_canvas();
+			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::NORMAL, float alpha = 0.5);
 			Animation* get_animation();
 			Canvas* get_canvas();
 			unsigned short get_cycle_interval();
@@ -62,6 +67,8 @@ namespace PixelMaestro {
 			unsigned int get_pixel_index(Point* coordinates);
 			unsigned int get_pixel_index(unsigned short x, unsigned short y);
 			unsigned short get_refresh_interval();
+			void remove_canvas();
+			void remove_overlay();
 			void set_all(Colors::RGB* color);
 			void set_animation(Animation* animation, bool preserve_cycle_index = false);
 			void set_canvas(Canvas* canvas);
@@ -71,7 +78,6 @@ namespace PixelMaestro {
 			void set_overlay(Overlay* overlay);
 			void set_pixels(Point* layout);
 			void set_refresh_interval(unsigned short interval);
-			void unset_overlay();
 			void update(const unsigned long& current_time);
 
 		private:
