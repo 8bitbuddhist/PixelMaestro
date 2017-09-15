@@ -35,12 +35,21 @@ namespace PixelMaestro {
 					iterations_++;
 				}
 
-				// TODO: Support vertical orientation
-				if (iterations_ < max_iterations_) {
-					section->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
+				if (orientation_ == Orientations::VERTICAL) {
+					if (iterations_ < max_iterations_) {
+						section->set_one(y, x, get_color_at_index(iterations_ + cycle_index_));
+					}
+					else {
+						section->set_one(y, x, &Colors::BLACK);
+					}
 				}
 				else {
-					section->set_one(x, y, &Colors::BLACK);
+					if (iterations_ < max_iterations_) {
+						section->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
+					}
+					else {
+						section->set_one(x, y, &Colors::BLACK);
+					}
 				}
 			}
 		}
