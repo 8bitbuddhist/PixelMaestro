@@ -476,9 +476,7 @@ namespace PixelMaestro {
 	}
 
 	Canvas::~Canvas() {
-		delete pattern_;
-		if (scroll_ != nullptr) {
-			delete scroll_;
-		}
+		delete[] pattern_;
+		delete scroll_;
 	}
 }

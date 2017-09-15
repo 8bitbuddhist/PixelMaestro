@@ -33,6 +33,9 @@ class MaestroControl : public QWidget {
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_;
 
+		/// Stores any extra animation controllers
+		QWidget* extra_control_widget_ = nullptr;
+
 		void change_scaling_color_array(Colors::RGB color);
 		void get_section_settings();
 		void initialize();

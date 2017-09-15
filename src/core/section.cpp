@@ -227,7 +227,7 @@ namespace PixelMaestro {
 	void Section::set_pixels(Point* dimensions) {
 		// Resize the Pixel grid
 		if (pixels_ != nullptr) {
-			delete pixels_;
+			delete[] pixels_;
 		}
 		pixels_ = new Pixel[dimensions->x * dimensions->y];
 
@@ -305,14 +305,10 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
-		if (canvas_ != nullptr) {
-			delete canvas_;
-		}
-		if (overlay_ != nullptr) {
-			delete overlay_;
-		}
-		if (pixels_ != nullptr) {
-			delete pixels_;
-		}
+		delete canvas_;
+		delete overlay_;
+
+		// FIXME: Exception when deleting pixels_ on Overlays
+		delete[] pixels_;
 	}
 }

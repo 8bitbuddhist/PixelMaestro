@@ -6,7 +6,10 @@
 namespace PixelMaestro {
 	class LightningAnimation : public Animation {
 		public:
-			LightningAnimation(unsigned char num_bolts, unsigned char down_threshold = 35, unsigned char up_threshold = 65, unsigned char fork_chance_ = 4, Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
+			LightningAnimation(unsigned char num_bolts = 1, unsigned char down_threshold = 90, unsigned char up_threshold = 166, unsigned char fork_chance_ = 4, Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
+			void set_bolt_count(unsigned char bolt_count);
+			void set_fork_chance(unsigned char fork_chance);
+			void set_thresholds(unsigned char down_threshold, unsigned char up_threshold);
 			void update(Section* section);
 
 		private:
