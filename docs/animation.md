@@ -35,7 +35,7 @@ Animation* blink_animation = new BlinkAnimation(Colors::COLORWHEEL, 12);
 section->set_animation(blink_animation);
 ``` 
 
-Some animations (such as SparkleAnimation) support the use of additional parameters. You can set these parameters in the animation's constructor.
+Some animations (such as SparkleAnimation) support the use of additional parameters. You can set these parameters in the Animation's constructor, or by calling a method (e.g. `SparkleAnimation::set_threshold()`).
 
 
 ### Setting the Color Palette

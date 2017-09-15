@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     ../src/animation/lightninganimation.cpp \
     ../src/show/overlaysetoptionsevent.cpp \
     widget/animation/lightninganimationcontrol.cpp \
-    widget/animation/plasmaanimationcontrol.cpp
+    widget/animation/plasmaanimationcontrol.cpp \
+    widget/animation/sparkleanimationcontrol.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -115,12 +116,14 @@ HEADERS += \
     ../src/animation/lightninganimation.h \
     ../src/show/overlaysetoptionsevent.h \
     widget/animation/lightninganimationcontrol.h \
-    widget/animation/plasmaanimationcontrol.h
+    widget/animation/plasmaanimationcontrol.h \
+    widget/animation/sparkleanimationcontrol.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
 		window/mainwindow.ui \
     widget/animation/lightninganimationcontrol.ui \
-    widget/animation/plasmaanimationcontrol.ui
+    widget/animation/plasmaanimationcontrol.ui \
+    widget/animation/sparkleanimationcontrol.ui
 
 INCLUDEPATH += $$PWD/../src

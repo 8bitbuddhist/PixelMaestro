@@ -17,8 +17,6 @@ namespace PixelMaestro {
 		set_sections(sections, num_sections);
 	}
 
-	// TODO: Destructor
-
 	/**
 		Returns the number of Sections.
 

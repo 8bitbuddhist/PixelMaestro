@@ -10,19 +10,19 @@ using namespace PixelMaestro;
  * Empty constructor.
  */
 MaestroController::MaestroController() {
-	maestro_ = new Maestro(nullptr, 0);
+	maestro_ = std::unique_ptr<Maestro>(new Maestro(nullptr, 0));
 }
 
 /**
  * Adds a new Section to the Maestro.
  */
 void MaestroController::add_section_controller(Point* layout) {
-	this->section_controllers_.push_back(new SectionController(layout));
+	this->section_controllers_.push_back(std::shared_ptr<SectionController>(new SectionController(layout)));
 	reassign_sections();
 }
 
 void MaestroController::add_show(Event** events, unsigned char num_events, Show::TimingModes timing, bool loop) {
-	show_ = new Show(maestro_, events, num_events);
+	show_ = std::unique_ptr<Show>(new Show(maestro_.get(), events, num_events));
 
 	show_->set_timing(timing);
 	if (loop) {
@@ -35,9 +35,6 @@ void MaestroController::add_show(Event** events, unsigned char num_events, Show:
  * @param index The index of the Section to remove.
  */
 void MaestroController::delete_section_controller(unsigned char index) {
-	// Delete the SectionController
-	delete section_controllers_[index];
-
 	// Remove the reference from the SectionController array
 	section_controllers_.erase(section_controllers_.begin() + index);
 
@@ -49,7 +46,7 @@ void MaestroController::delete_section_controller(unsigned char index) {
  * @return Underlying Maestro.
  */
 Maestro* MaestroController::get_maestro() {
-	return maestro_;
+	return maestro_.get();
 }
 
 /**
@@ -66,7 +63,7 @@ unsigned char MaestroController::get_num_section_controllers() {
  * @return SectionController at the specified index.
  */
 SectionController *MaestroController::get_section_controller(unsigned char index) {
-	return section_controllers_[index];
+	return section_controllers_[index].get();
 }
 
 /**
@@ -74,7 +71,7 @@ SectionController *MaestroController::get_section_controller(unsigned char index
  * @return Show managed by this Maestro.
  */
 Show *MaestroController::get_show() {
-	return show_;
+	return show_.get();
 }
 
 /**
@@ -90,11 +87,4 @@ void MaestroController::reassign_sections() {
 	maestro_->set_sections(sections_[0], sections_.size());
 }
 
-MaestroController::~MaestroController() {
-	// Delete SectionControllers
-	for (unsigned char i = 0; i < section_controllers_.size(); i++) {
-		delete section_controllers_[i];
-	}
-
-	delete show_;
-}
+MaestroController::~MaestroController() { }

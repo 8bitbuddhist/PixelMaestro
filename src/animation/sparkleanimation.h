@@ -6,13 +6,14 @@
 namespace PixelMaestro {
 	class SparkleAnimation : public Animation {
 		public:
-			SparkleAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, unsigned char threshold = 50);
+			SparkleAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, unsigned char threshold = 25);
+			void set_threshold(unsigned char threshold);
 			void update(Section* section);
 
 		private:
 			/**
 			 * Threshold for activating a Pixel (0 - 100).
-			 * The higher the threshold, the less likely a Pixel will be activated.
+			 * The higher the threshold, the more likely a Pixel will be activated.
 			 */
 			unsigned char threshold_;
 	};

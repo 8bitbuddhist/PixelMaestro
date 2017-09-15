@@ -10,6 +10,7 @@
 #include "animation/randomanimation.h"
 #include "animation/solidanimation.h"
 #include "animation/sparkleanimation.h"
+#include "animation/sparkleanimationcontrol.h"
 #include "animation/waveanimation.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
@@ -187,7 +188,12 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			active_section_controller_->get_section()->set_animation(new RandomAnimation(), preserve_cycle_index);
 			break;
 		case 6:
-			active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
+			{
+				active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
+				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
+				extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget()));
+				layout->addWidget(extra_control_widget_.get());
+			}
 			break;
 		case 7:
 			active_section_controller_->get_section()->set_animation(new RadialAnimation(), preserve_cycle_index);

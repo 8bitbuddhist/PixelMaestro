@@ -7,10 +7,18 @@ namespace PixelMaestro {
 		size_ = size;
 	}
 
+	/**
+	 * Sets the resolution (sharpness) of each plasma.
+	 * @param resolution Plasma resolution.
+	 */
 	void PlasmaAnimation::set_resolution(float resolution) {
 		this->resolution_ = resolution;
 	}
 
+	/**
+	 * Sets the size of each plasma.
+	 * @param size Plasma size.
+	 */
 	void PlasmaAnimation::set_size(float size) {
 		this->size_ = size;
 	}

@@ -308,7 +308,7 @@ namespace PixelMaestro {
 		delete canvas_;
 		delete overlay_;
 
-		// FIXME: Exception when deleting pixels_ on Overlays
+		// FIXME: Exception when deleting pixels_ on Overlays.
 		delete[] pixels_;
 	}
 }

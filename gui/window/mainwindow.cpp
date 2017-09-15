@@ -42,17 +42,17 @@ void MainWindow::reset_drawing_area() {
 	ui->action_Show_Demo->setEnabled(true);
 	ui->actionDrawing_Demo->setEnabled(true);
 
-	if (drawing_area_) {
-		delete drawing_area_;
-		drawing_area_ = nullptr;
+	if (maestro_control_) {
+		delete maestro_control_;
+		maestro_control_ = nullptr;
 	}
 	if (controller_) {
 		delete controller_;
 		controller_ = nullptr;
 	}
-	if (maestro_control_) {
-		delete maestro_control_;
-		maestro_control_ = nullptr;
+	if (drawing_area_) {
+		delete drawing_area_;
+		drawing_area_ = nullptr;
 	}
 
 	controller_ = new MaestroController();

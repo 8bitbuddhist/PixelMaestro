@@ -68,7 +68,7 @@ namespace PixelMaestro {
 			}
 			else if (direction_roll < down_threshold) {
 				if (cursor.y - 1 >= 0) {
-					cursor.y -=1;
+					cursor.y -= 1;
 				}
 			}
 			cursor.x++;
@@ -133,7 +133,7 @@ namespace PixelMaestro {
 			}
 			else if (direction_roll < left_threshold) {
 				if (cursor.x - 1 >= 0) {
-					cursor.x -=1;
+					cursor.x -= 1;
 				}
 			}
 			cursor.y++;
@@ -149,11 +149,10 @@ namespace PixelMaestro {
 					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.
 					 */
 					if (direction_roll > right_threshold) {
-						draw_bolt_horizontal(bolt_num, section, &cursor, 204, 153, fork_chance / 2);
+						draw_bolt_vertical(bolt_num, section, &cursor, 204, 153, fork_chance / 2);
 					}
 					else if (direction_roll < left_threshold) {
-					//else {
-						draw_bolt_horizontal(bolt_num, section, &cursor, 102, 51, fork_chance / 2);
+						draw_bolt_vertical(bolt_num, section, &cursor, 102, 51, fork_chance / 2);
 					}
 					else {
 						draw_bolt_vertical(bolt_num, section, &cursor, right_threshold, left_threshold, fork_chance / 2);
@@ -163,14 +162,27 @@ namespace PixelMaestro {
 		}
 	}
 
+	/**
+	 * Sets the number of bolts generated in each strike.
+	 * @param bolt_count Number of bolts (0 - 255).
+	 */
 	void LightningAnimation::set_bolt_count(unsigned char bolt_count) {
 		this->num_bolts_ = bolt_count;
 	}
 
+	/**
+	 * Sets the chances of a bolt forking.
+	 * @param fork_chance Chance of a bolt forking (0 - 255).
+	 */
 	void LightningAnimation::set_fork_chance(unsigned char fork_chance) {
 		this->fork_chance_ = fork_chance;
 	}
 
+	/**
+	 * Sets the chances of a bolt drifting in a certain direction.
+	 * @param down_threshold Chances of a bolt drifting downwards (left in vertical orientation).
+	 * @param up_threshold Chances of a bolt drifting upwards (right in vertical orientation).
+	 */
 	void LightningAnimation::set_thresholds(unsigned char down_threshold, unsigned char up_threshold) {
 		this->down_threshold_ = down_threshold;
 		this->up_threshold_ = up_threshold;
