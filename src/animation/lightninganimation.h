@@ -20,7 +20,8 @@ namespace PixelMaestro {
 
 			unsigned char up_threshold_;
 
-			void draw_bolt(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
+			void draw_bolt_horizontal(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
+			void draw_bolt_vertical(unsigned char bolt_num, Section* section, Point* start, unsigned char left_threshold, unsigned char right_threshold, unsigned char fork_chance);
 	};
 }
 

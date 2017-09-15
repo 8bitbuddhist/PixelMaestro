@@ -14,27 +14,37 @@ namespace PixelMaestro {
 		section->set_all(&Colors::BLACK);
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
-		Point start = {0, (unsigned short)Utility::rand(section->get_dimensions()->y)};
+		Point start = {0, 0};
+		if (orientation_ == Orientations::VERTICAL) {
+			start.set((unsigned short)Utility::rand(section->get_dimensions()->x), 0);
+		}
+		else {
+			start.set(0, (unsigned short)Utility::rand(section->get_dimensions()->y));
+		}
 
 		for (unsigned char bolt = 0; bolt < num_bolts_; bolt++) {
-			draw_bolt(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
+			if (orientation_ == Orientations::VERTICAL) {
+				draw_bolt_vertical(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
+			}
+			else {
+				draw_bolt_horizontal(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
+			}
 		}
 
 		update_cycle(0, num_colors_);
 	}
 
-	void LightningAnimation::draw_bolt(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
-		// TODO: True vertical mode
+	void LightningAnimation::draw_bolt_horizontal(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
 		int direction_roll;
 		Point cursor = {start->x, start->y};
 
 		/*
-		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
+		 * Calculate the maximum length of the bolt.
+		 * For the main bolt, we set the length equal to the length of the grid.
 		 * For off-shoots, we cap the distance at 25% of the grid length.
 		 */
 		unsigned int length;
-
-		if (cursor.x == 0) {	// If x==0, then this is the initial/main bolt.
+		if (cursor.x == 0) {
 			length = section->get_dimensions()->x;
 		}
 		else {
@@ -45,6 +55,10 @@ namespace PixelMaestro {
 				length = cursor.x + (section->get_dimensions()->x * 0.25);
 			}
 		}
+
+		/*
+		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
+		 */
 		for (unsigned int x = cursor.x; x < length; x++) {
 			direction_roll = Utility::rand(100);
 			if (direction_roll > up_threshold) {
@@ -59,12 +73,7 @@ namespace PixelMaestro {
 			}
 			cursor.x++;
 
-			if (orientation_ == Orientations::VERTICAL) {
-				section->set_one(cursor.y, x, get_color_at_index(cycle_index_ + bolt_num));
-			}
-			else {
-				section->set_one(x, cursor.y, get_color_at_index(cycle_index_ + bolt_num));
-			}
+			section->set_one(x, cursor.y, get_color_at_index(cycle_index_ + bolt_num));
 
 
 			// Check to see if we should fork the bolt
@@ -76,16 +85,77 @@ namespace PixelMaestro {
 					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.
 					 */
 					if (direction_roll > up_threshold) {
-						//draw_bolt(section, &cursor, up_threshold, down_threshold + 40, fork_chance / 2);
-						draw_bolt(bolt_num, section, &cursor, 80, 50, fork_chance / 2);
+						draw_bolt_horizontal(bolt_num, section, &cursor, 80, 60, fork_chance / 2);
 					}
 					else if (direction_roll < down_threshold) {
-					//else {
-						//draw_bolt(section, &cursor, up_threshold - 40, down_threshold, fork_chance / 2);
-						draw_bolt(bolt_num, section, &cursor, 50, 20, fork_chance / 2);
+						draw_bolt_horizontal(bolt_num, section, &cursor, 40, 20, fork_chance / 2);
 					}
 					else {
-						draw_bolt(bolt_num, section, &cursor, up_threshold, down_threshold, fork_chance / 2);
+						draw_bolt_horizontal(bolt_num, section, &cursor, up_threshold, down_threshold, fork_chance / 2);
+					}
+				}
+			}
+		}
+	}
+
+	void LightningAnimation::draw_bolt_vertical(unsigned char bolt_num, Section* section, Point* start, unsigned char left_threshold, unsigned char right_threshold, unsigned char fork_chance) {
+		int direction_roll;
+		Point cursor = {start->x, start->y};
+
+		/*
+		 * Calculate the maximum length of the bolt.
+		 * For the main bolt, we set the length equal to the length of the grid.
+		 * For off-shoots, we cap the distance at 25% of the grid length.
+		 */
+		unsigned int length;
+		if (cursor.y == 0) {
+			length = section->get_dimensions()->y;
+		}
+		else {
+			if (cursor.y + ((section->get_dimensions()->y * 0.25)) > section->get_dimensions()->y) {
+				length = section->get_dimensions()->y - cursor.y;
+			}
+			else {
+				length = cursor.y + (section->get_dimensions()->y * 0.25);
+			}
+		}
+
+		/*
+		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
+		 */
+		for (unsigned int y = cursor.y; y < length; y++) {
+			direction_roll = Utility::rand(100);
+			if (direction_roll > right_threshold) {
+				if (cursor.x + 1 < section->get_dimensions()->x) {
+					cursor.x += 1;
+				}
+			}
+			else if (direction_roll < left_threshold) {
+				if (cursor.x - 1 >= 0) {
+					cursor.x -=1;
+				}
+			}
+			cursor.y++;
+
+			section->set_one(cursor.x, y, get_color_at_index(cycle_index_ + bolt_num));
+
+			// Check to see if we should fork the bolt
+			if (y < (unsigned short)section->get_dimensions()->y) {
+				int chance_roll = Utility::rand(100);
+				if (chance_roll < fork_chance) {
+					/*
+					 * If we fork, reduce the fork chance by 50%.
+					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.
+					 */
+					if (direction_roll > right_threshold) {
+						draw_bolt_vertical(bolt_num, section, &cursor, 80, 60, fork_chance / 2);
+					}
+					else if (direction_roll < left_threshold) {
+					//else {
+						draw_bolt_vertical(bolt_num, section, &cursor, 40, 20, fork_chance / 2);
+					}
+					else {
+						draw_bolt_vertical(bolt_num, section, &cursor, right_threshold, left_threshold, fork_chance / 2);
 					}
 				}
 			}
