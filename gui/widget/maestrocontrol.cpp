@@ -158,10 +158,9 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 		delete active_section_controller_->get_section()->get_animation();
 
 		// Remove any existing extra control widgets
-		// FIXME: Smart pointers
 		if (extra_control_widget_ != nullptr) {
-			this->findChild<QLayout*>("extraControlsLayout")->removeWidget(extra_control_widget_);
-			delete extra_control_widget_;
+			this->findChild<QLayout*>("extraControlsLayout")->removeWidget(extra_control_widget_.get());
+			extra_control_widget_.reset();
 		}
 	}
 
@@ -200,16 +199,16 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			{
 				active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
 				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = new PlasmaAnimationControl((PlasmaAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget());
-				layout->addWidget(extra_control_widget_);
+				extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget()));
+				layout->addWidget(extra_control_widget_.get());
 				break;
 			}
 		case 10:
 			{
 				active_section_controller_->get_section()->set_animation(new LightningAnimation(), preserve_cycle_index);
 				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = new LightningAnimationControl((LightningAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget());
-				layout->addWidget(extra_control_widget_);
+				extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget()));
+				layout->addWidget(extra_control_widget_.get());
 			}
 			break;
 		default:
@@ -263,15 +262,8 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
  * Changes the number of columns in the display grid.
  */
 void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
-	// FIXME: Split into separate function. Triggers like this are calling Section::set_dimensions() multiple times
-	if (arg1 != active_section_controller_->get_dimensions().y || ui->rowsSpinBox->value() != active_section_controller_->get_dimensions().x) {
-		active_section_controller_->set_dimensions(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-
-		// Set Overlay if applicable
-		if (active_section_controller_->get_overlay_controller() != nullptr) {
-			active_section_controller_->get_overlay_controller()->set_dimensions(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-		}
-	}
+	// Got the names backwards
+	on_section_resize(ui->rowsSpinBox->value(), arg1);
 }
 
 
@@ -399,7 +391,8 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
  * @param arg1 New number of rows.
  */
 void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
-	on_columnsSpinBox_valueChanged(arg1);
+	// Got the names backwards
+	on_section_resize(arg1, ui->columnsSpinBox->value());
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
@@ -429,6 +422,17 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
  */
 void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
 	on_custom_color_changed();
+}
+
+/**
+ * Sets the size of the active SectionController.
+ * @param x Number of rows.
+ * @param y Number of columns.
+ */
+void MaestroControl::on_section_resize(unsigned short x, unsigned short y) {
+	if ((x != active_section_controller_->get_dimensions().x) || (y != active_section_controller_->get_dimensions().y)) {
+		active_section_controller_->set_dimensions(x, y);
+	}
 }
 
 /**
@@ -468,8 +472,4 @@ void MaestroControl::set_overlay_controls_visible(bool visible) {
  */
 MaestroControl::~MaestroControl() {
 	delete ui;
-
-	if (extra_control_widget_) {
-		delete extra_control_widget_;
-	}
 }

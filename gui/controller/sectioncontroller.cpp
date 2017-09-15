@@ -104,7 +104,11 @@ void SectionController::set_colors(Colors::RGB* colors, unsigned char num_colors
  */
 void SectionController::set_dimensions(unsigned short x, unsigned short y) {
 	dimensions_ = {x, y};
-	this->section_->set_pixels(&dimensions_);
+	section_->set_pixels(&dimensions_);
+
+	if (overlay_controller_) {
+		overlay_controller_->set_dimensions(x, y);
+	}
 }
 
 void SectionController::unset_overlay() {

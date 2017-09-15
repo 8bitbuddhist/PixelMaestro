@@ -34,13 +34,14 @@ class MaestroControl : public QWidget {
 		MaestroController* maestro_controller_;
 
 		/// Stores any extra animation controllers
-		QWidget* extra_control_widget_ = nullptr;
+		std::unique_ptr<QWidget> extra_control_widget_;
 
 		void change_scaling_color_array(Colors::RGB color);
 		void get_section_settings();
 		void initialize();
 		void on_custom_color_changed();
 		void on_ui_changed();
+		void on_section_resize(unsigned short x, unsigned short y);
 		void set_custom_color_controls_visible(bool visible);
 		void set_overlay_controls_visible(bool visible);
 
