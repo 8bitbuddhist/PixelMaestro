@@ -174,7 +174,7 @@ namespace PixelMaestro {
 	*/
 	void Section::set_canvas(Canvas* canvas) {
 		canvas_ = canvas;
-		canvas_->parent_section = this;
+		canvas_->set_section(this);
 	}
 
 	/**
@@ -242,25 +242,9 @@ namespace PixelMaestro {
 			delete pixels_;
 		}
 
-		// Resize the Canvas while preserving as much data as possible.
+		// Reinitialize the Canvas
 		if (canvas_ != nullptr) {
-			// Create a temporary array for storing the pattern.
-			bool tmp[dimensions_->x * dimensions_->y] = {0};
-			for (int pixel = 0; pixel < dimensions_->x * dimensions_->y; pixel++) {
-				tmp[pixel] = canvas_->pattern[pixel];
-			}
-			// Delete the current array, then create a new one and copy back as many of the original values as possible.
-			delete canvas_->pattern;
-
-			// Make sure we don't exceed the bounds of either the new grid or the old grid.
-			int max = dimensions_->size();
-			if (dimensions->x * dimensions->y < max) {
-				max = dimensions->x * dimensions->y;
-			}
-			canvas_->pattern = new bool[max];
-			for (unsigned int pixel = 0; pixel < (unsigned int)max; pixel++) {
-				tmp[pixel] = canvas_->pattern[pixel];
-			}
+			canvas_->initialize_pattern();
 		}
 
 		// Rebuild Pixels

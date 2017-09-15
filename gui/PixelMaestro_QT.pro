@@ -24,7 +24,6 @@ SOURCES += main.cpp\
 		../src/show/event.cpp \
 		../src/show/sectionsetcycleintervalevent.cpp \
 		../src/show/sectionsetoverlayevent.cpp \
-		../src/show/sectionunsetoverlayevent.cpp \
 		../src/canvas/fonts/font5x8.cpp \
 		../src/show/sectionsetcanvasevent.cpp \
 		demo/canvasdemo.cpp \
@@ -77,7 +76,6 @@ HEADERS += \
 		../src/show/event.h \
 		../src/show/sectionsetcycleintervalevent.h \
 		../src/show/sectionsetoverlayevent.h \
-		../src/show/sectionunsetoverlayevent.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
 		../src/show/sectionsetcanvasevent.h \
