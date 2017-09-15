@@ -97,7 +97,7 @@ void setup () {
 	}
 
 	// Sets the Section's cycle interval to 100ms and the brightness to 10%
-	maestro.set_cycle_interval(100);
+	maestro.get_section(0)->set_cycle_interval(100);
 	maestro.set_brightness(0.1);
 
 	// Loop the show every INTERVAL

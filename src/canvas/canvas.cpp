@@ -2,8 +2,8 @@
  * Canvas.cpp - Utilities for drawing patterns on a Section.
  */
 
-#include "canvas.h"
 #include "../utility.h"
+#include "canvas.h"
 
 namespace PixelMaestro {
 	/**

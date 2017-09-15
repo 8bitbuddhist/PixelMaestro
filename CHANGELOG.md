@@ -7,28 +7,34 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 - Animations:
 	- New Animations interface which splits all animations into separate classes.
-	- Added Radial, Mandelbrot, and Plasma animations.
+	- Added Radial, Mandelbrot, Plasma, and Lightning animations.
 - Animation Editor:
-	- Added color preview to custom color controls.
-	- Added Overlay by default.
+	- Added preview to custom color controls.
+	- Default Section comes with Overlay by default.
 	- Added Orientation support.
 - Show:
 	- Added RunFunctionEvent, which uses std::functional to trigger a custom function call at runtime.
 
 ### Changed
-- New Animations class:
-	- Moved animation logic from Sections into separate Animations class.
+- Animations:
+	- Moved animation logic from Sections into separate Animations classes.
 - Animation Editor:
 	- Replaced custom color dials with sliders.
 	- Fixed broken Overlay behavior.
-	- Fixed switching between Sections.
+	- Fixed switching between SectionControllers.
 	- Set default ColorAnimation to SOLID.
 	- Set default Overlay MixMode to NONE.
 	- Improved SimpleDrawingArea dynamic scaling.
-- Pixel:
-	- Optimized Pixel updates.
+- Canvas:
+	- Added ability to scroll Canvas contents independently of Animations.
+	- Dynamically allocated pattern arrays on Canvas initialization.
+	- Added dynamic resizing of Canvases when Section sizes change.
+- General:
+	- Optimized data types across core classes.
 - Section:
 	- Swapped set_one() parameters.
+	- Added dynamic Pixel allocation on Section initialization.
+	- Added dynamic Overlay allocation.
 
 ### Removed
 - Animations:

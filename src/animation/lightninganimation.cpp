@@ -16,22 +16,24 @@ namespace PixelMaestro {
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, (unsigned short)Utility::rand(section->get_dimensions()->y)};
 
-		for (unsigned short bolt = 0; bolt < num_bolts_; bolt++) {
-			draw_bolt(section, &start, up_threshold_, down_threshold_, fork_chance_);
+		for (unsigned char bolt = 0; bolt < num_bolts_; bolt++) {
+			draw_bolt(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
 		}
 
 		update_cycle(0, num_colors_);
 	}
 
-	void LightningAnimation::draw_bolt(Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
+	void LightningAnimation::draw_bolt(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
+		// TODO: True vertical mode
 		int direction_roll;
 		Point cursor = {start->x, start->y};
 
 		/*
-		 * For each increment in x-axis, roll the dice and compare it to the down/up thresholds.
+		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
 		 * For off-shoots, we cap the distance at 25% of the grid length.
 		 */
 		unsigned int length;
+
 		if (cursor.x == 0) {	// If x==0, then this is the initial/main bolt.
 			length = section->get_dimensions()->x;
 		}
@@ -57,28 +59,34 @@ namespace PixelMaestro {
 			}
 			cursor.x++;
 
-			section->set_one(x, cursor.y, &colors_[cycle_index_]);
+			if (orientation_ == Orientations::VERTICAL) {
+				section->set_one(cursor.y, x, get_color_at_index(cycle_index_ + bolt_num));
+			}
+			else {
+				section->set_one(x, cursor.y, get_color_at_index(cycle_index_ + bolt_num));
+			}
+
 
 			// Check to see if we should fork the bolt
 			if (x < (unsigned short)section->get_dimensions()->x) {
 				int chance_roll = Utility::rand(100);
 				if (chance_roll < fork_chance) {
-					// FIXME: Can only draw bolts in one direction
-					// TODO: Vertical mode
 					/*
 					 * If we fork, reduce the fork chance by 50%.
 					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.
 					 */
 					if (direction_roll > up_threshold) {
-						draw_bolt(section, &cursor, up_threshold, down_threshold + 40, fork_chance / 2);
+						//draw_bolt(section, &cursor, up_threshold, down_threshold + 40, fork_chance / 2);
+						draw_bolt(bolt_num, section, &cursor, 80, 50, fork_chance / 2);
 					}
-					//else if (direction_roll < down_threshold) {
+					else if (direction_roll < down_threshold) {
+					//else {
+						//draw_bolt(section, &cursor, up_threshold - 40, down_threshold, fork_chance / 2);
+						draw_bolt(bolt_num, section, &cursor, 50, 20, fork_chance / 2);
+					}
 					else {
-						draw_bolt(section, &cursor, up_threshold - 40, down_threshold, fork_chance / 2);
+						draw_bolt(bolt_num, section, &cursor, up_threshold, down_threshold, fork_chance / 2);
 					}
-					/*else {
-						draw_bolt(section, &cursor, up_threshold, down_threshold, fork_chance / 2);
-					}*/
 				}
 			}
 		}

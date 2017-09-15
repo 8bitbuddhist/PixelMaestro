@@ -2,7 +2,13 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned char num_colors) : Animation(colors, num_colors) { }
+	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned char num_colors) : Animation(colors, num_colors) {	}
+
+	void MandelbrotAnimation::set_colors(Colors::RGB *colors, unsigned char num_colors) {
+		colors_ = colors;
+		num_colors_ = num_colors;
+		max_iterations_ = num_colors;
+	}
 
 	void MandelbrotAnimation::update(Section* section) {
 		if (size_ != *section->get_dimensions()) {
@@ -18,7 +24,6 @@ namespace PixelMaestro {
 			image_width_ = 4.0 / size_.x;
 		}
 
-		// FIXME: Fix image generation. Results are not quite what you'd expect from a Mandelbrot
 		for (unsigned short y = 0; y < size_.y; y++) {
 			c_imaginary_ = (y - center_.y) * image_width_;
 			for (unsigned short x = 0; x < size_.x; x++) {
@@ -29,9 +34,9 @@ namespace PixelMaestro {
 				iterations_ = 0;
 
 				while ((x_ * x_) + (y_ * y_) < 4 && iterations_ < max_iterations_) {
-					// Default threshold is 2 * x_ * y_
-					y_ = (2.75 * x_ * y_) + c_imaginary_;
-					x_ = (x_ * x_) - (y_ * y_) + c_real_;
+					x_2_ = (x_ * x_) - (y_ * y_) + c_real_;
+					y_ = (2.0 * x_ * y_) + c_imaginary_;
+					x_ = x_2_;
 					iterations_++;
 				}
 

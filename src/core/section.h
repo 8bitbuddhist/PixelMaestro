@@ -71,7 +71,6 @@ namespace PixelMaestro {
 			void remove_overlay();
 			void set_all(Colors::RGB* color);
 			void set_animation(Animation* animation, bool preserve_cycle_index = false);
-			void set_canvas(Canvas* canvas);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short x, unsigned short y, Colors::RGB* color);

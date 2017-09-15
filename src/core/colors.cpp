@@ -2,8 +2,8 @@
 	Colors.cpp - Library for defining commonly used colors and methods for handling those colors.
 */
 
-#include "colors.h"
 #include "../utility.h"
+#include "colors.h"
 
 namespace PixelMaestro {
 	// Simple color set

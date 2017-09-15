@@ -3,7 +3,6 @@
 	Requires Pixel and Colors classes.
 */
 
-#include "../utility.h"
 #include "colors.h"
 #include "pixel.h"
 #include "section.h"
@@ -167,17 +166,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets the Canvas to display.
-		Also sets the Canvas' parent Section to the current Section.
-
-		@param canvas New Canvas.
-	*/
-	void Section::set_canvas(Canvas* canvas) {
-		canvas_ = canvas;
-		canvas_->set_section(this);
-	}
-
-	/**
 		Sets the speed between animation cycles.
 
 		@param interval Time between animation cycles (in milliseconds).
@@ -241,15 +229,14 @@ namespace PixelMaestro {
 		if (pixels_ != nullptr) {
 			delete pixels_;
 		}
+		pixels_ = new Pixel[dimensions->x * dimensions->y];
+
+		dimensions_ = dimensions;
 
 		// Reinitialize the Canvas
 		if (canvas_ != nullptr) {
 			canvas_->initialize_pattern();
 		}
-
-		// Rebuild Pixels
-		pixels_ = new Pixel[dimensions->x * dimensions->y];
-		dimensions_ = dimensions;
 	}
 
 	/**
@@ -320,6 +307,9 @@ namespace PixelMaestro {
 	Section::~Section() {
 		if (canvas_ != nullptr) {
 			delete canvas_;
+		}
+		if (overlay_ != nullptr) {
+			delete overlay_;
 		}
 		if (pixels_ != nullptr) {
 			delete pixels_;

@@ -23,9 +23,7 @@ SOURCES += main.cpp\
 		../src/show/colorsgeneratescalingcolorarrayevent.cpp \
 		../src/show/event.cpp \
 		../src/show/sectionsetcycleintervalevent.cpp \
-		../src/show/sectionsetoverlayevent.cpp \
 		../src/canvas/fonts/font5x8.cpp \
-		../src/show/sectionsetcanvasevent.cpp \
 		demo/canvasdemo.cpp \
 		../src/show/canvasdrawtextevent.cpp \
 		../src/show/canvasdrawrectevent.cpp \
@@ -60,7 +58,8 @@ SOURCES += main.cpp\
 		../src/animation/mandelbrotanimation.cpp \
 		../src/animation/plasmaanimation.cpp \
 		../src/renderer/renderer.cpp \
-    ../src/animation/lightninganimation.cpp
+    ../src/animation/lightninganimation.cpp \
+    ../src/show/overlaysetoptionsevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -75,10 +74,8 @@ HEADERS += \
 		../src/show/colorsgeneratescalingcolorarrayevent.h \
 		../src/show/event.h \
 		../src/show/sectionsetcycleintervalevent.h \
-		../src/show/sectionsetoverlayevent.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
-		../src/show/sectionsetcanvasevent.h \
 		demo/canvasdemo.h \
 		../src/show/canvasdrawtextevent.h \
 		../src/show/canvasdrawrectevent.h \
@@ -113,7 +110,8 @@ HEADERS += \
 		../src/animation/mandelbrotanimation.h \
 		../src/animation/plasmaanimation.h \
 		../src/renderer/renderer.h \
-    ../src/animation/lightninganimation.h
+    ../src/animation/lightninganimation.h \
+    ../src/show/overlaysetoptionsevent.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

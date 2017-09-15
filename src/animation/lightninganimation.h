@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class LightningAnimation : public Animation {
 		public:
-			LightningAnimation(unsigned char num_bolts, unsigned char down_threshold = 35, unsigned char up_threshold = 65, unsigned char fork_chance_ = 2, Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
+			LightningAnimation(unsigned char num_bolts, unsigned char down_threshold = 35, unsigned char up_threshold = 65, unsigned char fork_chance_ = 4, Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
 			void update(Section* section);
 
 		private:
@@ -20,7 +20,7 @@ namespace PixelMaestro {
 
 			unsigned char up_threshold_;
 
-			void draw_bolt(Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
+			void draw_bolt(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
 	};
 }
 
