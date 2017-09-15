@@ -47,14 +47,19 @@ Pixel *pixel = section.get_pixel(50, 2);
 
 ## Using Overlays
 You can add a second layer to your animations by merging the output of one Section with the current Section. This requires two sections, two Color arrays (one for each section), and two Pixel arrays (one for each Section). The layering is performed by merging the color of a Pixel in the base Section with its corresponding Pixel in the target Section.
+
+You can stack multiple Overlays by calling `base.get_overlay()->section->add_overlay()`.
+
 You can learn more about merging colors in the [Colors](colors.md) document.
+
 ```c++
 // Initialize Sections base and overlay
-base.set_overlay(overlay, Colors::MixMode::NORMAL);
+base.add_overlay(overlay, Colors::MixMode::NORMAL);
 ```
 
 ## Updating a Section
 To update a Section, call the `update()` method. You will need to pass in the program's current runtime in milliseconds. More than likely, you will update a Section by calling its Maestro's `update()` method, which automatically the Section and all other Sections.
+
 ```c++
 section.update(runtime);
 ```

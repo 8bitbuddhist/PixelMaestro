@@ -67,12 +67,11 @@ After a Show completes its last Event, it won't do anything except update the Ma
 * ColorsGenerateRandomColorArrayEvent: Generates a set of random colors and stores it in the specified array.
 * ColorsGenerateRandomColorEvent: Generates a single random color and stores it in the specified variable.
 * ColorsGenerateScalingColorArrayEvent: Generates a color color gradient and stores it in the specified array.
-* MaestroToggleRunEvent: Toggles a Maestro's running state.
+* MaestroSetRunningEvent: Sets a Maestro's running state.
 * RunFunctionEvent: Uses std::functional to run a function (not available on Arduino).
 * SectionSetAnimationEvent: Changes a Section's current animation.
 * SectionSetCanvasEvent: Sets a Canvas to a Section.
 * SectionSetCycleIntervalEvent: Changes the interval between animation cycles for a Section.
 * SectionSetOverlayEvent: Sets an Overlay to a Section.
-* SectionUnsetOverlayEvent: Removes an Overlay from a Section.
 
 [Home](README.md)

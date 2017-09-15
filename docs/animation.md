@@ -25,7 +25,7 @@ The following animation types are available:
 * LIGHTNING: Displays lightning bolts branching from one end of the grid to the other.
 
 ## Creating an Animation
-All animations are derived from the [Animations](src/animation/animation.h) class. To create an animation, import the desired animation class and initialize the animation along with a color scheme.
+All animations derive from the [Animations](src/animation/animation.h) class. To create an animation, import the relevant animation class and initialize the animation along with a color palette. An animation _must_ have a color palette.
 
 ```c++
 #include "animation/blinkanimation.h"
@@ -35,7 +35,7 @@ Animation* blink_animation = new BlinkAnimation(Colors::COLORWHEEL, 12);
 section->set_animation(blink_animation);
 ``` 
 
-Some animations (such as SPARKLE) support the use of additional parameters. You can set these parameters in the animation's constructor.
+Some animations (such as SparkleAnimation) support the use of additional parameters. You can set these parameters in the animation's constructor.
 
 
 ### Setting the Color Palette

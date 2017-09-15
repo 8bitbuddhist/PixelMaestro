@@ -64,6 +64,7 @@ namespace PixelMaestro {
 				int chance_roll = Utility::rand(100);
 				if (chance_roll < fork_chance) {
 					// FIXME: Can only draw bolts in one direction
+					// TODO: Vertical mode
 					/*
 					 * If we fork, reduce the fork chance by 50%.
 					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.

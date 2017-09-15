@@ -12,10 +12,10 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Assigns Pixels to the Section.
-	 * @param layout Initial layout (rows and columns) of the Pixels.
+	 * @param dimensions Initial layout (rows and columns) of the Pixels.
 	 */
-	Section::Section(Point* layout) {
-		set_pixels(layout);
+	Section::Section(Point* dimensions) {
+		set_pixels(dimensions);
 	}
 
 	/**

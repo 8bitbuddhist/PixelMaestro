@@ -22,7 +22,7 @@ Maestro maestro(sections, num_sections);
 You can also use `set_sections()` to set the Maestro's Sections.
 
 ## Getting the Refresh Rate
-The `get_refresh_rate()` method returns the minimum refresh rate required to update all Sections.
+The `get_refresh_rate()` method returns the minimum refresh rate needed to update all Sections.
 
 ## Interacting with Sections
 You can call a Section using the `get_section()` method and passing in the index of the Section.

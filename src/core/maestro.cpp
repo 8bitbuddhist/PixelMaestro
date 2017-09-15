@@ -89,18 +89,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets each Section's cycle interval.
-	 * @param interval Amount of time between animation steps.
-	 * @param pause Delay between animation step changes.
-	 */
-	void Maestro::set_cycle_interval(unsigned short interval, unsigned short pause) {
-		for (unsigned short section; section < num_sections_; section++) {
-			sections_[section].set_cycle_interval(interval, pause);
-		}
-
-	}
-
-	/**
 		Sets the Sections used in the Maestro.
 
 		@param sections Array of Sections.

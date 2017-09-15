@@ -58,6 +58,11 @@ namespace PixelMaestro {
 			Section* get_section();
 			bool in_bounds(Point* point);
 			void initialize_pattern();
+			void remove_bg_color();
+			void remove_fg_color();
+			void remove_scroll();
+			void set_bg_color(Colors::RGB* bg_color);
+			void set_fg_color(Colors::RGB* fg_color);
 			void set_scroll(signed short x, signed short y, bool repeat);
 			void set_section(Section* section_);
 			void set_offset(signed short x, signed short y);

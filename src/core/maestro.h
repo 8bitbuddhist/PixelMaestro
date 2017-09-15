@@ -19,7 +19,6 @@ namespace PixelMaestro {
 			bool get_running();
 			Section* get_section(unsigned char section);
 			void set_brightness(float brightness);
-			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_running(bool running);
 			void set_sections(Section* sections, unsigned char num_sections);
 			void update(const unsigned long& current_time);

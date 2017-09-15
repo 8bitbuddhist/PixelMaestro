@@ -53,7 +53,7 @@ namespace PixelMaestro {
 				}
 			};
 
-			Section(Point* layout);
+			Section(Point* dimensions);
 			~Section();
 			Canvas* add_canvas();
 			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::NORMAL, unsigned char alpha = 128);
