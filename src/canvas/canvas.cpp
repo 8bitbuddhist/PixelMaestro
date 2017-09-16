@@ -187,8 +187,8 @@ namespace PixelMaestro {
 			 * We use bitmasking to get the bit value, then enable/disable the pixel based on that bit.
 			 */
 			current_char = font->get_char(text[letter]);
-			for (int column = 0; column < font->size->x; column++) {
-				for (int row = 0; row < font->size->y; row++) {
+			for (int column = 0; column < font->size.x; column++) {
+				for (int row = 0; row < font->size.y; row++) {
 					if (in_bounds(origin)) {
 						pattern_[section_->get_pixel_index(cursor.x + column, cursor.y + row)] = (current_char[column] >> row) & 1;
 					}
@@ -200,7 +200,7 @@ namespace PixelMaestro {
 
 
 			// Move cursor to the location of the next letter based on the font size.
-			cursor.x += font->size->x;
+			cursor.x += font->size.x;
 		}
 	}
 
