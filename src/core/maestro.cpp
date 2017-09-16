@@ -37,20 +37,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the greatest common factor of the refresh_interval of all Sections.
+		Returns the Maestro's refresh interval.
 
 		@return Amount of time between refreshes (in ms).
 	*/
 	unsigned short Maestro::get_refresh_interval() {
-		unsigned short gcd = 0;
-		if (num_sections_ > 0) {
-			gcd = sections_[0].get_refresh_interval();
-			for (unsigned short section = 1; section < num_sections_; section++) {
-				gcd = Utility::gcd(sections_[section].get_refresh_interval(), sections_[section - 1].get_refresh_interval());
-			}
-		}
-
-		return Utility::abs_int(gcd);
+		return refresh_interval_;
 	}
 
 	/**
@@ -89,14 +81,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets the Sections used in the Maestro.
-
-		@param sections Array of Sections.
-		@param num_sections Number of Sections in the array.
-	*/
-	void Maestro::set_sections(Section* sections, unsigned char num_sections) {
-		sections_ = sections;
-		num_sections_ = num_sections;
+	 * Sets the Maestro's refresh interval.
+	 * @param interval New refresh interval.
+	 */
+	void Maestro::set_refresh_interval(unsigned short interval)	{
+		refresh_interval_ = interval;
 	}
 
 	/**
@@ -109,6 +98,21 @@ namespace PixelMaestro {
 	}
 
 	/**
+		Sets the Sections used in the Maestro.
+
+		@param sections Array of Sections.
+		@param num_sections Number of Sections in the array.
+	*/
+	void Maestro::set_sections(Section* sections, unsigned char num_sections) {
+		sections_ = sections;
+		num_sections_ = num_sections;
+
+		for (unsigned char section = 0; section < num_sections; section++) {
+			sections_[section].set_refresh_interval(&refresh_interval_);
+		}
+	}
+
+	/**
 		Main update routine.
 
 		@param current_time Program runtime.
@@ -116,8 +120,18 @@ namespace PixelMaestro {
 	void Maestro::update(const unsigned long& current_time) {
 		// If running, call each Section's update method.
 		if (running_) {
-			for (unsigned char section = 0; section < num_sections_; section++) {
-				sections_[section].update(current_time);
+
+			/*
+			 * Refresh the Pixels.
+			 * refresh_interval_ tracks the amount of time between Pixel draws, and last_refresh_ tracks the time of the last refresh.
+			 */
+			if (current_time - last_refresh_ >= (unsigned long)refresh_interval_) {
+				for (unsigned char section = 0; section < num_sections_; section++) {
+					sections_[section].update(current_time);
+				}
+
+				// Update the last refresh time.
+				last_refresh_ = current_time;
 			}
 		}
 	}

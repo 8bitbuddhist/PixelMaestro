@@ -3,7 +3,7 @@ Maestros are responsible for coordinating multiple Sections. A Maestro isn't nec
 
 ## Contents
 1. [Creating a Maestro](#creating-a-maestro)
-2. [Getting the Refresh Rate](#getting-the-refresh-rate)
+2. [Changing the Refresh Rate](#changing-the-refresh-rate)
 3. [Interacting with Sections](#interacting-with-sections)
 4. [Setting a Global Brightness Level](#setting-a-global-brightness-level)
 5. [Toggling the Running State](#toggling-the-running-state)
@@ -21,8 +21,8 @@ Maestro maestro(sections, num_sections);
 ```
 You can also use `set_sections()` to set the Maestro's Sections.
 
-## Getting the Refresh Rate
-The `get_refresh_rate()` method returns the minimum refresh rate needed to update all Sections.
+## Changing the Refresh Rate
+The refresh rate is the amount of time (in milliseconds) between Pixel redraws. On each refresh interval, each Section's `update()` method is called, which triggers a refresh of every Section's Pixels. You can get the refresh rate using `get_refresh_interval()` and set the refresh rate using `set_refresh_interval()`.
 
 ## Interacting with Sections
 You can call a Section using the `get_section()` method and passing in the index of the Section.

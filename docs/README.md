@@ -3,7 +3,7 @@ PixelMaestro has four main components:
 * [Pixel](pixel.md): A single RGB output.
 * [Animation](animation.md): An animation to render in a Section.
 * [Section](section.md): A collection of multiple Pixels. Provides the core functionality for animating Pixels.
-* [Maestro](maestro.md): A collection of Sections. Handles the synchronization and updating of one or more Sections.
+* [Maestro](maestro.md): A collection of Sections. Handles refreshing and synchronizing Sections.
 
 PixelMaestro also includes the following support classes:
 * [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.

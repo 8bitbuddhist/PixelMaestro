@@ -137,7 +137,7 @@ namespace PixelMaestro {
 		@return The refresh rate of the Section.
 	*/
 	unsigned short Section::get_refresh_interval() {
-		return refresh_interval_;
+		return *refresh_interval_;
 	}
 
 	/**
@@ -190,10 +190,10 @@ namespace PixelMaestro {
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
 			if (pause_ > 0) {
-				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_ - pause_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_ - pause_, *refresh_interval_);
 			}
 			else {
-				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_, refresh_interval_);
+				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_, *refresh_interval_);
 			}
 		}
 	}
@@ -244,8 +244,8 @@ namespace PixelMaestro {
 
 		@param interval Rate in milliseconds between Pixel redraws.
 	*/
-	void Section::set_refresh_interval(unsigned short interval) {
-		refresh_interval_ = interval;
+	void Section::set_refresh_interval(unsigned short* interval) {
+		this->refresh_interval_ = interval;
 	}
 
 	/**
@@ -265,42 +265,33 @@ namespace PixelMaestro {
 			overlay_->section->update(current_time);
 		}
 
+
 		/*
-		 * Refresh the Pixels.
-		 * refresh_interval_ tracks the amount of time between Pixel draws, and last_refresh_ tracks the time of the last refresh.
-		 */
-		if (current_time - last_refresh_ >= (unsigned long)refresh_interval_) {
+			Update the animation cycle.
+			cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
+			If it's time for the next cycle, run the animation.
+		*/
+		if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
+
+			// Run the animation.
+			animation_->update(this);
 
 			/*
-				Update the animation cycle.
-				cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
-				If it's time for the next cycle, run the animation.
-			*/
-			if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
-
-				// Run the animation.
-				animation_->update(this);
-
-				/*
-				 * If a Canvas is set, update it.
-				 */
-				if (canvas_ != nullptr) {
-					canvas_->update(current_time);
-				}
-
-				// Update the last cycle time.
-				last_cycle_ = current_time;
+			 * If a Canvas is set, update it.
+			 */
+			if (canvas_ != nullptr) {
+				canvas_->update(current_time);
 			}
 
-			// Only update each Pixel if we're fading or if the cycle has changed.
-			if (animation_->get_fade() || last_cycle_ == current_time) {
-				for (unsigned short pixel = 0; pixel < dimensions_->size(); pixel++) {
-					get_pixel(pixel)->update();
-				}
-			}
+			// Update the last cycle time.
+			last_cycle_ = current_time;
+		}
 
-			// Update the last refresh time.
-			last_refresh_ = current_time;
+		// Only update each Pixel if we're fading or if the cycle has changed.
+		if (animation_->get_fade() || last_cycle_ == current_time) {
+			for (unsigned short pixel = 0; pixel < dimensions_->size(); pixel++) {
+				get_pixel(pixel)->update();
+			}
 		}
 	}
 

@@ -76,7 +76,7 @@ namespace PixelMaestro {
 			void set_one(unsigned short x, unsigned short y, Colors::RGB* color);
 			void set_overlay(Overlay* overlay);
 			void set_pixels(Point* layout);
-			void set_refresh_interval(unsigned short interval);
+			void set_refresh_interval(unsigned short* interval);
 			void update(const unsigned long& current_time);
 
 		private:
@@ -95,9 +95,6 @@ namespace PixelMaestro {
 			/// The time since the last animation cycle change in milliseconds. Defaults to 0.
 			unsigned long last_cycle_ = 0;
 
-			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
-			unsigned long last_refresh_ = 0;
-
 			/// The Section overlaying the current section (if applicable).
 			Overlay* overlay_ = nullptr;
 
@@ -107,8 +104,8 @@ namespace PixelMaestro {
 			/// The array of Pixels managed by the Section.
 			Pixel* pixels_ = nullptr;
 
-			/// The time between Pixel redraws in milliseconds. Only relevant when fading is enabled. Defaults to 20.
-			unsigned short refresh_interval_ = 20;
+			/// The time between Pixel redraws in milliseconds. Controlled by the Maestro.
+			unsigned short* refresh_interval_;
 	};
 }
 
