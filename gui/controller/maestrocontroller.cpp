@@ -21,15 +21,6 @@ void MaestroController::add_section_controller(Point* layout) {
 	reassign_sections();
 }
 
-void MaestroController::add_show(Event** events, unsigned char num_events, Show::TimingModes timing, bool loop) {
-	show_ = std::unique_ptr<Show>(new Show(maestro_.get(), events, num_events));
-
-	show_->set_timing(timing);
-	if (loop) {
-		show_->set_looping(true);
-	}
-}
-
 /**
  * Removes a Section from the Maestro.
  * @param index The index of the Section to remove.
@@ -71,7 +62,7 @@ SectionController *MaestroController::get_section_controller(unsigned char index
  * @return Show managed by this Maestro.
  */
 Show *MaestroController::get_show() {
-	return show_.get();
+	return maestro_->get_show();
 }
 
 /**

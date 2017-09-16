@@ -68,7 +68,6 @@ Event *events[] = {
 	// Generates a new color scheme using the base and target colors.
 	new ColorsGenerateScalingColorArrayEvent(0, colors, &base_color, &target_color, NUM_COLORS, false)
 };
-Show show(&maestro, events, NUM_EVENTS);
 
 // Initialize WS2812 components.
 const unsigned char WS_PINS[] = {5, 6, 9, 10};
@@ -101,17 +100,18 @@ void setup () {
 	maestro.set_brightness(0.1);
 
 	// Loop the show every INTERVAL
-	show.set_timing(Show::TimingModes::RELATIVE);
-	show.set_looping(true);
+	Show* show = maestro.add_show(events, NUM_EVENTS);
+	show->set_timing(Show::TimingModes::RELATIVE);
+	show->set_looping(true);
 }
 
 void loop() {
-	show.update(millis());
+	maestro.update(millis());
 
 	// For each Pixel, set the corresponding WS2812 pixel to the Pixel's color.
 	for (unsigned char pixel = 0; pixel < ROWS * COLUMNS; pixel++) {
 		for (unsigned char strip = 0; strip < NUM_WS_STRIPS; strip++) {
-			ws[strip].set_crgb_at(pixel, RGBtoCRGB(maestro.get_pixel_color(0, pixel)));
+			ws[strip].set_crgb_at(pixel, RGBtoCRGB(maestro.get_section(0)->get_pixel_color(pixel)));
 		}
 	}
 

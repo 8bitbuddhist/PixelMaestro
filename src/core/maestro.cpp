@@ -18,6 +18,21 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Creates and configures a Show.
+	 * If a Show already exists, this modifies and returns the existing Show.
+	 * @param events Events used in the Show.
+	 * @param num_events The number of Events in the Show.
+	 * @return New Show.
+	 */
+	Show* Maestro::add_show(Event **events, unsigned short num_events) {
+		if (show_ == nullptr) {
+			show_ = new Show(events, num_events);
+		}
+
+		return show_;
+	}
+
+	/**
 		Returns the number of Sections.
 
 		@return Number of Sections.
@@ -62,6 +77,14 @@ namespace PixelMaestro {
 	*/
 	Section* Maestro::get_section(unsigned char section) {
 		return &sections_[section];
+	}
+
+	/**
+	 * Returns the current Show.
+	 * @return Active Show.
+	 */
+	Show* Maestro::get_show() {
+		return show_;
 	}
 
 	/**
@@ -121,11 +144,15 @@ namespace PixelMaestro {
 		// If running, call each Section's update method.
 		if (running_) {
 
-			/*
-			 * Refresh the Pixels.
-			 * refresh_interval_ tracks the amount of time between Pixel draws, and last_refresh_ tracks the time of the last refresh.
-			 */
+			// Compare the refresh time to the time since the last refresh.
 			if (current_time - last_refresh_ >= (unsigned long)refresh_interval_) {
+
+				// Run the Show
+				if (show_) {
+					show_->update(current_time);
+				}
+
+				// Update each Section
 				for (unsigned char section = 0; section < num_sections_; section++) {
 					sections_[section].update(current_time);
 				}
@@ -133,6 +160,12 @@ namespace PixelMaestro {
 				// Update the last refresh time.
 				last_refresh_ = current_time;
 			}
+		}
+	}
+
+	Maestro::~Maestro() {
+		if (show_ != nullptr) {
+			delete show_;
 		}
 	}
 }

@@ -8,12 +8,10 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor.
-	 * @param maestro The Maestro to control using this Show.
 	 * @param events Array of Events to queue.
 	 * @param num_events The number of Events in the queue.
 	 */
-	Show::Show(Maestro* maestro, Event **events, unsigned char num_events) {
-		maestro_ = maestro;
+	Show::Show(Event **events, unsigned short num_events) {
 		set_events(events, num_events);
 	}
 
@@ -27,12 +25,20 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the timing method used to run the Show.
+	 * @return Timing method.
+	 */
+	Show::TimingModes Show::get_timing() {
+		return timing_;
+	}
+
+	/**
 		Sets the Events in the Show.
 
 		@param events Array of Events to queue.
 		@param num_events The number of Events in the queue.
 	*/
-	void Show::set_events(Event** events, unsigned char num_events) {
+	void Show::set_events(Event** events, unsigned short num_events) {
 		events_ = events;
 		num_events_ = num_events;
 	}
@@ -44,15 +50,6 @@ namespace PixelMaestro {
 	*/
 	void Show::set_looping(bool loop) {
 		loop_ = loop;
-	}
-
-	/**
-		Sets the Maestro that the Show will control.
-
-		@param maestro Pointer to the Maestro that the show will control.
-	*/
-	void Show::set_maestro(Maestro* maestro) {
-		maestro_ = maestro;
 	}
 
 	/**
@@ -80,14 +77,12 @@ namespace PixelMaestro {
 			*/
 			if ((timing_ == TimingModes::ABSOLUTE && (current_time >= events_[current_index_]->get_time())) ||
 				(timing_ == TimingModes::RELATIVE && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
+				// TODO: Re-run to check the next Event
 				events_[current_index_]->run();
 				last_time_ = current_time;
 				update_event_index();
 			}
 		}
-
-		// Finally, update the Maestro
-		maestro_->update(current_time);
 	}
 
 	// Private methods
@@ -96,7 +91,7 @@ namespace PixelMaestro {
 		Updates the Event index.
 	*/
 	void Show::update_event_index() {
-		// If we've exceeded the size of the array, start over from 0
+		// If we've exceeded the number of events, start over from 0
 		if (loop_ && (current_index_ + 1 >= num_events_)) {
 			current_index_ = 0;
 		}

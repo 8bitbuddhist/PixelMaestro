@@ -8,8 +8,6 @@
 #include "core/maestro.h"
 #include "core/section.h"
 #include "sectioncontroller.h"
-#include "show/show.h"
-#include "show/event.h"
 #include <vector>
 
 using namespace PixelMaestro;
@@ -19,7 +17,6 @@ class MaestroController {
 		MaestroController();
 		~MaestroController();
 		void add_section_controller(Point* layout);
-		void add_show(Event **events, unsigned char num_events, Show::TimingModes timing, bool loop);
 		void delete_section_controller(unsigned char index);
 		Maestro* get_maestro();
 		unsigned char get_num_section_controllers();
@@ -35,9 +32,6 @@ class MaestroController {
 
 		/// SectionControllers that this MaestroController handles.
 		std::vector<std::shared_ptr<SectionController>> section_controllers_;
-
-		/// Show that this MaestroController controls (if applicable).
-		std::unique_ptr<Show> show_;
 
 		void reassign_sections();
 };

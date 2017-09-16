@@ -5,7 +5,6 @@
 #ifndef SHOW_H
 #define SHOW_H
 
-#include "../core/maestro.h"
 #include "event.h"
 
 using namespace PixelMaestro;
@@ -23,10 +22,10 @@ namespace PixelMaestro {
 				RELATIVE
 			};
 
-			Show(Maestro* maestro, Event **events, unsigned char num_events);
+			Show(Event **events, unsigned short num_events);
 			bool get_looping();
-			void set_events(Event **events, unsigned char num_events);
-			void set_maestro(Maestro* maestro);
+			TimingModes get_timing();
+			void set_events(Event **events, unsigned short num_events);
 			void set_timing(TimingModes timing);
 			void set_looping(bool loop);
 			void update(const unsigned long& current_time);
@@ -44,11 +43,8 @@ namespace PixelMaestro {
 			/// Whether to loop over the Event.
 			bool loop_ = false;
 
-			/// The Maestro that the Events apply to.
-			Maestro* maestro_ = nullptr;
-
-			/// The number of Events in the array.
-			unsigned char num_events_;
+			/// The number of Events in the Show.
+			unsigned short num_events_;
 
 			/// Method for measuring a Event's start time. Defaults to Absolute.
 			TimingModes timing_ = TimingModes::ABSOLUTE;

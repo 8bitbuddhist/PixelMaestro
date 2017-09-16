@@ -42,5 +42,7 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	 */
 	events_.push_back(new SectionSetAnimationEvent(5000, section_controller->get_section().get(), &animations_[0], animations_.size(), true));
 
-	maestro_controller_->add_show(&events_[0], events_.size(), Show::TimingModes::RELATIVE, true);
+	Show* show = maestro_controller_->get_maestro()->add_show(&events_[0], events_.size());
+	show->set_timing(Show::TimingModes::RELATIVE);
+	show->set_looping(true);
 }

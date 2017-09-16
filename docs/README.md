@@ -1,3 +1,7 @@
+## Contents
+1. [Structure](#structure)
+2. [Quick Start](#quick-start)
+
 # Structure
 PixelMaestro has four main components:
 * [Pixel](pixel.md): A single RGB output.
@@ -12,11 +16,16 @@ PixelMaestro also includes the following support classes:
 * [Show](show.md): Provides a way to schedule animation changes and other actions via a Maestro. These changes are triggered over the course of the program's runtime.
 * [Utility](utility.md): Shared (mostly mathematic) methods.
 
-# Basic Usage
-The following code manages a single 10x10 grid of Pixels cycling through a set of various colors.
+# Quick Start
+This example shows how to create a new Pixel grid 50 Pixels wide and 10 Pixels tall, set a new animation, writes text, and animate the Maestro.
+
 ```c++
 Section sections[] = { Section(new Point(10, 10) };
 sections[0].set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
+
+Canvas* canvas = sections[0].add_canvas();
+Point origin = {0, 0};
+canvas.draw_text(&origin, new Font5x8(), "Hello world!");
 
 Maestro maestro(sections, 1);
 

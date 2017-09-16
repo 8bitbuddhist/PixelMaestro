@@ -7,17 +7,22 @@
 
 #include "colors.h"
 #include "section.h"
+#include "../show/show.h"
+#include "../show/event.h"
 
 namespace PixelMaestro {
 	class Maestro {
 
 		public:
 			Maestro(Section* sections, unsigned char num_sections);
+			~Maestro();
+			Show* add_show(Event** events, unsigned short num_events);
 			Colors::RGB get_pixel_color(unsigned char section, unsigned int pixel);
 			unsigned char get_num_sections();
 			unsigned short get_refresh_interval();
 			bool get_running();
 			Section* get_section(unsigned char section);
+			Show* get_show();
 			void set_brightness(float brightness);
 			void set_refresh_interval(unsigned short interval);
 			void set_running(bool running);
@@ -41,7 +46,10 @@ namespace PixelMaestro {
 			bool running_ = true;
 
 			/// Sections managed by the Maestro.
-			Section* sections_;
+			Section* sections_ = nullptr;
+
+			/// Show managed by the Maestro.
+			Show* show_ = nullptr;
 	};
 }
 
