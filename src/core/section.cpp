@@ -40,6 +40,7 @@ namespace PixelMaestro {
 			overlay_ = new Overlay(dimensions_, mix_mode, alpha);
 		}
 
+		overlay_->section->set_refresh_interval(refresh_interval_);
 		return overlay_;
 	}
 
@@ -207,16 +208,6 @@ namespace PixelMaestro {
 	*/
 	void Section::set_one(unsigned short x, unsigned short y, Colors::RGB* color) {
 		set_one(get_pixel_index(x, y), color);
-	}
-
-	/**
-		Overlays another  Section on top of the current Section.
-		You can retrieve the blended output by using get_pixel_color() on the base Section.
-
-		@param overlay The Overlay to set.
-	*/
-	void Section::set_overlay(Overlay* overlay) {
-		overlay_ = overlay;
 	}
 
 	/**

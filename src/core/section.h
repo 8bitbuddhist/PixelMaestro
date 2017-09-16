@@ -74,7 +74,6 @@ namespace PixelMaestro {
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short x, unsigned short y, Colors::RGB* color);
-			void set_overlay(Overlay* overlay);
 			void set_pixels(Point* layout);
 			void set_refresh_interval(unsigned short* interval);
 			void update(const unsigned long& current_time);
@@ -105,7 +104,7 @@ namespace PixelMaestro {
 			Pixel* pixels_ = nullptr;
 
 			/// The time between Pixel redraws in milliseconds. Controlled by the Maestro.
-			unsigned short* refresh_interval_;
+			unsigned short* refresh_interval_ = nullptr;
 	};
 }
 

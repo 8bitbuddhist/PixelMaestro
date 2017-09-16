@@ -27,7 +27,7 @@ namespace PixelMaestro {
 	*/
 	void Pixel::set_next_color(Colors::RGB* next_color, bool fade, unsigned short cycle_interval, unsigned short refresh_rate) {
 		// Only trigger an update if the colors don't match.
-		if (next_color != nullptr && next_color != next_color_) {
+		if (next_color != next_color_) {
 			next_color_ = next_color;
 
 			/*
@@ -42,6 +42,9 @@ namespace PixelMaestro {
 					(unsigned char)(Utility::abs_int(next_color_->b - current_color_.b) / diff)
 				};
 				step_count_ = diff;
+			}
+			else {
+				step_count_ = 0;
 			}
 		}
 	}
