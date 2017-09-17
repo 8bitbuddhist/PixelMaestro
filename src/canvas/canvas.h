@@ -46,17 +46,18 @@ namespace PixelMaestro {
 
 			Canvas(Section* section);
 			void clear();
-			void draw_circle(Point* origin, unsigned short radius, bool fill);
-			void draw_line(Point* origin, Point* target);
-			void draw_point(Point* cursor);
-			void draw_rect(Point* origin, Point* size, bool fill);
-			void draw_text(Point* origin, Font* font, const char* text);
-			void draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill);
-			void erase(Point* cursor);
+			void draw_circle(unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
+			void draw_line(unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);
+			void draw_point(unsigned short x, unsigned short y);
+			void draw_rect(unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
+			void draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, const char* text);
+			void draw_triangle(unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
+			void erase(unsigned short x, unsigned short y);
 			bool* get_pattern();
 			bool get_pattern_index(unsigned int index);
 			Section* get_section();
 			bool in_bounds(Point* point);
+			bool in_bounds(unsigned short x, unsigned short y);
 			void initialize_pattern();
 			void remove_bg_color();
 			void remove_fg_color();

@@ -16,7 +16,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Blanks out the Canvas (all drawn entities will be lost!).
+	 * Blanks out the Canvas (anything drawn will be lost!).
 	 */
 	void Canvas::clear() {
 		for (unsigned int pixel = 0; pixel < (unsigned int)(section_->get_dimensions()->size()); pixel++) {
@@ -26,28 +26,29 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a circle.
-	 * @param origin The center of the circle.
+	 * @param origin_x Center x coordinate.
+	 * @param origin_y Center y coordinate.
 	 * @param radius The circle's radius.
 	 * @param fill Whether to fill the circle or leave it empty.
 	 */
-	void Canvas::draw_circle(Point* origin, unsigned short radius, bool fill) {
+	void Canvas::draw_circle(unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
 		// (x – h)^2 + (y – k)^2 = r^2
-		// r = radius, h = origin->x, k = origin->y
+		// r = radius, h = origin_x, k = origin_y
 
 		/*
 		 * First, get the min and max x-values, then the min and max y-values.
 		 * Then, create a hypothetical square using these points and iterate over each pixel in the square.
 		 * If the pixel satisfies the equation, activate it:
-		 *		(cursor.x – origin.x)^2 + (cursor.y – origin.y)^2 = radius^2
+		 *		(cursor.x – origin_x)^2 + (cursor.y – origin_y)^2 = radius^2
 		 */
 		Point cursor = { 0, 0 };
 		unsigned int test_point; // Placeholder for calculating points along the circle line
 		unsigned int radius_squared = Utility::square(radius);
-		for (cursor.x = origin->x - radius; cursor.x <= origin->x + radius; cursor.x++) {
-			for (cursor.y = origin->y - radius; cursor.y <= origin->y + radius; cursor.y++) {
+		for (cursor.x = origin_x - radius; cursor.x <= origin_x + radius; cursor.x++) {
+			for (cursor.y = origin_y - radius; cursor.y <= origin_y + radius; cursor.y++) {
 				if (in_bounds(&cursor)) {
 					// Check that cursor_x and cursor_y satisfy the equation
-					test_point = Utility::square(cursor.x - origin->x) + Utility::square(cursor.y - origin->y);
+					test_point = Utility::square(cursor.x - origin_x) + Utility::square(cursor.y - origin_y);
 					/*
 					 * Check if the test point lies along the line.
 					 * We use radius as a sort of tolerance, otherwise only a few pixels would activate.
@@ -64,32 +65,34 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a line.
-	 * @param origin The starting point.
-	 * @param target The target point.
+	 * @param cursor_x Starting point x coordinate.
+	 * @param cursor_y Starting point y coordinate.
+	 * @param target_x Ending point x coordinate.
+	 * @param target_y Ending point y coordinate.
 	 */
-	void Canvas::draw_line(Point* origin, Point* target) {
+	void Canvas::draw_line(unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
 		// Calculate slope
 		float slope;
-		if (target->x == origin->x) {
+		if (target_x == origin_x) {
 			slope = 1;
 		}
-		else if (target->y == origin->y) {
+		else if (target_y == origin_y) {
 			slope = 0;
 		}
 		else {
-			slope = (target->y - origin->y) / (float)(target->x - origin->x);
+			slope = (target_y - origin_y) / (float)(target_x - origin_x);
 		}
 
-		Point cursor = { origin->x, origin->y };
+		Point cursor = { origin_x, origin_y };
 
 		// Handle vertical lines
-		if (target->x == origin->x) {
-			while (cursor.y != target->y) {
+		if (target_x == origin_x) {
+			while (cursor.y != target_y) {
 				if (in_bounds(&cursor)) {
 					this->pattern_[section_->get_pixel_index(&cursor)] = 1;
 				}
 
-				if (target->y >= cursor.y) {
+				if (target_y >= cursor.y) {
 					cursor.y++;
 				}
 				else {
@@ -98,17 +101,17 @@ namespace PixelMaestro {
 			}
 		}
 		else {
-			float y_intercept = (slope * origin->x) - origin->y;
+			float y_intercept = (slope * origin_x) - origin_y;
 			/*
 			 * Move the cursor along the x-axis.
 			 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
 			 */
-			while (cursor.x != target->x) {
+			while (cursor.x != target_x) {
 				if (in_bounds(&cursor)) {
 					this->pattern_[section_->get_pixel_index(&cursor)] = 1;
 				}
 
-				if (target->x >= origin->x) {
+				if (target_x >= origin_x) {
 					cursor.x++;
 				}
 				else {
@@ -121,28 +124,31 @@ namespace PixelMaestro {
 
 	/**
 	 * Enables the pixel at the specified coordinates.
-	 * @param cursor Location of the pixel to toggle.
+	 * @param cursor_x Starting point x coordinate.
+	 * @param cursor_y Starting point y coordinate.
 	 */
-	void Canvas::draw_point(Point* cursor) {
-		if (in_bounds(cursor)) {
-			pattern_[section_->get_pixel_index(cursor)] = 1;
+	void Canvas::draw_point(unsigned short x, unsigned short y) {
+		if (in_bounds(x, y)) {
+			pattern_[section_->get_pixel_index(x, y)] = 1;
 		}
 	}
 
 	/**
 	 * Draws a rectangle.
-	 * @param origin The starting coordinates.
-	 * @param size The size of the rectangle.
+	 * @param origin_x Top-left corner x coordinate.
+	 * @param origin_y Top-left corner y coordinate.
+	 * @param size_x Width of the rectangle.
+	 * @param size_y Height of the rectangle.
 	 * @param fill Whether to fill the rectangle or leave it empty.
 	 */
-	void Canvas::draw_rect(Point* origin, Point* size, bool fill) {
-		Point cursor = { origin->x, origin->y };
-		for (unsigned short column = 0; column < size->x; column++) {
+	void Canvas::draw_rect(unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
+		Point cursor = { origin_x, origin_y };
+		for (unsigned short column = 0; column < size_x; column++) {
 			// (Re-)Initialize cursor coordinates.
-			cursor.x = origin->x + column;
-			cursor.y = origin->y;
-			for (unsigned short row = 0; row < size->y; row++) {
-				cursor.y = origin->y + row;
+			cursor.x = origin_x + column;
+			cursor.y = origin_y;
+			for (unsigned short row = 0; row < size_y; row++) {
+				cursor.y = origin_y + row;
 				if (in_bounds(&cursor)) {
 					// Check whether to fill
 					if (fill) {
@@ -153,8 +159,8 @@ namespace PixelMaestro {
 						 * Only draw if the cursor is at the border of the rectangle.
 						 * We do this by checking to see if the cursor is either horizontally or vertically aligned with the starting or end point.
 						 */
-						if ((cursor.x == origin->x || cursor.y == origin->y) ||
-							(column == size->x - 1 || row == size->y - 1)) {
+						if ((cursor.x == origin_x || cursor.y == origin_y) ||
+							(column == size_x - 1 || row == size_y - 1)) {
 							this->pattern_[section_->get_pixel_index(&cursor)] = 1;
 						}
 						else {
@@ -169,12 +175,13 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a string of characters.
-	 * @param origin The starting point for the string.
+	 * @param origin_x Top-left x coordinate.
+	 * @param origin_y Top-left y coordinate.
 	 * @param font The Font to render the text in.
 	 * @param text The string to render.
 	 */
-	void Canvas::draw_text(Point* origin, Font* font, const char* text) {
-		Point cursor = {origin->x, origin->y};
+	void Canvas::draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, const char* text) {
+		Point cursor = {origin_x, origin_y};
 
 		unsigned char* current_char;
 
@@ -189,7 +196,7 @@ namespace PixelMaestro {
 			current_char = font->get_char(text[letter]);
 			for (int column = 0; column < font->size.x; column++) {
 				for (int row = 0; row < font->size.y; row++) {
-					if (in_bounds(origin)) {
+					if (in_bounds(&cursor)) {
 						pattern_[section_->get_pixel_index(cursor.x + column, cursor.y + row)] = (current_char[column] >> row) & 1;
 					}
 					else {
@@ -206,15 +213,18 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a triangle. Points are drawn in a clockwise manner.
-	 * @param point_a The first point of the triangle.
-	 * @param point_b The next point clockwise from point a.
-	 * @param point_c The third point of the triangle.
+	 * @param point_a_x First point x-coordinate.
+	 * @param point_a_y First point y-coordinate.
+	 * @param point_b_x Second point x-coordinate.
+	 * @param point_b_y Second point y-coordinate.
+	 * @param point_c_x Third point x-coordinate.
+	 * @param point_c_y Third point y-coordinate.
 	 * @param fill Whether to fill the triangle or leave it empty.
 	 */
-	void Canvas::draw_triangle(Point* point_a, Point* point_b, Point* point_c, bool fill) {
-		this->draw_line(point_a, point_b);
-		this->draw_line(point_b, point_c);
-		this->draw_line(point_c, point_a);
+	void Canvas::draw_triangle(unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
+		this->draw_line(point_a_x, point_a_y, point_b_x, point_b_y);
+		this->draw_line(point_b_x, point_b_y, point_c_x, point_c_y);
+		this->draw_line(point_c_x, point_c_y, point_a_x, point_a_y);
 
 		if (fill) {
 			/*
@@ -224,13 +234,13 @@ namespace PixelMaestro {
 			 */
 			Point cursor = { 0, 0 };
 			float area, s, t;
-			area = 0.5 *(-point_b->y*point_c->x + point_a->y*(-point_b->x + point_c->x) + point_a->x*(point_b->y - point_c->y) + point_b->x*point_c->y);
+			area = 0.5 *(-point_b_y*point_c_x + point_a_y*(-point_b_x + point_c_x) + point_a_x*(point_b_y - point_c_y) + point_b_x*point_c_y);
 
-			// Until I find a more efficient way to do this, we're just gonna iterate through each pixel in the grid.
+			// TODO: Until I find a more efficient way to do this, we're just gonna iterate through each pixel in the grid.
 			for (cursor.x = 0; cursor.x < section_->get_dimensions()->x; cursor.x++) {
 				for (cursor.y = 0; cursor.y < section_->get_dimensions()->y; cursor.y++) {
-					s = 1/(2*area)*(point_a->y*point_c->x - point_a->x*point_c->y + (point_c->y - point_a->y)*cursor.x + (point_a->x - point_c->x)*cursor.y);
-					t = 1/(2*area)*(point_a->x*point_b->y - point_a->y*point_b->x + (point_a->y - point_b->y)*cursor.x + (point_b->x - point_a->x)*cursor.y);
+					s = 1/(2*area)*(point_a_y*point_c_x - point_a_x*point_c_y + (point_c_y - point_a_y)*cursor.x + (point_a_x - point_c_x)*cursor.y);
+					t = 1/(2*area)*(point_a_x*point_b_y - point_a_y*point_b_x + (point_a_y - point_b_y)*cursor.x + (point_b_x - point_a_x)*cursor.y);
 
 					if (s > 0 && t > 0 && 1-s-t > 0) {
 						this->pattern_[section_->get_pixel_index(&cursor)] = 1;
@@ -242,10 +252,11 @@ namespace PixelMaestro {
 
 	/**
 	 * Disables the pixel at the specified coordinate.
-	 * @param cursor The location of the pixel to disable.
+	 * @param cursor_x The pixel's x-coordinate.
+	 * @param cursor_y The pixel's y-coordinate.
 	 */
-	void Canvas::erase(Point* cursor) {
-		pattern_[section_->get_pixel_index(cursor)] = 0;
+	void Canvas::erase(unsigned short x, unsigned short y) {
+		pattern_[section_->get_pixel_index(x, y)] = 0;
 	}
 
 	/**
@@ -262,7 +273,17 @@ namespace PixelMaestro {
 	 * @return Whether the Point is in bounds.
 	 */
 	bool Canvas::in_bounds(Point* point) {
-		return (point->x < section_->get_dimensions()->x) && (point->y < section_->get_dimensions()->y);
+		return in_bounds(point->x, point->y);
+	}
+
+	/**
+	 * Returns whether the given Point is in the bounds of the Canvas.
+	 * @param x The x-coordinate to check.
+	 * @param y The y-coordinate to check.
+	 * @return Whether the Point is in bounds.
+	 */
+	bool Canvas::in_bounds(unsigned short x, unsigned short y) {
+		return (x < section_->get_dimensions()->x) && (y < section_->get_dimensions()->y);
 	}
 
 	/**

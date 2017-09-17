@@ -49,6 +49,7 @@ namespace PixelMaestro {
 			/// Method for measuring a Event's start time. Defaults to Absolute.
 			TimingModes timing_ = TimingModes::ABSOLUTE;
 
+			void check_next_event(const unsigned long& current_time);
 			void update_event_index();
 	};
 }

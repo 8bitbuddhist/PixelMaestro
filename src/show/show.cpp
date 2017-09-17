@@ -69,23 +69,32 @@ namespace PixelMaestro {
 	void Show::update(const unsigned long& current_time) {		
 		// Only run if we're looping, or if we haven't reached the end of the Event list yet.
 		if (loop_ || (!loop_ && current_index_ != num_events_)) {
-			/*
-				Based on the timing method used, determine whether to run the Event.
-				If ABSOLUTE, compare the current time to the next Event's start time.
-				If RELATIVE, compare the time since the last Event to the next Event's start time.
-				After running the Event, update the last run time and current Event index.
-			*/
-			if ((timing_ == TimingModes::ABSOLUTE && (current_time >= events_[current_index_]->get_time())) ||
-				(timing_ == TimingModes::RELATIVE && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
-				// TODO: Re-run to check the next Event
-				events_[current_index_]->run();
-				last_time_ = current_time;
-				update_event_index();
-			}
+			check_next_event(current_time);
 		}
 	}
 
 	// Private methods
+
+	/**
+	 * Checks the next Event's start time, then runs it if it's ready.
+	 */
+	void Show::check_next_event(const unsigned long& current_time) {
+		/*
+			Based on the timing method used, determine whether to run the Event.
+			If ABSOLUTE, compare the current time to the next Event's start time.
+			If RELATIVE, compare the time since the last Event to the next Event's start time.
+			After running the Event, update the last run time and current Event index.
+		*/
+		if ((timing_ == TimingModes::ABSOLUTE && (current_time >= events_[current_index_]->get_time())) ||
+			(timing_ == TimingModes::RELATIVE && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
+			events_[current_index_]->run();
+			last_time_ = current_time;
+			update_event_index();
+
+			// Check the next event
+			check_next_event(current_time);
+		}
+	}
 
 	/**
 		Updates the Event index.

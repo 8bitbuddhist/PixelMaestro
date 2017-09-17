@@ -10,12 +10,12 @@ namespace PixelMaestro {
 	class CanvasDrawTextEvent : public Event
 	{
 		public:
-			CanvasDrawTextEvent(unsigned long time, Canvas* canvas, Point* origin, Font* font, char* text);
+			CanvasDrawTextEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, Font* font, char* text);
 			void run();
 
 		private:
 			Canvas* canvas_;
-			Point* origin_;
+			unsigned short origin_x_, origin_y_;
 			Font* font_;
 			char* text_;
 	};

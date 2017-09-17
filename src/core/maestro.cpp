@@ -164,8 +164,6 @@ namespace PixelMaestro {
 	}
 
 	Maestro::~Maestro() {
-		if (show_ != nullptr) {
-			delete show_;
-		}
+		delete show_;
 	}
 }

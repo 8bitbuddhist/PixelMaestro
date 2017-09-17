@@ -52,10 +52,10 @@ void CanvasDrawingArea::mouseMoveEvent(QMouseEvent* event) {
 	 * If the right mouse button is held, disable the pixel.
 	 */
 	if (event->buttons() == Qt::LeftButton) {
-		canvas_->draw_point(cursor_);
+		canvas_->draw_point(cursor_->x, cursor_->y);
 	}
 	else if (event->buttons() == Qt::RightButton) {
-		canvas_->erase(cursor_);
+		canvas_->erase(cursor_->x, cursor_->y);
 	}
 }
 
