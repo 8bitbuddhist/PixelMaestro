@@ -15,6 +15,9 @@ using namespace PixelMaestro;
 
 class SectionController {
 	public:
+		/// Selected MaestroControl color scheme (helper member). Defaults to ColorWheel.
+		int mc_color_scheme_ = 3;
+
 		SectionController(Point* layout);
 		SectionController(Section* section, bool is_overlay = false);
 		void add_overlay(Colors::MixMode mix_mode, float alpha = 0.5);

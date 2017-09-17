@@ -157,13 +157,15 @@ namespace PixelMaestro {
 
 		@param animation New animation.
 		@param preserve_cycle_index If true, resume from the cycle_index of the previous animation.
+		@return The new animation.
 	*/
-	void Section::set_animation(Animation* animation, bool preserve_cycle_index) {
+	Animation* Section::set_animation(Animation* animation, bool preserve_cycle_index) {
 		if (preserve_cycle_index && animation_) {
 			animation->set_cycle_index(animation_->get_cycle_index());
 		}
 
 		animation_ = animation;
+		return animation_;
 	}
 
 	/**

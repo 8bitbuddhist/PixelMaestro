@@ -21,6 +21,8 @@
 #include <QString>
 #include "ui_maestrocontrol.h"
 
+// FIXME: Pulling and populating custom animation parameters
+
 /**
  * Constructor.
  * @param parent The QWidget containing this controller.
@@ -40,6 +42,14 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
  * Applies the active Section settings to the UI.
  */
 void MaestroControl::get_section_settings() {
+	// Apply animation options and speed
+	Animation* animation = active_section_controller_->get_section()->get_animation();
+	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
+	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
+	ui->fadeCheckBox->setChecked(animation->get_fade());
+	ui->num_colorsSpinBox->setValue(animation->get_num_colors());
+	ui->cycleSlider->setValue(active_section_controller_->get_section()->get_cycle_interval());
+
 	// Get the animation type
 	std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
 	for (unsigned int index = 0; index < (unsigned int)ui->animationComboBox->count(); index++) {
@@ -49,38 +59,24 @@ void MaestroControl::get_section_settings() {
 		}
 	}
 
-	ui->orientationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_animation()->get_orientation());
-
-	ui->reverse_animationCheckBox->setChecked(active_section_controller_->get_section()->get_animation()->get_reverse());
-	ui->fadeCheckBox->setChecked(active_section_controller_->get_section()->get_animation()->get_fade());
-	ui->num_colorsSpinBox->setValue(active_section_controller_->get_section()->get_animation()->get_num_colors());
-	ui->cycleSlider->setValue(this->active_section_controller_->get_section()->get_cycle_interval());
-
+	// Get Overlay MixMode and alpha from the Overlay's parent section
 	QStringList section_type = ui->sectionComboBox->currentText().split(" ");
 	if (QString::compare(section_type[0], "overlay", Qt::CaseInsensitive) == 0) {
-		ui->mix_modeComboBox->setCurrentIndex(this->maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->mix_mode);
-		ui->alphaSpinBox->setValue(this->maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->alpha);
+		ui->mix_modeComboBox->setCurrentIndex(maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->mix_mode);
+		ui->alphaSpinBox->setValue(maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->alpha);
 	}
 
-	Colors::RGB* first_color = active_section_controller_->get_section()->get_animation()->get_color_at_index(0);
-	if (*first_color == Colors::RED){
-		if (active_section_controller_->get_section()->get_animation()->get_num_colors() == 12) {
-			// Colorwheel
-			ui->colorComboBox->setCurrentIndex(3);
-		}
-		else {
-			// Fire
-			ui->colorComboBox->setCurrentIndex(1);
-		}
-	}
-	else if (*first_color == Colors::BLUE) {
-		ui->colorComboBox->setCurrentIndex(2);
+	// Get the current color scheme
+	if (active_section_controller_->mc_color_scheme_ != 0) {
+		ui->colorComboBox->setCurrentIndex(active_section_controller_->mc_color_scheme_);
 	}
 	else {
+		// Custom scheme
+		Colors::RGB first_color = active_section_controller_->get_colors()[0];
 		ui->colorComboBox->setCurrentIndex(0);
-		ui->redSlider->setValue(first_color->r);
-		ui->greenSlider->setValue(first_color->g);
-		ui->blueSlider->setValue(first_color->b);
+		ui->redSlider->setValue(first_color.r);
+		ui->greenSlider->setValue(first_color.g);
+		ui->blueSlider->setValue(first_color.b);
 		on_custom_color_changed();
 	}
 }
@@ -99,7 +95,7 @@ void MaestroControl::initialize() {
 	// Populate color combo box
 	ui->colorComboBox->addItems({"Custom", "Fire", "Deep Sea", "Color Wheel"});
 	ui->colorComboBox->setCurrentIndex(2);
-	this->set_custom_color_controls_visible(false);
+	set_custom_color_controls_visible(false);
 
 	// Set default values
 	ui->sectionComboBox->addItem("Section 1");
@@ -149,6 +145,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
+	Animation* animation = nullptr;	// Stores the new Animation
 	if (active_section_controller_->get_section()->get_animation() != nullptr) {
 		// Only change if the animation is different
 		std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
@@ -170,50 +167,50 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	switch(index) {
 		case 0:
-			active_section_controller_->get_section()->set_animation(new SolidAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new SolidAnimation(), preserve_cycle_index);
 			break;
 		case 1:
-			active_section_controller_->get_section()->set_animation(new BlinkAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new BlinkAnimation(), preserve_cycle_index);
 			break;
 		case 2:
-			active_section_controller_->get_section()->set_animation(new CycleAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new CycleAnimation(), preserve_cycle_index);
 			break;
 		case 3:
-			active_section_controller_->get_section()->set_animation(new WaveAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new WaveAnimation(), preserve_cycle_index);
 			break;
 		case 4:
-			active_section_controller_->get_section()->set_animation(new MergeAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new MergeAnimation(), preserve_cycle_index);
 			break;
 		case 5:
-			active_section_controller_->get_section()->set_animation(new RandomAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new RandomAnimation(), preserve_cycle_index);
 			break;
 		case 6:
 			{
-				active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
+				animation = active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
 				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget()));
+				extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, layout->widget()));
 				layout->addWidget(extra_control_widget_.get());
 			}
 			break;
 		case 7:
-			active_section_controller_->get_section()->set_animation(new RadialAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new RadialAnimation(), preserve_cycle_index);
 			break;
 		case 8:
-			active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(), preserve_cycle_index);
+			animation = active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(), preserve_cycle_index);
 			break;
 		case 9:
 			{
-				active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
+				animation = active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
 				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget()));
+				extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, layout->widget()));
 				layout->addWidget(extra_control_widget_.get());
 				break;
 			}
 		case 10:
 			{
-				active_section_controller_->get_section()->set_animation(new LightningAnimation(), preserve_cycle_index);
+				animation = active_section_controller_->get_section()->set_animation(new LightningAnimation(), preserve_cycle_index);
 				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)active_section_controller_->get_section()->get_animation(), layout->widget()));
+				extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, layout->widget()));
 				layout->addWidget(extra_control_widget_.get());
 			}
 			break;
@@ -223,10 +220,10 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 
 	// Set orientation, fade, reverse, and color palette
-	active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientations)ui->orientationComboBox->currentIndex());
-	active_section_controller_->get_section()->get_animation()->set_fade(ui->fadeCheckBox->isChecked());
-	active_section_controller_->get_section()->get_animation()->set_reverse(ui->reverse_animationCheckBox->isChecked());
-	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
+	animation->set_orientation((Animation::Orientations)ui->orientationComboBox->currentIndex());
+	animation->set_fade(ui->fadeCheckBox->isChecked());
+	animation->set_reverse(ui->reverse_animationCheckBox->isChecked());
+	animation->set_colors(active_section_controller_->get_colors(), active_section_controller_->get_num_colors());
 }
 
 /**
@@ -235,6 +232,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
  * @param index Index of the new color scheme.
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
+	active_section_controller_->mc_color_scheme_ = index;
 	switch (index) {
 		case 0:	// Custom
 			on_custom_color_changed();
@@ -321,9 +319,7 @@ void MaestroControl::on_blueSlider_valueChanged(int value) {
  * @param checked If true, fading is enabled.
  */
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
-	if (checked != active_section_controller_->get_section()->get_animation()->get_fade()) {
-		active_section_controller_->get_section()->get_animation()->set_fade(checked);
-	}
+	active_section_controller_->get_section()->get_animation()->set_fade(checked);
 }
 
 /**
@@ -387,9 +383,7 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
  * @param checked If true, reverse the animation.
  */
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
-	if (checked != active_section_controller_->get_section()->get_animation()->get_reverse()) {
-		active_section_controller_->get_section()->get_animation()->set_reverse(checked);
-	}
+	active_section_controller_->get_section()->get_animation()->set_reverse(checked);
 }
 
 /**
