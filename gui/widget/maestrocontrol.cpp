@@ -103,6 +103,9 @@ void MaestroControl::initialize() {
 	ui->sectionComboBox->addItem("Section 1");
 
 	// Add an Overlay
+	/*
+	 * FIXME: Segfault when leaving animation editor after adding an Overlay.
+	 */
 	active_section_controller_->add_overlay(Colors::MixMode::NONE);
 	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation());
 	active_section_controller_->get_overlay_controller()->set_colors(Colors::COLORWHEEL, 12);

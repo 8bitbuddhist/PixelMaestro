@@ -106,14 +106,14 @@ namespace PixelMaestro {
 	Colors::RGB Section::get_pixel_color(unsigned int pixel) {
 		if (overlay_ != nullptr) {
 			if (overlay_->mix_mode == Colors::MixMode::ALPHA_BLENDING) {
-				return Colors::mix_colors(get_pixel(pixel)->get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha / (float)255);
+				return Colors::mix_colors(pixels_[pixel].get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha / (float)255);
 			}
 			else {
-				return Colors::mix_colors(get_pixel(pixel)->get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode);
+				return Colors::mix_colors(pixels_[pixel].get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode);
 			}
 		}
 		else {
-			return *get_pixel(pixel)->get_color();
+			return *pixels_[pixel].get_color();
 		}
 	}
 
@@ -214,10 +214,10 @@ namespace PixelMaestro {
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
 			if (pause_ > 0) {
-				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_ - pause_, *refresh_interval_);
+				pixels_[pixel].set_next_color(color, animation_->get_fade(), cycle_interval_ - pause_, *refresh_interval_);
 			}
 			else {
-				get_pixel(pixel)->set_next_color(color, animation_->get_fade(), cycle_interval_, *refresh_interval_);
+				pixels_[pixel].set_next_color(color, animation_->get_fade(), cycle_interval_, *refresh_interval_);
 			}
 		}
 	}
@@ -302,7 +302,7 @@ namespace PixelMaestro {
 		// Only update each Pixel if we're fading or if the cycle has changed.
 		if (animation_->get_fade() || last_cycle_ == current_time) {
 			for (unsigned short pixel = 0; pixel < dimensions_->size(); pixel++) {
-				get_pixel(pixel)->update();
+				pixels_[pixel].update();
 			}
 		}
 	}
@@ -310,8 +310,6 @@ namespace PixelMaestro {
 	Section::~Section() {
 		remove_canvas();
 		remove_overlay();
-
-		// FIXME: Segfault when leaving animation editor.
 		delete [] pixels_;
 	}
 }
