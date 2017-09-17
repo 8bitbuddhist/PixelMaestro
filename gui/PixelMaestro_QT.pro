@@ -57,7 +57,6 @@ SOURCES += main.cpp\
 		../src/animation/radialanimation.cpp \
 		../src/animation/mandelbrotanimation.cpp \
 		../src/animation/plasmaanimation.cpp \
-		../src/renderer/renderer.cpp \
     ../src/animation/lightninganimation.cpp \
     ../src/show/overlaysetoptionsevent.cpp \
     widget/animation/lightninganimationcontrol.cpp \
@@ -114,7 +113,6 @@ HEADERS += \
 		../src/animation/radialanimation.h \
 		../src/animation/mandelbrotanimation.h \
 		../src/animation/plasmaanimation.h \
-		../src/renderer/renderer.h \
     ../src/animation/lightninganimation.h \
     ../src/show/overlaysetoptionsevent.h \
     widget/animation/lightninganimationcontrol.h \

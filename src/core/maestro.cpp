@@ -48,7 +48,7 @@ namespace PixelMaestro {
 	 * @return Pixel color after adjusting for Overlays and brightness.
 	 */
 	Colors::RGB Maestro::get_pixel_color(unsigned char section, unsigned int pixel) {
-		return sections_[section].get_pixel_color(pixel) * brightness_;
+		return sections_[section].get_pixel_color(pixel) * (float)(brightness_ / (float)255);
 	}
 
 	/**
@@ -89,18 +89,10 @@ namespace PixelMaestro {
 
 	/**
 	 * Sets the Maestro's global brightness level.
-	 * @param brightness Brightness level from 0.0 (completely dark) to 1.0 (completely lit).
+	 * @param brightness Brightness level from 0 (off) to 255 (full).
 	 */
-	void Maestro::set_brightness(float brightness) {
-		if (brightness < 0.0) {
-			brightness_ = 0.0;
-		}
-		else if (brightness > 1.0) {
-			brightness_ = 1.0;
-		}
-		else {
-			brightness_ = brightness;
-		}
+	void Maestro::set_brightness(unsigned char brightness) {
+		brightness_ = brightness;
 	}
 
 	/**

@@ -23,15 +23,15 @@ namespace PixelMaestro {
 			bool get_running();
 			Section* get_section(unsigned char section);
 			Show* get_show();
-			void set_brightness(float brightness);
+			void set_brightness(unsigned char brightness);
 			void set_refresh_interval(unsigned short interval);
 			void set_running(bool running);
 			void set_sections(Section* sections, unsigned char num_sections);
 			void update(const unsigned long& current_time);
 
 		private:
-			/// Sets the global brightness level. Defaults to 1.0 or 100% brightness.
-			float brightness_ = 1.0;
+			/// Sets the global brightness level from 0 - 255. Defaults to 255, or 100% brightness.
+			unsigned char brightness_ = 255;
 
 			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
 			unsigned long last_refresh_ = 0;

@@ -1,17 +1,17 @@
 # Canvas
-A Canvas lets you draw custom shapes and patterns onto a Section. At its core, a Canvas simply toggles certain Pixels on or off. When you create a Canvas, the Section displays an Animation over the Pixels that have been drawn over (i.e. enabled), and ignores the Pixels that have not been drawn over (i.e. disabled).
+A Canvas lets you draw custom shapes and patterns onto a Section. In essence, a Canvas is a way of quickly toggling certain Pixels on or off. Pixels that are on will show the Section's underlying Animation, while Pixels that are off won't show anything.
 
 See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
 
 ## Contents
 1. [Creating a Canvas](#creating-a-canvas)
-2. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
-3. [Drawing Shapes](#drawing-shapes)
+2. [Drawing Shapes](#drawing-shapes)
 	1. [Drawing Lines](#drawing-lines)
 	2. [Drawing Rectangles](#drawing-rectangles)
 	3. [Drawing Text](#drawing-text)
 	4. [Drawing Triangles](#drawing-triangles)
 	5. [Clearing the Canvas](#clearing-the-canvas)
+3. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
 4. [Scrolling](#scrolling)
 	1. [Repeated Scrolling](#repeated-scrolling)
 5. [Offsetting](#offsetting)
@@ -26,69 +26,62 @@ Canvas* canvas = section->add_canvas();
 
 You can also add an existing Canvas by using the `Section::set_canvas(Canvas*)` method.
 
-## Setting Background and Foreground Colors
-By default, anything drawn on the Canvas will cause the Section's running Animation to show through, and any pixels not drawn will be set to black. The `set_bg_color()` and `set_fg_color()` properties let you override this by setting custom background and foreground colors, respectively. Note that these colors apply to the entire Canvas. You can subsequently unset these colors using `remove_bg_color()` and `remove_fg_color()`.
-
 ## Drawing Shapes
-The Canvas class provides several functions for drawing various shapes, elements, and patterns. For each shape you must specify where it will appear on the grid, its size, and any extra parameters that the shape requires.
+The Canvas class provides several functions for drawing various shapes, elements, and patterns. For each shape you must specify where it will appear on the grid (typically as x and y coordinates), its size, and any extra parameters that the shape requires.
 
-For an example of drawing various shapes, see the [CanvasDemo](../gui/demo/canvasdemo.cpp) class in the GUI application.
+The Canvas uses a typical Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section.
+
+For an example of drawing various shapes, see the [CanvasDemo](../gui/demo/canvasdemo.cpp).
 
 ### Drawing Lines
 The `draw_line` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends.
 
 ```c++
 // Draw a 10 Pixel long diagonal line
-Point* cursor = new Point(0, 0);
-Point* target = new Point(10, 10);
-canvas_->draw_line(cursor, target);
+canvas_->draw_line(0, 0, 10, 10);
 ```
 
 ### Drawing Points
-The `draw_point()` method lets you activate a single pixel at a time. You can deactivate a pixel using the `erase()` method.
+The `draw_point()` method lets you "draw" a single pixel at a time. You can deactivate a pixel using the `erase()` method.
 
 ```c++
-// Draw a single point 5 pixels over
-Point* cursor = new Point(0, 5);
-canvas_->draw_point(cursor);
+// Draw a single point 5 pixels to the right of the origin
+canvas_->draw_point(0, 5);
 ```
 
 ### Drawing Rectangles
-The `draw_rect()` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
+The `draw_rect()` method draws a box with the specified origin, a size, and whether to `fill` the box or simply draw the border and leave the inside transparent.
 
 ```c++
 // Draw the outline of a 10 x 10 rectangle 
-Point* cursor = new Point(0, 0);
-Point* size = new Point(10, 10);
 bool fill = false;
-canvas_->draw_rect(cursor, size, fill);
+canvas_->draw_rect(0, 0, 10, 10, fill);
 ```
 
 ### Drawing Text
-The `draw_text()` method lets you draw text to a Canvas. Specify the `origin`, a `Font`, and the `text` to display.
+The `draw_text()` method lets you draw text to a Canvas. Specify the origin, a `Font`, and the `text` to display.
 
 ```c++
 // Draws "PixelMaestro" at the Canvas' origin
-Point* cursor = new Point(0, 0);
 Font *font = new Font5x8();
-canvas_->draw_text(cursor, font, "PixelMaestro");
+canvas_->draw_text(0, 0, font, "PixelMaestro");
 ```
 
-PixelMaestro uses bitmap fonts when rendering text. All fonts inherit from the [Font](../src/canvas/fonts/font.h) class and require you to specify their size and character map. For an example, see the included [5x8 font](../src/canvas/fonts/font5x8.h).
+PixelMaestro supports bitmap fonts. All fonts inherit from the [Font](../src/canvas/fonts/font.h). For an example, see the included [5x8 font](../src/canvas/fonts/font5x8.h).
 
 ### Drawing Triangles
 The `draw_triangle()` method draws a triangle using the three specified coordinates. You can also `fill` the triangle or leave the center transparent.
 
 ```c++
-// Draws a filled in right-angle triangle
-Point* a = new Point(0, 0);
-Point* b = new Point(10, 0);
-Point* c = new Point(0, 10);
-canvas_->draw_triangle(a, b, c, true);
+// Draws a filled in right-angle triangle 10 pixels high and 10 pixels wide
+canvas_->draw_triangle(0, 0, 10, 0, 0, 10, true);
 ```
 
 ### Clearing the Canvas
-The `clear()` method returns the Canvas to a blank slate by clearing out any drawn shapes. You can clear a single pixel using the `erase()` method.
+The `clear()` method returns the Canvas to a blank slate by clearing out any drawn shapes. You can clear a single pixel using the `erase()` method. Note that there's no way to recover anything you've drawn after clearing them.
+
+## Setting Background and Foreground Colors
+Drawing something on a Canvas causes the Section's underlying Animation to show through, while the remaining pixels will be black. The `set_bg_color()` and `set_fg_color()` properties let you override this by setting custom background and foreground colors, respectively. Note that these colors apply to the entire Canvas. You can subsequently unset these colors using `remove_bg_color()` and `remove_fg_color()`.
 
 ## Scrolling
 Scrolling shifts the contents of a Canvas along the Pixel grid, similar to a marquee. You can scroll a Canvas horizontally, vertically, or both. Use the `set_scroll()` method to define both the direction and rate of scrolling. Scroll time is measured in terms of refresh cycles, e.g. a scroll interval of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. This value can be negative, which scrolls left instead of right for the x-axis and up instead of down for y-axis.

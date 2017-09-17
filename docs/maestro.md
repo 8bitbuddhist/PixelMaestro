@@ -37,10 +37,10 @@ The refresh rate is the amount of time (in milliseconds) between redraws. On eac
 You can call a Section using the `get_section()` method and passing in the index of the Section.
 
 ## Setting a Global Brightness Level
-Use the `set_brightness()` method to set a global brightness level for all Sections and Pixels. Global brightness is applied when retrieving a Pixel color via `get_pixel_color(section, index)`.
+Use the `set_brightness()` method to set a global brightness level for all Sections and Pixels. Global brightness is applied when retrieving a Pixel color via `get_pixel_color(section, index)`. Brightness levels range from 0 (off) to 255 (fully lit).
 
 ## Toggling the Running State
-You can pause the Maestro using the `set_running(bool)` method. When the Maestro is paused, it won't update any of its Sections.
+You can pause the Maestro using the `set_running(bool)` method. Nothing gets updated while the Maestro is paused.
 
 ## Setting a Show
 [Shows](show.md) let you configure actions that will execute at a pre-determined time later during the program's runtime. For more information, see the [Show documentation](show.md).

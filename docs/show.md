@@ -52,7 +52,7 @@ A Show can use one of two timing methods: relative or absolute. Relative time me
 Absolute time measures the amount of time that has passed since the program started. Using the same example above, Event 1 executes 1000 ms after the program starts, and Event 2 executes 2000 ms after the program starts (or 1000 ms after Event 1 starts).
 
 ## Looping
-After a Show completes its last Event, it won't do anything except update the Maestro. However, with looping enabled, the Show will repeat its Events indefinitely. To enable looping, call `Show::toggle_looping()`. To determine whether a Show is looping, call `Show::get_looping()`. Looping only works when using relative time.
+After a Show completes its last Event, it won't do anything except update the Maestro. However, with looping enabled, the Show will repeat its Events indefinitely. To enable looping, call `Show::set_looping(boolean)`. To determine whether a Show is looping, call `Show::get_looping()`. Looping only works when using relative time.
 
 ## Event List
 * AnimationSetFadeEvent: Toggles fading on an animation.
@@ -69,6 +69,8 @@ After a Show completes its last Event, it won't do anything except update the Ma
 * MaestroSetRunningEvent: Sets a Maestro's running state.
 * OverlaySetOptionsEvent: Sets an Overlay's options.
 * RunFunctionEvent: Uses std::functional to run a function (not available on Arduino).
+* SectionAddOverlayEvent: Adds an Overlay to a Section.
+* SectionRemoveOverlayEvent: Removes a Section's Overlay.
 * SectionSetAnimationEvent: Changes a Section's current animation.
 * SectionSetCycleIntervalEvent: Changes the interval between animation cycles for a Section.
 

@@ -28,6 +28,9 @@ Section sections[] = {
 Maestro maestro(sections, 1);
 
 void setup() {
+	// Set global brightness to 50%
+	maestro.set_brightness(128);
+
 	// Create a new blinking animation using an assortment of colors
 	sections[0].set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
 
@@ -39,10 +42,10 @@ void setup() {
 void loop() {
 	maestro.update(millis());
 
-	Colors::RGB color;
+	Colors::RGB *color;
 	for (unsigned int pixel = 0; pixel < sections[0]->get_dimesions()->size(); pixel++) {
-		color = sections[0].get_pixel_color(pixel);
-		// Add methods to use `color` below
+		color = maestro.get_pixel_color(0, pixel);
+		// Use `color` below, e.g. to send RGB values to a LED strip
 	}
 }
 ```

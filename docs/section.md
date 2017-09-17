@@ -15,7 +15,8 @@ Sections are the primary interface for PixelMaestro. Their main function is to b
 ## Creating a Section
 When creating a Section, pass the logical layout of the array (e.g. rows and columns) as part of the constructor.
 ```c++
-Section *section = new Section(new Point(rows, columns));
+Point dimensions(10, 10);
+Section *section = new Section(&dimensions);
 ```
 
 ## Animating a Section
@@ -31,7 +32,7 @@ For more information, see the [Canvas](canvas.md) document.
 ## Retrieving Pixels and Colors
 At some point, you'll need to retrieve the color of a Pixel for output. You can do this using the `get_pixel_color(index)` method, where `index` is the index of the Pixel in the array (demonstrated below in [Accessing the Pixel by Index](#accessing-the-pixel-by-index)). If you'd rather access the Pixel by specifying its coordinate in the grid, see [Accessing the Pixel by Coordinate](#accessing-the-pixel-by-coordinate).
 
-You can also retrieve a Pixel's color by using the `Maestro::get_pixel_color(section, index)` method. You should use this method instead if you have set a global brightness level in the Maestro.
+You can also retrieve a Pixel's color by using the `Maestro::get_pixel_color(section, index)` method. You should use this method instead if you set the Maestro's global brightness level using `Maestro::set_brightness()`.
 
 ### Accessing Pixels by Index
 If you know the array index of the Pixel, you can use the `get_pixel(index)` method to retrieve the Pixel directly:
@@ -46,19 +47,18 @@ Pixel *pixel = section.get_pixel(50, 2);
 ```
 
 ## Using Overlays
-You can add a second layer to your animations by merging the output of one Section with the current Section. This requires two sections, two Color arrays (one for each section), and two Pixel arrays (one for each Section). The layering is performed by merging the color of a Pixel in the base Section with its corresponding Pixel in the target Section.
+You can layer animations by adding an Overlay to a Section. An Overlay is a second Section running on top of an existing Section, with both Sections working independently of each other. When you retrieve a Pixel's color from the base Section using `get_pixel_color()`, the color from the base Section is merged with the color of the corresponding Pixel in the overlaid Section. You can learn more about color merging in the [Colors](colors.md) document.
 
-You can stack multiple Overlays by calling `base.get_overlay()->section->add_overlay()`.
-
-You can learn more about merging colors in the [Colors](colors.md) document.
+You can stack multiple Overlays by calling `base.get_overlay()->section->add_overlay()`. Since any Section supports an Overlay, you could use this to keep stacking Overlays.
 
 ```c++
 // Initialize Sections base and overlay
-base.add_overlay(overlay, Colors::MixMode::NORMAL);
+Overlay* overlay = base.add_overlay(overlay, Colors::MixMode::NORMAL);
+overlay->section->add_animation(new RadialAnimation());
 ```
 
 ## Updating a Section
-To update a Section, call the `update()` method. You will need to pass in the program's current runtime in milliseconds. More than likely, you will update a Section by calling its Maestro's `update()` method, which automatically the Section and all other Sections.
+To update a Section, call the `update(runtime)` method, which updates the Section, the active Animation, the Canvas, the Overlay, and the Pixels assigned to that Section. In most cases, you'll update a Section by calling the Maestro's `update()` method, which automatically updates the Section and all other Sections.
 
 ```c++
 section.update(runtime);
