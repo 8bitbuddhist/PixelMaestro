@@ -155,7 +155,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			return;
 		}
 
-		active_section_controller_->get_section()->remove_animation();
+		delete active_section_controller_->get_section()->get_animation();
 	}
 
 	// Preserve the animation cycle between changes

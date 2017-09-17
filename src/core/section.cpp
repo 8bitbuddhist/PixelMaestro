@@ -147,14 +147,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Deletes the current Animation.
-	 */
-	void Section::remove_animation() {
-		delete animation_;
-		animation_ = nullptr;
-	}
-
-	/**
 	 * Deletes the current Canvas.
 	 */
 	void Section::remove_canvas() {
@@ -248,9 +240,7 @@ namespace PixelMaestro {
 	*/
 	void Section::set_pixels(Point* dimensions) {
 		// Resize the Pixel grid
-		if (pixels_ != nullptr) {
-			delete[] pixels_;
-		}
+		delete [] pixels_;
 		pixels_ = new Pixel[dimensions->x * dimensions->y];
 
 		dimensions_ = dimensions;
@@ -318,11 +308,10 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
-		remove_animation();
 		remove_canvas();
 		remove_overlay();
 
 		// FIXME: Segfault when leaving animation editor.
-		delete[] pixels_;
+		delete [] pixels_;
 	}
 }

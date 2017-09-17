@@ -27,11 +27,11 @@ class MaestroControl : public QWidget {
 
 	private:
 		/// Stores the actively controlled SectionController.
-		SectionController *active_section_controller_;
+		SectionController *active_section_controller_ = nullptr;
 		Ui::MaestroControl *ui;
 
 		/// MaestroController that this widget is controlling.
-		MaestroController* maestro_controller_;
+		MaestroController* maestro_controller_ = nullptr;
 
 		/// Stores any extra animation controllers
 		std::unique_ptr<QWidget> extra_control_widget_;

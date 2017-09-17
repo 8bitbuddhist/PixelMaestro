@@ -62,7 +62,9 @@ SOURCES += main.cpp\
     ../src/show/overlaysetoptionsevent.cpp \
     widget/animation/lightninganimationcontrol.cpp \
     widget/animation/plasmaanimationcontrol.cpp \
-    widget/animation/sparkleanimationcontrol.cpp
+    widget/animation/sparkleanimationcontrol.cpp \
+    ../src/show/sectionaddoverlayevent.cpp \
+    ../src/show/sectionremoveoverlayevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -117,7 +119,9 @@ HEADERS += \
     ../src/show/overlaysetoptionsevent.h \
     widget/animation/lightninganimationcontrol.h \
     widget/animation/plasmaanimationcontrol.h \
-    widget/animation/sparkleanimationcontrol.h
+    widget/animation/sparkleanimationcontrol.h \
+    ../src/show/sectionaddoverlayevent.h \
+    ../src/show/sectionremoveoverlayevent.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
