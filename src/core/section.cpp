@@ -147,6 +147,30 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Deletes the current Animation.
+	 */
+	void Section::remove_animation() {
+		delete animation_;
+		animation_ = nullptr;
+	}
+
+	/**
+	 * Deletes the current Canvas.
+	 */
+	void Section::remove_canvas() {
+		delete canvas_;
+		canvas_ = nullptr;
+	}
+
+	/**
+	 * Deletes the current Overlay.
+	 */
+	void Section::remove_overlay() {
+		delete overlay_;
+		overlay_ = nullptr;
+	}
+
+	/**
 		Sets all Pixels to the specified color.
 
 		@param color New color.
@@ -294,10 +318,11 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
-		delete canvas_;
-		delete overlay_;
+		remove_animation();
+		remove_canvas();
+		remove_overlay();
 
-		// FIXME: Exception when deleting pixels_ on Overlays.
+		// FIXME: Segfault when leaving animation editor.
 		delete[] pixels_;
 	}
 }

@@ -46,13 +46,13 @@ void MainWindow::reset_drawing_area() {
 		delete maestro_control_;
 		maestro_control_ = nullptr;
 	}
-	if (controller_) {
-		delete controller_;
-		controller_ = nullptr;
-	}
 	if (drawing_area_) {
 		delete drawing_area_;
 		drawing_area_ = nullptr;
+	}
+	if (controller_) {
+		delete controller_;
+		controller_ = nullptr;
 	}
 
 	controller_ = new MaestroController();

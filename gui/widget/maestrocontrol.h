@@ -26,7 +26,7 @@ class MaestroControl : public QWidget {
 		~MaestroControl();
 
 	private:
-		/// Index of the actively controlled SectionController.
+		/// Stores the actively controlled SectionController.
 		SectionController *active_section_controller_;
 		Ui::MaestroControl *ui;
 

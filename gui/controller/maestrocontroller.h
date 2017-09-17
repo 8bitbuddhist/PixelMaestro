@@ -15,7 +15,6 @@ using namespace PixelMaestro;
 class MaestroController {
 	public:
 		MaestroController();
-		~MaestroController();
 		void add_section_controller(Point* layout);
 		void delete_section_controller(unsigned char index);
 		Maestro* get_maestro();
@@ -25,7 +24,7 @@ class MaestroController {
 
 	private:
 		/// Maestro controlled by this controller.
-		std::unique_ptr<Maestro> maestro_;
+		std::shared_ptr<Maestro> maestro_;
 
 		/// Sections belonging to the Maestro (points to section_controllers_[index].section_). These are deleted automatically when their respective SectionController gets deleted.
 		std::vector<Section*> sections_;

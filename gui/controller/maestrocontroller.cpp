@@ -77,5 +77,3 @@ void MaestroController::reassign_sections() {
 
 	maestro_->set_sections(sections_[0], sections_.size());
 }
-
-MaestroController::~MaestroController() { }

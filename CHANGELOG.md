@@ -50,7 +50,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Removed num_chars parameter from draw_text().
 
 ### Known Issues
-- Fatal exception when calling `delete[] pixel_` in an Overlay.
+- Fatal exception when closing the Animation Editor without quitting the program.
 
 
 ## [v0.5] - 2017-09-02
