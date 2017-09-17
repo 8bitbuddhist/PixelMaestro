@@ -6,14 +6,16 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.6] - In Progress
 ### Added
 - Animations:
-	- New Animations interface which splits all animations into separate classes.
+	- New Animations interface.
 	- Added Radial, Mandelbrot, Plasma, and Lightning animations.
+	- Added customizable options to Sparkle, Plasma, and Lightning animations.
 - Animation Editor:
+	- Added support for Animation-specific controls.
 	- Added preview to custom color controls.
-	- Default Section comes with Overlay by default.
+	- Added a default Overlay.
 	- Added Orientation support.
 - Show:
-	- Added RunFunctionEvent, which uses std::functional to trigger a custom function call at runtime.
+	- Added RunFunctionEvent, which uses std::functional to trigger custom function calls at runtime.
 
 ### Changed
 - Animations:
@@ -21,20 +23,23 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Animation Editor:
 	- Replaced custom color dials with sliders.
 	- Fixed broken Overlay behavior.
-	- Fixed switching between SectionControllers.
+	- Fixed several bugs when switching Sections.
 	- Set default ColorAnimation to SOLID.
 	- Set default Overlay MixMode to NONE.
 	- Improved SimpleDrawingArea dynamic scaling.
 - Canvas:
-	- Added ability to scroll Canvas contents independently of Animations.
-	- Dynamically allocated pattern arrays on Canvas initialization.
-	- Added dynamic resizing of Canvases when Section sizes change.
+	- Canvas contents now scroll independently of Animations.
+	- Dynamic allocation of pattern arrays on Canvas initialization.
+	- Dynamic resizing of Canvases when Section sizes change.
+	- Canvas methods now take x and y coordinates as ints.
 - General:
 	- Optimized data types across core classes.
 - Section:
 	- Swapped set_one() parameters.
 	- Added dynamic Pixel allocation on Section initialization.
 	- Added dynamic Overlay allocation.
+- Show:
+	- Moved Shows under Maestros.
 
 ### Removed
 - Animations:
@@ -43,6 +48,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Temporarily removed ability to dynamically add and remove Sections and Overlays.
 - Canvas:
 	- Removed num_chars parameter from draw_text().
+
+### Known Issues
+- Fatal exception when calling `delete[] pixel_` in an Overlay.
 
 
 ## [v0.5] - 2017-09-02

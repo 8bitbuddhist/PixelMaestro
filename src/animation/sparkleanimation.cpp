@@ -7,6 +7,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the threshold for activating a Pixel.
+	 * @return Activation threshold.
+	 */
+	unsigned char SparkleAnimation::get_threshold() {
+		return threshold_;
+	}
+
+	/**
 	 * Sets the chances of a Pixel turning on.
 	 * @param threshold Chance that an individual Pixel will turn on (0 - 255).
 	 */

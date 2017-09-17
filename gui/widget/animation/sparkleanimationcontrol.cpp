@@ -6,6 +6,7 @@ SparkleAnimationControl::SparkleAnimationControl(SparkleAnimation* animation, QW
 	ui(new Ui::SparkleAnimationControl) {
 	ui->setupUi(this);
 	this->animation_ = animation;
+	ui->thresholdSpinBox->setValue(animation->get_threshold());
 }
 
 SparkleAnimationControl::~SparkleAnimationControl() {

@@ -21,8 +21,6 @@
 #include <QString>
 #include "ui_maestrocontrol.h"
 
-// FIXME: Pulling and populating custom animation parameters
-
 /**
  * Constructor.
  * @param parent The QWidget containing this controller.
@@ -54,7 +52,11 @@ void MaestroControl::get_section_settings() {
 	std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
 	for (unsigned int index = 0; index < (unsigned int)ui->animationComboBox->count(); index++) {
 		if (type.find(ui->animationComboBox->itemText(index).toStdString()) != std::string::npos) {
+			// Change the animation without firing the signal
+			ui->animationComboBox->blockSignals(true);
 			ui->animationComboBox->setCurrentIndex(index);
+			ui->animationComboBox->blockSignals(false);
+			show_extra_controls(index, active_section_controller_->get_section()->get_animation());
 			continue;
 		}
 	}
@@ -108,6 +110,7 @@ void MaestroControl::initialize() {
 
 	// Initialize Overlay controls
 	ui->mix_modeComboBox->addItems({"None", "Normal", "Alpha Blending", "Multiply", "Overlay"});
+	ui->alphaSpinBox->setVisible(false);
 
 	get_section_settings();
 }
@@ -132,12 +135,10 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 
 /**
  * Sets the Overlay's transparency level.
- * @param arg1 Transparency level from 0 - 1.
+ * @param arg1 Transparency level from 0 - 255.
  */
-void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
-	if (arg1 != maestro_controller_->get_section_controller(0)->get_overlay()->alpha) {
-		maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
-	}
+void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
+	maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
 }
 
 /**
@@ -145,6 +146,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(double arg1) {
  * @param index Index of the new animation.
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
+
 	Animation* animation = nullptr;	// Stores the new Animation
 	if (active_section_controller_->get_section()->get_animation() != nullptr) {
 		// Only change if the animation is different
@@ -154,12 +156,6 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 		}
 
 		delete active_section_controller_->get_section()->get_animation();
-
-		// Remove any existing extra control widgets
-		if (extra_control_widget_ != nullptr) {
-			this->findChild<QLayout*>("extraControlsLayout")->removeWidget(extra_control_widget_.get());
-			extra_control_widget_.reset();
-		}
 	}
 
 	// Preserve the animation cycle between changes
@@ -185,12 +181,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			animation = active_section_controller_->get_section()->set_animation(new RandomAnimation(), preserve_cycle_index);
 			break;
 		case 6:
-			{
-				animation = active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
-				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, layout->widget()));
-				layout->addWidget(extra_control_widget_.get());
-			}
+			animation = active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
 			break;
 		case 7:
 			animation = active_section_controller_->get_section()->set_animation(new RadialAnimation(), preserve_cycle_index);
@@ -199,25 +190,16 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 			animation = active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(), preserve_cycle_index);
 			break;
 		case 9:
-			{
-				animation = active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
-				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, layout->widget()));
-				layout->addWidget(extra_control_widget_.get());
-				break;
-			}
+			animation = active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
+			break;
 		case 10:
-			{
-				animation = active_section_controller_->get_section()->set_animation(new LightningAnimation(), preserve_cycle_index);
-				QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
-				extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, layout->widget()));
-				layout->addWidget(extra_control_widget_.get());
-			}
+			animation = active_section_controller_->get_section()->set_animation(new LightningAnimation(), preserve_cycle_index);
 			break;
 		default:
 			return;
 	}
 
+	show_extra_controls(index, animation);
 
 	// Set orientation, fade, reverse, and color palette
 	animation->set_orientation((Animation::Orientations)ui->orientationComboBox->currentIndex());
@@ -465,6 +447,39 @@ void MaestroControl::set_overlay_controls_visible(bool visible) {
 	ui->gridSizeLabel->setVisible(!visible);
 	ui->columnsSpinBox->setVisible(!visible);
 	ui->rowsSpinBox->setVisible(!visible);
+}
+
+/**
+ * Displays extra controls for animations that take custom parameters.
+ * @param index Index of the animation in the animations list.
+ * @param animation Pointer to the animation.
+ */
+void MaestroControl::show_extra_controls(int index, Animation* animation) {
+	// First, remove any existing extra control widgets
+	if (extra_control_widget_ != nullptr) {
+		this->findChild<QLayout*>("extraControlsLayout")->removeWidget(extra_control_widget_.get());
+		extra_control_widget_.reset();
+	}
+
+	QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
+
+	switch(index) {
+		case 6:
+			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, layout->widget()));
+			break;
+		case 9:
+			extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, layout->widget()));
+			break;
+		case 10:
+			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, layout->widget()));
+			break;
+		default:
+			break;
+	}
+
+	if (extra_control_widget_) {
+		layout->addWidget(extra_control_widget_.get());
+	}
 }
 
 /**

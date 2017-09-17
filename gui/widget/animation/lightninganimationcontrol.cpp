@@ -4,6 +4,10 @@
 LightningAnimationControl::LightningAnimationControl(LightningAnimation* animation, QWidget *parent) :	QWidget(parent), ui(new Ui::LightningAnimationControl) {
 	ui->setupUi(this);
 	this->animation_ = animation;
+	ui->boltCountSpinBox->setValue(animation->get_bolt_count());
+	ui->forkChanceSpinBox->setValue(animation->get_fork_chance());
+	ui->spreadDownSpinBox->setValue(animation->get_down_threshold());
+	ui->spreadUpSpinBox->setValue(animation->get_up_threshold());
 }
 
 LightningAnimationControl::~LightningAnimationControl() {

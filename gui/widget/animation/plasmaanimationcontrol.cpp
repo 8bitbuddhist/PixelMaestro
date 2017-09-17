@@ -6,6 +6,8 @@ PlasmaAnimationControl::PlasmaAnimationControl(PlasmaAnimation* animation, QWidg
 	ui(new Ui::PlasmaAnimationControl) {
 	ui->setupUi(this);
 	this->animation_ = animation;
+	ui->resolutionDoubleSpinBox->setValue(animation->get_resolution());
+	ui->sizeDoubleSpinBox->setValue(animation->get_size());
 }
 
 PlasmaAnimationControl::~PlasmaAnimationControl() {

@@ -8,6 +8,22 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the plasma resolution.
+	 * @return Plasma resolution.
+	 */
+	float PlasmaAnimation::get_resolution() {
+		return resolution_;
+	}
+
+	/**
+	 * Returns the plasma size.
+	 * @return Plasma size.
+	 */
+	float PlasmaAnimation::get_size() {
+		return size_;
+	}
+
+	/**
 	 * Sets the resolution (sharpness) of each plasma.
 	 * @param resolution Plasma resolution.
 	 */

@@ -163,6 +163,38 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the number of bolts.
+	 * @return Bolt count.
+	 */
+	unsigned char LightningAnimation::get_bolt_count() {
+		return num_bolts_;
+	}
+
+	/**
+	 * Returns the fork chance.
+	 * @return Fork chance.
+	 */
+	unsigned char LightningAnimation::get_fork_chance() {
+		return fork_chance_;
+	}
+
+	/**
+	 * Returns the down threshold.
+	 * @return Down threshold.
+	 */
+	unsigned char LightningAnimation::get_down_threshold() {
+		return down_threshold_;
+	}
+
+	/**
+	 * Returns the up threshold.
+	 * @return Up threshold.
+	 */
+	unsigned char LightningAnimation::get_up_threshold() {
+		return up_threshold_;
+	}
+
+	/**
 	 * Sets the number of bolts generated in each strike.
 	 * @param bolt_count Number of bolts (0 - 255).
 	 */

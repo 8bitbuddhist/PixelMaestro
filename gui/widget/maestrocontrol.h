@@ -43,10 +43,11 @@ class MaestroControl : public QWidget {
 		void on_ui_changed();
 		void on_section_resize(unsigned short x, unsigned short y);
 		void set_custom_color_controls_visible(bool visible);
+		void show_extra_controls(int index, Animation* animation);
 		void set_overlay_controls_visible(bool visible);
 
 	private slots:
-		void on_alphaSpinBox_valueChanged(double arg1);
+		void on_alphaSpinBox_valueChanged(int arg1);
 		void on_animationComboBox_currentIndexChanged(int index);
 		void on_blueSlider_valueChanged(int value);
 		void on_colorComboBox_currentIndexChanged(int index);
