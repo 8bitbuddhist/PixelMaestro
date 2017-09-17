@@ -15,14 +15,14 @@ namespace PixelMaestro {
 	}
 
 	void SparkleAnimation::update(Section* section) {
-		if (orientation_ == VERTICAL) {
+		if (orientation_ == Orientations::VERTICAL) {
 			for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
 				for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {
-					if ((Utility::rand(255)) <= threshold_) {
-						section->set_one(y, x, get_color_at_index(x));
+					if (Utility::rand(255) <= threshold_) {
+						section->set_one(x, y, get_color_at_index(y));
 					}
 					else {
-						section->set_one(y, x, &Colors::BLACK);
+						section->set_one(x, y, &Colors::BLACK);
 					}
 				}
 			}
@@ -30,7 +30,7 @@ namespace PixelMaestro {
 		else {	// Horizontal
 			for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {
 				for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
-					if ((Utility::rand(255)) <= threshold_) {
+					if (Utility::rand(255) <= threshold_) {
 						section->set_one(x, y, get_color_at_index(x));
 					}
 					else {
