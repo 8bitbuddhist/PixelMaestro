@@ -1,5 +1,5 @@
 # Maestro
-Maestros are responsible for coordinating multiple Sections. A Maestro isn't necessarily required, but it helps with abstracting away some of the management of multiple sections.
+Maestros are responsible for coordinating multiple Sections. Maestros also provide additional functionality such as setting global brightness levels.
 
 ## Contents
 1. [Creating a Maestro](#creating-a-maestro)
