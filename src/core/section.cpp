@@ -10,11 +10,20 @@
 namespace PixelMaestro {
 
 	/**
-	 * Constructor. Assigns Pixels to the Section.
+	 * Constructor. Initializes the Pixel array.
 	 * @param dimensions Initial layout (rows and columns) of the Pixels.
 	 */
-	Section::Section(Point* dimensions) {
-		set_pixels(dimensions);
+	Section::Section(Point dimensions) {
+		set_dimensions(dimensions);
+	}
+
+	/**
+	 * Constructor. Initializes the Pixel array.
+	 * @param x Number of rows in the Section.
+	 * @param y Number of columns in the Section.
+	 */
+	Section::Section(unsigned short x, unsigned short y) {
+		set_dimensions(x, y);
 	}
 
 	/**
@@ -76,7 +85,7 @@ namespace PixelMaestro {
 		@return Size of the Pixel grid.
 	*/
 	Point* Section::get_dimensions() {
-		return dimensions_;
+		return &dimensions_;
 	}
 
 	/**
@@ -134,7 +143,7 @@ namespace PixelMaestro {
 		@return The index of the Pixel.
 	*/
 	unsigned int Section::get_pixel_index(unsigned short x, unsigned short y) {
-		return (y * dimensions_->x) + x;
+		return (y * dimensions_.x) + x;
 	}
 
 	/**
@@ -168,7 +177,7 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::set_all(Colors::RGB* color) {
-		for (unsigned int pixel = 0; pixel < dimensions_->size(); pixel++) {
+		for (unsigned int pixel = 0; pixel < dimensions_.size(); pixel++) {
 			set_one(pixel, color);
 		}
 	}
@@ -208,7 +217,7 @@ namespace PixelMaestro {
 	*/
 	void Section::set_one(unsigned int pixel, Colors::RGB* color) {
 		// Only continue if Pixel is within the bounds of the array.
-		if (pixel < dimensions_->size()) {
+		if (pixel < dimensions_.size()) {
 			/*
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
@@ -238,16 +247,31 @@ namespace PixelMaestro {
 
 		@param dimensions Dimensions of the Pixel array.
 	*/
-	void Section::set_pixels(Point* dimensions) {
+	void Section::set_dimensions(Point dimensions) {
+		set_dimensions(dimensions.x, dimensions.y);
+	}
+
+	/**
+	 * Sets the size of the Section.
+	 * @param x Number of Pixels along the x-coordinate.
+	 * @param y Number of Pixels along the y-coordinate.
+	 */
+	void Section::set_dimensions(unsigned short x, unsigned short y) {
+		dimensions_.x = x;
+		dimensions_.y = y;
+
 		// Resize the Pixel grid
 		delete [] pixels_;
-		pixels_ = new Pixel[dimensions->x * dimensions->y];
-
-		dimensions_ = dimensions;
+		pixels_ = new Pixel[dimensions_.size()];
 
 		// Reinitialize the Canvas
 		if (canvas_ != nullptr) {
 			canvas_->initialize_pattern();
+		}
+
+		// Reinitialize the Overlay
+		if (overlay_ != nullptr) {
+			overlay_->section->set_dimensions(dimensions_);
 		}
 	}
 
@@ -301,7 +325,7 @@ namespace PixelMaestro {
 
 		// Only update each Pixel if we're fading or if the cycle has changed.
 		if (animation_->get_fade() || last_cycle_ == current_time) {
-			for (unsigned short pixel = 0; pixel < dimensions_->size(); pixel++) {
+			for (unsigned short pixel = 0; pixel < dimensions_.size(); pixel++) {
 				pixels_[pixel].update();
 			}
 		}

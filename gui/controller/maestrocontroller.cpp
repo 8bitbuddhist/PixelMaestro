@@ -16,9 +16,11 @@ MaestroController::MaestroController() {
 /**
  * Adds a new Section to the Maestro.
  */
-void MaestroController::add_section_controller(Point* layout) {
-	this->section_controllers_.push_back(std::shared_ptr<SectionController>(new SectionController(layout)));
+std::shared_ptr<SectionController> MaestroController::add_section_controller(Point* layout) {
+	std::shared_ptr<SectionController> controller = std::shared_ptr<SectionController>(new SectionController(layout));
+	section_controllers_.push_back(controller);
 	reassign_sections();
+	return controller;
 }
 
 /**

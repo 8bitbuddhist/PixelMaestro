@@ -8,11 +8,11 @@ using namespace PixelMaestro;
 
 /**
  * Constructor.
- * Creates a new Section, initializes its Pixels, and assigns the Pixels to the Section.
+ * @param layout The dimensions of the Section.
  */
 SectionController::SectionController(Point* layout) {
 	this->dimensions_ = *layout;
-	this->section_ = std::shared_ptr<Section>(new Section(&dimensions_));
+	this->section_ = std::shared_ptr<Section>(new Section(dimensions_));
 }
 
 SectionController::SectionController(Section* section, bool is_overlay) {
@@ -26,13 +26,14 @@ SectionController::SectionController(Section* section, bool is_overlay) {
  * @param mix_mode The blending mode of the Overlay.
  * @param alpha The transparency of the Overlay.
  */
-void SectionController::add_overlay(Colors::MixMode mix_mode, float alpha) {
-	this->section_->add_overlay(mix_mode, alpha);
-	this->overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(this->section_->get_overlay()->section, true));
+std::shared_ptr<SectionController> SectionController::add_overlay(Colors::MixMode mix_mode, float alpha) {
+	section_->add_overlay(mix_mode, alpha);
+	overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(section_->get_overlay()->section, true));
+	return overlay_controller_;
 }
 
 /**
- * Returns the color palette used in the Animation.
+ * Returns the controller's color palette.
  * @return Color palette.
  */
 Colors::RGB* SectionController::get_colors() {
@@ -40,15 +41,7 @@ Colors::RGB* SectionController::get_colors() {
 }
 
 /**
- * Returns the Section's dimensions.
- * @return Section's layout.
- */
-Point SectionController::get_dimensions() {
-	return this->dimensions_;
-}
-
-/**
- * Returns the number of Colors in the color palette.
+ * Returns the number of colors in the controller.
  * @return Number of colors.
  */
 unsigned char SectionController::get_num_colors() {
@@ -95,22 +88,4 @@ void SectionController::set_colors(Colors::RGB* colors, unsigned char num_colors
 	}
 
 	section_->get_animation()->set_colors(&this->colors_[0], num_colors);
-}
-
-/**
- * Initializes the Section's dimensions.
- * @param x Size of the x-axis.
- * @param y Size of the y-axis.
- */
-void SectionController::set_dimensions(unsigned short x, unsigned short y) {
-	dimensions_ = {x, y};
-	section_->set_pixels(&dimensions_);
-
-	if (overlay_controller_) {
-		overlay_controller_->set_dimensions(x, y);
-	}
-}
-
-void SectionController::unset_overlay() {
-	this->overlay_controller_.reset();
 }

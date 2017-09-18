@@ -15,8 +15,8 @@ Declare a Maestro by passing in the Sections that it will be controlling. The fo
 ```c++
 int num_sections = 2;
 Section sections[num_sections] = {
-	Section(new Point(10, 20)),
-	Section(new Point(20, 30))
+	Section(10, 20),
+	Section(20, 30)
 };
 Maestro maestro(sections, num_sections);
 ```

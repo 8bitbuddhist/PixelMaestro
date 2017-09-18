@@ -23,7 +23,7 @@ const unsigned char NUM_COLORS = 16;
 
 // This declares the number of Pixels used, assigns them to a Section, then assigns that Section to a Maestro.
 Section sections[] = {
-	Section(new Point(ROWS, COLUMNS)),
+	Section(ROWS, COLUMNS),
 };
 Maestro maestro(sections, 1);
 

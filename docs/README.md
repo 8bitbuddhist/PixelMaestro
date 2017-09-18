@@ -22,7 +22,7 @@ This Arduino-style example shows how to create a new Pixel grid 50 Pixels wide a
 ```c++
 Section sections[] = {
 	// Create a new 50x10 Pixel grid
-	Section(new Point(50, 10)
+	Section(50, 10)
 };
 // Add the Section to the Maestro
 Maestro maestro(sections, 1);

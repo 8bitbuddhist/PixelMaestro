@@ -42,7 +42,7 @@ namespace PixelMaestro {
 				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For The amount of transparency that the Overlay will have (0 - 255).
 				 */
-				Overlay(Point* dimensions, Colors::MixMode mix_mode, unsigned char alpha) {
+				Overlay(Point dimensions, Colors::MixMode mix_mode, unsigned char alpha) {
 					this->section = new Section(dimensions);
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
@@ -53,7 +53,8 @@ namespace PixelMaestro {
 				}
 			};
 
-			Section(Point* dimensions);
+			Section(Point dimensions);
+			Section(unsigned short x, unsigned short y);
 			~Section();
 			Canvas* add_canvas();
 			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::NORMAL, unsigned char alpha = 128);
@@ -72,9 +73,10 @@ namespace PixelMaestro {
 			void set_all(Colors::RGB* color);
 			Animation* set_animation(Animation* animation, bool preserve_cycle_index = false);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
+			void set_dimensions(Point layout);
+			void set_dimensions(unsigned short x, unsigned short y);
 			void set_one(unsigned int pixel, Colors::RGB* color);
 			void set_one(unsigned short x, unsigned short y, Colors::RGB* color);
-			void set_pixels(Point* layout);
 			void set_refresh_interval(unsigned short* interval);
 			void update(const unsigned long& current_time);
 
@@ -89,7 +91,7 @@ namespace PixelMaestro {
 			unsigned short cycle_interval_ = 250;
 
 			/// The logical layout of the Pixels.
-			Point* dimensions_ = nullptr;
+			Point dimensions_ = {0, 0};
 
 			/// The time since the last animation cycle change in milliseconds. Defaults to 0.
 			unsigned long last_cycle_ = 0;

@@ -11,7 +11,7 @@ const unsigned char ROWS = 1;
 const unsigned char COLUMNS = 8;
 
 Section sections[] = {
-  Section(new Point(ROWS, COLUMNS))
+  Section(ROWS, COLUMNS)
 };
 Maestro maestro(sections, 1);
 

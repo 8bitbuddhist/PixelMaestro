@@ -15,7 +15,7 @@ using namespace PixelMaestro;
 class MaestroController {
 	public:
 		MaestroController();
-		void add_section_controller(Point* layout);
+		std::shared_ptr<SectionController> add_section_controller(Point* layout);
 		void delete_section_controller(unsigned char index);
 		Maestro* get_maestro();
 		unsigned char get_num_section_controllers();

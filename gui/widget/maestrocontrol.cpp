@@ -415,8 +415,8 @@ void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
  * @param y Number of columns.
  */
 void MaestroControl::on_section_resize(unsigned short x, unsigned short y) {
-	if ((x != active_section_controller_->get_dimensions().x) || (y != active_section_controller_->get_dimensions().y)) {
-		active_section_controller_->set_dimensions(x, y);
+	if ((x != active_section_controller_->get_section()->get_dimensions()->x) || (y != active_section_controller_->get_section()->get_dimensions()->y)) {
+		active_section_controller_->get_section()->set_dimensions(x, y);
 	}
 }
 
