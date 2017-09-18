@@ -15,13 +15,15 @@ class SimpleDrawingArea : public MaestroDrawingArea {
 
 	protected:
 		void paintEvent(QPaintEvent *event) override;
+		void resizeEvent(QResizeEvent *event) override;
 
 		/// The size of each rendered Pixel.
-		unsigned short radius_ = 20;
+		unsigned char radius_ = 20;
 		/// The amount of space between each Pixel.
-		unsigned short pad_ = radius_ * 2;
-		/// The offset of the grid from its initial starting point.
-		unsigned short offset_ = pad_;
+		unsigned char pad_ = radius_ * 2;
+
+		/// Used to determine whether the Maestro's size has changed.
+		unsigned int last_pixel_count_ = 0;
 };
 
 #endif // SIMPLEDRAWINGAREA_H

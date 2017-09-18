@@ -1,20 +1,20 @@
 #ifndef CANVASDRAWCIRCLEEVENT_H
 #define CANVASDRAWCIRCLEEVENT_H
 
-#include "../canvas.h"
-#include "../point.h"
+#include "../canvas/canvas.h"
+#include "../core/point.h"
 #include "event.h"
 
 namespace PixelMaestro {
 	class CanvasDrawCircleEvent : public Event {
 		public:
-			CanvasDrawCircleEvent(unsigned long time, Canvas* canvas, Point* origin, unsigned short radius, bool fill);
+			CanvasDrawCircleEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
 			void run();
 
 		private:
 			Canvas* canvas_;
 			bool fill_;
-			Point* origin_;
+			unsigned short origin_x_, origin_y_;
 			unsigned short radius_;
 	};
 }

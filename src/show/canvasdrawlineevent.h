@@ -2,20 +2,20 @@
 #define CANVASDRAWLINEEVENT_H
 
 
-#include "../canvas.h"
-#include "../point.h"
+#include "../canvas/canvas.h"
+#include "../core/point.h"
 #include "event.h"
 
 namespace PixelMaestro {
 	class CanvasDrawLineEvent : public Event {
 		public:
-			CanvasDrawLineEvent(unsigned long time, Canvas* canvas, Point* origin, Point* target);
+			CanvasDrawLineEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);
 			void run();
 
 		private:
 			Canvas* canvas_;
-			Point* origin_;
-			Point* target_;
+			unsigned short origin_x_, origin_y_;
+			unsigned short target_x_, target_y_;
 	};
 }
 

@@ -1,90 +1,115 @@
 # Canvas
-The Canvas class lets you draw custom shapes and patterns on a Section. At its core, a Canvas is a grid of pixels. But instead of containing a color value, these pixels contain a boolean value. When you draw something on a Canvas, the pixels that have been drawn over are toggled from `false` to `true`. When the Section renders the Canvas, it draws all of the pixels that have been set to `true` and ignores the pixels that were set to `false`.
+A Canvas lets you draw custom shapes and patterns onto a Section. In essence, a Canvas is a way of quickly toggling certain Pixels on or off. Pixels that are on will show the Section's underlying Animation, while Pixels that are off won't show anything.
 
-See the [CanvasDemo class](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
+See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
 
 ## Contents
 1. [Creating a Canvas](#creating-a-canvas)
-2. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
-3. [Drawing Shapes](#drawing-shapes)
+2. [Drawing Shapes](#drawing-shapes)
 	1. [Drawing Lines](#drawing-lines)
 	2. [Drawing Rectangles](#drawing-rectangles)
 	3. [Drawing Text](#drawing-text)
 	4. [Drawing Triangles](#drawing-triangles)
 	5. [Clearing the Canvas](#clearing-the-canvas)
+3. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
 4. [Scrolling](#scrolling)
 	1. [Repeated Scrolling](#repeated-scrolling)
 5. [Offsetting](#offsetting)
 6. [Interactive Canvases](#interactive-canvases)
 
 ## Creating a Canvas
-The following code creates a 10 x 10 Canvas grid and assigns it to a Section. Note that this doesn't display anything by default. The size of the Canvas *should* be the same as the size of the Section, but it doesn't have to be.
+You can create a Canvas by calling `Section::add_canvas()`. This initializes a new Canvas and assigns it to the Canvas. Note that this doesn't display anything by default, so the Section will appear to be blank.
 
 ```c++
-Point *size = new Point(10, 10);
-bool *canvas_pixels = new bool[size->x * size->y] {0};
-
-Canvas canvas = new Canvas(&canvas_pixels[0], size);
-...
-section->set_canvas(canvas);
+Canvas* canvas = section->add_canvas();
 ```
 
-## Setting Background and Foreground Colors
-By default, any patterns displayed on the Canvas will display the color of the parent Section's color animation, and any pixels not displayed by the Canvas will be set to black. The `bg_color` and `fg_color` properties let you override the color animation by setting a custom background and foreground color on the Canvas, respectively.
+You can also add an existing Canvas by using the `Section::set_canvas(Canvas*)` method.
 
 ## Drawing Shapes
-The Canvas class provides specific functions for drawing various shapes, elements, and patterns. For each shape you must specify an origin on the grid, as well as any extra parameters that the shape requires.
+The Canvas class provides several functions for drawing various shapes, elements, and patterns. For each shape you must specify where it will appear on the grid (typically as x and y coordinates), its size, and any extra parameters that the shape requires.
 
-Note that you can draw multiple shapes on a single Canvas. Depending on the shape and Canvas configuration, any empty space is treated as transparency.
+The Canvas uses a typical Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section.
 
-Options such as line widths and colors per-shape are planned, but not currently implemented.
+For an example of drawing various shapes, see the [CanvasDemo](../gui/demo/canvasdemo.cpp).
 
 ### Drawing Lines
 The `draw_line` method lets you draw a line from one point to another. Enter the point where the line starts and the point where the line ends.
 
+```c++
+// Draw a 10 Pixel long diagonal line
+canvas_->draw_line(0, 0, 10, 10);
+```
+
 ### Drawing Points
-The `draw_point` method lets you activate a single pixel at a time. You can deactivate a pixel using the `erase` method.
+The `draw_point()` method lets you "draw" a single pixel at a time. You can deactivate a pixel using the `erase()` method.
+
+```c++
+// Draw a single point 5 pixels to the right of the origin
+canvas_->draw_point(0, 5);
+```
 
 ### Drawing Rectangles
-The `draw_rect` method draws a box with the specified `origin` coordinates, the `size` of the box, and whether to `fill` the box or simply draw the border and leave the inside transparent.
+The `draw_rect()` method draws a box with the specified origin, a size, and whether to `fill` the box or simply draw the border and leave the inside transparent.
+
+```c++
+// Draw the outline of a 10 x 10 rectangle 
+bool fill = false;
+canvas_->draw_rect(0, 0, 10, 10, fill);
+```
 
 ### Drawing Text
-The `draw_char` and `draw_text` methods let you draw individual characters and strings of text, respectively. For each method you must specify the origin `coordinates`, a `Font`, and the `text` or `character` to display. In the case of `draw_text`, you must also specify the number of characters in the string.
+The `draw_text()` method lets you draw text to a Canvas. Specify the origin, a `Font`, and the `text` to display.
 
-PixelMaestro uses bitmap fonts when rendering text. All fonts inherit from the [Font](../src/canvas/fonts/font.h) class and require you to specify their size and character map. For an example, see the included [5x8 font](../src/canvas/fonts/font5x8.h).
+```c++
+// Draws "PixelMaestro" at the Canvas' origin
+Font *font = new Font5x8();
+canvas_->draw_text(0, 0, font, "PixelMaestro");
+```
+
+PixelMaestro supports bitmap fonts. All fonts inherit from the [Font](../src/canvas/fonts/font.h). For an example, see the included [5x8 font](../src/canvas/fonts/font5x8.h).
 
 ### Drawing Triangles
-The `draw_triangle` method draws a triangle using the three specified coordinates. You can also `fill` the triangle or leave the center transparent.
+The `draw_triangle()` method draws a triangle using the three specified coordinates. You can also `fill` the triangle or leave the center transparent.
+
+```c++
+// Draws a filled in right-angle triangle 10 pixels high and 10 pixels wide
+canvas_->draw_triangle(0, 0, 10, 0, 0, 10, true);
+```
 
 ### Clearing the Canvas
-The `clear()` method returns the Canvas to a blank slate by setting each pixel to `false`.
+The `clear()` method returns the Canvas to a blank slate by clearing out any drawn shapes. You can clear a single pixel using the `erase()` method. Note that there's no way to recover anything you've drawn after clearing them.
+
+## Setting Background and Foreground Colors
+Drawing something on a Canvas causes the Section's underlying Animation to show through, while the remaining pixels will be black. The `set_bg_color()` and `set_fg_color()` properties let you override this by setting custom background and foreground colors, respectively. Note that these colors apply to the entire Canvas. You can subsequently unset these colors using `remove_bg_color()` and `remove_fg_color()`.
 
 ## Scrolling
-You can scroll a Canvas horizontally, vertically, or both by setting `Canvas::scroll_interval`. `scroll_interval` defines both the direction and amount of time before the Canvas is scrolled. Time is measured in terms of refresh cycles, e.g. a scroll interval of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. The same goes for `-2` as well.
+Scrolling shifts the contents of a Canvas along the Pixel grid, similar to a marquee. You can scroll a Canvas horizontally, vertically, or both. Use the `set_scroll()` method to define both the direction and rate of scrolling. Scroll time is measured in terms of refresh cycles, e.g. a scroll interval of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. This value can be negative, which scrolls left instead of right for the x-axis and up instead of down for y-axis.
 
- `scroll_rate->x` scrolls along the horizontal axis and `scroll_rate->y` scrolls along the vertical axis. These values can be negative, which scrolls left instead of right for `scroll_rate->x` and up instead of down for `scroll_rate->y`.
-
-Call `Canvas::scroll()` to trigger a scroll. A scroll is also triggered automatically on `Canvas::update()`. Setting `scroll_interval` to 0 on either axis disables scrolling on that axis altogether.
+Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on `update()`. Setting either axis to 0 disables scrolling on that axis. You can disable scrolling entirely by calling `remove_scroll()`.
 
 The following code scrolls 1 Pixel to the right on each refresh cycle, and 1 Pixel up every other refresh cycle.
+
 ```c++
-canvas->scroll_interval = new Point(1, -2);
+canvas->set_scroll(1, -2);
 ```
 
 ### Repeated Scrolling
 By default, the Canvas will "jump" back to its starting point when it reaches the end of the scroll, i.e, when the scroll amount becomes equivalent to the width of the Canvas. Setting the `repeat` property to `true` wraps the Canvas around from one end of the grid to the opposite end, making it appear to scroll infinitely.
+
+```c++
+canvas->set_scroll(1, -2, true);
+```
 
 ## Offsetting
 Offsetting shifts the Canvas' starting point to another place on the Pixel grid. By default the offset is set to 0, meaning the starting point is the same as the Pixel grid's starting point. These values can be negative.
 
 The following code shifts the Canvas 5 Pixels to the right and 1 Pixel down.
 ```c++
-canvas->offset->x = 5;
-canvas->offset->y = 1;
-section->set_canvas(canvas);
+canvas->set_offset(5, 1);
 ```
 
-By default, if the Pattern extends beyond the Pixel grid, the rest of the Pattern will not be drawn, and the empty space is filled by the Section's ColorAnimation. However, setting `Pattern::repeat` to true wraps the Canvas to the opposite end of the grid, filling in this empty space.
+Note that if scrolling is enabled, the offset will be disabled.
 
 ## Interactive Canvases
 For a demo on how to create an interactive Canvas, see the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class in the PixelMaestro GUI.

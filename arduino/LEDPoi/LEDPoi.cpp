@@ -1,28 +1,36 @@
 #include <Arduino.h>
 #include <WS2812.h>
 
-#include <show.h>
-#include <show/sectionsetcoloranimationevent.h>
-#include <show/colorsgeneraterandomcolorevent.h>
-#include <show/colorsgeneratescalingcolorarrayevent.h>
+#include <PixelMaestro/core/maestro.h>
+
+#include <PixelMaestro/animation/cycleanimation.h>
+#include <PixelMaestro/animation/mergeanimation.h>
+#include <PixelMaestro/animation/randomanimation.h>
+#include <PixelMaestro/animation/sparkleanimation.h>
+#include <PixelMaestro/animation/waveanimation.h>
+
+#include <PixelMaestro/show/show.h>
+#include <PixelMaestro/show/sectionsetanimationevent.h>
+#include <PixelMaestro/show/colorsgeneraterandomcolorevent.h>
+#include <PixelMaestro/show/colorsgeneratescalingcolorarrayevent.h>
 
 using namespace PixelMaestro;
 
 // Single strip of 8 LEDs with 16 colors
 const unsigned char ROWS = 1;
 const unsigned char COLUMNS = 8;
-const unsigned char NUM_PIXELS = ROWS * COLUMNS;
 const unsigned char NUM_COLORS = 16;
 
-Maestro maestro;
-Pixel pixels[NUM_PIXELS];
+// This declares the number of Pixels used, assigns them to a Section, then assigns that Section to a Maestro.
 Section sections[] = {
-	Section(pixels, new Point(ROWS, COLUMNS)),
+	Section(ROWS, COLUMNS),
 };
-Colors::RGB colors[NUM_COLORS];
-Colors::RGB base_color, target_color;	// These store random colors which are used to generate color schemes.
+Maestro maestro(sections, 1);
 
-// This array stores the base colors that we'll use to generate color schemes.
+Colors::RGB colors[NUM_COLORS] = {Colors::BLACK};	// Stores the color array used by the Section.
+Colors::RGB base_color, target_color;							// These store random colors which are used to generate color palettes for the colors array.
+
+// Stores the base colors that we'll use to generate color palettes.
 const unsigned char NUM_SOURCE_COLORS = 10;
 Colors::RGB source_colors[] = {
 	Colors::BLACK,
@@ -30,56 +38,53 @@ Colors::RGB source_colors[] = {
 	{150, 0, 255},	// Deep purple
 	Colors::BLUE,
 	Colors::RED,
-	{0, 50, 255},	// Royal blue
+	{0, 50, 255},		// Royal blue
 	Colors::GREEN,
 	{255, 125, 0},	// Deep orange
 	Colors::AZURE,
-	{255, 0, 200}	// Pink
+	{255, 0, 200}		// Pink
 };
 
-// Specify the animations that you wish to display.
+// Initializes the animations that the Section will cycle through.
 const unsigned char NUM_ANIMATIONS = 5;
-Section::ColorAnimations animations[] = {
-	Section::ColorAnimations::SPARKLE,
-	Section::ColorAnimations::WAVE,
-	Section::ColorAnimations::RANDOMINDEX,
-	Section::ColorAnimations::MERGE,
-	Section::ColorAnimations::CYCLE
+Animation* animations[] = {
+	new SparkleAnimation(colors, NUM_SOURCE_COLORS),
+	new WaveAnimation(colors, NUM_SOURCE_COLORS),
+	new RandomAnimation(colors, NUM_SOURCE_COLORS),
+	new MergeAnimation(colors, NUM_SOURCE_COLORS),
+	new CycleAnimation(colors, NUM_SOURCE_COLORS)
 };
 
-Show show;
-const unsigned int INTERVAL = 10000;	// 10 seconds between each Event.
-const unsigned char NUM_EVENTS = 4;
+// Initializes the Show.
+const unsigned int INTERVAL = 10000;	// 10 seconds between each animation.
+const unsigned char NUM_EVENTS = 4;		// 4 events total (declared in the events array below).
 Event *events[] = {
-	// Switch to the next animation.
-	new SectionSetColorAnimationEvent(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, false, Section::AnimationOrientations::HORIZONTAL),
-	// Select a new color scheme base color from the list of source colors.
+	// Switches to the next animation in the list.
+	new SectionSetAnimationEvent(INTERVAL, &sections[0], &animations[0], NUM_ANIMATIONS, true),
+	// Selects a new base color from the list of source colors.
 	new ColorsGenerateRandomColorEvent(0, &base_color, source_colors, NUM_SOURCE_COLORS),
-	// Select a new color scheme target color from the list of source colors.
+	// Selects a new target color from the list of source colors.
 	new ColorsGenerateRandomColorEvent(0, &target_color, source_colors, NUM_SOURCE_COLORS),
-	// Create the new color scheme.
+	// Generates a new color scheme using the base and target colors.
 	new ColorsGenerateScalingColorArrayEvent(0, colors, &base_color, &target_color, NUM_COLORS, false)
 };
 
 // Initialize WS2812 components.
+const unsigned char WS_PINS[] = {5, 6, 9, 10};
 const unsigned char NUM_WS_STRIPS = 4;
 WS2812 ws[] = {
-	WS2812(COLUMNS),
-	WS2812(COLUMNS),
-	WS2812(COLUMNS),
-	WS2812(COLUMNS)
+	WS2812(ROWS * COLUMNS),
+	WS2812(ROWS * COLUMNS),
+	WS2812(ROWS * COLUMNS),
+	WS2812(ROWS * COLUMNS)
 };
-const unsigned char WS_PINS[] = {5, 6, 9, 10};
-
-// Set the maximum brightness of the LEDs.
-const float MAX_BRIGHTNESS = 0.1;
 
 // Convert from Colors::RGB to WS2812::cRGB
 cRGB RGBtoCRGB(Colors::RGB rgbColor) {
 	cRGB cRGBColor;
-	cRGBColor.r = rgbColor.r * MAX_BRIGHTNESS;
-	cRGBColor.g = rgbColor.g * MAX_BRIGHTNESS;
-	cRGBColor.b = rgbColor.b * MAX_BRIGHTNESS;
+	cRGBColor.r = rgbColor.r;
+	cRGBColor.g = rgbColor.g;
+	cRGBColor.b = rgbColor.b;
 	return cRGBColor;
 }
 
@@ -90,28 +95,23 @@ void setup () {
 		ws[strip].setColorOrderGRB();
 	}
 
-	// Set the initial color array to all black.
-	Colors::generate_scaling_color_array(colors, &Colors::BLACK, &Colors::BLACK, COLUMNS, false);
-	sections[0].set_colors(colors, NUM_COLORS);
-	sections[0].set_cycle_interval(100);
-	sections[0].toggle_fade();
+	// Sets the Section's cycle interval to 100ms and the brightness to 10%
+	maestro.get_section(0)->set_cycle_interval(100);
+	maestro.set_brightness(0.1);
 
-	maestro.set_sections(sections, 1);
-
-	// Initialize the Show.
-	show.set_maestro(&maestro);
-	show.set_timing(Show::TimingModes::RELATIVE);
-	show.set_events(events, NUM_EVENTS);
-	show.toggle_looping();
+	// Loop the show every INTERVAL
+	Show* show = maestro.add_show(events, NUM_EVENTS);
+	show->set_timing(Show::TimingModes::RELATIVE);
+	show->set_looping(true);
 }
 
 void loop() {
-	show.update(millis());
+	maestro.update(millis());
 
 	// For each Pixel, set the corresponding WS2812 pixel to the Pixel's color.
-	for (unsigned char pixel = 0; pixel < NUM_PIXELS; pixel++) {
+	for (unsigned char pixel = 0; pixel < ROWS * COLUMNS; pixel++) {
 		for (unsigned char strip = 0; strip < NUM_WS_STRIPS; strip++) {
-			ws[strip].set_crgb_at(pixel, RGBtoCRGB(sections[0].get_pixel_color(pixel)));
+			ws[strip].set_crgb_at(pixel, RGBtoCRGB(maestro.get_section(0)->get_pixel_color(pixel)));
 		}
 	}
 

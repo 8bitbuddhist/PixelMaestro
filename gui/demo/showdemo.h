@@ -12,6 +12,9 @@
 class ShowDemo : public SimpleDrawingArea {
 	public:
 		ShowDemo(QWidget* parent, MaestroController* maestro_controller);
+
+	private:
+		std::vector<Animation*> animations_;
 		std::vector<Event*> events_;
 
 };

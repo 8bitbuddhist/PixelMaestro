@@ -21,12 +21,4 @@ namespace PixelMaestro {
 	unsigned long Event::get_time() {
 		return this->time_;
 	}
-
-	/**
-	 * Sets the time that this event will run.
-	 * @param time Event's start time.
-	 */
-	void Event::set_time(unsigned long time) {
-		this->time_ = time;
-	}
 }

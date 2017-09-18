@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       += core gui widgets
 
 TARGET = PixelMaestro_QT
 TEMPLATE = app
@@ -24,24 +22,9 @@ SOURCES += main.cpp\
 		../src/show/colorsgeneraterandomcolorevent.cpp \
 		../src/show/colorsgeneratescalingcolorarrayevent.cpp \
 		../src/show/event.cpp \
-		../src/show/maestrotogglerunevent.cpp \
-		../src/show/sectionsetcoloranimationevent.cpp \
 		../src/show/sectionsetcycleintervalevent.cpp \
-		../src/show/sectionsetoverlayevent.cpp \
-		../src/show/sectiontogglefadeevent.cpp \
-		../src/show/sectionunsetoverlayevent.cpp \
-		../src/colors.cpp \
-		../src/maestro.cpp \
-		../src/pixel.cpp \
-		../src/section.cpp \
-		../src/show.cpp \
-		../src/utility.cpp \
-		../src/point.cpp \
-		../src/canvas.cpp \
 		../src/canvas/fonts/font5x8.cpp \
-		../src/show/sectionsetcanvasevent.cpp \
 		demo/canvasdemo.cpp \
-		../src/show/canvasdrawcharevent.cpp \
 		../src/show/canvasdrawtextevent.cpp \
 		../src/show/canvasdrawrectevent.cpp \
 		../src/show/canvasdrawlineevent.cpp \
@@ -50,7 +33,37 @@ SOURCES += main.cpp\
 		../src/show/canvasdrawtriangleevent.cpp \
 		../src/show/canvasdrawpointevent.cpp \
 		../src/show/canvasclearevent.cpp \
-		window/mainwindow.cpp
+		window/mainwindow.cpp \
+		../src/show/runfunctionevent.cpp \
+		../src/animation/blinkanimation.cpp \
+		../src/animation/cycleanimation.cpp \
+		../src/animation/mergeanimation.cpp \
+		../src/animation/randomanimation.cpp \
+		../src/animation/solidanimation.cpp \
+		../src/animation/sparkleanimation.cpp \
+		../src/animation/waveanimation.cpp \
+		../src/animation/animation.cpp \
+		../src/show/sectionsetanimationevent.cpp \
+		../src/canvas/canvas.cpp \
+		../src/core/colors.cpp \
+		../src/core/maestro.cpp \
+		../src/core/pixel.cpp \
+		../src/core/point.cpp \
+		../src/core/section.cpp \
+		../src/show/show.cpp \
+		../src/show/animationsetfadeevent.cpp \
+		../src/utility.cpp \
+		../src/show/maestrosetrunningevent.cpp \
+		../src/animation/radialanimation.cpp \
+		../src/animation/mandelbrotanimation.cpp \
+		../src/animation/plasmaanimation.cpp \
+    ../src/animation/lightninganimation.cpp \
+    ../src/show/overlaysetoptionsevent.cpp \
+    widget/animation/lightninganimationcontrol.cpp \
+    widget/animation/plasmaanimationcontrol.cpp \
+    widget/animation/sparkleanimationcontrol.cpp \
+    ../src/show/sectionaddoverlayevent.cpp \
+    ../src/show/sectionremoveoverlayevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -64,25 +77,10 @@ HEADERS += \
 		../src/show/colorsgeneraterandomcolorevent.h \
 		../src/show/colorsgeneratescalingcolorarrayevent.h \
 		../src/show/event.h \
-		../src/show/maestrotogglerunevent.h \
-		../src/show/sectionsetcoloranimationevent.h \
 		../src/show/sectionsetcycleintervalevent.h \
-		../src/show/sectionsetoverlayevent.h \
-		../src/show/sectiontogglefadeevent.h \
-		../src/show/sectionunsetoverlayevent.h \
-		../src/colors.h \
-		../src/maestro.h \
-		../src/pixel.h \
-		../src/section.h \
-		../src/show.h \
-		../src/utility.h \
-		../src/point.h \
-		../src/canvas.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
-		../src/show/sectionsetcanvasevent.h \
 		demo/canvasdemo.h \
-		../src/show/canvasdrawcharevent.h \
 		../src/show/canvasdrawtextevent.h \
 		../src/show/canvasdrawrectevent.h \
 		../src/show/canvasdrawlineevent.h \
@@ -91,11 +89,43 @@ HEADERS += \
 		../src/show/canvasdrawtriangleevent.h \
 		../src/show/canvasdrawpointevent.h \
 		../src/show/canvasclearevent.h \
-		window/mainwindow.h
+		window/mainwindow.h \
+		../src/show/runfunctionevent.h \
+		../src/animation/blinkanimation.h \
+		../src/animation/cycleanimation.h \
+		../src/animation/mergeanimation.h \
+		../src/animation/randomanimation.h \
+		../src/animation/solidanimation.h \
+		../src/animation/sparkleanimation.h \
+		../src/animation/waveanimation.h \
+		../src/animation/animation.h \
+		../src/show/sectionsetanimationevent.h \
+		../src/canvas/canvas.h \
+		../src/core/colors.h \
+		../src/core/maestro.h \
+		../src/core/pixel.h \
+		../src/core/point.h \
+		../src/core/section.h \
+		../src/show/animationsetfadeevent.h \
+		../src/show/show.h \
+		../src/utility.h \
+		../src/show/maestrosetrunningevent.h \
+		../src/animation/radialanimation.h \
+		../src/animation/mandelbrotanimation.h \
+		../src/animation/plasmaanimation.h \
+    ../src/animation/lightninganimation.h \
+    ../src/show/overlaysetoptionsevent.h \
+    widget/animation/lightninganimationcontrol.h \
+    widget/animation/plasmaanimationcontrol.h \
+    widget/animation/sparkleanimationcontrol.h \
+    ../src/show/sectionaddoverlayevent.h \
+    ../src/show/sectionremoveoverlayevent.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
-		window/mainwindow.ui
+		window/mainwindow.ui \
+    widget/animation/lightninganimationcontrol.ui \
+    widget/animation/plasmaanimationcontrol.ui \
+    widget/animation/sparkleanimationcontrol.ui
 
-INCLUDEPATH += include \
-			$$PWD/../src
+INCLUDEPATH += $$PWD/../src
