@@ -1,5 +1,5 @@
+#include "core/maestro.h"
 #include "maestrodrawingarea.h"
-#include "maestro.h"
 #include <QElapsedTimer>
 #include <QTimer>
 
@@ -12,33 +12,25 @@ using namespace PixelMaestro;
  */
 MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent) {
 	this->maestro_controller_ = maestro_controller;
+	this->refresh_ = maestro_controller_->get_maestro()->get_refresh_interval();
 
 	// Initialize timers.
-	this->timer = new QTimer(this);
-	this->timer->setTimerType(Qt::PreciseTimer);
-	connect(this->timer, SIGNAL(timeout()), this, SLOT(refresh_maestro()));
+	timer_ = new QTimer(this);
+	timer_->setTimerType(Qt::PreciseTimer);
+	connect(timer_, SIGNAL(timeout()), this, SLOT(refresh_maestro()));
 
 	// Initialize runtime timer
-	this->elapsed_timer.start();
+	elapsed_timer_.start();
 
 	// Set Maestro's refresh rate
-	this->timer->start(this->refresh_);
+	timer_->start(refresh_);
 }
 
 MaestroController* MaestroDrawingArea::get_maestro_controller() {
-	return this->maestro_controller_;
+	return maestro_controller_;
 }
 
 void MaestroDrawingArea::refresh_maestro() {
-	/*
-	 * Check if a Show has been created.
-	 * If so, run the Show. Otherwise, update the Maestro.
-	 */
-	if (this->maestro_controller_->get_show()) {
-		this->maestro_controller_->get_show()->update(this->elapsed_timer.elapsed());
-	}
-	else {
-		this->maestro_controller_->get_maestro()->update(this->elapsed_timer.elapsed());
-	}
-	this->update();
+	maestro_controller_->get_maestro()->update(elapsed_timer_.elapsed());
+	update();
 }

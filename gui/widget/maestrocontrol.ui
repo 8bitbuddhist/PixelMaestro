@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>405</width>
-    <height>333</height>
+    <height>413</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -15,6 +15,12 @@
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>405</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
@@ -25,7 +31,7 @@
      <item row="0" column="0">
       <widget class="QLabel" name="sectionSelectLabel">
        <property name="text">
-        <string>Select Section</string>
+        <string>Active Section</string>
        </property>
       </widget>
      </item>
@@ -34,10 +40,24 @@
        <item>
         <widget class="QComboBox" name="sectionComboBox"/>
        </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="mixModeLabel">
+       <property name="text">
+        <string>Mix Mode / Alpha</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="overlayLayout">
        <item>
-        <widget class="QPushButton" name="addOverlayButton">
-         <property name="text">
-          <string>Add Overlay</string>
+        <widget class="QComboBox" name="mix_modeComboBox"/>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="alphaSpinBox">
+         <property name="maximum">
+          <number>255</number>
          </property>
         </widget>
        </item>
@@ -60,6 +80,9 @@
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::PlusMinus</enum>
          </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>255</number>
          </property>
@@ -73,6 +96,9 @@
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::PlusMinus</enum>
          </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
          <property name="maximum">
           <number>255</number>
          </property>
@@ -83,30 +109,7 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="animationLabel">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Animation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QComboBox" name="animationComboBox">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>0</height>
-        </size>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
+     <item row="5" column="1">
       <layout class="QHBoxLayout" name="animationOptionsLayout">
        <item>
         <widget class="QCheckBox" name="reverse_animationCheckBox">
@@ -127,7 +130,7 @@
        </item>
       </layout>
      </item>
-     <item row="6" column="0">
+     <item row="7" column="0">
       <widget class="QLabel" name="colorLabel">
        <property name="minimumSize">
         <size>
@@ -140,7 +143,7 @@
        </property>
       </widget>
      </item>
-     <item row="6" column="1">
+     <item row="7" column="1">
       <widget class="QComboBox" name="colorComboBox">
        <property name="minimumSize">
         <size>
@@ -156,76 +159,96 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="0">
+      <widget class="QLabel" name="baseColorLabel">
+       <property name="text">
+        <string>Base Color</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
       <layout class="QVBoxLayout" name="customColorLayout">
        <item>
-        <layout class="QHBoxLayout" name="colorDialLayout">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QDial" name="redDial">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>100</height>
-            </size>
-           </property>
+          <widget class="QSlider" name="redSlider">
            <property name="styleSheet">
-            <string notr="true">color: rgb(255, 0, 0);</string>
+            <string notr="true">QSlider::handle:horizontal {
+background-color: red;
+border: 1px solid #777;
+width: 13px;
+border-radius: 4px;
+}</string>
            </property>
            <property name="maximum">
             <number>255</number>
            </property>
-           <property name="invertedControls">
-            <bool>false</bool>
+           <property name="sliderPosition">
+            <number>0</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::NoTicks</enum>
+           </property>
+           <property name="tickInterval">
+            <number>5</number>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QDial" name="greenDial">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>100</height>
-            </size>
-           </property>
+          <widget class="QSlider" name="greenSlider">
            <property name="styleSheet">
-            <string notr="true">color: rgb(0, 255, 0);</string>
+            <string notr="true">QSlider::handle:horizontal {
+background-color: green;
+border: 1px solid #777;
+width: 13px;
+border-radius: 4px;
+}</string>
            </property>
            <property name="maximum">
             <number>255</number>
+           </property>
+           <property name="sliderPosition">
+            <number>0</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickInterval">
+            <number>5</number>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QDial" name="blueDial">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>100</width>
-             <height>100</height>
-            </size>
-           </property>
+          <widget class="QSlider" name="blueSlider">
            <property name="styleSheet">
-            <string notr="true">color: rgb(0, 0, 255);</string>
+            <string notr="true">QSlider::handle:horizontal {
+background-color: blue;
+border: 1px solid #777;
+width: 13px;
+border-radius: 4px;
+}</string>
            </property>
            <property name="maximum">
             <number>255</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="tickInterval">
+            <number>5</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="baseColorPreviewLabel">
+           <property name="text">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{0, 0, 0}&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -298,7 +321,7 @@
        </item>
       </layout>
      </item>
-     <item row="8" column="0">
+     <item row="9" column="0">
       <widget class="QLabel" name="cycleLabel">
        <property name="minimumSize">
         <size>
@@ -311,7 +334,7 @@
        </property>
       </widget>
      </item>
-     <item row="8" column="1">
+     <item row="9" column="1">
       <widget class="QSlider" name="cycleSlider">
        <property name="minimum">
         <number>10</number>
@@ -342,30 +365,40 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="overlayLayout">
+     <item row="3" column="0">
+      <widget class="QLabel" name="animationLabel">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Animation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="animationLayout">
        <item>
-        <widget class="QComboBox" name="mix_modeComboBox"/>
-       </item>
-       <item>
-        <widget class="QDoubleSpinBox" name="alphaSpinBox">
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.100000000000000</double>
-         </property>
-         <property name="value">
-          <double>0.500000000000000</double>
+        <widget class="QComboBox" name="animationComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
          </property>
         </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="orientationComboBox"/>
        </item>
       </layout>
      </item>
     </layout>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="extraControlsLayout"/>
    </item>
   </layout>
  </widget>

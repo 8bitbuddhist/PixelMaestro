@@ -1,7 +1,7 @@
 #ifndef CANVASCLEAREVENT_H
 #define CANVASCLEAREVENT_H
 
-#include "../canvas.h"
+#include "../canvas/canvas.h"
 #include "event.h"
 
 namespace PixelMaestro {

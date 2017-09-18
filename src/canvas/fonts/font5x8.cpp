@@ -5,8 +5,8 @@
 #include "font5x8.h"
 
 namespace PixelMaestro {
-	Font5x8::Font5x8() : Font() {
-		size = new Point(5, 8);
+	Font5x8::Font5x8() {
+		size.set(5, 8);
 	}
 
 	unsigned char* Font5x8::get_char(unsigned char character) {

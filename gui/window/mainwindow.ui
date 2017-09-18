@@ -896,8 +896,10 @@
     </widget>
     <addaction name="action_Open_Animation_Editor"/>
     <addaction name="menuOpen_Demo"/>
+    <addaction name="action_Close_Workspace"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
+    <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
@@ -948,6 +950,11 @@
   <action name="actionDrawing_Demo">
    <property name="text">
     <string>Drawing Demo</string>
+   </property>
+  </action>
+  <action name="action_Close_Workspace">
+   <property name="text">
+    <string>&amp;Close Workspace</string>
    </property>
   </action>
  </widget>

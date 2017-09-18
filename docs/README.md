@@ -1,29 +1,51 @@
+## Contents
+1. [Structure](#structure)
+2. [Quick Start](#quick-start)
+
 # Structure
-PixelMaestro is split into three main components:
-* [Pixel](pixel.md): A single RGB output.
-* [Section](section.md): A collection of multiple Pixels. Provides the core functionality for animating Pixels.
-* [Maestro](maestro.md): A collection of Sections. Handles the synchronization and updating of one or more Sections.
+PixelMaestro has four main components:
+* [Maestro](maestro.md): Main class. Handles synchronizing one or more Sections.
+* [Section](section.md): Provides the core functionality for managing and animating groups of Pixels.
+* [Animation](animation.md): An animation to render in a Section.
+* [Show](show.md): Provides a way to schedule animation changes and other actions via a Maestro. These changes are triggered over the course of the program's runtime.
 
 PixelMaestro also includes the following support classes:
 * [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.
 * [Colors](colors.md): Provides core utilities for managing colors including several pre-defined colors, color schemes, and methods for generating new colors.
-* [Show](show.md): Provides a way to schedule animation changes and other actions via a Maestro. These changes are triggered over the course of the program's runtime.
+* [Point](point.md): Class for managing coordinates on the Pixel grid.
+* [Pixel](pixel.md): A single RGB output.
 * [Utility](utility.md): Shared (mostly mathematic) methods.
 
-# Basic Usage
-The following code creates a 10x10 grid of Pixels flashing a variety of colors:
+# Quick Start
+This Arduino-style example shows how to create a new Pixel grid 50 Pixels wide and 10 Pixels tall, draw text, and make it flash.
+
 ```c++
-const int rows = 10;
-const int columns = 10;
-Pixel pixels[rows * columns];
+Section sections[] = {
+	// Create a new 50x10 Pixel grid
+	Section(50, 10)
+};
+// Add the Section to the Maestro
+Maestro maestro(sections, 1);
 
-int num_sections = 1;
-Section sections[num_sections] = {
-	Section(pixels, new Point(rows, columns))
+void setup() {
+	// Set global brightness to 50%
+	maestro.set_brightness(128);
+
+	// Create a new blinking animation using an assortment of colors
+	sections[0].set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
+
+	// Create a new Canvas and write "Hello world" using a 5x8 font
+	Canvas* canvas = sections[0].add_canvas();
+	canvas.draw_text(0, 0, new Font5x8(), "Hello world!");
 }
-sections[0].set_colors(Colors::COLORWHEEL, 12);
-sections[0].set_color_animation(ColorAnimations::BLINK);
 
-Maestro maestro;
-maestro.set_sections(sections, num_sections);
+void loop() {
+	maestro.update(millis());
+
+	Colors::RGB *color;
+	for (unsigned int pixel = 0; pixel < sections[0]->get_dimesions()->size(); pixel++) {
+		color = maestro.get_pixel_color(0, pixel);
+		// Use `color` below, e.g. to send RGB values to a LED strip
+	}
+}
 ```

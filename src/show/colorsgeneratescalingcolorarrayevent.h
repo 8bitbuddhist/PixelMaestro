@@ -1,7 +1,7 @@
 #ifndef COLORSGENERATESCALINGCOLORARRAYEVENT_H
 #define COLORSGENERATESCALINGCOLORARRAYEVENT_H
 
-#include "../colors.h"
+#include "../core/colors.h"
 #include "event.h"
 
 namespace PixelMaestro {

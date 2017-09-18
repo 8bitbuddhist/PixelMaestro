@@ -5,10 +5,10 @@
 #ifndef MAESTROCONTROL_H
 #define MAESTROCONTROL_H
 
-#include "colors.h"
-#include "maestro.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
+#include "core/colors.h"
+#include "core/maestro.h"
 #include "drawingarea/simpledrawingarea.h"
 #include <QWidget>
 
@@ -26,38 +26,43 @@ class MaestroControl : public QWidget {
 		~MaestroControl();
 
 	private:
-		/// Index of the actively controlled SectionController.
-		SectionController *active_section_controller_;;
+		/// Stores the actively controlled SectionController.
+		SectionController *active_section_controller_ = nullptr;
 		Ui::MaestroControl *ui;
 
 		/// MaestroController that this widget is controlling.
-		MaestroController* maestro_controller_;
+		MaestroController* maestro_controller_ = nullptr;
 
-		SectionController *getActiveSectionController();
-		void changeScalingColorArray(Colors::RGB color);
+		/// Stores any extra animation controllers
+		std::unique_ptr<QWidget> extra_control_widget_;
+
+		void change_scaling_color_array(Colors::RGB color);
+		void get_section_settings();
 		void initialize();
 		void on_custom_color_changed();
 		void on_ui_changed();
-		void setCustomColorControlsVisible(bool enabled);
-		void setOverlayControlsVisible(bool visible);
+		void on_section_resize(unsigned short x, unsigned short y);
+		void set_custom_color_controls_visible(bool visible);
+		void show_extra_controls(int index, Animation* animation);
+		void set_overlay_controls_visible(bool visible);
 
 	private slots:
+		void on_alphaSpinBox_valueChanged(int arg1);
 		void on_animationComboBox_currentIndexChanged(int index);
-		void on_blueDial_valueChanged(int value);
+		void on_blueSlider_valueChanged(int value);
 		void on_colorComboBox_currentIndexChanged(int index);
 		void on_columnsSpinBox_valueChanged(int arg1);
 		void on_cycleSlider_valueChanged(int value);
-		void on_greenDial_valueChanged(int value);
+		void on_greenSlider_valueChanged(int value);
 		void on_fadeCheckBox_toggled(bool checked);
-		void on_num_colorsSpinBox_valueChanged(int arg1);
-		void on_reverse_animationCheckBox_toggled(bool checked);
-		void on_redDial_valueChanged(int value);
-		void on_rowsSpinBox_valueChanged(int arg1);
-		void on_thresholdSpinBox_valueChanged(int arg1);
-		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
-		void on_addOverlayButton_clicked();
 		void on_mix_modeComboBox_currentIndexChanged(int index);
-		void on_alphaSpinBox_valueChanged(double arg1);
+		void on_num_colorsSpinBox_valueChanged(int arg1);
+		void on_orientationComboBox_currentIndexChanged(int index);
+		void on_reverse_animationCheckBox_toggled(bool checked);
+		void on_redSlider_valueChanged(int value);
+		void on_rowsSpinBox_valueChanged(int arg1);
+		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
+		void on_thresholdSpinBox_valueChanged(int arg1);
 };
 
 #endif // MAESTROCONTROL_H

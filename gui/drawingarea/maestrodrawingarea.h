@@ -7,14 +7,14 @@
 
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
-#include "colors.h"
-#include "maestro.h"
+#include "core/colors.h"
+#include "core/maestro.h"
+#include "core/pixel.h"
+#include "core/section.h"
 #include "maestrodrawingarea.h"
-#include "pixel.h"
 #include <QElapsedTimer>
 #include <QTimer>
 #include <QWidget>
-#include "section.h"
 #include <vector>
 
 using namespace PixelMaestro;
@@ -28,17 +28,29 @@ class MaestroDrawingArea : public QWidget {
 
 	protected:
 		/// Tracks the time elapsed since the DrawingArea's initialization.
-		QElapsedTimer elapsed_timer;
+		QElapsedTimer elapsed_timer_;
 
 		/// Handles calling the DrawingArea's refreshMaestro() method.
-		QTimer *timer;
+		QTimer *timer_;
 
 		/// The MaestroController managed by this DrawingArea.
 		MaestroController* maestro_controller_;
 
+		/// tmp_rgb_ converted to QColor
+		QColor tmp_color_;
+
+		/// Brush used to paint tmp_color
+		QBrush tmp_brush_;
+
+		/// Size and location of the Pixel to draw using tmp_brush
+		QRect tmp_rect_;
+
+		/// Colors::RGB output from each Pixel
+		Colors::RGB tmp_rgb_;
+
 	private:
-		/// Maestro's refresh rate (defaults to 20ms or 50Hz).
-		const unsigned char refresh_ = 20;
+		/// Maestro's refresh rate (defaults to 20ms, which is 50Hz).
+		unsigned char refresh_ = 20;
 
 	private slots:
 		void refresh_maestro();

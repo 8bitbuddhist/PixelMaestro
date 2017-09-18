@@ -1,0 +1,83 @@
+#ifndef ANIMATION_H
+#define ANIMATION_H
+
+#include "../core/colors.h"
+#include "../core/section.h"
+
+namespace PixelMaestro {
+	class Section;
+
+	class Animation {
+		public:
+			/// Set of animations usable by the Section.
+			enum Animations {
+				/// Sets each Pixel to its corresponding color.
+				SOLID,
+
+				/// Alternates Pixels between their default color and black (off).
+				BLINK,
+
+				/// Cycles Pixels through all stored colors.
+				CYCLE,
+
+				/// Scrolls the color array across the Section.
+				WAVE,
+
+				/// Converges the color array into the center of the Section.
+				MERGE,
+
+				/// Sets each Pixel to a random color.
+				RANDOM,
+
+				/// Creates a shimmering effect by turning on random pixels.
+				SPARKLE,
+
+				/// Radiates colors towards or away from the center of the grid.
+				RADIAL
+			};
+
+			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. Blink).
+			enum Orientations {
+				HORIZONTAL,
+				VERTICAL
+			};
+
+			Animation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
+			Colors::RGB* get_color_at_index(unsigned char index);
+			unsigned char get_cycle_index();
+			bool get_fade();
+			unsigned char get_num_colors();
+			unsigned int get_num_pixels();
+			Orientations get_orientation();
+			bool get_reverse();
+			void set_colors(Colors::RGB* colors, unsigned char num_colors);
+			void set_cycle_index(unsigned char index);
+			void set_fade(bool fade);
+			void set_orientation(Orientations orientation);
+			void set_reverse(bool reverse);
+			virtual void update(Section* section) = 0;
+
+		protected:
+			/// Array of colors used in the animation.
+			Colors::RGB* colors_ = nullptr;
+
+			///	The current stage in the animation cycle. Defaults to 0.
+			unsigned char cycle_index_ = 0;
+
+			/// Whether to fade between cycles. Defaults to true.
+			bool fade_ = true;
+
+			/// The number of colors in colors_.
+			unsigned char num_colors_ = 0;
+
+			/// The orientation of the animation. Defaults to HORIZONTAL.
+			Orientations orientation_ = Orientations::HORIZONTAL;
+
+			/// Whether to animate the current animation in reverse. Defaults to false.
+			bool reverse_ = false;
+
+			void update_cycle(unsigned char min, unsigned char max);
+	};
+}
+
+#endif // ANIMATION_H

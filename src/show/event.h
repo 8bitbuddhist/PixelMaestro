@@ -12,7 +12,6 @@ namespace PixelMaestro {
 			Event(unsigned long time);
 			unsigned long get_time();
 			virtual void run() = 0;
-			void set_time(unsigned long time);
 
 		protected:
 			/// Time that this Event will run.

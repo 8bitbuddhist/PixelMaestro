@@ -2,22 +2,21 @@
  * BlinkDemo - Displays a simple blink animation.
  */
 
+#include "../drawingarea/simpledrawingarea.h"
+#include "animation/blinkanimation.h"
 #include "blinkdemo.h"
-#include "colors.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
-#include "../drawingarea/simpledrawingarea.h"
+#include "core/colors.h"
 #include <memory>
 
-BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, this->maestro_controller_) {
-	this->maestro_controller_ = maestro_controller;
+BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
+	maestro_controller_ = maestro_controller;
+	maestro_controller_->add_section_controller(new Point(10, 10));
+	SectionController *section_controller = this->maestro_controller_->get_section_controller(0);
 
-	this->maestro_controller_->add_section_controller(new Point(10, 10));
-	SectionController *sectionController = this->maestro_controller_->get_section_controller(0);
-
-	sectionController->set_controller_colors(Colors::COLORWHEEL, 12);
-
-	std::shared_ptr<Section> section(sectionController->get_section());
-	section->set_color_animation(Section::ColorAnimations::BLINK, true, Section::AnimationOrientations::HORIZONTAL);
+	std::shared_ptr<Section> section(section_controller->get_section());
 	section->set_cycle_interval(500);
+
+	section->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
 }
