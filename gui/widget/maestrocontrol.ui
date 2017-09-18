@@ -59,6 +59,9 @@
          <property name="maximum">
           <number>255</number>
          </property>
+         <property name="singleStep">
+          <number>5</number>
+         </property>
         </widget>
        </item>
       </layout>

@@ -46,7 +46,7 @@ void MaestroControl::get_section_settings() {
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
 	ui->num_colorsSpinBox->setValue(animation->get_num_colors());
-	ui->cycleSlider->setValue(active_section_controller_->get_section()->get_cycle_interval());
+	ui->cycleSlider->setValue(ui->cycleSlider->maximum() - active_section_controller_->get_section()->get_animation()->get_speed());
 
 	// Get the animation type
 	std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
@@ -112,7 +112,7 @@ void MaestroControl::initialize() {
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
 
 	// Initialize Overlay controls
-	ui->mix_modeComboBox->addItems({"None", "Normal", "Alpha Blending", "Multiply", "Overlay"});
+	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Overlay"});
 	ui->alphaSpinBox->setVisible(false);
 
 	get_section_settings();
@@ -284,9 +284,9 @@ void MaestroControl::on_custom_color_changed() {
  * @param value New cycle speed.
  */
 void MaestroControl::on_cycleSlider_valueChanged(int value) {
-	if (value != active_section_controller_->get_section()->get_cycle_interval()) {
+	if (value != active_section_controller_->get_section()->get_animation()->get_speed()) {
 		value = ui->cycleSlider->maximum() - value;
-		active_section_controller_->get_section()->set_cycle_interval((unsigned short)value);
+		active_section_controller_->get_section()->get_animation()->set_speed(value);
 		ui->cycleSlider->setToolTip(QString::number(value));
 	}
 }
@@ -325,7 +325,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 			maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode = (Colors::MixMode)index;
 
 			// Show/hide spin box for alpha only
-			if (index == 2) {
+			if (ui->mix_modeComboBox->currentText().contains("Alpha")) {
 				ui->alphaSpinBox->setVisible(true);
 			}
 			else {

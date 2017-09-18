@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 	MainWindow w;
 
 	// Set default window size
-	w.resize(400, 500);
+	w.setWindowState(Qt::WindowState::WindowMaximized);
 
 	// Add drawing area to form
 	QVBoxLayout *main_layout = w.findChild<QVBoxLayout*>("mainLayout");

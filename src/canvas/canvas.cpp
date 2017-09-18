@@ -260,6 +260,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the boolean value at the specified index.
+	 * @param index Index to retrieve.
+	 * @return True if drawn, false if not.
+	 */
+	bool Canvas::get_pattern_index(unsigned int index) {
+		return pattern_[index];
+	}
+
+	/**
 	 * Returns the Canvas' parent Section.
 	 * @return Parent Section.
 	 */
@@ -298,42 +307,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Unsets the background color.
-	 */
-	void Canvas::remove_bg_color() {
-		this->bg_color_ = nullptr;
-	}
-
-	/**
-	 * Unsets the foreground color.
-	 */
-	void Canvas::remove_fg_color() {
-		this->bg_color_ = nullptr;
-	}
-
-	/**
 	 * Deletes this Canvas' scrolling behavior.
 	 */
 	void Canvas::remove_scroll() {
 		if (scroll_ != nullptr) {
 			delete scroll_;
 		}
-	}
-
-	/**
-	 * Sets the Canvas' background color.
-	 * @param bg_color New background color.
-	 */
-	void Canvas::set_bg_color(Colors::RGB *bg_color) {
-		this->bg_color_ = bg_color;
-	}
-
-	/**
-	 * Sets the Canvas' foreround color.
-	 * @param bg_color New foreground color.
-	 */
-	void Canvas::set_fg_color(Colors::RGB *fg_color) {
-		this->fg_color_ = fg_color;
 	}
 
 	/**
@@ -378,64 +357,12 @@ namespace PixelMaestro {
 
 	/**
 	 * Redraw the Canvas.
-	 * @param current_time The program's current runtime (passed in by a Section).
+	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const unsigned long& current_time) {
-		// Temporarily store the current color being applied.
-		Colors::RGB* tmp_color;
-
-		/*
-		 * Iterate over each bool in the Canvas.
-		 * If the bool is false, deactivate the corresponding Pixel in the Pixel grid.
-		 * If repeat is enabled, wrap the out-of-bounds part of the Canvas to the opposite end.
-		 * If Canvas::offset is set, calculate the true index of the Pixel by adding the offset.
-		 */
-		for (unsigned short row = 0; row < section_->get_dimensions()->y; row++) {
-			for (unsigned short column = 0; column < section_->get_dimensions()->x; column++) {
-
-				/*
-				 * Iterate through all Pixels.
-				 * If the Pixel is enabled, assign it the foreground color, otherwise assign the background color.
-				 * If the foregound color isn't set, skip over the Pixel and allow the Animation's color to pass through.
-				 * If the background color isn't set, just show black.
-				 */
-				if (pattern_[section_->get_pixel_index(column, row)]) {
-					if (fg_color_) {
-						tmp_color = fg_color_;
-					}
-					else {
-						// Skip this Pixel.
-						continue;
-					}
-
-				}
-				else {
-					if (bg_color_) {
-						tmp_color = bg_color_;
-					}
-					else {
-						tmp_color = &Colors::BLACK;
-					}
-				}
-
-				/*
-				 * Set the Pixel's color.
-				 * First, check one more time to make sure the Pixel is still in bounds.
-				 * If it's out of bounds, check to make sure repeat is enabled. If it is, move the Pixel to the other side of the Canvas.
-				 */
-				if (row + offset_y_ < section_->get_dimensions()->y &&
-					column + offset_x_ < section_->get_dimensions()->x) {
-					section_->set_one(column + offset_x_, row + offset_y_, tmp_color);
-				}
-				else if (scroll_ != nullptr && scroll_->repeat) {
-					section_->set_one((column + offset_x_) % section_->get_dimensions()->x,
-						(row + offset_y_) % section_->get_dimensions()->y,
-						tmp_color);
-				}
-			}
+		if (scroll_ != nullptr) {
+			update_scroll(current_time);
 		}
-
-		update_scroll(current_time);
 	}
 
 	/**

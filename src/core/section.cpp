@@ -71,15 +71,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the amount of time between animation changes.
-
-		@return speed The amount of time between animation changes.
-	*/
-	unsigned short Section::get_cycle_interval() {
-		return cycle_interval_;
-	}
-
-	/**
 		Returns the size of the Pixel grid.
 
 		@return Size of the Pixel grid.
@@ -113,14 +104,19 @@ namespace PixelMaestro {
 		@return RGB value of the Pixel's final color.
 	*/
 	Colors::RGB Section::get_pixel_color(unsigned int pixel) {
-		if (overlay_ != nullptr) {
-			if (overlay_->mix_mode == Colors::MixMode::ALPHA_BLENDING) {
-				return Colors::mix_colors(pixels_[pixel].get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha / (float)255);
-			}
-			else {
-				return Colors::mix_colors(pixels_[pixel].get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode);
+		// Overlay the Canvas, if one is set
+		if (canvas_ != nullptr) {
+			// If the same pixel hasn't been drawn, return black. Otherwise, fall through to the next check.
+			if (canvas_->get_pattern_index(pixel) == 0) {
+				return Colors::BLACK;
 			}
 		}
+
+		// Check the Overlay. If one is set, mix the Overlay with the current Section.
+		if (overlay_ != nullptr) {
+			return Colors::mix_colors(pixels_[pixel].get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha);
+		}
+		// No Overlay set, return the raw color.
 		else {
 			return *pixels_[pixel].get_color();
 		}
@@ -199,17 +195,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets the speed between animation cycles.
-
-		@param interval Time between animation cycles (in milliseconds).
-		@param pause Time to delay the start of the transition to the next animation (in ms).
-	*/
-	void Section::set_cycle_interval(unsigned short interval, unsigned short pause) {
-		cycle_interval_ = interval;
-		pause_ = pause;
-	}
-
-	/**
 		Sets the specified Pixel to a new color.
 
 		@param pixel The index of the Pixel to update.
@@ -222,12 +207,7 @@ namespace PixelMaestro {
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
-			if (pause_ > 0) {
-				pixels_[pixel].set_next_color(color, animation_->get_fade(), cycle_interval_ - pause_, *refresh_interval_);
-			}
-			else {
-				pixels_[pixel].set_next_color(color, animation_->get_fade(), cycle_interval_, *refresh_interval_);
-			}
+			pixels_[pixel].set_next_color(color, animation_->get_fade(), animation_->get_speed() - animation_->get_pause(), *refresh_interval_);
 		}
 	}
 
@@ -292,39 +272,23 @@ namespace PixelMaestro {
 	void Section::update(const unsigned long& current_time) {
 
 		// If no animation is set, do nothing.
-		if (this->animation_ == nullptr) {
+		if (animation_ == nullptr) {
 			return;
 		}
 
-		// If this Section has an Overlay, update it first.
+		// If this Section has an Overlay or Canvas, update them first.
 		if (overlay_ != nullptr) {
 			overlay_->section->update(current_time);
 		}
-
-
-		/*
-			Update the animation cycle.
-			cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
-			If it's time for the next cycle, run the animation.
-		*/
-		if (current_time - last_cycle_ >= (unsigned long)cycle_interval_) {
-
-			// Run the animation.
-			animation_->update(this);
-
-			/*
-			 * If a Canvas is set, update it.
-			 */
-			if (canvas_ != nullptr) {
-				canvas_->update(current_time);
-			}
-
-			// Update the last cycle time.
-			last_cycle_ = current_time;
+		if (canvas_ != nullptr) {
+			canvas_->update(current_time);
 		}
 
-		// Only update each Pixel if we're fading or if the cycle has changed.
-		if (animation_->get_fade() || last_cycle_ == current_time) {
+		/**
+		 * Update the animation.
+		 * Then, update each Pixel only if the update was successful or if fading is enabled.
+		 */
+		if (animation_->update(current_time, this) || animation_->get_fade()) {
 			for (unsigned short pixel = 0; pixel < dimensions_.size(); pixel++) {
 				pixels_[pixel].update();
 			}

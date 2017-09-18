@@ -3,7 +3,32 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.6] - 2017-09-17
+## [v0.6r2] - 2017-09-18
+### Changed
+- Animations:
+	- Animations now track their speed and update times instead of Sections.
+	- Animations now take speed and pause parameters in constructor.
+- Animation Previewer:
+	- Changed name of the animation editor to animation previewer.
+	- Fixed speed slider.
+- Canvas:
+	- Canvases no longer modify Pixels directly. Instead, the Section checks the Canvas during get_pixel_color().
+- Colors:
+	- Renamed "Alpha Blending" mix mode to "Alpha"
+	- Colors::MixMode takes alpha as unsigned char instead of float.
+- Other
+	- GUI opens maximized by default.
+
+### Removed
+- Canvas:
+	- Removed background and foreground color options.
+- Colors:
+	- Removed "Normal" mixing mode.
+
+### Known Issues
+- Fatal exception when closing the Animation Previewer without quitting the program.
+
+## [v0.6] - 2017-09-17 
 ### Added
 - Animations:
 	- New Animations interface.
@@ -50,7 +75,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Removed num_chars parameter from draw_text().
 
 ### Known Issues
-- Fatal exception when closing the Animation Editor without quitting the program.
+- Fatal exception when closing the Animation Previewer without quitting the program.
 
 
 ## [v0.5] - 2017-09-02

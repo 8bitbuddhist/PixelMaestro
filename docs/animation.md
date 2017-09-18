@@ -1,5 +1,5 @@
 # Animation
-Animations are moving patterns displayed on a Section. At its core, an animation is a set of colors that change over time. Each time an animation is updated, it calculates new color values for each Pixel in a Section, then applies the color to its respective Pixel.
+Animations are moving patterns displayed on a Section. At its core, an animation is a set of colors that change over time. Each time an animation is updated, it calculates and applies new color values for each Pixel in the Section. A single update is called a _cycle_. Different animations have different cycle counts depending on their behavior: for example, SOLID has one cycle (on), BLINK has two cycles (on and off), and CYCLE has a cycle count equal to the number of colors (one cycle per color).
 
 ## Contents
 1. [Animation Types](#animation-types)
@@ -25,12 +25,12 @@ The following animation types are available:
 * LIGHTNING: Displays lightning bolts branching from one end of the grid to the other.
 
 ## Creating an Animation
-All animations derive from the [Animations](src/animation/animation.h) class. To create an animation, import the relevant animation class and initialize the animation along with a color palette. An animation _must_ have a color palette.
+All animations derive from the [Animations](src/animation/animation.h) class. To create an animation, import the relevant animation class and initialize the animation along with a color palette and optionally a speed. An animation _must_ have a color palette or it will not run.
 
 ```c++
 #include "animation/blinkanimation.h"
 
-Section *section = new Section(new Point(10, 10));
+Section section Section(10, 10);
 Animation* blink_animation = new BlinkAnimation(Colors::COLORWHEEL, 12);
 section->set_animation(blink_animation);
 ``` 
@@ -56,13 +56,7 @@ animation->set_orientation(Animation::Orientations::VERTICAL);
 ```
 
 ## Changing the Animation Speed
-The speed of an animation is determined by the Section rather than the animation itself. There are two different counters: the `refresh interval` and the `cycle interval`. The `refresh interval` is the amount of time between Pixel redraws and only applies when fading is enabled. The `cycle interval` is the amount of time between animation updates. For example, in the Cycle animation, the `cycle interval` is the amount of time it takes to switch to the next color.  Both the refresh and cycle intervals are measured in milliseconds.
-
-The following code refreshes the Section every 1/10th of a second and cycles the animation every 1/2 second. If fading is disabled, then only the cycle speed will factor into the animation.
-```c++
-section.set_refresh_interval(100);
-section.set_cycle_interval(500);
-```
+You can set the animation's speed in the constructor or via the `set_speed()` method. Speed is the amount of time between animation updates measured in milliseconds. It's a bit of a misnomer, since it's actually the amount of time for the animation to finish. So for example, an animation with 5 cycles and a speed of 100 would take 500ms to finish, while the same animation with a speed of 500 would take 2500ms to finish.
 
 ### Toggling Fading
 By default, Pixels fade between color changes. Disabling fading causes color changes to occur instantly.

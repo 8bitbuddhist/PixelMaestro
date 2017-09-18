@@ -57,7 +57,7 @@ namespace PixelMaestro {
 			Section(unsigned short x, unsigned short y);
 			~Section();
 			Canvas* add_canvas();
-			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::NORMAL, unsigned char alpha = 128);
+			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::ALPHA, unsigned char alpha = 128);
 			Animation* get_animation();
 			Canvas* get_canvas();
 			unsigned short get_cycle_interval();
@@ -87,20 +87,11 @@ namespace PixelMaestro {
 			/// The Canvas to display (if applicable).
 			Canvas* canvas_ = nullptr;
 
-			/// The time between animation cycles in milliseconds. Defaults to 250.
-			unsigned short cycle_interval_ = 250;
-
 			/// The logical layout of the Pixels.
 			Point dimensions_ = {0, 0};
 
-			/// The time since the last animation cycle change in milliseconds. Defaults to 0.
-			unsigned long last_cycle_ = 0;
-
 			/// The Section overlaying the current section (if applicable).
 			Overlay* overlay_ = nullptr;
-
-			/// The amount of time the Section waits in milliseconds before starting the next animation cycle, by finishing the current cycle early. Defaults to 0.
-			unsigned short pause_ = 0;
 
 			/// The array of Pixels managed by the Section.
 			Pixel* pixels_ = nullptr;

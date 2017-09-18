@@ -18,7 +18,7 @@ See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT applicat
 6. [Interactive Canvases](#interactive-canvases)
 
 ## Creating a Canvas
-You can create a Canvas by calling `Section::add_canvas()`. This initializes a new Canvas and assigns it to the Canvas. Note that this doesn't display anything by default, so the Section will appear to be blank.
+You can create a Canvas by calling `Section::add_canvas()`. This initializes a new Canvas and assigns it to the Canvas. Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
 
 ```c++
 Canvas* canvas = section->add_canvas();
@@ -42,7 +42,7 @@ canvas_->draw_line(0, 0, 10, 10);
 ```
 
 ### Drawing Points
-The `draw_point()` method lets you "draw" a single pixel at a time. You can deactivate a pixel using the `erase()` method.
+The `draw_point()` method lets you draw a single pixel at a time. You can deactivate a pixel using the `erase()` method.
 
 ```c++
 // Draw a single point 5 pixels to the right of the origin
@@ -79,9 +79,6 @@ canvas_->draw_triangle(0, 0, 10, 0, 0, 10, true);
 
 ### Clearing the Canvas
 The `clear()` method returns the Canvas to a blank slate by clearing out any drawn shapes. You can clear a single pixel using the `erase()` method. Note that there's no way to recover anything you've drawn after clearing them.
-
-## Setting Background and Foreground Colors
-Drawing something on a Canvas causes the Section's underlying Animation to show through, while the remaining pixels will be black. The `set_bg_color()` and `set_fg_color()` properties let you override this by setting custom background and foreground colors, respectively. Note that these colors apply to the entire Canvas. You can subsequently unset these colors using `remove_bg_color()` and `remove_fg_color()`.
 
 ## Scrolling
 Scrolling shifts the contents of a Canvas along the Pixel grid, similar to a marquee. You can scroll a Canvas horizontally, vertically, or both. Use the `set_scroll()` method to define both the direction and rate of scrolling. Scroll time is measured in terms of refresh cycles, e.g. a scroll interval of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. This value can be negative, which scrolls left instead of right for the x-axis and up instead of down for y-axis.

@@ -15,16 +15,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the greatest common denominator (GCD) of two integers.
-	 * @param a First integer.
-	 * @param b Second integer.
-	 * @return Greatest common denominator.
-	 */
-	int Utility::gcd(int a, int b) {
-		return b == 0 ? a : gcd(b, a % b);
-	}
-
-	/**
 	 * Generates a pseudo-random integer value.
 	 * @param max Max limit of the RNG range.
 	 * @return Random integer value.

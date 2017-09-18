@@ -2,7 +2,7 @@
 #include "radialanimation.h"
 
 namespace PixelMaestro {
-	RadialAnimation::RadialAnimation(Colors::RGB* colors, unsigned char num_colors) : Animation(colors, num_colors) { }
+	RadialAnimation::RadialAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) { }
 
 	void RadialAnimation::update(Section* section) {
 		// Check if the size of the grid has changed.

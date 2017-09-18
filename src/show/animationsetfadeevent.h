@@ -1,7 +1,7 @@
 #ifndef ANIMATIONSETFADEEVENT_H
 #define ANIMATIONSETFADEEVENT_H
 
-#include "../core/section.h"
+#include "../animation/animation.h"
 #include "event.h"
 
 using namespace PixelMaestro;

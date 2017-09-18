@@ -59,11 +59,7 @@ namespace PixelMaestro {
 			bool in_bounds(Point* point);
 			bool in_bounds(unsigned short x, unsigned short y);
 			void initialize_pattern();
-			void remove_bg_color();
-			void remove_fg_color();
 			void remove_scroll();
-			void set_bg_color(Colors::RGB* bg_color);
-			void set_fg_color(Colors::RGB* fg_color);
 			void set_scroll(signed short x, signed short y, bool repeat);
 			void set_section(Section* section_);
 			void set_offset(signed short x, signed short y);
@@ -72,20 +68,13 @@ namespace PixelMaestro {
 			~Canvas();
 
 		private:
-
-			/// The background color of the Canvas.
-			Colors::RGB* bg_color_ = nullptr;
-
-			/// The foregound color of the Canvas.
-			Colors::RGB* fg_color_ = nullptr;
-
 			/// How far the Canvas is offset from the Pixel grid origin.
 			signed int offset_x_ = 0;
 			signed int offset_y_ = 0;
 
 			/**
 				The pattern to display.
-				Stored as an array of booleans where 'true' indicates an active Pixel.
+				Stored as an array of booleans where 'true' indicates a drawn Pixel.
 			*/
 			bool* pattern_ = nullptr;
 

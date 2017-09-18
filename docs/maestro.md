@@ -14,7 +14,7 @@ Maestros are responsible for coordinating multiple Sections. Maestros also provi
 Declare a Maestro by passing in the Sections that it will be controlling. The following code creates two Sections, one with a 10x20 grid of Pixels and another with a 20x30 grid.
 ```c++
 int num_sections = 2;
-Section sections[num_sections] = {
+Section sections[] = {
 	Section(10, 20),
 	Section(20, 30)
 };
@@ -23,7 +23,7 @@ Maestro maestro(sections, num_sections);
 You can also use `set_sections()` to set the Maestro's Sections.
 
 ## Updating the Maestro
-The `Maestro::update()` method triggers an update of all Sections, Pixels, Canvases, and Animations (and a Show, if configured) that the Maestro manages. The time between refreshes is determined by the `refresh_interval`, which defaults to 20 milliseconds. This means that every 20ms (or 50 times a second), every Section managed by the Maestro will draw a single frame. Calling `update()` multiple times repeatedly is what gives the appearance of a single fluid animation.
+The `Maestro::update()` method triggers an update of all Sections, Pixels, Canvases, and Animations (and a Show, if added) that the Maestro manages. The time between refreshes is determined by the `refresh_interval`, which defaults to 20 milliseconds. This means that every 20ms (or 50 times a second), each Section managed by the Maestro will draw a single frame. Calling `update()` multiple times per second is what gives the appearance of a single fluid animation.
 
 When you call the `update()` method, pass in the program's current runtime (or any incrementing value) in milliseconds. The Maestro will pass the runtime down to the Show's update method (if one is set) and each Section's `update()` method, as well as any Overlays or Canvases.
 ```c++

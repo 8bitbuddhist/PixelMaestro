@@ -16,7 +16,7 @@ BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : S
 	SectionController *section_controller = this->maestro_controller_->get_section_controller(0);
 
 	std::shared_ptr<Section> section(section_controller->get_section());
-	section->set_cycle_interval(500);
 
-	section->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
+	Animation* blink = section->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
+	blink->set_speed(500);
 }

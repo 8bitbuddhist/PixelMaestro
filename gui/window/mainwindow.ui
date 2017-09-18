@@ -944,7 +944,7 @@
   </action>
   <action name="action_Open_Animation_Editor">
    <property name="text">
-    <string>Open &amp;Animation Editor</string>
+    <string>Open Animation &amp;Previewer</string>
    </property>
   </action>
   <action name="actionDrawing_Demo">

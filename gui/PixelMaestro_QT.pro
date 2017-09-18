@@ -22,7 +22,6 @@ SOURCES += main.cpp\
 		../src/show/colorsgeneraterandomcolorevent.cpp \
 		../src/show/colorsgeneratescalingcolorarrayevent.cpp \
 		../src/show/event.cpp \
-		../src/show/sectionsetcycleintervalevent.cpp \
 		../src/canvas/fonts/font5x8.cpp \
 		demo/canvasdemo.cpp \
 		../src/show/canvasdrawtextevent.cpp \
@@ -63,7 +62,8 @@ SOURCES += main.cpp\
     widget/animation/plasmaanimationcontrol.cpp \
     widget/animation/sparkleanimationcontrol.cpp \
     ../src/show/sectionaddoverlayevent.cpp \
-    ../src/show/sectionremoveoverlayevent.cpp
+    ../src/show/sectionremoveoverlayevent.cpp \
+    ../src/show/animationsetspeedevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -77,7 +77,6 @@ HEADERS += \
 		../src/show/colorsgeneraterandomcolorevent.h \
 		../src/show/colorsgeneratescalingcolorarrayevent.h \
 		../src/show/event.h \
-		../src/show/sectionsetcycleintervalevent.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
 		demo/canvasdemo.h \
@@ -119,7 +118,8 @@ HEADERS += \
     widget/animation/plasmaanimationcontrol.h \
     widget/animation/sparkleanimationcontrol.h \
     ../src/show/sectionaddoverlayevent.h \
-    ../src/show/sectionremoveoverlayevent.h
+    ../src/show/sectionremoveoverlayevent.h \
+    ../src/show/animationsetspeedevent.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

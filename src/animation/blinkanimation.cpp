@@ -1,7 +1,7 @@
 #include "blinkanimation.h"
 
 namespace PixelMaestro {
-	BlinkAnimation::BlinkAnimation(Colors::RGB* colors, unsigned char num_colors) : Animation(colors, num_colors) { }
+	BlinkAnimation::BlinkAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) { }
 
 	void BlinkAnimation::update(Section* section) {
 		// Alternate the Pixel between its normal color and off (Colors::BLACK).

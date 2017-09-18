@@ -1,6 +1,6 @@
 #include <Arduino.h>
 
-#include <PixelMaestro/animation/solidanimation.h>
+#include <PixelMaestro/animation/blinkanimation.h>
 #include <PixelMaestro/core/maestro.h>
 
 #include <WS2812.h>
@@ -30,8 +30,11 @@ void setup () {
     ws.setOutput(LED_PIN);
     ws.setColorOrderGRB();
 
-		maestro.set_brightness(0.1);
-    maestro.get_section(0)->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12));
+		// Create a new blinking animation, set a palette of 12 colors, and set the cycle speed to 500ms
+    maestro.get_section(0)->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12, 500));
+
+		// Set global brightness to 10%
+		maestro.set_brightness(25);
 }
 
 void loop() {

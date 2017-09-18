@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class LightningAnimation : public Animation {
 		public:
-			LightningAnimation(unsigned char num_bolts = 1, unsigned char down_threshold = 90, unsigned char up_threshold = 166, unsigned char fork_chance_ = 4, Colors::RGB* colors = nullptr, unsigned char num_colors = 0);
+			LightningAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, unsigned short speed = 100, unsigned short pause = 0, unsigned char num_bolts = 1, unsigned char down_threshold = 90, unsigned char up_threshold = 166, unsigned char fork_chance_ = 4);
 			unsigned char get_bolt_count();
 			unsigned char get_fork_chance();
 			unsigned char get_down_threshold();
@@ -17,6 +17,7 @@ namespace PixelMaestro {
 			void update(Section* section);
 
 		private:
+			/// The chance that a bolt will drift downwards (or left in vertical mode).
 			unsigned char down_threshold_;
 
 			/// The chance of a bolt forking (reduces based on the number of off-shoot bolts. Defaults to 20.
@@ -25,6 +26,7 @@ namespace PixelMaestro {
 			/// The number of bolts to display. Defaults to 1.
 			unsigned char num_bolts_;
 
+			/// The chance that a bolt will drift upwards (or right in vertical mode).
 			unsigned char up_threshold_;
 
 			void draw_bolt_horizontal(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);

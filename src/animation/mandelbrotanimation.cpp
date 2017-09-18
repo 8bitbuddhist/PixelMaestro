@@ -2,7 +2,7 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned char num_colors) : Animation(colors, num_colors) {	}
+	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) {	}
 
 	void MandelbrotAnimation::set_colors(Colors::RGB *colors, unsigned char num_colors) {
 		colors_ = colors;
