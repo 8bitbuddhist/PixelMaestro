@@ -236,13 +236,33 @@ namespace PixelMaestro {
 			float area, s, t;
 			area = 0.5 *(-point_b_y*point_c_x + point_a_y*(-point_b_x + point_c_x) + point_a_x*(point_b_y - point_c_y) + point_b_x*point_c_y);
 
-			// TODO: Until I find a more efficient way to do this, we're just gonna iterate through each pixel in the grid.
-			for (cursor.x = 0; cursor.x < section_->get_dimensions()->x; cursor.x++) {
-				for (cursor.y = 0; cursor.y < section_->get_dimensions()->y; cursor.y++) {
-					s = 1/(2*area)*(point_a_y*point_c_x - point_a_x*point_c_y + (point_c_y - point_a_y)*cursor.x + (point_a_x - point_c_x)*cursor.y);
-					t = 1/(2*area)*(point_a_x*point_b_y - point_a_y*point_b_x + (point_a_y - point_b_y)*cursor.x + (point_b_x - point_a_x)*cursor.y);
+			// Calculate the rectangular bounds of the triangle. This allows us to iterate over a smaller set of Pixels rather than the entire grid.
+			unsigned short min_x = 0;
+			unsigned short max_x = section_->get_dimensions()->x - 1;
+			unsigned short min_y = 0;
+			unsigned short max_y = section_->get_dimensions()->y - 1;
 
-					if (s > 0 && t > 0 && 1-s-t > 0) {
+			/*
+			 * Is point a < point b?
+			 *	Yes: Is point a < point c?
+			 *		Yes: Return point a
+			 *		No: Return point c
+			 *	No: Is point b < point c?
+			 *		Yes: Return point b
+			 *		No: Return point c
+			 */
+			min_x = (point_a_x < point_b_x ? (point_c_x < point_a_x ? point_c_x : point_a_x) : (point_b_x < point_c_x ? point_b_x : point_c_x));
+			max_x = (point_a_x > point_b_x ? (point_c_x > point_a_x ? point_c_x : point_a_x) : (point_b_x > point_c_x ? point_b_x : point_c_x));
+			min_y = (point_a_y < point_b_y ? (point_c_y < point_a_y ? point_c_y : point_a_y) : (point_b_y < point_c_y ? point_b_y : point_c_y));
+			max_y = (point_a_y > point_b_y ? (point_c_y > point_a_y ? point_c_y : point_a_y) : (point_b_y > point_c_y ? point_b_y : point_c_y));
+
+			// For each point in the "rectangle", determine whether it lies inside the triangle. If so, fill it in.
+			for (cursor.x = min_x; cursor.x < max_x; cursor.x++) {
+				for (cursor.y = min_y; cursor.y < max_y; cursor.y++) {
+					s = 1 / (2 * area) * (point_a_y * point_c_x - point_a_x * point_c_y + (point_c_y - point_a_y) * cursor.x + (point_a_x - point_c_x) * cursor.y);
+					t = 1 / (2 * area) * (point_a_x * point_b_y - point_a_y * point_b_x + (point_a_y - point_b_y) * cursor.x + (point_b_x - point_a_x) * cursor.y);
+
+					if (s > 0 && t > 0 && 1 - s - t > 0) {
 						this->pattern_[section_->get_pixel_index(&cursor)] = 1;
 					}
 				}
