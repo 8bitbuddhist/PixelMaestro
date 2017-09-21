@@ -185,7 +185,7 @@ namespace PixelMaestro {
 
 		unsigned char* current_char;
 
-		// Iterate over each letter and draw using draw_char().
+		// Iterate over each letter. We know we've reached the end of the string if the array index doesn't point anywhere
 		for (unsigned short letter = 0; *(letter + text) != 0; letter++) {
 
 			/*
@@ -299,9 +299,8 @@ namespace PixelMaestro {
 	 * Reinitializes the pattern array.
 	 */
 	void Canvas::initialize_pattern() {
-		// Initialize the pattern
 		if (pattern_ != nullptr) {
-			delete pattern_;
+			delete[] pattern_;
 		}
 		pattern_ = new bool[section_->get_dimensions()->size()] {0};
 	}
@@ -310,9 +309,8 @@ namespace PixelMaestro {
 	 * Deletes this Canvas' scrolling behavior.
 	 */
 	void Canvas::remove_scroll() {
-		if (scroll_ != nullptr) {
-			delete scroll_;
-		}
+		delete scroll_;
+		scroll_ = nullptr;
 	}
 
 	/**
@@ -371,10 +369,10 @@ namespace PixelMaestro {
 	 */
 	void Canvas::update_scroll(const unsigned long& current_time) {
 		/*
-		 * If Canvas::scroll_interval is set, scroll the Canvas.
-		 * scroll_interval dictates how many refreshes will occur before the Canvas is scrolled.
-		 * For each axis, determine the impact of scroll_interval-><axis> and make the change.
-		 * If the axis exceeds the bounds of the Pixel grid, wrap back to the opposite side.
+		 * If Scroll::interval is set, scroll the Canvas.
+		 * The interval dictates how many refreshes will occur before the Canvas is scrolled.
+		 * For each axis, determine the impact of interval_<axis> and make the change.
+		 * For the part of the Canvas that gets pushed off the grid, wrap back to the opposite side.
 		 */
 		if (scroll_ != nullptr) {
 			unsigned long target_time = current_time - scroll_->last_scroll_x;
@@ -425,6 +423,6 @@ namespace PixelMaestro {
 
 	Canvas::~Canvas() {
 		delete[] pattern_;
-		delete scroll_;
+		remove_scroll();
 	}
 }

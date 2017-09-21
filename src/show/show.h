@@ -25,7 +25,7 @@ namespace PixelMaestro {
 			Show(Event **events, unsigned short num_events);
 			bool get_looping();
 			TimingModes get_timing();
-			void set_events(Event **events, unsigned short num_events);
+			void set_events(Event **events, unsigned short num_events, bool preserve_current_index = true);
 			void set_timing(TimingModes timing);
 			void set_looping(bool loop);
 			void update(const unsigned long& current_time);

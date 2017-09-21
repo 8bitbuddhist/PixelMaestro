@@ -37,8 +37,12 @@ namespace PixelMaestro {
 
 		@param events Array of Events to queue.
 		@param num_events The number of Events in the queue.
+		@param preserve_current_index If false, reset the current Event index to 0. Defaults to true.
 	*/
-	void Show::set_events(Event** events, unsigned short num_events) {
+	void Show::set_events(Event** events, unsigned short num_events, bool preserve_current_index) {
+		if (!preserve_current_index) {
+			current_index_ = 0;
+		}
 		events_ = events;
 		num_events_ = num_events;
 	}
