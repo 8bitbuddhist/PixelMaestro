@@ -299,5 +299,6 @@ namespace PixelMaestro {
 		remove_canvas();
 		remove_overlay();
 		delete [] pixels_;
+		pixels_ = nullptr;
 	}
 }

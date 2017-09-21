@@ -12,12 +12,12 @@ using namespace PixelMaestro;
  */
 SectionController::SectionController(Point* layout) {
 	this->dimensions_ = *layout;
-	this->section_ = std::shared_ptr<Section>(new Section(dimensions_));
+	this->section_ = new Section(dimensions_);
 }
 
 SectionController::SectionController(Section* section, bool is_overlay) {
 	this->dimensions_ = *section->get_dimensions();
-	this->section_ = std::shared_ptr<Section>(section);
+	this->section_ = section;
 	this->is_overlay_ = is_overlay;
 }
 
@@ -26,9 +26,9 @@ SectionController::SectionController(Section* section, bool is_overlay) {
  * @param mix_mode The blending mode of the Overlay.
  * @param alpha The transparency of the Overlay.
  */
-std::shared_ptr<SectionController> SectionController::add_overlay(Colors::MixMode mix_mode, float alpha) {
+SectionController* SectionController::add_overlay(Colors::MixMode mix_mode, float alpha) {
 	section_->add_overlay(mix_mode, alpha);
-	overlay_controller_ = std::shared_ptr<SectionController>(new SectionController(section_->get_overlay()->section, true));
+	overlay_controller_ = new SectionController(section_->get_overlay()->section, true);
 	return overlay_controller_;
 }
 
@@ -60,7 +60,7 @@ Section::Overlay* SectionController::get_overlay() {
  * Returns the Section's Overlay controller.
  * @return Overlay controller.
  */
-std::shared_ptr<SectionController> SectionController::get_overlay_controller() {
+SectionController* SectionController::get_overlay_controller() {
 	return this->overlay_controller_;
 }
 
@@ -68,7 +68,7 @@ std::shared_ptr<SectionController> SectionController::get_overlay_controller() {
  * Returns the SectionController's underlying Section.
  * @return Section controlled by the SectionController.
  */
-std::shared_ptr<Section> SectionController::get_section() {
+Section* SectionController::get_section() {
 	return this->section_;
 }
 
@@ -88,4 +88,13 @@ void SectionController::set_colors(Colors::RGB* colors, unsigned char num_colors
 	}
 
 	section_->get_animation()->set_colors(&this->colors_[0], num_colors);
+}
+
+SectionController::~SectionController() {
+	delete overlay_controller_;
+
+	// Sections automatically delete Overlays. Only delete this Section if it's not an Overlay.
+	if (!is_overlay_) {
+		delete section_;
+	}
 }

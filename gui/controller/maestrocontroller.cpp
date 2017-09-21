@@ -74,7 +74,7 @@ void MaestroController::reassign_sections() {
 	// Re-build the Sections vector
 	this->sections_.clear();
 	for (unsigned char i = 0; i < section_controllers_.size(); i++) {
-		sections_.push_back(section_controllers_[i]->get_section().get());
+		sections_.push_back(section_controllers_[i]->get_section());
 	}
 
 	maestro_->set_sections(sections_[0], sections_.size());

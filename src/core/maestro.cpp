@@ -28,6 +28,9 @@ namespace PixelMaestro {
 		if (show_ == nullptr) {
 			show_ = new Show(events, num_events);
 		}
+		else {
+			show_->set_events(events, num_events);
+		}
 
 		return show_;
 	}
