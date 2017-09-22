@@ -66,7 +66,8 @@ SOURCES += main.cpp\
     ../src/show/animationsetspeedevent.cpp \
     demo/presetdemo.cpp \
     ../src/preset/demopreset.cpp \
-    ../src/show/maestroapplypresetevent.cpp
+    ../src/show/maestroapplypresetevent.cpp \
+    ../src/canvas/animationcanvas.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -126,7 +127,8 @@ HEADERS += \
     demo/presetdemo.h \
     ../src/preset/preset.h \
     ../src/show/maestroapplypresetevent.h \
-    ../src/preset/demopreset.h
+    ../src/preset/demopreset.h \
+    ../src/canvas/animationcanvas.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

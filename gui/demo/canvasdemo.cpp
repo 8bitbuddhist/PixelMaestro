@@ -2,7 +2,8 @@
  * PatternDemo.cpp - Demonstrates PixelMaestro's Pattern features.
  */
 
-#include "../drawingarea/simpledrawingarea.h"
+#include "canvas/animationcanvas.h"
+#include "drawingarea/simpledrawingarea.h"
 #include "canvasdemo.h"
 #include "animation/mergeanimation.h"
 #include "canvas/fonts/font5x8.h"
@@ -23,7 +24,7 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 
 	section->set_animation(new MergeAnimation(Colors::COLORWHEEL, 12));
 
-	Canvas* canvas = section->add_canvas();
+	Canvas* canvas = section->set_canvas(new AnimationCanvas(section));
 
 	// Start drawing
 	// First, box off the Canvas into 4 quadrants

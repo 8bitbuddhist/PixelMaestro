@@ -56,7 +56,6 @@ namespace PixelMaestro {
 			Section(Point dimensions);
 			Section(unsigned short x, unsigned short y);
 			~Section();
-			Canvas* add_canvas();
 			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::ALPHA, unsigned char alpha = 128);
 			Animation* get_animation();
 			Canvas* get_canvas();
@@ -72,6 +71,7 @@ namespace PixelMaestro {
 			void remove_overlay();
 			void set_all(Colors::RGB* color);
 			Animation* set_animation(Animation* animation, bool preserve_cycle_index = false);
+			Canvas* set_canvas(Canvas* canvas);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_dimensions(Point layout);
 			void set_dimensions(unsigned short x, unsigned short y);

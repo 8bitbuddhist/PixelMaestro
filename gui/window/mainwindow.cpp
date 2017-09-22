@@ -1,9 +1,10 @@
-#include "../demo/blinkdemo.h"
-#include "../demo/canvasdemo.h"
-#include "../demo/presetdemo.h"
-#include "../demo/showdemo.h"
-#include "../drawingarea/canvasdrawingarea.h"
 #include "animation/waveanimation.h"
+#include "canvas/animationcanvas.h"
+#include "demo/blinkdemo.h"
+#include "demo/canvasdemo.h"
+#include "demo/presetdemo.h"
+#include "demo/showdemo.h"
+#include "drawingarea/canvasdrawingarea.h"
 #include "mainwindow.h"
 #include "QDesktopServices"
 #include "QMessageBox"
@@ -121,7 +122,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	Animation* wave = section_controller->get_section()->set_animation(new WaveAnimation());
 	wave->set_speed(100);
 	section_controller->set_colors(Colors::COLORWHEEL, 12);
-	Canvas* canvas = section_controller->get_section()->add_canvas();
+	Canvas* canvas = section_controller->get_section()->set_canvas(new AnimationCanvas(section_controller->get_section()));
 
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);
 	installEventFilter(drawing_area_);

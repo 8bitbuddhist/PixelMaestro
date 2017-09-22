@@ -27,18 +27,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Creates a new Canvas with the dimensions of the array.
-	 * @return New Canvas.
-	 */
-	Canvas* Section::add_canvas() {
-		if (canvas_ == nullptr) {
-			canvas_ = new Canvas(this);
-		}
-
-		return canvas_;
-	}
-
-	/**
 	 * Creates a new Overlay.
 	 * @param mix_mode The method for blending the Overlay.
 	 * @param alpha The Overlay's transparency (0 - 255.
@@ -107,22 +95,13 @@ namespace PixelMaestro {
 		// Before returning the final color, we need to factor in the Canvas and Overlay.
 		Colors::RGB color;
 
-		/*
-		 * Check the Canvas, if one is set.
-		 * If the pixel *hasn't* been drawn, set it to black.
-		 * Otherwise, show the animation color.
-		 */
-		if (canvas_ != nullptr && canvas_->get_pattern_index(pixel) == 0) {
-			color = Colors::BLACK;
-		}
-		else {
-			color = *pixels_[pixel].get_color();
+		if (canvas_ != nullptr) {
+			color = canvas_->get_pixel_color(pixel);
 		}
 
 		/*
-		 * Check the Overlay.
-		 * If one is set, mix the Overlay color with the Section color
-		 * Otherwise, return the existing color.
+		 * If there's an Overlay, mix the Overlay color with the Section color.
+		 * Otherwise, return the Section (/Canvas) color.
 		 */
 		if (overlay_ != nullptr) {
 			return Colors::mix_colors(color, overlay_->section->get_pixel_color(pixel), overlay_->mix_mode, overlay_->alpha);
@@ -201,6 +180,16 @@ namespace PixelMaestro {
 
 		animation_ = animation;
 		return animation_;
+	}
+
+	/**
+	 * Sets the Canvas.
+	 * @param canvas Canvas to set.
+	 * @return New Canvas.
+	 */
+	Canvas* Section::set_canvas(Canvas *canvas) {
+		canvas_ = canvas;
+		return canvas_;
 	}
 
 	/**

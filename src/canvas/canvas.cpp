@@ -7,12 +7,11 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. This also initializes the Canvas' offset to 0.
+	 * Constructor. This sets the parent Section.
 	 * @param section The Canvas' parent Section.
 	 */
 	Canvas::Canvas(Section* section) {
 		this->section_ = section;
-		initialize_pattern();
 	}
 
 	/**
@@ -20,7 +19,7 @@ namespace PixelMaestro {
 	 */
 	void Canvas::clear() {
 		for (unsigned int pixel = 0; pixel < (unsigned int)(section_->get_dimensions()->size()); pixel++) {
-			pattern_[pixel] = false;
+			deactivate(pixel);
 		}
 	}
 
@@ -56,7 +55,7 @@ namespace PixelMaestro {
 					 */
 					if ((test_point >= radius_squared - radius && test_point <= radius_squared + radius) ||
 						(fill && test_point < Utility::square(radius))) {
-						this->pattern_[section_->get_pixel_index(&cursor)] = 1;
+						activate(section_->get_pixel_index(&cursor));
 					}
 				}
 			}
@@ -89,7 +88,7 @@ namespace PixelMaestro {
 		if (target_x == origin_x) {
 			while (cursor.y != target_y) {
 				if (in_bounds(&cursor)) {
-					this->pattern_[section_->get_pixel_index(&cursor)] = 1;
+					activate(section_->get_pixel_index(&cursor));
 				}
 
 				if (target_y >= cursor.y) {
@@ -108,7 +107,7 @@ namespace PixelMaestro {
 			 */
 			while (cursor.x != target_x) {
 				if (in_bounds(&cursor)) {
-					this->pattern_[section_->get_pixel_index(&cursor)] = 1;
+					activate(section_->get_pixel_index(&cursor));
 				}
 
 				if (target_x >= origin_x) {
@@ -129,7 +128,7 @@ namespace PixelMaestro {
 	 */
 	void Canvas::draw_point(unsigned short x, unsigned short y) {
 		if (in_bounds(x, y)) {
-			pattern_[section_->get_pixel_index(x, y)] = 1;
+			activate(section_->get_pixel_index(x, y));
 		}
 	}
 
@@ -152,7 +151,7 @@ namespace PixelMaestro {
 				if (in_bounds(&cursor)) {
 					// Check whether to fill
 					if (fill) {
-						this->pattern_[section_->get_pixel_index(&cursor)] = 1;
+						activate(section_->get_pixel_index(&cursor));
 					}
 					else {
 						/*
@@ -161,7 +160,7 @@ namespace PixelMaestro {
 						 */
 						if ((cursor.x == origin_x || cursor.y == origin_y) ||
 							(column == size_x - 1 || row == size_y - 1)) {
-							this->pattern_[section_->get_pixel_index(&cursor)] = 1;
+							activate(section_->get_pixel_index(&cursor));
 						}
 					}
 				}
@@ -187,16 +186,15 @@ namespace PixelMaestro {
 			/*
 			 * Each char in the font corresponds to a column.
 			 * Each bit in the char corresponds to an individual pixel.
-			 * We use bitmasking to get the bit value, then enable/disable the pixel based on that bit.
+			 * We use bitmasking to get the bit value, then enable the pixel based on that bit.
 			 */
 			current_char = font->get_char(text[letter]);
 			for (int column = 0; column < font->size.x; column++) {
 				for (int row = 0; row < font->size.y; row++) {
 					if (in_bounds(&cursor)) {
-						pattern_[section_->get_pixel_index(cursor.x + column, cursor.y + row)] = (current_char[column] >> row) & 1;
-					}
-					else {
-						break;
+						if ((current_char[column] >> row) & 1) {
+							activate(section_->get_pixel_index(cursor.x + column, cursor.y + row));
+						}
 					}
 				}
 			}
@@ -259,7 +257,7 @@ namespace PixelMaestro {
 					t = 1 / (2 * area) * (point_a_x * point_b_y - point_a_y * point_b_x + (point_a_y - point_b_y) * cursor.x + (point_b_x - point_a_x) * cursor.y);
 
 					if (s > 0 && t > 0 && 1 - s - t > 0) {
-						this->pattern_[section_->get_pixel_index(&cursor)] = 1;
+						activate(section_->get_pixel_index(&cursor));
 					}
 				}
 			}
@@ -272,16 +270,7 @@ namespace PixelMaestro {
 	 * @param cursor_y The pixel's y-coordinate.
 	 */
 	void Canvas::erase(unsigned short x, unsigned short y) {
-		pattern_[section_->get_pixel_index(x, y)] = 0;
-	}
-
-	/**
-	 * Returns the boolean value at the specified index.
-	 * @param index Index to retrieve.
-	 * @return True if drawn, false if not.
-	 */
-	bool Canvas::get_pattern_index(unsigned int index) {
-		return pattern_[index];
+		deactivate(section_->get_pixel_index(x, y));
 	}
 
 	/**
@@ -309,16 +298,6 @@ namespace PixelMaestro {
 	 */
 	bool Canvas::in_bounds(unsigned short x, unsigned short y) {
 		return (x < section_->get_dimensions()->x) && (y < section_->get_dimensions()->y);
-	}
-
-	/**
-	 * Reinitializes the pattern array.
-	 */
-	void Canvas::initialize_pattern() {
-		if (pattern_ != nullptr) {
-			delete[] pattern_;
-		}
-		pattern_ = new bool[section_->get_dimensions()->size()] {0};
 	}
 
 	/**
@@ -438,7 +417,6 @@ namespace PixelMaestro {
 	}
 
 	Canvas::~Canvas() {
-		delete[] pattern_;
 		remove_scroll();
 	}
 }
