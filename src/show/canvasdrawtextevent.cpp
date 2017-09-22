@@ -10,7 +10,7 @@ namespace PixelMaestro {
 	 * @param font The font to use.
 	 * @param text The text to draw.
 	 */
-	CanvasDrawTextEvent::CanvasDrawTextEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, Font* font, char* text) : Event(time) {
+	CanvasDrawTextEvent::CanvasDrawTextEvent(unsigned long time, BaseCanvas* canvas, unsigned short origin_x, unsigned short origin_y, Font* font, char* text) : Event(time) {
 		this->canvas_ = canvas;
 		this->origin_x_ = origin_x;
 		this->origin_y_ = origin_y;

@@ -1,7 +1,8 @@
 #include "animation/waveanimation.h"
-#include "canvas/animationcanvas.h"
+#include "canvas/canvas.h"
 #include "demo/blinkdemo.h"
 #include "demo/canvasdemo.h"
+#include "demo/colorcanvasdemo.h"
 #include "demo/presetdemo.h"
 #include "demo/showdemo.h"
 #include "drawingarea/canvasdrawingarea.h"
@@ -41,8 +42,10 @@ void MainWindow::reset_drawing_area() {
 
 	ui->action_Blink_Demo->setEnabled(true);
 	ui->action_Canvas_Demo->setEnabled(true);
+	ui->action_Color_Canvas_Demo->setEnabled(true);
 	ui->action_Close_Workspace->setEnabled(false);
 	ui->action_Open_Animation_Editor->setEnabled(true);
+	ui->actionPreset_Demo->setEnabled(true);
 	ui->action_Show_Demo->setEnabled(true);
 	ui->actionDrawing_Demo->setEnabled(true);
 
@@ -122,7 +125,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	Animation* wave = section_controller->get_section()->set_animation(new WaveAnimation());
 	wave->set_speed(100);
 	section_controller->set_colors(Colors::COLORWHEEL, 12);
-	Canvas* canvas = section_controller->get_section()->set_canvas(new AnimationCanvas(section_controller->get_section()));
+	BaseCanvas* canvas = section_controller->get_section()->set_canvas(new Canvas(section_controller->get_section()));
 
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);
 	installEventFilter(drawing_area_);
@@ -140,4 +143,16 @@ void MainWindow::on_actionPreset_Demo_triggered() {
 	ui->actionPreset_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Demonstrates using a preset to auto-populate a Maestro."));
+}
+
+void MainWindow::on_action_Color_Canvas_Demo_triggered() {
+	reset_drawing_area();
+
+	drawing_area_ = new ColorCanvasDemo(main_layout_->widget(), controller_);
+	main_layout_->addWidget(drawing_area_);
+
+	// Update UI
+	ui->action_Color_Canvas_Demo->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
+	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Color Canvas."));
 }

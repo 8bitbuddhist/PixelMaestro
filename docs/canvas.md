@@ -4,30 +4,37 @@ A Canvas lets you draw custom shapes and patterns onto a Section. In essence, a 
 See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
 
 ## Contents
-1. [Creating a Canvas](#creating-a-canvas)
-2. [Drawing Shapes](#drawing-shapes)
+1. [Canvas Types](#canvas-types)
+2. [Creating a Canvas](#creating-a-canvas)
+3. [Drawing Shapes](#drawing-shapes)
 	1. [Drawing Lines](#drawing-lines)
 	2. [Drawing Rectangles](#drawing-rectangles)
 	3. [Drawing Text](#drawing-text)
 	4. [Drawing Triangles](#drawing-triangles)
 	5. [Clearing the Canvas](#clearing-the-canvas)
-3. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
-4. [Scrolling](#scrolling)
+4. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
+5. [Scrolling](#scrolling)
 	1. [Repeated Scrolling](#repeated-scrolling)
-5. [Offsetting](#offsetting)
-6. [Interactive Canvases](#interactive-canvases)
+6. [Offsetting](#offsetting)
+7. [Interactive Canvases](#interactive-canvases)
+
+## Canvas Types
+There are two different types of Canvases: `Canvas` and `ColorCanvas`. A `ColorCanvas` works similar to an image editor. You specify the shape to draw and the color to use when drawing the shape. You can pass any color, since the Canvas stores it internally. This is limited on embedded devices, since it requires you to store an additional RGB value for each pixel.
+
+A `Canvas` works almost identical to a `ColorCanvas`, except instead of drawing a specific color it draws the Section's underlying animation. For example, if the Section is running a `BlinkAnimation`, any shapes drawn on the Canvas will appear to blink. This is handled using a hidden boolean value associated with each pixel, where `true` means the pixel is "drawn" (i.e. show the color from the Animation) and `false` means the pixel is not drawn (i.e. show nothing).
 
 ## Creating a Canvas
-You can create a Canvas by calling `Section::add_canvas()`. This initializes a new Canvas and assigns it to the Canvas. Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
+When initializing a new Canvas, pass the Section that you want to assign it to in the constructor. You then need to call `Section::set_canvas(Canvas*)` to allow the Section to interact with the Canvas. Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
 
 ```c++
-Canvas* canvas = section->add_canvas();
+ColorCanvas* canvas = dynamic_cast<ColorCanvas*>(new ColorCanvas(section));
+Canvas* canvas = section->set_canvas(canvas);
 ```
-
-You can also add an existing Canvas by using the `Section::set_canvas(Canvas*)` method.
 
 ## Drawing Shapes
 The Canvas class provides several functions for drawing various shapes, elements, and patterns. For each shape you must specify where it will appear on the grid (typically as x and y coordinates), its size, and any extra parameters that the shape requires.
+
+**Note:** When calling one of the `draw_` methods on a ColorCanvas, you will also need to pass the Color you want to use to draw the shape.
 
 The Canvas uses a typical Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section.
 

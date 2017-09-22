@@ -9,7 +9,7 @@
 #include "QString"
 #include "QToolTip"
 
-CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro_controller, Canvas* canvas) : SimpleDrawingArea(parent, maestro_controller) {
+CanvasDrawingArea::CanvasDrawingArea(QWidget* parent, MaestroController* maestro_controller, BaseCanvas* canvas) : SimpleDrawingArea(parent, maestro_controller) {
 	// Enable mouse tracking
 	this->setMouseTracking(true);
 	this->canvas_ = canvas;

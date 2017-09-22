@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	 * @param size_y Height of the rectangle.
 	 * @param fill Whether or not to fill the rectangle.
 	 */
-	CanvasDrawRectEvent::CanvasDrawRectEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) : Event(time)	{
+	CanvasDrawRectEvent::CanvasDrawRectEvent(unsigned long time, BaseCanvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) : Event(time)	{
 		this->canvas_ = canvas;
 		this->origin_x_ = origin_x;
 		this->origin_y_ = origin_y;

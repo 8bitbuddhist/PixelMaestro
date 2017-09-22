@@ -54,7 +54,7 @@ namespace PixelMaestro {
 	 * Returns the Section's Canvas.
 	 * @return Section's Canvas.
 	 */
-	Canvas* Section::get_canvas() {
+	BaseCanvas* Section::get_canvas() {
 		return canvas_;
 	}
 
@@ -97,6 +97,9 @@ namespace PixelMaestro {
 
 		if (canvas_ != nullptr) {
 			color = canvas_->get_pixel_color(pixel);
+		}
+		else {
+			color = *pixels_[pixel].get_color();
 		}
 
 		/*
@@ -187,7 +190,7 @@ namespace PixelMaestro {
 	 * @param canvas Canvas to set.
 	 * @return New Canvas.
 	 */
-	Canvas* Section::set_canvas(Canvas *canvas) {
+	BaseCanvas* Section::set_canvas(BaseCanvas *canvas) {
 		canvas_ = canvas;
 		return canvas_;
 	}
@@ -286,7 +289,16 @@ namespace PixelMaestro {
 		 * Update the animation.
 		 * Then, update each Pixel only if the update was successful or if fading is enabled.
 		 */
-		if (animation_->update(current_time, this) || animation_->get_fade()) {
+		/*
+		 * Update the Pixel grid.
+		 * Only update under the following circumstances:
+		 *	1) An animation is set, and either
+		 *		a) The Animation has changed
+		 *		b) Fading is enabled
+		 */
+		if (animation_ != nullptr &&
+				(animation_->update(current_time, this) ||
+				 animation_->get_fade())) {
 			for (unsigned int pixel = 0; pixel < dimensions_.size(); pixel++) {
 				pixels_[pixel].update();
 			}
@@ -294,8 +306,8 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
-		remove_canvas();
 		remove_overlay();
+
 		delete [] pixels_;
 		pixels_ = nullptr;
 	}
