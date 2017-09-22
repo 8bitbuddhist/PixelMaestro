@@ -125,8 +125,7 @@ namespace PixelMaestro {
 		 * Otherwise, return the existing color.
 		 */
 		if (overlay_ != nullptr) {
-			Colors::RGB overlay_color = overlay_->section->get_pixel_color(pixel);
-			color = Colors::mix_colors(&color, &overlay_color, overlay_->mix_mode, overlay_->alpha);
+			return Colors::mix_colors(color, overlay_->section->get_pixel_color(pixel), overlay_->mix_mode, overlay_->alpha);
 		}
 
 		return color;

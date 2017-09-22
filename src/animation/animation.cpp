@@ -34,6 +34,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the color palette.
+	 * @return Color palette.
+	 */
+	Colors::RGB* Animation::get_colors() {
+		return colors_;
+	}
+
+	/**
 	 * Returns the current cycle index.
 	 *
 	 * @return Cycle index.
@@ -173,7 +181,7 @@ namespace PixelMaestro {
 			cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
 			If it's time for the next cycle, run the animation.
 		*/
-		if (current_time - last_cycle_ >= speed_) {
+		if ((current_time - last_cycle_) >= speed_) {
 
 			// Run the derived Animation's update function.
 			update(section);

@@ -7,10 +7,11 @@
 namespace PixelMaestro {
 	class MaestroApplyPresetEvent : public Event {
 		public:
-			MaestroApplyPresetEvent(unsigned long time, Maestro* maestro, Preset* preset);
+			MaestroApplyPresetEvent(unsigned long time, Maestro* maestro, Preset* preset, bool delete_preset_ = false);
 			void run();
 
 		private:
+			bool delete_preset_;
 			Maestro* maestro_;
 			Preset* preset_;
 	};

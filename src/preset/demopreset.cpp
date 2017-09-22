@@ -19,6 +19,9 @@ namespace PixelMaestro {
 		overlay->section->set_animation(new CycleAnimation(new Colors::RGB[2] { Colors::WHITE, {0, 0, 1} }, 2, 2500, 1000));
 
 		Canvas* canvas = overlay->section->add_canvas();
-		canvas->draw_text(1, 1, new Font5x8(), "Hello world!");
+
+		Font5x8* font = new Font5x8();
+		canvas->draw_text(1, 1, font, "Hello world!");
+		delete font;
 	}
 }

@@ -18,6 +18,7 @@ namespace PixelMaestro {
 
 			Animation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, unsigned short speed = 100, unsigned short pause = 0);
 			Colors::RGB* get_color_at_index(unsigned char index);
+			Colors::RGB* get_colors();
 			unsigned char get_cycle_index();
 			bool get_fade();
 			unsigned char get_num_colors();

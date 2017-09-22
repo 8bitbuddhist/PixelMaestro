@@ -11,6 +11,7 @@
 class PresetDemo : public SimpleDrawingArea {
 	public:
 		PresetDemo(QWidget* parent, MaestroController* maestro_controller);
+		~PresetDemo();
 };
 
 #endif // PRESETDEMO_H
