@@ -104,22 +104,32 @@ namespace PixelMaestro {
 		@return RGB value of the Pixel's final color.
 	*/
 	Colors::RGB Section::get_pixel_color(unsigned int pixel) {
-		// Overlay the Canvas, if one is set
-		if (canvas_ != nullptr) {
-			// If the same pixel hasn't been drawn, return black. Otherwise, fall through to the next check.
-			if (canvas_->get_pattern_index(pixel) == 0) {
-				return Colors::BLACK;
-			}
+		// Before returning the final color, we need to factor in the Canvas and Overlay.
+		Colors::RGB color;
+
+		/*
+		 * Check the Canvas, if one is set.
+		 * If the pixel *hasn't* been drawn, set it to black.
+		 * Otherwise, show the animation color.
+		 */
+		if (canvas_ != nullptr && canvas_->get_pattern_index(pixel) == 0) {
+			color = Colors::BLACK;
+		}
+		else {
+			color = *pixels_[pixel].get_color();
 		}
 
-		// Check the Overlay. If one is set, mix the Overlay with the current Section.
+		/*
+		 * Check the Overlay.
+		 * If one is set, mix the Overlay color with the Section color
+		 * Otherwise, return the existing color.
+		 */
 		if (overlay_ != nullptr) {
-			return Colors::mix_colors(pixels_[pixel].get_color(), overlay_->section->get_pixel(pixel)->get_color(), overlay_->mix_mode, overlay_->alpha);
+			Colors::RGB overlay_color = overlay_->section->get_pixel_color(pixel);
+			color = Colors::mix_colors(&color, &overlay_color, overlay_->mix_mode, overlay_->alpha);
 		}
-		// No Overlay set, return the raw color.
-		else {
-			return *pixels_[pixel].get_color();
-		}
+
+		return color;
 	}
 
 	/**
@@ -289,7 +299,7 @@ namespace PixelMaestro {
 		 * Then, update each Pixel only if the update was successful or if fading is enabled.
 		 */
 		if (animation_->update(current_time, this) || animation_->get_fade()) {
-			for (unsigned short pixel = 0; pixel < dimensions_.size(); pixel++) {
+			for (unsigned int pixel = 0; pixel < dimensions_.size(); pixel++) {
 				pixels_[pixel].update();
 			}
 		}

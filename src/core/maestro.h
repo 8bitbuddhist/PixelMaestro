@@ -1,5 +1,5 @@
 /*
-	Maestro.cpp - Library for controlling collections of Pixels.
+	Maestro.cpp - Master class for coordinating Sections.
 */
 
 #ifndef MAESTRO_H
@@ -7,6 +7,7 @@
 
 #include "colors.h"
 #include "section.h"
+#include "../preset/preset.h"
 #include "../show/show.h"
 #include "../show/event.h"
 
@@ -17,6 +18,7 @@ namespace PixelMaestro {
 			Maestro(Section* sections, unsigned char num_sections);
 			~Maestro();
 			Show* add_show(Event** events, unsigned short num_events);
+			void apply_preset(Preset* preset, bool delete_preset = false);
 			Colors::RGB get_pixel_color(unsigned char section, unsigned int pixel);
 			unsigned char get_num_sections();
 			unsigned short get_refresh_interval();

@@ -8,7 +8,6 @@
 #include "core/colors.h"
 #include "core/pixel.h"
 #include "core/section.h"
-#include <memory>
 #include <vector>
 
 using namespace PixelMaestro;

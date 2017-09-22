@@ -8,6 +8,7 @@
 #include "core/maestro.h"
 #include "core/section.h"
 #include "sectioncontroller.h"
+#include <memory>
 #include <vector>
 
 using namespace PixelMaestro;

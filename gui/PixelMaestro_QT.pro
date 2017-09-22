@@ -63,7 +63,10 @@ SOURCES += main.cpp\
     widget/animation/sparkleanimationcontrol.cpp \
     ../src/show/sectionaddoverlayevent.cpp \
     ../src/show/sectionremoveoverlayevent.cpp \
-    ../src/show/animationsetspeedevent.cpp
+    ../src/show/animationsetspeedevent.cpp \
+    demo/presetdemo.cpp \
+    ../src/preset/demopreset.cpp \
+    ../src/show/maestroapplypresetevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -119,7 +122,11 @@ HEADERS += \
     widget/animation/sparkleanimationcontrol.h \
     ../src/show/sectionaddoverlayevent.h \
     ../src/show/sectionremoveoverlayevent.h \
-    ../src/show/animationsetspeedevent.h
+    ../src/show/animationsetspeedevent.h \
+    demo/presetdemo.h \
+    ../src/preset/preset.h \
+    ../src/show/maestroapplypresetevent.h \
+    ../src/preset/demopreset.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

@@ -9,6 +9,7 @@ Maestros are responsible for coordinating multiple Sections. Maestros also provi
 5. [Setting a Global Brightness Level](#setting-a-global-brightness-level)
 6. [Toggling the Running State](#toggling-the-running-state)
 7. [Setting a Show](#setting-a-show)
+8. [Applying a Preset](#applying-a-preset)
 
 ## Creating a Maestro
 Declare a Maestro by passing in the Sections that it will be controlling. The following code creates two Sections, one with a 10x20 grid of Pixels and another with a 20x30 grid.
@@ -44,5 +45,16 @@ You can pause the Maestro using the `set_running(bool)` method. Nothing gets upd
 
 ## Setting a Show
 [Shows](show.md) let you configure actions that will execute at a pre-determined time later during the program's runtime. For more information, see the [Show documentation](show.md).
+
+## Applying a Preset
+A Preset is a quick and easy way to configure a Maestro. Presets are regular PixelMaestro commands bundled into a single function call. This lets you easily save, reuse, and share customized Maestro configurations. Pre-defined Presets can be found in the `preset` folder.
+
+Apply a Preset by calling `Maestro::apply_preset(Preset*)`.
+
+```c++
+// AwesomePreset changes the refresh rate, initializes 5 Sections with 2 Overlays, and sets up a new Show with 10 events.
+AwesomePreset* preset = new AwesomePreset();
+maestro.apply_preset(preset);
+```
 
 [Home](README.md)

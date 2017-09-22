@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.7] - In Progress
+### Added
+- Maestro:
+	- Added Presets, which are pre-defined configurations applied to a Maestro.
+
+### Changed
+
 ## [v0.6r2] - 2017-09-18
 ### Changed
 - Animations:

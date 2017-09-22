@@ -163,10 +163,6 @@ namespace PixelMaestro {
 							(column == size_x - 1 || row == size_y - 1)) {
 							this->pattern_[section_->get_pixel_index(&cursor)] = 1;
 						}
-						else {
-							// Don't fill.
-							continue;
-						}
 					}
 				}
 			}

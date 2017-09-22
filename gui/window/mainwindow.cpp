@@ -1,5 +1,6 @@
 #include "../demo/blinkdemo.h"
 #include "../demo/canvasdemo.h"
+#include "../demo/presetdemo.h"
 #include "../demo/showdemo.h"
 #include "../drawingarea/canvasdrawingarea.h"
 #include "animation/waveanimation.h"
@@ -128,4 +129,14 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	ui->actionDrawing_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Left-click to draw, right-click to erase, Delete to clear."));
+}
+
+void MainWindow::on_actionPreset_Demo_triggered() {
+	reset_drawing_area();
+
+	drawing_area_ = new PresetDemo(main_layout_->widget(), controller_);
+	main_layout_->addWidget(drawing_area_);
+	ui->actionPreset_Demo->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
+	statusBar()->showMessage(QString("Demonstrates using a preset to auto-populate a Maestro."));
 }

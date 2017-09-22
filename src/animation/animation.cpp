@@ -173,7 +173,7 @@ namespace PixelMaestro {
 			cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
 			If it's time for the next cycle, run the animation.
 		*/
-		if (current_time - last_cycle_ >= (unsigned long)speed_) {
+		if (current_time - last_cycle_ >= speed_) {
 
 			// Run the derived Animation's update function.
 			update(section);

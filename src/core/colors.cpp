@@ -172,11 +172,11 @@ namespace PixelMaestro {
 			}
 			case MixMode::OVERLAY:
 			{
-				if (*color_two == Colors::BLACK) {
-					mixed_color = *color_one;
+				if (*color_two != Colors::BLACK) {
+					mixed_color = *color_two;
 				}
 				else {
-					mixed_color = *color_two;
+					mixed_color = *color_one;
 				}
 				break;
 			}
