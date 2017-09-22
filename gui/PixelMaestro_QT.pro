@@ -43,7 +43,6 @@ SOURCES += main.cpp\
 		../src/animation/waveanimation.cpp \
 		../src/animation/animation.cpp \
 		../src/show/sectionsetanimationevent.cpp \
-		../src/canvas/canvas.cpp \
 		../src/core/colors.cpp \
 		../src/core/maestro.cpp \
 		../src/core/pixel.cpp \
@@ -67,7 +66,10 @@ SOURCES += main.cpp\
     demo/presetdemo.cpp \
     ../src/preset/demopreset.cpp \
     ../src/show/maestroapplypresetevent.cpp \
-    ../src/canvas/animationcanvas.cpp
+    ../src/canvas/colorcanvas.cpp \
+    ../src/canvas/basecanvas.cpp \
+    ../src/canvas/canvas.cpp \
+    demo/colorcanvasdemo.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -103,7 +105,6 @@ HEADERS += \
 		../src/animation/waveanimation.h \
 		../src/animation/animation.h \
 		../src/show/sectionsetanimationevent.h \
-		../src/canvas/canvas.h \
 		../src/core/colors.h \
 		../src/core/maestro.h \
 		../src/core/pixel.h \
@@ -128,7 +129,10 @@ HEADERS += \
     ../src/preset/preset.h \
     ../src/show/maestroapplypresetevent.h \
     ../src/preset/demopreset.h \
-    ../src/canvas/animationcanvas.h
+    ../src/canvas/colorcanvas.h \
+    ../src/canvas/basecanvas.h \
+    ../src/canvas/canvas.h \
+    demo/colorcanvasdemo.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

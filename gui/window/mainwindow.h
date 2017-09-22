@@ -28,6 +28,8 @@ class MainWindow : public QMainWindow {
 		void on_action_Close_Workspace_triggered();
 		void on_actionPreset_Demo_triggered();
 
+		void on_action_Color_Canvas_Demo_triggered();
+
 	private:
 		MaestroController* controller_ = nullptr;
 		QWidget* drawing_area_ = nullptr;

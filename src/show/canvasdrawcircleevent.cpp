@@ -10,7 +10,7 @@ namespace PixelMaestro {
 	 * @param radius The size of the circle.
 	 * @param fill Whether or not to fill the circle.
 	 */
-	CanvasDrawCircleEvent::CanvasDrawCircleEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) : Event(time) {
+	CanvasDrawCircleEvent::CanvasDrawCircleEvent(unsigned long time, BaseCanvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) : Event(time) {
 		this->canvas_ = canvas;
 		this->origin_x_ = origin_x;
 		this->origin_y_ = origin_y;

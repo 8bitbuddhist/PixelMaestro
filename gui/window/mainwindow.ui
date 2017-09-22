@@ -891,6 +891,7 @@
      </property>
      <addaction name="action_Blink_Demo"/>
      <addaction name="action_Canvas_Demo"/>
+     <addaction name="action_Color_Canvas_Demo"/>
      <addaction name="actionDrawing_Demo"/>
      <addaction name="actionPreset_Demo"/>
      <addaction name="action_Show_Demo"/>
@@ -961,6 +962,11 @@
   <action name="actionPreset_Demo">
    <property name="text">
     <string>P&amp;reset Demo</string>
+   </property>
+  </action>
+  <action name="action_Color_Canvas_Demo">
+   <property name="text">
+    <string>C&amp;olor Canvas Demo</string>
    </property>
   </action>
  </widget>
