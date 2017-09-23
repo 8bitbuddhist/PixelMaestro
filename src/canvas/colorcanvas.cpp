@@ -10,7 +10,7 @@ namespace PixelMaestro {
 	 * @param section The Canvas' parent Section.
 	 * @param colors The color palette to use.
 	 */
-	ColorCanvas::ColorCanvas(Section* section) : BaseCanvas(section) {
+	ColorCanvas::ColorCanvas(Section* section) : Canvas(section) {
 		initialize_pattern();
 	}
 
@@ -50,7 +50,7 @@ namespace PixelMaestro {
 	 */
 	void ColorCanvas::draw_circle(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
 		drawing_color_ = color;
-		BaseCanvas::draw_circle(origin_x, origin_y, radius, fill);
+		Canvas::draw_circle(origin_x, origin_y, radius, fill);
 	}
 
 	/**
@@ -63,7 +63,7 @@ namespace PixelMaestro {
 	 */
 	void ColorCanvas::draw_line(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
 		drawing_color_ = color;
-		BaseCanvas::draw_line(origin_x, origin_y, target_x, target_y);
+		Canvas::draw_line(origin_x, origin_y, target_x, target_y);
 	}
 
 	/**
@@ -74,7 +74,7 @@ namespace PixelMaestro {
 	 */
 	void ColorCanvas::draw_point(Colors::RGB color, unsigned short x, unsigned short y) {
 		drawing_color_ = color;
-		BaseCanvas::draw_point(x, y);
+		Canvas::draw_point(x, y);
 	}
 
 	/**
@@ -88,7 +88,7 @@ namespace PixelMaestro {
 	 */
 	void ColorCanvas::draw_rect(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
 		drawing_color_ = color;
-		BaseCanvas::draw_rect(origin_x, origin_y, size_x, size_y, fill);
+		Canvas::draw_rect(origin_x, origin_y, size_x, size_y, fill);
 	}
 
 	/**
@@ -101,7 +101,7 @@ namespace PixelMaestro {
 	 */
 	void ColorCanvas::draw_text(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font *font, const char *text) {
 		drawing_color_ = color;
-		BaseCanvas::draw_text(origin_x, origin_y, font, text);
+		Canvas::draw_text(origin_x, origin_y, font, text);
 	}
 
 	/**
@@ -117,7 +117,7 @@ namespace PixelMaestro {
 	 */
 	void ColorCanvas::draw_triangle(Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
 		drawing_color_ = color;
-		BaseCanvas::draw_triangle(point_a_x, point_a_y, point_b_x, point_b_y, point_c_x, point_c_y, fill);
+		Canvas::draw_triangle(point_a_x, point_a_y, point_b_x, point_b_y, point_c_x, point_c_y, fill);
 	}
 
 	/**

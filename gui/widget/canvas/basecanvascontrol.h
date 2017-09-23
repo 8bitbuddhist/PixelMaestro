@@ -25,7 +25,7 @@ class BaseCanvasControl : public QWidget {
 
 	private:
 		Section* section_;
-		BaseCanvas* canvas_;
+		Canvas* canvas_;
 		Ui::BaseCanvasControl *ui;
 
 		// Radio button groups

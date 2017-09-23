@@ -13,11 +13,11 @@
 
 class CanvasDrawingArea : public SimpleDrawingArea {
 	public:
-		CanvasDrawingArea(QWidget* parent, MaestroController* maestro_controller, BaseCanvas* canvas);
+		CanvasDrawingArea(QWidget* parent, MaestroController* maestro_controller, Canvas* canvas);
 		~CanvasDrawingArea();
 
 	protected:
-		BaseCanvas *canvas_ = nullptr;
+		Canvas *canvas_ = nullptr;
 
 		bool eventFilter(QObject *obj, QEvent *event);
 		void mouseMoveEvent(QMouseEvent* event) override;

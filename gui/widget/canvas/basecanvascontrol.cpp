@@ -1,4 +1,4 @@
-#include "canvas/canvas.h"
+#include "canvas/animationcanvas.h"
 #include "basecanvascontrol.h"
 #include "ui_basecanvascontrol.h"
 
@@ -132,7 +132,7 @@ void BaseCanvasControl::set_triangle_controls_visible(bool visible) {
 void BaseCanvasControl::on_basicCanvasRadioButton_toggled(bool checked) {
 	delete canvas_;
 
-	canvas_ = dynamic_cast<Canvas*>(new Canvas(section_));
+	canvas_ = dynamic_cast<AnimationCanvas*>(new AnimationCanvas(section_));
 }
 
 void BaseCanvasControl::on_circleRadioButton_toggled(bool checked) {

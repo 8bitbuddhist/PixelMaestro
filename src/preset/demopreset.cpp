@@ -4,7 +4,7 @@
  */
 
 #include "../animation/cycleanimation.h"
-#include "../canvas/canvas.h"
+#include "../canvas/animationcanvas.h"
 #include "../canvas/fonts/font5x8.h"
 #include "../core/colors.h"
 #include "demopreset.h"
@@ -19,7 +19,7 @@ namespace PixelMaestro {
 		// Since the Overlay mix mode ignores black, we pass a color that's almost-but-not-quite black.
 		overlay->section->set_animation(new CycleAnimation(new Colors::RGB[2] { Colors::WHITE, {0, 0, 1} }, 2, 2500, 1000));
 
-		BaseCanvas* canvas = overlay->section->set_canvas(new Canvas(overlay->section));
+		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(overlay->section->add_canvas(CanvasType::ANIMATIONCANVAS));
 
 		Font5x8* font = new Font5x8();
 		canvas->draw_text(1, 1, font, "Hello world!");

@@ -6,13 +6,14 @@
 #define SECTION_H
 
 #include "../animation/animation.h"
-#include "../canvas/basecanvas.h"
+#include "../canvas/canvas.h"
+#include "../canvas/canvastype.h"
 #include "colors.h"
 #include "point.h"
 #include "pixel.h"
 
 namespace PixelMaestro {
-	class BaseCanvas;
+	class Canvas;
 
 	class Animation;
 
@@ -56,9 +57,10 @@ namespace PixelMaestro {
 			Section(Point dimensions);
 			Section(unsigned short x, unsigned short y);
 			~Section();
+			Canvas* add_canvas(CanvasType::Type type = CanvasType::ANIMATIONCANVAS);
 			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::ALPHA, unsigned char alpha = 128);
 			Animation* get_animation();
-			BaseCanvas* get_canvas();
+			Canvas* get_canvas();
 			unsigned short get_cycle_interval();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
@@ -71,7 +73,6 @@ namespace PixelMaestro {
 			void remove_overlay();
 			void set_all(Colors::RGB* color);
 			Animation* set_animation(Animation* animation, bool preserve_cycle_index = false);
-			BaseCanvas* set_canvas(BaseCanvas* canvas);
 			void set_cycle_interval(unsigned short interval, unsigned short pause = 0);
 			void set_dimensions(Point layout);
 			void set_dimensions(unsigned short x, unsigned short y);
@@ -85,7 +86,7 @@ namespace PixelMaestro {
 			Animation* animation_ = nullptr;
 
 			/// The Canvas to display (if applicable).
-			BaseCanvas* canvas_ = nullptr;
+			Canvas* canvas_ = nullptr;
 
 			/// The logical layout of the Pixels.
 			Point dimensions_ = {0, 0};

@@ -1,17 +1,17 @@
 #ifndef CANVASCLEAREVENT_H
 #define CANVASCLEAREVENT_H
 
-#include "../canvas/basecanvas.h"
+#include "../canvas/canvas.h"
 #include "event.h"
 
 namespace PixelMaestro {
 	class CanvasClearEvent : Event {
 		public:
-			CanvasClearEvent(unsigned long time, BaseCanvas *canvas);
+			CanvasClearEvent(unsigned long time, Canvas *canvas);
 			void run();
 
 		private:
-			BaseCanvas *canvas_;
+			Canvas *canvas_;
 	};
 }
 

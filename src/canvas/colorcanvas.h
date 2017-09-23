@@ -5,10 +5,10 @@
 #ifndef COLORCANVAS_H
 #define COLORCANVAS_H
 
-#include "basecanvas.h"
+#include "canvas.h"
 
 namespace PixelMaestro {
-	class ColorCanvas : public BaseCanvas {
+	class ColorCanvas : public Canvas {
 		public:
 			ColorCanvas(Section* section);
 			~ColorCanvas();

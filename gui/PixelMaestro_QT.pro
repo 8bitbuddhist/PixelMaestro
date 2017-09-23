@@ -67,10 +67,10 @@ SOURCES += main.cpp\
     ../src/preset/demopreset.cpp \
     ../src/show/maestroapplypresetevent.cpp \
     ../src/canvas/colorcanvas.cpp \
-    ../src/canvas/basecanvas.cpp \
-    ../src/canvas/canvas.cpp \
     demo/colorcanvasdemo.cpp \
-    widget/canvas/basecanvascontrol.cpp
+    widget/canvas/basecanvascontrol.cpp \
+    ../src/canvas/animationcanvas.cpp \
+    ../src/canvas/canvas.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -131,10 +131,11 @@ HEADERS += \
     ../src/show/maestroapplypresetevent.h \
     ../src/preset/demopreset.h \
     ../src/canvas/colorcanvas.h \
-    ../src/canvas/basecanvas.h \
-    ../src/canvas/canvas.h \
     demo/colorcanvasdemo.h \
-    widget/canvas/basecanvascontrol.h
+    widget/canvas/basecanvascontrol.h \
+    ../src/canvas/canvastype.h \
+    ../src/canvas/animationcanvas.h \
+    ../src/canvas/canvas.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

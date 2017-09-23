@@ -30,7 +30,7 @@ Sections are responsible for creating and manage Animations, Canvases, Pixels, a
 For more information, see the [Animation](animation.md) document.
 
 ## Displaying Custom Shapes and Patterns
-You can draw custom shapes and patterns onto a Section using a Canvas. Canvases are useful when combined with animations that use the entire Section (SOLID, BLINK, WAVE, MERGE, etc.).
+You can draw custom shapes and patterns onto a Section using a Canvas. Different types of Canvases are available that interact with Sections in different ways.
 
 For more information, see the [Canvas](canvas.md) document.
 

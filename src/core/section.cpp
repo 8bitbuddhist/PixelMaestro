@@ -3,6 +3,8 @@
 	Requires Pixel and Colors classes.
 */
 
+#include "../canvas/animationcanvas.h"
+#include "../canvas/colorcanvas.h"
 #include "colors.h"
 #include "pixel.h"
 #include "section.h"
@@ -24,6 +26,27 @@ namespace PixelMaestro {
 	 */
 	Section::Section(unsigned short x, unsigned short y) {
 		set_dimensions(x, y);
+	}
+
+	/**
+	 * Creates a new Canvas of the specified type.
+	 * @param type The type of Canvas to create.
+	 * @return The new Canvas.
+	 */
+	Canvas* Section::add_canvas(CanvasType::Type type) {
+		// Delete the old Canvas
+		remove_canvas();
+
+		switch (type) {
+			case CanvasType::ANIMATIONCANVAS:
+				canvas_ = new AnimationCanvas(this);
+				break;
+			case CanvasType::COLORCANVAS:
+				canvas_ = new ColorCanvas(this);
+				break;
+		}
+
+		return canvas_;
 	}
 
 	/**
@@ -54,7 +77,7 @@ namespace PixelMaestro {
 	 * Returns the Section's Canvas.
 	 * @return Section's Canvas.
 	 */
-	BaseCanvas* Section::get_canvas() {
+	Canvas* Section::get_canvas() {
 		return canvas_;
 	}
 
@@ -186,44 +209,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the Canvas.
-	 * @param canvas Canvas to set.
-	 * @return New Canvas.
-	 */
-	BaseCanvas* Section::set_canvas(BaseCanvas *canvas) {
-		canvas_ = canvas;
-		return canvas_;
-	}
-
-	/**
-		Sets the specified Pixel to a new color.
-
-		@param pixel The index of the Pixel to update.
-		@param color New color.
-	*/
-	void Section::set_one(unsigned int pixel, Colors::RGB* color) {
-		// Only continue if Pixel is within the bounds of the array.
-		if (pixel < dimensions_.size()) {
-			/*
-				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
-				This results in the Pixel finishing early and waiting until the next cycle.
-			*/
-			pixels_[pixel].set_next_color(color, animation_->get_fade(), animation_->get_speed() - animation_->get_pause(), *refresh_interval_);
-		}
-	}
-
-	/**
-		Sets the specified Pixel to a new color.
-
-		@param x The column number of the Pixel.
-		@param y The row number of the Pixel.
-		@param color New color.
-	*/
-	void Section::set_one(unsigned short x, unsigned short y, Colors::RGB* color) {
-		set_one(get_pixel_index(x, y), color);
-	}
-
-	/**
 		Sets the Pixel array and layout used in the Section.
 
 		@param dimensions Dimensions of the Pixel array.
@@ -254,6 +239,34 @@ namespace PixelMaestro {
 		if (overlay_ != nullptr) {
 			overlay_->section->set_dimensions(dimensions_);
 		}
+	}
+
+	/**
+		Sets the specified Pixel to a new color.
+
+		@param pixel The index of the Pixel to update.
+		@param color New color.
+	*/
+	void Section::set_one(unsigned int pixel, Colors::RGB* color) {
+		// Only continue if Pixel is within the bounds of the array.
+		if (pixel < dimensions_.size()) {
+			/*
+				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
+				This results in the Pixel finishing early and waiting until the next cycle.
+			*/
+			pixels_[pixel].set_next_color(color, animation_->get_fade(), animation_->get_speed() - animation_->get_pause(), *refresh_interval_);
+		}
+	}
+
+	/**
+		Sets the specified Pixel to a new color.
+
+		@param x The column number of the Pixel.
+		@param y The row number of the Pixel.
+		@param color New color.
+	*/
+	void Section::set_one(unsigned short x, unsigned short y, Colors::RGB* color) {
+		set_one(get_pixel_index(x, y), color);
 	}
 
 	/**

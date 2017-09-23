@@ -6,7 +6,7 @@ namespace PixelMaestro {
 	 * @param time Time until the Event runs.
 	 * @param canvas Canvas to clear.
 	 */
-	CanvasClearEvent::CanvasClearEvent(unsigned long time, BaseCanvas *canvas) : Event(time) {
+	CanvasClearEvent::CanvasClearEvent(unsigned long time, Canvas *canvas) : Event(time) {
 		this->canvas_ = canvas;
 	}
 

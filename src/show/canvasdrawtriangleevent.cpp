@@ -13,7 +13,7 @@ namespace PixelMaestro {
 	 * @param point_c_y Third point y-coordinate.
 	 * @param fill Whether to fill the triangle.
 	 */
-	CanvasDrawTriangleEvent::CanvasDrawTriangleEvent(unsigned long time, BaseCanvas* canvas, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) : Event(time) {
+	CanvasDrawTriangleEvent::CanvasDrawTriangleEvent(unsigned long time, Canvas* canvas, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) : Event(time) {
 		this->canvas_ = canvas;
 		this->point_a_x_ = point_a_x;
 		this->point_a_y_ = point_a_y;

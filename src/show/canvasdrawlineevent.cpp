@@ -10,7 +10,7 @@ namespace PixelMaestro {
 	 * @param target_x Ending point x coordinate.
 	 * @param target_y Ending point y coordinate.
 	 */
-	CanvasDrawLineEvent::CanvasDrawLineEvent(unsigned long time, BaseCanvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) : Event(time){
+	CanvasDrawLineEvent::CanvasDrawLineEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) : Event(time){
 		this->canvas_ = canvas;
 		this->origin_x_ = origin_x;
 		this->origin_y_ = origin_y;

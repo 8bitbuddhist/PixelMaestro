@@ -19,16 +19,17 @@ See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT applicat
 7. [Interactive Canvases](#interactive-canvases)
 
 ## Canvas Types
-There are two different types of Canvases: `Canvas` and `ColorCanvas`. A `ColorCanvas` works similar to an image editor. You specify the shape to draw and the color to use when drawing the shape. You can pass any color, since the Canvas stores it internally. This is limited on embedded devices, since it requires you to store an additional RGB value for each pixel.
+There are two different types of Canvases: `ColorCanvas` and `AnimationCanvas`. A `ColorCanvas` works similar to an image editor: you specify the shape to draw and the color to use when drawing the shape. You can pass any color, and the Canvas will store it internally. This type of Canvas is limited on embedded devices, since it stores an additional RGB value for each pixel.
 
-A `Canvas` works almost identical to a `ColorCanvas`, except instead of drawing a specific color it draws the Section's underlying animation. For example, if the Section is running a `BlinkAnimation`, any shapes drawn on the Canvas will appear to blink. This is handled using a hidden boolean value associated with each pixel, where `true` means the pixel is "drawn" (i.e. show the color from the Animation) and `false` means the pixel is not drawn (i.e. show nothing).
+An `AnimationCanvas` works almost identical to a `ColorCanvas`, except instead of drawing a specific color it draws the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, any shapes drawn on the Canvas will appear to blink using the colors in the Animation. This is done by assigning a boolean value to each pixel: if the boolean is `true`, then the pixel is drawn (i.e. it shows the color from the Animation). If it's `false`, then the pixel is not drawn and it appears black.
 
 ## Creating a Canvas
-When initializing a new Canvas, pass the Section that you want to assign it to in the constructor. You then need to call `Section::set_canvas(Canvas*)` to allow the Section to interact with the Canvas. Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
+Create a new Canvas by calling `Section::add_canvas(CanvasType::Type)`, where CanvasType is one of the values in the `CanvasType::Type` enum. This automatically creates and initializes a new Canvas of the specified type. The Section will return a pointer to the Canvas of the base Canvas class, which you can then cast to the actual Canvas type.
+
+Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
 
 ```c++
-ColorCanvas* canvas = dynamic_cast<ColorCanvas*>(new ColorCanvas(section));
-Canvas* canvas = section->set_canvas(canvas);
+ColorCanvas* canvas = static_cast<ColorCanvas*>(section->add_canvas(CanvasType::COLORCANVAS);
 ```
 
 ## Drawing Shapes
@@ -36,7 +37,7 @@ The Canvas class provides several functions for drawing various shapes, elements
 
 **Note:** When calling one of the `draw_` methods on a ColorCanvas, you will also need to pass the Color you want to use to draw the shape.
 
-The Canvas uses a typical Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section.
+The Canvas uses a Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section.
 
 For an example of drawing various shapes, see the [CanvasDemo](../gui/demo/canvasdemo.cpp).
 

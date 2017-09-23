@@ -8,7 +8,7 @@ namespace PixelMaestro {
 	 * @param cursor_x Starting point x coordinate.
 	 * @param cursor_y Starting point y coordinate.
 	 */
-	CanvasDrawPointEvent::CanvasDrawPointEvent(unsigned long time, BaseCanvas *canvas, unsigned short cursor_x, unsigned short cursor_y) : Event(time) {
+	CanvasDrawPointEvent::CanvasDrawPointEvent(unsigned long time, Canvas *canvas, unsigned short cursor_x, unsigned short cursor_y) : Event(time) {
 		this->canvas_ = canvas;
 		this->cursor_x_ = cursor_x;
 		this->cursor_y_ = cursor_y;

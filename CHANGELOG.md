@@ -6,16 +6,15 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.7] - In Progress
 ### Added
 - Canvas:
-	- Added ColorCanvas, which lets you draw shapes using specific colors.
+	- Added `ColorCanvas` class, which lets you draw shapes using specific colors.
+	- Added `CanvasType` enum. This gets passed to `Section::add_canvas()` and specifies the type of Canvas that is created.
 	- Added Color Canvas Demo to the GUI application.
 - Maestro:
 	- Added Presets, which are pre-defined configurations applied to a Maestro.
 
 ### Changed
-- (Internal) Split the base Canvas class into `Canvas` and `BaseCanvas`. `BaseCanvas` is the base for `Canvas` and `ColorCanvas` and contains the logic for drawing shapes, setting scroll behavior, etc.
-
-### Removed
-- Removed `Section::add_canvas()`. Use `Section::set_canvas()` instead.
+- Canvas:
+	- Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
 
 ## [v0.6r2] - 2017-09-18
 ### Changed

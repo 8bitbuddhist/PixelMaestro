@@ -8,12 +8,12 @@
 namespace PixelMaestro {
 	class CanvasDrawTriangleEvent : Event {
 		public:
-			CanvasDrawTriangleEvent(unsigned long time, BaseCanvas* canvas, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
+			CanvasDrawTriangleEvent(unsigned long time, Canvas* canvas, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
 			CanvasDrawTriangleEvent(unsigned long time, ColorCanvas* canvas, Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
 			void run();
 
 		private:
-			BaseCanvas* canvas_;
+			Canvas* canvas_;
 			Colors::RGB color_;
 			bool is_color_canvas_ = false;
 			bool fill_;

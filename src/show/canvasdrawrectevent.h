@@ -8,12 +8,12 @@
 namespace PixelMaestro {
 	class CanvasDrawRectEvent : public Event {
 		public:
-			CanvasDrawRectEvent(unsigned long time, BaseCanvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
+			CanvasDrawRectEvent(unsigned long time, Canvas* canvas, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
 			CanvasDrawRectEvent(unsigned long time, ColorCanvas* canvas, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
 			void run();
 
 		private:
-			BaseCanvas* canvas_;
+			Canvas* canvas_;
 			Colors::RGB color_;
 			bool is_color_canvas_ = false;
 			unsigned short origin_x_, origin_y_;

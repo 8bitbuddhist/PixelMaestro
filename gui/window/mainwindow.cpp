@@ -1,5 +1,5 @@
 #include "animation/waveanimation.h"
-#include "canvas/canvas.h"
+#include "canvas/animationcanvas.h"
 #include "demo/blinkdemo.h"
 #include "demo/canvasdemo.h"
 #include "demo/colorcanvasdemo.h"
@@ -127,7 +127,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	Animation* wave = section_controller->get_section()->set_animation(new WaveAnimation());
 	wave->set_speed(100);
 	section_controller->set_colors(Colors::COLORWHEEL, 12);
-	BaseCanvas* canvas = section_controller->get_section()->set_canvas(new Canvas(section_controller->get_section()));
+	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->add_canvas(CanvasType::ANIMATIONCANVAS));
 
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);
 	installEventFilter(drawing_area_);
