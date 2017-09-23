@@ -69,7 +69,8 @@ SOURCES += main.cpp\
     ../src/canvas/colorcanvas.cpp \
     ../src/canvas/basecanvas.cpp \
     ../src/canvas/canvas.cpp \
-    demo/colorcanvasdemo.cpp
+    demo/colorcanvasdemo.cpp \
+    widget/canvas/basecanvascontrol.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -132,13 +133,15 @@ HEADERS += \
     ../src/canvas/colorcanvas.h \
     ../src/canvas/basecanvas.h \
     ../src/canvas/canvas.h \
-    demo/colorcanvasdemo.h
+    demo/colorcanvasdemo.h \
+    widget/canvas/basecanvascontrol.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
 		window/mainwindow.ui \
     widget/animation/lightninganimationcontrol.ui \
     widget/animation/plasmaanimationcontrol.ui \
-    widget/animation/sparkleanimationcontrol.ui
+    widget/animation/sparkleanimationcontrol.ui \
+    widget/canvas/basecanvascontrol.ui
 
 INCLUDEPATH += $$PWD/../src

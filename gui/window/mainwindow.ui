@@ -969,6 +969,14 @@
     <string>C&amp;olor Canvas Demo</string>
    </property>
   </action>
+  <action name="actionShow_Canvas_Controls">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Show &amp;Canvas Controls</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

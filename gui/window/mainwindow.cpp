@@ -6,7 +6,9 @@
 #include "demo/presetdemo.h"
 #include "demo/showdemo.h"
 #include "drawingarea/canvasdrawingarea.h"
+#include "widget/canvas/basecanvascontrol.h"
 #include "mainwindow.h"
+#include <memory>
 #include "QDesktopServices"
 #include "QMessageBox"
 #include "QUrl"
