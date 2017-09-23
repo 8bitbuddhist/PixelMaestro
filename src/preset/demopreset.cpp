@@ -3,10 +3,10 @@
  * Displays the text "Hello world!" and alternates from black to white.
  */
 
-#include "animation/cycleanimation.h"
-#include "canvas/canvas.h"
-#include "canvas/fonts/font5x8.h"
-#include "core/colors.h"
+#include "../animation/cycleanimation.h"
+#include "../canvas/canvas.h"
+#include "../canvas/fonts/font5x8.h"
+#include "../core/colors.h"
 #include "demopreset.h"
 
 namespace PixelMaestro {

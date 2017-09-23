@@ -40,7 +40,7 @@ namespace PixelMaestro {
 
 	void CanvasDrawTextEvent::run() {
 		if (is_color_canvas_) {
-			dynamic_cast<ColorCanvas*>(canvas_)->draw_text(color_, origin_x_, origin_y_, font_, text_);
+			static_cast<ColorCanvas*>(canvas_)->draw_text(color_, origin_x_, origin_y_, font_, text_);
 		}
 		else {
 			canvas_->draw_text(origin_x_, origin_y_, font_, text_);

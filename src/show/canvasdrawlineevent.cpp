@@ -40,7 +40,7 @@ namespace PixelMaestro {
 
 	void CanvasDrawLineEvent::run() {
 		if (is_color_canvas_) {
-			dynamic_cast<ColorCanvas*>(canvas_)->draw_line(color_, origin_x_, origin_y_, target_x_, target_y_);
+			static_cast<ColorCanvas*>(canvas_)->draw_line(color_, origin_x_, origin_y_, target_x_, target_y_);
 		}
 		else {
 			canvas_->draw_line(origin_x_, origin_y_, target_x_, target_y_);

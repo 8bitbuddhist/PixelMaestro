@@ -44,7 +44,7 @@ namespace PixelMaestro {
 
 	void CanvasDrawRectEvent::run() {
 		if (is_color_canvas_) {
-			dynamic_cast<ColorCanvas*>(canvas_)->draw_rect(color_, origin_x_, origin_y_, size_x_, size_y_, fill_);
+			static_cast<ColorCanvas*>(canvas_)->draw_rect(color_, origin_x_, origin_y_, size_x_, size_y_, fill_);
 		}
 		else {
 			canvas_->draw_rect(origin_x_, origin_y_, size_x_, size_y_, fill_);

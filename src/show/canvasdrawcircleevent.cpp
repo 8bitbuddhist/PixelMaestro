@@ -40,7 +40,7 @@ namespace PixelMaestro {
 
 	void CanvasDrawCircleEvent::run() {
 		if (is_color_canvas_) {
-			dynamic_cast<ColorCanvas*>(canvas_)->draw_circle(color_, origin_x_, origin_y_, radius_, fill_);
+			static_cast<ColorCanvas*>(canvas_)->draw_circle(color_, origin_x_, origin_y_, radius_, fill_);
 		}
 		else {
 			canvas_->draw_circle(origin_x_, origin_y_, radius_, fill_);

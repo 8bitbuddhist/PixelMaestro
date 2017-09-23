@@ -32,7 +32,7 @@ namespace PixelMaestro {
 
 	void CanvasDrawPointEvent::run() {
 		if (is_color_canvas_) {
-			dynamic_cast<ColorCanvas*>(canvas_)->draw_point(color_, cursor_x_, cursor_y_);
+			static_cast<ColorCanvas*>(canvas_)->draw_point(color_, cursor_x_, cursor_y_);
 		}
 		else {
 			canvas_->draw_point(cursor_x_, cursor_y_);

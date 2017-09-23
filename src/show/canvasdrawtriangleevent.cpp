@@ -52,7 +52,7 @@ namespace PixelMaestro {
 
 	void CanvasDrawTriangleEvent::run() {
 		if (is_color_canvas_) {
-			dynamic_cast<ColorCanvas*>(canvas_)->draw_triangle(color_, point_a_x_, point_a_y_, point_b_x_, point_b_y_, point_c_x_, point_c_y_, fill_);
+			static_cast<ColorCanvas*>(canvas_)->draw_triangle(color_, point_a_x_, point_a_y_, point_b_x_, point_b_y_, point_c_x_, point_c_y_, fill_);
 		}
 		else {
 			canvas_->draw_triangle(point_a_x_, point_a_y_, point_b_x_, point_b_y_, point_c_x_, point_c_y_, fill_);
