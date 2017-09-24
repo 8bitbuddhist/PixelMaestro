@@ -220,19 +220,19 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
  * @param index Index of the new Canvas type.
  */
 void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
-	// If we're switching Canvases, remove the current Canvas.
-	Canvas* canvas = active_section_controller_->get_section()->get_canvas();
+	Canvas* canvas = nullptr;
 
-	if (canvas != nullptr) {
-		active_section_controller_->get_section()->remove_canvas();
-	}
+	// Remove the existing Canvas.
+	active_section_controller_->get_section()->remove_canvas();
 
 	// Add the new Canvas
 	switch (index) {
 		case 1:	// Animation Canvas
 			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::ANIMATIONCANVAS);
 			break;
-		// TODO: Color Canvas
+		case 2: // Color Canvas
+			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::COLORCANVAS);
+			break;
 	}
 
 	show_canvas_controls(canvas);

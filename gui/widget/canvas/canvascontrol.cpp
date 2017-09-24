@@ -1,7 +1,9 @@
 #include "canvas/animationcanvas.h"
+#include "canvas/colorcanvas.h"
 #include "canvas/fonts/font5x8.h"
 #include "canvascontrol.h"
 #include "ui_canvascontrol.h"
+#include <QColorDialog>
 #include <QMessageBox>
 
 CanvasControl::CanvasControl(Canvas* canvas, QWidget *parent) :
@@ -41,6 +43,17 @@ void CanvasControl::initialize() {
 
 	// Add fonts
 	ui->fontComboBox->addItems({"5x8"});
+
+	// Set color Canvas buttons
+	switch (canvas_->get_type()) {
+		case CanvasType::COLORCANVAS:
+			ui->colorLabel->setVisible(true);
+			ui->selectColorButton->setVisible(true);
+			break;
+		default:
+			ui->colorLabel->setVisible(false);
+			ui->selectColorButton->setVisible(false);
+	}
 }
 
 void CanvasControl::set_circle_controls_visible(bool visible) {
@@ -165,27 +178,54 @@ void CanvasControl::on_circleRadioButton_toggled(bool checked) {
 void CanvasControl::on_drawButton_clicked() {
 	QAbstractButton* checked_button = this->shape_type_group_.checkedButton();
 
-	if (checked_button == ui->circleRadioButton) {
-		canvas_->draw_circle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
-	}
-	else if (checked_button == ui->lineRadioButton) {
-		canvas_->draw_line(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
-	}
-	else if (checked_button == ui->rectRadioButton) {
-		canvas_->draw_rect(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
-	}
-	else if (checked_button == ui->textRadioButton) {
-		// Reinitialize the font
-		delete font_;
-		switch (ui->fontComboBox->currentIndex()) {
-			default:
-				font_ = new Font5x8();
+	if (canvas_->get_type() == CanvasType::COLORCANVAS) {
+		ColorCanvas* canvas = static_cast<ColorCanvas*>(canvas_);
+		if (checked_button == ui->circleRadioButton) {
+			canvas->draw_circle(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
 		}
+		else if (checked_button == ui->lineRadioButton) {
+			canvas->draw_line(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
+		}
+		else if (checked_button == ui->rectRadioButton) {
+			canvas->draw_rect(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
+		}
+		else if (checked_button == ui->textRadioButton) {
+			// Reinitialize the font
+			delete font_;
+			switch (ui->fontComboBox->currentIndex()) {
+				default:
+					font_ = new Font5x8();
+			}
 
-		canvas_->draw_text(ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data());
+			canvas->draw_text(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data());
+		}
+		else {	// Triangle
+			canvas->draw_triangle(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
+		}
 	}
-	else {	// Triangle
-		canvas_->draw_triangle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
+	else {
+		if (checked_button == ui->circleRadioButton) {
+			canvas_->draw_circle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
+		}
+		else if (checked_button == ui->lineRadioButton) {
+			canvas_->draw_line(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
+		}
+		else if (checked_button == ui->rectRadioButton) {
+			canvas_->draw_rect(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
+		}
+		else if (checked_button == ui->textRadioButton) {
+			// Reinitialize the font
+			delete font_;
+			switch (ui->fontComboBox->currentIndex()) {
+				default:
+					font_ = new Font5x8();
+			}
+
+			canvas_->draw_text(ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data());
+		}
+		else {	// Triangle
+			canvas_->draw_triangle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
+		}
 	}
 }
 
@@ -199,6 +239,20 @@ void CanvasControl::on_lineRadioButton_toggled(bool checked) {
 
 void CanvasControl::on_rectRadioButton_toggled(bool checked) {
 	set_rect_controls_visible(checked);
+}
+
+void CanvasControl::on_selectColorButton_clicked() {
+	QColor new_color = QColorDialog::getColor(qcolor_, parentWidget());
+
+	if (new_color != qcolor_) {
+		qcolor_ = new_color;
+	}
+
+	ui->selectColorButton->setStyleSheet("background-color: " + qcolor_.name());
+
+	rgb_color_.r = qcolor_.red();
+	rgb_color_.g = qcolor_.green();
+	rgb_color_.b = qcolor_.blue();
 }
 
 void CanvasControl::on_textRadioButton_toggled(bool checked) {

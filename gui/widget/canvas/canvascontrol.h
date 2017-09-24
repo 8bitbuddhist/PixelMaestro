@@ -34,8 +34,12 @@ class CanvasControl : public QWidget {
 
 		void on_eraseButton_clicked();
 
+		void on_selectColorButton_clicked();
+
 	private:
 		Canvas* canvas_ = nullptr;
+		Colors::RGB rgb_color_ = Colors::BLACK;
+		QColor qcolor_ = QColor::fromRgb(0, 0, 0);
 		Font* font_ = nullptr;
 		Ui::CanvasControl *ui;
 
