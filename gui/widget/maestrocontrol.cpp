@@ -201,11 +201,12 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	show_extra_controls(index, animation);
 
-	// Set orientation, fade, reverse, and color palette
+	// Reapply animation options
 	animation->set_orientation((Animation::Orientations)ui->orientationComboBox->currentIndex());
 	animation->set_fade(ui->fadeCheckBox->isChecked());
 	animation->set_reverse(ui->reverse_animationCheckBox->isChecked());
 	animation->set_colors(active_section_controller_->get_colors(), active_section_controller_->get_num_colors());
+	animation->set_speed(ui->cycleSlider->maximum() - ui->cycleSlider->value());
 }
 
 /**
