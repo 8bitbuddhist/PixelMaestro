@@ -6,7 +6,7 @@
 #include "demo/presetdemo.h"
 #include "demo/showdemo.h"
 #include "drawingarea/canvasdrawingarea.h"
-#include "widget/canvas/basecanvascontrol.h"
+#include "widget/canvas/canvascontrol.h"
 #include "mainwindow.h"
 #include <memory>
 #include "QDesktopServices"
@@ -127,7 +127,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	Animation* wave = section_controller->get_section()->set_animation(new WaveAnimation());
 	wave->set_speed(100);
 	section_controller->set_colors(Colors::COLORWHEEL, 12);
-	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->add_canvas(CanvasType::ANIMATIONCANVAS));
+	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->add_canvas(CanvasType::Type::ANIMATIONCANVAS));
 
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);
 	installEventFilter(drawing_area_);

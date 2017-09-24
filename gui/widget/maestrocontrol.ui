@@ -40,6 +40,9 @@
        <item>
         <widget class="QComboBox" name="sectionComboBox"/>
        </item>
+       <item>
+        <widget class="QComboBox" name="canvasComboBox"/>
+       </item>
       </layout>
      </item>
      <item row="1" column="0">
@@ -87,7 +90,7 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>255</number>
+          <number>65535</number>
          </property>
          <property name="value">
           <number>10</number>
@@ -103,12 +106,42 @@
           <number>1</number>
          </property>
          <property name="maximum">
-          <number>255</number>
+          <number>65535</number>
          </property>
          <property name="value">
           <number>10</number>
          </property>
         </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="animationLabel">
+       <property name="minimumSize">
+        <size>
+         <width>100</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Animation</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <layout class="QHBoxLayout" name="animationLayout">
+       <item>
+        <widget class="QComboBox" name="animationComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="orientationComboBox"/>
        </item>
       </layout>
      </item>
@@ -368,37 +401,10 @@ border-radius: 4px;
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="animationLabel">
-       <property name="minimumSize">
-        <size>
-         <width>100</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Animation</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <layout class="QHBoxLayout" name="animationLayout">
-       <item>
-        <widget class="QComboBox" name="animationComboBox">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>0</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="orientationComboBox"/>
-       </item>
-      </layout>
-     </item>
     </layout>
+   </item>
+   <item row="0" column="2">
+    <layout class="QHBoxLayout" name="canvasControlsLayout"/>
    </item>
    <item row="0" column="1">
     <layout class="QHBoxLayout" name="extraControlsLayout"/>

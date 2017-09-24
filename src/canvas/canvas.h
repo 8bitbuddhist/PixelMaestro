@@ -63,6 +63,7 @@ namespace PixelMaestro {
 			void erase(unsigned short x, unsigned short y);
 			bool* get_pattern();
 			Section* get_section();
+			virtual CanvasType::Type get_type() = 0;
 			bool in_bounds(Point* point);
 			bool in_bounds(unsigned short x, unsigned short y);
 			void remove_scroll();

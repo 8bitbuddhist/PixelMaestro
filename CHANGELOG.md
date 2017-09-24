@@ -13,6 +13,8 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added Presets, which are pre-defined configurations applied to a Maestro.
 
 ### Changed
+- Animation Editor:
+	- Grid size will only update when the row or column fields lose focus.
 - Canvas:
 	- Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
 

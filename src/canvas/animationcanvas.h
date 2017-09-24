@@ -15,6 +15,7 @@ namespace PixelMaestro {
 			void activate(unsigned int pixel);
 			void deactivate(unsigned int pixel);
 			Colors::RGB get_pixel_color(unsigned int pixel);
+			CanvasType::Type get_type();
 			void initialize_pattern();
 
 		protected:

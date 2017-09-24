@@ -46,6 +46,10 @@ namespace PixelMaestro {
 		}
 	}
 
+	CanvasType::Type AnimationCanvas::get_type() {
+		return CanvasType::Type::ANIMATIONCANVAS;
+	}
+
 	/**
 	 * Reinitializes the pattern array.
 	 */

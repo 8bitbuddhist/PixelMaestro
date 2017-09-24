@@ -57,7 +57,7 @@ namespace PixelMaestro {
 			Section(Point dimensions);
 			Section(unsigned short x, unsigned short y);
 			~Section();
-			Canvas* add_canvas(CanvasType::Type type = CanvasType::ANIMATIONCANVAS);
+			Canvas* add_canvas(CanvasType::Type type = CanvasType::Type::ANIMATIONCANVAS);
 			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::ALPHA, unsigned char alpha = 128);
 			Animation* get_animation();
 			Canvas* get_canvas();

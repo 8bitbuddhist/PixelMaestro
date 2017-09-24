@@ -1,0 +1,215 @@
+#include "canvas/animationcanvas.h"
+#include "canvas/fonts/font5x8.h"
+#include "canvascontrol.h"
+#include "ui_canvascontrol.h"
+#include <QMessageBox>
+
+CanvasControl::CanvasControl(Canvas* canvas, QWidget *parent) :
+	QWidget(parent),
+	ui(new Ui::CanvasControl) {
+	ui->setupUi(this);
+	this->canvas_ = canvas;
+	this->initialize();
+}
+
+bool CanvasControl::confirm_clear() {
+	QMessageBox::StandardButton confirm;
+	confirm = QMessageBox::question(this, "Clear Canvas", "This action will clear the Canvas. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+	if (confirm == QMessageBox::Yes) {
+		canvas_->clear();
+		return true;
+	}
+
+	return false;
+}
+
+void CanvasControl::initialize() {
+	// Add radio buttons to groups
+	shape_type_group_.addButton(ui->circleRadioButton);
+	shape_type_group_.addButton(ui->lineRadioButton);
+	shape_type_group_.addButton(ui->rectRadioButton);
+	shape_type_group_.addButton(ui->textRadioButton);
+	shape_type_group_.addButton(ui->triangleRadioButton);
+
+	set_line_controls_visible(false);
+	set_rect_controls_visible(false);
+	set_text_controls_visible(false);
+	set_triangle_controls_visible(false);
+
+	ui->circleRadioButton->setChecked(true);
+	set_circle_controls_visible(true);
+
+	// Add fonts
+	ui->fontComboBox->addItems({"5x8"});
+}
+
+void CanvasControl::set_circle_controls_visible(bool visible) {
+	if (visible) {
+		set_line_controls_visible(false);
+		set_rect_controls_visible(false);
+		set_text_controls_visible(false);
+		set_triangle_controls_visible(false);
+
+		ui->targetLabel->setText("Radius");
+		ui->targetLabel->setVisible(true);
+		ui->targetXSpinBox->setVisible(true);
+	}
+	else {
+		ui->targetLabel->setText("Target");
+	}
+
+	ui->originLabel->setVisible(visible);
+	ui->originXSpinBox->setVisible(visible);
+	ui->originYSpinBox->setVisible(visible);
+	ui->fillCheckBox->setVisible(visible);
+}
+
+void CanvasControl::set_line_controls_visible(bool visible) {
+	if (visible) {
+		set_circle_controls_visible(false);
+		set_rect_controls_visible(false);
+		set_text_controls_visible(false);
+		set_triangle_controls_visible(false);
+	}
+
+	ui->originLabel->setVisible(visible);
+	ui->originXSpinBox->setVisible(visible);
+	ui->originYSpinBox->setVisible(visible);
+
+	ui->targetLabel->setVisible(visible);
+	ui->targetXSpinBox->setVisible(visible);
+	ui->targetYSpinBox->setVisible(visible);
+
+	ui->fillCheckBox->setVisible(visible);
+}
+
+void CanvasControl::set_rect_controls_visible(bool visible) {
+	if (visible) {
+		set_circle_controls_visible(false);
+		set_line_controls_visible(false);
+		set_text_controls_visible(false);
+		set_triangle_controls_visible(false);
+		ui->targetLabel->setText(QString("Size"));
+	}
+	else {
+		ui->targetLabel->setText(QString("Target"));
+	}
+
+	ui->originLabel->setVisible(visible);
+	ui->originXSpinBox->setVisible(visible);
+	ui->originYSpinBox->setVisible(visible);
+
+	ui->targetLabel->setVisible(visible);
+	ui->targetXSpinBox->setVisible(visible);
+	ui->targetYSpinBox->setVisible(visible);
+
+	ui->fillCheckBox->setVisible(visible);
+}
+
+void CanvasControl::set_text_controls_visible(bool visible) {
+	if (visible) {
+		set_circle_controls_visible(false);
+		set_line_controls_visible(false);
+		set_rect_controls_visible(false);
+		set_triangle_controls_visible(false);
+		ui->fillCheckBox->setVisible(false);
+	}
+
+	ui->originLabel->setVisible(visible);
+	ui->originXSpinBox->setVisible(visible);
+	ui->originYSpinBox->setVisible(visible);
+
+	ui->fontLabel->setVisible(visible);
+	ui->fontComboBox->setVisible(visible);
+
+	ui->textLabel->setVisible(visible);
+	ui->textLineEdit->setVisible(visible);
+}
+
+void CanvasControl::set_triangle_controls_visible(bool visible) {
+	if (visible) {
+		set_circle_controls_visible(false);
+		set_line_controls_visible(false);
+		set_rect_controls_visible(false);
+		set_text_controls_visible(false);
+
+		ui->originLabel->setText(QString("Point A"));
+		ui->targetLabel->setText(QString("Point B"));
+		ui->target2Label->setText(QString("Point C"));
+	}
+	else {
+		ui->originLabel->setText(QString("Origin"));
+		ui->targetLabel->setText(QString("Target"));
+		ui->target2Label->setText(QString("Target 2"));
+	}
+
+	ui->originLabel->setVisible(visible);
+	ui->originXSpinBox->setVisible(visible);
+	ui->originYSpinBox->setVisible(visible);
+
+	ui->targetLabel->setVisible(visible);
+	ui->targetXSpinBox->setVisible(visible);
+	ui->targetYSpinBox->setVisible(visible);
+
+	ui->target2Label->setVisible(visible);
+	ui->target2XSpinBox->setVisible(visible);
+	ui->target2YSpinBox->setVisible(visible);
+
+	ui->fillCheckBox->setVisible(visible);
+}
+
+void CanvasControl::on_circleRadioButton_toggled(bool checked) {
+	set_circle_controls_visible(checked);
+}
+
+void CanvasControl::on_drawButton_clicked() {
+	QAbstractButton* checked_button = this->shape_type_group_.checkedButton();
+
+	if (checked_button == ui->circleRadioButton) {
+		canvas_->draw_circle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());
+	}
+	else if (checked_button == ui->lineRadioButton) {
+		canvas_->draw_line(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value());
+	}
+	else if (checked_button == ui->rectRadioButton) {
+		canvas_->draw_rect(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->fillCheckBox->isChecked());
+	}
+	else if (checked_button == ui->textRadioButton) {
+		// Reinitialize the font
+		delete font_;
+		switch (ui->fontComboBox->currentIndex()) {
+			default:
+				font_ = new Font5x8();
+		}
+
+		canvas_->draw_text(ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data());
+	}
+	else {	// Triangle
+		canvas_->draw_triangle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
+	}
+}
+
+void CanvasControl::on_eraseButton_clicked() {
+	confirm_clear();
+}
+
+void CanvasControl::on_lineRadioButton_toggled(bool checked) {
+	set_line_controls_visible(checked);
+}
+
+void CanvasControl::on_rectRadioButton_toggled(bool checked) {
+	set_rect_controls_visible(checked);
+}
+
+void CanvasControl::on_textRadioButton_toggled(bool checked) {
+	set_text_controls_visible(checked);
+}
+
+void CanvasControl::on_triangleRadioButton_toggled(bool checked) {
+	set_triangle_controls_visible(checked);
+}
+
+CanvasControl::~CanvasControl() {
+	delete ui;
+	delete font_;
+}

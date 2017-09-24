@@ -12,6 +12,9 @@
 #include "animation/sparkleanimation.h"
 #include "animation/sparkleanimationcontrol.h"
 #include "animation/waveanimation.h"
+#include "canvas/animationcanvas.h"
+#include "canvas/colorcanvas.h"
+#include "canvas/canvascontrol.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
 #include "core/section.h"
@@ -112,6 +115,9 @@ void MaestroControl::initialize() {
 	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Overlay"});
 	ui->alphaSpinBox->setVisible(false);
 
+	// Initialize Canvas controls
+	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
+
 	get_section_settings();
 }
 
@@ -210,6 +216,29 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 }
 
 /**
+ * Changes the current Canvas.
+ * @param index Index of the new Canvas type.
+ */
+void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
+	// If we're switching Canvases, remove the current Canvas.
+	Canvas* canvas = active_section_controller_->get_section()->get_canvas();
+
+	if (canvas != nullptr) {
+		active_section_controller_->get_section()->remove_canvas();
+	}
+
+	// Add the new Canvas
+	switch (index) {
+		case 1:	// Animation Canvas
+			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::ANIMATIONCANVAS);
+			break;
+		// TODO: Color Canvas
+	}
+
+	show_canvas_controls(canvas);
+}
+
+/**
  * Changes the color scheme.
  * If 'Custom' is selected, this also displays controls for adjusting the custom color scheme.
  * @param index Index of the new color scheme.
@@ -248,11 +277,9 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 /**
  * Changes the number of columns in the display grid.
  */
-void MaestroControl::on_columnsSpinBox_valueChanged(int arg1) {
-	// Got the names backwards
-	on_section_resize(ui->rowsSpinBox->value(), arg1);
+void MaestroControl::on_columnsSpinBox_editingFinished() {
+	on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 }
-
 
 /**
  * Changes the custom color scheme.
@@ -370,12 +397,10 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 }
 
 /**
- * Changes the number of rows in the display grid.
- * @param arg1 New number of rows.
+ * Changes the number of rows in the displayed grid.
  */
-void MaestroControl::on_rowsSpinBox_valueChanged(int arg1) {
-	// Got the names backwards
-	on_section_resize(arg1, ui->columnsSpinBox->value());
+void MaestroControl::on_rowsSpinBox_editingFinished() {
+	on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 }
 
 void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
@@ -413,6 +438,14 @@ void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
  * @param y Number of columns.
  */
 void MaestroControl::on_section_resize(unsigned short x, unsigned short y) {
+	// Check the Canvas
+	if (canvas_control_widget_ != nullptr) {
+		CanvasControl* widget = qobject_cast<CanvasControl*>(canvas_control_widget_.get());
+		if (!widget->confirm_clear()) {
+			return;
+		}
+	}
+
 	if ((x != active_section_controller_->get_section()->get_dimensions()->x) || (y != active_section_controller_->get_section()->get_dimensions()->y)) {
 		active_section_controller_->get_section()->set_dimensions(x, y);
 	}
@@ -480,6 +513,20 @@ void MaestroControl::show_extra_controls(int index, Animation* animation) {
 
 	if (extra_control_widget_) {
 		layout->addWidget(extra_control_widget_.get());
+	}
+}
+
+void MaestroControl::show_canvas_controls(Canvas *canvas) {
+	QLayout* layout = this->findChild<QLayout*>("canvasControlsLayout");
+
+	// Remove the Canvas controls.
+	// If a Canvas is set, re-initialize and re-add the controls.
+	layout->removeWidget(canvas_control_widget_.get());
+	canvas_control_widget_.reset();
+
+	if (canvas != nullptr) {
+		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(canvas));
+		layout->addWidget(canvas_control_widget_.get());
 	}
 }
 

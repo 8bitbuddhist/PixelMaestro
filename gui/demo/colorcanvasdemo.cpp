@@ -15,7 +15,7 @@ ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_con
 	section->get_animation()->set_reverse(true);
 
 	Section::Overlay* overlay = section->add_overlay(Colors::MixMode::OVERLAY);
-	ColorCanvas* canvas = static_cast<ColorCanvas*>(overlay->section->add_canvas(CanvasType::COLORCANVAS));
+	ColorCanvas* canvas = static_cast<ColorCanvas*>(overlay->section->add_canvas(CanvasType::Type::COLORCANVAS));
 
 	canvas->draw_circle(Colors::BLUE, 40, 40, 40, true);
 	canvas->draw_circle(Colors::GREEN, 40, 40, 30, true);

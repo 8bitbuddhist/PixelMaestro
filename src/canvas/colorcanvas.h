@@ -24,6 +24,7 @@ namespace PixelMaestro {
 			void draw_rect(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
 			void draw_text(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font* font, const char* text);
 			void draw_triangle(Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
+			CanvasType::Type get_type();
 
 		private:
 			/**

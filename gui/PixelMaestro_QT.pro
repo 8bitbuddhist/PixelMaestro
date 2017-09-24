@@ -68,9 +68,9 @@ SOURCES += main.cpp\
     ../src/show/maestroapplypresetevent.cpp \
     ../src/canvas/colorcanvas.cpp \
     demo/colorcanvasdemo.cpp \
-    widget/canvas/basecanvascontrol.cpp \
     ../src/canvas/animationcanvas.cpp \
-    ../src/canvas/canvas.cpp
+    ../src/canvas/canvas.cpp \
+    widget/canvas/canvascontrol.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -132,10 +132,10 @@ HEADERS += \
     ../src/preset/demopreset.h \
     ../src/canvas/colorcanvas.h \
     demo/colorcanvasdemo.h \
-    widget/canvas/basecanvascontrol.h \
     ../src/canvas/canvastype.h \
     ../src/canvas/animationcanvas.h \
-    ../src/canvas/canvas.h
+    ../src/canvas/canvas.h \
+    widget/canvas/canvascontrol.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
@@ -143,6 +143,6 @@ FORMS	+= \
     widget/animation/lightninganimationcontrol.ui \
     widget/animation/plasmaanimationcontrol.ui \
     widget/animation/sparkleanimationcontrol.ui \
-    widget/canvas/basecanvascontrol.ui
+    widget/canvas/canvascontrol.ui
 
 INCLUDEPATH += $$PWD/../src
