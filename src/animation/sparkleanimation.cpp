@@ -48,5 +48,7 @@ namespace PixelMaestro {
 			}
 		}
 	}
+
+	SparkleAnimation::~SparkleAnimation() {}
 }
 

@@ -12,4 +12,6 @@ namespace PixelMaestro {
 	unsigned char* Font5x8::get_char(unsigned char character) {
 		return font[character - 32];
 	}
+
+	Font5x8::~Font5x8() {}
 }

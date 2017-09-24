@@ -7,6 +7,7 @@
 namespace PixelMaestro {
 	class DemoPreset : public Preset {
 		public:
+			~DemoPreset();
 			void apply(Maestro *maestro);
 	};
 }

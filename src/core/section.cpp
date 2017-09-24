@@ -109,15 +109,15 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the final color of the specified Pixel after applying post-processing effects (e.g. Overlays).
+		Returns the final color of the specified Pixel.
 
 		@param pixel Index of the Pixel.
 		@return RGB value of the Pixel's final color.
 	*/
 	Colors::RGB Section::get_pixel_color(unsigned int pixel) {
-		// Before returning the final color, we need to factor in the Canvas and Overlay.
 		Colors::RGB color;
 
+		// If there's a Canvas, get the color supplied by the Canvas.
 		if (canvas_ != nullptr) {
 			color = canvas_->get_pixel_color(pixel);
 		}
@@ -125,10 +125,7 @@ namespace PixelMaestro {
 			color = *pixels_[pixel].get_color();
 		}
 
-		/*
-		 * If there's an Overlay, mix the Overlay color with the Section color.
-		 * Otherwise, return the Section (/Canvas) color.
-		 */
+		// If there's an Overlay, return the Overlay color mixed with the Section (or Canvas) color.
 		if (overlay_ != nullptr) {
 			return Colors::mix_colors(color, overlay_->section->get_pixel_color(pixel), overlay_->mix_mode, overlay_->alpha);
 		}
@@ -285,27 +282,18 @@ namespace PixelMaestro {
 	*/
 	void Section::update(const unsigned long& current_time) {
 
-		// If no animation is set, do nothing.
-		if (animation_ == nullptr) {
-			return;
-		}
-
 		// If this Section has an Overlay or Canvas, update them first.
 		if (overlay_ != nullptr) {
 			overlay_->section->update(current_time);
 		}
+
 		if (canvas_ != nullptr) {
 			canvas_->update(current_time);
 		}
 
-		/**
-		 * Update the animation.
-		 * Then, update each Pixel only if the update was successful or if fading is enabled.
-		 */
 		/*
 		 * Update the Pixel grid.
-		 * Only update under the following circumstances:
-		 *	1) An animation is set, and either
+		 * Only update if an Animation is set and either:
 		 *		a) The Animation has changed
 		 *		b) Fading is enabled
 		 */
@@ -319,6 +307,7 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
+		remove_canvas();
 		remove_overlay();
 
 		delete [] pixels_;

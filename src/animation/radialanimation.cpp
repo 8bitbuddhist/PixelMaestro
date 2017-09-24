@@ -43,4 +43,6 @@ namespace PixelMaestro {
 
 		update_cycle(0, num_colors_);
 	}
+
+	RadialAnimation::~RadialAnimation() {}
 }

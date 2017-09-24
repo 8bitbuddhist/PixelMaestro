@@ -219,4 +219,6 @@ namespace PixelMaestro {
 		this->down_threshold_ = down_threshold;
 		this->up_threshold_ = up_threshold;
 	}
+
+	LightningAnimation::~LightningAnimation() {}
 }

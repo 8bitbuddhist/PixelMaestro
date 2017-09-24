@@ -61,4 +61,6 @@ namespace PixelMaestro {
 
 		update_cycle(0, num_colors_);
 	}
+
+	MandelbrotAnimation::~MandelbrotAnimation() {}
 }

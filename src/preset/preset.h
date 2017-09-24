@@ -12,6 +12,7 @@ namespace PixelMaestro {
 
 	class Preset {
 		public:
+			virtual ~Preset() {}
 			virtual void apply(Maestro* maestro) = 0;
 	};
 }

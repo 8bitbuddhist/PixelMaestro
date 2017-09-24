@@ -30,4 +30,6 @@ namespace PixelMaestro {
 		// Only run for two cycles.
 		update_cycle(0, 2);
 	}
+
+	BlinkAnimation::~BlinkAnimation() {}
 }

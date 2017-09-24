@@ -25,4 +25,6 @@ namespace PixelMaestro {
 		canvas->draw_text(1, 1, font, "Hello world!");
 		delete font;
 	}
+
+	DemoPreset::~DemoPreset() {}
 }

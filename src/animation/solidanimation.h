@@ -7,6 +7,7 @@ namespace PixelMaestro {
 	class SolidAnimation : public Animation {
 		public:
 			SolidAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, unsigned short speed = 100, unsigned short pause = 0);
+			~SolidAnimation();
 			void update(Section* section);
 	};
 }

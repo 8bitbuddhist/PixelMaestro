@@ -8,6 +8,7 @@ namespace PixelMaestro {
 	class RadialAnimation : public Animation {
 		public:
 			RadialAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, unsigned short speed = 100, unsigned short pause = 0);
+			~RadialAnimation();
 			void update(Section* section);
 
 		private:

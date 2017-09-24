@@ -52,7 +52,7 @@ namespace PixelMaestro {
 			virtual void initialize_pattern() = 0;
 
 			Canvas(Section* section);
-			~Canvas();
+			virtual ~Canvas();
 			void clear();
 			void draw_circle(unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
 			void draw_line(unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);

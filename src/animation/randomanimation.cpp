@@ -9,4 +9,6 @@ namespace PixelMaestro {
 			section->set_one(pixel, &colors_[Utility::rand(num_colors_)]);
 		}
 	}
+
+	RandomAnimation::~RandomAnimation() {}
 }
