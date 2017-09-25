@@ -46,7 +46,7 @@ void CanvasControl::initialize() {
 
 	// Set color Canvas buttons
 	switch (canvas_->get_type()) {
-		case CanvasType::COLORCANVAS:
+		case CanvasType::ColorCanvas:
 			ui->colorLabel->setVisible(true);
 			ui->selectColorButton->setVisible(true);
 			break;
@@ -178,7 +178,7 @@ void CanvasControl::on_circleRadioButton_toggled(bool checked) {
 void CanvasControl::on_drawButton_clicked() {
 	QAbstractButton* checked_button = this->shape_type_group_.checkedButton();
 
-	if (canvas_->get_type() == CanvasType::COLORCANVAS) {
+	if (canvas_->get_type() == CanvasType::ColorCanvas) {
 		ColorCanvas* canvas = static_cast<ColorCanvas*>(canvas_);
 		if (checked_button == ui->circleRadioButton) {
 			canvas->draw_circle(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->fillCheckBox->isChecked());

@@ -15,7 +15,7 @@ namespace PixelMaestro {
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, 0};
-		if (orientation_ == Orientations::VERTICAL) {
+		if (orientation_ == Orientation::Vertical) {
 			start.set((unsigned short)Utility::rand(section->get_dimensions()->x), 0);
 		}
 		else {
@@ -23,7 +23,7 @@ namespace PixelMaestro {
 		}
 
 		for (unsigned char bolt = 0; bolt < num_bolts_; bolt++) {
-			if (orientation_ == Orientations::VERTICAL) {
+			if (orientation_ == Orientation::Vertical) {
 				draw_bolt_vertical(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
 			}
 			else {

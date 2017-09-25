@@ -71,16 +71,16 @@ namespace PixelMaestro {
 			/// Determines the blending algorithm used when mixing two colors.
 			enum MixMode {
 				/// Do not mix the colors.
-				NONE,
+				None,
 
 				/// Mixes both colors with a specific blend percentage (blending is applied to the Overlay).
-				ALPHA,
+				Alpha,
 
 				/// Multiplies the base color by the overlay color.
-				MULTIPLY,
+				Multiply,
 
 				/// Draws lit Pixels, but treats black Pixels as transparent.
-				OVERLAY
+				Overlay
 			};
 
 			// Basic color set.

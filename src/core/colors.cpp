@@ -155,7 +155,7 @@ namespace PixelMaestro {
 		RGB mixed_color;
 
 		switch (mode) {
-			case MixMode::ALPHA:
+			case MixMode::Alpha:
 			{
 				float alpha_pct = alpha / (float)255;
 				mixed_color.r = (alpha_pct * color_two.r) + ((1 - alpha_pct) * color_one.r);
@@ -163,14 +163,14 @@ namespace PixelMaestro {
 				mixed_color.b = (alpha_pct * color_two.b) + ((1 - alpha_pct) * color_one.b);
 				break;
 			}
-			case MixMode::MULTIPLY:
+			case MixMode::Multiply:
 			{
 				mixed_color.r = color_one.r * (float)(color_two.r / (float)255);
 				mixed_color.g = color_one.g * (float)(color_two.g / (float)255);
 				mixed_color.b = color_one.b * (float)(color_two.b / (float)255);
 				break;
 			}
-			case MixMode::OVERLAY:
+			case MixMode::Overlay:
 			{
 				if (color_two != Colors::BLACK) {
 					mixed_color = color_two;

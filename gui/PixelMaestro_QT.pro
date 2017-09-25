@@ -70,7 +70,9 @@ SOURCES += main.cpp\
     demo/colorcanvasdemo.cpp \
     ../src/canvas/animationcanvas.cpp \
     ../src/canvas/canvas.cpp \
-    widget/canvas/canvascontrol.cpp
+    widget/canvas/canvascontrol.cpp \
+    ../src/serial/command.cpp \
+    demo/commanddemo.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -135,7 +137,9 @@ HEADERS += \
     ../src/canvas/canvastype.h \
     ../src/canvas/animationcanvas.h \
     ../src/canvas/canvas.h \
-    widget/canvas/canvascontrol.h
+    widget/canvas/canvascontrol.h \
+    ../src/serial/command.h \
+    demo/commanddemo.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

@@ -30,6 +30,8 @@ class MainWindow : public QMainWindow {
 
 		void on_action_Color_Canvas_Demo_triggered();
 
+		void on_actionCommand_Demo_triggered();
+
 	private:
 		MaestroController* controller_ = nullptr;
 		QWidget* drawing_area_ = nullptr;

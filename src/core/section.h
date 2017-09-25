@@ -32,7 +32,7 @@ namespace PixelMaestro {
 				Section* section = nullptr;
 
 				/// Method of blending the output from the Overlay with the base Section.
-				Colors::MixMode mix_mode = Colors::MixMode::NONE;
+				Colors::MixMode mix_mode = Colors::MixMode::None;
 
 				/// Transparency level of the overlaid Section (if applicable).
 				unsigned char alpha;
@@ -57,8 +57,8 @@ namespace PixelMaestro {
 			Section(Point dimensions);
 			Section(unsigned short x, unsigned short y);
 			~Section();
-			Canvas* add_canvas(CanvasType::Type type = CanvasType::Type::ANIMATIONCANVAS);
-			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::ALPHA, unsigned char alpha = 128);
+			Canvas* add_canvas(CanvasType::Type type = CanvasType::Type::AnimationCanvas);
+			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::Alpha, unsigned char alpha = 128);
 			Animation* get_animation();
 			Canvas* get_canvas();
 			unsigned short get_cycle_interval();

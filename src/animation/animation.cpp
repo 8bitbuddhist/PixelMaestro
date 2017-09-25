@@ -71,7 +71,7 @@ namespace PixelMaestro {
 	 * Returns the animation's orientation.
 	 * @return Animation's orientation
 	 */
-	Animation::Orientations Animation::get_orientation() {
+	Animation::Orientation Animation::get_orientation() {
 		return orientation_;
 	}
 
@@ -139,7 +139,7 @@ namespace PixelMaestro {
 	 *
 	 * @param orientation New orientation.
 	 */
-	void Animation::set_orientation(Orientations orientation) {
+	void Animation::set_orientation(Orientation orientation) {
 		orientation_ = orientation;
 	}
 

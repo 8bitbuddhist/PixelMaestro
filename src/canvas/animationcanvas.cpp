@@ -47,7 +47,7 @@ namespace PixelMaestro {
 	}
 
 	CanvasType::Type AnimationCanvas::get_type() {
-		return CanvasType::Type::ANIMATIONCANVAS;
+		return CanvasType::Type::AnimationCanvas;
 	}
 
 	/**

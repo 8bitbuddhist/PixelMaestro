@@ -28,7 +28,7 @@ namespace PixelMaestro {
 	 * Returns the timing method used to run the Show.
 	 * @return Timing method.
 	 */
-	Show::TimingModes Show::get_timing() {
+	Show::TimingMode Show::get_timing() {
 		return timing_;
 	}
 
@@ -61,7 +61,7 @@ namespace PixelMaestro {
 
 		@param timing Timing mode used.
 	*/
-	void Show::set_timing(TimingModes timing) {
+	void Show::set_timing(TimingMode timing) {
 		timing_ = timing;
 	}
 
@@ -89,8 +89,8 @@ namespace PixelMaestro {
 			If RELATIVE, compare the time since the last Event to the next Event's start time.
 			After running the Event, update the last run time and current Event index.
 		*/
-		if ((timing_ == TimingModes::ABSOLUTE && (current_time >= events_[current_index_]->get_time())) ||
-			(timing_ == TimingModes::RELATIVE && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
+		if ((timing_ == TimingMode::Absolute && (current_time >= events_[current_index_]->get_time())) ||
+			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
 			events_[current_index_]->run();
 			last_time_ = current_time;
 			update_event_index();

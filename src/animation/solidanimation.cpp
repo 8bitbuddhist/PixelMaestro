@@ -4,7 +4,7 @@ namespace PixelMaestro {
 	SolidAnimation::SolidAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) { }
 
 	void SolidAnimation::update(Section* section) {
-		if (orientation_ == Orientations::VERTICAL) {
+		if (orientation_ == Orientation::Vertical) {
 			for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
 				for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {
 					section->set_one(x, y, get_color_at_index(y));

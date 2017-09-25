@@ -8,10 +8,10 @@ namespace PixelMaestro {
 			enum Type {
 
 				/// Traditional Canvas. Draws Pixels using the underlying Section Animation.
-				ANIMATIONCANVAS,
+				AnimationCanvas,
 
 				/// Draws Pixels using custom colors.
-				COLORCANVAS
+				ColorCanvas
 			};
 	};
 }

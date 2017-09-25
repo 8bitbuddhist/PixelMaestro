@@ -23,7 +23,7 @@ namespace PixelMaestro {
 	}
 
 	void SparkleAnimation::update(Section* section) {
-		if (orientation_ == Orientations::VERTICAL) {
+		if (orientation_ == Orientation::Vertical) {
 			for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
 				for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {
 					if (Utility::rand(255) <= threshold_) {

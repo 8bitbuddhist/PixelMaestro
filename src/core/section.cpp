@@ -38,10 +38,10 @@ namespace PixelMaestro {
 		remove_canvas();
 
 		switch (type) {
-			case CanvasType::Type::ANIMATIONCANVAS:
+			case CanvasType::Type::AnimationCanvas:
 				canvas_ = new AnimationCanvas(this);
 				break;
-			case CanvasType::Type::COLORCANVAS:
+			case CanvasType::Type::ColorCanvas:
 				canvas_ = new ColorCanvas(this);
 				break;
 		}

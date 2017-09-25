@@ -121,7 +121,7 @@ namespace PixelMaestro {
 	}
 
 	CanvasType::Type ColorCanvas::get_type() {
-		return CanvasType::Type::COLORCANVAS;
+		return CanvasType::Type::ColorCanvas;
 	}
 
 	/**

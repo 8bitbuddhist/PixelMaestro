@@ -13,20 +13,20 @@ namespace PixelMaestro {
 	class Show {
 		public:
 			/// The method used to measure time between Events.
-			enum TimingModes {
+			enum TimingMode {
 
 				/// Counts time from when the Show starts.
-				ABSOLUTE,
+				Absolute,
 
 				/// Counts time since the last Event.
-				RELATIVE
+				Relative
 			};
 
 			Show(Event **events, unsigned short num_events);
 			bool get_looping();
-			TimingModes get_timing();
+			TimingMode get_timing();
 			void set_events(Event **events, unsigned short num_events, bool preserve_current_index = true);
-			void set_timing(TimingModes timing);
+			void set_timing(TimingMode timing);
 			void set_looping(bool loop);
 			void update(const unsigned long& current_time);
 
@@ -47,7 +47,7 @@ namespace PixelMaestro {
 			unsigned short num_events_;
 
 			/// Method for measuring a Event's start time. Defaults to Absolute.
-			TimingModes timing_ = TimingModes::ABSOLUTE;
+			TimingMode timing_ = TimingMode::Absolute;
 
 			void check_next_event(const unsigned long& current_time);
 			void update_event_index();

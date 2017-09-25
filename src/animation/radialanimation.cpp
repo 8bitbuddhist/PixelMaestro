@@ -14,7 +14,7 @@ namespace PixelMaestro {
 			};
 		}
 
-		if (orientation_ == Orientations::VERTICAL) {
+		if (orientation_ == Orientation::Vertical) {
 			// For each Pixel, calculate the slope from the center.
 			for (unsigned short y = 0; y < size_.y; y++) {
 				for (unsigned short x = 0; x < size_.x; x++) {

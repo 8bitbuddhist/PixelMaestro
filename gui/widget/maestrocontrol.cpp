@@ -106,7 +106,7 @@ void MaestroControl::initialize() {
 	ui->sectionComboBox->addItem("Section 1");
 
 	// Add an Overlay
-	active_section_controller_->add_overlay(Colors::MixMode::NONE);
+	active_section_controller_->add_overlay(Colors::MixMode::None);
 	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation());
 	active_section_controller_->get_overlay_controller()->set_colors(Colors::COLORWHEEL, 12);
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
@@ -208,7 +208,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	show_extra_controls(index, animation);
 
 	// Reapply animation options
-	animation->set_orientation((Animation::Orientations)ui->orientationComboBox->currentIndex());
+	animation->set_orientation((Animation::Orientation)ui->orientationComboBox->currentIndex());
 	animation->set_fade(ui->fadeCheckBox->isChecked());
 	animation->set_reverse(ui->reverse_animationCheckBox->isChecked());
 	animation->set_colors(active_section_controller_->get_colors(), active_section_controller_->get_num_colors());
@@ -228,10 +228,10 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 	// Add the new Canvas
 	switch (index) {
 		case 1:	// Animation Canvas
-			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::ANIMATIONCANVAS);
+			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::AnimationCanvas);
 			break;
 		case 2: // Color Canvas
-			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::COLORCANVAS);
+			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::ColorCanvas);
 			break;
 	}
 
@@ -373,9 +373,9 @@ void MaestroControl::on_num_colorsSpinBox_valueChanged(int arg1) {
  * @param index New orientation.
  */
 void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
-	if ((Animation::Orientations)index != active_section_controller_->get_section()->get_animation()->get_orientation()) {
+	if ((Animation::Orientation)index != active_section_controller_->get_section()->get_animation()->get_orientation()) {
 		if (active_section_controller_->get_section()->get_animation()) {
-			active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientations)index);
+			active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientation)index);
 		}
 	}
 }

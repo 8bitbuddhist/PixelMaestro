@@ -24,7 +24,7 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 
 	section->set_animation(new MergeAnimation(Colors::COLORWHEEL, 12));
 
-	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->add_canvas(CanvasType::Type::ANIMATIONCANVAS));
+	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->add_canvas(CanvasType::Type::AnimationCanvas));
 
 	// Start drawing
 	// First, box off the Canvas into 4 quadrants

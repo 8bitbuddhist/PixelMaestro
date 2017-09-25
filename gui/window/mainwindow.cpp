@@ -3,6 +3,7 @@
 #include "demo/blinkdemo.h"
 #include "demo/canvasdemo.h"
 #include "demo/colorcanvasdemo.h"
+#include "demo/commanddemo.h"
 #include "demo/presetdemo.h"
 #include "demo/showdemo.h"
 #include "drawingarea/canvasdrawingarea.h"
@@ -99,6 +100,18 @@ void MainWindow::on_action_Canvas_Demo_triggered() {
 	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Canvas."));
 }
 
+void MainWindow::on_actionCommand_Demo_triggered() {
+	reset_drawing_area();
+
+	drawing_area_ = new CommandDemo(main_layout_->widget(), controller_);
+	main_layout_->addWidget(drawing_area_);
+
+	// Update UI
+	ui->actionCommand_Demo->setEnabled(false);
+	ui->action_Close_Workspace->setEnabled(true);
+	statusBar()->showMessage(QString("Demonstrates sending commands to a Maestro."));
+}
+
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	reset_drawing_area();
 
@@ -127,7 +140,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	Animation* wave = section_controller->get_section()->set_animation(new WaveAnimation());
 	wave->set_speed(100);
 	section_controller->set_colors(Colors::COLORWHEEL, 12);
-	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->add_canvas(CanvasType::Type::ANIMATIONCANVAS));
+	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->add_canvas(CanvasType::Type::AnimationCanvas));
 
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);
 	installEventFilter(drawing_area_);

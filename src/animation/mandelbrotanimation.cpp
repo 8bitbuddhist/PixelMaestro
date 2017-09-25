@@ -40,7 +40,7 @@ namespace PixelMaestro {
 					iterations_++;
 				}
 
-				if (orientation_ == Orientations::VERTICAL) {
+				if (orientation_ == Orientation::Vertical) {
 					if (iterations_ < max_iterations_) {
 						section->set_one(y, x, get_color_at_index(iterations_ + cycle_index_));
 					}

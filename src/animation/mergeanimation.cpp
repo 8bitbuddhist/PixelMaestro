@@ -4,7 +4,7 @@ namespace PixelMaestro {
 	MergeAnimation::MergeAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) { }
 
 	void MergeAnimation::update(Section* section) {
-		if (orientation_ == VERTICAL) {
+		if (orientation_ == Vertical) {
 			for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
 				mid_point_ = (section->get_dimensions()->y / 2) - 1;
 				count_ = 0;

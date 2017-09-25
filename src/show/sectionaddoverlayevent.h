@@ -8,7 +8,7 @@
 namespace PixelMaestro {
 	class SectionAddOverlayEvent : public Event {
 		public:
-			SectionAddOverlayEvent(unsigned long time, Section* section, Colors::MixMode mix_mode = Colors::MixMode::ALPHA, unsigned char alpha = 128);
+			SectionAddOverlayEvent(unsigned long time, Section* section, Colors::MixMode mix_mode = Colors::MixMode::Alpha, unsigned char alpha = 128);
 			void run();
 
 		private:
