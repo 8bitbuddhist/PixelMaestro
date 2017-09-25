@@ -11,6 +11,8 @@ using namespace PixelMaestro;
  */
 MaestroController::MaestroController() {
 	maestro_ = std::unique_ptr<Maestro>(new Maestro(nullptr, 0));
+	// Set framerate to 25fps
+	maestro_->set_refresh_interval(40);
 }
 
 /**

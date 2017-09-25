@@ -6,4 +6,4 @@ PixelMaestro does not interact directly with underlying hardware. Instead, it ac
 **Note:** PixelMaestro is pre-alpha software. New releases can (and likely will) introduce incompatible changes.
 
 ## Getting Started
-To get started, please read the [documentation](docs/README.md). You can also test PixelMaestro by running the [Qt-based frontend](gui) or [Arduino sketches](arduino).
+To get started, please read the [documentation](docs/README.md). You can also test PixelMaestro by running the [Qt-based frontend](gui/README.md) or [Arduino sketches](arduino).
