@@ -34,7 +34,14 @@ namespace PixelMaestro {
 				 * Change the Maestro's refresh rate.
 				 * args[0] = New refresh rate.
 				 */
-				MaestroChangeRefreshInterval
+				MaestroChangeRefreshInterval,
+
+				/**
+				 * Adds a Canvas to a Section.
+				 * args[0] = Section number.
+				 * args[0] = Canvas::CanvasType.
+				 */
+				SectionAddCanvas
 			};
 
 			Command(Action action, unsigned int args[]);

@@ -8,16 +8,24 @@ namespace PixelMaestro {
 	 */
 	Command::Command(Action action, unsigned int args[]) {
 		// Build the command based on the parameters provided.
-		if (action == MaestroChangeRefreshInterval) {
-			if (args != nullptr) {
-				// Format: [Action] [Refresh Rate (1)] [Refresh Rate (2)]
-				IntByteConvert::IntAsByte byte = IntByteConvert::int_to_byte(args[0]);
+		switch(action) {
+			case MaestroChangeRefreshInterval: // Format: [Action] [Refresh Rate (1)] [Refresh Rate (2)]
+				{
+					IntByteConvert::IntAsByte byte = IntByteConvert::int_to_byte(args[0]);
+					command_ = new unsigned char[3] {
+						MaestroChangeRefreshInterval,
+						byte.quotient,
+						byte.remainder
+					};
+				}
+				break;
+			case SectionAddCanvas: // Format: [Action] [Section ID] [Canvas::CanvasType]
 				command_ = new unsigned char[3] {
-					MaestroChangeRefreshInterval,
-					byte.quotient,
-					byte.remainder
+					SectionAddCanvas,
+					(unsigned char)args[0],
+					(unsigned char)args[1]
 				};
-			}
+				break;
 		}
 	}
 
@@ -35,9 +43,13 @@ namespace PixelMaestro {
 	 * @param command The command to run.
 	 */
 	void Command::run(Maestro* maestro, unsigned char *command) {
-		if (command[0] == MaestroChangeRefreshInterval) {
-			int refresh_interval = IntByteConvert::byte_to_int(command[1], command[2]);
-			maestro->set_refresh_interval(refresh_interval);
+		switch (command[0]) {
+			case MaestroChangeRefreshInterval:
+				maestro->set_refresh_interval(IntByteConvert::byte_to_int(command[1], command[2]));
+				break;
+			case SectionAddCanvas:
+				maestro->get_section(command[1])->add_canvas(CanvasType::Type(command[2]));
+				break;
 		}
 	}
 }

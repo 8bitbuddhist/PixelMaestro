@@ -46,6 +46,7 @@ void MainWindow::reset_drawing_area() {
 	ui->action_Blink_Demo->setEnabled(true);
 	ui->action_Canvas_Demo->setEnabled(true);
 	ui->action_Color_Canvas_Demo->setEnabled(true);
+	ui->actionCommand_Demo->setEnabled(true);
 	ui->action_Close_Workspace->setEnabled(false);
 	ui->action_Open_Animation_Editor->setEnabled(true);
 	ui->actionPreset_Demo->setEnabled(true);
