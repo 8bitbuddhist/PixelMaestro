@@ -3,7 +3,8 @@
 
 namespace PixelMaestro {
 	SparkleAnimation::SparkleAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause, unsigned char threshold) : Animation(colors, num_colors, speed, pause) {
-		this->threshold_ = threshold;
+		type_ = Animation::Type::Sparkle;
+		threshold_ = threshold;
 	}
 
 	/**

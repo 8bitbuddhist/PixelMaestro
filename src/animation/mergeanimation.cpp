@@ -1,7 +1,9 @@
 #include "mergeanimation.h"
 
 namespace PixelMaestro {
-	MergeAnimation::MergeAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) { }
+	MergeAnimation::MergeAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) {
+		type_ = Animation::Type::Merge;
+	}
 
 	void MergeAnimation::update(Section* section) {
 		if (orientation_ == Vertical) {

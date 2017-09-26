@@ -8,6 +8,7 @@ namespace PixelMaestro {
 
 	// Initialize header contents
 	const unsigned char Serial::header_[] = {'P', 'M'};
+	bool Serial::run_checksum = true;
 
 	void Serial::build_packet(unsigned char* buffer, unsigned char* data, unsigned char data_size) {
 		/*
@@ -33,7 +34,12 @@ namespace PixelMaestro {
 		}
 
 		// Finally, add a checksum and stuff it in after the packet size
-		buffer[checksum_index_] = checksum(buffer, buffer[size_index_] + payload_index_);
+		if (run_checksum) {
+			buffer[checksum_index_] = checksum(buffer, buffer[size_index_] + payload_index_);
+		}
+		else {
+			buffer[checksum_index_] = 0;
+		}
 	}
 
 	unsigned char Serial::checksum(unsigned char *data, unsigned char data_size) {
@@ -63,7 +69,7 @@ namespace PixelMaestro {
 		}
 
 		// Second, generate and compare the checksum
-		if (command[checksum_index_] != checksum(command, command[size_index_] + payload_index_)) {
+		if (run_checksum && command[checksum_index_] != checksum(command, command[size_index_] + payload_index_)) {
 			return;
 		}
 

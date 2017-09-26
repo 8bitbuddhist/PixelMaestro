@@ -101,6 +101,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the type of Animation.
+	 * @return Animation type.
+	 */
+	Animation::Type Animation::get_type() {
+		return type_;
+	}
+
+	/**
 		Replaces the current color palette.
 
 		@param colors New color palette.

@@ -1,8 +1,8 @@
 #ifndef ANIMATIONSERIAL_H
 #define ANIMATIONSERIAL_H
 
-#include "animation/animation.h"
-#include "core/maestro.h"
+#include "../animation/animation.h"
+#include "../core/maestro.h"
 
 namespace PixelMaestro {
 	class AnimationSerial {

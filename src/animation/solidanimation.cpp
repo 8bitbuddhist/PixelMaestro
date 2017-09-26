@@ -1,7 +1,9 @@
 #include "solidanimation.h"
 
 namespace PixelMaestro {
-	SolidAnimation::SolidAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) { }
+	SolidAnimation::SolidAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) {
+		type_ = Animation::Type::Solid;
+	}
 
 	void SolidAnimation::update(Section* section) {
 		if (orientation_ == Orientation::Vertical) {

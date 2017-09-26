@@ -51,18 +51,11 @@ void MaestroControl::get_section_settings() {
 	ui->num_colorsSpinBox->setValue(animation->get_num_colors());
 	ui->cycleSlider->setValue(ui->cycleSlider->maximum() - active_section_controller_->get_section()->get_animation()->get_speed());
 
-	// Get the animation type
-	std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
-	for (unsigned int index = 0; index < (unsigned int)ui->animationComboBox->count(); index++) {
-		if (type.find(ui->animationComboBox->itemText(index).toStdString()) != std::string::npos) {
-			// Change the animation without firing the signal
-			ui->animationComboBox->blockSignals(true);
-			ui->animationComboBox->setCurrentIndex(index);
-			ui->animationComboBox->blockSignals(false);
-			show_extra_controls(index, active_section_controller_->get_section()->get_animation());
-			continue;
-		}
-	}
+	// Get the animation type, then change to the animation without firing the signal
+	ui->animationComboBox->blockSignals(true);
+	ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_animation()->get_type() - 1);
+	ui->animationComboBox->blockSignals(false);
+	show_extra_controls(active_section_controller_->get_section()->get_animation());
 
 	// Get Overlay MixMode and alpha from the Overlay's parent section
 	QStringList section_type = ui->sectionComboBox->currentText().split(" ");
@@ -94,7 +87,7 @@ void MaestroControl::initialize() {
 	active_section_controller_->get_section()->set_animation(new SolidAnimation());
 
 	// Populate Animation combo box
-	ui->animationComboBox->addItems({"Solid", "Blink", "Cycle", "Wave", "Merge", "Random", "Sparkle", "Radial", "Mandelbrot", "Plasma", "Lightning"});
+	ui->animationComboBox->addItems({"Blink", "Cycle", "Lightning", "Mandelbrot", "Merge", "Plasma", "Radial", "Random", "Solid", "Sparkle", "Wave"});
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
 	// Populate color combo box
@@ -156,56 +149,54 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	Animation* animation = nullptr;	// Stores the new Animation
 	if (active_section_controller_->get_section()->get_animation() != nullptr) {
 		// Only change if the animation is different
-		std::string type(typeid(*active_section_controller_->get_section()->get_animation()).name());
-		if (type.compare(ui->animationComboBox->itemText(index).toStdString()) == 0) {
+		if (active_section_controller_->get_section()->get_animation()->get_type() == index + 1) {
 			return;
 		}
-
 		delete active_section_controller_->get_section()->get_animation();
 	}
 
 	// Preserve the animation cycle between changes
 	bool preserve_cycle_index = true;
 
-	switch(index) {
-		case 0:
+	switch((Animation::Type)index + 1) {
+		case Animation::Type::Solid:
 			animation = active_section_controller_->get_section()->set_animation(new SolidAnimation(), preserve_cycle_index);
 			break;
-		case 1:
+		case Animation::Type::Blink:
 			animation = active_section_controller_->get_section()->set_animation(new BlinkAnimation(), preserve_cycle_index);
 			break;
-		case 2:
+		case Animation::Type::Cycle:
 			animation = active_section_controller_->get_section()->set_animation(new CycleAnimation(), preserve_cycle_index);
 			break;
-		case 3:
+		case Animation::Type::Wave:
 			animation = active_section_controller_->get_section()->set_animation(new WaveAnimation(), preserve_cycle_index);
 			break;
-		case 4:
+		case Animation::Type::Merge:
 			animation = active_section_controller_->get_section()->set_animation(new MergeAnimation(), preserve_cycle_index);
 			break;
-		case 5:
+		case Animation::Type::Random:
 			animation = active_section_controller_->get_section()->set_animation(new RandomAnimation(), preserve_cycle_index);
 			break;
-		case 6:
+		case Animation::Type::Sparkle:
 			animation = active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
 			break;
-		case 7:
+		case Animation::Type::Radial:
 			animation = active_section_controller_->get_section()->set_animation(new RadialAnimation(), preserve_cycle_index);
 			break;
-		case 8:
+		case Animation::Type::Mandelbrot:
 			animation = active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(), preserve_cycle_index);
 			break;
-		case 9:
+		case Animation::Type::Plasma:
 			animation = active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
 			break;
-		case 10:
+		case Animation::Type::Lightning:
 			animation = active_section_controller_->get_section()->set_animation(new LightningAnimation(), preserve_cycle_index);
 			break;
 		default:
 			return;
 	}
 
-	show_extra_controls(index, animation);
+	show_extra_controls(animation);
 
 	// Reapply animation options
 	animation->set_orientation((Animation::Orientation)ui->orientationComboBox->currentIndex());
@@ -488,7 +479,7 @@ void MaestroControl::set_overlay_controls_visible(bool visible) {
  * @param index Index of the animation in the animations list.
  * @param animation Pointer to the animation.
  */
-void MaestroControl::show_extra_controls(int index, Animation* animation) {
+void MaestroControl::show_extra_controls(Animation* animation) {
 	// First, remove any existing extra control widgets
 	if (extra_control_widget_ != nullptr) {
 		this->findChild<QLayout*>("extraControlsLayout")->removeWidget(extra_control_widget_.get());
@@ -497,14 +488,14 @@ void MaestroControl::show_extra_controls(int index, Animation* animation) {
 
 	QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
 
-	switch(index) {
-		case 6:
+	switch(animation->get_type()) {
+		case Animation::Type::Sparkle:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, layout->widget()));
 			break;
-		case 9:
+		case Animation::Type::Plasma:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, layout->widget()));
 			break;
-		case 10:
+		case Animation::Type::Lightning:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, layout->widget()));
 			break;
 		default:

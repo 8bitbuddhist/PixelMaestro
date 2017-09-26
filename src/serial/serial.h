@@ -1,7 +1,7 @@
 #ifndef SERIAL_H
 #define SERIAL_H
 
-#include "core/maestro.h"
+#include "../core/maestro.h"
 
 namespace PixelMaestro {
 
@@ -24,6 +24,8 @@ namespace PixelMaestro {
 			static unsigned int byte_to_int(unsigned char quotient, unsigned char remainder) {
 				return (quotient * 256) + remainder;
 			}
+
+			// TODO: unsigned long as byte: http://rclermont.blogspot.com/2010/02/convert-long-into-byte-array-in-cc.html
 	};
 
 	class Serial {
@@ -86,6 +88,7 @@ namespace PixelMaestro {
 
 			Serial(Action action, unsigned int args[]);
 
+			static bool run_checksum;
 			static const unsigned char size_index_ = header_len_;
 			static const unsigned char checksum_index_ = size_index_ + 1;
 			static const unsigned char payload_index_ = checksum_index_ + 1;

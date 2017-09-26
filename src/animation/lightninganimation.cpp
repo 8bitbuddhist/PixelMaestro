@@ -3,10 +3,11 @@
 
 namespace PixelMaestro {
 	LightningAnimation::LightningAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold,  unsigned char fork_chance) : Animation(colors, num_colors, speed, pause) {
-		this->num_bolts_ = num_bolts;
-		this->down_threshold_ = down_threshold;
-		this->up_threshold_ = up_threshold;
-		this->fork_chance_ = fork_chance;
+		type_ = Animation::Type::Lightning;
+		num_bolts_ = num_bolts;
+		down_threshold_ = down_threshold;
+		up_threshold_ = up_threshold;
+		fork_chance_ = fork_chance;
 	}
 
 	void LightningAnimation::update(Section *section) {

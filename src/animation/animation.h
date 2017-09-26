@@ -9,6 +9,21 @@ namespace PixelMaestro {
 
 	class Animation {
 		public:
+			/// The type of animation.
+			enum Type {
+				None,
+				Blink,
+				Cycle,
+				Lightning,
+				Mandelbrot,
+				Merge,
+				Plasma,
+				Radial,
+				Random,
+				Solid,
+				Sparkle,
+				Wave
+			};
 
 			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. CycleAnimation).
 			enum Orientation {
@@ -28,6 +43,7 @@ namespace PixelMaestro {
 			bool get_reverse();
 			unsigned short get_pause();
 			unsigned short get_speed();
+			Animation::Type get_type();
 			void set_colors(Colors::RGB* colors, unsigned char num_colors);
 			void set_cycle_index(unsigned char index);
 			void set_fade(bool fade);
@@ -64,6 +80,9 @@ namespace PixelMaestro {
 
 			/// The amount of time (in milliseconds) between animation updates. Defaults to 100.
 			unsigned short speed_ = 100;
+
+			/// The type of Animation. Gets set in the derived class' constructor.
+			Animation::Type type_;
 
 			void update_cycle(unsigned char min, unsigned char max);
 	};

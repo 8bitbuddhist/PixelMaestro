@@ -1,9 +1,9 @@
 #ifndef SECTIONSERIAL_H
 #define SECTIONSERIAL_H
 
-#include "canvas/canvastype.h"
-#include "core/colors.h"
-#include "core/maestro.h"
+#include "../canvas/canvastype.h"
+#include "../core/colors.h"
+#include "../core/maestro.h"
 
 namespace PixelMaestro {
 	class SectionSerial {

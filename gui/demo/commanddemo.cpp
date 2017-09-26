@@ -5,7 +5,6 @@
 
 CommandDemo::CommandDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
 	maestro_controller_->add_section_controller(new Point(10, 10));
-	// TODO
 
 	unsigned char buffer[100] = {0};
 	SectionSerial::add_canvas(buffer, 0, CanvasType::ColorCanvas);

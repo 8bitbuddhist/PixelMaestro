@@ -1,7 +1,7 @@
 #ifndef MAESTROSERIAL_H
 #define MAESTROSERIAL_H
 
-#include "core/maestro.h"
+#include "../core/maestro.h"
 
 namespace PixelMaestro {
 	class MaestroSerial {

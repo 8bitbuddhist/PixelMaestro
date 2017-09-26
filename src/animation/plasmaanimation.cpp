@@ -3,6 +3,7 @@
 
 namespace PixelMaestro {
 	PlasmaAnimation::PlasmaAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause, float size, float resolution) : Animation(colors, num_colors, speed, pause) {
+		type_ = Animation::Type::Plasma;
 		resolution_ = resolution;
 		size_ = size;
 	}
