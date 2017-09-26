@@ -152,7 +152,6 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 		if (active_section_controller_->get_section()->get_animation()->get_type() == index + 1) {
 			return;
 		}
-		delete active_section_controller_->get_section()->get_animation();
 	}
 
 	// Preserve the animation cycle between changes
@@ -286,6 +285,10 @@ void MaestroControl::on_custom_color_changed() {
 		(unsigned char)ui->greenSlider->value(),
 		(unsigned char)ui->blueSlider->value()
 	};
+
+	if (!active_section_controller_->get_section()->get_animation() || !active_section_controller_->get_section()->get_animation()->get_colors()) {
+		return;
+	}
 
 	if (active_section_controller_->get_section()->get_animation()->get_num_colors() == 0 || (new_color != *active_section_controller_->get_section()->get_animation()->get_color_at_index(0))) {
 		change_scaling_color_array(new_color);

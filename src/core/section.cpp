@@ -191,6 +191,7 @@ namespace PixelMaestro {
 
 	/**
 		Changes the current animation.
+		NOTE: The previous animation will be deleted!
 
 		@param animation New animation.
 		@param preserve_cycle_index If true, resume from the cycle_index of the previous animation.
@@ -200,6 +201,8 @@ namespace PixelMaestro {
 		if (preserve_cycle_index && animation_) {
 			animation->set_cycle_index(animation_->get_cycle_index());
 		}
+
+		delete this->animation_;
 
 		animation_ = animation;
 		return animation_;
