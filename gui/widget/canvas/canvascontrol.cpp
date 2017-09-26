@@ -197,7 +197,7 @@ void CanvasControl::on_drawButton_clicked() {
 					font_ = new Font5x8();
 			}
 
-			canvas->draw_text(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data());
+			canvas->draw_text(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size());
 		}
 		else {	// Triangle
 			canvas->draw_triangle(rgb_color_, ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());
@@ -221,7 +221,7 @@ void CanvasControl::on_drawButton_clicked() {
 					font_ = new Font5x8();
 			}
 
-			canvas_->draw_text(ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data());
+			canvas_->draw_text(ui->originXSpinBox->value(), ui->originYSpinBox->value(), font_, ui->textLineEdit->text().toLatin1().data(), ui->textLineEdit->text().size());
 		}
 		else {	// Triangle
 			canvas_->draw_triangle(ui->originXSpinBox->value(), ui->originYSpinBox->value(), ui->targetXSpinBox->value(), ui->targetYSpinBox->value(), ui->target2XSpinBox->value(), ui->target2YSpinBox->value(), ui->fillCheckBox->isChecked());

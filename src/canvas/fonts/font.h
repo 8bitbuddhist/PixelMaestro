@@ -9,6 +9,11 @@
 namespace PixelMaestro {
 	class Font {
 		public:
+			/// Types of fonts available.
+			enum Type {
+				Font5x8
+			};
+
 			/// The size of the font (e.g. a 5x8 font means 5 columns and 8 rows).
 			Point size = {0, 0};
 			virtual unsigned char* get_char(unsigned char character) = 0;

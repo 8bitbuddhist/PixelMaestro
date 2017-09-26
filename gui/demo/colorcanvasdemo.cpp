@@ -23,5 +23,5 @@ ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_con
 
 	// Not true black since the Overlay mix mode treats black as transparent
 	canvas->draw_rect({0, 0, 1}, 9, 36, 62, 9, true);
-	canvas->draw_text(Colors::WHITE, 10, 37, new Font5x8(), "PixelMaestro");
+	canvas->draw_text(Colors::WHITE, 10, 37, new Font5x8(), "PixelMaestro", 12);
 }

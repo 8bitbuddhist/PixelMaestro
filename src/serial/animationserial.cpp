@@ -22,12 +22,45 @@ namespace PixelMaestro {
 		Serial::build_packet(buffer, payload, sizeof(payload));
 	}
 
+	void AnimationSerial::set_cycle_index(unsigned char *buffer, unsigned char section_num, unsigned char cycle_index) {
+		unsigned char payload[] {
+			(unsigned char)Serial::Component::Animation,
+			(unsigned char)Action::SetCycleIndex,
+			section_num,
+			cycle_index
+		};
+
+		Serial::build_packet(buffer, payload, sizeof(payload));
+	}
+
 	void AnimationSerial::set_fade(unsigned char* buffer, unsigned char section_num, bool fade) {
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Animation,
 			(unsigned char)Action::SetFade,
 			section_num,
 			(unsigned char)fade
+		};
+
+		Serial::build_packet(buffer, payload, sizeof(payload));
+	}
+
+	void AnimationSerial::set_orientation(unsigned char *buffer, unsigned char section_num, Animation::Orientation orientation) {
+		unsigned char payload[] {
+			(unsigned char)Serial::Component::Animation,
+			(unsigned char)Action::SetReverse,
+			section_num,
+			(unsigned char)orientation
+		};
+
+		Serial::build_packet(buffer, payload, sizeof(payload));
+	}
+
+	void AnimationSerial::set_reverse(unsigned char *buffer, unsigned char section_num, bool reverse) {
+		unsigned char payload[] {
+			(unsigned char)Serial::Component::Animation,
+			(unsigned char)Action::SetReverse,
+			section_num,
+			(unsigned char)reverse
 		};
 
 		Serial::build_packet(buffer, payload, sizeof(payload));
@@ -70,8 +103,17 @@ namespace PixelMaestro {
 					animation->set_colors(colors, num_colors);
 				}
 				break;
+			case Action::SetCycleIndex:
+				animation->set_cycle_index(buffer[Serial::payload_index_ + 3]);
+				break;
 			case Action::SetFade:
 				animation->set_fade(buffer[Serial::payload_index_ + 3]);
+				break;
+			case Action::SetOrientation:
+				animation->set_orientation((Animation::Orientation)buffer[Serial::payload_index_ + 3]);
+				break;
+			case Action::SetReverse:
+				animation->set_reverse(buffer[Serial::payload_index_ + 3]);
 				break;
 			case Action::SetSpeed:
 				{

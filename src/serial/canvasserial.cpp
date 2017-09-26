@@ -1,5 +1,6 @@
 #include "../canvas/animationcanvas.h"
 #include "../canvas/colorcanvas.h"
+#include "../canvas/fonts/font5x8.h"
 #include "canvasserial.h"
 #include "serial.h"
 
@@ -259,6 +260,55 @@ namespace PixelMaestro {
 		Serial::build_packet(buffer, payload, sizeof(payload));
 	}
 
+	void CanvasSerial::draw_text(unsigned char *buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+
+		unsigned char payload[10 + num_chars];
+		payload[0] = (unsigned char)Serial::Component::Canvas;
+		payload[1] = (unsigned char)Action::DrawText;
+		payload[2] = (unsigned char)CanvasType::AnimationCanvas;
+		payload[3] = section_num;
+		payload[4] = origin_x_byte.quotient_;
+		payload[5] = origin_x_byte.remainder_;
+		payload[6] = origin_y_byte.quotient_;
+		payload[7] = origin_y_byte.remainder_;
+		payload[8] = (unsigned char)font;
+		payload[9] = num_chars;
+
+		for (int i = 0; i < num_chars; i++) {
+			payload[10 + i] = text[i];
+		}
+
+		Serial::build_packet(buffer, payload, sizeof(payload));
+	}
+
+	void CanvasSerial::draw_text(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+
+		unsigned char payload[13 + num_chars];
+		payload[0] = (unsigned char)Serial::Component::Canvas;
+		payload[1] = (unsigned char)Action::DrawText;
+		payload[2] = (unsigned char)CanvasType::AnimationCanvas;
+		payload[3] = section_num;
+		payload[4] = color.r;
+		payload[5] = color.g;
+		payload[6] = color.b;
+		payload[7] = origin_x_byte.quotient_;
+		payload[8] = origin_x_byte.remainder_;
+		payload[9] = origin_y_byte.quotient_;
+		payload[10] = origin_y_byte.remainder_;
+		payload[11] = (unsigned char)font;
+		payload[12] = num_chars;
+
+		for (int i = 0; i < num_chars; i++) {
+			payload[13 + i] = text[i];
+		}
+
+		Serial::build_packet(buffer, payload, sizeof(payload));
+	}
+
 	void CanvasSerial::run(Maestro *maestro, unsigned char *buffer) {
 		if ((CanvasType::Type)buffer[Serial::payload_index_ + 2] == CanvasType::AnimationCanvas) {
 			AnimationCanvas* canvas = static_cast<AnimationCanvas*>(maestro->get_section(buffer[Serial::payload_index_ + 3])->get_canvas());
@@ -289,6 +339,28 @@ namespace PixelMaestro {
 						IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 8], buffer[Serial::payload_index_ + 9]),
 						IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 10], buffer[Serial::payload_index_ + 11]),
 						(bool)buffer[Serial::payload_index_ + 12]);
+					break;
+				case Action::DrawText:
+					{
+						int num_chars = buffer[Serial::payload_index_ + 9];
+
+						// TODO: There has to be a better way to do this.
+						Font* font;
+						switch ((Font::Type)buffer[Serial::payload_index_ + 8]) {
+							case Font::Type::Font5x8:
+								font = new Font5x8();
+								break;
+						}
+
+						canvas->draw_text(
+							IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 5], buffer[Serial::payload_index_ + 6]),
+							IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 7], buffer[Serial::payload_index_ + 8]),
+							font,
+							// FIXME: unsigned char for text param?
+							(char*)&buffer[Serial::payload_index_ + 10],
+							num_chars
+						);
+					}
 					break;
 				case Action::DrawTriangle:
 					canvas->draw_triangle(
@@ -340,6 +412,34 @@ namespace PixelMaestro {
 						IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 11], buffer[Serial::payload_index_ + 12]),
 						IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 13], buffer[Serial::payload_index_ + 14]),
 						bool(buffer[Serial::payload_index_ + 15]));
+					break;
+				case Action::DrawText:
+					{
+						int num_chars = buffer[Serial::payload_index_ + 12];
+
+						// TODO: There has to be a better way to do this.
+						Font* font;
+						switch ((Font::Type)buffer[Serial::payload_index_ + 11]) {
+							case Font::Type::Font5x8:
+								font = new Font5x8();
+								break;
+						}
+
+						Colors::RGB color = {
+							buffer[Serial::payload_index_ + 4],
+							buffer[Serial::payload_index_ + 5],
+							buffer[Serial::payload_index_ + 6]
+						};
+
+						canvas->draw_text(
+							color,
+							IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 7], buffer[Serial::payload_index_ + 8]),
+							IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 9], buffer[Serial::payload_index_ + 10]),
+							font,
+							(char*)&buffer[Serial::payload_index_ + 13],
+							num_chars
+						);
+					}
 					break;
 				case Action::DrawTriangle:
 					canvas->draw_triangle(

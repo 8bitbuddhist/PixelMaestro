@@ -99,9 +99,9 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void ColorCanvas::draw_text(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font *font, const char *text) {
+	void ColorCanvas::draw_text(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font *font, char* text, unsigned char num_chars) {
 		drawing_color_ = color;
-		Canvas::draw_text(origin_x, origin_y, font, text);
+		Canvas::draw_text(origin_x, origin_y, font, text, num_chars);
 	}
 
 	/**

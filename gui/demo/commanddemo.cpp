@@ -16,6 +16,7 @@ CommandDemo::CommandDemo(QWidget* parent, MaestroController* maestro_controller)
 	Serial::run(maestro_controller_->get_maestro(), buffer);
 	*/
 
+
 	SectionSerial::set_animation(buffer, 0, Animation::Type::Wave, false);
 	Serial::run(maestro_controller_->get_maestro(), buffer);
 
@@ -23,6 +24,13 @@ CommandDemo::CommandDemo(QWidget* parent, MaestroController* maestro_controller)
 	Serial::run(maestro_controller_->get_maestro(), buffer);
 
 	AnimationSerial::set_speed(buffer, 0, 1000, 750);
+	Serial::run(maestro_controller_->get_maestro(), buffer);
+
+
+	SectionSerial::add_canvas(buffer, 0, CanvasType::AnimationCanvas);
+	Serial::run(maestro_controller_->get_maestro(), buffer);
+
+	CanvasSerial::draw_text(buffer, 0, 0, 0, Font::Type::Font5x8, "Hello world", 12);
 	Serial::run(maestro_controller_->get_maestro(), buffer);
 }
 

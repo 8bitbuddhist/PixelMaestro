@@ -175,13 +175,12 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void Canvas::draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, const char* text) {
+	void Canvas::draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, char* text, unsigned char num_chars) {
 		Point cursor = {origin_x, origin_y};
 
 		unsigned char* current_char;
 
-		// Iterate over each letter. We know we've reached the end of the string if the array index doesn't point anywhere
-		for (unsigned short letter = 0; *(letter + text) != 0; letter++) {
+		for (unsigned short letter = 0; letter < num_chars; letter++) {
 
 			/*
 			 * Each char in the font corresponds to a column.

@@ -35,8 +35,8 @@ CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) :
 	canvas->draw_line(2, 8, 38, 8);
 
 	Font *font = new Font5x8();
-	canvas->draw_text(7, 10, font, "Pixel");
-	canvas->draw_text(2, 20, font, "Maestro");
+	canvas->draw_text(7, 10, font, "Pixel", 5);
+	canvas->draw_text(2, 20, font, "Maestro", 7);
 	delete font;
 
 	canvas->draw_line(2, 30, 38, 30);
