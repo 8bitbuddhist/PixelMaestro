@@ -5,6 +5,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.7] - In Progress
 ### Added
+- Added serial communication support.
 - Canvas:
 	- Added `ColorCanvas` class, which lets you draw shapes using specific colors.
 	- Added `CanvasType` enum. This gets passed to `Section::add_canvas()` and specifies the type of Canvas that is created.

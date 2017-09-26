@@ -14,6 +14,7 @@ PixelMaestro also includes the following support classes:
 * [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.
 * [Colors](colors.md): Provides core utilities for managing colors including several pre-defined colors, color schemes, and methods for generating new colors.
 * [Point](point.md): Class for managing coordinates on the Pixel grid.
+* [Serial](serial.md): Provides methods for sending PixelMaestro commands to other devices via serial communication.
 * [Utility](utility.md): Shared (mostly mathematic) methods.
 
 # Quick Start

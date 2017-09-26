@@ -71,8 +71,12 @@ SOURCES += main.cpp\
     ../src/canvas/animationcanvas.cpp \
     ../src/canvas/canvas.cpp \
     widget/canvas/canvascontrol.cpp \
-    ../src/serial/command.cpp \
-    demo/commanddemo.cpp
+    demo/commanddemo.cpp \
+    ../src/serial/serial.cpp \
+    ../src/serial/animationserial.cpp \
+    ../src/serial/canvasserial.cpp \
+    ../src/serial/maestroserial.cpp \
+    ../src/serial/sectionserial.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -138,8 +142,12 @@ HEADERS += \
     ../src/canvas/animationcanvas.h \
     ../src/canvas/canvas.h \
     widget/canvas/canvascontrol.h \
-    ../src/serial/command.h \
-    demo/commanddemo.h
+    demo/commanddemo.h \
+    ../src/serial/serial.h \
+    ../src/serial/animationserial.h \
+    ../src/serial/canvasserial.h \
+    ../src/serial/maestroserial.h \
+    ../src/serial/sectionserial.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
