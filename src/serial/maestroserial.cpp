@@ -3,13 +3,13 @@
 
 namespace PixelMaestro {
 	void MaestroSerial::set_refresh_interval(unsigned char *buffer, unsigned short interval) {
-		IntByteConvert::IntAsByte interval_byte = IntByteConvert::int_to_byte(interval);
+		IntByteConvert interval_byte = IntByteConvert(interval);
 
 		unsigned char payload[] = {
 			(unsigned char)Serial::Component::Maestro,
 			Action::SetRefreshInterval,
-			interval_byte.quotient,
-			interval_byte.remainder
+			interval_byte.quotient_,
+			interval_byte.remainder_
 		};
 
 		Serial::build_packet(buffer, payload, sizeof(payload));

@@ -14,16 +14,16 @@ namespace PixelMaestro {
 	}
 
 	void AnimationSerial::set_speed(unsigned char* buffer, unsigned char section_num, unsigned short speed, unsigned short pause) {
-		IntByteConvert::IntAsByte speed_byte = IntByteConvert::int_to_byte(speed);
-		IntByteConvert::IntAsByte pause_byte = IntByteConvert::int_to_byte(pause);
+		IntByteConvert speed_byte = IntByteConvert(speed);
+		IntByteConvert pause_byte = IntByteConvert(pause);
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Animation,
 			Action::SetSpeed,
 			section_num,
-			speed_byte.quotient,
-			speed_byte.remainder,
-			pause_byte.quotient,
-			pause_byte.remainder
+			speed_byte.quotient_,
+			speed_byte.remainder_,
+			pause_byte.quotient_,
+			pause_byte.remainder_
 		};
 
 		Serial::build_packet(buffer, payload, sizeof(payload));

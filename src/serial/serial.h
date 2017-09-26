@@ -5,27 +5,46 @@
 
 namespace PixelMaestro {
 
+	/// Converts an integer value to and from a byte array.
 	class IntByteConvert {
 		public:
-			/// Represents an integer value as two bytes.
-			struct IntAsByte {
-				unsigned char quotient = 0;
-				unsigned char remainder = 0;
+			unsigned char quotient_ = 0;
+			unsigned char remainder_ = 0;
 
-				IntAsByte(unsigned int val) {
-					quotient = val / 256;
-					remainder = val % 256;
-				}
-			};
-			static IntAsByte int_to_byte(unsigned int val) {
-				return IntAsByte(val);
+			IntByteConvert(unsigned int val) {
+				quotient_ = val / 256;
+				remainder_ = val % 256;
 			}
 
 			static unsigned int byte_to_int(unsigned char quotient, unsigned char remainder) {
 				return (quotient * 256) + remainder;
 			}
+	};
 
-			// TODO: unsigned long as byte: http://rclermont.blogspot.com/2010/02/convert-long-into-byte-array-in-cc.html
+	/**
+	 * Converts an unsigned long to and from a byte array.
+	 * See http://rclermont.blogspot.com/2010/02/convert-long-into-byte-array-in-cc.html
+	 */
+	class LongByteConvert {
+		public:
+			unsigned char index_0_ = 0;
+			unsigned char index_1_ = 0;
+			unsigned char index_2_ = 0;
+			unsigned char index_3_ = 0;
+
+			LongByteConvert(unsigned long val) {
+				index_0_ = (int)((val >> 24) & 0xFF);
+				index_1_ = (int)((val >> 16) & 0xFF);
+				index_2_ = (int)((val >> 8) & 0xFF);
+				index_3_ = (int)(val & 0xFF);
+			}
+
+			static unsigned long byte_to_long(unsigned char index_0, unsigned char index_1, unsigned char index_2, unsigned char index_3) {
+				return ((index_0 << 24) +
+						(index_1 << 16) +
+						(index_2 << 8) +
+						index_3);
+			}
 	};
 
 	class Serial {

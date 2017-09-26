@@ -5,21 +5,21 @@
 
 namespace PixelMaestro {
 	void CanvasSerial::draw_circle(unsigned char *buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
-		IntByteConvert::IntAsByte origin_x_byte = IntByteConvert::int_to_byte(origin_x);
-		IntByteConvert::IntAsByte origin_y_byte = IntByteConvert::int_to_byte(origin_y);
-		IntByteConvert::IntAsByte radius_byte = IntByteConvert::int_to_byte(radius);
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+		IntByteConvert radius_byte = IntByteConvert(radius);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
 			(unsigned char)Action::DrawCircle,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			origin_x_byte.quotient,
-			origin_x_byte.remainder,
-			origin_y_byte.quotient,
-			origin_y_byte.remainder,
-			radius_byte.quotient,
-			radius_byte.remainder,
+			origin_x_byte.quotient_,
+			origin_x_byte.remainder_,
+			origin_y_byte.quotient_,
+			origin_y_byte.remainder_,
+			radius_byte.quotient_,
+			radius_byte.remainder_,
 			(unsigned char)fill
 		};
 
@@ -27,9 +27,9 @@ namespace PixelMaestro {
 	}
 
 	void CanvasSerial::draw_circle(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
-		IntByteConvert::IntAsByte origin_x_byte = IntByteConvert::int_to_byte(origin_x);
-		IntByteConvert::IntAsByte origin_y_byte = IntByteConvert::int_to_byte(origin_y);
-		IntByteConvert::IntAsByte radius_byte = IntByteConvert::int_to_byte(radius);
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+		IntByteConvert radius_byte = IntByteConvert(radius);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
@@ -39,12 +39,12 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			origin_x_byte.quotient,
-			origin_x_byte.remainder,
-			origin_y_byte.quotient,
-			origin_y_byte.remainder,
-			radius_byte.quotient,
-			radius_byte.remainder,
+			origin_x_byte.quotient_,
+			origin_x_byte.remainder_,
+			origin_y_byte.quotient_,
+			origin_y_byte.remainder_,
+			radius_byte.quotient_,
+			radius_byte.remainder_,
 			(unsigned char)fill
 		};
 
@@ -52,34 +52,34 @@ namespace PixelMaestro {
 	}
 
 	void CanvasSerial::draw_line(unsigned char *buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
-		IntByteConvert::IntAsByte origin_x_byte = IntByteConvert::int_to_byte(origin_x);
-		IntByteConvert::IntAsByte origin_y_byte = IntByteConvert::int_to_byte(origin_y);
-		IntByteConvert::IntAsByte target_x_byte = IntByteConvert::int_to_byte(target_x);
-		IntByteConvert::IntAsByte target_y_byte = IntByteConvert::int_to_byte(target_y);
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+		IntByteConvert target_x_byte = IntByteConvert(target_x);
+		IntByteConvert target_y_byte = IntByteConvert(target_y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
 			(unsigned char)Action::DrawLine,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			origin_x_byte.quotient,
-			origin_x_byte.remainder,
-			origin_y_byte.quotient,
-			origin_y_byte.remainder,
-			target_x_byte.quotient,
-			target_x_byte.remainder,
-			target_y_byte.quotient,
-			target_y_byte.remainder
+			origin_x_byte.quotient_,
+			origin_x_byte.remainder_,
+			origin_y_byte.quotient_,
+			origin_y_byte.remainder_,
+			target_x_byte.quotient_,
+			target_x_byte.remainder_,
+			target_y_byte.quotient_,
+			target_y_byte.remainder_
 		};
 
 		Serial::build_packet(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasSerial::draw_line(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
-		IntByteConvert::IntAsByte origin_x_byte = IntByteConvert::int_to_byte(origin_x);
-		IntByteConvert::IntAsByte origin_y_byte = IntByteConvert::int_to_byte(origin_y);
-		IntByteConvert::IntAsByte target_x_byte = IntByteConvert::int_to_byte(target_x);
-		IntByteConvert::IntAsByte target_y_byte = IntByteConvert::int_to_byte(target_y);
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+		IntByteConvert target_x_byte = IntByteConvert(target_x);
+		IntByteConvert target_y_byte = IntByteConvert(target_y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
@@ -89,40 +89,40 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			origin_x_byte.quotient,
-			origin_x_byte.remainder,
-			origin_y_byte.quotient,
-			origin_y_byte.remainder,
-			target_x_byte.quotient,
-			target_x_byte.remainder,
-			target_y_byte.quotient,
-			target_y_byte.remainder
+			origin_x_byte.quotient_,
+			origin_x_byte.remainder_,
+			origin_y_byte.quotient_,
+			origin_y_byte.remainder_,
+			target_x_byte.quotient_,
+			target_x_byte.remainder_,
+			target_y_byte.quotient_,
+			target_y_byte.remainder_
 		};
 
 		Serial::build_packet(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasSerial::draw_point(unsigned char *buffer, unsigned char section_num, unsigned short x, unsigned short y) {
-		IntByteConvert::IntAsByte x_byte = IntByteConvert::int_to_byte(x);
-		IntByteConvert::IntAsByte y_byte = IntByteConvert::int_to_byte(y);
+		IntByteConvert x_byte = IntByteConvert(x);
+		IntByteConvert y_byte = IntByteConvert(y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
 			(unsigned char)Action::DrawPoint,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			x_byte.quotient,
-			x_byte.remainder,
-			y_byte.quotient,
-			y_byte.remainder
+			x_byte.quotient_,
+			x_byte.remainder_,
+			y_byte.quotient_,
+			y_byte.remainder_
 		};
 
 		Serial::build_packet(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasSerial::draw_point(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short x, unsigned short y) {
-		IntByteConvert::IntAsByte x_byte = IntByteConvert::int_to_byte(x);
-		IntByteConvert::IntAsByte y_byte = IntByteConvert::int_to_byte(y);
+		IntByteConvert x_byte = IntByteConvert(x);
+		IntByteConvert y_byte = IntByteConvert(y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
@@ -132,34 +132,34 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			x_byte.quotient,
-			x_byte.remainder,
-			y_byte.quotient,
-			y_byte.remainder
+			x_byte.quotient_,
+			x_byte.remainder_,
+			y_byte.quotient_,
+			y_byte.remainder_
 		};
 
 		Serial::build_packet(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasSerial::draw_rect(unsigned char *buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
-		IntByteConvert::IntAsByte origin_x_byte = IntByteConvert::int_to_byte(origin_x);
-		IntByteConvert::IntAsByte origin_y_byte = IntByteConvert::int_to_byte(origin_y);
-		IntByteConvert::IntAsByte size_x_byte = IntByteConvert::int_to_byte(size_x);
-		IntByteConvert::IntAsByte size_y_byte = IntByteConvert::int_to_byte(size_y);
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+		IntByteConvert size_x_byte = IntByteConvert(size_x);
+		IntByteConvert size_y_byte = IntByteConvert(size_y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
 			(unsigned char)Action::DrawRect,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			origin_x_byte.quotient,
-			origin_x_byte.remainder,
-			origin_y_byte.quotient,
-			origin_y_byte.remainder,
-			size_x_byte.quotient,
-			size_x_byte.remainder,
-			size_y_byte.quotient,
-			size_y_byte.remainder,
+			origin_x_byte.quotient_,
+			origin_x_byte.remainder_,
+			origin_y_byte.quotient_,
+			origin_y_byte.remainder_,
+			size_x_byte.quotient_,
+			size_x_byte.remainder_,
+			size_y_byte.quotient_,
+			size_y_byte.remainder_,
 			(unsigned char)fill
 		};
 
@@ -167,10 +167,10 @@ namespace PixelMaestro {
 	}
 
 	void CanvasSerial::draw_rect(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
-		IntByteConvert::IntAsByte origin_x_byte = IntByteConvert::int_to_byte(origin_x);
-		IntByteConvert::IntAsByte origin_y_byte = IntByteConvert::int_to_byte(origin_y);
-		IntByteConvert::IntAsByte size_x_byte = IntByteConvert::int_to_byte(size_x);
-		IntByteConvert::IntAsByte size_y_byte = IntByteConvert::int_to_byte(size_y);
+		IntByteConvert origin_x_byte = IntByteConvert(origin_x);
+		IntByteConvert origin_y_byte = IntByteConvert(origin_y);
+		IntByteConvert size_x_byte = IntByteConvert(size_x);
+		IntByteConvert size_y_byte = IntByteConvert(size_y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
@@ -180,14 +180,14 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			origin_x_byte.quotient,
-			origin_x_byte.remainder,
-			origin_y_byte.quotient,
-			origin_y_byte.remainder,
-			size_x_byte.quotient,
-			size_x_byte.remainder,
-			size_y_byte.quotient,
-			size_y_byte.remainder,
+			origin_x_byte.quotient_,
+			origin_x_byte.remainder_,
+			origin_y_byte.quotient_,
+			origin_y_byte.remainder_,
+			size_x_byte.quotient_,
+			size_x_byte.remainder_,
+			size_y_byte.quotient_,
+			size_y_byte.remainder_,
 			(unsigned char)fill
 		};
 
@@ -195,30 +195,30 @@ namespace PixelMaestro {
 	}
 
 	void CanvasSerial::draw_triangle(unsigned char *buffer, unsigned char section_num, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
-		IntByteConvert::IntAsByte point_a_x_byte = IntByteConvert::int_to_byte(point_a_x);
-		IntByteConvert::IntAsByte point_a_y_byte = IntByteConvert::int_to_byte(point_a_y);
-		IntByteConvert::IntAsByte point_b_x_byte = IntByteConvert::int_to_byte(point_b_x);
-		IntByteConvert::IntAsByte point_b_y_byte = IntByteConvert::int_to_byte(point_b_y);
-		IntByteConvert::IntAsByte point_c_x_byte = IntByteConvert::int_to_byte(point_c_x);
-		IntByteConvert::IntAsByte point_c_y_byte = IntByteConvert::int_to_byte(point_c_y);
+		IntByteConvert point_a_x_byte = IntByteConvert(point_a_x);
+		IntByteConvert point_a_y_byte = IntByteConvert(point_a_y);
+		IntByteConvert point_b_x_byte = IntByteConvert(point_b_x);
+		IntByteConvert point_b_y_byte = IntByteConvert(point_b_y);
+		IntByteConvert point_c_x_byte = IntByteConvert(point_c_x);
+		IntByteConvert point_c_y_byte = IntByteConvert(point_c_y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
 			(unsigned char)Action::DrawTriangle,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			point_a_x_byte.quotient,
-			point_a_x_byte.remainder,
-			point_a_y_byte.quotient,
-			point_a_y_byte.remainder,
-			point_b_x_byte.quotient,
-			point_b_x_byte.remainder,
-			point_b_y_byte.quotient,
-			point_b_y_byte.remainder,
-			point_c_x_byte.quotient,
-			point_c_x_byte.remainder,
-			point_c_y_byte.quotient,
-			point_c_y_byte.remainder,
+			point_a_x_byte.quotient_,
+			point_a_x_byte.remainder_,
+			point_a_y_byte.quotient_,
+			point_a_y_byte.remainder_,
+			point_b_x_byte.quotient_,
+			point_b_x_byte.remainder_,
+			point_b_y_byte.quotient_,
+			point_b_y_byte.remainder_,
+			point_c_x_byte.quotient_,
+			point_c_x_byte.remainder_,
+			point_c_y_byte.quotient_,
+			point_c_y_byte.remainder_,
 			(unsigned char)fill
 		};
 
@@ -226,12 +226,12 @@ namespace PixelMaestro {
 	}
 
 	void CanvasSerial::draw_triangle(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
-		IntByteConvert::IntAsByte point_a_x_byte = IntByteConvert::int_to_byte(point_a_x);
-		IntByteConvert::IntAsByte point_a_y_byte = IntByteConvert::int_to_byte(point_a_y);
-		IntByteConvert::IntAsByte point_b_x_byte = IntByteConvert::int_to_byte(point_b_x);
-		IntByteConvert::IntAsByte point_b_y_byte = IntByteConvert::int_to_byte(point_b_y);
-		IntByteConvert::IntAsByte point_c_x_byte = IntByteConvert::int_to_byte(point_c_x);
-		IntByteConvert::IntAsByte point_c_y_byte = IntByteConvert::int_to_byte(point_c_y);
+		IntByteConvert point_a_x_byte = IntByteConvert(point_a_x);
+		IntByteConvert point_a_y_byte = IntByteConvert(point_a_y);
+		IntByteConvert point_b_x_byte = IntByteConvert(point_b_x);
+		IntByteConvert point_b_y_byte = IntByteConvert(point_b_y);
+		IntByteConvert point_c_x_byte = IntByteConvert(point_c_x);
+		IntByteConvert point_c_y_byte = IntByteConvert(point_c_y);
 
 		unsigned char payload[] {
 			(unsigned char)Serial::Component::Canvas,
@@ -241,18 +241,18 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			point_a_x_byte.quotient,
-			point_a_x_byte.remainder,
-			point_a_y_byte.quotient,
-			point_a_y_byte.remainder,
-			point_b_x_byte.quotient,
-			point_b_x_byte.remainder,
-			point_b_y_byte.quotient,
-			point_b_y_byte.remainder,
-			point_c_x_byte.quotient,
-			point_c_x_byte.remainder,
-			point_c_y_byte.quotient,
-			point_c_y_byte.remainder,
+			point_a_x_byte.quotient_,
+			point_a_x_byte.remainder_,
+			point_a_y_byte.quotient_,
+			point_a_y_byte.remainder_,
+			point_b_x_byte.quotient_,
+			point_b_x_byte.remainder_,
+			point_b_y_byte.quotient_,
+			point_b_y_byte.remainder_,
+			point_c_x_byte.quotient_,
+			point_c_x_byte.remainder_,
+			point_c_y_byte.quotient_,
+			point_c_y_byte.remainder_,
 			(unsigned char)fill
 		};
 
