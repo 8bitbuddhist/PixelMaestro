@@ -10,10 +10,9 @@ namespace PixelMaestro {
 	 * @param pause The amount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
 	Animation::Animation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) {
-		colors_ = colors;
-		num_colors_ = num_colors;
 		speed_ = speed;
 		pause_ = pause;
+		set_colors(colors, num_colors);
 	}
 
 	/**
@@ -115,7 +114,16 @@ namespace PixelMaestro {
 		@param num_colors Number of colors in the palette.
 	*/
 	void Animation::set_colors(Colors::RGB* colors, unsigned char num_colors) {
-		colors_ = colors;
+		if (colors_ != nullptr) {
+			delete[] colors_;
+		}
+
+		colors_ = new Colors::RGB[num_colors];
+
+		for (unsigned char i = 0; i < num_colors; i++) {
+			colors_[i] = colors[i];
+		}
+
 		num_colors_ = num_colors;
 	}
 
@@ -231,4 +239,7 @@ namespace PixelMaestro {
 		}
 	}
 
+	Animation::~Animation() {
+		delete[] colors_;
+	}
 }

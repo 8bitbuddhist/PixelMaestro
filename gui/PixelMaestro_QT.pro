@@ -18,9 +18,6 @@ SOURCES += main.cpp\
 		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
 		demo/showdemo.cpp \
-		../src/show/colorsgeneraterandomcolorarrayevent.cpp \
-		../src/show/colorsgeneraterandomcolorevent.cpp \
-		../src/show/colorsgeneratescalingcolorarrayevent.cpp \
 		../src/show/event.cpp \
 		../src/canvas/fonts/font5x8.cpp \
 		demo/canvasdemo.cpp \
@@ -72,9 +69,6 @@ HEADERS += \
 		controller/sectioncontroller.h \
 		controller/maestrocontroller.h \
 		demo/showdemo.h \
-		../src/show/colorsgeneraterandomcolorarrayevent.h \
-		../src/show/colorsgeneraterandomcolorevent.h \
-		../src/show/colorsgeneratescalingcolorarrayevent.h \
 		../src/show/event.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \

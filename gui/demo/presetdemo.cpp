@@ -10,12 +10,4 @@ PresetDemo::PresetDemo(QWidget* parent, MaestroController* maestro_controller) :
 }
 
 PresetDemo::~PresetDemo() {
-	// Clean up the mess left behind by the Preset
-	Section* section = maestro_controller_->get_maestro()->get_section(0);
-
-	delete section->get_animation()->get_colors();
-	delete section->get_animation();
-
-	delete section->get_overlay()->section->get_animation()->get_colors();
-	delete section->get_overlay()->section->get_animation();
 }

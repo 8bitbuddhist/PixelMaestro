@@ -162,6 +162,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Deletes the current Animation.
+	 */
+	void Section::remove_animation() {
+		delete animation_;
+		animation_ = nullptr;
+	}
+
+	/**
 	 * Deletes the current Canvas.
 	 */
 	void Section::remove_canvas() {
@@ -190,7 +198,6 @@ namespace PixelMaestro {
 
 	/**
 		Changes the current animation.
-		NOTE: The previous animation will be deleted!
 
 		@param animation New animation.
 		@param preserve_cycle_index If true, resume from the cycle_index of the previous animation.
@@ -201,7 +208,7 @@ namespace PixelMaestro {
 			animation->set_cycle_index(animation_->get_cycle_index());
 		}
 
-		delete animation_;
+		remove_animation();
 
 		animation_ = animation;
 		return animation_;
@@ -309,10 +316,10 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
+		remove_animation();
 		remove_canvas();
 		remove_overlay();
 
 		delete [] pixels_;
-		pixels_ = nullptr;
 	}
 }

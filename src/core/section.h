@@ -69,6 +69,7 @@ namespace PixelMaestro {
 			unsigned int get_pixel_index(Point* coordinates);
 			unsigned int get_pixel_index(unsigned short x, unsigned short y);
 			unsigned short get_refresh_interval();
+			void remove_animation();
 			void remove_canvas();
 			void remove_overlay();
 			void set_all(Colors::RGB* color);

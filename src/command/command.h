@@ -3,6 +3,7 @@
 
 #include "../core/maestro.h"
 
+// TODO: Rename to...Cue? Prompt?
 namespace PixelMaestro {
 
 	/// Converts an integer value to and from a byte array.

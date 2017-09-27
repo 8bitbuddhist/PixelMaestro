@@ -26,17 +26,6 @@ std::shared_ptr<SectionController> MaestroController::add_section_controller(Poi
 }
 
 /**
- * Removes a Section from the Maestro.
- * @param index The index of the Section to remove.
- */
-void MaestroController::delete_section_controller(unsigned char index) {
-	// Remove the reference from the SectionController array
-	section_controllers_.erase(section_controllers_.begin() + index);
-
-	reassign_sections();
-}
-
-/**
  * Returns the Maestro handled by this MaestroController.
  * @return Underlying Maestro.
  */

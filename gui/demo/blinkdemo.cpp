@@ -17,6 +17,5 @@ BlinkDemo::BlinkDemo(QWidget* parent, MaestroController* maestro_controller) : S
 
 	Section* section(section_controller->get_section());
 
-	Animation* blink = section->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12));
-	blink->set_speed(500);
+	section->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12, 500));
 }

@@ -21,16 +21,11 @@ class SectionController {
 		SectionController(Section* section, bool is_overlay = false);
 		~SectionController();
 		SectionController* add_overlay(Colors::MixMode mix_mode, float alpha = 0.5);
-		Colors::RGB* get_colors();
-		unsigned char get_num_colors();
 		Section::Overlay* get_overlay();
 		SectionController* get_overlay_controller();
 		Section* get_section();
-		void set_colors(Colors::RGB* colors, unsigned char num_colors);
 
 	private:
-		/// Colors used by the Section and its Overlay.
-		std::vector<Colors::RGB> colors_;
 
 		/// Stores the size of the grid.
 		Point dimensions_ = {0, 0};

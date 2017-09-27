@@ -17,7 +17,6 @@ class MaestroController {
 	public:
 		MaestroController();
 		std::shared_ptr<SectionController> add_section_controller(Point* layout);
-		void delete_section_controller(unsigned char index);
 		Maestro* get_maestro();
 		unsigned char get_num_section_controllers();
 		SectionController *get_section_controller(unsigned char index);

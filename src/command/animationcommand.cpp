@@ -87,11 +87,9 @@ namespace PixelMaestro {
 		switch((Action)buffer[Command::payload_index_ + 1]) {
 			case Action::SetColors:
 				{
-					delete animation->get_colors();
-
 					int num_colors = buffer[Command::payload_index_ + 3];
 					int current_color_index = 4;
-					Colors::RGB* colors = new Colors::RGB[num_colors];
+					Colors::RGB colors[num_colors];
 					for (unsigned char i = 0; i < num_colors; i++) {
 						colors[i].r = buffer[Command::payload_index_ + current_color_index];
 						current_color_index++;

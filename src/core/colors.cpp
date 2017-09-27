@@ -65,12 +65,13 @@ namespace PixelMaestro {
 	/**
 		Creates a randomly generated array of colors based off of a base color.
 
-		@param new_array Array to populate.
 		@param base_color The initial color.
 		@param num_colors Number of colors to generate.
 		@param range Range of possible new values.
+		@return New array.
 	*/
-	void Colors::generate_random_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, float range) {
+	Colors::RGB* Colors::generate_random_color_array(RGB* base_color, unsigned int num_colors, float range) {
+		RGB* new_array = new RGB[num_colors];
 		for (unsigned int new_color_index = 0; new_color_index < num_colors; new_color_index++) {
 			new_array[new_color_index] = {
 				(unsigned char)(base_color->r > 0 ? base_color->r - (unsigned char)(Utility::rand((unsigned char)(base_color->r * range))) : 0),
@@ -78,18 +79,22 @@ namespace PixelMaestro {
 				(unsigned char)(base_color->b > 0 ? base_color->b - (unsigned char)(Utility::rand((unsigned char)(base_color->b * range))) : 0)
 			};
 		}
+		return new_array;
 	}
 
 	/**
 		Creates an array of colors that gradually merge from a base color to a target color.
 
-		@param new_array Array to populate.
 		@param base_color The initial color.
 		@param target_color The target color.
 		@param num_colors Number of colors in the array.
 		@param reverse If true, the second half of the array will event from target_color back to base_color.
+		@return New array.
 	*/
-	void Colors::generate_scaling_color_array(RGB new_array[], RGB* base_color, RGB* target_color, unsigned int num_colors, bool reverse) {
+	Colors::RGB* Colors::generate_scaling_color_array(RGB* base_color, RGB* target_color, unsigned int num_colors, bool reverse) {
+
+		RGB* new_array = new RGB[num_colors];
+
 		if (reverse) {
 			num_colors /= 2;
 		}
@@ -121,25 +126,27 @@ namespace PixelMaestro {
 				new_array[i].b = new_array[num_colors - (i - num_colors)].b;
 			}
 		}
+
+		return new_array;
 	}
 
 	/**
 		Creates an array of colors that gradually merge from a base color to a target color.
 		The threshold determines the difference between the target color and the base color.
 
-		@param new_array Array to populate.
 		@param base_color The initial color.
 		@param num_colors Number of colors in the array.
 		@param range The difference in color values between the base color and the newly generated target color.
 		@param reverse If true, the array will be doubled to event from base_color to target_color, then back to base_color.
+		@return New array.
 	*/
-	void Colors::generate_scaling_color_array(RGB new_array[], RGB* base_color, unsigned int num_colors, unsigned char range, bool reverse) {
+	Colors::RGB* Colors::generate_scaling_color_array(RGB* base_color, unsigned int num_colors, unsigned char range, bool reverse) {
 		RGB new_color = {
 			(unsigned char)(base_color->r - range),
 			(unsigned char)(base_color->g - range),
 			(unsigned char)(base_color->b - range)
 		};
-		generate_scaling_color_array(new_array, base_color, &new_color, num_colors, reverse);
+		return generate_scaling_color_array(base_color, &new_color, num_colors, reverse);
 	}
 
 	/**

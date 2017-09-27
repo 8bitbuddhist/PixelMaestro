@@ -53,7 +53,7 @@ void MaestroControl::get_section_settings() {
 
 	// Get the animation type, then change to the animation without firing the signal
 	ui->animationComboBox->blockSignals(true);
-	ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_animation()->get_type() - 1);
+	ui->animationComboBox->setCurrentIndex(active_section_controller_->get_section()->get_animation()->get_type());
 	ui->animationComboBox->blockSignals(false);
 	show_extra_controls(active_section_controller_->get_section()->get_animation());
 
@@ -70,7 +70,13 @@ void MaestroControl::get_section_settings() {
 	}
 	else {
 		// Custom scheme
-		Colors::RGB first_color = active_section_controller_->get_colors()[0];
+		Animation* animation = active_section_controller_->get_section()->get_animation();
+		Colors::RGB first_color = Colors::BLACK;
+
+		if (animation != nullptr && animation->get_colors() != nullptr) {
+			first_color = active_section_controller_->get_section()->get_animation()->get_colors()[0];
+		}
+
 		ui->colorComboBox->setCurrentIndex(0);
 		ui->redSlider->setValue(first_color.r);
 		ui->greenSlider->setValue(first_color.g);
@@ -100,8 +106,7 @@ void MaestroControl::initialize() {
 
 	// Add an Overlay
 	active_section_controller_->add_overlay(Colors::MixMode::None);
-	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation());
-	active_section_controller_->get_overlay_controller()->set_colors(Colors::COLORWHEEL, 12);
+	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12));
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
 
 	// Initialize Overlay controls
@@ -125,8 +130,7 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 	tmp_colors.resize(num_colors);
 
 	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-	Colors::generate_scaling_color_array(&tmp_colors[0], &color, num_colors, threshold, true);
-	active_section_controller_->set_colors(&tmp_colors[0], num_colors);
+	active_section_controller_->get_section()->get_animation()->set_colors(Colors::generate_scaling_color_array(&color, num_colors, threshold, true), num_colors);
 
 	// Release tmp_colors
 	std::vector<Colors::RGB>().swap(tmp_colors);
@@ -149,7 +153,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	Animation* animation = nullptr;	// Stores the new Animation
 	if (active_section_controller_->get_section()->get_animation() != nullptr) {
 		// Only change if the animation is different
-		if (active_section_controller_->get_section()->get_animation()->get_type() == index + 1) {
+		if (active_section_controller_->get_section()->get_animation()->get_type() == index) {
 			return;
 		}
 	}
@@ -157,7 +161,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	// Preserve the animation cycle between changes
 	bool preserve_cycle_index = true;
 
-	switch((Animation::Type)index + 1) {
+	switch((Animation::Type)index) {
 		case Animation::Type::Solid:
 			animation = active_section_controller_->get_section()->set_animation(new SolidAnimation(), preserve_cycle_index);
 			break;
@@ -197,11 +201,11 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	show_extra_controls(animation);
 
-	// Reapply animation options
+	// Reapply animation settings
+	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
 	animation->set_orientation((Animation::Orientation)ui->orientationComboBox->currentIndex());
 	animation->set_fade(ui->fadeCheckBox->isChecked());
 	animation->set_reverse(ui->reverse_animationCheckBox->isChecked());
-	animation->set_colors(active_section_controller_->get_colors(), active_section_controller_->get_num_colors());
 	animation->set_speed(ui->cycleSlider->maximum() - ui->cycleSlider->value());
 }
 
@@ -243,23 +247,19 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 		case 1:	// Fire
 			{
 				unsigned char num_colors = 14;
-				Colors::RGB fire[num_colors];
-				Colors::generate_scaling_color_array(fire, &Colors::RED, &Colors::YELLOW, num_colors, true);
-				active_section_controller_->set_colors(fire, num_colors);
+				active_section_controller_->get_section()->get_animation()->set_colors(Colors::generate_scaling_color_array(&Colors::RED, &Colors::YELLOW, num_colors, true), num_colors);
 				set_custom_color_controls_visible(false);
 				break;
 			}
 		case 2:	// Deep Sea
 			{
 				unsigned char num_colors = 14;
-				Colors::RGB deep_sea[num_colors];
-				Colors::generate_scaling_color_array(deep_sea, &Colors::BLUE, &Colors::GREEN, num_colors, true);
-				active_section_controller_->set_colors(deep_sea, num_colors);
+				active_section_controller_->get_section()->get_animation()->set_colors(Colors::generate_scaling_color_array(&Colors::BLUE, &Colors::GREEN, num_colors, true), num_colors);
 				set_custom_color_controls_visible(false);
 				break;
 			}
 		default:// Color Wheel
-			active_section_controller_->set_colors(Colors::COLORWHEEL, 12);
+			active_section_controller_->get_section()->get_animation()->set_colors(Colors::COLORWHEEL, 12);
 			set_custom_color_controls_visible(false);
 	}
 }

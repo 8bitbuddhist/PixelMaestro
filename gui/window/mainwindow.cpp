@@ -138,9 +138,8 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 
 	// Initialize a new 50x50 drawing grid
 	std::shared_ptr<SectionController> section_controller = controller_->add_section_controller(new Point(50, 50));
-	Animation* wave = section_controller->get_section()->set_animation(new WaveAnimation());
-	wave->set_speed(100);
-	section_controller->set_colors(Colors::COLORWHEEL, 12);
+	section_controller->get_section()->set_animation(new WaveAnimation(Colors::COLORWHEEL, 12));
+
 	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->add_canvas(CanvasType::Type::AnimationCanvas));
 
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);

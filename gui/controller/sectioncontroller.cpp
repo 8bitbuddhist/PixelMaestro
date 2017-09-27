@@ -33,22 +33,6 @@ SectionController* SectionController::add_overlay(Colors::MixMode mix_mode, floa
 }
 
 /**
- * Returns the controller's color palette.
- * @return Color palette.
- */
-Colors::RGB* SectionController::get_colors() {
-	return &this->colors_[0];
-}
-
-/**
- * Returns the number of colors in the controller.
- * @return Number of colors.
- */
-unsigned char SectionController::get_num_colors() {
-	return this->colors_.size();
-}
-
-/**
  * Returns the Section's Overlay directly.
  * @return Section's Overlay.
  */
@@ -70,24 +54,6 @@ SectionController* SectionController::get_overlay_controller() {
  */
 Section* SectionController::get_section() {
 	return this->section_;
-}
-
-/**
- * Copies an array of Colors into the SectionController's color array.
- * @param colors Colors to store in the SectionController.
- * @param num_colors Number of colors in the array.
- */
-void SectionController::set_colors(Colors::RGB* colors, unsigned char num_colors) {
-	colors_.resize(num_colors);
-
-	// Copy provided colors to controller
-	for (int i = 0; i < num_colors; i++) {
-		colors_[i].r = colors[i].r;
-		colors_[i].g = colors[i].g;
-		colors_[i].b = colors[i].b;
-	}
-
-	section_->get_animation()->set_colors(&this->colors_[0], num_colors);
 }
 
 SectionController::~SectionController() {
