@@ -90,8 +90,8 @@ namespace PixelMaestro {
 			After running the Event, update the last run time and current Event index.
 		*/
 		unsigned long event_time = events_[current_index_]->get_time();
-		if ((timing_ == TimingMode::Absolute && (current_time >= events_[current_index_]->get_time())) ||
-			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
+		if ((timing_ == TimingMode::Absolute && (current_time >= event_time)) ||
+			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= event_time))) {
 			events_[current_index_]->run();
 			last_time_ = current_time;
 			update_event_index();

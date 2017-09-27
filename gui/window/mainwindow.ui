@@ -894,7 +894,6 @@
      <addaction name="action_Color_Canvas_Demo"/>
      <addaction name="actionCommand_Demo"/>
      <addaction name="actionDrawing_Demo"/>
-     <addaction name="actionPreset_Demo"/>
      <addaction name="action_Show_Demo"/>
     </widget>
     <addaction name="action_Open_Animation_Editor"/>
@@ -958,11 +957,6 @@
   <action name="action_Close_Workspace">
    <property name="text">
     <string>&amp;Close Workspace</string>
-   </property>
-  </action>
-  <action name="actionPreset_Demo">
-   <property name="text">
-    <string>P&amp;reset Demo</string>
    </property>
   </action>
   <action name="action_Color_Canvas_Demo">

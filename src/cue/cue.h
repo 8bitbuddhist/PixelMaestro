@@ -1,9 +1,8 @@
-#ifndef COMMAND_H
-#define COMMAND_H
+#ifndef CUE_H
+#define CUE_H
 
 #include "../core/maestro.h"
 
-// TODO: Rename to...Cue? Prompt?
 namespace PixelMaestro {
 
 	/// Converts an integer value to and from a byte array.
@@ -22,7 +21,7 @@ namespace PixelMaestro {
 			}
 	};
 
-	class Command {
+	class Cue {
 		private:
 			static const unsigned char header_len_;
 			static const unsigned char header_[];
@@ -46,4 +45,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // COMMAND_H
+#endif // CUE_H

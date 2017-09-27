@@ -36,19 +36,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Configures the Maestro using a Preset.
-	 * @param preset Preset to apply.
-	 * @param delete_preset Whether to clear the Preset from memory after running it.
-	 */
-	void Maestro::apply_preset(Preset *preset, bool delete_preset) {
-		preset->apply(this);
-
-		if (delete_preset) {
-			delete preset;
-		}
-	}
-
-	/**
 		Returns the number of Sections.
 
 		@return Number of Sections.

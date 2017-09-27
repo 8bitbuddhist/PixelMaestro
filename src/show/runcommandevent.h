@@ -1,7 +1,7 @@
 #ifndef RUNCOMMANDEVENT_H
 #define RUNCOMMANDEVENT_H
 
-#include "../command/command.h"
+#include "../cue/cue.h"
 #include "event.h"
 
 namespace PixelMaestro {

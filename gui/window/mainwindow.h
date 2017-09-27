@@ -26,10 +26,7 @@ class MainWindow : public QMainWindow {
 		void on_action_Open_Animation_Editor_triggered();
 		void on_actionDrawing_Demo_triggered();
 		void on_action_Close_Workspace_triggered();
-		void on_actionPreset_Demo_triggered();
-
 		void on_action_Color_Canvas_Demo_triggered();
-
 		void on_actionCommand_Demo_triggered();
 
 	private:

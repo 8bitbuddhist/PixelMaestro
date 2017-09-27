@@ -1,10 +1,10 @@
-#ifndef MAESTROCOMMAND_H
-#define MAESTROCOMMAND_H
+#ifndef MAESTROCUE_H
+#define MAESTROCUE_H
 
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class MaestroCommand {
+	class MaestroCue {
 		public:
 			enum Action {
 				SetRefreshInterval
@@ -12,8 +12,8 @@ namespace PixelMaestro {
 
 			static void set_refresh_interval(unsigned char* buffer, unsigned short interval);
 
-			static void run(Maestro *maestro, unsigned char *buffer);
+			static void run(Maestro *maestro, unsigned char *cue);
 	};
 }
 
-#endif // MAESTROCOMMAND_H
+#endif // MAESTROCUE_H

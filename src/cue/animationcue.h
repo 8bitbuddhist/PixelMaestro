@@ -1,12 +1,12 @@
-#ifndef ANIMATIONCOMMAND_H
-#define ANIMATIONCOMMAND_H
+#ifndef ANIMATIONCUE_H
+#define ANIMATIONCUE_H
 
 #include "../animation/animation.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class AnimationCommand {
+	class AnimationCue {
 		public:
 			enum Action {
 				SetColors,
@@ -25,8 +25,8 @@ namespace PixelMaestro {
 			static void set_reverse(unsigned char* buffer, unsigned char section_num, bool reverse);
 			static void set_speed(unsigned char* buffer, unsigned char section_num, unsigned short speed, unsigned short pause);
 
-			static void run(Maestro* maestro, unsigned char* buffer);
+			static void run(Maestro* maestro, unsigned char* cue);
 	};
 }
 
-#endif // ANIMATIONCOMMAND_H
+#endif // ANIMATIONCUE_H

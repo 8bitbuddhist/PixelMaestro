@@ -46,20 +46,18 @@ SOURCES += main.cpp\
     widget/animation/lightninganimationcontrol.cpp \
     widget/animation/plasmaanimationcontrol.cpp \
     widget/animation/sparkleanimationcontrol.cpp \
-    demo/presetdemo.cpp \
-    ../src/preset/demopreset.cpp \
     ../src/canvas/colorcanvas.cpp \
     demo/colorcanvasdemo.cpp \
     ../src/canvas/animationcanvas.cpp \
     ../src/canvas/canvas.cpp \
     widget/canvas/canvascontrol.cpp \
     demo/commanddemo.cpp \
-    ../src/command/animationcommand.cpp \
-    ../src/command/canvascommand.cpp \
-    ../src/command/maestrocommand.cpp \
-    ../src/command/sectioncommand.cpp \
-    ../src/command/command.cpp \
-    ../src/show/runcommandevent.cpp
+    ../src/show/runcommandevent.cpp \
+    ../src/cue/animationcue.cpp \
+    ../src/cue/canvascue.cpp \
+    ../src/cue/cue.cpp \
+    ../src/cue/maestrocue.cpp \
+    ../src/cue/sectioncue.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -98,9 +96,6 @@ HEADERS += \
     widget/animation/lightninganimationcontrol.h \
     widget/animation/plasmaanimationcontrol.h \
     widget/animation/sparkleanimationcontrol.h \
-    demo/presetdemo.h \
-    ../src/preset/preset.h \
-    ../src/preset/demopreset.h \
     ../src/canvas/colorcanvas.h \
     demo/colorcanvasdemo.h \
     ../src/canvas/canvastype.h \
@@ -108,12 +103,12 @@ HEADERS += \
     ../src/canvas/canvas.h \
     widget/canvas/canvascontrol.h \
     demo/commanddemo.h \
-    ../src/command/animationcommand.h \
-    ../src/command/canvascommand.h \
-    ../src/command/maestrocommand.h \
-    ../src/command/sectioncommand.h \
-    ../src/command/command.h \
-    ../src/show/runcommandevent.h
+    ../src/show/runcommandevent.h \
+    ../src/cue/animationcue.h \
+    ../src/cue/canvascue.h \
+    ../src/cue/cue.h \
+    ../src/cue/maestrocue.h \
+    ../src/cue/sectioncue.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
