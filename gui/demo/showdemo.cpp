@@ -19,10 +19,8 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 
 	// FIXME: This is just all effed up
 
-	SectionCommand::set_animation(buffer, 0, Animation::Type::Wave, false);
+	SectionCommand::set_animation(buffer, 0, Animation::Type::Wave, false, Colors::COLORWHEEL, 12);
 	events_.push_back(new RunCommandEvent(5000, maestro_controller_->get_maestro(), buffer));
-	AnimationCommand::set_colors(buffer, 0, Colors::COLORWHEEL, 12);
-	events_.push_back(new RunCommandEvent(0, maestro_controller_->get_maestro(), buffer));
 
 	/*
 	SectionCommand::set_animation(buffer, 0, Animation::Type::Radial, true);

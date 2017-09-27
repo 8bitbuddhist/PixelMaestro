@@ -13,7 +13,7 @@ namespace PixelMaestro {
 		// Initialize and copy the command over.
 		unsigned int packet_size = buffer[Command::size_index_] + Command::payload_index_;
 		buffer_ = new unsigned char[packet_size];
-		for (unsigned char i = 0; i < buffer_[packet_size]; i++) {
+		for (unsigned char i = 0; i < packet_size; i++) {
 			buffer_[i] = buffer[i];
 		}
 	}

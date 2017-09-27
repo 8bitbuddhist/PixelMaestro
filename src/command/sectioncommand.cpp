@@ -37,14 +37,24 @@ namespace PixelMaestro {
 		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
-	void SectionCommand::set_animation(unsigned char *buffer, unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index) {
-		unsigned char payload[] {
-			(unsigned char)Command::Component::Section,
-			(unsigned char)Action::SetAnimation,
-			section_num,
-			(unsigned char)animation_type,
-			(unsigned char)preserve_cycle_index
-		};
+	void SectionCommand::set_animation(unsigned char *buffer, unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors) {
+
+		unsigned char payload[3 + (num_colors * 3)];
+		payload[0] = (unsigned char)Command::Component::Section;
+		payload[1] = (unsigned char)Action::SetAnimation;
+		payload[2] = section_num;
+		payload[3] = (unsigned char)animation_type;
+		payload[4] = (unsigned char)preserve_cycle_index;
+
+		int colors_index = 5;
+		for (unsigned char i = 0; i < num_colors; i++) {
+			payload[colors_index] = colors[i].r;
+			colors_index++;
+			payload[colors_index] = colors[i].g;
+			colors_index++;
+			payload[colors_index] = colors[i].b;
+			colors_index++;
+		}
 
 		Command::assemble(buffer, payload, sizeof(payload));
 	}
@@ -77,39 +87,51 @@ namespace PixelMaestro {
 			case Action::SetAnimation:
 				{
 					Animation* animation;
+					int num_colors = buffer[Command::payload_index_ + 3];
+					int current_color_index = 5;
+					Colors::RGB* colors = new Colors::RGB[num_colors];
+					for (unsigned char i = 0; i < num_colors; i++) {
+						colors[i].r = buffer[Command::payload_index_ + current_color_index];
+						current_color_index++;
+						colors[i].g = buffer[Command::payload_index_ + current_color_index];
+						current_color_index++;
+						colors[i].b = buffer[Command::payload_index_ + current_color_index];
+						current_color_index++;
+					}
+
 					switch((Animation::Type)buffer[Command::payload_index_ + 3]) {
 						case Animation::Type::Blink:
-							animation = new BlinkAnimation();
+							animation = new BlinkAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Cycle:
-							animation = new CycleAnimation();
+							animation = new CycleAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Lightning:
-							animation = new LightningAnimation();
+							animation = new LightningAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Mandelbrot:
-							animation = new MandelbrotAnimation();
+							animation = new MandelbrotAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Merge:
-							animation = new MergeAnimation();
+							animation = new MergeAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Plasma:
-							animation = new PlasmaAnimation();
+							animation = new PlasmaAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Radial:
-							animation = new RadialAnimation();
+							animation = new RadialAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Random:
-							animation = new RandomAnimation();
+							animation = new RandomAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Solid:
-							animation = new SolidAnimation();
+							animation = new SolidAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Sparkle:
-							animation = new SparkleAnimation();
+							animation = new SparkleAnimation(colors, num_colors);
 							break;
 						case Animation::Type::Wave:
-							animation = new WaveAnimation();
+							animation = new WaveAnimation(colors, num_colors);
 							break;
 					}
 					section->set_animation(animation, (bool)buffer[Command::payload_index_ + 4]);

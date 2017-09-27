@@ -19,10 +19,7 @@ CommandDemo::CommandDemo(QWidget* parent, MaestroController* maestro_controller)
 	SectionCommand::set_dimensions(buffer, 0, 100, 40);
 	Command::run(maestro_controller_->get_maestro(), buffer);
 
-	SectionCommand::set_animation(buffer, 0, Animation::Type::Wave, false);
-	Command::run(maestro_controller_->get_maestro(), buffer);
-
-	AnimationCommand::set_colors(buffer, 0, Colors::COLORWHEEL, 12);
+	SectionCommand::set_animation(buffer, 0, Animation::Type::Wave, false, Colors::COLORWHEEL, 12);
 	Command::run(maestro_controller_->get_maestro(), buffer);
 
 	AnimationCommand::set_speed(buffer, 0, 1000, 750);
