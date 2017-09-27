@@ -1,10 +1,10 @@
-#ifndef CANVASCOMMAND_H
-#define CANVASCOMMAND_H
+#ifndef CANVASCUE_H
+#define CANVASCUE_H
 
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class CanvasCommand	{
+	class CanvasCue	{
 		public:
 			enum Action {
 				DrawCircle,
@@ -28,8 +28,8 @@ namespace PixelMaestro {
 			static void draw_triangle(unsigned char* buffer, unsigned char section_num, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
 			static void draw_triangle(unsigned char* buffer, unsigned char section_num, Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
 
-			static void run(Maestro* maestro, unsigned char* command);
+			static void run(Maestro* maestro, unsigned char* cue);
 	};
 }
 
-#endif // CANVASCOMMAND_H
+#endif // CANVASCUE_H

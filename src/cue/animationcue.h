@@ -1,23 +1,32 @@
-#ifndef ANIMATIONCOMMAND_H
-#define ANIMATIONCOMMAND_H
+#ifndef ANIMATIONCUE_H
+#define ANIMATIONCUE_H
 
 #include "../animation/animation.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
+#include "sectioncue.h"
 
 namespace PixelMaestro {
-	class AnimationCommand {
+	class AnimationCue {
 		public:
 			enum Action {
 				SetColors,
 				SetCycleIndex,
 				SetFade,
+				SetLightningOptions,
 				SetOrientation,
+				SetPlasmaOptions,
 				SetReverse,
+				SetSparkleOptions,
 				SetSpeed
 			};
 
-			// TODO: Animation-specific options
+			// Animation-specific options
+			static void set_lightning_options(unsigned char* buffer, unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
+			static void set_plasma_options(unsigned char* buffer, unsigned char section_num, float size, float resolution);
+			static void set_sparkle_options(unsigned char* buffer, unsigned char section_num, unsigned char threshold);
+
+			// General Animation calls
 			static void set_colors(unsigned char* buffer, unsigned char section_num, Colors::RGB* colors, unsigned char num_colors);
 			static void set_cycle_index(unsigned char* buffer, unsigned char section_num, unsigned char cycle_index);
 			static void set_fade(unsigned char* buffer, unsigned char section_num, bool fade);
@@ -25,8 +34,10 @@ namespace PixelMaestro {
 			static void set_reverse(unsigned char* buffer, unsigned char section_num, bool reverse);
 			static void set_speed(unsigned char* buffer, unsigned char section_num, unsigned short speed, unsigned short pause);
 
-			static void run(Maestro* maestro, unsigned char* buffer);
+			static void run(Maestro* maestro, unsigned char* cue);
+
+			static Animation* initialize_animation(unsigned char* cue);
 	};
 }
 
-#endif // ANIMATIONCOMMAND_H
+#endif // ANIMATIONCUE_H

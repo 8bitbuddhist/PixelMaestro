@@ -4,10 +4,10 @@
 #include "controller/maestrocontroller.h"
 #include "drawingarea/simpledrawingarea.h"
 
-class CommandDemo : public SimpleDrawingArea {
+class CueDemo : public SimpleDrawingArea {
 	public:
-		CommandDemo(QWidget* parent, MaestroController* maestro_controller);
-		~CommandDemo();
+		CueDemo(QWidget* parent, MaestroController* maestro_controller);
+		~CueDemo();
 };
 
 #endif // COMMANDDEMO_H

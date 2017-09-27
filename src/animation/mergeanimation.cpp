@@ -30,7 +30,7 @@ namespace PixelMaestro {
 
 				// Go from the center to the last
 				count_ = 0;
-				for (short y = mid_point_; y < section->get_dimensions()->y; y++) {
+				for (unsigned short y = mid_point_; y < section->get_dimensions()->y; y++) {
 					section->set_one(x, y, get_color_at_index(count_ + cycle_index_));
 					count_++;
 				}
@@ -41,7 +41,7 @@ namespace PixelMaestro {
 				mid_point_ = (section->get_dimensions()->x / 2) - 1;
 				count_ = 0;
 
-				// Note: COLUMN MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
+				// Note: ROW MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
 				for (signed int x = mid_point_; x >= 0; x--) {
 					section->set_one(x, y, get_color_at_index(count_ + cycle_index_));
 					count_++;
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 
 				// Go from the center to the last
 				count_ = 0;
-				for (short x = mid_point_; x < section->get_dimensions()->x; x++) {
+				for (unsigned short x = mid_point_; x < section->get_dimensions()->x; x++) {
 					section->set_one(x, y, get_color_at_index(count_ + cycle_index_));
 					count_++;
 				}

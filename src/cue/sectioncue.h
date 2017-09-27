@@ -1,12 +1,12 @@
-#ifndef SECTIONCOMMAND_H
-#define SECTIONCOMMAND_H
+#ifndef SECTIONCUE_H
+#define SECTIONCUE_H
 
 #include "../canvas/canvastype.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class SectionCommand {
+	class SectionCue {
 		public:
 			enum Action {
 				AddCanvas,
@@ -20,8 +20,8 @@ namespace PixelMaestro {
 			static void set_animation(unsigned char* buffer, unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors);
 			static void set_dimensions(unsigned char* buffer, unsigned char section_num, unsigned short x, unsigned short y);
 
-			static void run(Maestro* maestro, unsigned char* buffer);
+			static void run(Maestro* maestro, unsigned char* cue);
 	};
 }
 
-#endif // SECTIONCOMMAND_H
+#endif // SECTIONCUE_H

@@ -1,7 +1,7 @@
 #ifndef RUNCOMMANDEVENT_H
 #define RUNCOMMANDEVENT_H
 
-#include "../command/command.h"
+#include "../cue/cue.h"
 #include "event.h"
 
 namespace PixelMaestro {
@@ -12,7 +12,7 @@ namespace PixelMaestro {
 			void run();
 
 		private:
-			unsigned char* buffer_;
+			unsigned char* buffer_ = nullptr;
 			Maestro* maestro_ = nullptr;
 	};
 }

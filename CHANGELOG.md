@@ -5,19 +5,25 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.7] - In Progress
 ### Added
-- Added serial communication support.
+- Cue:
+	- New class for converting PixelMaestro commands into portable strings. Cues are designed for sending commands to Maestros on other devices via USB, Bluetooth, WiFi, or other serial protocol.
 - Canvas:
 	- Added `ColorCanvas` class, which lets you draw shapes using specific colors.
-	- Added `CanvasType` enum. This gets passed to `Section::add_canvas()` and specifies the type of Canvas that is created.
 	- Added Color Canvas Demo to the GUI application.
-- Maestro:
-	- Added Presets, which are pre-defined configurations applied to a Maestro.
 
 ### Changed
 - Animation Editor:
 	- Grid size will only update when the row or column fields lose focus.
+	- Changed default Maestro refresh rate to 25fps.
+- Animations:
+	- Added dynamic allocation for color arrays.
+- Colors:
+	- Array population methods now return a new array instead of requiring an existing array.
 - Canvas:
 	- Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
+
+### Removed
+- Removed most Show Events. These have been replaced by `Cue` and `RunCueEvent`.
 
 ## [v0.6r2] - 2017-09-18
 ### Changed

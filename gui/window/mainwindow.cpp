@@ -3,8 +3,7 @@
 #include "demo/blinkdemo.h"
 #include "demo/canvasdemo.h"
 #include "demo/colorcanvasdemo.h"
-#include "demo/commanddemo.h"
-#include "demo/presetdemo.h"
+#include "demo/cuedemo.h"
 #include "demo/showdemo.h"
 #include "drawingarea/canvasdrawingarea.h"
 #include "widget/canvas/canvascontrol.h"
@@ -49,7 +48,6 @@ void MainWindow::reset_drawing_area() {
 	ui->actionCommand_Demo->setEnabled(true);
 	ui->action_Close_Workspace->setEnabled(false);
 	ui->action_Open_Animation_Editor->setEnabled(true);
-	ui->actionPreset_Demo->setEnabled(true);
 	ui->action_Show_Demo->setEnabled(true);
 	ui->actionDrawing_Demo->setEnabled(true);
 
@@ -104,7 +102,7 @@ void MainWindow::on_action_Canvas_Demo_triggered() {
 void MainWindow::on_actionCommand_Demo_triggered() {
 	reset_drawing_area();
 
-	drawing_area_ = new CommandDemo(main_layout_->widget(), controller_);
+	drawing_area_ = new CueDemo(main_layout_->widget(), controller_);
 	main_layout_->addWidget(drawing_area_);
 
 	// Update UI
@@ -148,16 +146,6 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	ui->actionDrawing_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Left-click to draw, right-click to erase, Delete to clear."));
-}
-
-void MainWindow::on_actionPreset_Demo_triggered() {
-	reset_drawing_area();
-
-	drawing_area_ = new PresetDemo(main_layout_->widget(), controller_);
-	main_layout_->addWidget(drawing_area_);
-	ui->actionPreset_Demo->setEnabled(false);
-	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates using a preset to auto-populate a Maestro."));
 }
 
 void MainWindow::on_action_Color_Canvas_Demo_triggered() {

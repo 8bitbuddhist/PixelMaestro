@@ -188,8 +188,8 @@ namespace PixelMaestro {
 			 * We use bitmasking to get the bit value, then enable the pixel based on that bit.
 			 */
 			current_char = font->get_char(text[letter]);
-			for (int column = 0; column < font->size.x; column++) {
-				for (int row = 0; row < font->size.y; row++) {
+			for (unsigned short column = 0; column < font->size.x; column++) {
+				for (unsigned short row = 0; row < font->size.y; row++) {
 					if (in_bounds(&cursor)) {
 						if ((current_char[column] >> row) & 1) {
 							activate(section_->get_pixel_index(cursor.x + column, cursor.y + row));
@@ -381,11 +381,11 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset_x_ >= section_->get_dimensions()->x) {
+				if (offset_x_ >= (signed int)section_->get_dimensions()->x) {
 					offset_x_ = 0;
 				}
-				else if (offset_x_ + 1 == 0) {	// Buffer overflow
-					offset_x_ = section_->get_dimensions()->x;
+				else if (offset_x_ < 0) {
+					offset_x_ = (signed int)section_->get_dimensions()->x;
 				}
 
 				scroll_->last_scroll_x = current_time;
@@ -403,10 +403,10 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset_y_ >= section_->get_dimensions()->y) {
+				if (offset_y_ >= (signed int)section_->get_dimensions()->y) {
 					offset_y_ = 0;
 				}
-				else if (offset_y_ + 1 == 0) {	// Buffer overflow
+				else if (offset_y_ < 0) {
 					offset_y_ = section_->get_dimensions()->y;
 				}
 
