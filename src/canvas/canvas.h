@@ -58,7 +58,7 @@ namespace PixelMaestro {
 			void draw_line(unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);
 			void draw_point(unsigned short x, unsigned short y);
 			void draw_rect(unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
-			void draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, char* text, unsigned char num_chars);
+			void draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, const char* text, unsigned char num_chars);
 			void draw_triangle(unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
 			void erase(unsigned short x, unsigned short y);
 			bool* get_pattern();

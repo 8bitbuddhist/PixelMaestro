@@ -49,13 +49,30 @@ namespace PixelMaestro {
 		Serial::build_packet(buffer, payload, sizeof(payload));
 	}
 
+	void SectionSerial::set_dimensions(unsigned char *buffer, unsigned char section_num, unsigned short x, unsigned short y) {
+		IntByteConvert x_byte = IntByteConvert(x);
+		IntByteConvert y_byte = IntByteConvert(y);
+		unsigned char payload[] {
+			(unsigned char)Serial::Component::Section,
+			(unsigned char)Action::SetDimensions,
+			section_num,
+			x_byte.quotient_,
+			x_byte.remainder_,
+			y_byte.quotient_,
+			y_byte.remainder_
+		};
+
+		Serial::build_packet(buffer, payload, sizeof(payload));
+	}
+
 	void SectionSerial::run(Maestro *maestro, unsigned char *buffer) {
+		Section* section = maestro->get_section(buffer[Serial::payload_index_ + 2]);
 		switch ((Action)buffer[Serial::payload_index_ + 1]) {
 			case Action::AddCanvas:
-				maestro->get_section(buffer[Serial::payload_index_ + 2])->add_canvas(CanvasType::Type(buffer[Serial::payload_index_ + 3]));
+				section->add_canvas(CanvasType::Type(buffer[Serial::payload_index_ + 3]));
 				break;
 			case Action::AddOverlay:
-				maestro->get_section(buffer[Serial::payload_index_ + 2])->add_overlay(Colors::MixMode(buffer[Serial::payload_index_ + 3]), buffer[Serial::payload_index_ + 4]);
+				section->add_overlay(Colors::MixMode(buffer[Serial::payload_index_ + 3]), buffer[Serial::payload_index_ + 4]);
 				break;
 			case Action::SetAnimation:
 				{
@@ -95,8 +112,13 @@ namespace PixelMaestro {
 							animation = new WaveAnimation();
 							break;
 					}
-					maestro->get_section(buffer[Serial::payload_index_ + 2])->set_animation(animation, (bool)buffer[Serial::payload_index_ + 4]);
+					section->set_animation(animation, (bool)buffer[Serial::payload_index_ + 4]);
 				}
+				break;
+			case Action::SetDimensions:
+				section->set_dimensions(
+					IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 3], buffer[Serial::payload_index_ + 4]),
+					IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 5], buffer[Serial::payload_index_ + 6]));
 				break;
 		}
 	}

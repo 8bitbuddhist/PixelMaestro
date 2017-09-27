@@ -344,7 +344,7 @@ namespace PixelMaestro {
 					{
 						int num_chars = buffer[Serial::payload_index_ + 9];
 
-						// TODO: There has to be a better way to do this.
+						// TODO: There has to be a better way to handle this.
 						Font* font;
 						switch ((Font::Type)buffer[Serial::payload_index_ + 8]) {
 							case Font::Type::Font5x8:
@@ -356,10 +356,11 @@ namespace PixelMaestro {
 							IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 5], buffer[Serial::payload_index_ + 6]),
 							IntByteConvert::byte_to_int(buffer[Serial::payload_index_ + 7], buffer[Serial::payload_index_ + 8]),
 							font,
-							// FIXME: unsigned char for text param?
 							(char*)&buffer[Serial::payload_index_ + 10],
 							num_chars
 						);
+
+						delete font;
 					}
 					break;
 				case Action::DrawTriangle:
@@ -417,7 +418,7 @@ namespace PixelMaestro {
 					{
 						int num_chars = buffer[Serial::payload_index_ + 12];
 
-						// TODO: There has to be a better way to do this.
+						// See AnimationCanvas::DrawText
 						Font* font;
 						switch ((Font::Type)buffer[Serial::payload_index_ + 11]) {
 							case Font::Type::Font5x8:
@@ -439,6 +440,8 @@ namespace PixelMaestro {
 							(char*)&buffer[Serial::payload_index_ + 13],
 							num_chars
 						);
+
+						delete font;
 					}
 					break;
 				case Action::DrawTriangle:

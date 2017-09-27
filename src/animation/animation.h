@@ -11,7 +11,6 @@ namespace PixelMaestro {
 		public:
 			/// The type of animation.
 			enum Type {
-				None,
 				Blink,
 				Cycle,
 				Lightning,

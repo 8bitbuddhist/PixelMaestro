@@ -22,7 +22,7 @@ namespace PixelMaestro {
 		AnimationCanvas* canvas = static_cast<AnimationCanvas*>(overlay->section->add_canvas(CanvasType::Type::AnimationCanvas));
 
 		Font5x8* font = new Font5x8();
-		canvas->draw_text(1, 1, font, "Hello world!", 12);
+		canvas->draw_text(1, 1, font, (char*)"Hello world!", 12);
 		delete font;
 	}
 

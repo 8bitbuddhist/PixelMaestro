@@ -175,7 +175,7 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void Canvas::draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, char* text, unsigned char num_chars) {
+	void Canvas::draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, const char* text, unsigned char num_chars) {
 		Point cursor = {origin_x, origin_y};
 
 		unsigned char* current_char;
