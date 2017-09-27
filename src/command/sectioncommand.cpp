@@ -22,7 +22,7 @@ namespace PixelMaestro {
 			canvas_type
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void SectionCommand::add_overlay(unsigned char* buffer, unsigned char section_num, Colors::MixMode mix_mode, unsigned char alpha) {
@@ -34,7 +34,7 @@ namespace PixelMaestro {
 			alpha
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void SectionCommand::set_animation(unsigned char *buffer, unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index) {
@@ -46,7 +46,7 @@ namespace PixelMaestro {
 			(unsigned char)preserve_cycle_index
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void SectionCommand::set_dimensions(unsigned char *buffer, unsigned char section_num, unsigned short x, unsigned short y) {
@@ -56,13 +56,13 @@ namespace PixelMaestro {
 			(unsigned char)Command::Component::Section,
 			(unsigned char)Action::SetDimensions,
 			section_num,
-			x_byte.quotient_,
-			x_byte.remainder_,
-			y_byte.quotient_,
-			y_byte.remainder_
+			x_byte.index_0,
+			x_byte.index_1,
+			y_byte.index_0,
+			y_byte.index_1
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void SectionCommand::run(Maestro *maestro, unsigned char *buffer) {

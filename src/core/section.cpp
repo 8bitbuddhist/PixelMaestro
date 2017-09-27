@@ -30,11 +30,11 @@ namespace PixelMaestro {
 
 	/**
 	 * Creates a new Canvas of the specified type.
+	 * This will overwrite an existing Canvas.
 	 * @param type The type of Canvas to create.
 	 * @return The new Canvas.
 	 */
 	Canvas* Section::add_canvas(CanvasType::Type type) {
-		// Delete the old Canvas
 		remove_canvas();
 
 		switch (type) {
@@ -51,15 +51,14 @@ namespace PixelMaestro {
 
 	/**
 	 * Creates a new Overlay.
+	 * This will overwrite an existing Overlay.
 	 * @param mix_mode The method for blending the Overlay.
 	 * @param alpha The Overlay's transparency (0 - 255.
 	 * @return New Overlay.
 	 */
 	Section::Overlay* Section::add_overlay(Colors::MixMode mix_mode, unsigned char alpha) {
-		if (overlay_ == nullptr) {
-			overlay_ = new Overlay(dimensions_, mix_mode, alpha);
-		}
-
+		remove_overlay();
+		overlay_ = new Overlay(dimensions_, mix_mode, alpha);
 		overlay_->section->set_refresh_interval(refresh_interval_);
 		return overlay_;
 	}
@@ -202,7 +201,7 @@ namespace PixelMaestro {
 			animation->set_cycle_index(animation_->get_cycle_index());
 		}
 
-		delete this->animation_;
+		delete animation_;
 
 		animation_ = animation;
 		return animation_;
@@ -275,7 +274,7 @@ namespace PixelMaestro {
 		@param interval Rate in milliseconds between Pixel redraws.
 	*/
 	void Section::set_refresh_interval(unsigned short* interval) {
-		this->refresh_interval_ = interval;
+		refresh_interval_ = interval;
 	}
 
 	/**

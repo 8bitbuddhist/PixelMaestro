@@ -8,21 +8,22 @@ namespace PixelMaestro {
 	/// Converts an integer value to and from a byte array.
 	class IntByteConvert {
 		public:
-			unsigned char quotient_ = 0;
-			unsigned char remainder_ = 0;
+			unsigned char index_0 = 0;
+			unsigned char index_1 = 0;
 
 			IntByteConvert(unsigned int val) {
-				quotient_ = val / 256;
-				remainder_ = val % 256;
+				index_0 = val / 256;
+				index_1 = val % 256;
 			}
 
-			static unsigned int byte_to_int(unsigned char quotient, unsigned char remainder) {
-				return (quotient * 256) + remainder;
+			static unsigned int byte_to_int(unsigned char index0, unsigned char index1) {
+				return (index0 * 256) + index1;
 			}
 	};
 
 	class Command {
 		private:
+			static bool assemble_packets_;
 			static const unsigned char header_len_ = 2;
 			static const unsigned char header_[];
 
@@ -35,13 +36,14 @@ namespace PixelMaestro {
 				Section
 			};
 
-			static const unsigned char size_index_ = header_len_;
-			static const unsigned char checksum_index_ = size_index_ + 1;
-			static const unsigned char payload_index_ = checksum_index_ + 1;
+			static unsigned char size_index_;
+			static unsigned char checksum_index_;
+			static unsigned char payload_index_;
 
-			static void build_packet(unsigned char* buffer, unsigned char* data, unsigned char data_size);
+			static void assemble(unsigned char* buffer, unsigned char* data, unsigned char data_size);
 			static unsigned char checksum(unsigned char* data, unsigned char data_size);
 			static void run(Maestro* maestro, unsigned char* command);
+			static void set_assemble_packets(bool assemble);
 	};
 }
 

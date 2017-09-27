@@ -8,11 +8,11 @@ namespace PixelMaestro {
 		unsigned char payload[] = {
 			(unsigned char)Command::Component::Maestro,
 			Action::SetRefreshInterval,
-			interval_byte.quotient_,
-			interval_byte.remainder_
+			interval_byte.index_0,
+			interval_byte.index_1
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void MaestroCommand::run(Maestro *maestro, unsigned char *buffer) {

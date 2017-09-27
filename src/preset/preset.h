@@ -7,6 +7,7 @@
 
 #include "../core/maestro.h"
 
+// TODO: Re-design Presets using Commands
 namespace PixelMaestro {
 	class Maestro;
 

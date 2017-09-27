@@ -6,45 +6,77 @@
 
 namespace PixelMaestro {
 
-	// Initialize header contents
+	bool Command::assemble_packets_ = true;
 	const unsigned char Command::header_[] = {'P', 'M'};
+	unsigned char Command::size_index_ = header_len_;
+	unsigned char Command::checksum_index_ = size_index_ + 1;
+	unsigned char Command::payload_index_ = checksum_index_ + 1;
 
-	void Command::build_packet(unsigned char* buffer, unsigned char* data, unsigned char data_size) {
-		/*
-		 * Packets take the following form: [Header] [Size] [Checksum] [Payload]
-		 *
-		 * [Header] is a unique identifier used to confirm that this is a PixelMaestro packet.
-		 * [Size] is the size of the payload.
-		 * [Checksum] is a value calculated to confirm that the data was transmitted successfully.
-		 * [Payload] contains the actual command parameters.
-		 */
-
-		// Append header info first
-		for (unsigned char i = 0; i < header_len_; i++) {
-			buffer[i] = header_[i];
+	/**
+	 * Assembles a payload into a packet.
+	 * @param buffer Container for the packet.
+	 * @param payload The actual contents of the command.
+	 * @param payload_size The size of the command.
+	 */
+	void Command::assemble(unsigned char* buffer, unsigned char* payload, unsigned char payload_size) {
+		// Append the payload first.
+		for (unsigned char i = 0; i < payload_size; i++) {
+			buffer[payload_index_ + i] = payload[i];
 		}
 
-		buffer[size_index_] = data_size;
+		if (assemble_packets_) {
+			/*
+			 * Final command has the following form: [Header] [Size] [Checksum] [Payload]
+			 *
+			 * [Header] is a "unique" identifier confirming that this is a PixelMaestro command.
+			 * [Size] is the size of the payload.
+			 * [Checksum] is a value calculated to confirm data integrity.
+			 * [Payload] contains the actual command with parameters.
+			 */
 
-		// Append the actual data
-		for (unsigned char i = 0; i < data_size; i++) {
-			buffer[payload_index_ + i] = data[i];
+			for (unsigned char i = 0; i < header_len_; i++) {
+				buffer[i] = header_[i];
+			}
+
+			buffer[size_index_] = payload_size;
+
+			buffer[checksum_index_] = checksum(buffer, buffer[size_index_] + payload_index_);
 		}
-
-		buffer[checksum_index_] = checksum(buffer, buffer[size_index_] + payload_index_);
 	}
 
-	unsigned char Command::checksum(unsigned char *data, unsigned char data_size) {
+	/**
+	 * Generates a checksum for verifying the integrity of a packet.
+	 * @param buffer The contents of the packet.
+	 * @param buffer_size The size of the packet.
+	 * @return New checksum.
+	 */
+	unsigned char Command::checksum(unsigned char *buffer, unsigned char buffer_size) {
 		unsigned int sum = 0;
-		for (unsigned char i = 0; i < data_size; i++) {
+		for (unsigned char i = 0; i < buffer_size; i++) {
 
 			// Make sure we don't include the checksum in its own calculation
 			if (i != checksum_index_) {
-				sum += data[i];
+				sum += buffer[i];
 			}
 		}
 
 		return (sum % 256);
+	}
+
+	/**
+	 * Sets whether commands are automatically encapsulated into packets.
+	 * This is useful if sending commands out via Serial.
+	 * @param assemble If true, commands are assembled into packets.
+	 */
+	void Command::set_assemble_packets(bool assemble) {
+		if (assemble) {
+			assemble_packets_  = true;
+			payload_index_ = 5;
+		}
+		else {
+			assemble_packets_ = false;
+			payload_index_ = 0;
+		}
 	}
 
 	/**
@@ -53,16 +85,19 @@ namespace PixelMaestro {
 	 * @param command The command to run.
 	 */
 	void Command::run(Maestro* maestro, unsigned char *command) {
-		// First, make sure the header is present
-		for (unsigned char i = 0; i < header_len_; i++) {
-			if (command[i] != header_[i]) {
+
+		if (assemble_packets_) {
+			// First, verify the header.
+			for (unsigned char i = 0; i < header_len_; i++) {
+				if (command[i] != header_[i]) {
+					return;
+				}
+			}
+
+			// Second, generate and compare the checksum
+			if (command[checksum_index_] != checksum(command, command[size_index_] + payload_index_)) {
 				return;
 			}
-		}
-
-		// Second, generate and compare the checksum
-		if (command[checksum_index_] != checksum(command, command[size_index_] + payload_index_)) {
-			return;
 		}
 
 		// Finally, hand off the command to the appropriate controller

@@ -19,7 +19,7 @@ namespace PixelMaestro {
 			colors_index++;
 		}
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void AnimationCommand::set_cycle_index(unsigned char *buffer, unsigned char section_num, unsigned char cycle_index) {
@@ -30,7 +30,7 @@ namespace PixelMaestro {
 			cycle_index
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void AnimationCommand::set_fade(unsigned char* buffer, unsigned char section_num, bool fade) {
@@ -41,7 +41,7 @@ namespace PixelMaestro {
 			(unsigned char)fade
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void AnimationCommand::set_orientation(unsigned char *buffer, unsigned char section_num, Animation::Orientation orientation) {
@@ -52,7 +52,7 @@ namespace PixelMaestro {
 			(unsigned char)orientation
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void AnimationCommand::set_reverse(unsigned char *buffer, unsigned char section_num, bool reverse) {
@@ -63,7 +63,7 @@ namespace PixelMaestro {
 			(unsigned char)reverse
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void AnimationCommand::set_speed(unsigned char* buffer, unsigned char section_num, unsigned short speed, unsigned short pause) {
@@ -73,13 +73,13 @@ namespace PixelMaestro {
 			(unsigned char)Command::Component::Animation,
 			(unsigned char)Action::SetSpeed,
 			section_num,
-			speed_byte.quotient_,
-			speed_byte.remainder_,
-			pause_byte.quotient_,
-			pause_byte.remainder_
+			speed_byte.index_0,
+			speed_byte.index_1,
+			pause_byte.index_0,
+			pause_byte.index_1
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void AnimationCommand::run(Maestro *maestro, unsigned char *buffer) {

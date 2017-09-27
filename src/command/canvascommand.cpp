@@ -15,16 +15,16 @@ namespace PixelMaestro {
 			(unsigned char)Action::DrawCircle,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			origin_x_byte.quotient_,
-			origin_x_byte.remainder_,
-			origin_y_byte.quotient_,
-			origin_y_byte.remainder_,
-			radius_byte.quotient_,
-			radius_byte.remainder_,
+			origin_x_byte.index_0,
+			origin_x_byte.index_1,
+			origin_y_byte.index_0,
+			origin_y_byte.index_1,
+			radius_byte.index_0,
+			radius_byte.index_1,
 			(unsigned char)fill
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_circle(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
@@ -40,16 +40,16 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			origin_x_byte.quotient_,
-			origin_x_byte.remainder_,
-			origin_y_byte.quotient_,
-			origin_y_byte.remainder_,
-			radius_byte.quotient_,
-			radius_byte.remainder_,
+			origin_x_byte.index_0,
+			origin_x_byte.index_1,
+			origin_y_byte.index_0,
+			origin_y_byte.index_1,
+			radius_byte.index_0,
+			radius_byte.index_1,
 			(unsigned char)fill
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_line(unsigned char *buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
@@ -63,17 +63,17 @@ namespace PixelMaestro {
 			(unsigned char)Action::DrawLine,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			origin_x_byte.quotient_,
-			origin_x_byte.remainder_,
-			origin_y_byte.quotient_,
-			origin_y_byte.remainder_,
-			target_x_byte.quotient_,
-			target_x_byte.remainder_,
-			target_y_byte.quotient_,
-			target_y_byte.remainder_
+			origin_x_byte.index_0,
+			origin_x_byte.index_1,
+			origin_y_byte.index_0,
+			origin_y_byte.index_1,
+			target_x_byte.index_0,
+			target_x_byte.index_1,
+			target_y_byte.index_0,
+			target_y_byte.index_1
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_line(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
@@ -90,17 +90,17 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			origin_x_byte.quotient_,
-			origin_x_byte.remainder_,
-			origin_y_byte.quotient_,
-			origin_y_byte.remainder_,
-			target_x_byte.quotient_,
-			target_x_byte.remainder_,
-			target_y_byte.quotient_,
-			target_y_byte.remainder_
+			origin_x_byte.index_0,
+			origin_x_byte.index_1,
+			origin_y_byte.index_0,
+			origin_y_byte.index_1,
+			target_x_byte.index_0,
+			target_x_byte.index_1,
+			target_y_byte.index_0,
+			target_y_byte.index_1
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_point(unsigned char *buffer, unsigned char section_num, unsigned short x, unsigned short y) {
@@ -112,13 +112,13 @@ namespace PixelMaestro {
 			(unsigned char)Action::DrawPoint,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			x_byte.quotient_,
-			x_byte.remainder_,
-			y_byte.quotient_,
-			y_byte.remainder_
+			x_byte.index_0,
+			x_byte.index_1,
+			y_byte.index_0,
+			y_byte.index_1
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_point(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short x, unsigned short y) {
@@ -133,13 +133,13 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			x_byte.quotient_,
-			x_byte.remainder_,
-			y_byte.quotient_,
-			y_byte.remainder_
+			x_byte.index_0,
+			x_byte.index_1,
+			y_byte.index_0,
+			y_byte.index_1
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_rect(unsigned char *buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
@@ -153,18 +153,18 @@ namespace PixelMaestro {
 			(unsigned char)Action::DrawRect,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			origin_x_byte.quotient_,
-			origin_x_byte.remainder_,
-			origin_y_byte.quotient_,
-			origin_y_byte.remainder_,
-			size_x_byte.quotient_,
-			size_x_byte.remainder_,
-			size_y_byte.quotient_,
-			size_y_byte.remainder_,
+			origin_x_byte.index_0,
+			origin_x_byte.index_1,
+			origin_y_byte.index_0,
+			origin_y_byte.index_1,
+			size_x_byte.index_0,
+			size_x_byte.index_1,
+			size_y_byte.index_0,
+			size_y_byte.index_1,
 			(unsigned char)fill
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_rect(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
@@ -181,18 +181,18 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			origin_x_byte.quotient_,
-			origin_x_byte.remainder_,
-			origin_y_byte.quotient_,
-			origin_y_byte.remainder_,
-			size_x_byte.quotient_,
-			size_x_byte.remainder_,
-			size_y_byte.quotient_,
-			size_y_byte.remainder_,
+			origin_x_byte.index_0,
+			origin_x_byte.index_1,
+			origin_y_byte.index_0,
+			origin_y_byte.index_1,
+			size_x_byte.index_0,
+			size_x_byte.index_1,
+			size_y_byte.index_0,
+			size_y_byte.index_1,
 			(unsigned char)fill
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_triangle(unsigned char *buffer, unsigned char section_num, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
@@ -208,22 +208,22 @@ namespace PixelMaestro {
 			(unsigned char)Action::DrawTriangle,
 			(unsigned char)CanvasType::AnimationCanvas,
 			section_num,
-			point_a_x_byte.quotient_,
-			point_a_x_byte.remainder_,
-			point_a_y_byte.quotient_,
-			point_a_y_byte.remainder_,
-			point_b_x_byte.quotient_,
-			point_b_x_byte.remainder_,
-			point_b_y_byte.quotient_,
-			point_b_y_byte.remainder_,
-			point_c_x_byte.quotient_,
-			point_c_x_byte.remainder_,
-			point_c_y_byte.quotient_,
-			point_c_y_byte.remainder_,
+			point_a_x_byte.index_0,
+			point_a_x_byte.index_1,
+			point_a_y_byte.index_0,
+			point_a_y_byte.index_1,
+			point_b_x_byte.index_0,
+			point_b_x_byte.index_1,
+			point_b_y_byte.index_0,
+			point_b_y_byte.index_1,
+			point_c_x_byte.index_0,
+			point_c_x_byte.index_1,
+			point_c_y_byte.index_0,
+			point_c_y_byte.index_1,
 			(unsigned char)fill
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_triangle(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
@@ -242,22 +242,22 @@ namespace PixelMaestro {
 			color.r,
 			color.g,
 			color.b,
-			point_a_x_byte.quotient_,
-			point_a_x_byte.remainder_,
-			point_a_y_byte.quotient_,
-			point_a_y_byte.remainder_,
-			point_b_x_byte.quotient_,
-			point_b_x_byte.remainder_,
-			point_b_y_byte.quotient_,
-			point_b_y_byte.remainder_,
-			point_c_x_byte.quotient_,
-			point_c_x_byte.remainder_,
-			point_c_y_byte.quotient_,
-			point_c_y_byte.remainder_,
+			point_a_x_byte.index_0,
+			point_a_x_byte.index_1,
+			point_a_y_byte.index_0,
+			point_a_y_byte.index_1,
+			point_b_x_byte.index_0,
+			point_b_x_byte.index_1,
+			point_b_y_byte.index_0,
+			point_b_y_byte.index_1,
+			point_c_x_byte.index_0,
+			point_c_x_byte.index_1,
+			point_c_y_byte.index_0,
+			point_c_y_byte.index_1,
 			(unsigned char)fill
 		};
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_text(unsigned char *buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
@@ -269,10 +269,10 @@ namespace PixelMaestro {
 		payload[1] = (unsigned char)Action::DrawText;
 		payload[2] = (unsigned char)CanvasType::AnimationCanvas;
 		payload[3] = section_num;
-		payload[4] = origin_x_byte.quotient_;
-		payload[5] = origin_x_byte.remainder_;
-		payload[6] = origin_y_byte.quotient_;
-		payload[7] = origin_y_byte.remainder_;
+		payload[4] = origin_x_byte.index_0;
+		payload[5] = origin_x_byte.index_1;
+		payload[6] = origin_y_byte.index_0;
+		payload[7] = origin_y_byte.index_1;
 		payload[8] = (unsigned char)font;
 		payload[9] = num_chars;
 
@@ -280,7 +280,7 @@ namespace PixelMaestro {
 			payload[10 + i] = text[i];
 		}
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::draw_text(unsigned char *buffer, unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
@@ -295,10 +295,10 @@ namespace PixelMaestro {
 		payload[4] = color.r;
 		payload[5] = color.g;
 		payload[6] = color.b;
-		payload[7] = origin_x_byte.quotient_;
-		payload[8] = origin_x_byte.remainder_;
-		payload[9] = origin_y_byte.quotient_;
-		payload[10] = origin_y_byte.remainder_;
+		payload[7] = origin_x_byte.index_0;
+		payload[8] = origin_x_byte.index_1;
+		payload[9] = origin_y_byte.index_0;
+		payload[10] = origin_y_byte.index_1;
 		payload[11] = (unsigned char)font;
 		payload[12] = num_chars;
 
@@ -306,7 +306,7 @@ namespace PixelMaestro {
 			payload[13 + i] = text[i];
 		}
 
-		Command::build_packet(buffer, payload, sizeof(payload));
+		Command::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCommand::run(Maestro *maestro, unsigned char *buffer) {
