@@ -23,8 +23,7 @@ namespace PixelMaestro {
 
 	class Command {
 		private:
-			static bool assemble_packets_;
-			static const unsigned char header_len_ = 2;
+			static const unsigned char header_len_;
 			static const unsigned char header_[];
 
 		public:
@@ -43,7 +42,6 @@ namespace PixelMaestro {
 			static void assemble(unsigned char* buffer, unsigned char* data, unsigned char data_size);
 			static unsigned char checksum(unsigned char* data, unsigned char data_size);
 			static void run(Maestro* maestro, unsigned char* command);
-			static void set_assemble_packets(bool assemble);
 	};
 }
 

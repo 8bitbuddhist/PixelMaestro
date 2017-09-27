@@ -89,6 +89,7 @@ namespace PixelMaestro {
 			If RELATIVE, compare the time since the last Event to the next Event's start time.
 			After running the Event, update the last run time and current Event index.
 		*/
+		unsigned long event_time = events_[current_index_]->get_time();
 		if ((timing_ == TimingMode::Absolute && (current_time >= events_[current_index_]->get_time())) ||
 			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= events_[current_index_]->get_time()))) {
 			events_[current_index_]->run();
@@ -96,7 +97,9 @@ namespace PixelMaestro {
 			update_event_index();
 
 			// Check the next event
-			check_next_event(current_time);
+			if (current_index_ < num_events_) {
+				check_next_event(current_time);
+			}
 		}
 	}
 

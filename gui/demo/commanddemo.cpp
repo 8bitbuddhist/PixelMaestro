@@ -6,7 +6,6 @@
 
 CommandDemo::CommandDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
 	maestro_controller_->add_section_controller(new Point(10, 10));
-	Command::set_assemble_packets(false);
 
 	unsigned char buffer[100] = {0};
 	/*

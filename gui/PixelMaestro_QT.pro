@@ -24,14 +24,7 @@ SOURCES += main.cpp\
 		../src/show/event.cpp \
 		../src/canvas/fonts/font5x8.cpp \
 		demo/canvasdemo.cpp \
-		../src/show/canvasdrawtextevent.cpp \
-		../src/show/canvasdrawrectevent.cpp \
-		../src/show/canvasdrawlineevent.cpp \
 		drawingarea/canvasdrawingarea.cpp \
-		../src/show/canvasdrawcircleevent.cpp \
-		../src/show/canvasdrawtriangleevent.cpp \
-		../src/show/canvasdrawpointevent.cpp \
-		../src/show/canvasclearevent.cpp \
 		window/mainwindow.cpp \
 		../src/show/runfunctionevent.cpp \
 		../src/animation/blinkanimation.cpp \
@@ -42,30 +35,22 @@ SOURCES += main.cpp\
 		../src/animation/sparkleanimation.cpp \
 		../src/animation/waveanimation.cpp \
 		../src/animation/animation.cpp \
-		../src/show/sectionsetanimationevent.cpp \
 		../src/core/colors.cpp \
 		../src/core/maestro.cpp \
 		../src/core/pixel.cpp \
 		../src/core/point.cpp \
 		../src/core/section.cpp \
 		../src/show/show.cpp \
-		../src/show/animationsetfadeevent.cpp \
 		../src/utility.cpp \
-		../src/show/maestrosetrunningevent.cpp \
 		../src/animation/radialanimation.cpp \
 		../src/animation/mandelbrotanimation.cpp \
 		../src/animation/plasmaanimation.cpp \
     ../src/animation/lightninganimation.cpp \
-    ../src/show/overlaysetoptionsevent.cpp \
     widget/animation/lightninganimationcontrol.cpp \
     widget/animation/plasmaanimationcontrol.cpp \
     widget/animation/sparkleanimationcontrol.cpp \
-    ../src/show/sectionaddoverlayevent.cpp \
-    ../src/show/sectionremoveoverlayevent.cpp \
-    ../src/show/animationsetspeedevent.cpp \
     demo/presetdemo.cpp \
     ../src/preset/demopreset.cpp \
-    ../src/show/maestroapplypresetevent.cpp \
     ../src/canvas/colorcanvas.cpp \
     demo/colorcanvasdemo.cpp \
     ../src/canvas/animationcanvas.cpp \
@@ -76,7 +61,8 @@ SOURCES += main.cpp\
     ../src/command/canvascommand.cpp \
     ../src/command/maestrocommand.cpp \
     ../src/command/sectioncommand.cpp \
-    ../src/command/command.cpp
+    ../src/command/command.cpp \
+    ../src/show/runcommandevent.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -93,14 +79,7 @@ HEADERS += \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
 		demo/canvasdemo.h \
-		../src/show/canvasdrawtextevent.h \
-		../src/show/canvasdrawrectevent.h \
-		../src/show/canvasdrawlineevent.h \
 		drawingarea/canvasdrawingarea.h \
-		../src/show/canvasdrawcircleevent.h \
-		../src/show/canvasdrawtriangleevent.h \
-		../src/show/canvasdrawpointevent.h \
-		../src/show/canvasclearevent.h \
 		window/mainwindow.h \
 		../src/show/runfunctionevent.h \
 		../src/animation/blinkanimation.h \
@@ -111,30 +90,22 @@ HEADERS += \
 		../src/animation/sparkleanimation.h \
 		../src/animation/waveanimation.h \
 		../src/animation/animation.h \
-		../src/show/sectionsetanimationevent.h \
 		../src/core/colors.h \
 		../src/core/maestro.h \
 		../src/core/pixel.h \
 		../src/core/point.h \
 		../src/core/section.h \
-		../src/show/animationsetfadeevent.h \
 		../src/show/show.h \
 		../src/utility.h \
-		../src/show/maestrosetrunningevent.h \
 		../src/animation/radialanimation.h \
 		../src/animation/mandelbrotanimation.h \
 		../src/animation/plasmaanimation.h \
     ../src/animation/lightninganimation.h \
-    ../src/show/overlaysetoptionsevent.h \
     widget/animation/lightninganimationcontrol.h \
     widget/animation/plasmaanimationcontrol.h \
     widget/animation/sparkleanimationcontrol.h \
-    ../src/show/sectionaddoverlayevent.h \
-    ../src/show/sectionremoveoverlayevent.h \
-    ../src/show/animationsetspeedevent.h \
     demo/presetdemo.h \
     ../src/preset/preset.h \
-    ../src/show/maestroapplypresetevent.h \
     ../src/preset/demopreset.h \
     ../src/canvas/colorcanvas.h \
     demo/colorcanvasdemo.h \
@@ -147,7 +118,8 @@ HEADERS += \
     ../src/command/canvascommand.h \
     ../src/command/maestrocommand.h \
     ../src/command/sectioncommand.h \
-    ../src/command/command.h
+    ../src/command/command.h \
+    ../src/show/runcommandevent.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
