@@ -1,15 +1,4 @@
-#include "../animation/blinkanimation.h"
-#include "../animation/cycleanimation.h"
-#include "../animation/lightninganimation.h"
-#include "../animation/mandelbrotanimation.h"
-#include "../animation/mergeanimation.h"
-#include "../animation/plasmaanimation.h"
-#include "../animation/radialanimation.h"
-#include "../animation/randomanimation.h"
-#include "../animation/solidanimation.h"
-#include "../animation/sparkleanimation.h"
-#include "../animation/waveanimation.h"
-
+#include "animationcue.h"
 #include "cue.h"
 #include "sectioncue.h"
 
@@ -66,10 +55,10 @@ namespace PixelMaestro {
 			(unsigned char)Cue::Component::Section,
 			(unsigned char)Action::SetDimensions,
 			section_num,
-			x_byte.index_0,
-			x_byte.index_1,
-			y_byte.index_0,
-			y_byte.index_1
+			x_byte.converted_0,
+			x_byte.converted_1,
+			y_byte.converted_0,
+			y_byte.converted_1
 		};
 
 		Cue::assemble(buffer, payload, sizeof(payload));
@@ -85,62 +74,12 @@ namespace PixelMaestro {
 				section->add_overlay(Colors::MixMode(cue[Cue::payload_index_ + 3]), cue[Cue::payload_index_ + 4]);
 				break;
 			case Action::SetAnimation:
-				{
-					Animation* animation;
-					int num_colors = cue[Cue::payload_index_ + 3];
-					int current_color_index = 5;
-					Colors::RGB* colors = new Colors::RGB[num_colors];
-					for (unsigned char i = 0; i < num_colors; i++) {
-						colors[i].r = cue[Cue::payload_index_ + current_color_index];
-						current_color_index++;
-						colors[i].g = cue[Cue::payload_index_ + current_color_index];
-						current_color_index++;
-						colors[i].b = cue[Cue::payload_index_ + current_color_index];
-						current_color_index++;
-					}
-
-					switch((Animation::Type)cue[Cue::payload_index_ + 3]) {
-						case Animation::Type::Blink:
-							animation = new BlinkAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Cycle:
-							animation = new CycleAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Lightning:
-							animation = new LightningAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Mandelbrot:
-							animation = new MandelbrotAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Merge:
-							animation = new MergeAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Plasma:
-							animation = new PlasmaAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Radial:
-							animation = new RadialAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Random:
-							animation = new RandomAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Solid:
-							animation = new SolidAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Sparkle:
-							animation = new SparkleAnimation(colors, num_colors);
-							break;
-						case Animation::Type::Wave:
-							animation = new WaveAnimation(colors, num_colors);
-							break;
-					}
-					section->set_animation(animation, (bool)cue[Cue::payload_index_ + 4]);
-				}
+				section->set_animation(AnimationCue::initialize_animation(cue), (bool)cue[Cue::payload_index_ + 4]);
 				break;
 			case Action::SetDimensions:
 				section->set_dimensions(
-					IntByteConvert::byte_to_int(cue[Cue::payload_index_ + 3], cue[Cue::payload_index_ + 4]),
-					IntByteConvert::byte_to_int(cue[Cue::payload_index_ + 5], cue[Cue::payload_index_ + 6]));
+					IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 3]),
+					IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 5]));
 				break;
 		}
 	}
