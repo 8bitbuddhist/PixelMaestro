@@ -1,10 +1,10 @@
-#ifndef CANVASSERIAL_H
-#define CANVASSERIAL_H
+#ifndef CANVASCOMMAND_H
+#define CANVASCOMMAND_H
 
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class CanvasSerial	{
+	class CanvasCommand	{
 		public:
 			enum Action {
 				DrawCircle,
@@ -32,4 +32,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // CANVASSERIAL_H
+#endif // CANVASCOMMAND_H

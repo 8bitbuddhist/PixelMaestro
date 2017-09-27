@@ -1,38 +1,38 @@
 #include "commanddemo.h"
-#include "serial/animationserial.h"
-#include "serial/serial.h"
-#include "serial/canvasserial.h"
-#include "serial/sectionserial.h"
+#include "command/animationcommand.h"
+#include "command/command.h"
+#include "command/canvascommand.h"
+#include "command/sectioncommand.h"
 
 CommandDemo::CommandDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
 	maestro_controller_->add_section_controller(new Point(10, 10));
 
 	unsigned char buffer[100] = {0};
 	/*
-	SectionSerial::add_canvas(buffer, 0, CanvasType::ColorCanvas);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	SectionCommand::add_canvas(buffer, 0, CanvasType::ColorCanvas);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 
-	CanvasSerial::draw_circle(buffer, 0, Colors::GREEN, 5, 5, 2, true);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	CanvasCommand::draw_circle(buffer, 0, Colors::GREEN, 5, 5, 2, true);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 	*/
 
-	SectionSerial::set_dimensions(buffer, 0, 100, 40);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	SectionCommand::set_dimensions(buffer, 0, 100, 40);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 
-	SectionSerial::set_animation(buffer, 0, Animation::Type::Wave, false);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	SectionCommand::set_animation(buffer, 0, Animation::Type::Wave, false);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 
-	AnimationSerial::set_colors(buffer, 0, Colors::COLORWHEEL, 12);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	AnimationCommand::set_colors(buffer, 0, Colors::COLORWHEEL, 12);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 
-	AnimationSerial::set_speed(buffer, 0, 1000, 750);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	AnimationCommand::set_speed(buffer, 0, 1000, 750);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 
-	SectionSerial::add_canvas(buffer, 0, CanvasType::AnimationCanvas);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	SectionCommand::add_canvas(buffer, 0, CanvasType::AnimationCanvas);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 
-	CanvasSerial::draw_text(buffer, 0, 0, 0, Font::Type::Font5x8, "Hello world!", 13);
-	Serial::run(maestro_controller_->get_maestro(), buffer);
+	CanvasCommand::draw_text(buffer, 0, 0, 0, Font::Type::Font5x8, "Hello world!", 13);
+	Command::run(maestro_controller_->get_maestro(), buffer);
 }
 
 CommandDemo::~CommandDemo() {}

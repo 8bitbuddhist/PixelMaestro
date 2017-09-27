@@ -1,10 +1,10 @@
-#ifndef MAESTROSERIAL_H
-#define MAESTROSERIAL_H
+#ifndef MAESTROCOMMAND_H
+#define MAESTROCOMMAND_H
 
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class MaestroSerial {
+	class MaestroCommand {
 		public:
 			enum Action {
 				SetRefreshInterval

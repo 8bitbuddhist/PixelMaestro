@@ -1,12 +1,12 @@
-#ifndef SECTIONSERIAL_H
-#define SECTIONSERIAL_H
+#ifndef SECTIONCOMMAND_H
+#define SECTIONCOMMAND_H
 
 #include "../canvas/canvastype.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class SectionSerial {
+	class SectionCommand {
 		public:
 			enum Action {
 				AddCanvas,

@@ -1,16 +1,15 @@
-#include "animationserial.h"
-#include "canvasserial.h"
-#include "serial.h"
-#include "maestroserial.h"
-#include "sectionserial.h"
+#include "animationcommand.h"
+#include "canvascommand.h"
+#include "command.h"
+#include "maestrocommand.h"
+#include "sectioncommand.h"
 
 namespace PixelMaestro {
 
 	// Initialize header contents
-	const unsigned char Serial::header_[] = {'P', 'M'};
-	bool Serial::run_checksum = true;
+	const unsigned char Command::header_[] = {'P', 'M'};
 
-	void Serial::build_packet(unsigned char* buffer, unsigned char* data, unsigned char data_size) {
+	void Command::build_packet(unsigned char* buffer, unsigned char* data, unsigned char data_size) {
 		/*
 		 * Packets take the following form: [Header] [Size] [Checksum] [Payload]
 		 *
@@ -25,7 +24,6 @@ namespace PixelMaestro {
 			buffer[i] = header_[i];
 		}
 
-		// Store the size of the payload
 		buffer[size_index_] = data_size;
 
 		// Append the actual data
@@ -33,16 +31,10 @@ namespace PixelMaestro {
 			buffer[payload_index_ + i] = data[i];
 		}
 
-		// Finally, add a checksum and stuff it in after the packet size
-		if (run_checksum) {
-			buffer[checksum_index_] = checksum(buffer, buffer[size_index_] + payload_index_);
-		}
-		else {
-			buffer[checksum_index_] = 0;
-		}
+		buffer[checksum_index_] = checksum(buffer, buffer[size_index_] + payload_index_);
 	}
 
-	unsigned char Serial::checksum(unsigned char *data, unsigned char data_size) {
+	unsigned char Command::checksum(unsigned char *data, unsigned char data_size) {
 		unsigned int sum = 0;
 		for (unsigned char i = 0; i < data_size; i++) {
 
@@ -60,7 +52,7 @@ namespace PixelMaestro {
 	 * @param maestro The Maestro to run the command against.
 	 * @param command The command to run.
 	 */
-	void Serial::run(Maestro* maestro, unsigned char *command) {
+	void Command::run(Maestro* maestro, unsigned char *command) {
 		// First, make sure the header is present
 		for (unsigned char i = 0; i < header_len_; i++) {
 			if (command[i] != header_[i]) {
@@ -69,23 +61,23 @@ namespace PixelMaestro {
 		}
 
 		// Second, generate and compare the checksum
-		if (run_checksum && command[checksum_index_] != checksum(command, command[size_index_] + payload_index_)) {
+		if (command[checksum_index_] != checksum(command, command[size_index_] + payload_index_)) {
 			return;
 		}
 
 		// Finally, hand off the command to the appropriate controller
 		switch ((Component)command[payload_index_]) {
 			case Component::Animation:
-				AnimationSerial::run(maestro, command);
+				AnimationCommand::run(maestro, command);
 				break;
 			case Component::Canvas:
-				CanvasSerial::run(maestro, command);
+				CanvasCommand::run(maestro, command);
 				break;
 			case Component::Maestro:
-				MaestroSerial::run(maestro, command);
+				MaestroCommand::run(maestro, command);
 				break;
 			case Component::Section:
-				SectionSerial::run(maestro, command);
+				SectionCommand::run(maestro, command);
 				break;
 		}
 	}

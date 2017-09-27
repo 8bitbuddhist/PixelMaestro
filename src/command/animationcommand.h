@@ -1,12 +1,12 @@
-#ifndef ANIMATIONSERIAL_H
-#define ANIMATIONSERIAL_H
+#ifndef ANIMATIONCOMMAND_H
+#define ANIMATIONCOMMAND_H
 
 #include "../animation/animation.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
 
 namespace PixelMaestro {
-	class AnimationSerial {
+	class AnimationCommand {
 		public:
 			enum Action {
 				SetColors,
@@ -29,4 +29,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // ANIMATIONSERIAL_H
+#endif // ANIMATIONCOMMAND_H
