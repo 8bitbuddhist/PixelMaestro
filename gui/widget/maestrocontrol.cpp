@@ -130,7 +130,9 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 	tmp_colors.resize(num_colors);
 
 	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
-	active_section_controller_->get_section()->get_animation()->set_colors(Colors::generate_scaling_color_array(&color, num_colors, threshold, true), num_colors);
+	Colors::RGB tmp[num_colors];
+	Colors::generate_scaling_color_array(tmp, &color, num_colors, threshold, true);
+	active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 
 	// Release tmp_colors
 	std::vector<Colors::RGB>().swap(tmp_colors);
@@ -247,14 +249,18 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 		case 1:	// Fire
 			{
 				unsigned char num_colors = 14;
-				active_section_controller_->get_section()->get_animation()->set_colors(Colors::generate_scaling_color_array(&Colors::RED, &Colors::YELLOW, num_colors, true), num_colors);
+				Colors::RGB tmp[num_colors];
+				Colors::generate_scaling_color_array(tmp, &Colors::RED, &Colors::YELLOW, num_colors, true);
+				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
 				break;
 			}
 		case 2:	// Deep Sea
 			{
 				unsigned char num_colors = 14;
-				active_section_controller_->get_section()->get_animation()->set_colors(Colors::generate_scaling_color_array(&Colors::BLUE, &Colors::GREEN, num_colors, true), num_colors);
+				Colors::RGB tmp[num_colors];
+				Colors::generate_scaling_color_array(tmp, &Colors::BLUE, &Colors::GREEN, num_colors, true);
+				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
 				break;
 			}

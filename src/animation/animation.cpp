@@ -2,7 +2,7 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor.
+	 * Constructor. The Color palette is copied into the Animation.
 	 * @param section The Section that this animation will render in.
 	 * @param colors Initial color palette.
 	 * @param num_colors The number of colors in the palette.
@@ -108,7 +108,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Replaces the current color palette.
+		Deletes the current color palette and copies in a new palette.
 
 		@param colors New color palette.
 		@param num_colors Number of colors in the palette.
