@@ -28,14 +28,15 @@ namespace PixelMaestro {
 
 	void SectionCue::set_animation(unsigned char *buffer, unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors) {
 
-		unsigned char payload[3 + (num_colors * 3)];
+		int colors_index = 6;
+		unsigned char payload[colors_index + (num_colors * 3)];
 		payload[0] = (unsigned char)Cue::Component::Section;
 		payload[1] = (unsigned char)Action::SetAnimation;
 		payload[2] = section_num;
 		payload[3] = (unsigned char)animation_type;
 		payload[4] = (unsigned char)preserve_cycle_index;
+		payload[5] = num_colors;
 
-		int colors_index = 5;
 		for (unsigned char i = 0; i < num_colors; i++) {
 			payload[colors_index] = colors[i].r;
 			colors_index++;
@@ -74,7 +75,24 @@ namespace PixelMaestro {
 				section->add_overlay(Colors::MixMode(cue[Cue::payload_index_ + 3]), cue[Cue::payload_index_ + 4]);
 				break;
 			case Action::SetAnimation:
-				section->set_animation(AnimationCue::initialize_animation(cue), (bool)cue[Cue::payload_index_ + 4]);
+				{
+					unsigned char num_colors = cue[Cue::payload_index_ + 5];
+					if (num_colors == 0) {
+						return;
+					}
+					unsigned char colors_index = 6;
+					Colors::RGB colors[num_colors];
+					for (unsigned char i = 0; i < num_colors; i++) {
+						colors[i].r = cue[Cue::payload_index_ + colors_index];
+						colors_index++;
+						colors[i].g = cue[Cue::payload_index_ + colors_index];
+						colors_index++;
+						colors[i].b = cue[Cue::payload_index_ + colors_index];
+						colors_index++;
+					}
+					Animation* animation = section->set_animation(AnimationCue::initialize_animation(cue), (bool)cue[Cue::payload_index_ + 4]);
+					animation->set_colors(colors, num_colors);
+				}
 				break;
 			case Action::SetDimensions:
 				section->set_dimensions(
