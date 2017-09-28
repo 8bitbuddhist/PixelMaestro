@@ -73,7 +73,7 @@ namespace PixelMaestro {
 			static unsigned char checksum_index_;
 			static unsigned char payload_index_;
 
-			static void assemble(unsigned char* buffer, unsigned char* data, unsigned char data_size);
+			static void assemble(unsigned char* buffer, unsigned char payload_size);
 			static unsigned char checksum(unsigned char* data, unsigned char data_size);
 			static void run(Maestro* maestro, unsigned char* command);
 	};

@@ -9,12 +9,11 @@ namespace PixelMaestro {
 	const unsigned char Cue::header_[] = "PMC";
 
 	/**
-	 * Assembles a payload into a complete Cue.
+	 * Adds header info to a Cue.
 	 * @param buffer Container for the Cue.
-	 * @param payload The actual command.
-	 * @param payload_size The size of the command.
+	 * @param payload_size The size of the payload.
 	 */
-	void Cue::assemble(unsigned char* buffer, unsigned char* payload, unsigned char payload_size) {
+	void Cue::assemble(unsigned char* buffer, unsigned char payload_size) {
 		/*
 		 * Final Cue has the following form: [Header] [Checksum] [Size] [Payload]
 		 *
@@ -29,10 +28,6 @@ namespace PixelMaestro {
 		}
 
 		buffer[Bit::SizeBit] = payload_size;
-
-		for (unsigned char i = 0; i < payload_size; i++) {
-			buffer[Bit::PayloadBit + i] = payload[i];
-		}
 
 		buffer[Bit::ChecksumBit] = checksum(buffer, Bit::PayloadBit + payload_size);
 

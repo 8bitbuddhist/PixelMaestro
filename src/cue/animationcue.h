@@ -29,7 +29,7 @@ namespace PixelMaestro {
 				OptionsBit
 			};
 
-			// Animation-specific options
+			// Animation-specific calls
 			static void set_lightning_options(unsigned char* buffer, unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
 			static void set_plasma_options(unsigned char* buffer, unsigned char section_num, float size, float resolution);
 			static void set_sparkle_options(unsigned char* buffer, unsigned char section_num, unsigned char threshold);

@@ -5,14 +5,12 @@ namespace PixelMaestro {
 	void MaestroCue::set_refresh_interval(unsigned char *buffer, unsigned short interval) {
 		IntByteConvert interval_byte = IntByteConvert(interval);
 
-		unsigned char payload[] = {
-			(unsigned char)Cue::Component::Maestro,
-			Action::SetRefreshInterval,
-			interval_byte.converted_0,
-			interval_byte.converted_1
-		};
+		buffer[Bit::ComponentBit] = (unsigned char)Cue::Component::Maestro;
+		buffer[Bit::ActionBit] = Action::SetRefreshInterval;
+		buffer[Bit::OptionsBit] = interval_byte.converted_0;
+		buffer[Bit::OptionsBit + 1] = interval_byte.converted_1;
 
-		Cue::assemble(buffer, payload, sizeof(payload));
+		Cue::assemble(buffer, (unsigned char)(Bit::OptionsBit + 2));
 	}
 
 	void MaestroCue::run(Maestro *maestro, unsigned char *cue) {
