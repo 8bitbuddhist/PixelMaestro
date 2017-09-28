@@ -4,6 +4,7 @@
 #include "../animation/animation.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
+#include "cue.h"
 #include "sectioncue.h"
 
 namespace PixelMaestro {
@@ -19,6 +20,13 @@ namespace PixelMaestro {
 				SetReverse,
 				SetSparkleOptions,
 				SetSpeed
+			};
+
+			enum Bit {
+				ComponentBit = Cue::Bit::PayloadBit,
+				ActionBit,
+				SectionBit,
+				OptionsBit
 			};
 
 			// Animation-specific options

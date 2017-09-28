@@ -4,6 +4,7 @@
 #include "../canvas/canvastype.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
+#include "cue.h"
 
 namespace PixelMaestro {
 	class SectionCue {
@@ -13,6 +14,13 @@ namespace PixelMaestro {
 				AddOverlay,
 				SetAnimation,
 				SetDimensions
+			};
+
+			enum Bit {
+				ComponentBit = (int)Cue::Bit::PayloadBit,
+				ActionBit,
+				SectionBit,
+				OptionsBit
 			};
 
 			static void add_canvas(unsigned char* buffer, unsigned char section_num, CanvasType::Type canvas_type);

@@ -11,7 +11,7 @@ namespace PixelMaestro {
 		maestro_ = maestro;
 
 		// Initialize and copy the command over.
-		unsigned int packet_size = buffer[Cue::size_index_] + Cue::payload_index_;
+		unsigned int packet_size = buffer[Cue::Bit::SizeBit] + Cue::Bit::PayloadBit;
 		buffer_ = new unsigned char[packet_size];
 		for (unsigned char i = 0; i < packet_size; i++) {
 			buffer_[i] = buffer[i];

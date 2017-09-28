@@ -6,11 +6,7 @@
 
 namespace PixelMaestro {
 
-	const unsigned char Cue::header_len_ = 3;
 	const unsigned char Cue::header_[] = "PMC";
-	unsigned char Cue::checksum_index_ = header_len_;
-	unsigned char Cue::size_index_ = checksum_index_ + 1;
-	unsigned char Cue::payload_index_ = size_index_ + 1;
 
 	/**
 	 * Assembles a payload into a complete Cue.
@@ -28,20 +24,20 @@ namespace PixelMaestro {
 		 * [Payload] contains the actual command with parameters.
 		 */
 
-		for (unsigned char i = 0; i < header_len_; i++) {
+		for (unsigned char i = 0; i < Bit::ChecksumBit; i++) {
 			buffer[i] = header_[i];
 		}
 
-		buffer[size_index_] = payload_size;
+		buffer[Bit::SizeBit] = payload_size;
 
 		for (unsigned char i = 0; i < payload_size; i++) {
-			buffer[payload_index_ + i] = payload[i];
+			buffer[Bit::PayloadBit + i] = payload[i];
 		}
 
-		buffer[checksum_index_] = checksum(buffer, payload_index_ + payload_size);
+		buffer[Bit::ChecksumBit] = checksum(buffer, Bit::PayloadBit + payload_size);
 
 		// Add null terminator to end of buffer
-		buffer[payload_index_ + payload_size] = '\0';
+		buffer[Bit::PayloadBit + payload_size] = '\0';
 	}
 
 	/**
@@ -55,7 +51,7 @@ namespace PixelMaestro {
 		for (unsigned char i = 0; i < buffer_size; i++) {
 
 			// Make sure we don't include the checksum in its own calculation
-			if (i != checksum_index_) {
+			if (i != Bit::ChecksumBit) {
 				sum += buffer[i];
 			}
 		}
@@ -70,19 +66,19 @@ namespace PixelMaestro {
 	 */
 	void Cue::run(Maestro* maestro, unsigned char *cue) {
 		// First, verify the header.
-		for (unsigned char i = 0; i < header_len_; i++) {
+		for (unsigned char i = 0; i < Bit::ChecksumBit; i++) {
 			if (cue[i] != header_[i]) {
 				return;
 			}
 		}
 
 		// Second, generate and compare the checksum.
-		if (cue[checksum_index_] != checksum(cue, cue[size_index_] + payload_index_)) {
+		if (cue[Bit::ChecksumBit] != checksum(cue, cue[Bit::SizeBit] + Bit::PayloadBit)) {
 			return;
 		}
 
 		// Finally, hand off the payload to the appropriate controller.
-		switch ((Component)cue[payload_index_]) {
+		switch ((Component)cue[Bit::PayloadBit]) {
 			case Component::Animation:
 				AnimationCue::run(maestro, cue);
 				break;

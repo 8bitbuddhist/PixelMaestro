@@ -15,19 +15,19 @@
 
 namespace PixelMaestro {
 	Animation* AnimationCue::initialize_animation(unsigned char* cue) {
-		int num_colors = cue[Cue::payload_index_ + 3];
+		int num_colors = cue[AnimationCue::Bit::OptionsBit];
 		int current_color_index = 5;
 		Colors::RGB* colors = new Colors::RGB[num_colors];
 		for (unsigned char i = 0; i < num_colors; i++) {
-			colors[i].r = cue[Cue::payload_index_ + current_color_index];
+			colors[i].r = cue[Cue::Bit::PayloadBit + current_color_index];
 			current_color_index++;
-			colors[i].g = cue[Cue::payload_index_ + current_color_index];
+			colors[i].g = cue[Cue::Bit::PayloadBit + current_color_index];
 			current_color_index++;
-			colors[i].b = cue[Cue::payload_index_ + current_color_index];
+			colors[i].b = cue[Cue::Bit::PayloadBit + current_color_index];
 			current_color_index++;
 		}
 
-		switch((Animation::Type)cue[Cue::payload_index_ + 3]) {
+		switch((Animation::Type)cue[AnimationCue::Bit::OptionsBit]) {
 			case Animation::Type::Blink:
 				return new BlinkAnimation(colors, num_colors);
 				break;
@@ -116,7 +116,8 @@ namespace PixelMaestro {
 	// General-purpose Cues
 
 	void AnimationCue::set_colors(unsigned char *buffer, unsigned char section_num, Colors::RGB *colors, unsigned char num_colors) {
-		int colors_index = 4;
+		// Colors array starts at the Options bit.
+		int colors_index = AnimationCue::Bit::OptionsBit;
 
 		unsigned char payload[colors_index + (num_colors * 3)];
 		payload[0] = (unsigned char)Cue::Component::Animation;
@@ -197,58 +198,58 @@ namespace PixelMaestro {
 	}
 
 	void AnimationCue::run(Maestro *maestro, unsigned char *cue) {
-		Animation* animation = maestro->get_section(cue[Cue::payload_index_ + 2])->get_animation();
-		switch((Action)cue[Cue::payload_index_ + 1]) {
+		Animation* animation = maestro->get_section(cue[AnimationCue::Bit::SectionBit])->get_animation();
+		switch((Action)cue[AnimationCue::Bit::ActionBit]) {
 			case Action::SetColors:
 				{
-					unsigned char num_colors = cue[Cue::payload_index_ + 3];
-					unsigned char current_color_index = 4;
+					unsigned char num_colors = cue[AnimationCue::Bit::OptionsBit];
+					unsigned char current_color_index = 1;
 					Colors::RGB colors[num_colors];
 					for (unsigned char i = 0; i < num_colors; i++) {
-						colors[i].r = cue[Cue::payload_index_ + current_color_index];
+						colors[i].r = cue[AnimationCue::Bit::OptionsBit + current_color_index];
 						current_color_index++;
-						colors[i].g = cue[Cue::payload_index_ + current_color_index];
+						colors[i].g = cue[AnimationCue::Bit::OptionsBit + current_color_index];
 						current_color_index++;
-						colors[i].b = cue[Cue::payload_index_ + current_color_index];
+						colors[i].b = cue[AnimationCue::Bit::OptionsBit + current_color_index];
 						current_color_index++;
 					}
 					animation->set_colors(colors, num_colors);
 				}
 				break;
 			case Action::SetCycleIndex:
-				animation->set_cycle_index(cue[Cue::payload_index_ + 3]);
+				animation->set_cycle_index(cue[AnimationCue::Bit::OptionsBit]);
 				break;
 			case Action::SetFade:
-				animation->set_fade(cue[Cue::payload_index_ + 3]);
+				animation->set_fade(cue[AnimationCue::Bit::OptionsBit]);
 				break;
 			case Action::SetLightningOptions:
 				{
-					static_cast<LightningAnimation*>(animation)->set_bolt_count(cue[Cue::payload_index_ + 3]);
-					static_cast<LightningAnimation*>(animation)->set_thresholds(cue[Cue::payload_index_ + 4], cue[Cue::payload_index_ + 5]);
-					static_cast<LightningAnimation*>(animation)->set_fork_chance(cue[Cue::payload_index_ + 6]);
+					static_cast<LightningAnimation*>(animation)->set_bolt_count(cue[AnimationCue::Bit::OptionsBit]);
+					static_cast<LightningAnimation*>(animation)->set_thresholds(cue[AnimationCue::Bit::OptionsBit + 1], cue[AnimationCue::Bit::OptionsBit + 2]);
+					static_cast<LightningAnimation*>(animation)->set_fork_chance(cue[AnimationCue::Bit::OptionsBit + 3]);
 				}
 				break;
 			case Action::SetPlasmaOptions:
 				{
-					float size = FloatByteConvert::byte_to_float(&cue[Cue::payload_index_ + 3]);
-					float resolution = FloatByteConvert::byte_to_float(&cue[Cue::payload_index_ + 7]);
+					float size = FloatByteConvert::byte_to_float(&cue[AnimationCue::Bit::OptionsBit]);
+					float resolution = FloatByteConvert::byte_to_float(&cue[AnimationCue::Bit::OptionsBit + 4]);
 					static_cast<PlasmaAnimation*>(animation)->set_size(size);
 					static_cast<PlasmaAnimation*>(animation)->set_resolution(resolution);
 				}
 				break;
 			case Action::SetOrientation:
-				animation->set_orientation((Animation::Orientation)cue[Cue::payload_index_ + 3]);
+				animation->set_orientation((Animation::Orientation)cue[AnimationCue::Bit::OptionsBit]);
 				break;
 			case Action::SetReverse:
-				animation->set_reverse(cue[Cue::payload_index_ + 3]);
+				animation->set_reverse(cue[AnimationCue::Bit::OptionsBit]);
 				break;
 			case Action::SetSparkleOptions:
-				static_cast<SparkleAnimation*>(animation)->set_threshold(cue[Cue::payload_index_ + 3]);
+				static_cast<SparkleAnimation*>(animation)->set_threshold(cue[AnimationCue::Bit::OptionsBit]);
 				break;
 			case Action::SetSpeed:
 				animation->set_speed(
-					IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 3]),
-					IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 5]));
+					IntByteConvert::byte_to_int(&cue[AnimationCue::Bit::OptionsBit]),
+					IntByteConvert::byte_to_int(&cue[AnimationCue::Bit::OptionsBit + 2]));
 				break;
 		}
 	}

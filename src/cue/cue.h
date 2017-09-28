@@ -48,10 +48,19 @@ namespace PixelMaestro {
 
 	class Cue {
 		private:
-			static const unsigned char header_len_;
 			static const unsigned char header_[];
 
 		public:
+			/// Common bit indices in each packet..
+			enum Bit {
+				Header1Bit,
+				Header2Bit,
+				Header3Bit,
+				ChecksumBit,
+				SizeBit,
+				PayloadBit
+			};
+
 			/// The different components available to run commands against.
 			enum class Component {
 				Animation,

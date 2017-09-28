@@ -264,8 +264,8 @@ namespace PixelMaestro {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 
-		unsigned char font_index = 10;
-		unsigned char payload[font_index + num_chars];
+		unsigned char text_index = 10;	// Starting point for the text
+		unsigned char payload[text_index + num_chars];
 		payload[0] = (unsigned char)Cue::Component::Canvas;
 		payload[1] = (unsigned char)Action::DrawText;
 		payload[2] = (unsigned char)CanvasType::AnimationCanvas;
@@ -278,7 +278,7 @@ namespace PixelMaestro {
 		payload[9] = num_chars;
 
 		for (int i = 0; i < num_chars; i++) {
-			payload[font_index + i] = text[i];
+			payload[text_index + i] = text[i];
 		}
 
 		Cue::assemble(buffer, payload, sizeof(payload));
@@ -288,7 +288,8 @@ namespace PixelMaestro {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 
-		unsigned char payload[13 + num_chars];
+		unsigned char text_index = 13;
+		unsigned char payload[text_index + num_chars];
 		payload[0] = (unsigned char)Cue::Component::Canvas;
 		payload[1] = (unsigned char)Action::DrawText;
 		payload[2] = (unsigned char)CanvasType::AnimationCanvas;
@@ -304,60 +305,60 @@ namespace PixelMaestro {
 		payload[12] = num_chars;
 
 		for (int i = 0; i < num_chars; i++) {
-			payload[13 + i] = text[i];
+			payload[text_index + i] = text[i];
 		}
 
 		Cue::assemble(buffer, payload, sizeof(payload));
 	}
 
 	void CanvasCue::run(Maestro *maestro, unsigned char *cue) {
-		CanvasType::Type canvas_type = (CanvasType::Type)cue[Cue::payload_index_ + 2];
+		CanvasType::Type canvas_type = (CanvasType::Type)cue[CanvasCue::Bit::TypeBit];
 		if (canvas_type == CanvasType::AnimationCanvas) {
-			AnimationCanvas* canvas = static_cast<AnimationCanvas*>(maestro->get_section(cue[Cue::payload_index_ + 3])->get_canvas());
-			switch((Action)cue[Cue::payload_index_ + 1]) {
+			AnimationCanvas* canvas = static_cast<AnimationCanvas*>(maestro->get_section(cue[CanvasCue::Bit::SectionBit])->get_canvas());
+			switch((Action)cue[CanvasCue::Bit::ActionBit]) {
 				case Action::DrawCircle:
 					canvas->draw_circle(
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 4]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 6]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 8]),
-						(bool)cue[Cue::payload_index_ + 10]);
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 2]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 4]),
+						(bool)cue[CanvasCue::Bit::OptionsBit + 6]);
 					break;
 				case Action::DrawLine:
 					canvas->draw_line(
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 4]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 6]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 8]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 10]));
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 2]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 4]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 6]));
 					break;
 				case Action::DrawPoint:
 					canvas->draw_point(
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 4]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 6]));
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 2]));
 					break;
 				case Action::DrawRect:
 					canvas->draw_rect(
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 4]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 6]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 8]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 10]),
-						(bool)cue[Cue::payload_index_ + 12]);
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 2]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 4]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 6]),
+						(bool)cue[CanvasCue::Bit::OptionsBit + 8]);
 					break;
 				case Action::DrawText:
 					{
 						// TODO: There must be a better way to handle this.
 						Font* font;
-						switch ((Font::Type)cue[Cue::payload_index_ + 8]) {
+						switch ((Font::Type)cue[CanvasCue::Bit::OptionsBit + 4]) {
 							case Font::Type::Font5x8:
 								font = new Font5x8();
 								break;
 						}
 
 						canvas->draw_text(
-							IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 4]),
-							IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 6]),
+							IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit]),
+							IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 2]),
 							font,
-							(char*)&cue[Cue::payload_index_ + 10],
-							cue[Cue::payload_index_ + 9]
+							(char*)&cue[CanvasCue::Bit::OptionsBit + 6],
+							cue[CanvasCue::Bit::OptionsBit + 5]
 						);
 
 						delete font;
@@ -365,78 +366,78 @@ namespace PixelMaestro {
 					break;
 				case Action::DrawTriangle:
 					canvas->draw_triangle(
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 4]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 6]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 8]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 10]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 12]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 14]),
-						(bool)cue[Cue::payload_index_ + 16]);
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 2]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 4]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 6]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 8]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 10]),
+						(bool)cue[CanvasCue::Bit::OptionsBit + 12]);
 					break;
 			}
 		}
 		else if (canvas_type == CanvasType::ColorCanvas) {
-			ColorCanvas* canvas = static_cast<ColorCanvas*>(maestro->get_section(cue[Cue::payload_index_ + 3])->get_canvas());
+			ColorCanvas* canvas = static_cast<ColorCanvas*>(maestro->get_section(cue[CanvasCue::Bit::SectionBit])->get_canvas());
 			Colors::RGB color = {
-				cue[Cue::payload_index_ + 4],
-				cue[Cue::payload_index_ + 5],
-				cue[Cue::payload_index_ + 6]
+				cue[CanvasCue::Bit::OptionsBit],
+				cue[CanvasCue::Bit::OptionsBit + 1],
+				cue[CanvasCue::Bit::OptionsBit + 2]
 			};
-			switch((Action)cue[Cue::payload_index_ + 1]) {
+			switch((Action)cue[CanvasCue::Bit::ActionBit]) {
 				case Action::DrawCircle:
 					canvas->draw_circle(
 						color,
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 7]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 9]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 11]),
-						bool(cue[Cue::payload_index_ + 13]));
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 3]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 5]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 7]),
+						bool(cue[CanvasCue::Bit::OptionsBit + 9]));
 					break;
 				case Action::DrawLine:
 					canvas->draw_line(
 						color,
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 7]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 9]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 11]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 13]));
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 3]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 5]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 7]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 11]));
 					break;
 				case Action::DrawPoint:
 					canvas->draw_point(
 						color,
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 5]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 7]));
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 3]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 5]));
 					break;
 				case Action::DrawRect:
 					canvas->draw_rect(
 						color,
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 7]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 9]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 11]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 13]),
-						bool(cue[Cue::payload_index_ + 15]));
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 3]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 5]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 7]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 9]),
+						bool(cue[CanvasCue::Bit::OptionsBit + 11]));
 					break;
 				case Action::DrawText:
 					{
 						// See AnimationCanvas::DrawText
 						Font* font;
-						switch ((Font::Type)cue[Cue::payload_index_ + 11]) {
+						switch ((Font::Type)cue[CanvasCue::Bit::OptionsBit + 7]) {
 							case Font::Type::Font5x8:
 								font = new Font5x8();
 								break;
 						}
 
 						Colors::RGB color = {
-							cue[Cue::payload_index_ + 4],
-							cue[Cue::payload_index_ + 5],
-							cue[Cue::payload_index_ + 6]
+							cue[CanvasCue::Bit::OptionsBit],
+							cue[CanvasCue::Bit::OptionsBit + 1],
+							cue[CanvasCue::Bit::OptionsBit + 2]
 						};
 
 						canvas->draw_text(
 							color,
-							IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 7]),
-							IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 9]),
+							IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 3]),
+							IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 5]),
 							font,
-							(char*)&cue[Cue::payload_index_ + 13],
-							cue[Cue::payload_index_ + 12]
+							(char*)&cue[CanvasCue::Bit::OptionsBit + 9],
+							cue[CanvasCue::Bit::OptionsBit + 8]
 						);
 
 						delete font;
@@ -445,13 +446,13 @@ namespace PixelMaestro {
 				case Action::DrawTriangle:
 					canvas->draw_triangle(
 						color,
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 7]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 9]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 11]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 13]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 15]),
-						IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 17]),
-						bool(cue[Cue::payload_index_ + 19]));
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 3]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 5]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 7]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 9]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 11]),
+						IntByteConvert::byte_to_int(&cue[CanvasCue::Bit::OptionsBit + 13]),
+						bool(cue[CanvasCue::Bit::OptionsBit + 15]));
 					break;
 			}
 		}

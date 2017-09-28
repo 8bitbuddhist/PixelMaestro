@@ -16,10 +16,10 @@ namespace PixelMaestro {
 	}
 
 	void MaestroCue::run(Maestro *maestro, unsigned char *cue) {
-		switch((Action)cue[Cue::payload_index_ + 1]) {
+		switch((Action)cue[MaestroCue::Bit::ActionBit]) {
 			case Action::SetRefreshInterval:
 				{
-					unsigned int interval = IntByteConvert::byte_to_int(&cue[Cue::payload_index_ + 2]);
+					unsigned int interval = IntByteConvert::byte_to_int(&cue[MaestroCue::Bit::OptionsBit]);
 					maestro->set_refresh_interval(interval);
 				}
 				break;

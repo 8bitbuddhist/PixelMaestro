@@ -2,6 +2,7 @@
 #define CANVASCUE_H
 
 #include "../core/maestro.h"
+#include "cue.h"
 
 namespace PixelMaestro {
 	class CanvasCue	{
@@ -13,6 +14,14 @@ namespace PixelMaestro {
 				DrawRect,
 				DrawText,
 				DrawTriangle
+			};
+
+			enum Bit {
+				ComponentBit = Cue::Bit::PayloadBit,
+				ActionBit,
+				TypeBit,
+				SectionBit,
+				OptionsBit
 			};
 
 			static void draw_circle(unsigned char* buffer, unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
