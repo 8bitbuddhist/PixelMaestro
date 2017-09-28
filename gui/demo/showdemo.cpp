@@ -2,12 +2,12 @@
  * ShowDemo - Demonstrates a Maestro using a Show.
  */
 
-#include "cue/animationcue.h"
-#include "cue/sectioncue.h"
 #include "controller/maestrocontroller.h"
 #include "controller/sectioncontroller.h"
+#include "cue/animationcue.h"
+#include "cue/sectioncue.h"
+#include "cue/event.h"
 #include "drawingarea/simpledrawingarea.h"
-#include "show/runcueevent.h"
 #include <memory>
 #include "showdemo.h"
 
@@ -30,13 +30,19 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	AnimationCue::set_colors(green_buffer, 0, green_colors, 16);
 
 	Colors::RGB blue_colors[16];
-	Colors::generate_scaling_color_array(blue_colors, &Colors::BLUE, &Colors::BLACK, 16, true);
+	Colors::generate_scaling_color_array(blue_colors, &Colors::GREEN, &Colors::BLACK, 16, true);
 	AnimationCue::set_colors(blue_buffer, 0, blue_colors, 16);
 
-	events_.push_back(new RunCueEvent(5000, maestro_controller_->get_maestro(), green_buffer));
-	events_.push_back(new RunCueEvent(5000, maestro_controller_->get_maestro(), blue_buffer));
+	events_ = new Event[2] {
+		Event(5000, maestro_controller_->get_maestro(), green_buffer),
+		Event(5000, maestro_controller_->get_maestro(), blue_buffer)
+	};
 
-	Show* show = maestro_controller_->get_maestro()->add_show(&events_[0], events_.size());
+	Show* show = maestro_controller_->get_maestro()->add_show(events_, 2);
 	show->set_timing(Show::TimingMode::Relative);
 	show->set_looping(true);
+}
+
+ShowDemo::~ShowDemo() {
+	delete[] events_;
 }

@@ -5,18 +5,20 @@
 #ifndef MAESTRO_H
 #define MAESTRO_H
 
+#include "../cue/show.h"
+#include "../cue/event.h"
 #include "colors.h"
 #include "section.h"
-#include "../show/show.h"
-#include "../show/event.h"
 
 namespace PixelMaestro {
+	class Event;
+	class Show;
 	class Maestro {
 
 		public:
 			Maestro(Section* sections, unsigned char num_sections);
 			~Maestro();
-			Show* add_show(Event** events, unsigned short num_events);
+			Show* add_show(Event* events, unsigned short num_events);
 			Colors::RGB get_pixel_color(unsigned char section, unsigned int pixel);
 			unsigned char get_num_sections();
 			unsigned short get_refresh_interval();

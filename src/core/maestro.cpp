@@ -24,7 +24,7 @@ namespace PixelMaestro {
 	 * @param num_events The number of Events in the Show.
 	 * @return New Show.
 	 */
-	Show* Maestro::add_show(Event **events, unsigned short num_events) {
+	Show* Maestro::add_show(Event* events, unsigned short num_events) {
 		if (show_ == nullptr) {
 			show_ = new Show(events, num_events);
 		}

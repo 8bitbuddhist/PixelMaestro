@@ -7,11 +7,11 @@
 namespace PixelMaestro {
 
 	/**
-	 * Constructor.
+	 * Constructor. Specifies an initial set of Events to run.
 	 * @param events Array of Events to queue.
 	 * @param num_events The number of Events in the queue.
 	 */
-	Show::Show(Event **events, unsigned short num_events) {
+	Show::Show(Event* events, unsigned short num_events) {
 		set_events(events, num_events);
 	}
 
@@ -39,7 +39,7 @@ namespace PixelMaestro {
 		@param num_events The number of Events in the queue.
 		@param preserve_current_index If false, reset the current Event index to 0. Defaults to true.
 	*/
-	void Show::set_events(Event** events, unsigned short num_events, bool preserve_current_index) {
+	void Show::set_events(Event* events, unsigned short num_events, bool preserve_current_index) {
 		if (!preserve_current_index) {
 			current_index_ = 0;
 		}
@@ -89,10 +89,10 @@ namespace PixelMaestro {
 			If RELATIVE, compare the time since the last Event to the next Event's start time.
 			After running the Event, update the last run time and current Event index.
 		*/
-		unsigned long event_time = events_[current_index_]->get_time();
+		unsigned long event_time = events_[current_index_].get_time();
 		if ((timing_ == TimingMode::Absolute && (current_time >= event_time)) ||
 			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= event_time))) {
-			events_[current_index_]->run();
+			events_[current_index_].run();
 			last_time_ = current_time;
 			update_event_index();
 

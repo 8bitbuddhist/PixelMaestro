@@ -18,12 +18,10 @@ SOURCES += main.cpp\
 		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
 		demo/showdemo.cpp \
-		../src/show/event.cpp \
 		../src/canvas/fonts/font5x8.cpp \
 		demo/canvasdemo.cpp \
 		drawingarea/canvasdrawingarea.cpp \
 		window/mainwindow.cpp \
-		../src/show/runfunctionevent.cpp \
 		../src/animation/blinkanimation.cpp \
 		../src/animation/cycleanimation.cpp \
 		../src/animation/mergeanimation.cpp \
@@ -37,7 +35,6 @@ SOURCES += main.cpp\
 		../src/core/pixel.cpp \
 		../src/core/point.cpp \
 		../src/core/section.cpp \
-		../src/show/show.cpp \
 		../src/utility.cpp \
 		../src/animation/radialanimation.cpp \
 		../src/animation/mandelbrotanimation.cpp \
@@ -57,7 +54,8 @@ SOURCES += main.cpp\
     ../src/cue/maestrocue.cpp \
     ../src/cue/sectioncue.cpp \
     demo/cuedemo.cpp \
-    ../src/show/runcueevent.cpp
+    ../src/cue/event.cpp \
+    ../src/cue/show.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -67,13 +65,11 @@ HEADERS += \
 		controller/sectioncontroller.h \
 		controller/maestrocontroller.h \
 		demo/showdemo.h \
-		../src/show/event.h \
 		../src/canvas/fonts/font.h \
 		../src/canvas/fonts/font5x8.h \
 		demo/canvasdemo.h \
 		drawingarea/canvasdrawingarea.h \
 		window/mainwindow.h \
-		../src/show/runfunctionevent.h \
 		../src/animation/blinkanimation.h \
 		../src/animation/cycleanimation.h \
 		../src/animation/mergeanimation.h \
@@ -87,7 +83,6 @@ HEADERS += \
 		../src/core/pixel.h \
 		../src/core/point.h \
 		../src/core/section.h \
-		../src/show/show.h \
 		../src/utility.h \
 		../src/animation/radialanimation.h \
 		../src/animation/mandelbrotanimation.h \
@@ -108,7 +103,8 @@ HEADERS += \
     ../src/cue/maestrocue.h \
     ../src/cue/sectioncue.h \
     demo/cuedemo.h \
-    ../src/show/runcueevent.h
+    ../src/cue/event.h \
+    ../src/cue/show.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

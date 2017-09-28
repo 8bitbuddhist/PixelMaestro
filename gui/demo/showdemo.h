@@ -7,14 +7,14 @@
 
 #include "../drawingarea/simpledrawingarea.h"
 #include "controller/maestrocontroller.h"
-#include <vector>
 
 class ShowDemo : public SimpleDrawingArea {
 	public:
 		ShowDemo(QWidget* parent, MaestroController* maestro_controller);
+		~ShowDemo();
 
 	private:
-		std::vector<Event*> events_;
+		Event* events_;
 
 };
 

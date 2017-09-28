@@ -22,10 +22,10 @@ namespace PixelMaestro {
 				Relative
 			};
 
-			Show(Event **events, unsigned short num_events);
+			Show(Event *events, unsigned short num_events);
 			bool get_looping();
 			TimingMode get_timing();
-			void set_events(Event **events, unsigned short num_events, bool preserve_current_index = true);
+			void set_events(Event* events, unsigned short num_events, bool preserve_current_index = true);
 			void set_timing(TimingMode timing);
 			void set_looping(bool loop);
 			void update(const unsigned long& current_time);
@@ -35,7 +35,7 @@ namespace PixelMaestro {
 			unsigned short current_index_ = 0;
 
 			/// Events used in the Show.
-			Event **events_;
+			Event *events_;
 
 			/// The time that the last Event ran.
 			unsigned long last_time_ = 0;

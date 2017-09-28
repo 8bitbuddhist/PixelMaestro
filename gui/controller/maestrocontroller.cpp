@@ -1,8 +1,8 @@
 #include "core/maestro.h"
+#include "cue/show.h"
 #include "maestrocontroller.h"
 #include <memory>
 #include "sectioncontroller.h"
-#include "show/show.h"
 
 using namespace PixelMaestro;
 
