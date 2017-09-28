@@ -5,10 +5,10 @@
 #include "../core/colors.h"
 #include "../core/maestro.h"
 #include "cue.h"
-#include "sectioncue.h"
+#include "cuecontroller.h"
 
 namespace PixelMaestro {
-	class AnimationCue {
+	class AnimationCue : public Cue {
 		public:
 			enum Action {
 				SetColors,
@@ -23,26 +23,27 @@ namespace PixelMaestro {
 			};
 
 			enum Bit {
-				ComponentBit = Cue::Bit::PayloadBit,
+				ComponentBit = CueController::Bit::PayloadBit,
 				ActionBit,
 				SectionBit,
 				OptionsBit
 			};
 
+			AnimationCue(Maestro* maestro, unsigned char* buffer) : Cue(maestro, buffer) {}
 			// Animation-specific calls
-			static void set_lightning_options(unsigned char* buffer, unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
-			static void set_plasma_options(unsigned char* buffer, unsigned char section_num, float size, float resolution);
-			static void set_sparkle_options(unsigned char* buffer, unsigned char section_num, unsigned char threshold);
+			void set_lightning_options(unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
+			void set_plasma_options(unsigned char section_num, float size, float resolution);
+			void set_sparkle_options(unsigned char section_num, unsigned char threshold);
 
 			// General Animation calls
-			static void set_colors(unsigned char* buffer, unsigned char section_num, Colors::RGB* colors, unsigned char num_colors);
-			static void set_cycle_index(unsigned char* buffer, unsigned char section_num, unsigned char cycle_index);
-			static void set_fade(unsigned char* buffer, unsigned char section_num, bool fade);
-			static void set_orientation(unsigned char* buffer, unsigned char section_num, Animation::Orientation orientation);
-			static void set_reverse(unsigned char* buffer, unsigned char section_num, bool reverse);
-			static void set_speed(unsigned char* buffer, unsigned char section_num, unsigned short speed, unsigned short pause);
+			void set_colors(unsigned char section_num, Colors::RGB* colors, unsigned char num_colors);
+			void set_cycle_index(unsigned char section_num, unsigned char cycle_index);
+			void set_fade(unsigned char section_num, bool fade);
+			void set_orientation(unsigned char section_num, Animation::Orientation orientation);
+			void set_reverse(unsigned char section_num, bool reverse);
+			void set_speed(unsigned char section_num, unsigned short speed, unsigned short pause);
 
-			static void run(Maestro* maestro, unsigned char* cue);
+			void run(unsigned char* cue);
 
 			static Animation* initialize_animation(unsigned char* cue);
 	};

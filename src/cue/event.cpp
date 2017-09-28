@@ -2,24 +2,26 @@
  *
  * Event.cpp - Base class for Show events.
  */
-#include "../cue/cue.h"
+#include "../cue/cuecontroller.h"
 #include "event.h"
 
 using namespace PixelMaestro;
 
 namespace PixelMaestro {
+
 	/**
-	 * Constructor.
+	 * Constructor. Loads the provided Cue into the CueController.
 	 * @param time Event's start time.
 	 * @param Maestro The Maestro that the Cue will run on.
-	 * @param Cue The Cue to run. This will be copied over to the Event.
+	 * @param Cue The Cue to run. This will be copied to the Event, then loaded into the CueController.
 	 * @param size The size of the Cue.
 	 */
-	Event::Event(unsigned long time, Maestro* maestro, const unsigned char* cue) {
+	Event::Event(unsigned long time, Maestro* maestro, CueController* controller, const unsigned char* cue) {
+		this->controller_ = controller;
 		this->maestro_ = maestro;
 		this->time_ = time;
 
-		unsigned char size = cue[Cue::Bit::SizeBit] + Cue::Bit::PayloadBit;
+		unsigned char size = cue[CueController::Bit::SizeBit] + CueController::Bit::PayloadBit;
 		cue_ = new unsigned char[size];
 		for (unsigned char i = 0; i < size; i++) {
 			cue_[i] = cue[i];
@@ -35,7 +37,8 @@ namespace PixelMaestro {
 	}
 
 	void Event::run() {
-		Cue::run(maestro_, cue_);
+		controller_->load(cue_);
+		controller_->run();
 	}
 
 	Event::~Event() {

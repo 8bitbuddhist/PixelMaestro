@@ -15,27 +15,33 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	maestro_controller_ = maestro_controller;
 	std::shared_ptr<SectionController> section_controller = maestro_controller_->add_section_controller(new Point(10, 10));
 
-	int buffer_size = 100;
-	unsigned char start_buffer[buffer_size];
-	unsigned char green_buffer[buffer_size];
-	unsigned char blue_buffer[buffer_size];
+	CueController::Component handlers[] = {
+		CueController::Component::AnimationComponent,
+		CueController::Component::CanvasComponent,
+		CueController::Component::SectionComponent
+	};
+	controller_ = new CueController(maestro_controller_->get_maestro(), handlers, 3);
+	SectionCue* section_cue = static_cast<SectionCue*>(controller_->get_handler(CueController::Component::SectionComponent));
+	AnimationCue* animation_cue = static_cast<AnimationCue*>(controller_->get_handler(CueController::Component::AnimationComponent));
 
-	// Start running an initial animation
-	SectionCue::set_animation(start_buffer, 0, Animation::Type::Radial, false, Colors::COLORWHEEL, 12);
-	Cue::run(maestro_controller_->get_maestro(), start_buffer);
-
+	section_cue->set_animation(0, Animation::Type::Radial, false, Colors::COLORWHEEL, 12);
+	controller_->run();
 
 	Colors::RGB green_colors[16];
 	Colors::generate_scaling_color_array(green_colors, &Colors::GREEN, &Colors::BLACK, 16, true);
-	AnimationCue::set_colors(green_buffer, 0, green_colors, 16);
+	animation_cue->set_colors(0, green_colors, 16);
+	unsigned char green_buffer[255];
+	memcpy(green_buffer, controller_->get_buffer(), 255);
 
 	Colors::RGB blue_colors[16];
-	Colors::generate_scaling_color_array(blue_colors, &Colors::GREEN, &Colors::BLACK, 16, true);
-	AnimationCue::set_colors(blue_buffer, 0, blue_colors, 16);
+	Colors::generate_scaling_color_array(blue_colors, &Colors::BLUE, &Colors::BLACK, 16, true);
+	animation_cue->set_colors(0, blue_colors, 16);
+	unsigned char blue_buffer[255];
+	memcpy(blue_buffer, controller_->get_buffer(), 255);
 
 	events_ = new Event[2] {
-		Event(5000, maestro_controller_->get_maestro(), green_buffer),
-		Event(5000, maestro_controller_->get_maestro(), blue_buffer)
+		Event(5000, maestro_controller_->get_maestro(), controller_, green_buffer),
+		Event(5000, maestro_controller_->get_maestro(), controller_, blue_buffer)
 	};
 
 	Show* show = maestro_controller_->get_maestro()->add_show(events_, 2);
@@ -44,5 +50,6 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 }
 
 ShowDemo::~ShowDemo() {
+	delete controller_;
 	delete[] events_;
 }

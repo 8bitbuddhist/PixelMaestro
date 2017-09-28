@@ -50,12 +50,13 @@ SOURCES += main.cpp\
     widget/canvas/canvascontrol.cpp \
     ../src/cue/animationcue.cpp \
     ../src/cue/canvascue.cpp \
-    ../src/cue/cue.cpp \
     ../src/cue/maestrocue.cpp \
     ../src/cue/sectioncue.cpp \
     demo/cuedemo.cpp \
     ../src/cue/event.cpp \
-    ../src/cue/show.cpp
+    ../src/cue/show.cpp \
+    ../src/cue/cuecontroller.cpp \
+    ../src/cue/cue.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -99,12 +100,13 @@ HEADERS += \
     widget/canvas/canvascontrol.h \
     ../src/cue/animationcue.h \
     ../src/cue/canvascue.h \
-    ../src/cue/cue.h \
     ../src/cue/maestrocue.h \
     ../src/cue/sectioncue.h \
     demo/cuedemo.h \
     ../src/cue/event.h \
-    ../src/cue/show.h
+    ../src/cue/show.h \
+    ../src/cue/cuecontroller.h \
+    ../src/cue/cue.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

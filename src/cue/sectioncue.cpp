@@ -1,66 +1,66 @@
 #include "animationcue.h"
-#include "cue.h"
+#include "cuecontroller.h"
 #include "sectioncue.h"
 
 namespace PixelMaestro {
-	void SectionCue::add_canvas(unsigned char* buffer, unsigned char section_num, CanvasType::Type canvas_type) {
-		buffer[Bit::ComponentBit] = (unsigned char)Cue::Component::Section;
-		buffer[Bit::ActionBit] = (unsigned char)Action::AddCanvas;
-		buffer[Bit::SectionBit] = section_num;
-		buffer[Bit::OptionsBit] = canvas_type;
+	void SectionCue::add_canvas(unsigned char section_num, CanvasType::Type canvas_type) {
+		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::SectionComponent;
+		buffer_[Bit::ActionBit] = (unsigned char)Action::AddCanvas;
+		buffer_[Bit::SectionBit] = section_num;
+		buffer_[Bit::OptionsBit] = canvas_type;
 
-		Cue::assemble(buffer, (unsigned char)Bit::OptionsBit);
+		CueController::assemble(buffer_, (unsigned char)Bit::OptionsBit);
 	}
 
-	void SectionCue::add_overlay(unsigned char* buffer, unsigned char section_num, Colors::MixMode mix_mode, unsigned char alpha) {
-		buffer[Bit::ComponentBit] = (unsigned char)Cue::Component::Section;
-		buffer[Bit::ActionBit] = (unsigned char)Action::AddOverlay;
-		buffer[Bit::SectionBit] = section_num;
-		buffer[Bit::OptionsBit] = mix_mode;
-		buffer[Bit::OptionsBit + 1] = alpha;
+	void SectionCue::add_overlay(unsigned char section_num, Colors::MixMode mix_mode, unsigned char alpha) {
+		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::SectionComponent;
+		buffer_[Bit::ActionBit] = (unsigned char)Action::AddOverlay;
+		buffer_[Bit::SectionBit] = section_num;
+		buffer_[Bit::OptionsBit] = mix_mode;
+		buffer_[Bit::OptionsBit + 1] = alpha;
 
-		Cue::assemble(buffer, (unsigned char)Bit::OptionsBit + 2);
+		CueController::assemble(buffer_, (unsigned char)Bit::OptionsBit + 2);
 	}
 
-	void SectionCue::set_animation(unsigned char *buffer, unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors) {
+	void SectionCue::set_animation(unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors) {
 
-		buffer[Bit::ComponentBit] = (unsigned char)Cue::Component::Section;
-		buffer[Bit::ActionBit] = (unsigned char)Action::SetAnimation;
-		buffer[Bit::SectionBit] = section_num;
-		buffer[Bit::OptionsBit] = (unsigned char)animation_type;
-		buffer[Bit::OptionsBit + 1] = (unsigned char)preserve_cycle_index;
-		buffer[Bit::OptionsBit + 2] = num_colors;
+		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::SectionComponent;
+		buffer_[Bit::ActionBit] = (unsigned char)Action::SetAnimation;
+		buffer_[Bit::SectionBit] = section_num;
+		buffer_[Bit::OptionsBit] = (unsigned char)animation_type;
+		buffer_[Bit::OptionsBit + 1] = (unsigned char)preserve_cycle_index;
+		buffer_[Bit::OptionsBit + 2] = num_colors;
 
 		unsigned char colors_index = Bit::OptionsBit + 3;
 		for (unsigned char i = 0; i < num_colors; i++) {
-			buffer[colors_index] = colors[i].r;
+			buffer_[colors_index] = colors[i].r;
 			colors_index++;
-			buffer[colors_index] = colors[i].g;
+			buffer_[colors_index] = colors[i].g;
 			colors_index++;
-			buffer[colors_index] = colors[i].b;
+			buffer_[colors_index] = colors[i].b;
 			colors_index++;
 		}
 
-		Cue::assemble(buffer, colors_index);
+		CueController::assemble(buffer_, colors_index);
 	}
 
-	void SectionCue::set_dimensions(unsigned char *buffer, unsigned char section_num, unsigned short x, unsigned short y) {
+	void SectionCue::set_dimensions(unsigned char section_num, unsigned short x, unsigned short y) {
 		IntByteConvert x_byte = IntByteConvert(x);
 		IntByteConvert y_byte = IntByteConvert(y);
 
-		buffer[Bit::ComponentBit] = (unsigned char)Cue::Component::Section;
-		buffer[Bit::ActionBit] = (unsigned char)Action::SetDimensions;
-		buffer[Bit::SectionBit] = section_num;
-		buffer[Bit::OptionsBit] = x_byte.converted_0;
-		buffer[Bit::OptionsBit + 1] = x_byte.converted_1;
-		buffer[Bit::OptionsBit + 2] = y_byte.converted_0;
-		buffer[Bit::OptionsBit + 3] = y_byte.converted_1;
+		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::SectionComponent;
+		buffer_[Bit::ActionBit] = (unsigned char)Action::SetDimensions;
+		buffer_[Bit::SectionBit] = section_num;
+		buffer_[Bit::OptionsBit] = x_byte.converted_0;
+		buffer_[Bit::OptionsBit + 1] = x_byte.converted_1;
+		buffer_[Bit::OptionsBit + 2] = y_byte.converted_0;
+		buffer_[Bit::OptionsBit + 3] = y_byte.converted_1;
 
-		Cue::assemble(buffer, (unsigned char)Bit::OptionsBit + 4);
+		CueController::assemble(buffer_, (unsigned char)Bit::OptionsBit + 4);
 	}
 
-	void SectionCue::run(Maestro *maestro, unsigned char *cue) {
-		Section* section = maestro->get_section(cue[Bit::SectionBit]);
+	void SectionCue::run(unsigned char *cue) {
+		Section* section = maestro_->get_section(cue[Bit::SectionBit]);
 		switch ((Action)cue[Bit::ActionBit]) {
 			case Action::AddCanvas:
 				section->add_canvas(CanvasType::Type(cue[Bit::OptionsBit]));
@@ -84,6 +84,7 @@ namespace PixelMaestro {
 						colors[i].b = cue[colors_index];
 						colors_index++;
 					}
+					// FIXME: Major memory leak with this and AnimationCue::initialize
 					Animation* animation = section->set_animation(AnimationCue::initialize_animation(cue), (bool)cue[Bit::OptionsBit + 1]);
 					animation->set_colors(colors, num_colors);
 				}
