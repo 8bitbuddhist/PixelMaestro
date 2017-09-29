@@ -10,15 +10,14 @@
 #include "../animation/sparkleanimation.h"
 #include "../animation/waveanimation.h"
 
-#include "animationcue.h"
-#include "cuecontroller.h"
-#include "sectioncue.h"
+#include "animationcuehandler.h"
+#include "sectioncuehandler.h"
 
 namespace PixelMaestro {
 
-	Animation* AnimationCue::initialize_animation(unsigned char* cue) {
-		int num_colors = cue[SectionCue::Bit::OptionsBit + 2];
-		int current_color_index = SectionCue::Bit::OptionsBit + 3;
+	Animation* AnimationCueHandler::initialize_animation(unsigned char* cue) {
+		int num_colors = cue[SectionCueHandler::Bit::OptionsBit + 2];
+		int current_color_index = SectionCueHandler::Bit::OptionsBit + 3;
 		Colors::RGB colors[num_colors];
 		for (unsigned char i = 0; i < num_colors; i++) {
 			colors[i].r = cue[current_color_index];
@@ -29,7 +28,7 @@ namespace PixelMaestro {
 			current_color_index++;
 		}
 
-		switch((Animation::Type)cue[SectionCue::Bit::OptionsBit]) {
+		switch((Animation::Type)cue[SectionCueHandler::Bit::OptionsBit]) {
 			case Animation::Type::Blink:
 				return new BlinkAnimation(colors, num_colors);
 				break;
@@ -69,120 +68,120 @@ namespace PixelMaestro {
 	}
 
 	// Animation-specific Cues
-	void AnimationCue::set_lightning_options(unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetLightningOptions;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = num_bolts;
-		buffer_[Bit::OptionsBit + 1] = down_threshold;
-		buffer_[Bit::OptionsBit + 2] = up_threshold;
-		buffer_[Bit::OptionsBit + 3] = fork_chance;
+	void AnimationCueHandler::set_lightning_options(unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetLightningOptions;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = num_bolts;
+		controller_->get_cue()[Bit::OptionsBit + 1] = down_threshold;
+		controller_->get_cue()[Bit::OptionsBit + 2] = up_threshold;
+		controller_->get_cue()[Bit::OptionsBit + 3] = fork_chance;
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 4));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 4));
 	}
 
-	void AnimationCue::set_plasma_options(unsigned char section_num, float size, float resolution) {
+	void AnimationCueHandler::set_plasma_options(unsigned char section_num, float size, float resolution) {
 		FloatByteConvert size_byte(size);
 		FloatByteConvert resolution_byte(resolution);
 
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetPlasmaOptions;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = size_byte.converted.byte[0];
-		buffer_[Bit::OptionsBit + 1] = size_byte.converted.byte[1];
-		buffer_[Bit::OptionsBit + 2] = size_byte.converted.byte[2];
-		buffer_[Bit::OptionsBit + 3] = size_byte.converted.byte[3];
-		buffer_[Bit::OptionsBit + 4] = resolution_byte.converted.byte[0];
-		buffer_[Bit::OptionsBit + 5] = resolution_byte.converted.byte[1];
-		buffer_[Bit::OptionsBit + 6] = resolution_byte.converted.byte[2];
-		buffer_[Bit::OptionsBit + 7] = resolution_byte.converted.byte[3];
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetPlasmaOptions;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = size_byte.converted.byte[0];
+		controller_->get_cue()[Bit::OptionsBit + 1] = size_byte.converted.byte[1];
+		controller_->get_cue()[Bit::OptionsBit + 2] = size_byte.converted.byte[2];
+		controller_->get_cue()[Bit::OptionsBit + 3] = size_byte.converted.byte[3];
+		controller_->get_cue()[Bit::OptionsBit + 4] = resolution_byte.converted.byte[0];
+		controller_->get_cue()[Bit::OptionsBit + 5] = resolution_byte.converted.byte[1];
+		controller_->get_cue()[Bit::OptionsBit + 6] = resolution_byte.converted.byte[2];
+		controller_->get_cue()[Bit::OptionsBit + 7] = resolution_byte.converted.byte[3];
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 7));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 7));
 	}
 
-	void AnimationCue::set_sparkle_options(unsigned char section_num, unsigned char threshold) {
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetSparkleOptions;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = threshold;
+	void AnimationCueHandler::set_sparkle_options(unsigned char section_num, unsigned char threshold) {
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetSparkleOptions;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = threshold;
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 1));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 1));
 	}
 
 	// General-purpose Cues
 
-	void AnimationCue::set_colors(unsigned char section_num, Colors::RGB *colors, unsigned char num_colors) {
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetColors;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = num_colors;
+	void AnimationCueHandler::set_colors(unsigned char section_num, Colors::RGB *colors, unsigned char num_colors) {
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetColors;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = num_colors;
 
 		unsigned char colors_index = Bit::OptionsBit + 1;
 		for (unsigned char i = 0; i < num_colors; i++) {
-			buffer_[colors_index] = colors[i].r;
+			controller_->get_cue()[colors_index] = colors[i].r;
 			colors_index++;
-			buffer_[colors_index] = colors[i].g;
+			controller_->get_cue()[colors_index] = colors[i].g;
 			colors_index++;
-			buffer_[colors_index] = colors[i].b;
+			controller_->get_cue()[colors_index] = colors[i].b;
 			colors_index++;
 		}
 
-		CueController::assemble(buffer_, colors_index);
+		controller_->assemble(colors_index);
 	}
 
-	void AnimationCue::set_cycle_index(unsigned char section_num, unsigned char cycle_index) {
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetCycleIndex;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = cycle_index;
+	void AnimationCueHandler::set_cycle_index(unsigned char section_num, unsigned char cycle_index) {
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetCycleIndex;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = cycle_index;
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 1));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 1));
 	}
 
-	void AnimationCue::set_fade(unsigned char section_num, bool fade) {
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetFade;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = (unsigned char)fade;
+	void AnimationCueHandler::set_fade(unsigned char section_num, bool fade) {
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetFade;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = (unsigned char)fade;
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 1));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 1));
 	}
 
-	void AnimationCue::set_orientation(unsigned char section_num, Animation::Orientation orientation) {
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetOrientation;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = (unsigned char)orientation;
+	void AnimationCueHandler::set_orientation(unsigned char section_num, Animation::Orientation orientation) {
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetOrientation;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = (unsigned char)orientation;
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 1));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 1));
 	}
 
-	void AnimationCue::set_reverse(unsigned char section_num, bool reverse) {
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetReverse;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = (unsigned char)reverse;
+	void AnimationCueHandler::set_reverse(unsigned char section_num, bool reverse) {
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetReverse;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = (unsigned char)reverse;
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 1));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 1));
 	}
 
-	void AnimationCue::set_speed(unsigned char section_num, unsigned short speed, unsigned short pause) {
+	void AnimationCueHandler::set_speed(unsigned char section_num, unsigned short speed, unsigned short pause) {
 		IntByteConvert speed_byte(speed);
 		IntByteConvert pause_byte(pause);
 
-		buffer_[Bit::ComponentBit] = (unsigned char)CueController::Component::AnimationComponent;
-		buffer_[Bit::ActionBit] = (unsigned char)Action::SetSpeed;
-		buffer_[Bit::SectionBit] = section_num;
-		buffer_[Bit::OptionsBit] = speed_byte.converted_0;
-		buffer_[Bit::OptionsBit + 1] = speed_byte.converted_1;
-		buffer_[Bit::OptionsBit + 2] = pause_byte.converted_0;
-		buffer_[Bit::OptionsBit + 3] = pause_byte.converted_1;
+		controller_->get_cue()[Bit::HandlerBit] = (unsigned char)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Bit::ActionBit] = (unsigned char)Action::SetSpeed;
+		controller_->get_cue()[Bit::SectionBit] = section_num;
+		controller_->get_cue()[Bit::OptionsBit] = speed_byte.converted_0;
+		controller_->get_cue()[Bit::OptionsBit + 1] = speed_byte.converted_1;
+		controller_->get_cue()[Bit::OptionsBit + 2] = pause_byte.converted_0;
+		controller_->get_cue()[Bit::OptionsBit + 3] = pause_byte.converted_1;
 
-		CueController::assemble(buffer_, (unsigned char)(Bit::OptionsBit + 4));
+		controller_->assemble((unsigned char)(Bit::OptionsBit + 4));
 	}
 
-	void AnimationCue::run(unsigned char *cue) {
-		Animation* animation = maestro_->get_section(cue[Bit::SectionBit])->get_animation();
+	void AnimationCueHandler::run(unsigned char *cue) {
+		Animation* animation = controller_->get_maestro()->get_section(cue[Bit::SectionBit])->get_animation();
 		switch((Action)cue[Bit::ActionBit]) {
 			case Action::SetColors:
 				{

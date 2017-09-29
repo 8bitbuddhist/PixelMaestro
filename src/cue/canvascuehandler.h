@@ -1,11 +1,11 @@
-#ifndef CANVASCUE_H
-#define CANVASCUE_H
+#ifndef CANVASCUEHANDLER_H
+#define CANVASCUEHANDLER_H
 
 #include "../core/maestro.h"
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
-	class CanvasCue : public Cue {
+	class CanvasCueHandler : public CueHandler {
 		public:
 			enum Action {
 				DrawCircle,
@@ -17,14 +17,14 @@ namespace PixelMaestro {
 			};
 
 			enum Bit {
-				ComponentBit = CueController::Bit::PayloadBit,
+				HandlerBit = CueController::Bit::PayloadBit,
 				ActionBit,
 				TypeBit,
 				SectionBit,
 				OptionsBit
 			};
 
-			CanvasCue(Maestro* maestro, unsigned char* buffer) : Cue(maestro, buffer) {}
+			CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
 			void draw_circle(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
 			void draw_circle(unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
 			void draw_line(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);
@@ -42,4 +42,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // CANVASCUE_H
+#endif // CANVASCUEHANDLER_H

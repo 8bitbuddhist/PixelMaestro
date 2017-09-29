@@ -22,7 +22,7 @@ namespace PixelMaestro {
 				Relative
 			};
 
-			Show(Event *events, unsigned short num_events);
+			Show(CueController* controller, Event *events, unsigned short num_events);
 			bool get_looping();
 			TimingMode get_timing();
 			void set_events(Event* events, unsigned short num_events, bool preserve_current_index = true);
@@ -31,6 +31,9 @@ namespace PixelMaestro {
 			void update(const unsigned long& current_time);
 
 		private:
+			/// The controller for running Cues.
+			CueController* cue_controller_ = nullptr;
+
 			/// The index of the current Event.
 			unsigned short current_index_ = 0;
 

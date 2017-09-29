@@ -14,8 +14,6 @@ class ShowDemo : public SimpleDrawingArea {
 		~ShowDemo();
 
 	private:
-		CueController* controller_ = nullptr;
-
 		Event* events_;
 
 };

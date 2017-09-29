@@ -974,7 +974,7 @@
   </action>
   <action name="actionCommand_Demo">
    <property name="text">
-    <string>Co&amp;mmand Demo</string>
+    <string>C&amp;ue Demo</string>
    </property>
   </action>
  </widget>

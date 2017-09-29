@@ -1,26 +1,26 @@
-#ifndef MAESTROCUE_H
-#define MAESTROCUE_H
+#ifndef MAESTROCUEHANDLER_H
+#define MAESTROCUEHANDLER_H
 
 #include "../core/maestro.h"
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
-	class MaestroCue : public Cue {
+	class MaestroCueHandler : public CueHandler {
 		public:
 			enum Action {
 				SetRefreshInterval
 			};
 
 			enum Bit {
-				ComponentBit = (int)CueController::Bit::PayloadBit,
+				HandlerBit = (int)CueController::Bit::PayloadBit,
 				ActionBit,
 				OptionsBit
 			};
 
-			MaestroCue(Maestro* maestro, unsigned char* buffer) : Cue(maestro, buffer) {}
+			MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
 			void set_refresh_interval(unsigned short interval);
 			void run(unsigned char *cue);
 	};
 }
 
-#endif // MAESTROCUE_H
+#endif // MAESTROCUEHANDLER_H

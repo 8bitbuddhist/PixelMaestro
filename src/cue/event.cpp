@@ -16,9 +16,7 @@ namespace PixelMaestro {
 	 * @param Cue The Cue to run. This will be copied to the Event, then loaded into the CueController.
 	 * @param size The size of the Cue.
 	 */
-	Event::Event(unsigned long time, Maestro* maestro, CueController* controller, const unsigned char* cue) {
-		this->controller_ = controller;
-		this->maestro_ = maestro;
+	Event::Event(unsigned long time, const unsigned char* cue) {
 		this->time_ = time;
 
 		unsigned char size = cue[CueController::Bit::SizeBit] + CueController::Bit::PayloadBit;
@@ -36,9 +34,8 @@ namespace PixelMaestro {
 		return this->time_;
 	}
 
-	void Event::run() {
-		controller_->load(cue_);
-		controller_->run();
+	void Event::run(CueController* controller) {
+		controller->load(cue_);
 	}
 
 	Event::~Event() {

@@ -2,11 +2,11 @@
 #define CUECONTROLLER_H
 
 #include "../core/maestro.h"
-#include "cue.h"
+#include "cuehandler.h"
 
 namespace PixelMaestro {
 	class Maestro;
-	class Cue;
+	class CueHandler;
 
 	/// Converts a float value to and from a byte array.
 	class FloatByteConvert {
@@ -51,7 +51,7 @@ namespace PixelMaestro {
 
 	class CueController {
 		public:
-			/// Common bit indices in each packet..
+			/// Common bit indices for each Cue.
 			enum Bit {
 				Header1Bit,
 				Header2Bit,
@@ -61,35 +61,38 @@ namespace PixelMaestro {
 				PayloadBit
 			};
 
-			/// The different components available to run Cues against.
-			enum Component {
-				AnimationComponent,
-				CanvasComponent,
-				MaestroComponent,
-				SectionComponent
+			/// The different handlers available for running Cues.
+			enum Handler {
+				AnimationHandler,
+				CanvasHandler,
+				MaestroHandler,
+				SectionHandler
 			};
 
-			unsigned char buffer[255];
+			CueController(Maestro* maestro);
+			unsigned char* get_cue();
+			CueHandler* get_handler(Handler handler);
+			Maestro* get_maestro();
+			void set_handlers(Handler* handlers, unsigned char num_handlers);
 
-			CueController(Maestro* maestro, Component* components, unsigned char num_components);
-			unsigned char* get_buffer();
-			Cue* get_handler(Component component);
-			void set_handlers(Component* components, unsigned char num_components);
-
-			static void assemble(unsigned char* buffer, unsigned char payload_size);
-			static unsigned char checksum(unsigned char* data, unsigned char data_size);
+			void assemble(unsigned char payload_size);
+			unsigned char checksum(unsigned char* cue, unsigned char cue_size);
+			CueHandler* enable_handler(Handler handler);
 			void load(unsigned char* cue);
+			void load(unsigned char* cues, unsigned char num_cues);
 			void run();
 
 		private:
-			static const unsigned char header_[];
+			/// Header assigned to all outgoing Cues.
+			const unsigned char header_[3] = {'P', 'M', 'C'};
 
-			/**
-			 * Stores instances of Cue generators/readers.
-			 * Instances are accessed by their respective Component.
-			 */
-			Cue* handlers_[4];
+			/// Buffer for storing the currently loaded Cue.
+			unsigned char cue_[255];
 
+			/// Handlers for incoming Cues.
+			CueHandler* handlers_[4];
+
+			/// Maestro that Cues will run on.
 			Maestro* maestro_;
 	};
 }

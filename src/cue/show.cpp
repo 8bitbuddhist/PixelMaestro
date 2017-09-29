@@ -8,10 +8,12 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Specifies an initial set of Events to run.
+	 * @param controller The controller that will run the Events.
 	 * @param events Array of Events to queue.
 	 * @param num_events The number of Events in the queue.
 	 */
-	Show::Show(Event* events, unsigned short num_events) {
+	Show::Show(CueController* controller, Event* events, unsigned short num_events) {
+		cue_controller_ = controller;
 		set_events(events, num_events);
 	}
 
@@ -92,7 +94,7 @@ namespace PixelMaestro {
 		unsigned long event_time = events_[current_index_].get_time();
 		if ((timing_ == TimingMode::Absolute && (current_time >= event_time)) ||
 			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= event_time))) {
-			events_[current_index_].run();
+			events_[current_index_].run(cue_controller_);
 			last_time_ = current_time;
 			update_event_index();
 

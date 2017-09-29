@@ -1,14 +1,14 @@
-#ifndef ANIMATIONCUE_H
-#define ANIMATIONCUE_H
+#ifndef ANIMATIONCUEHANDLER_H
+#define ANIMATIONCUEHANDLER_H
 
 #include "../animation/animation.h"
 #include "../core/colors.h"
 #include "../core/maestro.h"
-#include "cue.h"
+#include "cuehandler.h"
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
-	class AnimationCue : public Cue {
+	class AnimationCueHandler : public CueHandler {
 		public:
 			enum Action {
 				SetColors,
@@ -23,13 +23,13 @@ namespace PixelMaestro {
 			};
 
 			enum Bit {
-				ComponentBit = CueController::Bit::PayloadBit,
+				HandlerBit = CueController::Bit::PayloadBit,
 				ActionBit,
 				SectionBit,
 				OptionsBit
 			};
 
-			AnimationCue(Maestro* maestro, unsigned char* buffer) : Cue(maestro, buffer) {}
+			AnimationCueHandler(CueController* controller) : CueHandler(controller) { }
 			// Animation-specific calls
 			void set_lightning_options(unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
 			void set_plasma_options(unsigned char section_num, float size, float resolution);
@@ -49,4 +49,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // ANIMATIONCUE_H
+#endif // ANIMATIONCUEHANDLER_H

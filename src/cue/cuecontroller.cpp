@@ -1,24 +1,24 @@
-#include "animationcue.h"
-#include "canvascue.h"
+#include "animationcuehandler.h"
+#include "canvascuehandler.h"
 #include "cuecontroller.h"
-#include "maestrocue.h"
-#include "sectioncue.h"
+#include "maestrocuehandler.h"
+#include "sectioncuehandler.h"
 
 namespace PixelMaestro {
 
-	const unsigned char CueController::header_[] = "PMC";
-
-	CueController::CueController(Maestro* maestro, Component* components, unsigned char num_components) {
+	/**
+	 * Constructor.
+	 * @param maestro Maestro that processed Cues will run on.
+	 */
+	CueController::CueController(Maestro* maestro) {
 		maestro_ = maestro;
-		set_handlers(components, num_components);
 	}
 
 	/**
-	 * Adds header info to a Cue.
-	 * @param buffer Container for the Cue.
+	 * Prepares the Cue for transport by adding header info.
 	 * @param payload_size The size of the payload.
 	 */
-	void CueController::assemble(unsigned char* buffer, unsigned char payload_size) {
+	void CueController::assemble(unsigned char payload_size) {
 		/*
 		 * Final Cue has the following form: [Header] [Checksum] [Size] [Payload]
 		 *
@@ -29,49 +29,82 @@ namespace PixelMaestro {
 		 */
 
 		for (unsigned char i = 0; i < Bit::ChecksumBit; i++) {
-			buffer[i] = header_[i];
+			cue_[i] = header_[i];
 		}
 
-		buffer[Bit::SizeBit] = payload_size;
+		cue_[Bit::SizeBit] = payload_size;
 
-		buffer[Bit::ChecksumBit] = checksum(buffer, Bit::PayloadBit + payload_size);
-
-		// Add null terminator to end of buffer
-		buffer[Bit::PayloadBit + payload_size] = '\0';
+		cue_[Bit::ChecksumBit] = checksum(cue_, Bit::PayloadBit + payload_size);
 	}
 
 	/**
 	 * Generates a checksum for verifying the integrity of a Cue.
-	 * @param buffer The contents of the Cue.
-	 * @param buffer_size The size of the Cue.
+	 * @param cue The contents of the Cue.
+	 * @param cue_size The size of the Cue.
 	 * @return New checksum.
 	 */
-	unsigned char CueController::checksum(unsigned char *buffer, unsigned char buffer_size) {
+	unsigned char CueController::checksum(unsigned char *cue, unsigned char cue_size) {
 		unsigned int sum = 0;
-		for (unsigned char i = 0; i < buffer_size; i++) {
+		for (unsigned char i = 0; i < cue_size; i++) {
 
 			// Make sure we don't include the checksum in its own calculation
 			if (i != Bit::ChecksumBit) {
-				sum += buffer[i];
+				sum += cue[i];
 			}
 		}
 
 		return (sum % 256);
 	}
 
-	unsigned char* CueController::get_buffer() {
-		return buffer;
+	CueHandler* CueController::enable_handler(Handler handler) {
+		switch(handler) {
+			case AnimationHandler:
+				handlers_[(int)Handler::AnimationHandler] = new AnimationCueHandler(this);
+				break;
+			case CanvasHandler:
+				handlers_[(int)Handler::CanvasHandler] = new CanvasCueHandler(this);
+				break;
+			case MaestroHandler:
+				handlers_[(int)Handler::MaestroHandler] = new MaestroCueHandler(this);
+				break;
+			case SectionHandler:
+				handlers_[(int)Handler::SectionHandler] = new SectionCueHandler(this);
+				break;
+		}
+
+		return handlers_[(int)handler];
 	}
 
-	Cue* CueController::get_handler(Component component) {
-		if (handlers_[(int)component] != nullptr) {
-			return handlers_[(int)component];
+	/**
+	 * Returns the current Cue.
+	 * @return Cue buffer.
+	 */
+	unsigned char* CueController::get_cue() {
+		return cue_;
+	}
+
+	/**
+	 * Returns the instance of the specified Handler.
+	 * @param handler Handler to get.
+	 * @return Handler instance.
+	 */
+	CueHandler* CueController::get_handler(Handler handler) {
+		if (handlers_[(int)handler] != nullptr) {
+			return handlers_[(int)handler];
 		}
 		return nullptr;
 	}
 
 	/**
-	 * Loads a raw Cue into the buffer.
+	 * Returns the Maestro managed by this controller.
+	 * @return Maestro.
+	 */
+	Maestro* CueController::get_maestro() {
+		return maestro_;
+	}
+
+	/**
+	 * Loads and runs a raw Cue.
 	 * @param cue Cue to load.
 	 */
 	void CueController::load(unsigned char *cue) {
@@ -89,36 +122,54 @@ namespace PixelMaestro {
 			return;
 		}
 
-		// Finally, load the Cue into the local buffer.
+		// Next, load the Cue into the local buffer.
 		for (unsigned char i = 0; i < size; i++) {
-			buffer[i] = cue[i];
+			cue_[i] = cue[i];
+		}
+
+		// Finally, run the Cue.
+		run();
+	}
+
+	/**
+	 * Loads and executes multiple Cues sequentially.
+	 * @param cues Cues to load.
+	 * @param num_cues Number of Cues to load.
+	 */
+	void CueController::load(unsigned char *cues, unsigned char num_cues) {
+		for (unsigned char i = 0; i < num_cues; i++) {
+			load(&cues[i]);
 		}
 	}
 
 	/**
-	 * Runs the current buffer.
+	 * Runs the currently loaded Cue.
 	 * @param maestro The Maestro to run the command against.
 	 * @param cue The Cue to run.
 	 */
 	void CueController::run() {
-		// Finally, hand off the payload to the appropriate controller.
-		handlers_[buffer[Bit::PayloadBit]]->run(buffer);
+		handlers_[cue_[Bit::PayloadBit]]->run(cue_);
 	}
 
-	void CueController::set_handlers(Component *components, unsigned char num_components) {
-		for (unsigned char i = 0; i < num_components; i++) {
+	/**
+	 * Initializes the required Cue handlers.
+	 * @param handlers List of Handlers to load.
+	 * @param num_handlers Number of Handlers.
+	 */
+	void CueController::set_handlers(Handler *components, unsigned char num_handlers) {
+		for (unsigned char i = 0; i < num_handlers; i++) {
 			switch(components[i]) {
-				case AnimationComponent:
-					handlers_[(int)Component::AnimationComponent] = new AnimationCue(maestro_, buffer);
+				case AnimationHandler:
+					handlers_[(int)Handler::AnimationHandler] = new AnimationCueHandler(this);
 					break;
-				case CanvasComponent:
-					handlers_[(int)Component::CanvasComponent] = new CanvasCue(maestro_, buffer);
+				case CanvasHandler:
+					handlers_[(int)Handler::CanvasHandler] = new CanvasCueHandler(this);
 					break;
-				case MaestroComponent:
-					handlers_[(int)Component::MaestroComponent] = new MaestroCue(maestro_, buffer);
+				case MaestroHandler:
+					handlers_[(int)Handler::MaestroHandler] = new MaestroCueHandler(this);
 					break;
-				case SectionComponent:
-					handlers_[(int)Component::SectionComponent] = new SectionCue(maestro_, buffer);
+				case SectionHandler:
+					handlers_[(int)Handler::SectionHandler] = new SectionCueHandler(this);
 					break;
 			}
 		}

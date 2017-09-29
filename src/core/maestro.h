@@ -5,12 +5,14 @@
 #ifndef MAESTRO_H
 #define MAESTRO_H
 
-#include "../cue/show.h"
+#include "../cue/cuecontroller.h"
 #include "../cue/event.h"
+#include "../cue/show.h"
 #include "colors.h"
 #include "section.h"
 
 namespace PixelMaestro {
+	class CueController;
 	class Event;
 	class Show;
 	class Maestro {
@@ -18,7 +20,8 @@ namespace PixelMaestro {
 		public:
 			Maestro(Section* sections, unsigned char num_sections);
 			~Maestro();
-			Show* add_show(Event* events, unsigned short num_events);
+			CueController* add_cue_controller();
+			Show* add_show(CueController* controller, Event* events, unsigned short num_events);
 			Colors::RGB get_pixel_color(unsigned char section, unsigned int pixel);
 			unsigned char get_num_sections();
 			unsigned short get_refresh_interval();
@@ -34,6 +37,8 @@ namespace PixelMaestro {
 		private:
 			/// Sets the global brightness level from 0 - 255. Defaults to 255, or 100% brightness.
 			unsigned char brightness_ = 255;
+
+			CueController* cue_controller_ = nullptr;
 
 			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
 			unsigned long last_refresh_ = 0;

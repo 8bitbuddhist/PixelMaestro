@@ -17,6 +17,16 @@ namespace PixelMaestro {
 		set_sections(sections, num_sections);
 	}
 
+
+	CueController* Maestro::add_cue_controller() {
+		if (cue_controller_ == nullptr) {
+			cue_controller_ = new CueController(this);
+		}
+
+		return cue_controller_;
+	}
+
+
 	/**
 	 * Creates and configures a Show.
 	 * If a Show already exists, this modifies and returns the existing Show.
@@ -24,9 +34,9 @@ namespace PixelMaestro {
 	 * @param num_events The number of Events in the Show.
 	 * @return New Show.
 	 */
-	Show* Maestro::add_show(Event* events, unsigned short num_events) {
+	Show* Maestro::add_show(CueController* controller, Event* events, unsigned short num_events) {
 		if (show_ == nullptr) {
-			show_ = new Show(events, num_events);
+			show_ = new Show(controller, events, num_events);
 		}
 		else {
 			show_->set_events(events, num_events);
@@ -159,6 +169,7 @@ namespace PixelMaestro {
 	}
 
 	Maestro::~Maestro() {
+		delete cue_controller_;
 		delete show_;
 	}
 }

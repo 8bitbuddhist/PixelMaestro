@@ -8,12 +8,12 @@ PixelMaestro has five main components:
 * [Section](section.md): Provides the core functionality for managing and animating groups of Pixels.
 * [Pixel](pixel.md): A single RGB output.
 * [Animation](animation.md): An animation to render in a Section.
-* [Show](show.md): Provides a way of scheduling animation changes and other actions via a Maestro. These changes are triggered automatically over the course of the program's runtime.
+* [Show](show.md): Provides a way of scheduling Cues to run at a later time.
 
 PixelMaestro also includes the following support classes:
 * [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.
 * [Colors](colors.md): Provides core utilities for managing colors including several pre-defined colors, color schemes, and methods for generating new colors.
-* [Cue](cue.md): Provides methods for sending PixelMaestro commands to other devices.
+* [Cue](cue.md): Provides utilities for serializing and storing PixelMaestro commands.
 * [Point](point.md): Class for managing coordinates on the Pixel grid.
 * [Utility](utility.md): Shared (mostly mathematic) methods.
 

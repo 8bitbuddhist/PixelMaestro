@@ -98,15 +98,15 @@ HEADERS += \
     ../src/canvas/animationcanvas.h \
     ../src/canvas/canvas.h \
     widget/canvas/canvascontrol.h \
-    ../src/cue/animationcue.h \
-    ../src/cue/canvascue.h \
-    ../src/cue/maestrocue.h \
-    ../src/cue/sectioncue.h \
     demo/cuedemo.h \
     ../src/cue/event.h \
     ../src/cue/show.h \
     ../src/cue/cuecontroller.h \
-    ../src/cue/cue.h
+    ../src/cue/cuehandler.h \
+    ../src/cue/animationcuehandler.h \
+    ../src/cue/canvascuehandler.h \
+    ../src/cue/maestrocuehandler.h \
+    ../src/cue/sectioncuehandler.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

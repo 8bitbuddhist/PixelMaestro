@@ -1,5 +1,5 @@
-#ifndef SECTIONCUE_H
-#define SECTIONCUE_H
+#ifndef SECTIONCUEHANDLER_H
+#define SECTIONCUEHANDLER_H
 
 #include "../canvas/canvastype.h"
 #include "../core/colors.h"
@@ -7,7 +7,7 @@
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
-	class SectionCue : public Cue {
+	class SectionCueHandler : public CueHandler {
 		public:
 			enum Action {
 				AddCanvas,
@@ -16,14 +16,18 @@ namespace PixelMaestro {
 				SetDimensions
 			};
 
+			/*
+			 * TODO: OverlayBit for identifying Overlays.
+			 * The bit should contain how many levels down the Overlay is (e.g. '2' means section > overlay > overlay).
+			 */
 			enum Bit {
-				ComponentBit = (int)CueController::Bit::PayloadBit,
+				HandlerBit = (int)CueController::Bit::PayloadBit,
 				ActionBit,
 				SectionBit,
 				OptionsBit
 			};
 
-			SectionCue(Maestro* maestro, unsigned char* buffer) : Cue(maestro, buffer) {}
+			SectionCueHandler(CueController* controller) : CueHandler(controller) { }
 			void add_canvas(unsigned char section_num, CanvasType::Type canvas_type);
 			void add_overlay(unsigned char section_num, Colors::MixMode mix_mode, unsigned char alpha);
 			void set_animation(unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors);
@@ -32,4 +36,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // SECTIONCUE_H
+#endif // SECTIONCUEHANDLER_H

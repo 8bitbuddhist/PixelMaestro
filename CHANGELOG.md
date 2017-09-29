@@ -6,24 +6,25 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.7] - In Progress
 ### Added
 - Cue:
-	- New class for converting PixelMaestro commands into portable strings. Cues are designed for sending commands to Maestros on other devices via USB, Bluetooth, WiFi, or other serial protocol.
+	- New class for converting PixelMaestro actions into portable commands. See the [Cue documentation](#docs/cue.md)
+	- Added Cue Demo to the GUI.
 - Canvas:
-	- Added `ColorCanvas` class, which lets you draw shapes using specific colors.
-	- Added Color Canvas Demo to the GUI application.
+	- Added `ColorCanvas` class for drawing shapes using colors not in the color palette.
+	- Added Color Canvas Demo to the GUI.
 
 ### Changed
 - Animation Editor:
 	- Grid size will only update when the row or column fields lose focus.
 	- Changed default Maestro refresh rate to 25fps.
-- Animations:
-	- Added dynamic allocation for color arrays.
-- Colors:
-	- Array population methods now return a new array instead of requiring an existing array.
-- Canvas:
-	- Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
+- Animations: Added dynamic allocation for color arrays.
+- Canvas: Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
+- Show: Shows now use Cues to run events. All extended Event classes have been removed. The default Event class now stores and runs Cues.
 
 ### Removed
-- Removed most Show Events. These have been replaced by `Cue` and `RunCueEvent`.
+- Removed extended Event classes.
+
+### Known Issues
+- Cues can add Overlays, but can't modify them (at this time).
 
 ## [v0.6r2] - 2017-09-18
 ### Changed
