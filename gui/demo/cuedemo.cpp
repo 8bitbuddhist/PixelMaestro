@@ -12,25 +12,32 @@ CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : Simpl
 	CueController* controller = maestro->add_cue_controller();
 
 	SectionCueHandler *section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
-	section_handler->add_overlay(0, Colors::MixMode::Overlay, 0);
+	section_handler->add_overlay(0, 0, Colors::MixMode::Overlay, 0);
 	controller->run();
 
-	section_handler->set_dimensions(0, 61, 9);
+	section_handler->set_dimensions(0, 0, 62, 9);
 	controller->run();
 
-	Colors::RGB colors[] = {Colors::SPRING, Colors::ROSE};
-	section_handler->set_animation(0, Animation::Type::Cycle, false, colors, 2);
+	Colors::RGB colors_black[] = {Colors::BLACK, Colors::WHITE};
+	section_handler->set_animation(0, 0, Animation::Type::Cycle, false, colors_black, 2);
 	controller->run();
 
 	AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
-	animation_handler->set_speed(0, 1000, 750);
+	animation_handler->set_speed(0, 0, 2000, 1500);
 	controller->run();
 
-	section_handler->add_canvas(0, CanvasType::AnimationCanvas);
+	Colors::RGB colors_white[] = {Colors::WHITE, {0, 0, 1}};
+	section_handler->set_animation(0, 1, Animation::Type::Cycle, false, colors_white, 2);
+	controller->run();
+
+	animation_handler->set_speed(0, 1, 2000, 1500);
+	controller->run();
+
+	section_handler->add_canvas(0, 1, CanvasType::AnimationCanvas);
 	controller->run();
 
 	CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasHandler));
-	canvas_handler->draw_text(0, 1, 1, Font::Type::Font5x8, "Hello world!", 12);
+	canvas_handler->draw_text(0, 1, 1, 1, Font::Type::Font5x8, "PixelMaestro", 12);
 	controller->run();
 }
 

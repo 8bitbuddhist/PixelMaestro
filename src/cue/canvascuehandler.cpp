@@ -5,7 +5,7 @@
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
-	void CanvasCueHandler::draw_circle(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
+	void CanvasCueHandler::draw_circle(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert radius_byte(radius);
@@ -14,6 +14,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawCircle;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
@@ -25,7 +26,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 7));
 	}
 
-	void CanvasCueHandler::draw_circle(unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
+	void CanvasCueHandler::draw_circle(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert radius_byte(radius);
@@ -34,6 +35,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawCircle;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::ColorCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = color.r;
 		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
 		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
@@ -48,7 +50,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 10));
 	}
 
-	void CanvasCueHandler::draw_line(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
+	void CanvasCueHandler::draw_line(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert target_x_byte(target_x);
@@ -58,6 +60,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawLine;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
@@ -70,7 +73,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 8));
 	}
 
-	void CanvasCueHandler::draw_line(unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
+	void CanvasCueHandler::draw_line(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert target_x_byte(target_x);
@@ -80,6 +83,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawLine;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::ColorCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = color.r;
 		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
 		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
@@ -95,7 +99,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 11));
 	}
 
-	void CanvasCueHandler::draw_point(unsigned char section_num, unsigned short x, unsigned short y) {
+	void CanvasCueHandler::draw_point(unsigned char section_num, unsigned char overlay_num, unsigned short x, unsigned short y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
@@ -103,6 +107,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawPoint;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = x_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
@@ -111,7 +116,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 4));
 	}
 
-	void CanvasCueHandler::draw_point(unsigned char section_num, Colors::RGB color, unsigned short x, unsigned short y) {
+	void CanvasCueHandler::draw_point(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short x, unsigned short y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
@@ -119,6 +124,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawPoint;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = color.r;
 		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
 		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
@@ -130,7 +136,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 7));
 	}
 
-	void CanvasCueHandler::draw_rect(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
+	void CanvasCueHandler::draw_rect(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert size_x_byte(size_x);
@@ -140,6 +146,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawRect;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
@@ -153,7 +160,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 9));
 	}
 
-	void CanvasCueHandler::draw_rect(unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
+	void CanvasCueHandler::draw_rect(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert size_x_byte(size_x);
@@ -163,6 +170,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawRect;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::ColorCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = color.r;
 		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
 		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
@@ -179,7 +187,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 12));
 	}
 
-	void CanvasCueHandler::draw_triangle(unsigned char section_num, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
+	void CanvasCueHandler::draw_triangle(unsigned char section_num, unsigned char overlay_num, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
 		IntByteConvert point_a_x_byte(point_a_x);
 		IntByteConvert point_a_y_byte(point_a_y);
 		IntByteConvert point_b_x_byte(point_b_x);
@@ -191,6 +199,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawTriangle;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = point_a_x_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = point_a_x_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = point_a_y_byte.converted_0;
@@ -208,7 +217,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 13));
 	}
 
-	void CanvasCueHandler::draw_triangle(unsigned char section_num, Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
+	void CanvasCueHandler::draw_triangle(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
 		IntByteConvert point_a_x_byte(point_a_x);
 		IntByteConvert point_a_y_byte(point_a_y);
 		IntByteConvert point_b_x_byte(point_b_x);
@@ -220,6 +229,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawTriangle;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::ColorCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = color.r;
 		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
 		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
@@ -240,7 +250,7 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 16));
 	}
 
-	void CanvasCueHandler::draw_text(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
+	void CanvasCueHandler::draw_text(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 
@@ -248,6 +258,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawText;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
@@ -264,7 +275,7 @@ namespace PixelMaestro {
 		controller_->assemble(text_index);
 	}
 
-	void CanvasCueHandler::draw_text(unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
+	void CanvasCueHandler::draw_text(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char *text, unsigned char num_chars) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 
@@ -272,6 +283,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::DrawText;
 		controller_->get_cue()[Byte::TypeByte] = (unsigned char)CanvasType::ColorCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = color.r;
 		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
 		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
@@ -292,9 +304,14 @@ namespace PixelMaestro {
 	}
 
 	void CanvasCueHandler::run(unsigned char *cue) {
+		Section* section = controller_->get_maestro()->get_section(cue[Byte::SectionByte]);
+
+		for (unsigned char i = 0; i < cue[Byte::OverlayByte]; i++) {
+			section = section->get_overlay()->section;
+		}
 		CanvasType::Type canvas_type = (CanvasType::Type)cue[Byte::TypeByte];
 		if (canvas_type == CanvasType::AnimationCanvas) {
-			AnimationCanvas* canvas = static_cast<AnimationCanvas*>(controller_->get_maestro()->get_section(cue[Byte::SectionByte])->get_canvas());
+			AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->get_canvas());
 			switch((Action)cue[Byte::ActionByte]) {
 				case Action::DrawCircle:
 					canvas->draw_circle(
@@ -357,7 +374,7 @@ namespace PixelMaestro {
 			}
 		}
 		else if (canvas_type == CanvasType::ColorCanvas) {
-			ColorCanvas* canvas = static_cast<ColorCanvas*>(controller_->get_maestro()->get_section(cue[Byte::SectionByte])->get_canvas());
+			ColorCanvas* canvas = static_cast<ColorCanvas*>(section->get_canvas());
 			Colors::RGB color = {
 				cue[Byte::OptionsByte],
 				cue[Byte::OptionsByte + 1],

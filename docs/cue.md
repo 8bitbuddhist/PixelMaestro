@@ -38,28 +38,29 @@ You can create a cue by calling one of the methods in an enabled `CueHandler` cl
 
 **Note::* Most methods require you to pass in the ID of the Section you want to modify.
 
-The following example demonstrates using two commands to create a Canvas and draw a circle:
+The following example demonstrates using two commands to create a Canvas and draw a circle on an Overlay:
 ```c++
 #include "cue/cuecontroller.h"
 #include "cue/canvascuehandler.h"
 #include "cue/sectioncuehandler.h"
 
 ...
-int section_index = 0;		// The index of the Section (in `Maestro::sections_`). This is required for almost all Cues.
+int section_index = 0;	// The index of the Section (in `Maestro::sections_`). This is required for almost all Cues.
+int overlay_index = 1;	// If modifying an Overlay, this indicates how far down the Overlay is. For example, an index of 1 affects the Section's Overlay, while an index of 2 affects the Overlay's Overlay.
 
-section_handler->add_canvas(section_index, CanvasType::ColorCanvas);
+section_handler->add_canvas(section_index, overlay_index, CanvasType::ColorCanvas);
 controller->run();
 
-canvas_handler->draw_circle(section_index, Colors::GREEN, 5, 5, 2, true);
+canvas_handler->draw_circle(section_index, overlay_index, Colors::GREEN, 5, 5, 2, true);
 controller->run();
 ``
 
 ## Running Cues
-To run a Cue, load the Cue into the buffer by calling a Handler method, then use `CueController::run()`. To run an existing Cue (i.e. from an outside source), call `CueController::load(unsigned char*)` and pass in the Cue directly. The CueController will verify and unpack the Cue before sending it off to the correct Handler.
+After calling a Handler method, you can immediately run the generated Cue by using `CueController::run()`. To run an outside Cue (i.e. from a file or serial port), call `CueController::load(unsigned char*)` and pass in the Cue directly. The CueController verifies and unpacks the Cue before sending it off to the correct Handler.
 
-**Note:** Don't run a Handler's run methods directly (`CanvasCue::run()`, `SectionCue::run()`, etc.), as this will bypass error checking and validation.
+**Note:** Don't call a Handler's `run` method directly, as this will bypass error checking and validation.
 
-**Note:** The following info is for reference/curiosity only.
+**The following sections are for reference/curiosity only.**
 
 ## Cue Components
 At its core, a Cue is just a string of bytes approximately 20 characters long. Each Cue consists of four parts:
@@ -78,6 +79,7 @@ Payloads can vary in length depending on the command (hence the _size_ component
 2. **Action**: the Handler-specific action to perform.
 3. **Type**: identifies one of several possible options in the command, e.g. a canvas type or font name.
 4. **Section**: the Section affected by this Cue.
+4. **Overlay**: the index of the Overlay affected by this Cue in relation to the Section.
 5. **Options**: A variable-length set of parameters custom to each Action.
 
 [Home](README.md)

@@ -87,13 +87,13 @@ namespace PixelMaestro {
 			const unsigned char header_[3] = {'P', 'M', 'C'};
 
 			/// Buffer for storing the currently loaded Cue.
-			unsigned char cue_[255];
+			unsigned char cue_[255] = {0};
 
 			/// Handlers for incoming Cues.
-			CueHandler* handlers_[4];
+			CueHandler* handlers_[4] {nullptr};
 
 			/// Maestro that Cues will run on.
-			Maestro* maestro_;
+			Maestro* maestro_ = nullptr;
 	};
 }
 

@@ -68,10 +68,11 @@ namespace PixelMaestro {
 	}
 
 	// Animation-specific Cues
-	void AnimationCueHandler::set_lightning_options(unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
+	void AnimationCueHandler::set_lightning_options(unsigned char section_num, unsigned char overlay_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetLightningOptions;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = num_bolts;
 		controller_->get_cue()[Byte::OptionsByte + 1] = down_threshold;
 		controller_->get_cue()[Byte::OptionsByte + 2] = up_threshold;
@@ -80,13 +81,14 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 4));
 	}
 
-	void AnimationCueHandler::set_plasma_options(unsigned char section_num, float size, float resolution) {
+	void AnimationCueHandler::set_plasma_options(unsigned char section_num, unsigned char overlay_num, float size, float resolution) {
 		FloatByteConvert size_byte(size);
 		FloatByteConvert resolution_byte(resolution);
 
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetPlasmaOptions;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = size_byte.converted.byte[0];
 		controller_->get_cue()[Byte::OptionsByte + 1] = size_byte.converted.byte[1];
 		controller_->get_cue()[Byte::OptionsByte + 2] = size_byte.converted.byte[2];
@@ -99,10 +101,11 @@ namespace PixelMaestro {
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 7));
 	}
 
-	void AnimationCueHandler::set_sparkle_options(unsigned char section_num, unsigned char threshold) {
+	void AnimationCueHandler::set_sparkle_options(unsigned char section_num, unsigned char overlay_num, unsigned char threshold) {
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetSparkleOptions;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = threshold;
 
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 1));
@@ -110,10 +113,11 @@ namespace PixelMaestro {
 
 	// General-purpose Cues
 
-	void AnimationCueHandler::set_colors(unsigned char section_num, Colors::RGB *colors, unsigned char num_colors) {
+	void AnimationCueHandler::set_colors(unsigned char section_num, unsigned char overlay_num, Colors::RGB *colors, unsigned char num_colors) {
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetColors;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = num_colors;
 
 		unsigned char colors_index = Byte::OptionsByte + 1;
@@ -129,49 +133,54 @@ namespace PixelMaestro {
 		controller_->assemble(colors_index);
 	}
 
-	void AnimationCueHandler::set_cycle_index(unsigned char section_num, unsigned char cycle_index) {
+	void AnimationCueHandler::set_cycle_index(unsigned char section_num, unsigned char overlay_num, unsigned char cycle_index) {
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetCycleIndex;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = cycle_index;
 
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 1));
 	}
 
-	void AnimationCueHandler::set_fade(unsigned char section_num, bool fade) {
+	void AnimationCueHandler::set_fade(unsigned char section_num, unsigned char overlay_num, bool fade) {
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetFade;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = (unsigned char)fade;
 
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 1));
 	}
 
-	void AnimationCueHandler::set_orientation(unsigned char section_num, Animation::Orientation orientation) {
+	void AnimationCueHandler::set_orientation(unsigned char section_num, unsigned char overlay_num, Animation::Orientation orientation) {
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetOrientation;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = (unsigned char)orientation;
 
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 1));
 	}
 
-	void AnimationCueHandler::set_reverse(unsigned char section_num, bool reverse) {
+	void AnimationCueHandler::set_reverse(unsigned char section_num, unsigned char overlay_num, bool reverse) {
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetReverse;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = (unsigned char)reverse;
 
 		controller_->assemble((unsigned char)(Byte::OptionsByte + 1));
 	}
 
-	void AnimationCueHandler::set_speed(unsigned char section_num, unsigned short speed, unsigned short pause) {
+	void AnimationCueHandler::set_speed(unsigned char section_num, unsigned char overlay_num, unsigned short speed, unsigned short pause) {
 		IntByteConvert speed_byte(speed);
 		IntByteConvert pause_byte(pause);
 
 		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetSpeed;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = speed_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = speed_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = pause_byte.converted_0;
@@ -181,7 +190,14 @@ namespace PixelMaestro {
 	}
 
 	void AnimationCueHandler::run(unsigned char *cue) {
-		Animation* animation = controller_->get_maestro()->get_section(cue[Byte::SectionByte])->get_animation();
+
+		Section* section = controller_->get_maestro()->get_section(cue[Byte::SectionByte]);
+
+		for (unsigned char i = 0; i < cue[Byte::OverlayByte]; i++) {
+			section = section->get_overlay()->section;
+		}
+
+		Animation* animation = section->get_animation();
 		switch((Action)cue[Byte::ActionByte]) {
 			case Action::SetColors:
 				{
