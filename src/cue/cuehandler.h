@@ -7,7 +7,8 @@ namespace PixelMaestro {
 	class CueController;
 	class CueHandler {
 		public:
-			CueHandler(CueController* controller);
+			CueHandler(CueController* controller) { controller_ = controller; }
+			virtual ~CueHandler() { }
 			virtual void run(unsigned char* cue) = 0;
 
 		protected:

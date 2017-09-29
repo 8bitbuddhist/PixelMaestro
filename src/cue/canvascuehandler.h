@@ -16,15 +16,16 @@ namespace PixelMaestro {
 				DrawTriangle
 			};
 
-			enum Bit {
-				HandlerBit = CueController::Bit::PayloadBit,
-				ActionBit,
-				TypeBit,
-				SectionBit,
-				OptionsBit
+			enum Byte {
+				HandlerByte = CueController::Byte::PayloadByte,
+				ActionByte,
+				TypeByte,
+				SectionByte,
+				OptionsByte
 			};
 
 			CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
+			~CanvasCueHandler();
 			void draw_circle(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
 			void draw_circle(unsigned char section_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
 			void draw_line(unsigned char section_num, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);

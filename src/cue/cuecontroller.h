@@ -52,13 +52,13 @@ namespace PixelMaestro {
 	class CueController {
 		public:
 			/// Common bit indices for each Cue.
-			enum Bit {
-				Header1Bit,
-				Header2Bit,
-				Header3Bit,
-				ChecksumBit,
-				SizeBit,
-				PayloadBit
+			enum Byte {
+				Header1Byte,
+				Header2Byte,
+				Header3Byte,
+				ChecksumByte,
+				SizeByte,
+				PayloadByte
 			};
 
 			/// The different handlers available for running Cues.
@@ -70,14 +70,14 @@ namespace PixelMaestro {
 			};
 
 			CueController(Maestro* maestro);
+			~CueController();
 			unsigned char* get_cue();
 			CueHandler* get_handler(Handler handler);
-			Maestro* get_maestro();
-			void set_handlers(Handler* handlers, unsigned char num_handlers);
 
 			void assemble(unsigned char payload_size);
 			unsigned char checksum(unsigned char* cue, unsigned char cue_size);
 			CueHandler* enable_handler(Handler handler);
+			Maestro* get_maestro();
 			void load(unsigned char* cue);
 			void load(unsigned char* cues, unsigned char num_cues);
 			void run();

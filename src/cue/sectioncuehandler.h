@@ -17,17 +17,18 @@ namespace PixelMaestro {
 			};
 
 			/*
-			 * TODO: OverlayBit for identifying Overlays.
-			 * The bit should contain how many levels down the Overlay is (e.g. '2' means section > overlay > overlay).
+			 * TODO: OverlayByte for identifying Overlays.
+			 * The byte should contain how many levels down the Overlay is (e.g. '2' means section > overlay > overlay).
 			 */
-			enum Bit {
-				HandlerBit = (int)CueController::Bit::PayloadBit,
-				ActionBit,
-				SectionBit,
-				OptionsBit
+			enum Byte {
+				HandlerByte = (int)CueController::Byte::PayloadByte,
+				ActionByte,
+				SectionByte,
+				OptionsByte
 			};
 
 			SectionCueHandler(CueController* controller) : CueHandler(controller) { }
+			~SectionCueHandler();
 			void add_canvas(unsigned char section_num, CanvasType::Type canvas_type);
 			void add_overlay(unsigned char section_num, Colors::MixMode mix_mode, unsigned char alpha);
 			void set_animation(unsigned char section_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors);

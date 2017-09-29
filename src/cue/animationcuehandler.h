@@ -22,14 +22,15 @@ namespace PixelMaestro {
 				SetSpeed
 			};
 
-			enum Bit {
-				HandlerBit = CueController::Bit::PayloadBit,
-				ActionBit,
-				SectionBit,
-				OptionsBit
+			enum Byte {
+				HandlerByte = CueController::Byte::PayloadByte,
+				ActionByte,
+				SectionByte,
+				OptionsByte
 			};
 
 			AnimationCueHandler(CueController* controller) : CueHandler(controller) { }
+			~AnimationCueHandler();
 			// Animation-specific calls
 			void set_lightning_options(unsigned char section_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
 			void set_plasma_options(unsigned char section_num, float size, float resolution);

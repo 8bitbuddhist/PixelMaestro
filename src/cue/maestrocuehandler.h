@@ -11,13 +11,14 @@ namespace PixelMaestro {
 				SetRefreshInterval
 			};
 
-			enum Bit {
-				HandlerBit = (int)CueController::Bit::PayloadBit,
-				ActionBit,
-				OptionsBit
+			enum Byte {
+				HandlerByte = (int)CueController::Byte::PayloadByte,
+				ActionByte,
+				OptionsByte
 			};
 
 			MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
+			~MaestroCueHandler();
 			void set_refresh_interval(unsigned short interval);
 			void run(unsigned char *cue);
 	};

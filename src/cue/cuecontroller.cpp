@@ -28,13 +28,13 @@ namespace PixelMaestro {
 		 * [Payload] contains the actual command with parameters.
 		 */
 
-		for (unsigned char i = 0; i < Bit::ChecksumBit; i++) {
+		for (unsigned char i = 0; i < Byte::ChecksumByte; i++) {
 			cue_[i] = header_[i];
 		}
 
-		cue_[Bit::SizeBit] = payload_size;
+		cue_[Byte::SizeByte] = payload_size;
 
-		cue_[Bit::ChecksumBit] = checksum(cue_, Bit::PayloadBit + payload_size);
+		cue_[Byte::ChecksumByte] = checksum(cue_, Byte::PayloadByte + payload_size);
 	}
 
 	/**
@@ -48,7 +48,7 @@ namespace PixelMaestro {
 		for (unsigned char i = 0; i < cue_size; i++) {
 
 			// Make sure we don't include the checksum in its own calculation
-			if (i != Bit::ChecksumBit) {
+			if (i != Byte::ChecksumByte) {
 				sum += cue[i];
 			}
 		}
@@ -56,20 +56,27 @@ namespace PixelMaestro {
 		return (sum % 256);
 	}
 
+	/**
+	 * Enables the specified CueHandler.
+	 * @param handler CueHandler to enable.
+	 * @return New CueHandler.
+	 */
 	CueHandler* CueController::enable_handler(Handler handler) {
-		switch(handler) {
-			case AnimationHandler:
-				handlers_[(int)Handler::AnimationHandler] = new AnimationCueHandler(this);
-				break;
-			case CanvasHandler:
-				handlers_[(int)Handler::CanvasHandler] = new CanvasCueHandler(this);
-				break;
-			case MaestroHandler:
-				handlers_[(int)Handler::MaestroHandler] = new MaestroCueHandler(this);
-				break;
-			case SectionHandler:
-				handlers_[(int)Handler::SectionHandler] = new SectionCueHandler(this);
-				break;
+		if (handlers_[(int)handler] == nullptr) {
+			switch(handler) {
+				case AnimationHandler:
+					handlers_[(int)Handler::AnimationHandler] = new AnimationCueHandler(this);
+					break;
+				case CanvasHandler:
+					handlers_[(int)Handler::CanvasHandler] = new CanvasCueHandler(this);
+					break;
+				case MaestroHandler:
+					handlers_[(int)Handler::MaestroHandler] = new MaestroCueHandler(this);
+					break;
+				case SectionHandler:
+					handlers_[(int)Handler::SectionHandler] = new SectionCueHandler(this);
+					break;
+			}
 		}
 
 		return handlers_[(int)handler];
@@ -96,8 +103,8 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the Maestro managed by this controller.
-	 * @return Maestro.
+	 * Returns the controller's Maestro.
+	 * @return Maestro controlling this CueController.
 	 */
 	Maestro* CueController::get_maestro() {
 		return maestro_;
@@ -109,16 +116,16 @@ namespace PixelMaestro {
 	 */
 	void CueController::load(unsigned char *cue) {
 		// First, verify the header.
-		for (unsigned char i = 0; i < Bit::ChecksumBit; i++) {
+		for (unsigned char i = 0; i < Byte::ChecksumByte; i++) {
 			if (cue[i] != header_[i]) {
 				return;
 			}
 		}
 
-		unsigned char size = cue[Bit::SizeBit] + Bit::PayloadBit;
+		unsigned char size = cue[Byte::SizeByte] + Byte::PayloadByte;
 
 		// Second, generate and compare the checksum.
-		if (cue[Bit::ChecksumBit] != checksum(cue, size)) {
+		if (cue[Byte::ChecksumByte] != checksum(cue, size)) {
 			return;
 		}
 
@@ -148,30 +155,12 @@ namespace PixelMaestro {
 	 * @param cue The Cue to run.
 	 */
 	void CueController::run() {
-		handlers_[cue_[Bit::PayloadBit]]->run(cue_);
+		handlers_[cue_[Byte::PayloadByte]]->run(cue_);
 	}
 
-	/**
-	 * Initializes the required Cue handlers.
-	 * @param handlers List of Handlers to load.
-	 * @param num_handlers Number of Handlers.
-	 */
-	void CueController::set_handlers(Handler *components, unsigned char num_handlers) {
-		for (unsigned char i = 0; i < num_handlers; i++) {
-			switch(components[i]) {
-				case AnimationHandler:
-					handlers_[(int)Handler::AnimationHandler] = new AnimationCueHandler(this);
-					break;
-				case CanvasHandler:
-					handlers_[(int)Handler::CanvasHandler] = new CanvasCueHandler(this);
-					break;
-				case MaestroHandler:
-					handlers_[(int)Handler::MaestroHandler] = new MaestroCueHandler(this);
-					break;
-				case SectionHandler:
-					handlers_[(int)Handler::SectionHandler] = new SectionCueHandler(this);
-					break;
-			}
+	CueController::~CueController() {
+		for (unsigned char i = 0; i < 4; i++) {
+			delete handlers_[i];
 		}
 	}
 }

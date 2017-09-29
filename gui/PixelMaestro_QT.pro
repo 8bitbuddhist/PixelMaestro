@@ -48,15 +48,14 @@ SOURCES += main.cpp\
     ../src/canvas/animationcanvas.cpp \
     ../src/canvas/canvas.cpp \
     widget/canvas/canvascontrol.cpp \
-    ../src/cue/animationcue.cpp \
-    ../src/cue/canvascue.cpp \
-    ../src/cue/maestrocue.cpp \
-    ../src/cue/sectioncue.cpp \
     demo/cuedemo.cpp \
     ../src/cue/event.cpp \
     ../src/cue/show.cpp \
     ../src/cue/cuecontroller.cpp \
-    ../src/cue/cue.cpp
+    ../src/cue/animationcuehandler.cpp \
+    ../src/cue/canvascuehandler.cpp \
+    ../src/cue/maestrocuehandler.cpp \
+    ../src/cue/sectioncuehandler.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \

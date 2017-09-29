@@ -19,7 +19,7 @@ namespace PixelMaestro {
 	Event::Event(unsigned long time, const unsigned char* cue) {
 		this->time_ = time;
 
-		unsigned char size = cue[CueController::Bit::SizeBit] + CueController::Bit::PayloadBit;
+		unsigned char size = cue[CueController::Byte::SizeByte] + CueController::Byte::PayloadByte;
 		cue_ = new unsigned char[size];
 		for (unsigned char i = 0; i < size; i++) {
 			cue_[i] = cue[i];
