@@ -1,5 +1,5 @@
 # Show
-Shows are used to schedule the execution of [Cues](#cue.md) at a later point. They let you plan out actions that a Maestro will automatically perform over the course of its runtime. To start a Show, use the `Maestro::add_show()` method. This method also requires you to pass in a set of [`Events`](#adding-events), which are explained below.
+Shows are used to schedule the execution of [Cues](cue.md) at a later point. They let you plan out actions that a Maestro will automatically perform over the course of its runtime. To start a Show, use the `Maestro::add_show()` method. This method also requires you to pass in a set of [`Events`](#adding-events), which are explained below.
 
 For an example of how to configure a Show, see [ShowDemo](../gui/demo/showdemo.cpp).
 
@@ -24,24 +24,22 @@ SectionCue::add_canvas(canvas_buffer, 0, CanvasType::ColorCanvas);
 CanvasCue::draw_circle(drawing_buffer, 0, Colors::GREEN, 5, 5, 2, true);
 
 int num_events = 2;
-Event* events[] = new Event[2] {
-	new RunCueEvent(5000, canvas_buffer),
-	new RunCueEvent(5000, drawing_buffer)
+Event events[num_events] = {
+	Event(5000, canvas_buffer),
+	Event(5000, drawing_buffer)
 }
-
+...
 maestro.add_show(events, num_events);
 ```
 
 ## Adding Events
-A `Event` is an object containing a set of instructions. Events consist of:
-* A `time` when the Event will execute based on the program's current runtime, and
-* A [`Cue`](#cue.md) that will be executed when the Event executes.
-
-All Events can be found in the [src/show](../src/show) folder. A list of Events can be found in the [Event List](#event-list) section below.
+A `Event` contains a set of instructions for running a Cue. Events consist of:
+* A `time` when the Event will execute in relation to the program's current runtime, and
+* A [`Cue`](cue.md) that will run when the Event executes.
 
 An Event is executed when its `time` is matched or exceeded by the program's runtime. When an Event runs, its `Cue` is loaded and executed. Each Show contains at least one Event. As each Event executes, the Show tracks the index of the next queued Event so that each Event runs sequentially.
 
-To reset or change the Event list, use `Show::set_events()`.
+To change or reset the Event list, use `Show::set_events()`.
 
 ## Timing Methods
 A Show can use one of two timing methods: relative or absolute. Relative time measures the amount of time that has passed since the last Event. For example, if Event 1 has a time of 1000 and Event 2 has a time of 2000 ms, Event 1 will execute 1000 ms after the program starts, and Event 2 will execute 2000 ms after Event 1.
