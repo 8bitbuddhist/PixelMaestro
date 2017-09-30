@@ -7,8 +7,9 @@ Because Cues run on a Maestro, they have access to anything the Maestro has acce
 1. [Setting Up Cues](#setting-up-cues)
 2. [Creating Cues](#creating-cues)
 3. [Running Cues](#running-cues)
-4. [Cue Components](#cue-components)
-5. [Payload Components](#payload-components)
+4. [Reading Cues](#reading-cues)
+5. [Cue Components](#cue-components)
+6. [Payload Components](#payload-components)
 
 ## Setting Up Cues
 All Cue actions are controlled by a `_CueController_`, which processes and stores Cues until they're executed. Create a CueController by calling `Maestro::add_cue_controller()`.
@@ -59,6 +60,13 @@ controller->run();
 After calling a Handler method, you can immediately run the generated Cue by using `CueController::run()`. To run an outside Cue (i.e. from a file or serial port), call `CueController::load(unsigned char*)` and pass in the Cue directly. The CueController verifies and unpacks the Cue before sending it off to the correct Handler.
 
 **Note:** Don't call a Handler's `run` method directly, as this will bypass error checking and validation.
+
+## Reading Cues
+Reading Cues from an external source can be done all at once (e.g. from a file) or in steps (e.g. from a serial port). The CueController class provides multiple methods for reading Cues.
+
+To load a Cue all at once, use `CueController::load(cue)` and `CueController::load(cues, num_cues)`. The first method loads in a single Cue, while the second loads an array of Cues and runs each Cue sequentially.
+
+To read in a Cue byte-by-byte, use `CueController::read(byte)`. This is designed for serial communication, where the Cue might come in chunks instead of all at once. The CueController adds each byte to the buffer, then executes the buffer once the full Cue is loaded.
 
 **The following sections are for reference/curiosity only.**
 

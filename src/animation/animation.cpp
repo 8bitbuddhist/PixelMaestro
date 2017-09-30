@@ -114,9 +114,7 @@ namespace PixelMaestro {
 		@param num_colors Number of colors in the palette.
 	*/
 	void Animation::set_colors(Colors::RGB* colors, unsigned char num_colors) {
-		if (colors_ != nullptr) {
-			delete[] colors_;
-		}
+		delete[] colors_;
 
 		colors_ = new Colors::RGB[num_colors];
 

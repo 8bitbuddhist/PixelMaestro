@@ -71,15 +71,16 @@ namespace PixelMaestro {
 
 			CueController(Maestro* maestro);
 			~CueController();
-			unsigned char* get_cue();
-			CueHandler* get_handler(Handler handler);
-
 			void assemble(unsigned char payload_size);
 			unsigned char checksum(unsigned char* cue, unsigned char cue_size);
 			CueHandler* enable_handler(Handler handler);
+			unsigned char* get_cue();
+			unsigned char get_cue_size();
+			CueHandler* get_handler(Handler handler);
 			Maestro* get_maestro();
 			void load(unsigned char* cue);
 			void load(unsigned char* cues, unsigned char num_cues);
+			void read(unsigned char byte);
 			void run();
 
 		private:
@@ -87,13 +88,16 @@ namespace PixelMaestro {
 			const unsigned char header_[3] = {'P', 'M', 'C'};
 
 			/// Buffer for storing the currently loaded Cue.
-			unsigned char cue_[255] = {0};
+			unsigned char cue_[256] = {0};
 
 			/// Handlers for incoming Cues.
 			CueHandler* handlers_[4] {nullptr};
 
 			/// Maestro that Cues will run on.
 			Maestro* maestro_ = nullptr;
+
+			/// Index for tracking buffer reads while loading a Cue by byte.
+			unsigned char read_index_ = 0;
 	};
 }
 

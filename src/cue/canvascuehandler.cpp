@@ -309,9 +309,15 @@ namespace PixelMaestro {
 		for (unsigned char i = 0; i < cue[Byte::OverlayByte]; i++) {
 			section = section->get_overlay()->section;
 		}
+
+		if (section == nullptr) {
+			return;
+		}
+
 		CanvasType::Type canvas_type = (CanvasType::Type)cue[Byte::TypeByte];
 		if (canvas_type == CanvasType::AnimationCanvas) {
 			AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->get_canvas());
+			if (canvas == nullptr) return;
 			switch((Action)cue[Byte::ActionByte]) {
 				case Action::DrawCircle:
 					canvas->draw_circle(
@@ -375,6 +381,7 @@ namespace PixelMaestro {
 		}
 		else if (canvas_type == CanvasType::ColorCanvas) {
 			ColorCanvas* canvas = static_cast<ColorCanvas*>(section->get_canvas());
+			if (canvas == nullptr) return;
 			Colors::RGB color = {
 				cue[Byte::OptionsByte],
 				cue[Byte::OptionsByte + 1],

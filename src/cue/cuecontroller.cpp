@@ -1,6 +1,6 @@
+#include "cuecontroller.h"
 #include "animationcuehandler.h"
 #include "canvascuehandler.h"
-#include "cuecontroller.h"
 #include "maestrocuehandler.h"
 #include "sectioncuehandler.h"
 
@@ -91,6 +91,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the size of the currently loaded Cue.
+	 * @return Cue size.
+	 */
+	unsigned char CueController::get_cue_size() {
+		return (cue_[Byte::SizeByte] + Byte::PayloadByte);
+	}
+
+	/**
 	 * Returns the instance of the specified Handler.
 	 * @param handler Handler to get.
 	 * @return Handler instance.
@@ -146,6 +154,42 @@ namespace PixelMaestro {
 	void CueController::load(unsigned char *cues, unsigned char num_cues) {
 		for (unsigned char i = 0; i < num_cues; i++) {
 			load(&cues[i]);
+		}
+	}
+
+	/**
+	 * Reads a Cue byte-by-byte into the buffer.
+	 * Once the end of the Cue has been reached, the Cue runs and the reader resets for the next Cue.
+	 * @param byte Byte to read into the buffer.
+	 */
+	void CueController::read(unsigned char byte) {
+		cue_[read_index_] = byte;
+
+		/*
+		 * Run the Cue if once we've read past the payload, then reset the read index.
+		 * We re-initialize the read index in the following cases:
+		 *	1) If we successfully ran the Cue
+		 *	2) If the last bytes read match the header
+		 *	3) If we've exceeded the buffer size
+		 */
+		if (read_index_ > Byte::SizeByte && read_index_ > cue_[Byte::SizeByte]) {
+			run();
+			read_index_ = 0;
+		}
+		else {
+			if (read_index_ >= Header3Byte &&
+				(cue_[read_index_ - Header3Byte] == header_[Header1Byte] &&
+				 cue_[read_index_ - Header2Byte] == header_[Header2Byte] &&
+				 cue_[read_index_ - Header1Byte] == header_[Header3Byte])) {
+
+				cue_[Header1Byte] = header_[Header1Byte];
+				cue_[Header2Byte] = header_[Header2Byte];
+				cue_[Header3Byte] = header_[Header3Byte];
+				read_index_ = Header3Byte + 1;
+			}
+			else if ((signed short)(read_index_ + 1) >= 256) {
+				read_index_ = 0;
+			}
 		}
 	}
 

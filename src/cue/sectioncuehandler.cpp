@@ -70,6 +70,8 @@ namespace PixelMaestro {
 			section = section->get_overlay()->section;
 		}
 
+		if (section == nullptr) return;
+
 		switch ((Action)cue[Byte::ActionByte]) {
 			case Action::AddCanvas:
 				section->add_canvas(CanvasType::Type(cue[Byte::OptionsByte]));

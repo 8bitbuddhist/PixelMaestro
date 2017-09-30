@@ -198,6 +198,9 @@ namespace PixelMaestro {
 		}
 
 		Animation* animation = section->get_animation();
+
+		if (section == nullptr || animation == nullptr) return;
+
 		switch((Action)cue[Byte::ActionByte]) {
 			case Action::SetColors:
 				{
