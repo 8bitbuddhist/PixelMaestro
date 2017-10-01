@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "../catch/single_include/catch.hpp"
-#include "colors.h"
+#include "../../src/core/colors.h"
 #include "colorstest.h"
 
 using namespace PixelMaestro;
@@ -69,17 +69,16 @@ TEST_CASE("Can generate scaling color array.", "[Array]") {
 
 TEST_CASE("Can mix colors.", "[Colors::RGB]") {
 
-    SECTION("Normal blending red and blue results in purple.") {
-        Colors::RGB purple = Colors::mix_colors(&Colors::RED, &Colors::BLUE, Colors::MixMode::NORMAL, 0.5);
-        REQUIRE(purple.r == 127);
-        REQUIRE(purple.g == 0);
-        REQUIRE(purple.b == 127);
-    }
+	SECTION("Alpha blend reduces color 2 by specified amount.") {
+		Colors::RGB mixed = Colors::mix_colors(Colors::BLACK, Colors::WHITE, Colors::MixMode::Alpha, 51);
+		Colors::RGB target = {51, 51, 51};
+		REQUIRE(mixed == target);
+	}
 
-    SECTION("Color multiplied by half equals halved values.") {
+    SECTION("Multiply mix mode multiplies color by half.") {
 		Colors::RGB color = {254, 128, 76};
 		Colors::RGB halfWhite = {128, 128, 128};
-		Colors::RGB mixed = Colors::mix_colors(&color, &halfWhite, Colors::MixMode::MULTIPLY);
+		Colors::RGB mixed = Colors::mix_colors(color, halfWhite, Colors::MixMode::Multiply);
 		
 		Colors::RGB halfColor = color / 2;
 		REQUIRE((unsigned int)mixed.r == (unsigned int)halfColor.r);
@@ -87,9 +86,8 @@ TEST_CASE("Can mix colors.", "[Colors::RGB]") {
 		REQUIRE((unsigned int)mixed.b == (unsigned int)halfColor.b);
 	}
 	
-	SECTION("Colors blend with specified alpha.") {
-		Colors::RGB mixed = Colors::mix_colors(&Colors::BLACK, &Colors::WHITE, Colors::MixMode::ALPHA_BLENDING, 0.2);
-		Colors::RGB target = {51, 51, 51};
-		REQUIRE(mixed == target);
-	}
+	SECTION("Overlay mix mode shows color 2 unless color 2 is black.") {
+        REQUIRE(Colors::mix_colors(Colors::RED, Colors::BLUE, Colors::MixMode::Overlay) == Colors::BLUE);
+        REQUIRE(Colors::mix_colors(Colors::RED, Colors::BLACK, Colors::MixMode::Overlay) == Colors::RED);
+    }
 }

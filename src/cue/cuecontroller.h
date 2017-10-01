@@ -78,10 +78,11 @@ namespace PixelMaestro {
 			unsigned char get_cue_size();
 			CueHandler* get_handler(Handler handler);
 			Maestro* get_maestro();
-			void load(unsigned char* cue);
-			void load(unsigned char* cues, unsigned char num_cues);
 			void read(unsigned char byte);
 			void run();
+			void run(unsigned char* cue);
+			void run(unsigned char* cues, unsigned char num_cues);
+			bool validate_header(unsigned char* cue);
 
 		private:
 			/// Header assigned to all outgoing Cues.

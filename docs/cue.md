@@ -65,24 +65,32 @@ After calling a Handler method, you can immediately run the generated Cue by usi
 
 **Note:** Don't call a Handler's `run` method directly, as this will bypass error checking and validation.
 
-### Reading Cues
-Reading Cues from an external source can be done all at once (e.g. from a file) or in steps (e.g. from a serial port). The CueController class provides multiple methods for reading Cues.
+### Running External Cues
+In addition to running cached Cues, you can run unloaded Cues by using `CueController::run(unsigned char* cue)` and passing the Cue as the parameter. This lets you pass in Cues from an external source, such as file. You can run multiple Cues sequentially using `CueController::run(unsigned char* cues, unsigned char num_cues)`. The first method loads in a single Cue, while the second loads an array of Cues and runs each Cue sequentially.
 
-To load a Cue all at once, use `CueController::load(unsigned char* cue)` and `CueController::load(unsigned char* cues, unsigned char num_cues)`. The first method loads in a single Cue, while the second loads an array of Cues and runs each Cue sequentially.
+For cases where you want to feed in a Cue byte-by-byte (e.g. using `Serial.read()` on an Arduino), use `CueController::read(byte)`. Each byte is loaded into the CueController's buffer until the Cue has loaded completely, then the Cue is automatically executed. The buffer then resets and repeats the process for the next incoming Cue.
 
-To read in a Cue byte-by-byte, use `CueController::read(byte)`. This is designed for cases (such as serial communication) where the Cue might arrive in individual bytes instead of all at once. The CueController adds each byte to the buffer, then executes the buffer once the Cue is completely loaded.
+```c++
+// Setup
+Serial.begin(9600);
+
+// Loop
+if (Serial.available()) {
+	controller.read(Serial.read());
+}
+```
 
 **The following sections are for reference/curiosity only.**
 
 ## Cue Components
-At its core, a Cue is just a string of bytes approximately 20 characters long. Each Cue consists of four parts:
+At its core, a Cue is just a string of bytes approximately 20 characters long. Cues contain the following parts:
 
-1. **Header**: a simple string used to identify the start of a PixelMaestro Cue.
+1. **ID**: a simple string used to identify the start of a PixelMaestro Cue.
 2. **Size**: the size of the PixelMaestro command (aka the _payload_).
 3. **Checksum**: a value calculated to confirm the integrity of the data received. This is done by summing up the entire command, dividing by 256, and taking the remainder.
 4. **Payload**: the actual serialized PixelMaestro command.
 
-The header and checksum are used as validation when loading a Cue from an external source. Cues generated from within the CueController bypass these steps.
+The ID and checksum are used as validation when loading a Cue from external sources. Cues generated from within the CueController bypass these steps.
 
 ## Payload Components
 Payloads can vary in length depending on the command (hence the _size_ component), but all payloads contain all of these components (excluding Type in some cases):

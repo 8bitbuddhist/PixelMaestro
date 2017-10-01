@@ -14,21 +14,30 @@ For an example of how to configure a Show, see [ShowDemo](../gui/demo/showdemo.c
 ## Creating a Show
 Create a Show by calling `Maestro::add_show()` and passing in the Events you want to run. This example creates two events using Cues: one that adds a new Canvas, and one that draws a circle onto the Canvas.
 
+**Tip:** `add_show()` automatically calls `add_cue_controller()` in case you haven't already initialized a CueController.
+
 ```c++
-#include "cue/canvascue.h"
-#include "cue/sectioncue.h"
+#include "cue/canvascuehandler.h"
+#include "cue/event.h"
+#include "cue/sectioncuehandler.h"
 unsigned char canvas_buffer[100];
 unsigned char drawing_buffer[100];
 
-SectionCue::add_canvas(canvas_buffer, 0, CanvasType::ColorCanvas);
-CanvasCue::draw_circle(drawing_buffer, 0, Colors::GREEN, 5, 5, 2, true);
+...
+// Configure Maestro and CueController
+...
+
+section_handler->add_canvas(0, 0, CanvasType::ColorCanvas);
+memcpy(canvas_buffer, controller->get_cue(), 100);
+
+canvas_handler->draw_circle(0, 0, Colors::GREEN, 5, 5, 2, true);
+memcpy(drawing_buffer, controller->get_cue(), 100);
 
 int num_events = 2;
 Event events[num_events] = {
 	Event(5000, canvas_buffer),
 	Event(5000, drawing_buffer)
 }
-...
 maestro.add_show(events, num_events);
 ```
 

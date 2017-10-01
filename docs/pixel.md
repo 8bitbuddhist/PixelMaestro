@@ -1,5 +1,5 @@
 # Pixel
-A Pixel represents a single RGB output. It stores an RGB color value, a pointer to a target RGB value, and instructions on how to reach that target color during an animation. Pixels are normally not used by themselves without being included in a Section.
+A Pixel represents a single RGB output. It stores a color value, a pointer to a target color, and instructions on how to reach that target color. Pixels are normally not used by themselves without being included in a Section.
 
 ## Contents
 1. [Creating Pixels](#creating-pixels)
@@ -16,11 +16,11 @@ Pixel pixel;
 ## Animating Pixels
 Each Pixel stores three key bits of information: its `current_color_`, its `next_color_`, and its `step_` amount.
 
-The `current_color_` is the color that the Pixel is displaying right now. This is the value that gets rendered to your output device and can be accessed using `Pixel::get_color()`, `Section::get_pixel_color(pixel)`, or `Maestro::get_pixel_color(section, pixel)`. This is also the value that gets updated when the Pixel's `update()` method is called.
+`current_color_` is the color that the Pixel is displaying right now. This is the value that gets rendered to your output device and can be accessed using `Section::get_pixel_color(pixel)` or `Maestro::get_pixel_color(section, pixel)` (if using the Maestro's global brightness). This is also the value that gets changed when the Pixel's `update()` method is called.
 
-The `next_color_` points to the color that the Pixel will switch to on the next animation cycle. During an animation cycle, if fading is enabled, `current_color_` will gradually approach `next_color_` until the cycle is complete, at which point the RGB values of `current_color_` are equal to those of `next_color_`. If fading is not enabled, `current_color_` will immediately jump to `next_color_` when switching to the next cycle.
+`next_color_` points to the color that the Pixel will switch to on the next animation cycle. During an animation cycle, if fading is enabled, `current_color_` will gradually approach `next_color_` until the cycle is complete, at which point the RGB values of `current_color_` are equal to those of `next_color_`. If fading is not enabled, `current_color_` will immediately jump to `next_color_` when starting the next cycle.
 
-`step_` is used to calculate the degree of change between the Pixel's `current_color_` and its `next_color_` at the start of each animation cycle. On each refresh, the `step_` amount is applied to the `current_color_`, which blends the Pixel in the direction of `next_color_`. The number of steps is tracked in `step_count_` and is equal to the animation cycle interval divided by the refresh rate. This is only used when fading is enabled.
+When fading, `step_` is used to calculate the degree of change between the Pixel's `current_color_` and its `next_color_` at the start of each animation cycle. On each refresh, the `step_` amount is applied to the `current_color_`, which blends the Pixel in the direction of `next_color_`. The number of steps is tracked in `step_count_` and is equal to the animation cycle interval divided by the refresh rate. This is not used when fading is disabled.
 
 ## Updating Pixels
 Calling a Pixel's `update()` method triggers a single refresh of the Pixel. A refresh tells the Pixel to move one step from its current color towards its target color. If fading is enabled, this adds blending to the Pixel's current color and brings it closer to its target color. If fading is not enabled, the Pixel immediately jumps to its next color.

@@ -40,7 +40,7 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 		Event(5000, blue_buffer)
 	};
 
-	Show* show = maestro_controller_->get_maestro()->add_show(controller, events_, 2);
+	Show* show = maestro_controller_->get_maestro()->add_show(events_, 2);
 	show->set_timing(Show::TimingMode::Relative);
 	show->set_looping(true);
 }

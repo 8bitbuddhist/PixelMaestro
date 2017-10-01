@@ -21,7 +21,7 @@ namespace PixelMaestro {
 			Maestro(Section* sections, unsigned char num_sections);
 			~Maestro();
 			CueController* add_cue_controller();
-			Show* add_show(CueController* controller, Event* events, unsigned short num_events);
+			Show* add_show(Event* events, unsigned short num_events);
 			Colors::RGB get_pixel_color(unsigned char section, unsigned int pixel);
 			unsigned char get_num_sections();
 			unsigned short get_refresh_interval();

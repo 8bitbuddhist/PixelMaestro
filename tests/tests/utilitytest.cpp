@@ -1,5 +1,5 @@
 #include "../catch/single_include/catch.hpp"
-#include "utility.h"
+#include "../../src/utility.h"
 #include "utilitytest.h"
 
 using namespace PixelMaestro;

@@ -35,7 +35,7 @@ namespace PixelMaestro {
 	}
 
 	void Event::run(CueController* controller) {
-		controller->load(cue_);
+		controller->run(cue_);
 	}
 
 	Event::~Event() {
