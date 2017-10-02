@@ -12,9 +12,9 @@ namespace PixelMaestro {
 		public:
 			AnimationCanvas(Section* section);
 			~AnimationCanvas();
-			void activate(unsigned int pixel);
-			void deactivate(unsigned int pixel);
-			Colors::RGB get_pixel_color(unsigned int pixel);
+			void activate(uint32_t pixel);
+			void deactivate(uint32_t pixel);
+			Colors::RGB get_pixel_color(uint32_t pixel);
 			CanvasType::Type get_type();
 			void initialize_pattern();
 

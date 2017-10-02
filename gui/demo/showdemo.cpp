@@ -26,13 +26,13 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	Colors::RGB green_colors[16];
 	Colors::generate_scaling_color_array(green_colors, &Colors::GREEN, &Colors::BLACK, 16, true);
 	animation_handler->set_colors(0, 0, green_colors, 16);
-	unsigned char green_buffer[255];
+	uint8_t green_buffer[255];
 	memcpy(green_buffer, controller->get_cue(), 255);
 
 	Colors::RGB blue_colors[16];
 	Colors::generate_scaling_color_array(blue_colors, &Colors::BLUE, &Colors::BLACK, 16, true);
 	animation_handler->set_colors(0, 0, blue_colors, 16);
-	unsigned char blue_buffer[255];
+	uint8_t blue_buffer[255];
 	memcpy(blue_buffer, controller->get_cue(), 255);
 
 	events_ = new Event[2] {

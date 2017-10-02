@@ -7,7 +7,7 @@
 namespace PixelMaestro {
 	class RadialAnimation : public Animation {
 		public:
-			RadialAnimation(Colors::RGB* colors = nullptr, unsigned char num_colors = 0, unsigned short speed = 100, unsigned short pause = 0);
+			RadialAnimation(Colors::RGB* colors = nullptr, uint8_t num_colors = 0, uint16_t speed = 100, uint16_t pause = 0);
 			~RadialAnimation();
 			void update(Section* section);
 
@@ -16,16 +16,16 @@ namespace PixelMaestro {
 			Point center_ = {0, 0};
 
 			/// Tracks the distance of the current point from the center.
-			unsigned short distance_ = 0;
+			uint16_t distance_ = 0;
 
 			/// Stores the size of the array to check for resizes.
 			Point size_ = {0, 0};
 
 			/// Stores the slope between a Pixel and the center of the grid.
-			unsigned short slope_;
+			uint16_t slope_;
 
 			/// Stores the square of the current x-axis.
-			unsigned short y_squared_ = 0;
+			uint16_t y_squared_ = 0;
 	};
 }
 

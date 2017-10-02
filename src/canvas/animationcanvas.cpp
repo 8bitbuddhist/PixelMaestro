@@ -18,7 +18,7 @@ namespace PixelMaestro {
 	 * Enables the pixel at the specified index.
 	 * @param pixel Pixel to activate.
 	 */
-	void AnimationCanvas::activate(unsigned int pixel) {
+	void AnimationCanvas::activate(uint32_t pixel) {
 		pattern_[pixel] = 1;
 	}
 
@@ -26,7 +26,7 @@ namespace PixelMaestro {
 	 * Deactivates (turns off) the pixel at the specified index.
 	 * @param pixel Pixel to deactivate.
 	 */
-	void AnimationCanvas::deactivate(unsigned int pixel) {
+	void AnimationCanvas::deactivate(uint32_t pixel) {
 		pattern_[pixel] = 0;
 	}
 
@@ -37,7 +37,7 @@ namespace PixelMaestro {
 	 * @param pixel Index of the pixel to check.
 	 * @return Pixel's color.
 	 */
-	Colors::RGB AnimationCanvas::get_pixel_color(unsigned int pixel) {
+	Colors::RGB AnimationCanvas::get_pixel_color(uint32_t pixel) {
 		if (pattern_[pixel] == 0) {
 			return Colors::BLACK;
 		}

@@ -3,39 +3,39 @@
 #include "sectioncuehandler.h"
 
 namespace PixelMaestro {
-	void SectionCueHandler::add_canvas(unsigned char section_num, unsigned char overlay_num, CanvasType::Type canvas_type) {
-		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::SectionHandler;
-		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::AddCanvas;
+	void SectionCueHandler::add_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::AddCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = canvas_type;
 
-		controller_->assemble((unsigned char)Byte::OptionsByte);
+		controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
-	void SectionCueHandler::add_overlay(unsigned char section_num, unsigned char overlay_num, Colors::MixMode mix_mode, unsigned char alpha) {
-		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::SectionHandler;
-		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::AddOverlay;
+	void SectionCueHandler::add_overlay(uint8_t section_num, uint8_t overlay_num, Colors::MixMode mix_mode, uint8_t alpha) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::AddOverlay;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = mix_mode;
 		controller_->get_cue()[Byte::OptionsByte + 1] = alpha;
 
-		controller_->assemble((unsigned char)Byte::OptionsByte + 2);
+		controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
-	void SectionCueHandler::set_animation(unsigned char section_num, unsigned char overlay_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors) {
+	void SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors) {
 
-		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::SectionHandler;
-		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetAnimation;
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetAnimation;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = (unsigned char)animation_type;
-		controller_->get_cue()[Byte::OptionsByte + 1] = (unsigned char)preserve_cycle_index;
+		controller_->get_cue()[Byte::OptionsByte] = (uint8_t)animation_type;
+		controller_->get_cue()[Byte::OptionsByte + 1] = (uint8_t)preserve_cycle_index;
 		controller_->get_cue()[Byte::OptionsByte + 2] = num_colors;
 
-		unsigned char colors_index = Byte::OptionsByte + 3;
-		for (unsigned char i = 0; i < num_colors; i++) {
+		uint8_t colors_index = Byte::OptionsByte + 3;
+		for (uint8_t i = 0; i < num_colors; i++) {
 			controller_->get_cue()[colors_index] = colors[i].r;
 			colors_index++;
 			controller_->get_cue()[colors_index] = colors[i].g;
@@ -47,12 +47,12 @@ namespace PixelMaestro {
 		controller_->assemble(colors_index);
 	}
 
-	void SectionCueHandler::set_dimensions(unsigned char section_num, unsigned char overlay_num, unsigned short x, unsigned short y) {
+	void SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y) {
 		IntByteConvert x_byte = IntByteConvert(x);
 		IntByteConvert y_byte = IntByteConvert(y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (unsigned char)CueController::Handler::SectionHandler;
-		controller_->get_cue()[Byte::ActionByte] = (unsigned char)Action::SetDimensions;
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetDimensions;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
@@ -60,13 +60,13 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
 
-		controller_->assemble((unsigned char)Byte::OptionsByte + 4);
+		controller_->assemble((uint8_t)Byte::OptionsByte + 4);
 	}
 
-	void SectionCueHandler::run(unsigned char *cue) {
+	void SectionCueHandler::run(uint8_t *cue) {
 		Section* section = controller_->get_maestro()->get_section(cue[Byte::SectionByte]);
 
-		for (unsigned char i = 0; i < cue[Byte::OverlayByte]; i++) {
+		for (uint8_t i = 0; i < cue[Byte::OverlayByte]; i++) {
 			section = section->get_overlay()->section;
 		}
 
@@ -81,13 +81,13 @@ namespace PixelMaestro {
 				break;
 			case Action::SetAnimation:
 				{
-					unsigned char num_colors = cue[Byte::OptionsByte + 2];
+					uint8_t num_colors = cue[Byte::OptionsByte + 2];
 					if (num_colors == 0) {
 						return;
 					}
-					unsigned char colors_index = Byte::OptionsByte + 3;
+					uint8_t colors_index = Byte::OptionsByte + 3;
 					Colors::RGB colors[num_colors];
-					for (unsigned char i = 0; i < num_colors; i++) {
+					for (uint8_t i = 0; i < num_colors; i++) {
 						colors[i].r = cue[colors_index];
 						colors_index++;
 						colors[i].g = cue[colors_index];
@@ -109,8 +109,8 @@ namespace PixelMaestro {
 				break;
 			case Action::SetDimensions:
 				{
-					unsigned short x = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
-					unsigned short y = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]);
+					uint16_t x = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
+					uint16_t y = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]);
 					section->set_dimensions(x, y);
 				}
 				break;

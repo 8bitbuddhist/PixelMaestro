@@ -18,7 +18,7 @@ namespace PixelMaestro {
 	 * Blanks out the Canvas (anything drawn will be lost!).
 	 */
 	void Canvas::clear() {
-		for (unsigned int pixel = 0; pixel < (unsigned int)(section_->get_dimensions()->size()); pixel++) {
+		for (uint32_t pixel = 0; pixel < (uint32_t)(section_->get_dimensions()->size()); pixel++) {
 			deactivate(pixel);
 		}
 	}
@@ -30,7 +30,7 @@ namespace PixelMaestro {
 	 * @param radius The circle's radius.
 	 * @param fill Whether to fill the circle or leave it empty.
 	 */
-	void Canvas::draw_circle(unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
+	void Canvas::draw_circle(uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
 		// (x – h)^2 + (y – k)^2 = r^2
 		// r = radius, h = origin_x, k = origin_y
 
@@ -41,8 +41,8 @@ namespace PixelMaestro {
 		 *		(cursor.x – origin_x)^2 + (cursor.y – origin_y)^2 = radius^2
 		 */
 		Point cursor = { 0, 0 };
-		unsigned int test_point; // Placeholder for calculating points along the circle line
-		unsigned int radius_squared = Utility::square(radius);
+		uint32_t test_point; // Placeholder for calculating points along the circle line
+		uint32_t radius_squared = Utility::square(radius);
 		for (cursor.x = origin_x - radius; cursor.x <= origin_x + radius; cursor.x++) {
 			for (cursor.y = origin_y - radius; cursor.y <= origin_y + radius; cursor.y++) {
 				if (in_bounds(&cursor)) {
@@ -69,7 +69,7 @@ namespace PixelMaestro {
 	 * @param target_x Ending point x coordinate.
 	 * @param target_y Ending point y coordinate.
 	 */
-	void Canvas::draw_line(unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
+	void Canvas::draw_line(uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
 		// Calculate slope
 		float slope;
 		if (target_x == origin_x) {
@@ -126,7 +126,7 @@ namespace PixelMaestro {
 	 * @param cursor_x Starting point x coordinate.
 	 * @param cursor_y Starting point y coordinate.
 	 */
-	void Canvas::draw_point(unsigned short x, unsigned short y) {
+	void Canvas::draw_point(uint16_t x, uint16_t y) {
 		if (in_bounds(x, y)) {
 			activate(section_->get_pixel_index(x, y));
 		}
@@ -140,13 +140,13 @@ namespace PixelMaestro {
 	 * @param size_y Height of the rectangle.
 	 * @param fill Whether to fill the rectangle or leave it empty.
 	 */
-	void Canvas::draw_rect(unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
+	void Canvas::draw_rect(uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
 		Point cursor = { origin_x, origin_y };
-		for (unsigned short column = 0; column < size_x; column++) {
+		for (uint16_t column = 0; column < size_x; column++) {
 			// (Re-)Initialize cursor coordinates.
 			cursor.x = origin_x + column;
 			cursor.y = origin_y;
-			for (unsigned short row = 0; row < size_y; row++) {
+			for (uint16_t row = 0; row < size_y; row++) {
 				cursor.y = origin_y + row;
 				if (in_bounds(&cursor)) {
 					// Check whether to fill
@@ -175,12 +175,12 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void Canvas::draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, const char* text, unsigned char num_chars) {
+	void Canvas::draw_text(uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars) {
 		Point cursor = {origin_x, origin_y};
 
-		unsigned char* current_char;
+		uint8_t* current_char;
 
-		for (unsigned short letter = 0; letter < num_chars; letter++) {
+		for (uint16_t letter = 0; letter < num_chars; letter++) {
 
 			/*
 			 * Each char in the font corresponds to a column.
@@ -188,8 +188,8 @@ namespace PixelMaestro {
 			 * We use bitmasking to get the bit value, then enable the pixel based on that bit.
 			 */
 			current_char = font->get_char(text[letter]);
-			for (unsigned short column = 0; column < font->size.x; column++) {
-				for (unsigned short row = 0; row < font->size.y; row++) {
+			for (uint16_t column = 0; column < font->size.x; column++) {
+				for (uint16_t row = 0; row < font->size.y; row++) {
 					if (in_bounds(&cursor)) {
 						if ((current_char[column] >> row) & 1) {
 							activate(section_->get_pixel_index(cursor.x + column, cursor.y + row));
@@ -214,7 +214,7 @@ namespace PixelMaestro {
 	 * @param point_c_y Third point y-coordinate.
 	 * @param fill Whether to fill the triangle or leave it empty.
 	 */
-	void Canvas::draw_triangle(unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
+	void Canvas::draw_triangle(uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
 		this->draw_line(point_a_x, point_a_y, point_b_x, point_b_y);
 		this->draw_line(point_b_x, point_b_y, point_c_x, point_c_y);
 		this->draw_line(point_c_x, point_c_y, point_a_x, point_a_y);
@@ -230,10 +230,10 @@ namespace PixelMaestro {
 			area = 0.5 *(-point_b_y*point_c_x + point_a_y*(-point_b_x + point_c_x) + point_a_x*(point_b_y - point_c_y) + point_b_x*point_c_y);
 
 			// Calculate the rectangular bounds of the triangle. This allows us to iterate over a smaller set of Pixels rather than the entire grid.
-			unsigned short min_x = 0;
-			unsigned short max_x = section_->get_dimensions()->x - 1;
-			unsigned short min_y = 0;
-			unsigned short max_y = section_->get_dimensions()->y - 1;
+			uint16_t min_x = 0;
+			uint16_t max_x = section_->get_dimensions()->x - 1;
+			uint16_t min_y = 0;
+			uint16_t max_y = section_->get_dimensions()->y - 1;
 
 			/*
 			 * Is point a < point b?
@@ -268,7 +268,7 @@ namespace PixelMaestro {
 	 * @param cursor_x The pixel's x-coordinate.
 	 * @param cursor_y The pixel's y-coordinate.
 	 */
-	void Canvas::erase(unsigned short x, unsigned short y) {
+	void Canvas::erase(uint16_t x, uint16_t y) {
 		deactivate(section_->get_pixel_index(x, y));
 	}
 
@@ -295,7 +295,7 @@ namespace PixelMaestro {
 	 * @param y The y-coordinate to check.
 	 * @return Whether the Point is in bounds.
 	 */
-	bool Canvas::in_bounds(unsigned short x, unsigned short y) {
+	bool Canvas::in_bounds(uint16_t x, uint16_t y) {
 		return (x < section_->get_dimensions()->x) && (y < section_->get_dimensions()->y);
 	}
 
@@ -313,7 +313,7 @@ namespace PixelMaestro {
 	 * @param x Offset along the x-axis.
 	 * @param y Offset along the y-axis.
 	 */
-	void Canvas::set_offset(signed short x, signed short y) {
+	void Canvas::set_offset(int16_t x, int16_t y) {
 		offset_x_ = x;
 		offset_y_ = y;
 	}
@@ -327,7 +327,7 @@ namespace PixelMaestro {
 	 * @param x Scrolling interval along the x-axis.
 	 * @param y Scrolling interval along the y-axis.
 	 */
-	void Canvas::set_scroll(signed short x, signed short y, bool repeat) {
+	void Canvas::set_scroll(int16_t x, int16_t y, bool repeat) {
 		if (scroll_ == nullptr) {
 			scroll_ = new Scroll(x, y, repeat);
 		}
@@ -351,7 +351,7 @@ namespace PixelMaestro {
 	 * Redraw the Canvas.
 	 * @param current_time The program's current runtime.
 	 */
-	void Canvas::update(const unsigned long& current_time) {
+	void Canvas::update(const uint32_t& current_time) {
 		if (scroll_ != nullptr) {
 			update_scroll(current_time);
 		}
@@ -361,7 +361,7 @@ namespace PixelMaestro {
 	 * Scrolls the Canvas by 1 increment.
 	 * @param current_time The program's current runtime).
 	 */
-	void Canvas::update_scroll(const unsigned long& current_time) {
+	void Canvas::update_scroll(const uint32_t& current_time) {
 		/*
 		 * If Scroll::interval is set, scroll the Canvas.
 		 * The interval dictates how many refreshes will occur before the Canvas is scrolled.
@@ -369,7 +369,7 @@ namespace PixelMaestro {
 		 * For the part of the Canvas that gets pushed off the grid, wrap back to the opposite side.
 		 */
 		if (scroll_ != nullptr) {
-			unsigned long target_time = current_time - scroll_->last_scroll_x;
+			uint32_t target_time = current_time - scroll_->last_scroll_x;
 			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * section_->get_refresh_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
@@ -381,11 +381,11 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset_x_ >= (signed int)section_->get_dimensions()->x) {
+				if (offset_x_ >= (int32_t)section_->get_dimensions()->x) {
 					offset_x_ = 0;
 				}
 				else if (offset_x_ < 0) {
-					offset_x_ = (signed int)section_->get_dimensions()->x;
+					offset_x_ = (int32_t)section_->get_dimensions()->x;
 				}
 
 				scroll_->last_scroll_x = current_time;
@@ -403,7 +403,7 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset_y_ >= (signed int)section_->get_dimensions()->y) {
+				if (offset_y_ >= (int32_t)section_->get_dimensions()->y) {
 					offset_y_ = 0;
 				}
 				else if (offset_y_ < 0) {

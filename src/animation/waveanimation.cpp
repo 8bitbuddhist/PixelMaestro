@@ -1,13 +1,13 @@
 #include "waveanimation.h"
 
 namespace PixelMaestro {
-	WaveAnimation::WaveAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) {
+	WaveAnimation::WaveAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
 		type_ = Animation::Type::Wave;
 	}
 
 	void WaveAnimation::update(Section* section) {
-		for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {
-			for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
+		for (uint16_t y = 0; y < section->get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < section->get_dimensions()->x; x++) {
 				if (orientation_ == Vertical) {
 					section->set_one(x, y, get_color_at_index(y + cycle_index_));
 				}

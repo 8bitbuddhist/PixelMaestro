@@ -14,17 +14,17 @@ namespace PixelMaestro {
 	class Event {
 
 		public:
-			Event(unsigned long time, const unsigned char* cue);
+			Event(uint32_t time, const uint8_t* cue);
 			~Event();
-			unsigned long get_time();
+			uint32_t get_time();
 			void run(CueController* controller);
 
 		protected:
 			/// The Cue to run.
-			unsigned char* cue_;
+			uint8_t* cue_;
 
 			/// Time that this Event will run.
-			unsigned long time_;
+			uint32_t time_;
 
 	};
 }

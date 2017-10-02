@@ -124,12 +124,12 @@ void MaestroControl::initialize() {
  * @param color Base color to use when generating the array.
  */
 void MaestroControl::change_scaling_color_array(Colors::RGB color) {
-	unsigned int num_colors = (unsigned int)ui->num_colorsSpinBox->value();
+	uint32_t num_colors = (uint32_t)ui->num_colorsSpinBox->value();
 
 	std::vector<Colors::RGB> tmp_colors;
 	tmp_colors.resize(num_colors);
 
-	unsigned char threshold = 255 - (unsigned char)ui->thresholdSpinBox->value();
+	uint8_t threshold = 255 - (uint8_t)ui->thresholdSpinBox->value();
 	Colors::RGB tmp[num_colors];
 	Colors::generate_scaling_color_array(tmp, &color, num_colors, threshold, true);
 	active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
@@ -248,7 +248,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 			break;
 		case 1:	// Fire
 			{
-				unsigned char num_colors = 14;
+				uint8_t num_colors = 14;
 				Colors::RGB tmp[num_colors];
 				Colors::generate_scaling_color_array(tmp, &Colors::RED, &Colors::YELLOW, num_colors, true);
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
@@ -257,7 +257,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 			}
 		case 2:	// Deep Sea
 			{
-				unsigned char num_colors = 14;
+				uint8_t num_colors = 14;
 				Colors::RGB tmp[num_colors];
 				Colors::generate_scaling_color_array(tmp, &Colors::BLUE, &Colors::GREEN, num_colors, true);
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
@@ -287,9 +287,9 @@ void MaestroControl::on_custom_color_changed() {
 	}
 
 	Colors::RGB new_color = {
-		(unsigned char)ui->redSlider->value(),
-		(unsigned char)ui->greenSlider->value(),
-		(unsigned char)ui->blueSlider->value()
+		(uint8_t)ui->redSlider->value(),
+		(uint8_t)ui->greenSlider->value(),
+		(uint8_t)ui->blueSlider->value()
 	};
 
 	if (!active_section_controller_->get_section()->get_animation() || !active_section_controller_->get_section()->get_animation()->get_colors()) {
@@ -437,7 +437,7 @@ void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
  * @param x Number of rows.
  * @param y Number of columns.
  */
-void MaestroControl::on_section_resize(unsigned short x, unsigned short y) {
+void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 	// Check the Canvas
 	if (canvas_control_widget_ != nullptr) {
 		CanvasControl* widget = qobject_cast<CanvasControl*>(canvas_control_widget_.get());

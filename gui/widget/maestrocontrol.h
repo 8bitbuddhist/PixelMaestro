@@ -44,7 +44,7 @@ class MaestroControl : public QWidget {
 		void initialize();
 		void on_custom_color_changed();
 		void on_ui_changed();
-		void on_section_resize(unsigned short x, unsigned short y);
+		void on_section_resize(uint16_t x, uint16_t y);
 		void set_custom_color_controls_visible(bool visible);
 		void show_extra_controls(Animation* animation);
 		void show_canvas_controls(Canvas* canvas);

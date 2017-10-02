@@ -26,11 +26,11 @@ namespace PixelMaestro {
 
 			SectionCueHandler(CueController* controller) : CueHandler(controller) { }
 			~SectionCueHandler();
-			void add_canvas(unsigned char section_num, unsigned char overlay_num, CanvasType::Type canvas_type);
-			void add_overlay(unsigned char section_num, unsigned char overlay_num, Colors::MixMode mix_mode, unsigned char alpha);
-			void set_animation(unsigned char section_num, unsigned char overlay_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, unsigned char num_colors);
-			void set_dimensions(unsigned char section_num, unsigned char overlay_num, unsigned short x, unsigned short y);
-			void run(unsigned char* cue);
+			void add_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type);
+			void add_overlay(uint8_t section_num, uint8_t overlay_num, Colors::MixMode mix_mode, uint8_t alpha);
+			void set_animation(uint8_t section_num, uint8_t overlay_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors);
+			void set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y);
+			void run(uint8_t* cue);
 	};
 }
 

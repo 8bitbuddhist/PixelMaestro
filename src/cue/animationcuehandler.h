@@ -33,21 +33,21 @@ namespace PixelMaestro {
 			AnimationCueHandler(CueController* controller) : CueHandler(controller) { }
 			~AnimationCueHandler();
 			// Animation-specific calls
-			void set_lightning_options(unsigned char section_num, unsigned char overlay_num, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance);
-			void set_plasma_options(unsigned char section_num, unsigned char overlay_num, float size, float resolution);
-			void set_sparkle_options(unsigned char section_num, unsigned char overlay_num, unsigned char threshold);
+			void set_lightning_options(uint8_t section_num, uint8_t overlay_num, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance);
+			void set_plasma_options(uint8_t section_num, uint8_t overlay_num, float size, float resolution);
+			void set_sparkle_options(uint8_t section_num, uint8_t overlay_num, uint8_t threshold);
 
 			// General Animation calls
-			void set_colors(unsigned char section_num, unsigned char overlay_num, Colors::RGB* colors, unsigned char num_colors);
-			void set_cycle_index(unsigned char section_num, unsigned char overlay_num, unsigned char cycle_index);
-			void set_fade(unsigned char section_num, unsigned char overlay_num, bool fade);
-			void set_orientation(unsigned char section_num, unsigned char overlay_num, Animation::Orientation orientation);
-			void set_reverse(unsigned char section_num, unsigned char overlay_num, bool reverse);
-			void set_speed(unsigned char section_num, unsigned char overlay_num, unsigned short speed, unsigned short pause);
+			void set_colors(uint8_t section_num, uint8_t overlay_num, Colors::RGB* colors, uint8_t num_colors);
+			void set_cycle_index(uint8_t section_num, uint8_t overlay_num, uint8_t cycle_index);
+			void set_fade(uint8_t section_num, uint8_t overlay_num, bool fade);
+			void set_orientation(uint8_t section_num, uint8_t overlay_num, Animation::Orientation orientation);
+			void set_reverse(uint8_t section_num, uint8_t overlay_num, bool reverse);
+			void set_speed(uint8_t section_num, uint8_t overlay_num, uint16_t speed, uint16_t pause);
 
-			void run(unsigned char* cue);
+			void run(uint8_t* cue);
 
-			static Animation* initialize_animation(unsigned char* cue);
+			static Animation* initialize_animation(uint8_t* cue);
 	};
 }
 

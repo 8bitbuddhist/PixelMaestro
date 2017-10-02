@@ -5,6 +5,7 @@
 #ifndef SECTION_H
 #define SECTION_H
 
+#include <stdint.h>
 #include "../animation/animation.h"
 #include "../canvas/canvas.h"
 #include "../canvas/canvastype.h"
@@ -35,7 +36,7 @@ namespace PixelMaestro {
 				Colors::MixMode mix_mode = Colors::MixMode::None;
 
 				/// Transparency level of the overlaid Section (if applicable).
-				unsigned char alpha;
+				uint8_t alpha;
 
 				/**
 				 * Constructor.
@@ -43,7 +44,7 @@ namespace PixelMaestro {
 				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For The amount of transparency that the Overlay will have (0 - 255).
 				 */
-				Overlay(Point dimensions, Colors::MixMode mix_mode, unsigned char alpha) {
+				Overlay(Point dimensions, Colors::MixMode mix_mode, uint8_t alpha) {
 					this->section = new Section(dimensions);
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
@@ -55,31 +56,31 @@ namespace PixelMaestro {
 			};
 
 			Section(Point dimensions);
-			Section(unsigned short x, unsigned short y);
+			Section(uint16_t x, uint16_t y);
 			~Section();
 			Canvas* add_canvas(CanvasType::Type type = CanvasType::Type::AnimationCanvas);
-			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::Alpha, unsigned char alpha = 128);
+			Section::Overlay* add_overlay(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			Animation* get_animation();
 			Canvas* get_canvas();
-			unsigned short get_cycle_interval();
+			uint16_t get_cycle_interval();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
-			Pixel* get_pixel(unsigned int pixel);
-			Colors::RGB get_pixel_color(unsigned int pixel);
-			unsigned int get_pixel_index(Point* coordinates);
-			unsigned int get_pixel_index(unsigned short x, unsigned short y);
-			unsigned short get_refresh_interval();
+			Pixel* get_pixel(uint32_t pixel);
+			Colors::RGB get_pixel_color(uint32_t pixel);
+			uint32_t get_pixel_index(Point* coordinates);
+			uint32_t get_pixel_index(uint16_t x, uint16_t y);
+			uint16_t get_refresh_interval();
 			void remove_animation();
 			void remove_canvas();
 			void remove_overlay();
 			void set_all(Colors::RGB* color);
 			Animation* set_animation(Animation* animation, bool preserve_cycle_index = false);
 			void set_dimensions(Point layout);
-			void set_dimensions(unsigned short x, unsigned short y);
-			void set_one(unsigned int pixel, Colors::RGB* color);
-			void set_one(unsigned short x, unsigned short y, Colors::RGB* color);
-			void set_refresh_interval(unsigned short* interval);
-			void update(const unsigned long& current_time);
+			void set_dimensions(uint16_t x, uint16_t y);
+			void set_one(uint32_t pixel, Colors::RGB* color);
+			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
+			void set_refresh_interval(uint16_t* interval);
+			void update(const uint32_t& current_time);
 
 		private:
 			/// The animation displayed in this Section.
@@ -98,7 +99,7 @@ namespace PixelMaestro {
 			Pixel* pixels_ = nullptr;
 
 			/// The time between Pixel redraws in milliseconds. Controlled by the Maestro.
-			unsigned short* refresh_interval_ = nullptr;
+			uint16_t* refresh_interval_ = nullptr;
 	};
 }
 

@@ -2,7 +2,7 @@
 #include "lightninganimation.h"
 
 namespace PixelMaestro {
-	LightningAnimation::LightningAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause, unsigned char num_bolts, unsigned char down_threshold, unsigned char up_threshold,  unsigned char fork_chance) : Animation(colors, num_colors, speed, pause) {
+	LightningAnimation::LightningAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold,  uint8_t fork_chance) : Animation(colors, num_colors, speed, pause) {
 		type_ = Animation::Type::Lightning;
 		num_bolts_ = num_bolts;
 		down_threshold_ = down_threshold;
@@ -17,13 +17,13 @@ namespace PixelMaestro {
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, 0};
 		if (orientation_ == Orientation::Vertical) {
-			start.set((unsigned short)Utility::rand(section->get_dimensions()->x), 0);
+			start.set((uint16_t)Utility::rand(section->get_dimensions()->x), 0);
 		}
 		else {
-			start.set(0, (unsigned short)Utility::rand(section->get_dimensions()->y));
+			start.set(0, (uint16_t)Utility::rand(section->get_dimensions()->y));
 		}
 
-		for (unsigned char bolt = 0; bolt < num_bolts_; bolt++) {
+		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {
 			if (orientation_ == Orientation::Vertical) {
 				draw_bolt_vertical(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
 			}
@@ -35,8 +35,8 @@ namespace PixelMaestro {
 		update_cycle(0, num_colors_);
 	}
 
-	void LightningAnimation::draw_bolt_horizontal(unsigned char bolt_num, Section* section, Point* start, unsigned char down_threshold, unsigned char up_threshold, unsigned char fork_chance) {
-		unsigned char direction_roll;
+	void LightningAnimation::draw_bolt_horizontal(uint8_t bolt_num, Section* section, Point* start, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance) {
+		uint8_t direction_roll;
 		Point cursor = {start->x, start->y};
 
 		/*
@@ -44,7 +44,7 @@ namespace PixelMaestro {
 		 * For the main bolt, we set the length equal to the length of the grid.
 		 * For off-shoots, we cap the distance at 25% of the grid length.
 		 */
-		unsigned short length;
+		uint16_t length;
 		if (cursor.x == 0) {
 			length = section->get_dimensions()->x;
 		}
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 		/*
 		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
 		 */
-		for (unsigned short x = cursor.x; x < length; x++) {
+		for (uint16_t x = cursor.x; x < length; x++) {
 			direction_roll = Utility::rand(255);
 			if (direction_roll > up_threshold) {
 				if (cursor.y + 1 < section->get_dimensions()->y) {
@@ -78,8 +78,8 @@ namespace PixelMaestro {
 
 
 			// Check to see if we should fork the bolt
-			if (x < (unsigned short)section->get_dimensions()->x) {
-				unsigned char chance_roll = Utility::rand(255);
+			if (x < (uint16_t)section->get_dimensions()->x) {
+				uint8_t chance_roll = Utility::rand(255);
 				if (chance_roll < fork_chance) {
 					/*
 					 * If we fork, reduce the fork chance by 50%.
@@ -100,8 +100,8 @@ namespace PixelMaestro {
 		}
 	}
 
-	void LightningAnimation::draw_bolt_vertical(unsigned char bolt_num, Section* section, Point* start, unsigned char left_threshold, unsigned char right_threshold, unsigned char fork_chance) {
-		unsigned char direction_roll;
+	void LightningAnimation::draw_bolt_vertical(uint8_t bolt_num, Section* section, Point* start, uint8_t left_threshold, uint8_t right_threshold, uint8_t fork_chance) {
+		uint8_t direction_roll;
 		Point cursor = {start->x, start->y};
 
 		/*
@@ -109,7 +109,7 @@ namespace PixelMaestro {
 		 * For the main bolt, we set the length equal to the length of the grid.
 		 * For off-shoots, we cap the distance at 25% of the grid length.
 		 */
-		unsigned int length;
+		uint32_t length;
 		if (cursor.y == 0) {
 			length = section->get_dimensions()->y;
 		}
@@ -125,7 +125,7 @@ namespace PixelMaestro {
 		/*
 		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
 		 */
-		for (unsigned short y = cursor.y; y < length; y++) {
+		for (uint16_t y = cursor.y; y < length; y++) {
 			direction_roll = Utility::rand(255);
 			if (direction_roll > right_threshold) {
 				if (cursor.x + 1 < section->get_dimensions()->x) {
@@ -142,8 +142,8 @@ namespace PixelMaestro {
 			section->set_one(cursor.x, y, get_color_at_index(cycle_index_ + bolt_num));
 
 			// Check to see if we should fork the bolt
-			if (y < (unsigned short)section->get_dimensions()->y) {
-				unsigned char chance_roll = Utility::rand(255);
+			if (y < (uint16_t)section->get_dimensions()->y) {
+				uint8_t chance_roll = Utility::rand(255);
 				if (chance_roll < fork_chance) {
 					/*
 					 * If we fork, reduce the fork chance by 50%.
@@ -167,7 +167,7 @@ namespace PixelMaestro {
 	 * Returns the number of bolts.
 	 * @return Bolt count.
 	 */
-	unsigned char LightningAnimation::get_bolt_count() {
+	uint8_t LightningAnimation::get_bolt_count() {
 		return num_bolts_;
 	}
 
@@ -175,7 +175,7 @@ namespace PixelMaestro {
 	 * Returns the fork chance.
 	 * @return Fork chance.
 	 */
-	unsigned char LightningAnimation::get_fork_chance() {
+	uint8_t LightningAnimation::get_fork_chance() {
 		return fork_chance_;
 	}
 
@@ -183,7 +183,7 @@ namespace PixelMaestro {
 	 * Returns the down threshold.
 	 * @return Down threshold.
 	 */
-	unsigned char LightningAnimation::get_down_threshold() {
+	uint8_t LightningAnimation::get_down_threshold() {
 		return down_threshold_;
 	}
 
@@ -191,7 +191,7 @@ namespace PixelMaestro {
 	 * Returns the up threshold.
 	 * @return Up threshold.
 	 */
-	unsigned char LightningAnimation::get_up_threshold() {
+	uint8_t LightningAnimation::get_up_threshold() {
 		return up_threshold_;
 	}
 
@@ -199,7 +199,7 @@ namespace PixelMaestro {
 	 * Sets the number of bolts generated in each strike.
 	 * @param bolt_count Number of bolts (0 - 255).
 	 */
-	void LightningAnimation::set_bolt_count(unsigned char bolt_count) {
+	void LightningAnimation::set_bolt_count(uint8_t bolt_count) {
 		this->num_bolts_ = bolt_count;
 	}
 
@@ -207,7 +207,7 @@ namespace PixelMaestro {
 	 * Sets the chances of a bolt forking.
 	 * @param fork_chance Chance of a bolt forking (0 - 255).
 	 */
-	void LightningAnimation::set_fork_chance(unsigned char fork_chance) {
+	void LightningAnimation::set_fork_chance(uint8_t fork_chance) {
 		this->fork_chance_ = fork_chance;
 	}
 
@@ -216,7 +216,7 @@ namespace PixelMaestro {
 	 * @param down_threshold Chances of a bolt drifting downwards (left in vertical orientation).
 	 * @param up_threshold Chances of a bolt drifting upwards (right in vertical orientation).
 	 */
-	void LightningAnimation::set_thresholds(unsigned char down_threshold, unsigned char up_threshold) {
+	void LightningAnimation::set_thresholds(uint8_t down_threshold, uint8_t up_threshold) {
 		this->down_threshold_ = down_threshold;
 		this->up_threshold_ = up_threshold;
 	}

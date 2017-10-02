@@ -18,12 +18,12 @@ class SimpleDrawingArea : public MaestroDrawingArea {
 		void resizeEvent(QResizeEvent *event) override;
 
 		/// The size of each rendered Pixel.
-		unsigned char radius_ = 20;
+		uint8_t radius_ = 20;
 		/// The amount of space between each Pixel.
-		unsigned char pad_ = radius_ * 2;
+		uint8_t pad_ = radius_ * 2;
 
 		/// Used to determine whether the Maestro's size has changed.
-		unsigned int last_pixel_count_ = 0;
+		uint32_t last_pixel_count_ = 0;
 };
 
 #endif // SIMPLEDRAWINGAREA_H

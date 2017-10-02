@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	 * @param x X-axis coordinate.
 	 * @param y Y-axis coordinate.
 	 */
-	Point::Point(unsigned short x, unsigned short y) {
+	Point::Point(uint16_t x, uint16_t y) {
 		set(x, y);
 	}
 
@@ -20,7 +20,7 @@ namespace PixelMaestro {
 	 * @param x X-axis coordinate.
 	 * @param y Y-axis coordinate.
 	 */
-	void Point::set(unsigned short x, unsigned short y) {
+	void Point::set(uint16_t x, uint16_t y) {
 		this->x = x;
 		this->y = y;
 	}
@@ -29,7 +29,7 @@ namespace PixelMaestro {
 	 * When used as a dimension, returns x * y.
 	 * @return X value multiplied by the Y value.
 	 */
-	unsigned int Point::size() {
+	uint32_t Point::size() {
 		return x * y;
 	}
 }

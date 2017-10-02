@@ -6,6 +6,7 @@
 #ifndef PIXEL_H
 #define PIXEL_H
 
+#include <stdint.h>
 #include "colors.h"
 
 namespace PixelMaestro {
@@ -13,7 +14,7 @@ namespace PixelMaestro {
 
 		public:
 			Colors::RGB* get_color();
-			void set_next_color(Colors::RGB* next_color, bool fade, unsigned short cycle_speed, unsigned short refresh_rate);
+			void set_next_color(Colors::RGB* next_color, bool fade, uint16_t cycle_speed, uint16_t refresh_rate);
 			void update();
 
 		private:
@@ -27,7 +28,7 @@ namespace PixelMaestro {
 			Colors::RGB step_ = Colors::BLACK;
 
 			/// The number of steps from current_color_ to next_color_ (only applicable when fading).
-			unsigned char step_count_ = 0;
+			uint8_t step_count_ = 0;
 
 	};
 }

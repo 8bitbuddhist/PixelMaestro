@@ -6,14 +6,16 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include <stdint.h>
+
 namespace PixelMaestro {
 	class Point {
 		public:
 			/// X-coordinate.
-			unsigned short x = 0;
+			uint16_t x = 0;
 
 			/// Y-coordinate.
-			unsigned short y = 0;
+			uint16_t y = 0;
 
 			void operator=(Point point_two) {
 				x = point_two.x;
@@ -30,35 +32,35 @@ namespace PixelMaestro {
 
 			Point operator+(Point point_two) {
 				return {
-					(unsigned short)(x + point_two.x),
-					(unsigned short)(y + point_two.y)
+					(uint16_t)(x + point_two.x),
+					(uint16_t)(y + point_two.y)
 				};
 			}
 
 			Point operator-(Point point_two) {
 				return {
-					(unsigned short)(x - point_two.x),
-					(unsigned short)(y - point_two.y)
+					(uint16_t)(x - point_two.x),
+					(uint16_t)(y - point_two.y)
 				};
 			}
 
 			Point operator*(Point point_two) {
 				return {
-					(unsigned short)(x * point_two.x),
-					(unsigned short)(y * point_two.y)
+					(uint16_t)(x * point_two.x),
+					(uint16_t)(y * point_two.y)
 				};
 			}
 
 			Point operator/(Point point_two) {
 				return {
-					(unsigned short)(x / point_two.x),
-					(unsigned short)(y / point_two.y)
+					(uint16_t)(x / point_two.x),
+					(uint16_t)(y / point_two.y)
 				};
 			}
 
-			Point(unsigned short x, unsigned short y);
-			void set(unsigned short x, unsigned short y);
-			unsigned int size();
+			Point(uint16_t x, uint16_t y);
+			void set(uint16_t x, uint16_t y);
+			uint32_t size();
 	};
 }
 

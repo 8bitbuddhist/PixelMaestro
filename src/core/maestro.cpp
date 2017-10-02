@@ -2,6 +2,7 @@
 	Maestro.cpp - Library for controlling a collection of Pixels and Sections.
 */
 
+#include <stdint.h>
 #include "../utility.h"
 #include "maestro.h"
 #include "section.h"
@@ -13,7 +14,7 @@ namespace PixelMaestro {
 	 * @param sections Array of Sections to manage.
 	 * @param num_sections Number of Sections in the array.
 	 */
-	Maestro::Maestro(Section* sections, unsigned char num_sections) {
+	Maestro::Maestro(Section* sections, uint8_t num_sections) {
 		set_sections(sections, num_sections);
 	}
 
@@ -39,7 +40,7 @@ namespace PixelMaestro {
 	 * @param num_events The number of Events in the Show.
 	 * @return New Show.
 	 */
-	Show* Maestro::add_show(Event* events, unsigned short num_events) {
+	Show* Maestro::add_show(Event* events, uint16_t num_events) {
 		if (show_ == nullptr) {
 			show_ = new Show(add_cue_controller(), events, num_events);
 		}
@@ -55,7 +56,7 @@ namespace PixelMaestro {
 
 		@return Number of Sections.
 	*/
-	unsigned char Maestro::get_num_sections() {
+	uint8_t Maestro::get_num_sections() {
 		return num_sections_;
 	}
 
@@ -65,7 +66,7 @@ namespace PixelMaestro {
 	 * @param pixel Index of the Pixel to retrieve.
 	 * @return Pixel color after adjusting for Overlays and brightness.
 	 */
-	Colors::RGB Maestro::get_pixel_color(unsigned char section, unsigned int pixel) {
+	Colors::RGB Maestro::get_pixel_color(uint8_t section, uint32_t pixel) {
 		return sections_[section].get_pixel_color(pixel) * (float)(brightness_ / (float)255);
 	}
 
@@ -74,7 +75,7 @@ namespace PixelMaestro {
 
 		@return Amount of time between refreshes (in ms).
 	*/
-	unsigned short Maestro::get_refresh_interval() {
+	uint16_t Maestro::get_refresh_interval() {
 		return refresh_interval_;
 	}
 
@@ -93,7 +94,7 @@ namespace PixelMaestro {
 		@param section Index of the Section to return.
 		@return Section at the specified index.
 	*/
-	Section* Maestro::get_section(unsigned char section) {
+	Section* Maestro::get_section(uint8_t section) {
 		return &sections_[section];
 	}
 
@@ -109,7 +110,7 @@ namespace PixelMaestro {
 	 * Sets the Maestro's global brightness level.
 	 * @param brightness Brightness level from 0 (off) to 255 (full).
 	 */
-	void Maestro::set_brightness(unsigned char brightness) {
+	void Maestro::set_brightness(uint8_t brightness) {
 		brightness_ = brightness;
 	}
 
@@ -117,7 +118,7 @@ namespace PixelMaestro {
 	 * Sets the Maestro's refresh interval.
 	 * @param interval New refresh interval.
 	 */
-	void Maestro::set_refresh_interval(unsigned short interval)	{
+	void Maestro::set_refresh_interval(uint16_t interval)	{
 		refresh_interval_ = interval;
 	}
 
@@ -136,11 +137,11 @@ namespace PixelMaestro {
 		@param sections Array of Sections.
 		@param num_sections Number of Sections in the array.
 	*/
-	void Maestro::set_sections(Section* sections, unsigned char num_sections) {
+	void Maestro::set_sections(Section* sections, uint8_t num_sections) {
 		sections_ = sections;
 		num_sections_ = num_sections;
 
-		for (unsigned char section = 0; section < num_sections; section++) {
+		for (uint8_t section = 0; section < num_sections; section++) {
 			sections_[section].set_refresh_interval(&refresh_interval_);
 		}
 	}
@@ -150,12 +151,12 @@ namespace PixelMaestro {
 
 		@param current_time Program runtime.
 	*/
-	void Maestro::update(const unsigned long& current_time) {
+	void Maestro::update(const uint32_t& current_time) {
 		// If running, call each Section's update method.
 		if (running_) {
 
 			// Compare the refresh time to the time since the last refresh.
-			if (current_time - last_refresh_ >= (unsigned long)refresh_interval_) {
+			if (current_time - last_refresh_ >= (uint32_t)refresh_interval_) {
 
 				// Run the Show
 				if (show_) {
@@ -163,7 +164,7 @@ namespace PixelMaestro {
 				}
 
 				// Update each Section
-				for (unsigned char section = 0; section < num_sections_; section++) {
+				for (uint8_t section = 0; section < num_sections_; section++) {
 					sections_[section].update(current_time);
 				}
 

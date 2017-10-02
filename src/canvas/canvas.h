@@ -5,6 +5,7 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
+#include <stdint.h>
 #include "../core/colors.h"
 #include "../core/point.h"
 #include "../core/section.h"
@@ -19,14 +20,14 @@ namespace PixelMaestro {
 			/// Defines the scrolling behavior of a Canvas.
 			struct Scroll {
 				/// The direction and rate that the Canvas will scroll along the x-axis.
-				signed short interval_x = 0;
+				int16_t interval_x = 0;
 				/// The direction and rate that the Canvas will scroll along the y-axis.
-				signed short interval_y = 0;
+				int16_t interval_y = 0;
 
 				/// The last time the Canvas scrolled along the x-axis.
-				unsigned long last_scroll_x = 0;
+				uint32_t last_scroll_x = 0;
 				/// The last time the Canvas scrolled along the y-axis.
-				unsigned long last_scroll_y = 0;
+				uint32_t last_scroll_y = 0;
 
 				/// Whether to repeat the Pattern while scrolling over the grid.
 				bool repeat = false;
@@ -37,7 +38,7 @@ namespace PixelMaestro {
 				 * @param y Scrolling along the y-axis.
 				 * @param repeat If true, repeat the Canvas while scrolling.
 				 */
-				Scroll(signed short x, signed short y, bool repeat) {
+				Scroll(int16_t x, int16_t y, bool repeat) {
 					this->interval_x = x;
 					this->interval_y = y;
 					this->repeat = repeat;
@@ -46,32 +47,32 @@ namespace PixelMaestro {
 			};
 
 			// Virtual functions - must be implemented in derived Canvases.
-			virtual void activate(unsigned int pixel) = 0;
-			virtual void deactivate(unsigned int pixel) = 0;
-			virtual Colors::RGB get_pixel_color(unsigned int pixel) = 0;
+			virtual void activate(uint32_t pixel) = 0;
+			virtual void deactivate(uint32_t pixel) = 0;
+			virtual Colors::RGB get_pixel_color(uint32_t pixel) = 0;
 			virtual void initialize_pattern() = 0;
 
 			Canvas(Section* section);
 			virtual ~Canvas();
 			void clear();
-			void draw_circle(unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
-			void draw_line(unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);
-			void draw_point(unsigned short x, unsigned short y);
-			void draw_rect(unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
-			void draw_text(unsigned short origin_x, unsigned short origin_y, Font* font, const char* text, unsigned char num_chars);
-			void draw_triangle(unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
-			void erase(unsigned short x, unsigned short y);
+			void draw_circle(uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
+			void draw_line(uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
+			void draw_point(uint16_t x, uint16_t y);
+			void draw_rect(uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
+			void draw_text(uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars);
+			void draw_triangle(uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
+			void erase(uint16_t x, uint16_t y);
 			bool* get_pattern();
 			Section* get_section();
 			virtual CanvasType::Type get_type() = 0;
 			bool in_bounds(Point* point);
-			bool in_bounds(unsigned short x, unsigned short y);
+			bool in_bounds(uint16_t x, uint16_t y);
 			void remove_scroll();
-			void set_scroll(signed short x, signed short y, bool repeat);
+			void set_scroll(int16_t x, int16_t y, bool repeat);
 			void set_section(Section* section_);
-			void set_offset(signed short x, signed short y);
-			void update(const unsigned long& current_time);
-			void update_scroll(const unsigned long& current_time);
+			void set_offset(int16_t x, int16_t y);
+			void update(const uint32_t& current_time);
+			void update_scroll(const uint32_t& current_time);
 
 		protected:
 			/**
@@ -82,8 +83,8 @@ namespace PixelMaestro {
 
 		private:
 			/// How far the Canvas is offset from the Pixel grid origin.
-			signed int offset_x_ = 0;
-			signed int offset_y_ = 0;
+			int32_t offset_x_ = 0;
+			int32_t offset_y_ = 0;
 
 			/// The scrolling behavior of the Canvas.
 			Scroll* scroll_ = nullptr;

@@ -19,8 +19,8 @@ namespace PixelMaestro {
 
 			MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
 			~MaestroCueHandler();
-			void set_refresh_interval(unsigned short interval);
-			void run(unsigned char *cue);
+			void set_refresh_interval(uint16_t interval);
+			void run(uint8_t *cue);
 	};
 }
 

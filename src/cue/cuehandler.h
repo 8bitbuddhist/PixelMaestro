@@ -1,6 +1,7 @@
 #ifndef CUEHANDLER_H
 #define CUEHANDLER_H
 
+#include <stdint.h>
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
@@ -11,7 +12,7 @@ namespace PixelMaestro {
 				controller_ = controller;
 			}
 			virtual ~CueHandler() { }
-			virtual void run(unsigned char* cue) = 0;
+			virtual void run(uint8_t* cue) = 0;
 
 		protected:
 			/// The controller managing this Handler.

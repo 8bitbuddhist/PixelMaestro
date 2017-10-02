@@ -25,7 +25,7 @@ namespace PixelMaestro {
 		@param cycle_interval The amount of time to go from the current color to next_color.
 		@param refresh_rate The refresh rate of the section. Used to calculate color events (if fading).
 	*/
-	void Pixel::set_next_color(Colors::RGB* next_color, bool fade, unsigned short cycle_interval, unsigned short refresh_rate) {
+	void Pixel::set_next_color(Colors::RGB* next_color, bool fade, uint16_t cycle_interval, uint16_t refresh_rate) {
 		// Only trigger an update if the colors don't match.
 		if (next_color != next_color_) {
 			next_color_ = next_color;
@@ -37,9 +37,9 @@ namespace PixelMaestro {
 			if (fade) {
 				float diff = cycle_interval / (float)refresh_rate;
 				step_ = {
-					(unsigned char)(Utility::abs_int(next_color_->r - current_color_.r) / diff),
-					(unsigned char)(Utility::abs_int(next_color_->g - current_color_.g) / diff),
-					(unsigned char)(Utility::abs_int(next_color_->b - current_color_.b) / diff)
+					(uint8_t)(Utility::abs_int(next_color_->r - current_color_.r) / diff),
+					(uint8_t)(Utility::abs_int(next_color_->g - current_color_.g) / diff),
+					(uint8_t)(Utility::abs_int(next_color_->b - current_color_.b) / diff)
 				};
 				step_count_ = diff;
 			}

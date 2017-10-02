@@ -37,7 +37,7 @@ Maestro* MaestroController::get_maestro() {
  * Returns the number of Sections handled by this Maestro.
  * @return Number of Sections.
  */
-unsigned char MaestroController::get_num_section_controllers() {
+uint8_t MaestroController::get_num_section_controllers() {
 	return section_controllers_.size();
 }
 
@@ -46,7 +46,7 @@ unsigned char MaestroController::get_num_section_controllers() {
  * @param index Index of the desired SectionController.
  * @return SectionController at the specified index.
  */
-SectionController *MaestroController::get_section_controller(unsigned char index) {
+SectionController *MaestroController::get_section_controller(uint8_t index) {
 	return section_controllers_[index].get();
 }
 
@@ -64,7 +64,7 @@ Show *MaestroController::get_show() {
 void MaestroController::reassign_sections() {
 	// Re-build the Sections vector
 	this->sections_.clear();
-	for (unsigned char i = 0; i < section_controllers_.size(); i++) {
+	for (uint8_t i = 0; i < section_controllers_.size(); i++) {
 		sections_.push_back(section_controllers_[i]->get_section());
 	}
 

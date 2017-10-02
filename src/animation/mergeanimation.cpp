@@ -1,18 +1,18 @@
 #include "mergeanimation.h"
 
 namespace PixelMaestro {
-	MergeAnimation::MergeAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) {
+	MergeAnimation::MergeAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
 		type_ = Animation::Type::Merge;
 	}
 
 	void MergeAnimation::update(Section* section) {
 		if (orientation_ == Vertical) {
-			for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
+			for (uint16_t x = 0; x < section->get_dimensions()->x; x++) {
 				mid_point_ = (section->get_dimensions()->y / 2) - 1;
 				count_ = 0;
 
 				// Note: COLUMN MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
-				for (signed int y = mid_point_; y >= 0; y--) {
+				for (int32_t y = mid_point_; y >= 0; y--) {
 					section->set_one(x, y, get_color_at_index(count_ + cycle_index_));
 					count_++;
 				}
@@ -30,19 +30,19 @@ namespace PixelMaestro {
 
 				// Go from the center to the last
 				count_ = 0;
-				for (unsigned short y = mid_point_; y < section->get_dimensions()->y; y++) {
+				for (uint16_t y = mid_point_; y < section->get_dimensions()->y; y++) {
 					section->set_one(x, y, get_color_at_index(count_ + cycle_index_));
 					count_++;
 				}
 			}
 		}
 		else {	// Horizontal
-			for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {
+			for (uint16_t y = 0; y < section->get_dimensions()->y; y++) {
 				mid_point_ = (section->get_dimensions()->x / 2) - 1;
 				count_ = 0;
 
 				// Note: ROW MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
-				for (signed int x = mid_point_; x >= 0; x--) {
+				for (int32_t x = mid_point_; x >= 0; x--) {
 					section->set_one(x, y, get_color_at_index(count_ + cycle_index_));
 					count_++;
 				}
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 
 				// Go from the center to the last
 				count_ = 0;
-				for (unsigned short x = mid_point_; x < section->get_dimensions()->x; x++) {
+				for (uint16_t x = mid_point_; x < section->get_dimensions()->x; x++) {
 					section->set_one(x, y, get_color_at_index(count_ + cycle_index_));
 					count_++;
 				}

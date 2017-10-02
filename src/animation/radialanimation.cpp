@@ -2,7 +2,7 @@
 #include "radialanimation.h"
 
 namespace PixelMaestro {
-	RadialAnimation::RadialAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) {
+	RadialAnimation::RadialAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
 		type_ = Animation::Type::Radial;
 	}
 
@@ -11,15 +11,15 @@ namespace PixelMaestro {
 		if (size_ != *section->get_dimensions()) {
 			size_ = *section->get_dimensions();
 			center_ = {
-				(unsigned short)(size_.x / 2),
-				(unsigned short)(size_.y / 2)
+				(uint16_t)(size_.x / 2),
+				(uint16_t)(size_.y / 2)
 			};
 		}
 
 		if (orientation_ == Orientation::Vertical) {
 			// For each Pixel, calculate the slope from the center.
-			for (unsigned short y = 0; y < size_.y; y++) {
-				for (unsigned short x = 0; x < size_.x; x++) {
+			for (uint16_t y = 0; y < size_.y; y++) {
+				for (uint16_t x = 0; x < size_.x; x++) {
 					if (x == center_.x || y == center_.y) {
 						slope_ = 0;
 					}
@@ -34,9 +34,9 @@ namespace PixelMaestro {
 		}
 		else {	// Horizontal
 			// For each Pixel, calculate its distance from the center of the grid, then use the distance to choose the index of the correct color.
-			for (unsigned short y = 0; y < size_.y; y++) {
+			for (uint16_t y = 0; y < size_.y; y++) {
 				y_squared_ = Utility::square(y - center_.y);
-				for (unsigned short x = 0; x < size_.x; x++) {
+				for (uint16_t x = 0; x < size_.x; x++) {
 					distance_ = Utility::sqrt(Utility::square(x - center_.x) + y_squared_);
 					section->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
 				}

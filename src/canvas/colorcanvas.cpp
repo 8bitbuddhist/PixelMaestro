@@ -20,7 +20,7 @@ namespace PixelMaestro {
 	 * @param pixel
 	 * @return
 	 */
-	Colors::RGB ColorCanvas::get_pixel_color(unsigned int pixel) {
+	Colors::RGB ColorCanvas::get_pixel_color(uint32_t pixel) {
 		return color_pattern_[pixel];
 	}
 
@@ -29,14 +29,14 @@ namespace PixelMaestro {
 	 * Sets the color of the pixel at the specified index to the current drawing color.
 	 * @param pixel Pixel to activate.
 	 */
-	void ColorCanvas::activate(unsigned int pixel) {
+	void ColorCanvas::activate(uint32_t pixel) {
 		color_pattern_[pixel] = drawing_color_;
 	}
 	/**
 	 * Sets the color of the pixel at the specified index to black.
 	 * @param pixel Pixel to activate.
 	 */
-	void ColorCanvas::deactivate(unsigned int pixel) {
+	void ColorCanvas::deactivate(uint32_t pixel) {
 		color_pattern_[pixel] = Colors::BLACK;
 	}
 
@@ -48,7 +48,7 @@ namespace PixelMaestro {
 	 * @param radius The circle's radius.
 	 * @param fill Whether to fill the circle or leave it empty.
 	 */
-	void ColorCanvas::draw_circle(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill) {
+	void ColorCanvas::draw_circle(Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
 		drawing_color_ = color;
 		Canvas::draw_circle(origin_x, origin_y, radius, fill);
 	}
@@ -61,7 +61,7 @@ namespace PixelMaestro {
 	 * @param target_x Ending point x coordinate.
 	 * @param target_y Ending point y coordinate.
 	 */
-	void ColorCanvas::draw_line(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y) {
+	void ColorCanvas::draw_line(Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
 		drawing_color_ = color;
 		Canvas::draw_line(origin_x, origin_y, target_x, target_y);
 	}
@@ -72,7 +72,7 @@ namespace PixelMaestro {
 	 * @param cursor_x Pixel x coordinate.
 	 * @param cursor_y Pixel y coordinate.
 	 */
-	void ColorCanvas::draw_point(Colors::RGB color, unsigned short x, unsigned short y) {
+	void ColorCanvas::draw_point(Colors::RGB color, uint16_t x, uint16_t y) {
 		drawing_color_ = color;
 		Canvas::draw_point(x, y);
 	}
@@ -86,7 +86,7 @@ namespace PixelMaestro {
 	 * @param size_y Height of the rectangle.
 	 * @param fill Whether to fill the rectangle or leave it empty.
 	 */
-	void ColorCanvas::draw_rect(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill) {
+	void ColorCanvas::draw_rect(Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
 		drawing_color_ = color;
 		Canvas::draw_rect(origin_x, origin_y, size_x, size_y, fill);
 	}
@@ -99,7 +99,7 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void ColorCanvas::draw_text(Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font *font, const char* text, unsigned char num_chars) {
+	void ColorCanvas::draw_text(Colors::RGB color, uint16_t origin_x, uint16_t origin_y, Font *font, const char* text, uint8_t num_chars) {
 		drawing_color_ = color;
 		Canvas::draw_text(origin_x, origin_y, font, text, num_chars);
 	}
@@ -115,7 +115,7 @@ namespace PixelMaestro {
 	 * @param point_c_y Third point y-coordinate.
 	 * @param fill Whether to fill the triangle or leave it empty.
 	 */
-	void ColorCanvas::draw_triangle(Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill) {
+	void ColorCanvas::draw_triangle(Colors::RGB color, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
 		drawing_color_ = color;
 		Canvas::draw_triangle(point_a_x, point_a_y, point_b_x, point_b_y, point_c_x, point_c_y, fill);
 	}

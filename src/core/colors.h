@@ -5,6 +5,8 @@
 #ifndef COLORS_H
 #define COLORS_H
 
+#include <stdint.h>
+
 namespace PixelMaestro {
 	class Colors {
 
@@ -13,13 +15,13 @@ namespace PixelMaestro {
 			/// Stores an RGB definition of a color.
 			struct RGB {
 				/// The color's red value.
-				unsigned char r;
+				uint8_t r;
 
 				/// The color's green value.
-				unsigned char g;
+				uint8_t g;
 
 				/// The color's blue value.
-				unsigned char b;
+				uint8_t b;
 
 				void operator=(RGB color_two) {
 					r = color_two.r;
@@ -37,33 +39,33 @@ namespace PixelMaestro {
 
 				RGB operator+(RGB color_two) {
 					return {
-						(unsigned char)((r + color_two.r) % 255),
-						(unsigned char)((g + color_two.g) % 255),
-						(unsigned char)((b + color_two.b) % 255)
+						(uint8_t)((r + color_two.r) % 255),
+						(uint8_t)((g + color_two.g) % 255),
+						(uint8_t)((b + color_two.b) % 255)
 					};
 				}
 
 				RGB operator-(RGB color_two) {
 					return {
-						(unsigned char)((r - color_two.r) % 255),
-						(unsigned char)((g - color_two.g) % 255),
-						(unsigned char)((b - color_two.b) % 255)
+						(uint8_t)((r - color_two.r) % 255),
+						(uint8_t)((g - color_two.g) % 255),
+						(uint8_t)((b - color_two.b) % 255)
 					};
 				}
 
 				RGB operator*(float multiplier) {
 					return {
-						(unsigned char)(r * multiplier),
-						(unsigned char)(g * multiplier),
-						(unsigned char)(b * multiplier)
+						(uint8_t)(r * multiplier),
+						(uint8_t)(g * multiplier),
+						(uint8_t)(b * multiplier)
 					};
 				}
 
 				RGB operator/(float divisor) {
 					return {
-						(unsigned char)(r / divisor),
-						(unsigned char)(g / divisor),
-						(unsigned char)(b / divisor)
+						(uint8_t)(r / divisor),
+						(uint8_t)(g / divisor),
+						(uint8_t)(b / divisor)
 					};
 				}
 			};
@@ -107,10 +109,10 @@ namespace PixelMaestro {
 			static RGB RAINBOW[];
 
 			static RGB generate_random_color();
-			static void generate_random_color_array(RGB* array, RGB* base_color, unsigned int num_colors, float range = 1.0);
-			static void generate_scaling_color_array(RGB* array, RGB* base_color, RGB* target_color, unsigned int num_colors, bool reverse = false);
-			static void generate_scaling_color_array(RGB* array, RGB* base_color, unsigned int num_colors, unsigned char threshold, bool reverse = false);
-			static RGB mix_colors(RGB color_one, RGB color_two, MixMode mode, unsigned char alpha = 0);
+			static void generate_random_color_array(RGB* array, RGB* base_color, uint32_t num_colors, float range = 1.0);
+			static void generate_scaling_color_array(RGB* array, RGB* base_color, RGB* target_color, uint32_t num_colors, bool reverse = false);
+			static void generate_scaling_color_array(RGB* array, RGB* base_color, uint32_t num_colors, uint8_t threshold, bool reverse = false);
+			static RGB mix_colors(RGB color_one, RGB color_two, MixMode mode, uint8_t alpha = 0);
 	};
 }
 

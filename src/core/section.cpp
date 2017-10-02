@@ -24,7 +24,7 @@ namespace PixelMaestro {
 	 * @param x Number of rows in the Section.
 	 * @param y Number of columns in the Section.
 	 */
-	Section::Section(unsigned short x, unsigned short y) {
+	Section::Section(uint16_t x, uint16_t y) {
 		set_dimensions(x, y);
 	}
 
@@ -56,7 +56,7 @@ namespace PixelMaestro {
 	 * @param alpha The Overlay's transparency (0 - 255.
 	 * @return New Overlay.
 	 */
-	Section::Overlay* Section::add_overlay(Colors::MixMode mix_mode, unsigned char alpha) {
+	Section::Overlay* Section::add_overlay(Colors::MixMode mix_mode, uint8_t alpha) {
 		remove_overlay();
 		overlay_ = new Overlay(dimensions_, mix_mode, alpha);
 		overlay_->section->set_refresh_interval(refresh_interval_);
@@ -103,7 +103,7 @@ namespace PixelMaestro {
 
 		@param pixel The index of the Pixel in the pixels_ array.
 	*/
-	Pixel* Section::get_pixel(unsigned int pixel) {
+	Pixel* Section::get_pixel(uint32_t pixel) {
 		return &pixels_[pixel];
 	}
 
@@ -113,7 +113,7 @@ namespace PixelMaestro {
 		@param pixel Index of the Pixel.
 		@return RGB value of the Pixel's final color.
 	*/
-	Colors::RGB Section::get_pixel_color(unsigned int pixel) {
+	Colors::RGB Section::get_pixel_color(uint32_t pixel) {
 		Colors::RGB color;
 
 		// If there's a Canvas, get the color supplied by the Canvas.
@@ -137,7 +137,7 @@ namespace PixelMaestro {
 	 * @param coordinates The Pixel's Point.
 	 * @return The index of the Pixel.
 	 */
-	unsigned int Section::get_pixel_index(Point* coordinates) {
+	uint32_t Section::get_pixel_index(Point* coordinates) {
 		return get_pixel_index(coordinates->x, coordinates->y);
 	}
 
@@ -148,7 +148,7 @@ namespace PixelMaestro {
 		@param y The Pixel's y-coordinate.
 		@return The index of the Pixel.
 	*/
-	unsigned int Section::get_pixel_index(unsigned short x, unsigned short y) {
+	uint32_t Section::get_pixel_index(uint16_t x, uint16_t y) {
 		return (y * dimensions_.x) + x;
 	}
 
@@ -157,7 +157,7 @@ namespace PixelMaestro {
 
 		@return The refresh rate of the Section.
 	*/
-	unsigned short Section::get_refresh_interval() {
+	uint16_t Section::get_refresh_interval() {
 		return *refresh_interval_;
 	}
 
@@ -191,7 +191,7 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::set_all(Colors::RGB* color) {
-		for (unsigned int pixel = 0; pixel < dimensions_.size(); pixel++) {
+		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
 			set_one(pixel, color);
 		}
 	}
@@ -228,7 +228,7 @@ namespace PixelMaestro {
 	 * @param x Number of Pixels along the x-coordinate.
 	 * @param y Number of Pixels along the y-coordinate.
 	 */
-	void Section::set_dimensions(unsigned short x, unsigned short y) {
+	void Section::set_dimensions(uint16_t x, uint16_t y) {
 		dimensions_.x = x;
 		dimensions_.y = y;
 
@@ -253,7 +253,7 @@ namespace PixelMaestro {
 		@param pixel The index of the Pixel to update.
 		@param color New color.
 	*/
-	void Section::set_one(unsigned int pixel, Colors::RGB* color) {
+	void Section::set_one(uint32_t pixel, Colors::RGB* color) {
 		// Only continue if Pixel is within the bounds of the array.
 		if (pixel < dimensions_.size()) {
 			/*
@@ -271,7 +271,7 @@ namespace PixelMaestro {
 		@param y The row number of the Pixel.
 		@param color New color.
 	*/
-	void Section::set_one(unsigned short x, unsigned short y, Colors::RGB* color) {
+	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB* color) {
 		set_one(get_pixel_index(x, y), color);
 	}
 
@@ -280,7 +280,7 @@ namespace PixelMaestro {
 
 		@param interval Rate in milliseconds between Pixel redraws.
 	*/
-	void Section::set_refresh_interval(unsigned short* interval) {
+	void Section::set_refresh_interval(uint16_t* interval) {
 		refresh_interval_ = interval;
 	}
 
@@ -289,7 +289,7 @@ namespace PixelMaestro {
 
 		@param current_time Program runtime.
 	*/
-	void Section::update(const unsigned long& current_time) {
+	void Section::update(const uint32_t& current_time) {
 
 		// If this Section has an Overlay or Canvas, update them first.
 		if (overlay_ != nullptr) {
@@ -309,7 +309,7 @@ namespace PixelMaestro {
 		if (animation_ != nullptr &&
 				(animation_->update(current_time, this) ||
 				 animation_->get_fade())) {
-			for (unsigned int pixel = 0; pixel < dimensions_.size(); pixel++) {
+			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
 				pixels_[pixel].update();
 			}
 		}

@@ -2,11 +2,11 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) : Animation(colors, num_colors, speed, pause) {
+	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
 		type_ = Animation::Type::Mandelbrot;
 	}
 
-	void MandelbrotAnimation::set_colors(Colors::RGB *colors, unsigned char num_colors) {
+	void MandelbrotAnimation::set_colors(Colors::RGB *colors, uint8_t num_colors) {
 		colors_ = colors;
 		num_colors_ = num_colors;
 		max_iterations_ = num_colors;
@@ -18,17 +18,17 @@ namespace PixelMaestro {
 
 			// Recalculate center and width in case the Section size has changed.
 			center_ = {
-				(unsigned short)(section->get_dimensions()->x / 2),
-				(unsigned short)(section->get_dimensions()->y / 2)
+				(uint16_t)(section->get_dimensions()->x / 2),
+				(uint16_t)(section->get_dimensions()->y / 2)
 			};
 
 			// Calculate the scale of the pattern
 			image_width_ = 4.0 / size_.x;
 		}
 
-		for (unsigned short y = 0; y < size_.y; y++) {
+		for (uint16_t y = 0; y < size_.y; y++) {
 			c_imaginary_ = (y - center_.y) * image_width_;
-			for (unsigned short x = 0; x < size_.x; x++) {
+			for (uint16_t x = 0; x < size_.x; x++) {
 				c_real_ = (x - center_.x) * image_width_;
 
 				x_ = 0;

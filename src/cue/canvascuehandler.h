@@ -27,20 +27,20 @@ namespace PixelMaestro {
 
 			CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
 			~CanvasCueHandler();
-			void draw_circle(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
-			void draw_circle(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short radius, bool fill);
-			void draw_line(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);
-			void draw_line(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short target_x, unsigned short target_y);
-			void draw_point(unsigned char section_num, unsigned char overlay_num, unsigned short x, unsigned short y);
-			void draw_point(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short x, unsigned short y);
-			void draw_rect(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
-			void draw_rect(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, unsigned short size_x, unsigned short size_y, bool fill);
-			void draw_text(unsigned char section_num, unsigned char overlay_num, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char* text, unsigned char num_chars);
-			void draw_text(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short origin_x, unsigned short origin_y, Font::Type font, const char* text, unsigned char num_chars);
-			void draw_triangle(unsigned char section_num, unsigned char overlay_num, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
-			void draw_triangle(unsigned char section_num, unsigned char overlay_num, Colors::RGB color, unsigned short point_a_x, unsigned short point_a_y, unsigned short point_b_x, unsigned short point_b_y, unsigned short point_c_x, unsigned short point_c_y, bool fill);
+			void draw_circle(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
+			void draw_circle(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
+			void draw_line(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
+			void draw_line(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
+			void draw_point(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y);
+			void draw_point(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t x, uint16_t y);
+			void draw_rect(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
+			void draw_rect(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
+			void draw_text(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars);
+			void draw_text(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars);
+			void draw_triangle(uint8_t section_num, uint8_t overlay_num, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
+			void draw_triangle(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
 
-			void run(unsigned char* cue);
+			void run(uint8_t* cue);
 	};
 }
 

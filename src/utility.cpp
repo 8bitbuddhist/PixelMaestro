@@ -10,8 +10,8 @@ namespace PixelMaestro {
 	 * @param val The integer to evaluate.
 	 * @return The absolute value of the integer.
 	 */
-	unsigned int Utility::abs_int(short val) {
-		return val > 0 ? (unsigned int)val : (unsigned int)-val;
+	uint32_t Utility::abs_int(int32_t val) {
+		return val > 0 ? val : -val;
 	}
 
 	/**
@@ -19,13 +19,13 @@ namespace PixelMaestro {
 	 * @param max Max limit of the RNG range.
 	 * @return Random integer value.
 	 */
-	int Utility::rand(int max) {
+	int32_t Utility::rand(int32_t max) {
 		seed_ = (seed_ * 1103515245U + 12345U) & 0x7fffffffU;
 		if (max == 0) {
-			return (int)seed_;
+			return (int32_t)seed_;
 		}
 		else {
-			return (int)seed_ % max;
+			return (int32_t)seed_ % max;
 		}
 	}
 
@@ -57,7 +57,7 @@ namespace PixelMaestro {
 	 * @param val The integer to evaluate.
 	 * @return The integer squared.
 	 */
-	unsigned int Utility::square(short val) {
+	uint32_t Utility::square(int16_t val) {
 		return val * val;
 	}
 }

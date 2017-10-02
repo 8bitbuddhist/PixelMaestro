@@ -28,14 +28,14 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	 * If there's more than one, the last Section will overwrite the first.
 	 * For more complex layouts, create a custom MaestroDrawingArea or add multiple SimpleDrawingAreas to the window.
 	 */
-	unsigned short section = 0;
+	uint16_t section = 0;
 	if (last_pixel_count_ != maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->size()) {
 		resizeEvent(nullptr);
 		last_pixel_count_ = maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->size();
 	}
 
-	for (unsigned short row = 0; row < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
-		for (unsigned short pixel = 0; pixel < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {			
+	for (uint16_t row = 0; row < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
+		for (uint16_t pixel = 0; pixel < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {			
 			tmp_rgb_ = maestro_controller_->get_maestro()->get_pixel_color(section, maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
 			tmp_color_.setRgb(tmp_rgb_.r, tmp_rgb_.g, tmp_rgb_.b);
 			tmp_brush_.setColor(tmp_color_);

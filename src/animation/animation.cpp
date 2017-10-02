@@ -9,7 +9,7 @@ namespace PixelMaestro {
 	 * @param speed The amount of time (in milliseconds) to run a single animation cycle.
 	 * @param pause The amount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	Animation::Animation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause) {
+	Animation::Animation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) {
 		speed_ = speed;
 		pause_ = pause;
 		set_colors(colors, num_colors);
@@ -24,7 +24,7 @@ namespace PixelMaestro {
 		@param index Desired index.
 		@return Color at the specified index.
 	*/
-	Colors::RGB* Animation::get_color_at_index(unsigned char index) {
+	Colors::RGB* Animation::get_color_at_index(uint8_t index) {
 		if (num_colors_ > 0 && index >= num_colors_) {
 			return &colors_[index % num_colors_];
 		}
@@ -45,7 +45,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Cycle index.
 	 */
-	unsigned char Animation::get_cycle_index() {
+	uint8_t Animation::get_cycle_index() {
 		return cycle_index_;
 	}
 
@@ -62,7 +62,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Number of colors in the color palette.
 	 */
-	unsigned char Animation::get_num_colors() {
+	uint8_t Animation::get_num_colors() {
 		return num_colors_;
 	}
 
@@ -78,7 +78,7 @@ namespace PixelMaestro {
 	 * Returns the amount of time (in milliseconds) to wait before starting an animation cycle.
 	 * @return Pause time.
 	 */
-	unsigned short Animation::get_pause() {
+	uint16_t Animation::get_pause() {
 		return pause_;
 	}
 
@@ -95,7 +95,7 @@ namespace PixelMaestro {
 	 * Returns the animation's speed.
 	 * @return Speed.
 	 */
-	unsigned short Animation::get_speed() {
+	uint16_t Animation::get_speed() {
 		return speed_;
 	}
 
@@ -113,12 +113,12 @@ namespace PixelMaestro {
 		@param colors New color palette.
 		@param num_colors Number of colors in the palette.
 	*/
-	void Animation::set_colors(Colors::RGB* colors, unsigned char num_colors) {
+	void Animation::set_colors(Colors::RGB* colors, uint8_t num_colors) {
 		delete[] colors_;
 
 		colors_ = new Colors::RGB[num_colors];
 
-		for (unsigned char i = 0; i < num_colors; i++) {
+		for (uint8_t i = 0; i < num_colors; i++) {
 			colors_[i] = colors[i];
 		}
 
@@ -131,7 +131,7 @@ namespace PixelMaestro {
 	 *
 	 * @param index New cycle index.
 	 */
-	void Animation::set_cycle_index(unsigned char index) {
+	void Animation::set_cycle_index(uint8_t index) {
 		if (num_colors_ && index > num_colors_) {
 			index %= num_colors_;
 		}
@@ -172,7 +172,7 @@ namespace PixelMaestro {
 	 * @param speed Amount of time (in milliseconds) between animation cycles.
 	 * @param pause AMount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	void Animation::set_speed(unsigned short speed, unsigned short pause) {
+	void Animation::set_speed(uint16_t speed, uint16_t pause) {
 		speed_ = speed;
 		pause_ = pause;
 	}
@@ -184,7 +184,7 @@ namespace PixelMaestro {
 	 * @param section The parent Section.
 	 * @return True if the update was processed.
 	 */
-	bool Animation::update(const unsigned long &current_time, Section *section) {
+	bool Animation::update(const uint32_t &current_time, Section *section) {
 		// If the color palette is not set, exit.
 		if (num_colors_ == 0 || colors_ == nullptr) {
 			return false;
@@ -218,7 +218,7 @@ namespace PixelMaestro {
 		@param min The minimum possible value of cycle_index_.
 		@param max The maximum possible value of cycle_index_.
 	*/
-	void Animation::update_cycle(unsigned char min, unsigned char max) {
+	void Animation::update_cycle(uint8_t min, uint8_t max) {
 		if (reverse_) {
 			if (cycle_index_ == 0) {
 				cycle_index_ = max - 1;

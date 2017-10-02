@@ -1,6 +1,7 @@
 #ifndef CUECONTROLLER_H
 #define CUECONTROLLER_H
 
+#include <stdint.h>
 #include "../core/maestro.h"
 #include "cuehandler.h"
 
@@ -13,7 +14,7 @@ namespace PixelMaestro {
 		public:
 			typedef union {
 				float val;
-				unsigned char byte[4];
+				uint8_t byte[4];
 			} Converter;
 
 			Converter converted;
@@ -22,7 +23,7 @@ namespace PixelMaestro {
 				converted.val = float_val;
 			}
 
-			static float byte_to_float(unsigned char* byte_start) {
+			static float byte_to_float(uint8_t* byte_start) {
 				Converter converted_tmp;
 				converted_tmp.byte[0] = byte_start[0];
 				converted_tmp.byte[1] = byte_start[1];
@@ -36,15 +37,15 @@ namespace PixelMaestro {
 	/// Converts an integer value to and from a byte array.
 	class IntByteConvert {
 		public:
-			unsigned char converted_0 = 0;
-			unsigned char converted_1 = 0;
+			uint8_t converted_0 = 0;
+			uint8_t converted_1 = 0;
 
-			IntByteConvert(unsigned int val) {
+			IntByteConvert(uint32_t val) {
 				converted_0 = val / 256;
 				converted_1 = val % 256;
 			}
 
-			static unsigned int byte_to_int(unsigned char* byte_start) {
+			static uint32_t byte_to_int(uint8_t* byte_start) {
 				return (byte_start[0] * 256) + byte_start[1];
 			}
 	};
@@ -71,25 +72,25 @@ namespace PixelMaestro {
 
 			CueController(Maestro* maestro);
 			~CueController();
-			void assemble(unsigned char payload_size);
-			unsigned char checksum(unsigned char* cue, unsigned char cue_size);
+			void assemble(uint8_t payload_size);
+			uint8_t checksum(uint8_t* cue, uint8_t cue_size);
 			CueHandler* enable_handler(Handler handler);
-			unsigned char* get_cue();
-			unsigned char get_cue_size();
+			uint8_t* get_cue();
+			uint8_t get_cue_size();
 			CueHandler* get_handler(Handler handler);
 			Maestro* get_maestro();
-			void read(unsigned char byte);
+			void read(uint8_t byte);
 			void run();
-			void run(unsigned char* cue);
-			void run(unsigned char* cues, unsigned char num_cues);
-			bool validate_header(unsigned char* cue);
+			void run(uint8_t* cue);
+			void run(uint8_t* cues, uint8_t num_cues);
+			bool validate_header(uint8_t* cue);
 
 		private:
 			/// Header assigned to all outgoing Cues.
-			const unsigned char header_[3] = {'P', 'M', 'C'};
+			const uint8_t header_[3] = {'P', 'M', 'C'};
 
 			/// Buffer for storing the currently loaded Cue.
-			unsigned char cue_[256] = {0};
+			uint8_t cue_[256] = {0};
 
 			/// Handlers for incoming Cues.
 			CueHandler* handlers_[4] {nullptr};
@@ -98,7 +99,7 @@ namespace PixelMaestro {
 			Maestro* maestro_ = nullptr;
 
 			/// Index for tracking buffer reads while loading a Cue by byte.
-			unsigned char read_index_ = 0;
+			uint8_t read_index_ = 0;
 	};
 }
 

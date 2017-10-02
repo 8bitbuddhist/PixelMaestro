@@ -2,7 +2,7 @@
 #include "plasmaanimation.h"
 
 namespace PixelMaestro {
-	PlasmaAnimation::PlasmaAnimation(Colors::RGB* colors, unsigned char num_colors, unsigned short speed, unsigned short pause, float size, float resolution) : Animation(colors, num_colors, speed, pause) {
+	PlasmaAnimation::PlasmaAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause, float size, float resolution) : Animation(colors, num_colors, speed, pause) {
 		type_ = Animation::Type::Plasma;
 		resolution_ = resolution;
 		size_ = size;
@@ -43,8 +43,8 @@ namespace PixelMaestro {
 	void PlasmaAnimation::update(Section* section) {
 		int color_index;
 
-		for (unsigned short y = 0; y < section->get_dimensions()->y; y++) {
-			for (unsigned short x = 0; x < section->get_dimensions()->x; x++) {
+		for (uint16_t y = 0; y < section->get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < section->get_dimensions()->x; x++) {
 				color_index = ((resolution_ + (resolution_ * sin(x / size_))) + (resolution_ + (resolution_ * sin(y / size_)))) / 2;
 				section->set_one(x, y, get_color_at_index(color_index + cycle_index_));
 			}

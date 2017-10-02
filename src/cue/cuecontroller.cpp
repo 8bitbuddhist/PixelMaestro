@@ -18,7 +18,7 @@ namespace PixelMaestro {
 	 * Prepares the Cue for transport by adding header info.
 	 * @param payload_size The size of the payload.
 	 */
-	void CueController::assemble(unsigned char payload_size) {
+	void CueController::assemble(uint8_t payload_size) {
 		/*
 		 * Final Cue has the following form: [ID] [Checksum] [Size] [Payload]
 		 *
@@ -28,7 +28,7 @@ namespace PixelMaestro {
 		 * [Payload] contains the actual command with parameters.
 		 */
 
-		for (unsigned char i = 0; i < Byte::ChecksumByte; i++) {
+		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
 			cue_[i] = header_[i];
 		}
 
@@ -43,9 +43,9 @@ namespace PixelMaestro {
 	 * @param cue_size The size of the Cue.
 	 * @return New checksum.
 	 */
-	unsigned char CueController::checksum(unsigned char *cue, unsigned char cue_size) {
-		unsigned int sum = 0;
-		for (unsigned char i = 0; i < cue_size; i++) {
+	uint8_t CueController::checksum(uint8_t *cue, uint8_t cue_size) {
+		uint32_t sum = 0;
+		for (uint8_t i = 0; i < cue_size; i++) {
 
 			// Make sure we don't include the checksum in its own calculation
 			if (i != Byte::ChecksumByte) {
@@ -62,31 +62,31 @@ namespace PixelMaestro {
 	 * @return New CueHandler.
 	 */
 	CueHandler* CueController::enable_handler(Handler handler) {
-		if (handlers_[(unsigned char)handler] == nullptr) {
+		if (handlers_[(uint8_t)handler] == nullptr) {
 			switch(handler) {
 				case AnimationHandler:
-					handlers_[(unsigned char)Handler::AnimationHandler] = new AnimationCueHandler(this);
+					handlers_[(uint8_t)Handler::AnimationHandler] = new AnimationCueHandler(this);
 					break;
 				case CanvasHandler:
-					handlers_[(unsigned char)Handler::CanvasHandler] = new CanvasCueHandler(this);
+					handlers_[(uint8_t)Handler::CanvasHandler] = new CanvasCueHandler(this);
 					break;
 				case MaestroHandler:
-					handlers_[(unsigned char)Handler::MaestroHandler] = new MaestroCueHandler(this);
+					handlers_[(uint8_t)Handler::MaestroHandler] = new MaestroCueHandler(this);
 					break;
 				case SectionHandler:
-					handlers_[(unsigned char)Handler::SectionHandler] = new SectionCueHandler(this);
+					handlers_[(uint8_t)Handler::SectionHandler] = new SectionCueHandler(this);
 					break;
 			}
 		}
 
-		return handlers_[(unsigned char)handler];
+		return handlers_[(uint8_t)handler];
 	}
 
 	/**
 	 * Returns the current Cue.
 	 * @return Cue buffer.
 	 */
-	unsigned char* CueController::get_cue() {
+	uint8_t* CueController::get_cue() {
 		return cue_;
 	}
 
@@ -94,7 +94,7 @@ namespace PixelMaestro {
 	 * Returns the size of the currently loaded Cue.
 	 * @return Cue size.
 	 */
-	unsigned char CueController::get_cue_size() {
+	uint8_t CueController::get_cue_size() {
 		return (cue_[Byte::SizeByte] + Byte::PayloadByte);
 	}
 
@@ -104,8 +104,8 @@ namespace PixelMaestro {
 	 * @return Handler instance.
 	 */
 	CueHandler* CueController::get_handler(Handler handler) {
-		if (handlers_[(unsigned char)handler] != nullptr) {
-			return handlers_[(unsigned char)handler];
+		if (handlers_[(uint8_t)handler] != nullptr) {
+			return handlers_[(uint8_t)handler];
 		}
 		return nullptr;
 	}
@@ -123,7 +123,7 @@ namespace PixelMaestro {
 	 * Once the end of the Cue has been reached, the Cue runs and the reader resets for the next Cue.
 	 * @param byte Byte to read into the buffer.
 	 */
-	void CueController::read(unsigned char byte) {
+	void CueController::read(uint8_t byte) {
 		cue_[read_index_] = byte;
 		read_index_++;
 
@@ -150,7 +150,7 @@ namespace PixelMaestro {
 				cue_[Header3Byte] = header_[Header3Byte];
 				read_index_ = Header3Byte + 1;
 			}
-			else if ((signed short)(read_index_ + 1) >= 256) {
+			else if ((int16_t)(read_index_ + 1) >= 256) {
 				read_index_ = 0;
 			}
 		}
@@ -167,7 +167,7 @@ namespace PixelMaestro {
 	 * Validates and runs the provided Cue.
 	 * @param cue Cue to load.
 	 */
-	void CueController::run(unsigned char *cue) {
+	void CueController::run(uint8_t *cue) {
 		if (validate_header(cue)) {
 			handlers_[cue[Byte::PayloadByte]]->run(cue);
 		}
@@ -178,8 +178,8 @@ namespace PixelMaestro {
 	 * @param cues Cues to load.
 	 * @param num_cues Number of Cues to load.
 	 */
-	void CueController::run(unsigned char *cues, unsigned char num_cues) {
-		for (unsigned char i = 0; i < num_cues; i++) {
+	void CueController::run(uint8_t *cues, uint8_t num_cues) {
+		for (uint8_t i = 0; i < num_cues; i++) {
 			run(&cues[i]);
 		}
 	}
@@ -189,14 +189,14 @@ namespace PixelMaestro {
 	 * @param cue Cue to validate.
 	 * @return True if valid, false if not.
 	 */
-	bool CueController::validate_header(unsigned char *cue) {
-		for (unsigned char i = 0; i < Byte::ChecksumByte; i++) {
+	bool CueController::validate_header(uint8_t *cue) {
+		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
 			if (cue[i] != header_[i]) {
 				return false;
 			}
 		}
 
-		unsigned char size = cue[Byte::SizeByte] + Byte::PayloadByte;
+		uint8_t size = cue[Byte::SizeByte] + Byte::PayloadByte;
 
 		// Second, generate and compare the checksum.
 		if (cue[Byte::ChecksumByte] != checksum(cue, size)) {
@@ -207,7 +207,7 @@ namespace PixelMaestro {
 	}
 
 	CueController::~CueController() {
-		for (unsigned char i = 0; i < 4; i++) {
+		for (uint8_t i = 0; i < 4; i++) {
 			delete handlers_[i];
 		}
 	}
