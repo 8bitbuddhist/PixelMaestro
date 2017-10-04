@@ -3,7 +3,7 @@
 namespace PixelMaestro {
 
 	// Must initialize static char value in source file.
-	int Utility::seed_ = 1;
+	int32_t Utility::seed_ = 1;
 
 	/**
 	 * Returns the absolute value of an integer.

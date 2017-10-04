@@ -9,7 +9,14 @@
 #include "controller/sectioncontroller.h"
 #include "core/colors.h"
 #include "core/maestro.h"
+#include "cue/animationcuehandler.h"
+#include "cue/canvascuehandler.h"
+#include "cue/maestrocuehandler.h"
+#include "cue/sectioncuehandler.h"
 #include "drawingarea/simpledrawingarea.h"
+#include <boost/asio.hpp>
+#include <boost/asio/serial_port.hpp>
+#include <fstream>
 #include <QWidget>
 
 namespace Ui {
@@ -26,9 +33,10 @@ class MaestroControl : public QWidget {
 		~MaestroControl();
 
 	private:
+		Ui::MaestroControl *ui;
+
 		/// Stores the actively controlled SectionController.
 		SectionController *active_section_controller_ = nullptr;
-		Ui::MaestroControl *ui;
 
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_ = nullptr;
@@ -39,12 +47,29 @@ class MaestroControl : public QWidget {
 		/// Stores Canvas controls
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
+		// Load Serial connection to Arduino.
+		bool serial_enabled_ = false;
+		const char* port_num_ = "/dev/ttyACM0";
+		boost::asio::io_service io_service_;
+		boost::asio::serial_port serial_port_;
+
+		// Initialize CueController
+		CueController* controller_;
+		AnimationCueHandler* animation_handler;
+		CanvasCueHandler* canvas_handler;
+		MaestroCueHandler* maestro_handler;
+		SectionCueHandler* section_handler;
+
+		/// True if UI is done loading. This prevents some (i.e. serial-related) events from firing before the UI is done loading.
+		bool ui_initialized_ = false;
+
 		void change_scaling_color_array(Colors::RGB color);
 		void get_section_settings();
 		void initialize();
 		void on_custom_color_changed();
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
+		void send_to_device(uint8_t* out, uint8_t size);
 		void set_custom_color_controls_visible(bool visible);
 		void show_extra_controls(Animation* animation);
 		void show_canvas_controls(Canvas* canvas);

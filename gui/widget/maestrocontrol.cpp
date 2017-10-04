@@ -29,10 +29,26 @@
  * @param parent The QWidget containing this controller.
  * @param maestro_controller The MaestroController being controlled.
  */
-MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControl) {
+MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControl), io_service_(), serial_port_(io_service_) {
 
 	// Assign easy reference variables for the Maestro
 	this->maestro_controller_ = maestro_controller;
+
+	// Open connection to Arduino
+	if (serial_enabled_) {
+
+		controller_ = maestro_controller_->get_maestro()->add_cue_controller();
+		animation_handler = static_cast<AnimationCueHandler*>(controller_->enable_handler(CueController::Handler::AnimationHandler));
+		canvas_handler = static_cast<CanvasCueHandler*>(controller_->enable_handler(CueController::Handler::CanvasHandler));
+		maestro_handler = static_cast<MaestroCueHandler*>(controller_->enable_handler(CueController::Handler::MaestroHandler));
+		section_handler = static_cast<SectionCueHandler*>(controller_->enable_handler(CueController::Handler::SectionHandler));
+
+		struct stat buffer;
+		if (stat (port_num_, &buffer) == 0) {
+			serial_port_.open(port_num_);
+			serial_port_.set_option(boost::asio::serial_port_base::baud_rate(9600));
+		}
+	}
 
 	// Initialize UI
 	ui->setupUi(this);
@@ -134,6 +150,11 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 	Colors::generate_scaling_color_array(tmp, &color, num_colors, threshold, true);
 	active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 
+	if (serial_enabled_) {
+		animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
+		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+	}
+
 	// Release tmp_colors
 	std::vector<Colors::RGB>().swap(tmp_colors);
 }
@@ -144,6 +165,11 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
  */
 void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
+
+	if (serial_enabled_) {
+		section_handler->add_overlay(0, active_section_controller_->is_overlay_, maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode, arg1);
+		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+	}
 }
 
 /**
@@ -203,6 +229,11 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	show_extra_controls(animation);
 
+	if (serial_enabled_) {
+		section_handler->set_animation(0, active_section_controller_->is_overlay_, (Animation::Type)index, preserve_cycle_index, nullptr, 0);
+		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+	}
+
 	// Reapply animation settings
 	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
 	animation->set_orientation((Animation::Orientation)ui->orientationComboBox->currentIndex());
@@ -231,6 +262,11 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 			break;
 	}
 
+	if (serial_enabled_) {
+		section_handler->add_canvas(0, active_section_controller_->is_overlay_, (CanvasType::Type)index);
+		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+	}
+
 	show_canvas_controls(canvas);
 }
 
@@ -253,6 +289,11 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 				Colors::generate_scaling_color_array(tmp, &Colors::RED, &Colors::YELLOW, num_colors, true);
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
+
+				if (serial_enabled_) {
+					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
+					send_to_device(controller_->get_cue(), controller_->get_cue_size());
+				}
 				break;
 			}
 		case 2:	// Deep Sea
@@ -262,11 +303,21 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 				Colors::generate_scaling_color_array(tmp, &Colors::BLUE, &Colors::GREEN, num_colors, true);
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
+
+				if (serial_enabled_) {
+					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
+					send_to_device(controller_->get_cue(), controller_->get_cue_size());
+				}
 				break;
 			}
 		default:// Color Wheel
 			active_section_controller_->get_section()->get_animation()->set_colors(Colors::COLORWHEEL, 12);
 			set_custom_color_controls_visible(false);
+
+			if (serial_enabled_) {
+				animation_handler->set_colors(0, active_section_controller_->is_overlay_, Colors::COLORWHEEL, 12);
+				send_to_device(controller_->get_cue(), controller_->get_cue_size());
+			}
 	}
 }
 
@@ -313,6 +364,11 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
 		value = ui->cycleSlider->maximum() - value;
 		active_section_controller_->get_section()->get_animation()->set_speed(value);
 		ui->cycleSlider->setToolTip(QString::number(value));
+
+		if (serial_enabled_) {
+			animation_handler->set_speed(0, active_section_controller_->is_overlay_, value, 0);
+			send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		}
 	}
 }
 
@@ -330,6 +386,11 @@ void MaestroControl::on_blueSlider_valueChanged(int value) {
  */
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_fade(checked);
+
+	if (serial_enabled_) {
+		animation_handler->set_fade(0, active_section_controller_->is_overlay_, checked);
+		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+	}
 }
 
 /**
@@ -356,6 +417,11 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 			else {
 				ui->alphaSpinBox->setVisible(false);
 			}
+
+			if (serial_enabled_) {
+				section_handler->add_overlay(0, active_section_controller_->is_overlay_, (Colors::MixMode)index, ui->alphaSpinBox->value());
+				send_to_device(controller_->get_cue(), controller_->get_cue_size());
+			}
 		}
 	}
 }
@@ -376,6 +442,11 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 	if ((Animation::Orientation)index != active_section_controller_->get_section()->get_animation()->get_orientation()) {
 		if (active_section_controller_->get_section()->get_animation()) {
 			active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientation)index);
+
+			if (serial_enabled_) {
+				animation_handler->set_orientation(0, active_section_controller_->is_overlay_, (Animation::Orientation)index);
+				send_to_device(controller_->get_cue(), controller_->get_cue_size());
+			}
 		}
 	}
 }
@@ -394,6 +465,11 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
  */
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_reverse(checked);
+
+	if (serial_enabled_) {
+		animation_handler->set_reverse(0, active_section_controller_->is_overlay_, checked);
+		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+	}
 }
 
 /**
@@ -448,7 +524,16 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 
 	if ((x != active_section_controller_->get_section()->get_dimensions()->x) || (y != active_section_controller_->get_section()->get_dimensions()->y)) {
 		active_section_controller_->get_section()->set_dimensions(x, y);
+
+		if (serial_enabled_) {
+			section_handler->set_dimensions(0, active_section_controller_->is_overlay_, ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+			send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		}
 	}
+}
+
+void MaestroControl::send_to_device(uint8_t* out, uint8_t size) {
+	serial_port_.write_some(boost::asio::buffer((void*)out, size));
 }
 
 /**
@@ -534,5 +619,8 @@ void MaestroControl::show_canvas_controls(Canvas *canvas) {
  * Destructor.
  */
 MaestroControl::~MaestroControl() {
+	if (serial_enabled_) {
+		serial_port_.close();
+	}
 	delete ui;
 }

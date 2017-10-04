@@ -1,71 +1,9 @@
-#include "../animation/blinkanimation.h"
-#include "../animation/cycleanimation.h"
 #include "../animation/lightninganimation.h"
-#include "../animation/mandelbrotanimation.h"
-#include "../animation/mergeanimation.h"
 #include "../animation/plasmaanimation.h"
-#include "../animation/radialanimation.h"
-#include "../animation/randomanimation.h"
-#include "../animation/solidanimation.h"
 #include "../animation/sparkleanimation.h"
-#include "../animation/waveanimation.h"
-
 #include "animationcuehandler.h"
-#include "sectioncuehandler.h"
 
 namespace PixelMaestro {
-
-	Animation* AnimationCueHandler::initialize_animation(uint8_t* cue) {
-		int num_colors = cue[SectionCueHandler::Byte::OptionsByte + 2];
-		int current_color_index = SectionCueHandler::Byte::OptionsByte + 3;
-		Colors::RGB colors[num_colors];
-		for (uint8_t i = 0; i < num_colors; i++) {
-			colors[i].r = cue[current_color_index];
-			current_color_index++;
-			colors[i].g = cue[current_color_index];
-			current_color_index++;
-			colors[i].b = cue[current_color_index];
-			current_color_index++;
-		}
-
-		switch((Animation::Type)cue[SectionCueHandler::Byte::OptionsByte]) {
-			case Animation::Type::Blink:
-				return new BlinkAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Cycle:
-				return new CycleAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Lightning:
-				return new LightningAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Mandelbrot:
-				return new MandelbrotAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Merge:
-				return new MergeAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Plasma:
-				return new PlasmaAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Radial:
-				return new RadialAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Random:
-				return new RandomAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Solid:
-				return new SolidAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Sparkle:
-				return new SparkleAnimation(colors, num_colors);
-				break;
-			case Animation::Type::Wave:
-				return new WaveAnimation(colors, num_colors);
-				break;
-		}
-
-		return nullptr;
-	}
 
 	// Animation-specific Cues
 	void AnimationCueHandler::set_lightning_options(uint8_t section_num, uint8_t overlay_num, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance) {

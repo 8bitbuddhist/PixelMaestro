@@ -5,6 +5,8 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.7] - In Progress
 ### Added
+- Animation Previewer:
+	- Added ability to send Cues to devices connected via USB/serial.
 - Cue:
 	- New class for converting PixelMaestro actions into portable commands. See the [`Cue` class documentation](docs/cue.md)
 	- Added Cue Demo to the GUI.

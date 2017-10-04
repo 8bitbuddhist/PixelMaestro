@@ -22,6 +22,7 @@ namespace PixelMaestro {
 			~Maestro();
 			CueController* add_cue_controller();
 			Show* add_show(Event* events, uint16_t num_events);
+			CueController* get_cue_controller();
 			Colors::RGB get_pixel_color(uint8_t section, uint32_t pixel);
 			uint8_t get_num_sections();
 			uint16_t get_refresh_interval();

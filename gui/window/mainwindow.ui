@@ -977,6 +977,11 @@
     <string>C&amp;ue Demo</string>
    </property>
   </action>
+  <action name="action_Preferences">
+   <property name="text">
+    <string>&amp;Preferences</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

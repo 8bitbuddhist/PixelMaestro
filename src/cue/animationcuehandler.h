@@ -46,8 +46,6 @@ namespace PixelMaestro {
 			void set_speed(uint8_t section_num, uint8_t overlay_num, uint16_t speed, uint16_t pause);
 
 			void run(uint8_t* cue);
-
-			static Animation* initialize_animation(uint8_t* cue);
 	};
 }
 

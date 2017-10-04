@@ -1,6 +1,10 @@
 # PixelMaestro GUI
 This is a QT-based application that lets you preview PixelMaestro animations on a PC.
 
+## Requirements
+- QT 5
+- Boost
+
 ## Contents
 1. [Main Window](#main-window)
 	1. [Navigating Workspaces](#navigating-workspaces)

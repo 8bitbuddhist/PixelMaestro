@@ -17,6 +17,9 @@ class SectionController {
 		/// Selected MaestroControl color scheme (helper member). Defaults to ColorWheel.
 		int mc_color_scheme_ = 3;
 
+		/// Determines whether this Section is an Overlay.
+		bool is_overlay_ = false;
+
 		SectionController(Point* layout);
 		SectionController(Section* section, bool is_overlay = false);
 		~SectionController();
@@ -29,9 +32,6 @@ class SectionController {
 
 		/// Stores the size of the grid.
 		Point dimensions_ = {0, 0};
-
-		/// Determines whether this Section is an Overlay.
-		bool is_overlay_ = false;
 
 		/**
 		 * Controller for the Overlay Section.

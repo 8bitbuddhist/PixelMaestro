@@ -52,6 +52,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the active Cue controller.
+	 * @return Cue controller.
+	 */
+	CueController* Maestro::get_cue_controller() {
+		return cue_controller_;
+	}
+
+	/**
 		Returns the number of Sections.
 
 		@return Number of Sections.

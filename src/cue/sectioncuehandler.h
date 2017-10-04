@@ -31,6 +31,9 @@ namespace PixelMaestro {
 			void set_animation(uint8_t section_num, uint8_t overlay_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors);
 			void set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y);
 			void run(uint8_t* cue);
+
+		private:
+			Animation* initialize_animation(uint8_t* cue);
 	};
 }
 

@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui widgets
+LIBS	 += -L/usr/include/boost -lboost_system
 
 TARGET = PixelMaestro_QT
 TEMPLATE = app
