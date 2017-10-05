@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class CycleAnimation : public Animation {
 		public:
-			CycleAnimation(Colors::RGB* colors = nullptr, uint8_t num_colors = 0, uint16_t speed = 100, uint16_t pause = 0);
+			CycleAnimation(Colors::RGB* colors = nullptr, uint8_t num_colors = 0);
 			~CycleAnimation();
 			void update(Section* section);
 	};

@@ -2,7 +2,7 @@
 #include "plasmaanimation.h"
 
 namespace PixelMaestro {
-	PlasmaAnimation::PlasmaAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause, float size, float resolution) : Animation(colors, num_colors, speed, pause) {
+	PlasmaAnimation::PlasmaAnimation(Colors::RGB* colors, uint8_t num_colors, float size, float resolution) : Animation(colors, num_colors) {
 		type_ = AnimationType::Plasma;
 		resolution_ = resolution;
 		size_ = size;

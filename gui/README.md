@@ -23,5 +23,10 @@ When you click on a link from the *File* menu, this opens a new *Workspace*. You
 Unlike demos, which are pre-configured to run specific actions, the Animation Previewer lets you interact with the PixelMaestro library in real-time. When you open the Animation Previewer, it initializes a Maestro with a single Section and Overlay. You can perform actions such as adjust the Section's size, configure Animations, and add a Canvas. 
 
 ### Additional Animation Parameters
+TODO
+
 ### Custom Color Schemes
+TODO
+
 ### Using Canvases
+TODO

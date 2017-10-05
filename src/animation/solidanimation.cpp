@@ -1,7 +1,7 @@
 #include "solidanimation.h"
 
 namespace PixelMaestro {
-	SolidAnimation::SolidAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
+	SolidAnimation::SolidAnimation(Colors::RGB* colors, uint8_t num_colors) : Animation(colors, num_colors) {
 		type_ = AnimationType::Solid;
 	}
 

@@ -27,23 +27,25 @@ The following animation types are available:
 * Lightning: Displays lightning bolts branching from one end of the grid to the other.
 
 ## Creating an Animation
-All animations derive from the [base Animation class](src/animation/animation.h). To create an animation, import the relevant animation class and initialize the animation along with a color palette and optionally a speed. An animation _must_ have a color palette or it will not run.
+To create an animation, use `Section::add_animation()` specifying the animation type and a color palette.
 
 ```c++
-#include "animation/blinkanimation.h"
+#include "core/section.h"
 
-Section section Section(10, 10);
-Animation* blink_animation = new BlinkAnimation(Colors::COLORWHEEL, 12);
-section->set_animation(blink_animation);
+Section section(10, 10);
+Animation* animation = section.add_animation(AnimationType::Blink, Colors::COLORWHEEL, 12);
 ``` 
 
-Some animations (such as Sparkle) support the use of additional parameters. You can set these parameters in the Animation's constructor, or by calling a method specific to that animation (e.g. `SparkleAnimation::set_threshold()`).
+Some animations (such as Sparkle) support the use of additional parameters. You can set these parameters by calling a method specific to that animation (e.g. `SparkleAnimation::set_threshold()`).
 
+```c++
+Section section(10, 10);
+SparkleAnimation* animation = static_cast<SparkleAnimation*>(section.add_animation(AnimationType::Sparkle, Colors::COLORWHEEL, 12));
+animation.set_threshold(100);
+``` 
 
 ### Setting the Color Palette
 All animations require you to set a color palette. The palette provides a set of colors that the animation uses for each of its cycles. You can set the palette in the constructor or by using `Animation::set_colors()`.
-
-**Note:** The Animation copies the palette into a new buffer, so the source does not need to be persistent.
 
 The following example sets a palette of three colors: red, green, and blue. Depending on the animation, one of these colors (or a mix) will be displayed in each Pixel.
 ```c++

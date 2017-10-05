@@ -6,12 +6,8 @@ namespace PixelMaestro {
 	 * @param section The Section that this animation will render in.
 	 * @param colors Initial color palette.
 	 * @param num_colors The number of colors in the palette.
-	 * @param speed The amount of time (in milliseconds) to run a single animation cycle.
-	 * @param pause The amount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	Animation::Animation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) {
-		speed_ = speed;
-		pause_ = pause;
+	Animation::Animation(Colors::RGB* colors, uint8_t num_colors) {
 		set_colors(colors, num_colors);
 	}
 
@@ -230,7 +226,5 @@ namespace PixelMaestro {
 		}
 	}
 
-	Animation::~Animation() {
-		//delete[] colors_;
-	}
+	Animation::~Animation() { }
 }

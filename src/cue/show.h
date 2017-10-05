@@ -13,7 +13,7 @@ namespace PixelMaestro {
 	class Show {
 		public:
 			/// The method used to measure time between Events.
-			enum TimingMode {
+			enum TimingMode :uint8_t {
 
 				/// Counts time from when the Show starts.
 				Absolute,

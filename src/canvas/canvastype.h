@@ -5,7 +5,7 @@ namespace PixelMaestro {
 	class CanvasType {
 		public:
 			/// Lists the types of Canvases available.
-			enum Type {
+			enum Type : uint8_t {
 
 				/// Traditional Canvas. Draws Pixels using the underlying Section Animation.
 				AnimationCanvas,

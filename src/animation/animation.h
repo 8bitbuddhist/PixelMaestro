@@ -13,12 +13,12 @@ namespace PixelMaestro {
 		public:
 
 			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. CycleAnimation).
-			enum Orientation {
+			enum Orientation : uint8_t {
 				Horizontal,
 				Vertical
 			};
 
-			Animation(Colors::RGB* colors = nullptr, uint8_t num_colors = 0, uint16_t speed = 100, uint16_t pause = 0);
+			Animation(Colors::RGB* colors, uint8_t num_colors);
 			virtual ~Animation();
 			Colors::RGB* get_color_at_index(uint8_t index);
 			Colors::RGB* get_colors();

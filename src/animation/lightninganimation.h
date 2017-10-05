@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class LightningAnimation : public Animation {
 		public:
-			LightningAnimation(Colors::RGB* colors = nullptr, uint8_t num_colors = 0, uint16_t speed = 100, uint16_t pause = 0, uint8_t num_bolts = 1, uint8_t down_threshold = 90, uint8_t up_threshold = 166, uint8_t fork_chance_ = 4);
+			LightningAnimation(Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts = 1, uint8_t down_threshold = 90, uint8_t up_threshold = 166, uint8_t fork_chance_ = 4);
 			~LightningAnimation();
 			uint8_t get_bolt_count();
 			uint8_t get_fork_chance();

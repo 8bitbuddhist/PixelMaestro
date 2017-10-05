@@ -49,17 +49,7 @@ namespace PixelMaestro {
 	 * @return New Animation.
 	 */
 	Animation* Section::add_animation(AnimationType::Type animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_cycle_index) {
-
-		uint8_t cycle_index = 0;
-		if (animation_) {
-			if (preserve_cycle_index) {
-				cycle_index = animation_->get_cycle_index();
-			}
-			remove_animation();
-		}
-
 		Animation* animation = nullptr;
-
 		switch(animation_type) {
 			case AnimationType::Type::Blink:
 				animation = new BlinkAnimation(colors, num_colors);
@@ -96,8 +86,11 @@ namespace PixelMaestro {
 				break;
 		}
 
-		if (preserve_cycle_index) {
-			animation->set_cycle_index(cycle_index);
+		if (animation_) {
+			if (preserve_cycle_index) {
+				animation->set_cycle_index(animation_->get_cycle_index());
+			}
+			remove_animation();
 		}
 
 		animation_ = animation;

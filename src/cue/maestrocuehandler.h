@@ -7,11 +7,11 @@
 namespace PixelMaestro {
 	class MaestroCueHandler : public CueHandler {
 		public:
-			enum Action {
+			enum Action : uint8_t {
 				SetRefreshInterval
 			};
 
-			enum Byte {
+			enum Byte : uint8_t {
 				HandlerByte = (int)CueController::Byte::PayloadByte,
 				ActionByte,
 				OptionsByte

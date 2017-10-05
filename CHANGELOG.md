@@ -17,12 +17,19 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 - Changed default Maestro refresh rate to 40ms (25fps).
 - Animation Editor: Grid size will only update when the row or column fields lose focus.
-- Animations: Added dynamic allocation for color arrays.
+- Animations:
+	- Sections now handle memory allocation for Animations.
+	- Create Animations using `Section::add_animation(AnimationType)` instead of `Section::set_animation(Animation*)`.
+	- Lightning bolts originate from different sources instead of the same location.
 - Canvas: Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
 - Show: Shows now use Cues to run events. All extended Event classes have been removed. The base Event class now stores and runs Cues.
 
 ### Removed
 - Removed extended Event classes.
+- Removed Section::set_animation().
+
+### Known Issues
+- After opening the Animation Previewer, serial devices won't display animations until you change to a different animation.
 
 ## [v0.6r2] - 2017-09-18
 ### Changed

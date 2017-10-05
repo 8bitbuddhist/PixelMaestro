@@ -14,6 +14,7 @@ Sections are the primary interface for PixelMaestro. Their main function is to b
 
 ## Creating a Section
 When creating a Section, pass the logical layout of the array (e.g. rows and columns) as part of the constructor.
+
 ```c++
 Section section = Section(10, 10);
 ```

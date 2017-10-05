@@ -120,6 +120,10 @@ namespace PixelMaestro {
 		Canvas::draw_triangle(point_a_x, point_a_y, point_b_x, point_b_y, point_c_x, point_c_y, fill);
 	}
 
+	/**
+	 * Returns the Canvas type.
+	 * @return Canvas type.
+	 */
 	CanvasType::Type ColorCanvas::get_type() {
 		return CanvasType::Type::ColorCanvas;
 	}

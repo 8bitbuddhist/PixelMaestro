@@ -2,7 +2,7 @@
 #include "lightninganimation.h"
 
 namespace PixelMaestro {
-	LightningAnimation::LightningAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold,  uint8_t fork_chance) : Animation(colors, num_colors, speed, pause) {
+	LightningAnimation::LightningAnimation(Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold,  uint8_t fork_chance) : Animation(colors, num_colors) {
 		type_ = AnimationType::Lightning;
 		num_bolts_ = num_bolts;
 		down_threshold_ = down_threshold;
@@ -16,18 +16,13 @@ namespace PixelMaestro {
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, 0};
-		if (orientation_ == Orientation::Vertical) {
-			start.set((uint16_t)Utility::rand(section->get_dimensions()->x), 0);
-		}
-		else {
-			start.set(0, (uint16_t)Utility::rand(section->get_dimensions()->y));
-		}
-
-		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {
+		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {			
 			if (orientation_ == Orientation::Vertical) {
+				start.set((uint16_t)Utility::rand(section->get_dimensions()->x), 0);
 				draw_bolt_vertical(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
 			}
 			else {
+				start.set(0, (uint16_t)Utility::rand(section->get_dimensions()->y));
 				draw_bolt_horizontal(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
 			}
 		}

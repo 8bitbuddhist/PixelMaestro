@@ -5,7 +5,7 @@ namespace PixelMaestro {
 	class AnimationType {
 		public:
 			/// The type of animation.
-			enum Type {
+			enum Type : uint8_t {
 				Blink,
 				Cycle,
 				Lightning,

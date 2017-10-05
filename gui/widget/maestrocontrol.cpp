@@ -39,22 +39,23 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	this->initialize();
 
 	// Open serial connection to Arduino
+	// TODO: Track Session ID and Overlay ID
 	if (serial_enabled_) {
-
 		controller_ = maestro_controller_->get_maestro()->add_cue_controller();
 		animation_handler = static_cast<AnimationCueHandler*>(controller_->enable_handler(CueController::Handler::AnimationHandler));
 		canvas_handler = static_cast<CanvasCueHandler*>(controller_->enable_handler(CueController::Handler::CanvasHandler));
 		maestro_handler = static_cast<MaestroCueHandler*>(controller_->enable_handler(CueController::Handler::MaestroHandler));
 		section_handler = static_cast<SectionCueHandler*>(controller_->enable_handler(CueController::Handler::SectionHandler));
 
-		q_serial_port_.setPortName(QString(port_num_));
-		q_serial_port_.setBaudRate(9600);
+		serial_.setPortName(QString(port_num_));
+		serial_.setBaudRate(9600);
+
 		// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
-		q_serial_port_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-		q_serial_port_.setParity(QSerialPort::Parity::NoParity);
-		q_serial_port_.setDataBits(QSerialPort::DataBits::Data8);
-		q_serial_port_.setStopBits(QSerialPort::StopBits::OneStop);
-		q_serial_port_.open(QIODevice::WriteOnly);
+		serial_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+		serial_.setParity(QSerialPort::Parity::NoParity);
+		serial_.setDataBits(QSerialPort::DataBits::Data8);
+		serial_.setStopBits(QSerialPort::StopBits::OneStop);
+		serial_.open(QIODevice::WriteOnly);
 	}
 }
 
@@ -145,9 +146,6 @@ void MaestroControl::initialize() {
 void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 	uint32_t num_colors = (uint32_t)ui->num_colorsSpinBox->value();
 
-	std::vector<Colors::RGB> tmp_colors;
-	tmp_colors.resize(num_colors);
-
 	uint8_t threshold = 255 - (uint8_t)ui->thresholdSpinBox->value();
 	Colors::RGB* tmp = new Colors::RGB[num_colors];
 	Colors::generate_scaling_color_array(tmp, &color, num_colors, threshold, true);
@@ -157,9 +155,6 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 		animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
-
-	// Release tmp_colors
-	std::vector<Colors::RGB>().swap(tmp_colors);
 }
 
 /**
@@ -206,13 +201,6 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
 	on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
 	on_cycleSlider_valueChanged(ui->cycleSlider->value());
-
-	/*
-	animation->set_orientation((Animation::Orientation)ui->orientationComboBox->currentIndex());
-	animation->set_fade(ui->fadeCheckBox->isChecked());
-	animation->set_reverse(ui->reverse_animationCheckBox->isChecked());
-	animation->set_speed(ui->cycleSlider->maximum() - ui->cycleSlider->value());
-	*/
 }
 
 /**
@@ -416,7 +404,7 @@ void MaestroControl::on_num_colorsSpinBox_valueChanged(int arg1) {
 }
 
 /**
- * Sets the animation's orientation
+ * Sets the animation's orientation.
  * @param index New orientation.
  */
 void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
@@ -460,6 +448,10 @@ void MaestroControl::on_rowsSpinBox_editingFinished() {
 	on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 }
 
+/**
+ * Changes the currently selected Section.
+ * @param arg1 Index of the Section to switch to.
+ */
 void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
 	QString type = arg1.split(" ")[0];
 
@@ -506,18 +498,18 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 	if ((x != active_section_controller_->get_section()->get_dimensions()->x) || (y != active_section_controller_->get_section()->get_dimensions()->y)) {
 		active_section_controller_->get_section()->set_dimensions(x, y);
 
+		/*
+		 * NOTE: Dynamic resizing on remote devices is disabled for now.
 		if (serial_enabled_ && controller_ != nullptr) {
-			// FIXME: Out of memory exception on embedded devices
-			/*
 			section_handler->set_dimensions(0, active_section_controller_->is_overlay_, ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 			send_to_device(controller_->get_cue(), controller_->get_cue_size());
-			*/
 		}
+		*/
 	}
 }
 
 void MaestroControl::send_to_device(uint8_t* out, uint8_t size) {
-	q_serial_port_.write((const char*)out, size);
+	serial_.write((const char*)out, size);
 }
 
 /**
@@ -566,6 +558,7 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 
 	QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
 
+	// TODO: Serial integration
 	switch(animation->get_type()) {
 		case AnimationType::Type::Sparkle:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, layout->widget()));
@@ -603,9 +596,8 @@ void MaestroControl::show_canvas_controls(Canvas *canvas) {
  * Destructor.
  */
 MaestroControl::~MaestroControl() {
-	if (q_serial_port_.isOpen()) {
-		q_serial_port_.close();
-		controller_ = nullptr;
+	if (serial_.isOpen()) {
+		serial_.close();
 	}
 	delete ui;
 }

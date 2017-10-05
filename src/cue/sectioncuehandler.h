@@ -9,14 +9,14 @@
 namespace PixelMaestro {
 	class SectionCueHandler : public CueHandler {
 		public:
-			enum Action {
+			enum Action : uint8_t {
 				AddAnimation,
 				AddCanvas,
 				AddOverlay,
 				SetDimensions
 			};
 
-			enum Byte {
+			enum Byte : uint8_t {
 				HandlerByte = (int)CueController::Byte::PayloadByte,
 				ActionByte,
 				SectionByte,

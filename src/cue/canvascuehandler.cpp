@@ -348,7 +348,6 @@ namespace PixelMaestro {
 					break;
 				case Action::DrawText:
 					{
-						// TODO: There must be a better way to handle this.
 						Font* font;
 						switch ((Font::Type)cue[Byte::OptionsByte + 4]) {
 							case Font::Type::Font5x8:
@@ -421,7 +420,6 @@ namespace PixelMaestro {
 					break;
 				case Action::DrawText:
 					{
-						// See AnimationCanvas::DrawText
 						Font* font;
 						switch ((Font::Type)cue[Byte::OptionsByte + 7]) {
 							case Font::Type::Font5x8:

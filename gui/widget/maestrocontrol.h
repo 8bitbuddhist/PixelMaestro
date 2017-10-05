@@ -49,7 +49,7 @@ class MaestroControl : public QWidget {
 		// Load Serial connection to Arduino.
 		bool serial_enabled_ = true;
 		const char* port_num_ = "/dev/ttyACM0";
-		QSerialPort q_serial_port_;
+		QSerialPort serial_;
 
 
 		// Initialize CueController

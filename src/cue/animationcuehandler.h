@@ -10,7 +10,7 @@
 namespace PixelMaestro {
 	class AnimationCueHandler : public CueHandler {
 		public:
-			enum Action {
+			enum Action : uint8_t {
 				SetColors,
 				SetCycleIndex,
 				SetFade,
@@ -22,7 +22,7 @@ namespace PixelMaestro {
 				SetSpeed
 			};
 
-			enum Byte {
+			enum Byte : uint8_t {
 				HandlerByte = CueController::Byte::PayloadByte,
 				ActionByte,
 				SectionByte,

@@ -53,7 +53,7 @@ namespace PixelMaestro {
 	class CueController {
 		public:
 			/// Common bit indices for each Cue.
-			enum Byte {
+			enum Byte : uint8_t {
 				Header1Byte,
 				Header2Byte,
 				Header3Byte,
@@ -63,7 +63,7 @@ namespace PixelMaestro {
 			};
 
 			/// The different handlers available for running Cues.
-			enum Handler {
+			enum Handler : uint8_t {
 				AnimationHandler,
 				CanvasHandler,
 				MaestroHandler,
