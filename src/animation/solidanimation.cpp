@@ -2,7 +2,7 @@
 
 namespace PixelMaestro {
 	SolidAnimation::SolidAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
-		type_ = Animation::Type::Solid;
+		type_ = AnimationType::Solid;
 	}
 
 	void SolidAnimation::update(Section* section) {

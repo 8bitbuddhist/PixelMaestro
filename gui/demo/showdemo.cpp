@@ -20,7 +20,7 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
 	AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
 
-	section_handler->set_animation(0, 0, Animation::Type::Radial, false, Colors::COLORWHEEL, 12);
+	section_handler->add_animation(0, 0, AnimationType::Type::Radial, false, Colors::COLORWHEEL, 12);
 	controller->run();
 
 	Colors::RGB green_colors[16];

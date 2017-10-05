@@ -2,7 +2,7 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. The Color palette is copied into the Animation.
+	 * Constructor.
 	 * @param section The Section that this animation will render in.
 	 * @param colors Initial color palette.
 	 * @param num_colors The number of colors in the palette.
@@ -103,25 +103,18 @@ namespace PixelMaestro {
 	 * Returns the type of Animation.
 	 * @return Animation type.
 	 */
-	Animation::Type Animation::get_type() {
+	AnimationType::Type Animation::get_type() {
 		return type_;
 	}
 
 	/**
-		Deletes the current color palette and copies in a new palette.
+		Sets a new color palette.
 
 		@param colors New color palette.
 		@param num_colors Number of colors in the palette.
 	*/
 	void Animation::set_colors(Colors::RGB* colors, uint8_t num_colors) {
-		delete[] colors_;
-
-		colors_ = new Colors::RGB[num_colors];
-
-		for (uint8_t i = 0; i < num_colors; i++) {
-			colors_[i] = colors[i];
-		}
-
+		colors_ = colors;
 		num_colors_ = num_colors;
 	}
 
@@ -238,6 +231,6 @@ namespace PixelMaestro {
 	}
 
 	Animation::~Animation() {
-		delete[] colors_;
+		//delete[] colors_;
 	}
 }

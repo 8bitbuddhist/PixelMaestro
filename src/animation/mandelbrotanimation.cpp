@@ -3,7 +3,7 @@
 
 namespace PixelMaestro {
 	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
-		type_ = Animation::Type::Mandelbrot;
+		type_ = AnimationType::Mandelbrot;
 	}
 
 	void MandelbrotAnimation::set_colors(Colors::RGB *colors, uint8_t num_colors) {

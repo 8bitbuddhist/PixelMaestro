@@ -4,8 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
-LIBS	 += -L/usr/include/boost -lboost_system
+QT       += core gui widgets serialport
 
 TARGET = PixelMaestro_QT
 TEMPLATE = app
@@ -106,7 +105,8 @@ HEADERS += \
     ../src/cue/animationcuehandler.h \
     ../src/cue/canvascuehandler.h \
     ../src/cue/maestrocuehandler.h \
-    ../src/cue/sectioncuehandler.h
+    ../src/cue/sectioncuehandler.h \
+    ../src/animation/animationtype.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

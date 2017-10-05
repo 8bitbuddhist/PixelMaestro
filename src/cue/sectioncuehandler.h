@@ -10,9 +10,9 @@ namespace PixelMaestro {
 	class SectionCueHandler : public CueHandler {
 		public:
 			enum Action {
+				AddAnimation,
 				AddCanvas,
 				AddOverlay,
-				SetAnimation,
 				SetDimensions
 			};
 
@@ -26,14 +26,11 @@ namespace PixelMaestro {
 
 			SectionCueHandler(CueController* controller) : CueHandler(controller) { }
 			~SectionCueHandler();
+			void add_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors);
 			void add_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type);
 			void add_overlay(uint8_t section_num, uint8_t overlay_num, Colors::MixMode mix_mode, uint8_t alpha);
-			void set_animation(uint8_t section_num, uint8_t overlay_num, Animation::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors);
 			void set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y);
 			void run(uint8_t* cue);
-
-		private:
-			Animation* initialize_animation(uint8_t* cue);
 	};
 }
 

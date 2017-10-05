@@ -14,9 +14,8 @@
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "drawingarea/simpledrawingarea.h"
-#include <boost/asio.hpp>
-#include <boost/asio/serial_port.hpp>
 #include <fstream>
+#include <QSerialPort>
 #include <QWidget>
 
 namespace Ui {
@@ -48,17 +47,17 @@ class MaestroControl : public QWidget {
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
 		// Load Serial connection to Arduino.
-		bool serial_enabled_ = false;
+		bool serial_enabled_ = true;
 		const char* port_num_ = "/dev/ttyACM0";
-		boost::asio::io_service io_service_;
-		boost::asio::serial_port serial_port_;
+		QSerialPort q_serial_port_;
+
 
 		// Initialize CueController
-		CueController* controller_;
-		AnimationCueHandler* animation_handler;
-		CanvasCueHandler* canvas_handler;
-		MaestroCueHandler* maestro_handler;
-		SectionCueHandler* section_handler;
+		CueController* controller_ = nullptr;
+		AnimationCueHandler* animation_handler = nullptr;
+		CanvasCueHandler* canvas_handler = nullptr;
+		MaestroCueHandler* maestro_handler = nullptr;
+		SectionCueHandler* section_handler = nullptr;
 
 		/// True if UI is done loading. This prevents some (i.e. serial-related) events from firing before the UI is done loading.
 		bool ui_initialized_ = false;

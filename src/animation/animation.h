@@ -2,6 +2,7 @@
 #define ANIMATION_H
 
 #include <stdint.h>
+#include "animationtype.h"
 #include "../core/colors.h"
 #include "../core/section.h"
 
@@ -10,20 +11,6 @@ namespace PixelMaestro {
 
 	class Animation {
 		public:
-			/// The type of animation.
-			enum Type {
-				Blink,
-				Cycle,
-				Lightning,
-				Mandelbrot,
-				Merge,
-				Plasma,
-				Radial,
-				Random,
-				Solid,
-				Sparkle,
-				Wave
-			};
 
 			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. CycleAnimation).
 			enum Orientation {
@@ -43,7 +30,7 @@ namespace PixelMaestro {
 			bool get_reverse();
 			uint16_t get_pause();
 			uint16_t get_speed();
-			Animation::Type get_type();
+			AnimationType::Type get_type();
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
@@ -82,7 +69,7 @@ namespace PixelMaestro {
 			uint16_t speed_ = 100;
 
 			/// The type of Animation. Gets set in the derived class' constructor.
-			Animation::Type type_;
+			AnimationType::Type type_;
 
 			void update_cycle(uint8_t min, uint8_t max);
 	};

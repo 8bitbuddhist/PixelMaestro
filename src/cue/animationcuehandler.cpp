@@ -142,9 +142,13 @@ namespace PixelMaestro {
 		switch((Action)cue[Byte::ActionByte]) {
 			case Action::SetColors:
 				{
+					if (animation->get_colors() != nullptr) {
+						delete[] animation->get_colors();
+					}
+
 					uint8_t num_colors = cue[Byte::OptionsByte];
 					uint8_t current_color_index = 1;
-					Colors::RGB colors[num_colors];
+					Colors::RGB* colors = new Colors::RGB[num_colors];
 					for (uint8_t i = 0; i < num_colors; i++) {
 						colors[i].r = cue[Byte::OptionsByte + current_color_index];
 						current_color_index++;

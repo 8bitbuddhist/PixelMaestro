@@ -3,7 +3,7 @@
 
 namespace PixelMaestro {
 	RandomAnimation::RandomAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
-		type_ = Animation::Type::Random;
+		type_ = AnimationType::Random;
 	}
 
 	void RandomAnimation::update(Section* section) {

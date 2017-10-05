@@ -3,7 +3,7 @@
 
 namespace PixelMaestro {
 	LightningAnimation::LightningAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold,  uint8_t fork_chance) : Animation(colors, num_colors, speed, pause) {
-		type_ = Animation::Type::Lightning;
+		type_ = AnimationType::Lightning;
 		num_bolts_ = num_bolts;
 		down_threshold_ = down_threshold;
 		up_threshold_ = up_threshold;

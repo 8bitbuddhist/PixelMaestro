@@ -135,7 +135,7 @@ namespace PixelMaestro {
 		 *	2) If the last bytes read match the header, set the index to the header size
 		 *	3) If we've reached the buffer size, set the index to 0 (error / invalid Cue)
 		 */
-		if (read_index_ > Byte::SizeByte && read_index_ > cue_[Byte::SizeByte]) {
+		if (read_index_ >= cue_[Byte::SizeByte] + Byte::PayloadByte) {
 			run();
 			read_index_ = 0;
 		}
@@ -143,7 +143,7 @@ namespace PixelMaestro {
 			if (read_index_ >= Header3Byte &&
 				(cue_[read_index_ - Header3Byte] == header_[Header1Byte] &&
 				 cue_[read_index_ - Header2Byte] == header_[Header2Byte] &&
-				 cue_[read_index_ - Header1Byte] == header_[Header3Byte])) {
+				 cue_[read_index_] == header_[Header3Byte])) {
 
 				cue_[Header1Byte] = header_[Header1Byte];
 				cue_[Header2Byte] = header_[Header2Byte];

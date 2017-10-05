@@ -3,6 +3,17 @@
 	Requires Pixel and Colors classes.
 */
 
+#include "../animation/blinkanimation.h"
+#include "../animation/cycleanimation.h"
+#include "../animation/lightninganimation.h"
+#include "../animation/mandelbrotanimation.h"
+#include "../animation/mergeanimation.h"
+#include "../animation/plasmaanimation.h"
+#include "../animation/radialanimation.h"
+#include "../animation/randomanimation.h"
+#include "../animation/solidanimation.h"
+#include "../animation/sparkleanimation.h"
+#include "../animation/waveanimation.h"
 #include "../canvas/animationcanvas.h"
 #include "../canvas/colorcanvas.h"
 #include "colors.h"
@@ -26,6 +37,71 @@ namespace PixelMaestro {
 	 */
 	Section::Section(uint16_t x, uint16_t y) {
 		set_dimensions(x, y);
+	}
+
+	/**
+	 * Creates a new Animation.
+	 * This will overwrite an existing Animation.
+	 * @param type Animation type.
+	 * @param colors The color palette.
+	 * @param num_colors The number of colors in the palette.
+	 * @param preserve_cycle_index If true, the cycle index from the old Animation transfers over to the new Animation.
+	 * @return New Animation.
+	 */
+	Animation* Section::add_animation(AnimationType::Type animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_cycle_index) {
+
+		uint8_t cycle_index = 0;
+		if (animation_) {
+			if (preserve_cycle_index) {
+				cycle_index = animation_->get_cycle_index();
+			}
+			remove_animation();
+		}
+
+		Animation* animation = nullptr;
+
+		switch(animation_type) {
+			case AnimationType::Type::Blink:
+				animation = new BlinkAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Cycle:
+				animation = new CycleAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Lightning:
+				animation = new LightningAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Mandelbrot:
+				animation = new MandelbrotAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Merge:
+				animation = new MergeAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Plasma:
+				animation = new PlasmaAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Radial:
+				animation = new RadialAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Random:
+				animation = new RandomAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Solid:
+				animation = new SolidAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Sparkle:
+				animation = new SparkleAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Wave:
+				animation = new WaveAnimation(colors, num_colors);
+				break;
+		}
+
+		if (preserve_cycle_index) {
+			animation->set_cycle_index(cycle_index);
+		}
+
+		animation_ = animation;
+		return animation_;
 	}
 
 	/**
@@ -194,24 +270,6 @@ namespace PixelMaestro {
 		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
 			set_one(pixel, color);
 		}
-	}
-
-	/**
-		Changes the current animation.
-
-		@param animation New animation.
-		@param preserve_cycle_index If true, resume from the cycle_index of the previous animation.
-		@return The new animation.
-	*/
-	Animation* Section::set_animation(Animation* animation, bool preserve_cycle_index) {
-		if (preserve_cycle_index && animation_) {
-			animation->set_cycle_index(animation_->get_cycle_index());
-		}
-
-		remove_animation();
-
-		animation_ = animation;
-		return animation_;
 	}
 
 	/**

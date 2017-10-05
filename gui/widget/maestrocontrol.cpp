@@ -29,12 +29,16 @@
  * @param parent The QWidget containing this controller.
  * @param maestro_controller The MaestroController being controlled.
  */
-MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControl), io_service_(), serial_port_(io_service_) {
+MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_controller) : QWidget(parent), ui(new Ui::MaestroControl) {
 
 	// Assign easy reference variables for the Maestro
 	this->maestro_controller_ = maestro_controller;
 
-	// Open connection to Arduino
+	// Initialize UI
+	ui->setupUi(this);
+	this->initialize();
+
+	// Open serial connection to Arduino
 	if (serial_enabled_) {
 
 		controller_ = maestro_controller_->get_maestro()->add_cue_controller();
@@ -43,16 +47,15 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		maestro_handler = static_cast<MaestroCueHandler*>(controller_->enable_handler(CueController::Handler::MaestroHandler));
 		section_handler = static_cast<SectionCueHandler*>(controller_->enable_handler(CueController::Handler::SectionHandler));
 
-		struct stat buffer;
-		if (stat (port_num_, &buffer) == 0) {
-			serial_port_.open(port_num_);
-			serial_port_.set_option(boost::asio::serial_port_base::baud_rate(9600));
-		}
+		q_serial_port_.setPortName(QString(port_num_));
+		q_serial_port_.setBaudRate(9600);
+		// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
+		q_serial_port_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+		q_serial_port_.setParity(QSerialPort::Parity::NoParity);
+		q_serial_port_.setDataBits(QSerialPort::DataBits::Data8);
+		q_serial_port_.setStopBits(QSerialPort::StopBits::OneStop);
+		q_serial_port_.open(QIODevice::WriteOnly);
 	}
-
-	// Initialize UI
-	ui->setupUi(this);
-	this->initialize();
 }
 
 /**
@@ -106,7 +109,7 @@ void MaestroControl::get_section_settings() {
  */
 void MaestroControl::initialize() {
 	active_section_controller_ = maestro_controller_->get_section_controller(0);
-	active_section_controller_->get_section()->set_animation(new SolidAnimation());
+	active_section_controller_->get_section()->add_animation(AnimationType::Solid, nullptr, 0);
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Blink", "Cycle", "Lightning", "Mandelbrot", "Merge", "Plasma", "Radial", "Random", "Solid", "Sparkle", "Wave"});
@@ -122,7 +125,7 @@ void MaestroControl::initialize() {
 
 	// Add an Overlay
 	active_section_controller_->add_overlay(Colors::MixMode::None);
-	active_section_controller_->get_overlay()->section->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12));
+	active_section_controller_->get_overlay()->section->add_animation(AnimationType::Solid, nullptr, 0);
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
 
 	// Initialize Overlay controls
@@ -146,11 +149,11 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 	tmp_colors.resize(num_colors);
 
 	uint8_t threshold = 255 - (uint8_t)ui->thresholdSpinBox->value();
-	Colors::RGB tmp[num_colors];
+	Colors::RGB* tmp = new Colors::RGB[num_colors];
 	Colors::generate_scaling_color_array(tmp, &color, num_colors, threshold, true);
 	active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 
-	if (serial_enabled_) {
+	if (serial_enabled_ && controller_ != nullptr) {
 		animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
@@ -166,7 +169,7 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
 
-	if (serial_enabled_) {
+	if (serial_enabled_ && controller_ != nullptr) {
 		section_handler->add_overlay(0, active_section_controller_->is_overlay_, maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode, arg1);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
@@ -178,7 +181,6 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
  */
 void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
-	Animation* animation = nullptr;	// Stores the new Animation
 	if (active_section_controller_->get_section()->get_animation() != nullptr) {
 		// Only change if the animation is different
 		if (active_section_controller_->get_section()->get_animation()->get_type() == index) {
@@ -189,57 +191,28 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	// Preserve the animation cycle between changes
 	bool preserve_cycle_index = true;
 
-	switch((Animation::Type)index) {
-		case Animation::Type::Solid:
-			animation = active_section_controller_->get_section()->set_animation(new SolidAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Blink:
-			animation = active_section_controller_->get_section()->set_animation(new BlinkAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Cycle:
-			animation = active_section_controller_->get_section()->set_animation(new CycleAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Wave:
-			animation = active_section_controller_->get_section()->set_animation(new WaveAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Merge:
-			animation = active_section_controller_->get_section()->set_animation(new MergeAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Random:
-			animation = active_section_controller_->get_section()->set_animation(new RandomAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Sparkle:
-			animation = active_section_controller_->get_section()->set_animation(new SparkleAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Radial:
-			animation = active_section_controller_->get_section()->set_animation(new RadialAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Mandelbrot:
-			animation = active_section_controller_->get_section()->set_animation(new MandelbrotAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Plasma:
-			animation = active_section_controller_->get_section()->set_animation(new PlasmaAnimation(), preserve_cycle_index);
-			break;
-		case Animation::Type::Lightning:
-			animation = active_section_controller_->get_section()->set_animation(new LightningAnimation(), preserve_cycle_index);
-			break;
-		default:
-			return;
-	}
+	Animation* animation = active_section_controller_->get_section()->add_animation((AnimationType::Type)index, 0, preserve_cycle_index);
 
 	show_extra_controls(animation);
 
-	if (serial_enabled_) {
-		section_handler->set_animation(0, active_section_controller_->is_overlay_, (Animation::Type)index, preserve_cycle_index, nullptr, 0);
+	if (serial_enabled_ && controller_ != nullptr) {
+		section_handler->add_animation(0, active_section_controller_->is_overlay_, (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
 
 	// Reapply animation settings
 	on_colorComboBox_currentIndexChanged(ui->colorComboBox->currentIndex());
+	on_orientationComboBox_currentIndexChanged(ui->orientationComboBox->currentIndex());
+	on_fadeCheckBox_toggled(ui->fadeCheckBox->isChecked());
+	on_reverse_animationCheckBox_toggled(ui->reverse_animationCheckBox->isChecked());
+	on_cycleSlider_valueChanged(ui->cycleSlider->value());
+
+	/*
 	animation->set_orientation((Animation::Orientation)ui->orientationComboBox->currentIndex());
 	animation->set_fade(ui->fadeCheckBox->isChecked());
 	animation->set_reverse(ui->reverse_animationCheckBox->isChecked());
 	animation->set_speed(ui->cycleSlider->maximum() - ui->cycleSlider->value());
+	*/
 }
 
 /**
@@ -262,7 +235,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 			break;
 	}
 
-	if (serial_enabled_) {
+	if (serial_enabled_ && controller_ != nullptr) {
 		section_handler->add_canvas(0, active_section_controller_->is_overlay_, (CanvasType::Type)index);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
@@ -276,6 +249,12 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
  * @param index Index of the new color scheme.
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
+
+	// Delete current colors
+	if (active_section_controller_->get_section()->get_animation() != nullptr && active_section_controller_->get_section()->get_animation()->get_colors() != nullptr) {
+		delete[] active_section_controller_->get_section()->get_animation()->get_colors();
+	}
+
 	active_section_controller_->mc_color_scheme_ = index;
 	switch (index) {
 		case 0:	// Custom
@@ -285,12 +264,12 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 		case 1:	// Fire
 			{
 				uint8_t num_colors = 14;
-				Colors::RGB tmp[num_colors];
+				Colors::RGB* tmp = new Colors::RGB[num_colors];
 				Colors::generate_scaling_color_array(tmp, &Colors::RED, &Colors::YELLOW, num_colors, true);
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
 
-				if (serial_enabled_) {
+				if (serial_enabled_ && controller_ != nullptr) {
 					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
 					send_to_device(controller_->get_cue(), controller_->get_cue_size());
 				}
@@ -299,23 +278,27 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 		case 2:	// Deep Sea
 			{
 				uint8_t num_colors = 14;
-				Colors::RGB tmp[num_colors];
+				Colors::RGB* tmp = new Colors::RGB[num_colors];
 				Colors::generate_scaling_color_array(tmp, &Colors::BLUE, &Colors::GREEN, num_colors, true);
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
 
-				if (serial_enabled_) {
+				if (serial_enabled_ && controller_ != nullptr) {
 					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
 					send_to_device(controller_->get_cue(), controller_->get_cue_size());
 				}
 				break;
 			}
 		default:// Color Wheel
-			active_section_controller_->get_section()->get_animation()->set_colors(Colors::COLORWHEEL, 12);
+			Colors::RGB* tmp = new Colors::RGB[12];
+			for (unsigned char i = 0; i < 12; i++) {
+				tmp[i] = Colors::COLORWHEEL[i];
+			}
+			active_section_controller_->get_section()->get_animation()->set_colors(tmp, 12);
 			set_custom_color_controls_visible(false);
 
-			if (serial_enabled_) {
-				animation_handler->set_colors(0, active_section_controller_->is_overlay_, Colors::COLORWHEEL, 12);
+			if (serial_enabled_ && controller_ != nullptr) {
+				animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, 12);
 				send_to_device(controller_->get_cue(), controller_->get_cue_size());
 			}
 	}
@@ -347,12 +330,10 @@ void MaestroControl::on_custom_color_changed() {
 		return;
 	}
 
-	if (active_section_controller_->get_section()->get_animation()->get_num_colors() == 0 || (new_color != *active_section_controller_->get_section()->get_animation()->get_color_at_index(0))) {
-		change_scaling_color_array(new_color);
+	change_scaling_color_array(new_color);
 
-		ui->baseColorPreviewLabel->setText(QString("{%1, %2, %3}").arg(new_color.r).arg(new_color.g).arg(new_color.b));
-		ui->baseColorPreviewLabel->setStyleSheet(QString("QLabel { color: rgb(%1, %2, %3); font-weight: bold; }").arg(new_color.r).arg(new_color.g).arg(new_color.b));
-	}
+	ui->baseColorPreviewLabel->setText(QString("{%1, %2, %3}").arg(new_color.r).arg(new_color.g).arg(new_color.b));
+	ui->baseColorPreviewLabel->setStyleSheet(QString("QLabel { color: rgb(%1, %2, %3); font-weight: bold; }").arg(new_color.r).arg(new_color.g).arg(new_color.b));
 }
 
 /**
@@ -365,7 +346,7 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
 		active_section_controller_->get_section()->get_animation()->set_speed(value);
 		ui->cycleSlider->setToolTip(QString::number(value));
 
-		if (serial_enabled_) {
+		if (serial_enabled_ && controller_ != nullptr) {
 			animation_handler->set_speed(0, active_section_controller_->is_overlay_, value, 0);
 			send_to_device(controller_->get_cue(), controller_->get_cue_size());
 		}
@@ -387,7 +368,7 @@ void MaestroControl::on_blueSlider_valueChanged(int value) {
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_fade(checked);
 
-	if (serial_enabled_) {
+	if (serial_enabled_ && controller_ != nullptr) {
 		animation_handler->set_fade(0, active_section_controller_->is_overlay_, checked);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
@@ -418,7 +399,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 				ui->alphaSpinBox->setVisible(false);
 			}
 
-			if (serial_enabled_) {
+			if (serial_enabled_ && controller_ != nullptr) {
 				section_handler->add_overlay(0, active_section_controller_->is_overlay_, (Colors::MixMode)index, ui->alphaSpinBox->value());
 				send_to_device(controller_->get_cue(), controller_->get_cue_size());
 			}
@@ -443,7 +424,7 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 		if (active_section_controller_->get_section()->get_animation()) {
 			active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientation)index);
 
-			if (serial_enabled_) {
+			if (serial_enabled_ && controller_ != nullptr) {
 				animation_handler->set_orientation(0, active_section_controller_->is_overlay_, (Animation::Orientation)index);
 				send_to_device(controller_->get_cue(), controller_->get_cue_size());
 			}
@@ -466,7 +447,7 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_reverse(checked);
 
-	if (serial_enabled_) {
+	if (serial_enabled_ && controller_ != nullptr) {
 		animation_handler->set_reverse(0, active_section_controller_->is_overlay_, checked);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
@@ -525,15 +506,18 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 	if ((x != active_section_controller_->get_section()->get_dimensions()->x) || (y != active_section_controller_->get_section()->get_dimensions()->y)) {
 		active_section_controller_->get_section()->set_dimensions(x, y);
 
-		if (serial_enabled_) {
+		if (serial_enabled_ && controller_ != nullptr) {
+			// FIXME: Out of memory exception on embedded devices
+			/*
 			section_handler->set_dimensions(0, active_section_controller_->is_overlay_, ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 			send_to_device(controller_->get_cue(), controller_->get_cue_size());
+			*/
 		}
 	}
 }
 
 void MaestroControl::send_to_device(uint8_t* out, uint8_t size) {
-	serial_port_.write_some(boost::asio::buffer((void*)out, size));
+	q_serial_port_.write((const char*)out, size);
 }
 
 /**
@@ -583,13 +567,13 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 	QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
 
 	switch(animation->get_type()) {
-		case Animation::Type::Sparkle:
+		case AnimationType::Type::Sparkle:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, layout->widget()));
 			break;
-		case Animation::Type::Plasma:
+		case AnimationType::Type::Plasma:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, layout->widget()));
 			break;
-		case Animation::Type::Lightning:
+		case AnimationType::Type::Lightning:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, layout->widget()));
 			break;
 		default:
@@ -619,8 +603,9 @@ void MaestroControl::show_canvas_controls(Canvas *canvas) {
  * Destructor.
  */
 MaestroControl::~MaestroControl() {
-	if (serial_enabled_) {
-		serial_port_.close();
+	if (q_serial_port_.isOpen()) {
+		q_serial_port_.close();
+		controller_ = nullptr;
 	}
 	delete ui;
 }

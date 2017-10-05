@@ -11,8 +11,8 @@ ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_con
 
 	SectionController *section_controller = maestro_controller_->get_section_controller(0);
 	Section* section = section_controller->get_section();
-	section->set_animation(new RadialAnimation(Colors::COLORWHEEL, 12));
-	section->get_animation()->set_reverse(true);
+	Animation* animation = section->add_animation(AnimationType::Radial, Colors::COLORWHEEL, 12);
+	animation->set_reverse(true);
 
 	Section::Overlay* overlay = section->add_overlay(Colors::MixMode::Overlay);
 	ColorCanvas* canvas = static_cast<ColorCanvas*>(overlay->section->add_canvas(CanvasType::Type::ColorCanvas));

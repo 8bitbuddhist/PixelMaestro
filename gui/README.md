@@ -3,7 +3,7 @@ This is a QT-based application that lets you preview PixelMaestro animations on 
 
 ## Requirements
 - QT 5
-- Boost
+	- QSerialPort
 
 ## Contents
 1. [Main Window](#main-window)

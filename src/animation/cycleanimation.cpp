@@ -2,7 +2,7 @@
 
 namespace PixelMaestro {
 	CycleAnimation::CycleAnimation(Colors::RGB* colors, uint8_t num_colors, uint16_t speed, uint16_t pause) : Animation(colors, num_colors, speed, pause) {
-		type_ = Animation::Type::Cycle;
+		type_ = AnimationType::Cycle;
 	}
 
 	void CycleAnimation::update(Section* section) {

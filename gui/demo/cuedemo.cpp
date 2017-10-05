@@ -19,7 +19,7 @@ CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : Simpl
 	controller->run();
 
 	Colors::RGB colors_black[] = {Colors::BLACK, Colors::WHITE};
-	section_handler->set_animation(0, 0, Animation::Type::Cycle, false, colors_black, 2);
+	section_handler->add_animation(0, 0, AnimationType::Type::Cycle, false, colors_black, 2);
 	controller->run();
 
 	AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
@@ -27,7 +27,7 @@ CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : Simpl
 	controller->run();
 
 	Colors::RGB colors_white[] = {Colors::WHITE, {0, 0, 1}};
-	section_handler->set_animation(0, 1, Animation::Type::Cycle, false, colors_white, 2);
+	section_handler->add_animation(0, 1, AnimationType::Type::Cycle, false, colors_white, 2);
 	controller->run();
 
 	animation_handler->set_speed(0, 1, 2000, 1500);
