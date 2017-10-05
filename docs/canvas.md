@@ -24,12 +24,12 @@ There are two different types of Canvases: `ColorCanvas` and `AnimationCanvas`. 
 An `AnimationCanvas` works almost identical to a `ColorCanvas`, except instead of drawing a specific color it draws the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, any shapes drawn on the Canvas will appear to blink as if it were running the Animation normally. This is done by assigning a boolean value to each pixel: if the boolean is `true`, then the pixel is drawn (i.e. it shows the Animation). If it's `false`, then the pixel is not drawn and appears black.
 
 ## Creating a Canvas
-Create a new Canvas by calling `Section::add_canvas(CanvasType::Type)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas`. This automatically creates and initializes a new Canvas of the specified type, then returns a pointer to the new Canvas.
+Create a new Canvas by calling `Section::set_canvas(CanvasType::Type)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas`. This automatically creates and initializes a new Canvas of the specified type, then returns a pointer to the new Canvas.
 
 Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
 
 ```c++
-ColorCanvas* canvas = static_cast<ColorCanvas*>(section->add_canvas(CanvasType::ColorCanvas);
+ColorCanvas* canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas);
 ```
 
 ## Drawing Shapes
@@ -46,7 +46,7 @@ The `draw_line` method lets you draw a line from one point to another. Enter the
 
 ```c++
 // Draw a 10 Pixel long diagonal line
-canvas_->draw_line(0, 0, 10, 10);
+canvas->draw_line(0, 0, 10, 10);
 ```
 
 ### Drawing Points
@@ -54,8 +54,8 @@ The `draw_point()` method lets you draw a single pixel at a time. You can erase 
 
 ```c++
 // Draw a single point 5 pixels to the right of the origin, then erase it.
-canvas_->draw_point(0, 5);
-canvas_->erase(0, 5);
+canvas->draw_point(0, 5);
+canvas->erase(0, 5);
 ```
 
 ### Drawing Rectangles
@@ -64,7 +64,7 @@ The `draw_rect()` method draws a box with the specified origin, size, and whethe
 ```c++
 // Draw the outline of a 10 x 10 rectangle 
 bool fill = false;
-canvas_->draw_rect(0, 0, 10, 10, fill);
+canvas->draw_rect(0, 0, 10, 10, fill);
 ```
 
 ### Drawing Text
@@ -73,7 +73,7 @@ The `draw_text()` method lets you draw text. Specify the origin, a `Font`, and t
 ```c++
 // Draws "PixelMaestro" at the Canvas' origin
 Font *font = new Font5x8();
-canvas_->draw_text(0, 0, font, "PixelMaestro");
+canvas->draw_text(0, 0, font, "PixelMaestro");
 ```
 
 PixelMaestro only supports bitmap fonts. All fonts inherit from the [Font class](../src/canvas/fonts/font.h). For an example, see the included [5x8 font](../src/canvas/fonts/font5x8.h).
@@ -83,7 +83,7 @@ The `draw_triangle()` method draws a triangle using the three specified coordina
 
 ```c++
 // Draws a filled in right-angle triangle 10 pixels high and 10 pixels wide
-canvas_->draw_triangle(0, 0, 10, 0, 0, 10, true);
+canvas->draw_triangle(0, 0, 10, 0, 0, 10, true);
 ```
 
 ### Clearing the Canvas

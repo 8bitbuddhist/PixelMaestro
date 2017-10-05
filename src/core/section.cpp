@@ -40,99 +40,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Creates a new Animation.
-	 * This will overwrite an existing Animation.
-	 * @param type Animation type.
-	 * @param colors The color palette.
-	 * @param num_colors The number of colors in the palette.
-	 * @param preserve_cycle_index If true, the cycle index from the old Animation transfers over to the new Animation.
-	 * @return New Animation.
-	 */
-	Animation* Section::add_animation(AnimationType::Type animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_cycle_index) {
-		Animation* animation = nullptr;
-		switch(animation_type) {
-			case AnimationType::Type::Blink:
-				animation = new BlinkAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Cycle:
-				animation = new CycleAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Lightning:
-				animation = new LightningAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Mandelbrot:
-				animation = new MandelbrotAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Merge:
-				animation = new MergeAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Plasma:
-				animation = new PlasmaAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Radial:
-				animation = new RadialAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Random:
-				animation = new RandomAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Solid:
-				animation = new SolidAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Sparkle:
-				animation = new SparkleAnimation(colors, num_colors);
-				break;
-			case AnimationType::Type::Wave:
-				animation = new WaveAnimation(colors, num_colors);
-				break;
-		}
-
-		if (animation_) {
-			if (preserve_cycle_index) {
-				animation->set_cycle_index(animation_->get_cycle_index());
-			}
-			remove_animation();
-		}
-
-		animation_ = animation;
-		return animation_;
-	}
-
-	/**
-	 * Creates a new Canvas of the specified type.
-	 * This will overwrite an existing Canvas.
-	 * @param type The type of Canvas to create.
-	 * @return The new Canvas.
-	 */
-	Canvas* Section::add_canvas(CanvasType::Type type) {
-		remove_canvas();
-
-		switch (type) {
-			case CanvasType::Type::AnimationCanvas:
-				canvas_ = new AnimationCanvas(this);
-				break;
-			case CanvasType::Type::ColorCanvas:
-				canvas_ = new ColorCanvas(this);
-				break;
-		}
-
-		return canvas_;
-	}
-
-	/**
-	 * Creates a new Overlay.
-	 * This will overwrite an existing Overlay.
-	 * @param mix_mode The method for blending the Overlay.
-	 * @param alpha The Overlay's transparency (0 - 255.
-	 * @return New Overlay.
-	 */
-	Section::Overlay* Section::add_overlay(Colors::MixMode mix_mode, uint8_t alpha) {
-		remove_overlay();
-		overlay_ = new Overlay(dimensions_, mix_mode, alpha);
-		overlay_->section->set_refresh_interval(refresh_interval_);
-		return overlay_;
-	}
-
-	/**
 		Returns the current animation.
 
 		@return Current animation.
@@ -266,6 +173,85 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets a new Animation.
+	 * This will delete and overwrite an existing Animation.
+	 * @param type Animation type.
+	 * @param colors The color palette.
+	 * @param num_colors The number of colors in the palette.
+	 * @param preserve_cycle_index If true, the cycle index from the old Animation transfers over to the new Animation.
+	 * @return New Animation.
+	 */
+	Animation* Section::set_animation(AnimationType::Type animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_cycle_index) {
+		Animation* animation = nullptr;
+		switch(animation_type) {
+			case AnimationType::Type::Blink:
+				animation = new BlinkAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Cycle:
+				animation = new CycleAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Lightning:
+				animation = new LightningAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Mandelbrot:
+				animation = new MandelbrotAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Merge:
+				animation = new MergeAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Plasma:
+				animation = new PlasmaAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Radial:
+				animation = new RadialAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Random:
+				animation = new RandomAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Solid:
+				animation = new SolidAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Sparkle:
+				animation = new SparkleAnimation(colors, num_colors);
+				break;
+			case AnimationType::Type::Wave:
+				animation = new WaveAnimation(colors, num_colors);
+				break;
+		}
+
+		if (animation_) {
+			if (preserve_cycle_index) {
+				animation->set_cycle_index(animation_->get_cycle_index());
+			}
+			remove_animation();
+		}
+
+		animation_ = animation;
+		return animation_;
+	}
+
+	/**
+	 * Sets a new Canvas of the specified type.
+	 * This will delete and overwrite an existing Canvas.
+	 * @param type The type of Canvas to create.
+	 * @return The new Canvas.
+	 */
+	Canvas* Section::set_canvas(CanvasType::Type type) {
+		remove_canvas();
+
+		switch (type) {
+			case CanvasType::Type::AnimationCanvas:
+				canvas_ = new AnimationCanvas(this);
+				break;
+			case CanvasType::Type::ColorCanvas:
+				canvas_ = new ColorCanvas(this);
+				break;
+		}
+
+		return canvas_;
+	}
+
+	/**
 		Sets the Pixel array and layout used in the Section.
 
 		@param dimensions Dimensions of the Pixel array.
@@ -324,6 +310,20 @@ namespace PixelMaestro {
 	*/
 	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB* color) {
 		set_one(get_pixel_index(x, y), color);
+	}
+
+	/**
+	 * Sets a new Overlay.
+	 * This will delete and overwrite an existing Overlay.
+	 * @param mix_mode The method for blending the Overlay.
+	 * @param alpha The Overlay's transparency (0 - 255.
+	 * @return New Overlay.
+	 */
+	Section::Overlay* Section::set_overlay(Colors::MixMode mix_mode, uint8_t alpha) {
+		remove_overlay();
+		overlay_ = new Overlay(dimensions_, mix_mode, alpha);
+		overlay_->section->set_refresh_interval(refresh_interval_);
+		return overlay_;
 	}
 
 	/**

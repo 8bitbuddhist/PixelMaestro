@@ -1,3 +1,7 @@
+/*
+ * CanvasType - List of available Canvases.
+ */
+
 #ifndef CANVASTYPE_H
 #define CANVASTYPE_H
 

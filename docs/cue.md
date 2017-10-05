@@ -6,21 +6,20 @@ A Cue is a PixelMaestro command that has been converted into a portable format. 
 2. [Creating Cues](#creating-cues)
 3. [Running Cues](#running-cues)
 4. [Reading Cues](#reading-cues)
-5. [Cue Components](#cue-components)
-6. [Payload Components](#payload-components)
+5. [Cue Parameters](#cue-parameters)
+6. [Payload Parameters](#payload-parameters)
 
 ## Setting Up Cues
-All Cue actions are controlled by a `CueController`, which processes and stores Cues for execution. Create a new CueController by calling `Maestro::add_cue_controller()`.
+All Cue actions are controlled by a `CueController`, which processes and stores Cues for execution. Create a new CueController by calling `Maestro::set_cue_controller()`. Calling [`Maesto::set_show()`](show.md) also creates a new CueController.
 
 ```c++
 #include "core/maestro.h"
 #include "cue/cuecontroller.h"
-
 ...
-CueController* controller = maestro.add_cue_controller();
+CueController* controller = maestro.set_cue_controller();
 ```
 
-The Cues themselves are created by a `CueHandler`. CueHandlers contain methods for translate PixelMaestro commands into Cues as well as converting Cues back into PixelMaestro commands. Each of the main PixelMaestro classes has an associated CueHandler.
+The Cues themselves are created by a `CueHandler`. CueHandlers contain methods for generating Cues from PixelMaestro commands, as well as running PixelMaestro commands from Cues. Each of the main PixelMaestro classes has an associated CueHandler.
 
 You can enable a CueHandler using `CueController::enable_handler(CueController::Handler)`. Since CueHandlers use a relatively large amount of memory, you should only enable the CueHandlers you need.
 
@@ -31,9 +30,9 @@ SectionCueHandler* handler = static_cast<SectionCueHandler*>(controller->enable_
 ```
 
 ## Creating Cues
-You can create a Cue by calling one of the methods in an enabled CueHandler class. For example, to create a Cue that changes a Section's dimensions, enable a SectionCueHandler and call `handler.set_dimensions(section, overlay, x, y)`, where `section` and `overlay` are the indices of the Section and Overlay you want to modify (leave the Overlay index as 0 if you just want to modify the Section). This generates a Cue and stores it in the CueController's buffer, which you can access using `CueController::get_cue()`.
+You can create a Cue by calling one of the methods in an enabled CueHandler class. For example, to create a Cue that changes a Section's dimensions, enable a `SectionCueHandler` and call `handler.set_dimensions(section, overlay, x, y)`, where `section` and `overlay` are the indices of the Section and Overlay you want to modify (leave the Overlay index as 0 if you just want to modify the Section). This generates a Cue and stores it in the CueController's buffer, which you can access using `CueController::get_cue()`.
 
-**Note:** Most methods require you to pass in the ID of the Section you want to modify.
+**Note:** All Handler methods require you to pass in the index of the Section and Overlay you want to modify. The Overay index indicates the number of Overlays from the base Section (index 0 points to the base Section itself).
 
 The following example demonstrates using two Cues to create a Canvas and draw a circle on an Overlay:
 ```c++
@@ -43,11 +42,10 @@ The following example demonstrates using two Cues to create a Canvas and draw a 
 
 ...
 // The index of the Section (in `Maestro::sections_`).
-// This is required for almost all Cues.
-int section_index = 0;
+int section_index = 02
 
-// If modifying an Overlay, this indicates how far down the Overlay is.
-// For example, an index of 1 affects the Section's Overlay, while an index of 2 affects the Overlay's Overlay.
+// This indicates how far down the Overlay is.
+// For example, an index of 1 affects the base Section's Overlay, while an index of 2 affects the Overlay's Overlay.
 int overlay_index = 1;
 
 SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
@@ -65,7 +63,7 @@ After calling a CueHandler method, you can immediately run the generated Cue by 
 **Note:** Don't call a Handler's `run` method directly, as this will bypass error checking and validation.
 
 ### Running External Cues
-In addition to running cached Cues, you can run Cues by using `CueController::run(unsigned char* cue)` and passing the Cue as the parameter. This lets you pass in Cues from an external source such as file. You can run a set of multiple Cues using `CueController::run(unsigned char* cues, unsigned char num_cues)`, which runs each Cue sequentially.
+You can also run Cues by using `CueController::run(unsigned char* cue)` and passing the Cue as the parameter. This lets you pass in Cues from an external source such as a file or serial device. You can also run a multiple Cues sequentially using `CueController::run(unsigned char* cues, unsigned char num_cues)`.
 
 For cases where you can only read parts of a Cue at a time (e.g. using `Serial.read()` on an Arduino), use `CueController::read(byte)`. Each byte is loaded into the CueController's buffer until the Cue has loaded completely, then the Cue is automatically executed. The buffer then resets and repeats the process for the next incoming Cue.
 
@@ -81,24 +79,24 @@ if (Serial.available()) {
 
 **The following sections are for reference/curiosity only.**
 
-## Cue Components
+## Cue Parameters
 At its core, a Cue is just a string of bytes approximately 20 characters long. Cues contain the following parts:
 
 1. **ID**: a simple string used to identify the start of a PixelMaestro Cue.
 2. **Size**: the size of the PixelMaestro command (aka the _payload_).
 3. **Checksum**: a value calculated to confirm the integrity of the data received. This is done by summing up the entire command, dividing by 256, and taking the remainder.
-4. **Payload**: the actual serialized PixelMaestro command.
+4. **Payload**: the contents of the PixelMaestro command.
 
-The ID and checksum are used as validation when loading a Cue from external sources. Cues generated from within the CueController bypass these steps.
+The ID and checksum are used as validation when loading Cues from external sources, whereas Cues generated from within the CueController bypass this step altogether.
 
-## Payload Components
-Payloads can vary in length depending on the command (hence the _size_ component), but all payloads contain all of these components (excluding Type in some cases):
+## Payload Parameters
+Payloads can vary in length depending on the command (hence the _size_ component), but each payload contains almost all of these parameters:
 
 1. **Handler**: the CueHandler that generated this Cue. This helps the CueController delegate incoming Cues to different CueHandlers.
-2. **Action**: the CueHandler-specific method that created this Cue. This is where CueHandler methods map to PixelMaestro methods.
-3. **Type**: identifies one of several possible options, e.g. a canvas type or animation type.
+2. **Action**: the CueHandler-specific method that created this Cue. This is also used to map CueHandler methods to PixelMaestro methods.
+3. **Type**: identifies one of several possible options, e.g. a canvas type or animation type. Only a few CueHandlers use this parameter.
 4. **Section**: the index of the Section that this Cue modifies.
-4. **Overlay**: the index of the affected Overlay in relation to the Section.
-5. **Options**: A variable-length set of parameters custom to each Action.
+4. **Overlay**: the index of the Overlay that this Cue modifies in relation to the Section.
+5. **Options**: A variable-length set of options custom to each Action.
 
 [Home](README.md)

@@ -23,10 +23,10 @@ class SectionController {
 		SectionController(Point* layout);
 		SectionController(Section* section, bool is_overlay = false);
 		~SectionController();
-		SectionController* add_overlay(Colors::MixMode mix_mode, float alpha = 0.5);
 		Section::Overlay* get_overlay();
 		SectionController* get_overlay_controller();
 		Section* get_section();
+		SectionController* set_overlay(Colors::MixMode mix_mode, float alpha = 0.5);
 
 	private:
 

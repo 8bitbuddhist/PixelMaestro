@@ -26,9 +26,10 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	
 	SECTION("Verify update works.") {
 		Section* s1 = maestro.get_section(0);
-		Animation* animation = s1->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12), 100);
-		
+		Animation* animation = s1->set_animation(AnimationType::Solid, Colors::COLORWHEEL, 12);
+		animation->set_speed(100);
 		animation->set_fade(false);
+
 		maestro.update(101);
 		
 		REQUIRE(*s1->get_pixel(0)->get_color() == Colors::COLORWHEEL[0]);
@@ -36,9 +37,10 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	
 	SECTION("Verify global brightness works.") {
 		Section* s1 = maestro.get_section(0);
-		Animation* animation = s1->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12), 100);
-		
+		Animation* animation = s1->set_animation(AnimationType::Solid, Colors::COLORWHEEL, 12);
+		animation->set_speed(100);
 		animation->set_fade(false);
+
 		maestro.set_brightness(127);
 		maestro.update(101);
 		
@@ -47,7 +49,7 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	
 	SECTION("Verify running state works.") {
 		Section* s1 = maestro.get_section(0);
-		s1->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12), 100);
+		s1->set_animation(AnimationType::Solid, Colors::COLORWHEEL, 12);
 		
 		maestro.set_running(false);
 		

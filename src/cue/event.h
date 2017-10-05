@@ -5,19 +5,16 @@
 #ifndef EVENT_H
 #define EVENT_H
 
-#include "../core/maestro.h"
-#include "cuecontroller.h"
+#include <stdint.h>
 
 namespace PixelMaestro {
-	class CueController;
-	class Maestro;
 	class Event {
 
 		public:
 			Event(uint32_t time, const uint8_t* cue);
 			~Event();
+			uint8_t* get_cue();
 			uint32_t get_time();
-			void run(CueController* controller);
 
 		protected:
 			/// The Cue to run.

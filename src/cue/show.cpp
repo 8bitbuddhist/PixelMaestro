@@ -94,7 +94,7 @@ namespace PixelMaestro {
 		uint32_t event_time = events_[current_index_].get_time();
 		if ((timing_ == TimingMode::Absolute && (current_time >= event_time)) ||
 			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= event_time))) {
-			events_[current_index_].run(cue_controller_);
+			cue_controller_->run(events_[current_index_].get_cue());
 			last_time_ = current_time;
 			update_event_index();
 

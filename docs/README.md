@@ -13,7 +13,7 @@ PixelMaestro has five main components:
 PixelMaestro also includes the following support classes:
 * [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.
 * [Colors](colors.md): Provides core utilities for managing colors including several pre-defined colors, color schemes, and methods for generating new colors.
-* [Cue](cue.md): Provides utilities for serializing and storing PixelMaestro commands.
+* [Cue](cue.md): Provides utilities for serializing PixelMaestro commands.
 * [Point](point.md): Class for managing coordinates on the Pixel grid.
 * [Utility](utility.md): Shared (mostly mathematic) methods.
 
@@ -39,11 +39,12 @@ void setup() {
 	maestro.set_brightness(128);
 
 	// Create a new blinking animation using an assortment of 12 colors, then sets the animation speed to 500ms
-	sections[0].set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12, 500));
+	Animation* animation = sections[0].set_animation(AnimationType::Blink, Colors::COLORWHEEL, 12);
+	animation->set_speed(500);
 
 	// Create a new Canvas and write "Hello world" using a 5x8 font
 	Canvas* canvas = sections[0].add_canvas();
-	canvas.draw_text(0, 0, new Font5x8(), "Hello world!");
+	canvas->draw_text(0, 0, new Font5x8(), "Hello world!");
 }
 
 void loop() {

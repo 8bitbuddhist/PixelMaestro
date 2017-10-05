@@ -10,11 +10,9 @@ using namespace PixelMaestro;
 namespace PixelMaestro {
 
 	/**
-	 * Constructor. Loads the provided Cue into the CueController.
+	 * Constructor. Copies the provided Cue into the Event.
 	 * @param time Event's start time.
-	 * @param Maestro The Maestro that the Cue will run on.
-	 * @param Cue The Cue to run. This will be copied to the Event, then loaded into the CueController.
-	 * @param size The size of the Cue.
+	 * @param Cue The Cue to run.
 	 */
 	Event::Event(uint32_t time, const uint8_t* cue) {
 		this->time_ = time;
@@ -27,15 +25,20 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Event's Cue.
+	 * The Show passes this to the CueController when the Event runs.
+	 * @return Cue.
+	 */
+	uint8_t* Event::get_cue() {
+		return cue_;
+	}
+
+	/**
 	 * Returns the time that this Event will run.
 	 * @return Event's start time.
 	 */
 	uint32_t Event::get_time() {
-		return this->time_;
-	}
-
-	void Event::run(CueController* controller) {
-		controller->run(cue_);
+		return time_;
 	}
 
 	Event::~Event() {

@@ -19,39 +19,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Creates a new controller for managing Cues.
-	 * @return New Cue controller.
-	 */
-	CueController* Maestro::add_cue_controller() {
-		if (cue_controller_ == nullptr) {
-			cue_controller_ = new CueController(this);
-		}
-
-		return cue_controller_;
-	}
-
-
-	/**
-	 * Creates and configures a Show.
-	 * If a Show already exists, this modifies and returns the existing Show.
-	 * This will also initialize a CueController if one does not already exist.
-	 *
-	 * @param events Events used in the Show.
-	 * @param num_events The number of Events in the Show.
-	 * @return New Show.
-	 */
-	Show* Maestro::add_show(Event* events, uint16_t num_events) {
-		if (show_ == nullptr) {
-			show_ = new Show(add_cue_controller(), events, num_events);
-		}
-		else {
-			show_->set_events(events, num_events);
-		}
-
-		return show_;
-	}
-
-	/**
 	 * Returns the active Cue controller.
 	 * @return Cue controller.
 	 */
@@ -123,6 +90,18 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets a new Cue controller, or returns the current Controller if one is already set.
+	 * @return New Cue controller.
+	 */
+	CueController* Maestro::set_cue_controller() {
+		if (cue_controller_ == nullptr) {
+			cue_controller_ = new CueController(this);
+		}
+
+		return cue_controller_;
+	}
+
+	/**
 	 * Sets the Maestro's refresh interval.
 	 * @param interval New refresh interval.
 	 */
@@ -152,6 +131,26 @@ namespace PixelMaestro {
 		for (uint8_t section = 0; section < num_sections; section++) {
 			sections_[section].set_refresh_interval(&refresh_interval_);
 		}
+	}
+
+	/**
+	 * Sets a new Show.
+	 * If a Show already exists, this updates the existing Show with the new Event list.
+	 * This also initializes a CueController if one does not already exist.
+	 *
+	 * @param events Events used in the Show.
+	 * @param num_events The number of Events.
+	 * @return New Show.
+	 */
+	Show* Maestro::set_show(Event* events, uint16_t num_events) {
+		if (show_ == nullptr) {
+			show_ = new Show(set_cue_controller(), events, num_events);
+		}
+		else {
+			show_->set_events(events, num_events);
+		}
+
+		return show_;
 	}
 
 	/**

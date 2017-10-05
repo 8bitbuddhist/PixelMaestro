@@ -1,14 +1,13 @@
 #include <Arduino.h>
 
-#include <PixelMaestro/animation/blinkanimation.h>
 #include <PixelMaestro/core/maestro.h>
 
 #include <WS2812.h>
 
 using namespace PixelMaestro;
 
-const unsigned char ROWS = 1;
-const unsigned char COLUMNS = 8;
+const unsigned char ROWS = 8;
+const unsigned char COLUMNS = 1;
 
 Section sections[] = {
   Section(ROWS, COLUMNS)
@@ -30,11 +29,12 @@ void setup () {
     ws.setOutput(LED_PIN);
     ws.setColorOrderGRB();
 
-		// Create a new blinking animation, set a palette of 12 colors, and set the cycle speed to 500ms
-    maestro.get_section(0)->set_animation(new BlinkAnimation(Colors::COLORWHEEL, 12, 500));
-
 		// Set global brightness to 10%
 		maestro.set_brightness(25);
+
+		// Create a new blinking animation, set a palette of 12 colors, and set the cycle speed to 500ms
+		Animation* animation = sections[0].add_animation(AnimationType::Type::Blink, Colors::COLORWHEEL, 12);
+		animation->set_speed(500);
 }
 
 void loop() {

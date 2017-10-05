@@ -20,8 +20,6 @@ namespace PixelMaestro {
 		public:
 			Maestro(Section* sections, uint8_t num_sections);
 			~Maestro();
-			CueController* add_cue_controller();
-			Show* add_show(Event* events, uint16_t num_events);
 			CueController* get_cue_controller();
 			Colors::RGB get_pixel_color(uint8_t section, uint32_t pixel);
 			uint8_t get_num_sections();
@@ -30,9 +28,11 @@ namespace PixelMaestro {
 			Section* get_section(uint8_t section);
 			Show* get_show();
 			void set_brightness(uint8_t brightness);
+			CueController* set_cue_controller();
 			void set_refresh_interval(uint16_t interval);
 			void set_running(bool running);
 			void set_sections(Section* sections, uint8_t num_sections);
+			Show* set_show(Event* events, uint16_t num_events);
 			void update(const uint32_t& current_time);
 
 		private:

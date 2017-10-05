@@ -3,7 +3,6 @@
 
 #include "../animation/animation.h"
 #include "../core/colors.h"
-#include "../core/maestro.h"
 #include "cuehandler.h"
 #include "cuecontroller.h"
 

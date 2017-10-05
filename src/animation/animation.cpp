@@ -1,3 +1,7 @@
+/*
+ * Animation - Base class for rendering Animations on a Section.
+ */
+
 #include "animation.h"
 
 namespace PixelMaestro {

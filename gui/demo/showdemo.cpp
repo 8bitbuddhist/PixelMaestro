@@ -15,12 +15,12 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 	maestro_controller_ = maestro_controller;
 	maestro_controller_->add_section_controller(new Point(10, 10));
 
-	CueController* controller = maestro_controller_->get_maestro()->add_cue_controller();
+	CueController* controller = maestro_controller_->get_maestro()->set_cue_controller();
 
 	SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
 	AnimationCueHandler* animation_handler = static_cast<AnimationCueHandler*>(controller->enable_handler(CueController::Handler::AnimationHandler));
 
-	section_handler->add_animation(0, 0, AnimationType::Type::Radial, false, Colors::COLORWHEEL, 12);
+	section_handler->set_animation(0, 0, AnimationType::Type::Radial, false, Colors::COLORWHEEL, 12);
 	controller->run();
 
 	Colors::RGB green_colors[16];
@@ -40,7 +40,7 @@ ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : Sim
 		Event(5000, blue_buffer)
 	};
 
-	Show* show = maestro_controller_->get_maestro()->add_show(events_, 2);
+	Show* show = maestro_controller_->get_maestro()->set_show(events_, 2);
 	show->set_timing(Show::TimingMode::Relative);
 	show->set_looping(true);
 }

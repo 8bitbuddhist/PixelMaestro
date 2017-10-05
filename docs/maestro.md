@@ -1,5 +1,5 @@
 # Maestro
-Maestros are responsible for coordinating multiple Sections. Maestros also provide additional functionality such as setting global brightness levels.
+Maestros are at the top of the PixelMaestro hierarchy. In addition to managing multiple Sections, they set global parameters such as the refresh rate, brightness level, and Show Events.
 
 ## Contents
 1. [Creating a Maestro](#creating-a-maestro)
@@ -11,7 +11,7 @@ Maestros are responsible for coordinating multiple Sections. Maestros also provi
 7. [Creating a Show](#creating-a-show)
 
 ## Creating a Maestro
-Declare a Maestro by passing in the Sections that it will be controlling. The following code creates two Sections, one with a 10x20 grid of Pixels and another with a 20x30 grid.
+Create a Maestro by passing in the Sections that it will be controlling. The following code creates two Sections, one with a 10x20 grid of Pixels and another with a 20x30 grid.
 ```c++
 int num_sections = 2;
 Section sections[] = {

@@ -1,5 +1,5 @@
 # Section
-Sections are the primary interface for PixelMaestro. Their main function is to bridge Pixels and Animations. They also manage Canvases, Overlays, and other additional functionality.
+Sections are the core of PixelMaestro. Their main function is to delegate colors to Pixels. They are responsible for managing Animations, Canvases, Overlays, and other objects that impact the Pixel grid.
 
 ## Contents
 1. [Creating a Section](#creating-a-section)
@@ -56,15 +56,17 @@ Pixel *pixel = section.get_pixel(50, 2);
 ## Using Overlays
 You can layer animations by adding an Overlay to a Section. An Overlay is a second Section layered on top of an existing Section, with both Sections running independently of each other. When you retrieve a Pixel's color from the base Section using `get_pixel_color()`, the color from the base Section is merged with the color of the corresponding Pixel in the overlaid Section. You can learn more about color merging in the [Colors](colors.md) document.
 
-You can access the overlaid Section by calling `Section::get_overlay()->section`. You can stack multiple Overlays by calling `Section::get_overlay()->section->add_overlay()`. Since any Section can have an Overlay, you could theoretically stack an unlimited number of Overlays.
+Create an Overlay by calling `Section::set_overlay()`. This returns a new Overlay object, which contains the Section used to render the Overlay as well as methods for rendering the Section over its parent Section. You can access the overlaid Section by calling `Section::get_overlay()->section`.
+
+Since any Section can have an Overlay, you could theoretically stack an unlimited number of Overlays. For example, to add a second-level Overlay, call `Section::get_overlay()->section->set_overlay()`.
 
 ```c++
 Section base = Section(10, 10);
 ...
 // Creates a new Overlay and sets its animation.
-// The final Pixel color will be 50% of the base Pixel's color and 50% of the overlaid Pixel's color.
-Overlay* overlay = base.add_overlay(overlay, Colors::MixMode::ALPHA, 128);
-overlay->section->add_animation(new RadialAnimation(Colors::RAINBOW, 7));
+// The final Pixel color will be 50% of the base color and 50% of the overlaid color.
+Overlay* overlay = base.set_overlay(overlay, Colors::MixMode::ALPHA, 127);
+overlay->section->set_animation(new RadialAnimation(Colors::RAINBOW, 7));
 ```
 
 ## Updating a Section

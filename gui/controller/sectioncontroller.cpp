@@ -26,8 +26,8 @@ SectionController::SectionController(Section* section, bool is_overlay) {
  * @param mix_mode The blending mode of the Overlay.
  * @param alpha The transparency of the Overlay.
  */
-SectionController* SectionController::add_overlay(Colors::MixMode mix_mode, float alpha) {
-	section_->add_overlay(mix_mode, alpha);
+SectionController* SectionController::set_overlay(Colors::MixMode mix_mode, float alpha) {
+	section_->set_overlay(mix_mode, alpha);
 	overlay_controller_ = new SectionController(section_->get_overlay()->section, true);
 	return overlay_controller_;
 }

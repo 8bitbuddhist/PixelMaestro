@@ -1,3 +1,7 @@
+/*
+ * AnimationType - List of available Animations.
+ */
+
 #ifndef ANIMATIONTYPE_H
 #define ANIMATIONTYPE_H
 

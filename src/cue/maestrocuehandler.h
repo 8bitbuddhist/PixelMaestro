@@ -1,8 +1,8 @@
 #ifndef MAESTROCUEHANDLER_H
 #define MAESTROCUEHANDLER_H
 
-#include "../core/maestro.h"
 #include "cuecontroller.h"
+#include "cuehandler.h"
 
 namespace PixelMaestro {
 	class MaestroCueHandler : public CueHandler {

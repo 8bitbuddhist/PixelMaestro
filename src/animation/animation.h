@@ -1,3 +1,7 @@
+/*
+ * Animation - Base class for rendering Animations on a Section.
+ */
+
 #ifndef ANIMATION_H
 #define ANIMATION_H
 

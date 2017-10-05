@@ -1,7 +1,6 @@
 #ifndef CANVASCUEHANDLER_H
 #define CANVASCUEHANDLER_H
 
-#include "../core/maestro.h"
 #include "cuecontroller.h"
 
 namespace PixelMaestro {

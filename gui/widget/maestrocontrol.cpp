@@ -41,7 +41,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	// Open serial connection to Arduino
 	// TODO: Track Session ID and Overlay ID
 	if (serial_enabled_) {
-		controller_ = maestro_controller_->get_maestro()->add_cue_controller();
+		controller_ = maestro_controller_->get_maestro()->set_cue_controller();
 		animation_handler = static_cast<AnimationCueHandler*>(controller_->enable_handler(CueController::Handler::AnimationHandler));
 		canvas_handler = static_cast<CanvasCueHandler*>(controller_->enable_handler(CueController::Handler::CanvasHandler));
 		maestro_handler = static_cast<MaestroCueHandler*>(controller_->enable_handler(CueController::Handler::MaestroHandler));
@@ -110,7 +110,7 @@ void MaestroControl::get_section_settings() {
  */
 void MaestroControl::initialize() {
 	active_section_controller_ = maestro_controller_->get_section_controller(0);
-	active_section_controller_->get_section()->add_animation(AnimationType::Solid, nullptr, 0);
+	active_section_controller_->get_section()->set_animation(AnimationType::Solid, nullptr, 0);
 
 	// Populate Animation combo box
 	ui->animationComboBox->addItems({"Blink", "Cycle", "Lightning", "Mandelbrot", "Merge", "Plasma", "Radial", "Random", "Solid", "Sparkle", "Wave"});
@@ -125,8 +125,8 @@ void MaestroControl::initialize() {
 	ui->sectionComboBox->addItem("Section 1");
 
 	// Add an Overlay
-	active_section_controller_->add_overlay(Colors::MixMode::None);
-	active_section_controller_->get_overlay()->section->add_animation(AnimationType::Solid, nullptr, 0);
+	active_section_controller_->set_overlay(Colors::MixMode::None);
+	active_section_controller_->get_overlay()->section->set_animation(AnimationType::Solid, nullptr, 0);
 	ui->sectionComboBox->addItem(QString("Overlay 1"));
 
 	// Initialize Overlay controls
@@ -165,7 +165,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
 
 	if (serial_enabled_ && controller_ != nullptr) {
-		section_handler->add_overlay(0, active_section_controller_->is_overlay_, maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode, arg1);
+		section_handler->set_overlay(0, active_section_controller_->is_overlay_, maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode, arg1);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
 }
@@ -186,12 +186,12 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	// Preserve the animation cycle between changes
 	bool preserve_cycle_index = true;
 
-	Animation* animation = active_section_controller_->get_section()->add_animation((AnimationType::Type)index, 0, preserve_cycle_index);
+	Animation* animation = active_section_controller_->get_section()->set_animation((AnimationType::Type)index, 0, preserve_cycle_index);
 
 	show_extra_controls(animation);
 
 	if (serial_enabled_ && controller_ != nullptr) {
-		section_handler->add_animation(0, active_section_controller_->is_overlay_, (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
+		section_handler->set_animation(0, active_section_controller_->is_overlay_, (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
 
@@ -216,15 +216,15 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 	// Add the new Canvas
 	switch (index) {
 		case 1:	// Animation Canvas
-			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::AnimationCanvas);
+			canvas = active_section_controller_->get_section()->set_canvas(CanvasType::Type::AnimationCanvas);
 			break;
 		case 2: // Color Canvas
-			canvas = active_section_controller_->get_section()->add_canvas(CanvasType::Type::ColorCanvas);
+			canvas = active_section_controller_->get_section()->set_canvas(CanvasType::Type::ColorCanvas);
 			break;
 	}
 
 	if (serial_enabled_ && controller_ != nullptr) {
-		section_handler->add_canvas(0, active_section_controller_->is_overlay_, (CanvasType::Type)index);
+		section_handler->set_canvas(0, active_section_controller_->is_overlay_, (CanvasType::Type)index);
 		send_to_device(controller_->get_cue(), controller_->get_cue_size());
 	}
 
@@ -388,7 +388,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 			}
 
 			if (serial_enabled_ && controller_ != nullptr) {
-				section_handler->add_overlay(0, active_section_controller_->is_overlay_, (Colors::MixMode)index, ui->alphaSpinBox->value());
+				section_handler->set_overlay(0, active_section_controller_->is_overlay_, (Colors::MixMode)index, ui->alphaSpinBox->value());
 				send_to_device(controller_->get_cue(), controller_->get_cue_size());
 			}
 		}

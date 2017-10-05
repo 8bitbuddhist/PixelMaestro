@@ -33,7 +33,7 @@ namespace PixelMaestro {
 			*/
 			Colors::RGB* color_pattern_ = nullptr;
 
-			/// Stores the color currently being used to draw a shape.
+			/// Stores the color currently being used to draw shapes.
 			Colors::RGB drawing_color_ = Colors::BLACK;
 	};
 }

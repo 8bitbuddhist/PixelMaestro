@@ -47,13 +47,14 @@ namespace PixelMaestro {
 			};
 
 			// Virtual functions - must be implemented in derived Canvases.
+			virtual ~Canvas();
 			virtual void activate(uint32_t pixel) = 0;
 			virtual void deactivate(uint32_t pixel) = 0;
 			virtual Colors::RGB get_pixel_color(uint32_t pixel) = 0;
+			virtual CanvasType::Type get_type() = 0;
 			virtual void initialize_pattern() = 0;
 
 			Canvas(Section* section);
-			virtual ~Canvas();
 			void clear();
 			void draw_circle(uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			void draw_line(uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
@@ -64,7 +65,6 @@ namespace PixelMaestro {
 			void erase(uint16_t x, uint16_t y);
 			bool* get_pattern();
 			Section* get_section();
-			virtual CanvasType::Type get_type() = 0;
 			bool in_bounds(Point* point);
 			bool in_bounds(uint16_t x, uint16_t y);
 			void remove_scroll();

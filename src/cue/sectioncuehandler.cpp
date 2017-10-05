@@ -2,10 +2,10 @@
 #include "sectioncuehandler.h"
 
 namespace PixelMaestro {
-	void SectionCueHandler::add_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors) {
+	void SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors) {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::AddAnimation;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetAnimation;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = (uint8_t)animation_type;
@@ -25,25 +25,14 @@ namespace PixelMaestro {
 		controller_->assemble(colors_index);
 	}
 
-	void SectionCueHandler::add_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type) {
+	void SectionCueHandler::set_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::AddCanvas;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = canvas_type;
 
 		controller_->assemble((uint8_t)Byte::OptionsByte);
-	}
-
-	void SectionCueHandler::add_overlay(uint8_t section_num, uint8_t overlay_num, Colors::MixMode mix_mode, uint8_t alpha) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::AddOverlay;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = mix_mode;
-		controller_->get_cue()[Byte::OptionsByte + 1] = alpha;
-
-		controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
 	void SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y) {
@@ -62,6 +51,17 @@ namespace PixelMaestro {
 		controller_->assemble((uint8_t)Byte::OptionsByte + 4);
 	}
 
+	void SectionCueHandler::set_overlay(uint8_t section_num, uint8_t overlay_num, Colors::MixMode mix_mode, uint8_t alpha) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetOverlay;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_cue()[Byte::OptionsByte] = mix_mode;
+		controller_->get_cue()[Byte::OptionsByte + 1] = alpha;
+
+		controller_->assemble((uint8_t)Byte::OptionsByte + 2);
+	}
+
 	void SectionCueHandler::run(uint8_t *cue) {
 		Section* section = controller_->get_maestro()->get_section(cue[Byte::SectionByte]);
 
@@ -72,7 +72,7 @@ namespace PixelMaestro {
 		if (section == nullptr) return;
 
 		switch ((Action)cue[Byte::ActionByte]) {
-			case Action::AddAnimation:
+			case Action::SetAnimation:
 				{
 					uint8_t num_colors = cue[Byte::OptionsByte + 2];
 					uint8_t colors_index = Byte::OptionsByte + 3;
@@ -95,21 +95,19 @@ namespace PixelMaestro {
 						delete[] section->get_animation()->get_colors();
 					}
 
-					section->add_animation((AnimationType::Type)cue[SectionCueHandler::Byte::OptionsByte], colors, num_colors, (bool)cue[Byte::OptionsByte + 1]);
+					section->set_animation((AnimationType::Type)cue[SectionCueHandler::Byte::OptionsByte], colors, num_colors, (bool)cue[Byte::OptionsByte + 1]);
 				}
 				break;
-			case Action::AddCanvas:
-				section->add_canvas(CanvasType::Type(cue[Byte::OptionsByte]));
-				break;
-			case Action::AddOverlay:
-				section->add_overlay(Colors::MixMode(cue[Byte::OptionsByte]), cue[Byte::OptionsByte + 1]);
+			case Action::SetCanvas:
+				section->set_canvas(CanvasType::Type(cue[Byte::OptionsByte]));
 				break;
 			case Action::SetDimensions:
-				{
-					uint16_t x = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
-					uint16_t y = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]);
-					section->set_dimensions(x, y);
-				}
+				section->set_dimensions(
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
+				break;
+			case Action::SetOverlay:
+				section->set_overlay(Colors::MixMode(cue[Byte::OptionsByte]), cue[Byte::OptionsByte + 1]);
 				break;
 		}
 	}

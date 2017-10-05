@@ -1,5 +1,5 @@
 # Show
-Shows are used to schedule the execution of [Cues](cue.md) at a later point. They let you plan out actions that a Maestro will automatically perform over the course of its runtime. To start a Show, use the `Maestro::add_show()` method. This method also requires you to pass in a set of [`Events`](#adding-events), which are explained below.
+Shows are used to schedule the execution of [Cues](cue.md) at some later point during the program's lifetime. To start a Show, use the `Maestro::set_show()` method. This method also requires you to pass in a set of [`Events`](#adding-events), which are explained below.
 
 For an example of how to configure a Show, see [ShowDemo](../gui/demo/showdemo.cpp).
 
@@ -12,14 +12,15 @@ For an example of how to configure a Show, see [ShowDemo](../gui/demo/showdemo.c
 6. [Event List](#event-list)
 
 ## Creating a Show
-Create a Show by calling `Maestro::add_show()` and passing in the Events you want to run. This example creates two events using Cues: one that adds a new Canvas, and one that draws a circle onto the Canvas.
+Create a Show by calling `Maestro::set_show()` and passing in the Events you want to run. This example creates two events using Cues: one that adds a new Canvas, and one that draws a circle onto the Canvas.
 
-**Tip:** `add_show()` automatically calls `add_cue_controller()` in case you haven't already initialized a CueController.
+**Tip:** `set_show()` automatically calls `set_cue_controller()` in case you haven't already initialized a CueController.
 
 ```c++
 #include "cue/canvascuehandler.h"
 #include "cue/event.h"
 #include "cue/sectioncuehandler.h"
+
 unsigned char canvas_buffer[100];
 unsigned char drawing_buffer[100];
 
@@ -27,18 +28,18 @@ unsigned char drawing_buffer[100];
 // Configure Maestro and CueController
 ...
 
-section_handler->add_canvas(0, 0, CanvasType::ColorCanvas);
-memcpy(canvas_buffer, controller->get_cue(), 100);
+section_handler->set_canvas(0, 0, CanvasType::ColorCanvas);
+memcpy(canvas_buffer, controller->get_cue(), controller->get_cue_size());
 
 canvas_handler->draw_circle(0, 0, Colors::GREEN, 5, 5, 2, true);
-memcpy(drawing_buffer, controller->get_cue(), 100);
+memcpy(drawing_buffer, controller->get_cue(), controller->get_cue_size());
 
 int num_events = 2;
 Event events[num_events] = {
 	Event(5000, canvas_buffer),
 	Event(5000, drawing_buffer)
 }
-maestro.add_show(events, num_events);
+maestro.set_show(events, num_events);
 ```
 
 ## Adding Events

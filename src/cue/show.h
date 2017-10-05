@@ -5,11 +5,14 @@
 #ifndef SHOW_H
 #define SHOW_H
 
+#include <stdint.h>
+#include "cuecontroller.h"
 #include "event.h"
 
 using namespace PixelMaestro;
 
 namespace PixelMaestro {
+	class CueController;
 	class Show {
 		public:
 			/// The method used to measure time between Events.
@@ -43,7 +46,7 @@ namespace PixelMaestro {
 			/// The time that the last Event ran.
 			uint32_t last_time_ = 0;
 
-			/// Whether to loop over the Event.
+			/// Whether to loop over the Event list.
 			bool loop_ = false;
 
 			/// The number of Events in the Show.

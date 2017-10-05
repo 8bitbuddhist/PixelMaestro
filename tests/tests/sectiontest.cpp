@@ -27,7 +27,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 	}
 	
 	SECTION("Verify that Animations and Colors are set correctly.") {
-		Animation* animation = section->set_animation(new SolidAnimation());
+		Animation* animation = section->set_animation(AnimationType::Solid, nullptr, 0);
 		animation->set_colors(Colors::COLORWHEEL, 12);
 		animation->set_speed(100);
 		animation->set_fade(false);
@@ -38,11 +38,11 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 	}
 	
 	SECTION("Verify that different Canvas types can be added.") {
-		Animation* animation = section->set_animation(new SolidAnimation(Colors::COLORWHEEL, 12), 100);
+		Animation* animation = section->set_animation(AnimationType::Solid, Colors::COLORWHEEL, 12);
 		animation->set_fade(false);
 		
 		// Draw a filled in animation rectangle
-		AnimationCanvas* animation_canvas = static_cast<AnimationCanvas*>(section->add_canvas(CanvasType::Type::AnimationCanvas));
+		AnimationCanvas* animation_canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));
 		animation_canvas->draw_rect(0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
 		
 		maestro.update(101);
@@ -53,7 +53,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		REQUIRE(section->get_canvas() == nullptr);
 		
 		// Draw a color rectangle
-		ColorCanvas* color_canvas = static_cast<ColorCanvas*>(section->add_canvas(CanvasType::Type::ColorCanvas));
+		ColorCanvas* color_canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::Type::ColorCanvas));
 		color_canvas->draw_rect(Colors::CHARTREUSE, 0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
 		
 		REQUIRE(section->get_pixel_color(test_pixel) == Colors::CHARTREUSE);
@@ -63,9 +63,11 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		Colors::RGB section_colors[] = {Colors::WHITE};
 		Colors::RGB overlay_colors[] = {Colors::BLACK, Colors::BLUE};
 		
-		Section::Overlay* overlay = section->add_overlay(Colors::MixMode::None);
-		Animation* section_animation = section->set_animation(new SolidAnimation(section_colors, 1), 100);
-		Animation* overlay_animation = overlay->section->set_animation(new SolidAnimation(overlay_colors, 2), 100);
+		Section::Overlay* overlay = section->set_overlay(Colors::MixMode::None);
+		Animation* section_animation = section->set_animation(AnimationType::Solid, section_colors, 1);
+		Animation* overlay_animation = overlay->section->set_animation(AnimationType::Solid, section_colors, 1);
+		section_animation->set_speed(100);
+		overlay_animation->set_speed(100);
 		section_animation->set_fade(false);
 		overlay_animation->set_fade(false);
 		
