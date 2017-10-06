@@ -31,7 +31,7 @@ class MaestroDrawingArea : public QWidget {
 		QElapsedTimer elapsed_timer_;
 
 		/// Handles calling the DrawingArea's refreshMaestro() method.
-		QTimer *timer_;
+		QTimer timer_;
 
 		/// The MaestroController managed by this DrawingArea.
 		MaestroController* maestro_controller_;

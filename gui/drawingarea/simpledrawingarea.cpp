@@ -1,4 +1,5 @@
 #include "controller/maestrocontroller.h"
+#include "window/settingsdialog.h"
 #include "maestrodrawingarea.h"
 #include "simpledrawingarea.h"
 #include <QPainter>
@@ -77,5 +78,18 @@ void SimpleDrawingArea::resizeEvent(QResizeEvent *event) {
 		radius_ = optimal_height;
 	}
 
-	pad_ = (radius_ * 2);
+	switch (settings_.value(SettingsDialog::interface_padding).toInt()) {
+		case 0:	// None
+			pad_ = radius_;
+			break;
+		case 1:	// Small
+			pad_ = radius_ + (radius_ / 2);
+			break;
+		case 2:	// Medium
+			pad_ = radius_ * 2;
+			break;
+		case 3:	// Large
+			pad_ = radius_ * 3;
+			break;
+	}
 }

@@ -13,6 +13,7 @@
 #include "controller/sectioncontroller.h"
 #include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
+#include "window/settingsdialog.h"
 #include "maestrocontrol.h"
 #include <QSettings>
 #include <QString>
@@ -30,8 +31,8 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 	// Load settings
 	QSettings settings;
-	serial_enabled_ = settings.value("serial/enabled").toBool();
-	serial_port_ = settings.value("serial/port").toString();
+	serial_enabled_ = settings.value(SettingsDialog::serial_enabled).toBool();
+	serial_port_ = settings.value(SettingsDialog::serial_port).toString();
 
 	// Initialize UI
 	ui->setupUi(this);

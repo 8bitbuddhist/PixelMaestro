@@ -7,6 +7,7 @@
 
 #include "controller/maestrocontroller.h"
 #include "maestrodrawingarea.h"
+#include <QSettings>
 
 class SimpleDrawingArea : public MaestroDrawingArea {
 	public:
@@ -19,11 +20,14 @@ class SimpleDrawingArea : public MaestroDrawingArea {
 
 		/// The size of each rendered Pixel.
 		uint8_t radius_ = 20;
-		/// The amount of space between each Pixel.
-		uint8_t pad_ = radius_ * 2;
+		/// The amount of space between each Pixel. Gets initialized in resizeEvent().
+		uint8_t pad_;
 
 		/// Used to determine whether the Maestro's size has changed.
 		uint32_t last_pixel_count_ = 0;
+
+	private:
+		QSettings settings_;
 };
 
 #endif // SIMPLEDRAWINGAREA_H
