@@ -9,6 +9,7 @@ namespace PixelMaestro {
 		public:
 			RadialAnimation(Colors::RGB* colors, uint8_t num_colors);
 			~RadialAnimation();
+			void set_resolution(uint8_t resolution);
 			void update(Section* section);
 
 		private:
@@ -18,7 +19,10 @@ namespace PixelMaestro {
 			/// Tracks the distance of the current point from the center.
 			uint16_t distance_ = 0;
 
-			/// Stores the size of the array to check for resizes.
+			/// In vertical mode, this defines the wideness of each spoke coming from the center.
+			uint8_t resolution_ = 10;
+
+			/// Stores the last grid size. This is used to recalculate the center if the grid changes.
 			Point size_ = {0, 0};
 
 			/// Stores the slope between a Pixel and the center of the grid.

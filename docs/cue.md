@@ -5,9 +5,8 @@ A Cue is a PixelMaestro command that has been converted into a portable format. 
 1. [Setting Up Cues](#setting-up-cues)
 2. [Creating Cues](#creating-cues)
 3. [Running Cues](#running-cues)
-4. [Reading Cues](#reading-cues)
-5. [Cue Parameters](#cue-parameters)
-6. [Payload Parameters](#payload-parameters)
+4. [Header Parameters](#header-parameters)
+5. [Payload Parameters](#payload-parameters)
 
 ## Setting Up Cues
 All Cue actions are controlled by a `CueController`, which processes and stores Cues for execution. Create a new CueController by calling `Maestro::set_cue_controller()`. Calling [`Maesto::set_show()`](show.md) also creates a new CueController.
@@ -62,10 +61,9 @@ After calling a CueHandler method, you can immediately run the generated Cue by 
 
 **Note:** Don't call a Handler's `run` method directly, as this will bypass error checking and validation.
 
-### Running External Cues
-You can also run Cues by using `CueController::run(unsigned char* cue)` and passing the Cue as the parameter. This lets you pass in Cues from an external source such as a file or serial device. You can also run a multiple Cues sequentially using `CueController::run(unsigned char* cues, unsigned char num_cues)`.
+You can also run Cues by using `CueController::run(unsigned char* cue)` and passing the Cue as the parameter. This lets you pass in Cues from external sources such as files or serial devices. You can also run a multiple Cues sequentially using `CueController::run(unsigned char* cues, unsigned char num_cues)`.
 
-For cases where you can only read parts of a Cue at a time (e.g. using `Serial.read()` on an Arduino), use `CueController::read(byte)`. Each byte is loaded into the CueController's buffer until the Cue has loaded completely, then the Cue is automatically executed. The buffer then resets and repeats the process for the next incoming Cue.
+For cases where you need to read in parts of a Cue at a time (e.g. using `Serial.read()` on an Arduino), use `CueController::read(byte)`. Each byte is loaded into the CueController's buffer until the Cue has loaded completely, then the Cue is automatically executed. The buffer then resets and repeats the process for the next incoming Cue.
 
 ```c++
 // Setup
@@ -79,18 +77,19 @@ if (Serial.available()) {
 
 **The following sections are for reference/curiosity only.**
 
-## Cue Parameters
-At its core, a Cue is just a string of bytes approximately 20 characters long. Cues contain the following parts:
+## Header Parameters
+At its core, a Cue is just a string of bytes approximately 20 characters long. Each Cue starts with a header, which contains the following parts:
 
 1. **ID**: a simple string used to identify the start of a PixelMaestro Cue.
 2. **Size**: the size of the PixelMaestro command (aka the _payload_).
 3. **Checksum**: a value calculated to confirm the integrity of the data received. This is done by summing up the entire command, dividing by 256, and taking the remainder.
-4. **Payload**: the contents of the PixelMaestro command.
 
 The ID and checksum are used as validation when loading Cues from external sources, whereas Cues generated from within the CueController bypass this step altogether.
 
+After the Checksum is the _Payload_, which contains the actual command.
+
 ## Payload Parameters
-Payloads can vary in length depending on the command (hence the _size_ component), but each payload contains almost all of these parameters:
+Payloads can vary in length depending on the command (stored in the _size_ component of the header), but each payload contains almost all of these parameters:
 
 1. **Handler**: the CueHandler that generated this Cue. This helps the CueController delegate incoming Cues to different CueHandlers.
 2. **Action**: the CueHandler-specific method that created this Cue. This is also used to map CueHandler methods to PixelMaestro methods.

@@ -16,6 +16,7 @@ namespace PixelMaestro {
 				SetLightningOptions,
 				SetOrientation,
 				SetPlasmaOptions,
+				SetRadialOptions,
 				SetReverse,
 				SetSparkleOptions,
 				SetSpeed
@@ -34,6 +35,7 @@ namespace PixelMaestro {
 			// Animation-specific calls
 			void set_lightning_options(uint8_t section_num, uint8_t overlay_num, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance);
 			void set_plasma_options(uint8_t section_num, uint8_t overlay_num, float size, float resolution);
+			void set_radial_options(uint8_t section_num, uint8_t overlay_num, uint8_t resolution);
 			void set_sparkle_options(uint8_t section_num, uint8_t overlay_num, uint8_t threshold);
 
 			// General Animation calls

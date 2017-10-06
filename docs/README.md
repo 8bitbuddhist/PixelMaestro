@@ -38,7 +38,7 @@ void setup() {
 	// Set global brightness to 50%
 	maestro.set_brightness(128);
 
-	// Create a new blinking animation using an assortment of 12 colors, then sets the animation speed to 500ms
+	// Create a new blinking animation using the ColorWheel preset, then sets the animation speed to 500ms
 	Animation* animation = sections[0].set_animation(AnimationType::Blink, Colors::COLORWHEEL, 12);
 	animation->set_speed(500);
 

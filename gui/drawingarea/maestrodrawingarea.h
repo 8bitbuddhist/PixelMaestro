@@ -48,10 +48,6 @@ class MaestroDrawingArea : public QWidget {
 		/// Colors::RGB output from each Pixel
 		Colors::RGB tmp_rgb_;
 
-	private:
-		/// Maestro's refresh rate (defaults to 20ms, which is 50Hz).
-		uint8_t refresh_ = 20;
-
 	private slots:
 		void refresh_maestro();
 };

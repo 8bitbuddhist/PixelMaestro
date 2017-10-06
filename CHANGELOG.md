@@ -6,33 +6,38 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.7] - In Progress
 ### Added
 - Animation Previewer:
-	- Added support for sending commands to devices connected via USB/serial.
+	- Added support for sending commands to devices connected via USB/serial. You can enable and select a serial device by opening `Edit > Preferences` in the menu.
 - Cue:
-	- Added class for converting PixelMaestro actions into commands that can be sent to other devices. See the [`Cue` class documentation](docs/cue.md)
+	- Added classes for converting PixelMaestro actions into portable commands. This allows you to control remote devices, save and load presets, schedule commands for later exection, and more. See the [`Cue` documentation page](docs/cue.md) for details.
 	- Added Cue Demo to the GUI.
 - Canvas:
 	- Added `ColorCanvas` class for drawing Canvas objects using specified colors.
 	- Added Color Canvas Demo to the GUI.
 
 ### Changed
+- Animation Previewer:
+	- Changed row and column fields to only update the grid when losing focus.
+- Animations:
+	- Sections now manage memory allocation for Animations. `Section::set_animation()` now takes an enum value as a parameter instead of an Animation object. The Animation is automatically allocated and destroyed when changing Animations or destroying the Section.
+	- Fixed issue where LightningAnimations generated multiple bolts with the same starting location.
+	- Added resolution parameter to Radial Animation (only affects vertical mode).
+- Canvas:
+	-Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
 - Maestro
 	- Moved control of the refresh rate from Sections to Maestros.
 	- Changed default refresh rate to 40ms (25fps).
-- Animation Editor: Grid size will only update when the row or column fields lose focus.
-- Animations:
-	- Sections now handle memory allocation for Animations. Create Animations using `Section::set_animation(AnimationType)` instead of `Section::set_animation(Animation*)`.
-	- When rendering multiple bolts in LightningAnimation, each bolt now starts in a different locations.
-- Canvas: Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
 - Section:
 	- Changed `add_canvas()` and `add_overlay()` to `set_canvas()` and `set_overlay()`.
-- Show: Shows now run Cues. All extended Event classes have been removed. Events are essentailly just a helper class for storing and running Cues.
+- Show:
+	- Modified Events to store and run Cues. `Event` is essentially just a wrapper class for Cues.
+	- Removed all extended Event classes.
 
 ### Removed
 - Removed extended Event classes.
 
 ### Known Issues
 - After opening the Animation Previewer, serial devices won't display animations until you change to a different animation.
-- After changing the serial device port while the Animation Previewer is open, commands will continue sending to the old port until you reopen the Animation Previewer.
+- After changing the serial device port while the Animation Previewer is open, commands will continue being sent to the old port until you reopen the Animation Previewer.
 
 ## [v0.6r2] - 2017-09-18
 ### Changed

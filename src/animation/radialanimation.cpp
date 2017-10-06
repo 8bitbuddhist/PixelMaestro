@@ -6,6 +6,14 @@ namespace PixelMaestro {
 		type_ = AnimationType::Radial;
 	}
 
+	/**
+	 * Changes the thickness of each spoke (vertical mode only).
+	 * @param resolution New resolution.
+	 */
+	void RadialAnimation::set_resolution(uint8_t resolution) {
+		this->resolution_ = resolution;
+	}
+
 	void RadialAnimation::update(Section* section) {
 		// Check if the size of the grid has changed.
 		if (size_ != *section->get_dimensions()) {
@@ -24,8 +32,7 @@ namespace PixelMaestro {
 						slope_ = 0;
 					}
 					else {
-						//slope_ = ((center_.y - y) / (float)(center_.x - x)) * 10;
-						slope_ = ((y - center_.y) / (float)(x - center_.x)) * 10;
+						slope_ = ((y - center_.y) / (float)(x - center_.x)) * resolution_;
 					}
 
 					section->set_one(x, y, get_color_at_index(slope_ + cycle_index_));

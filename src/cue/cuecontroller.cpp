@@ -22,14 +22,14 @@ namespace PixelMaestro {
 		/*
 		 * Final Cue has the following form: [ID] [Checksum] [Size] [Payload]
 		 *
-		 * [ID] is a unique identifier confirming that this is a PixelMaestro Cue (hence PMC).
+		 * [ID] is a set of characters marking the start of a Cue.
 		 * [Size] is the size of the payload.
 		 * [Checksum] is a value generated for error detection.
 		 * [Payload] contains the actual command with parameters.
 		 */
 
 		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
-			cue_[i] = header_[i];
+			cue_[i] = id_[i];
 		}
 
 		cue_[Byte::SizeByte] = payload_size;
@@ -131,8 +131,8 @@ namespace PixelMaestro {
 		 * Once we've read past the payload, run the Cue then reset the read index.
 		 *
 		 * We manually set the read index in the following cases:
-		 *	1) If we successfully ran the Cue, set the index to 0 (start new Cue)
-		 *	2) If the last bytes read match the header, set the index to the header size
+		 *	1) If we successfully ran the last Cue, set the index to 0 (starts new Cue)
+		 *	2) If the last bytes read match the Cue ID string, move the ID and read index to the start of the buffer (starts a new Cue)
 		 *	3) If we've reached the buffer size, set the index to 0 (error / invalid Cue)
 		 */
 		if (read_index_ >= cue_[Byte::SizeByte] + Byte::PayloadByte) {
@@ -140,15 +140,15 @@ namespace PixelMaestro {
 			read_index_ = 0;
 		}
 		else {
-			if (read_index_ >= Header3Byte &&
-				(cue_[read_index_ - Header3Byte] == header_[Header1Byte] &&
-				 cue_[read_index_ - Header2Byte] == header_[Header2Byte] &&
-				 cue_[read_index_] == header_[Header3Byte])) {
+			if (read_index_ > ID3Byte &&
+				(cue_[read_index_ - ID3Byte] == id_[ID1Byte] &&
+				 cue_[read_index_ - ID2Byte] == id_[ID2Byte] &&
+				 cue_[read_index_] == id_[ID3Byte])) {
 
-				cue_[Header1Byte] = header_[Header1Byte];
-				cue_[Header2Byte] = header_[Header2Byte];
-				cue_[Header3Byte] = header_[Header3Byte];
-				read_index_ = Header3Byte;
+				cue_[ID1Byte] = id_[ID1Byte];
+				cue_[ID2Byte] = id_[ID2Byte];
+				cue_[ID3Byte] = id_[ID3Byte];
+				read_index_ = ID3Byte;
 			}
 			else if ((int16_t)read_index_ + 1 >= 256) {
 				read_index_ = 0;
@@ -191,7 +191,7 @@ namespace PixelMaestro {
 	 */
 	bool CueController::validate_header(uint8_t *cue) {
 		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
-			if (cue[i] != header_[i]) {
+			if (cue[i] != id_[i]) {
 				return false;
 			}
 		}

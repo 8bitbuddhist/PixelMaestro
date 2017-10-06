@@ -54,9 +54,9 @@ namespace PixelMaestro {
 		public:
 			/// Common bit indices for each Cue.
 			enum Byte : uint8_t {
-				Header1Byte,
-				Header2Byte,
-				Header3Byte,
+				ID1Byte,
+				ID2Byte,
+				ID3Byte,
 				ChecksumByte,
 				SizeByte,
 				PayloadByte
@@ -86,14 +86,14 @@ namespace PixelMaestro {
 			bool validate_header(uint8_t* cue);
 
 		private:
-			/// Header assigned to all outgoing Cues.
-			const uint8_t header_[3] = {'P', 'M', 'C'};
-
 			/// Buffer for storing the currently loaded Cue.
 			uint8_t cue_[256] = {0};
 
 			/// Handlers for incoming Cues.
 			CueHandler* handlers_[4] {nullptr};
+
+			/// Unique ID marking the start of a Cue.
+			const uint8_t id_[3] = {'P', 'M', 'C'};
 
 			/// Maestro that Cues will run on.
 			Maestro* maestro_ = nullptr;

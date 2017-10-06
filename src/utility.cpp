@@ -28,36 +28,4 @@ namespace PixelMaestro {
 			return (int32_t)seed_ % max;
 		}
 	}
-
-	/**
-	 * Returns the square root of a number.
-	 * @param val Number to evaluate.
-	 * @return The square root of the number.
-	 */
-	float Utility::sqrt(float val) {
-		// Fast inverse square root: https://en.wikipedia.org/wiki/Fast_inverse_square_root
-		long i;
-		float x2, y;
-		const float threehalfs = 1.5F;
-
-		x2 = val * 0.5F;
-		y  = val;
-		i  = * ( long * ) &y;                     // floating point bit level hacking [sic]
-		i  = 0x5f3759df - ( i >> 1 );             // Newton's approximation
-		y  = * ( float * ) &i;
-		y  = y * ( threehalfs - ( x2 * y * y ) ); // 1st iteration
-		y  = y * ( threehalfs - ( x2 * y * y ) ); // 2nd iteration
-		y  = y * ( threehalfs - ( x2 * y * y ) ); // 3rd iteration
-
-		return 1/y;
-	}
-
-	/**
-	 * Returns the square of an integer value.
-	 * @param val The integer to evaluate.
-	 * @return The integer squared.
-	 */
-	uint32_t Utility::square(int16_t val) {
-		return val * val;
-	}
 }

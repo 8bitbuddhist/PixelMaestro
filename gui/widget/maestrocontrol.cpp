@@ -2,6 +2,8 @@
 #include "animation/lightninganimationcontrol.h"
 #include "animation/plasmaanimation.h"
 #include "animation/plasmaanimationcontrol.h"
+#include "animation/radialanimation.h"
+#include "animation/radialanimationcontrol.h"
 #include "animation/sparkleanimation.h"
 #include "animation/sparkleanimationcontrol.h"
 #include "canvas/animationcanvas.h"
@@ -556,14 +558,17 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 	QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
 
 	switch(animation->get_type()) {
-		case AnimationType::Type::Sparkle:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, this, layout->widget()));
+		case AnimationType::Lightning:
+			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, this, layout->widget()));
 			break;
-		case AnimationType::Type::Plasma:
+		case AnimationType::Plasma:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, this, layout->widget()));
 			break;
-		case AnimationType::Type::Lightning:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, this, layout->widget()));
+		case AnimationType::Radial:
+			extra_control_widget_ = std::unique_ptr<QWidget>(new RadialAnimationControl((RadialAnimation*)animation, this, layout->widget()));
+			break;
+		case AnimationType::Sparkle:
+			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, this, layout->widget()));
 			break;
 		default:
 			break;

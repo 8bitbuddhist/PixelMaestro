@@ -1,5 +1,6 @@
 #include "../animation/lightninganimation.h"
 #include "../animation/plasmaanimation.h"
+#include "../animation/radialanimation.h"
 #include "../animation/sparkleanimation.h"
 #include "animationcuehandler.h"
 
@@ -37,6 +38,16 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte + 7] = resolution_byte.converted.byte[3];
 
 		controller_->assemble((uint8_t)(Byte::OptionsByte + 7));
+	}
+
+	void AnimationCueHandler::set_radial_options(uint8_t section_num, uint8_t overlay_num, uint8_t resolution) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetRadialOptions;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_cue()[Byte::OptionsByte] = resolution;
+
+		controller_->assemble((uint8_t)(Byte::OptionsByte + 1));
 	}
 
 	void AnimationCueHandler::set_sparkle_options(uint8_t section_num, uint8_t overlay_num, uint8_t threshold) {
@@ -185,6 +196,9 @@ namespace PixelMaestro {
 				break;
 			case Action::SetOrientation:
 				animation->set_orientation((Animation::Orientation)cue[Byte::OptionsByte]);
+				break;
+			case Action::SetRadialOptions:
+				static_cast<RadialAnimation*>(animation)->set_resolution(cue[Byte::OptionsByte]);
 				break;
 			case Action::SetReverse:
 				animation->set_reverse(cue[Byte::OptionsByte]);
