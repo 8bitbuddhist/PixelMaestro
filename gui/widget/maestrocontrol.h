@@ -57,11 +57,8 @@ class MaestroControl : public QWidget {
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
 		// Load Serial connection to Arduino.
-		bool serial_enabled_ = true;
-		const char* port_num_ = "/dev/ttyACM0";
-
-		/// True if UI is done loading. This prevents some (i.e. serial-related) events from firing before the UI is done loading.
-		bool ui_initialized_ = false;
+		bool serial_enabled_ = false;
+		QString serial_port_;
 
 		void change_scaling_color_array(Colors::RGB color);
 		void get_section_settings();

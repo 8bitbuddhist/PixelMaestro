@@ -6,30 +6,33 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.7] - In Progress
 ### Added
 - Animation Previewer:
-	- Added ability to send Cues to devices connected via USB/serial.
+	- Added support for sending commands to devices connected via USB/serial.
 - Cue:
-	- New class for converting PixelMaestro actions into portable commands. See the [`Cue` class documentation](docs/cue.md)
+	- Added class for converting PixelMaestro actions into commands that can be sent to other devices. See the [`Cue` class documentation](docs/cue.md)
 	- Added Cue Demo to the GUI.
 - Canvas:
-	- Added `ColorCanvas` class for drawing Canvas objects using a specified color.
+	- Added `ColorCanvas` class for drawing Canvas objects using specified colors.
 	- Added Color Canvas Demo to the GUI.
 
 ### Changed
-- Changed default Maestro refresh rate to 40ms (25fps).
+- Maestro
+	- Moved control of the refresh rate from Sections to Maestros.
+	- Changed default refresh rate to 40ms (25fps).
 - Animation Editor: Grid size will only update when the row or column fields lose focus.
 - Animations:
-	- Sections now handle memory allocation for Animations.
-	- Create Animations using `Section::add_animation(AnimationType)` instead of `Section::set_animation(Animation*)`.
-	- Lightning bolts originate from different sources instead of the same location.
+	- Sections now handle memory allocation for Animations. Create Animations using `Section::set_animation(AnimationType)` instead of `Section::set_animation(Animation*)`.
+	- When rendering multiple bolts in LightningAnimation, each bolt now starts in a different locations.
 - Canvas: Renamed `Canvas` to `AnimationCanvas`. The `Canvas` class now acts as a base class for new Canvas types.
-- Show: Shows now use Cues to run events. All extended Event classes have been removed. The base Event class now stores and runs Cues.
+- Section:
+	- Changed `add_canvas()` and `add_overlay()` to `set_canvas()` and `set_overlay()`.
+- Show: Shows now run Cues. All extended Event classes have been removed. Events are essentailly just a helper class for storing and running Cues.
 
 ### Removed
 - Removed extended Event classes.
-- Removed Section::set_animation().
 
 ### Known Issues
 - After opening the Animation Previewer, serial devices won't display animations until you change to a different animation.
+- After changing the serial device port while the Animation Previewer is open, commands will continue sending to the old port until you reopen the Animation Previewer.
 
 ## [v0.6r2] - 2017-09-18
 ### Changed

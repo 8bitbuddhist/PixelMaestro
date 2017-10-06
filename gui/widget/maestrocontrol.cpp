@@ -12,6 +12,7 @@
 #include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
 #include "maestrocontrol.h"
+#include <QSettings>
 #include <QString>
 #include "ui_maestrocontrol.h"
 
@@ -24,6 +25,11 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 	// Assign easy reference variables for the Maestro
 	this->maestro_controller_ = maestro_controller;
+
+	// Load settings
+	QSettings settings;
+	serial_enabled_ = settings.value("serial/enabled").toBool();
+	serial_port_ = settings.value("serial/port").toString();
 
 	// Initialize UI
 	ui->setupUi(this);
@@ -38,7 +44,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
 		section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
 
-		serial_.setPortName(QString(port_num_));
+		serial_.setPortName(QString(serial_port_));
 		serial_.setBaudRate(9600);
 
 		// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
@@ -549,7 +555,6 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 
 	QLayout* layout = this->findChild<QLayout*>("extraControlsLayout");
 
-	// TODO: Serial integration
 	switch(animation->get_type()) {
 		case AnimationType::Type::Sparkle:
 			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, this, layout->widget()));

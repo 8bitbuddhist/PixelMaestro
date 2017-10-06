@@ -4,6 +4,10 @@
 #include <QVBoxLayout>
 
 int main(int argc, char* argv[]) {
+	// Set application parameters for QSettings
+	QCoreApplication::setOrganizationName("PixelMaestro");
+	QCoreApplication::setApplicationName("PixelMaestro");
+
 	QApplication a(argc, argv);
 	MainWindow w;
 

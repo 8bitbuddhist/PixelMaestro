@@ -9,9 +9,10 @@
 #include "widget/canvas/canvascontrol.h"
 #include "mainwindow.h"
 #include <memory>
-#include "QDesktopServices"
-#include "QMessageBox"
-#include "QUrl"
+#include <QDesktopServices>
+#include <QMessageBox>
+#include <QUrl>
+#include "settingsdialog.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -158,4 +159,9 @@ void MainWindow::on_action_Color_Canvas_Demo_triggered() {
 	ui->action_Color_Canvas_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Color Canvas."));
+}
+
+void MainWindow::on_action_Preferences_triggered() {
+	SettingsDialog settings;
+	settings.exec();
 }
