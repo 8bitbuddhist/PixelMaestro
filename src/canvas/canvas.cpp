@@ -2,6 +2,7 @@
  * Canvas.cpp -Base class for drawing patterns on a Section.
  */
 
+#include <math.h>
 #include "../utility.h"
 #include "canvas.h"
 
@@ -42,19 +43,19 @@ namespace PixelMaestro {
 		 */
 		Point cursor = { 0, 0 };
 		uint32_t test_point; // Placeholder for calculating points along the circle line
-		uint32_t radius_squared = Utility::square(radius);
+		uint32_t radius_squared = pow(radius, 2);
 		for (cursor.x = origin_x - radius; cursor.x <= origin_x + radius; cursor.x++) {
 			for (cursor.y = origin_y - radius; cursor.y <= origin_y + radius; cursor.y++) {
 				if (in_bounds(&cursor)) {
 					// Check that cursor_x and cursor_y satisfy the equation
-					test_point = Utility::square(cursor.x - origin_x) + Utility::square(cursor.y - origin_y);
+					test_point = pow(cursor.x - origin_x, 2) + pow(cursor.y - origin_y, 2);
 					/*
 					 * Check if the test point lies along the line.
 					 * We use radius as a sort of tolerance, otherwise only a few pixels would activate.
 					 * Or, if fill is enabled, check to see if the point lies inside the circle
 					 */
 					if ((test_point >= radius_squared - radius && test_point <= radius_squared + radius) ||
-						(fill && test_point < Utility::square(radius))) {
+						(fill && test_point < pow(radius, 2))) {
 						activate(section_->get_pixel_index(&cursor));
 					}
 				}

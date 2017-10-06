@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "animation/lightninganimation.h"
+#include "widget/maestrocontrol.h"
 
 using namespace PixelMaestro;
 
@@ -14,7 +15,7 @@ class LightningAnimationControl : public QWidget {
 		Q_OBJECT
 
 	public:
-		explicit LightningAnimationControl(LightningAnimation* animation, QWidget *parent = 0);
+		explicit LightningAnimationControl(LightningAnimation* animation, MaestroControl* controller, QWidget *parent = 0);
 		~LightningAnimationControl();
 
 	private slots:
@@ -28,6 +29,7 @@ class LightningAnimationControl : public QWidget {
 
 	private:
 		LightningAnimation* animation_;
+		MaestroControl* maestro_control_;
 		Ui::LightningAnimationControl *ui;
 };
 

@@ -14,7 +14,6 @@
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "drawingarea/simpledrawingarea.h"
-#include <fstream>
 #include <QSerialPort>
 #include <QWidget>
 
@@ -28,14 +27,25 @@ class MaestroControl : public QWidget {
 	Q_OBJECT
 
 	public:
+		/// The actively controlled SectionController.
+		SectionController *active_section_controller_ = nullptr;
+
+		// Initialize CueController
+		CueController* cue_controller_ = nullptr;
+		AnimationCueHandler* animation_handler = nullptr;
+		CanvasCueHandler* canvas_handler = nullptr;
+		MaestroCueHandler* maestro_handler = nullptr;
+		SectionCueHandler* section_handler = nullptr;
+
+		/// Connection to an Arduino or other device.
+		QSerialPort serial_;
+
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
+		void send_to_device(uint8_t* out, uint8_t size);
 
 	private:
 		Ui::MaestroControl *ui;
-
-		/// Stores the actively controlled SectionController.
-		SectionController *active_section_controller_ = nullptr;
 
 		/// MaestroController that this widget is controlling.
 		MaestroController* maestro_controller_ = nullptr;
@@ -49,15 +59,6 @@ class MaestroControl : public QWidget {
 		// Load Serial connection to Arduino.
 		bool serial_enabled_ = true;
 		const char* port_num_ = "/dev/ttyACM0";
-		QSerialPort serial_;
-
-
-		// Initialize CueController
-		CueController* controller_ = nullptr;
-		AnimationCueHandler* animation_handler = nullptr;
-		CanvasCueHandler* canvas_handler = nullptr;
-		MaestroCueHandler* maestro_handler = nullptr;
-		SectionCueHandler* section_handler = nullptr;
 
 		/// True if UI is done loading. This prevents some (i.e. serial-related) events from firing before the UI is done loading.
 		bool ui_initialized_ = false;
@@ -68,7 +69,6 @@ class MaestroControl : public QWidget {
 		void on_custom_color_changed();
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
-		void send_to_device(uint8_t* out, uint8_t size);
 		void set_custom_color_controls_visible(bool visible);
 		void show_extra_controls(Animation* animation);
 		void show_canvas_controls(Canvas* canvas);

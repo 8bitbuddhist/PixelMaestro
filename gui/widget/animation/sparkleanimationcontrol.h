@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include "animation/sparkleanimation.h"
+#include "widget/maestrocontrol.h"
 
 using namespace PixelMaestro;
 
@@ -15,7 +16,7 @@ class SparkleAnimationControl : public QWidget
 		Q_OBJECT
 
 	public:
-		explicit SparkleAnimationControl(SparkleAnimation* animation, QWidget *parent = 0);
+		explicit SparkleAnimationControl(SparkleAnimation* animation, MaestroControl* controller, QWidget *parent = 0);
 		~SparkleAnimationControl();
 
 	private slots:
@@ -23,6 +24,7 @@ class SparkleAnimationControl : public QWidget
 
 	private:
 		SparkleAnimation* animation_;
+		MaestroControl* maestro_control_;
 		Ui::SparkleAnimationControl *ui;
 };
 

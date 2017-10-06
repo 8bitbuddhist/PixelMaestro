@@ -33,7 +33,7 @@ void setup () {
 		maestro.set_brightness(25);
 
 		// Create a new blinking animation, set a palette of 12 colors, and set the cycle speed to 500ms
-		Animation* animation = sections[0].add_animation(AnimationType::Type::Blink, Colors::COLORWHEEL, 12);
+		Animation* animation = sections[0].set_animation(AnimationType::Type::Blink, Colors::COLORWHEEL, 12);
 		animation->set_speed(500);
 }
 

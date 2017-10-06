@@ -1,17 +1,9 @@
-#include "animation/blinkanimation.h"
-#include "animation/cycleanimation.h"
 #include "animation/lightninganimation.h"
 #include "animation/lightninganimationcontrol.h"
-#include "animation/mergeanimation.h"
-#include "animation/mandelbrotanimation.h"
 #include "animation/plasmaanimation.h"
 #include "animation/plasmaanimationcontrol.h"
-#include "animation/radialanimation.h"
-#include "animation/randomanimation.h"
-#include "animation/solidanimation.h"
 #include "animation/sparkleanimation.h"
 #include "animation/sparkleanimationcontrol.h"
-#include "animation/waveanimation.h"
 #include "canvas/animationcanvas.h"
 #include "canvas/colorcanvas.h"
 #include "canvas/canvascontrol.h"
@@ -20,7 +12,6 @@
 #include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
 #include "maestrocontrol.h"
-#include <QPalette>
 #include <QString>
 #include "ui_maestrocontrol.h"
 
@@ -41,11 +32,11 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	// Open serial connection to Arduino
 	// TODO: Track Session ID and Overlay ID
 	if (serial_enabled_) {
-		controller_ = maestro_controller_->get_maestro()->set_cue_controller();
-		animation_handler = static_cast<AnimationCueHandler*>(controller_->enable_handler(CueController::Handler::AnimationHandler));
-		canvas_handler = static_cast<CanvasCueHandler*>(controller_->enable_handler(CueController::Handler::CanvasHandler));
-		maestro_handler = static_cast<MaestroCueHandler*>(controller_->enable_handler(CueController::Handler::MaestroHandler));
-		section_handler = static_cast<SectionCueHandler*>(controller_->enable_handler(CueController::Handler::SectionHandler));
+		cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller();
+		animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->enable_handler(CueController::Handler::AnimationHandler));
+		canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->enable_handler(CueController::Handler::CanvasHandler));
+		maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
+		section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
 
 		serial_.setPortName(QString(port_num_));
 		serial_.setBaudRate(9600);
@@ -151,9 +142,9 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 	Colors::generate_scaling_color_array(tmp, &color, num_colors, threshold, true);
 	active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 
-	if (serial_enabled_ && controller_ != nullptr) {
+	if (serial_.isOpen()) {
 		animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
-		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
 
@@ -164,9 +155,9 @@ void MaestroControl::change_scaling_color_array(Colors::RGB color) {
 void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
 
-	if (serial_enabled_ && controller_ != nullptr) {
+	if (serial_.isOpen()) {
 		section_handler->set_overlay(0, active_section_controller_->is_overlay_, maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode, arg1);
-		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
 
@@ -190,9 +181,9 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	show_extra_controls(animation);
 
-	if (serial_enabled_ && controller_ != nullptr) {
+	if (serial_.isOpen()) {
 		section_handler->set_animation(0, active_section_controller_->is_overlay_, (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
-		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 
 	// Reapply animation settings
@@ -223,9 +214,9 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 			break;
 	}
 
-	if (serial_enabled_ && controller_ != nullptr) {
+	if (serial_.isOpen()) {
 		section_handler->set_canvas(0, active_section_controller_->is_overlay_, (CanvasType::Type)index);
-		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 
 	show_canvas_controls(canvas);
@@ -257,9 +248,9 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
 
-				if (serial_enabled_ && controller_ != nullptr) {
+				if (serial_.isOpen()) {
 					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
-					send_to_device(controller_->get_cue(), controller_->get_cue_size());
+					send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 				}
 				break;
 			}
@@ -271,9 +262,9 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
 				set_custom_color_controls_visible(false);
 
-				if (serial_enabled_ && controller_ != nullptr) {
+				if (serial_.isOpen()) {
 					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
-					send_to_device(controller_->get_cue(), controller_->get_cue_size());
+					send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 				}
 				break;
 			}
@@ -285,9 +276,9 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 			active_section_controller_->get_section()->get_animation()->set_colors(tmp, 12);
 			set_custom_color_controls_visible(false);
 
-			if (serial_enabled_ && controller_ != nullptr) {
+			if (serial_.isOpen()) {
 				animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, 12);
-				send_to_device(controller_->get_cue(), controller_->get_cue_size());
+				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 			}
 	}
 }
@@ -334,9 +325,9 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
 		active_section_controller_->get_section()->get_animation()->set_speed(value);
 		ui->cycleSlider->setToolTip(QString::number(value));
 
-		if (serial_enabled_ && controller_ != nullptr) {
+		if (serial_.isOpen()) {
 			animation_handler->set_speed(0, active_section_controller_->is_overlay_, value, 0);
-			send_to_device(controller_->get_cue(), controller_->get_cue_size());
+			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 		}
 	}
 }
@@ -356,9 +347,9 @@ void MaestroControl::on_blueSlider_valueChanged(int value) {
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_fade(checked);
 
-	if (serial_enabled_ && controller_ != nullptr) {
+	if (serial_.isOpen()) {
 		animation_handler->set_fade(0, active_section_controller_->is_overlay_, checked);
-		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
 
@@ -387,9 +378,9 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 				ui->alphaSpinBox->setVisible(false);
 			}
 
-			if (serial_enabled_ && controller_ != nullptr) {
+			if (serial_.isOpen()) {
 				section_handler->set_overlay(0, active_section_controller_->is_overlay_, (Colors::MixMode)index, ui->alphaSpinBox->value());
-				send_to_device(controller_->get_cue(), controller_->get_cue_size());
+				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 			}
 		}
 	}
@@ -412,9 +403,9 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 		if (active_section_controller_->get_section()->get_animation()) {
 			active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientation)index);
 
-			if (serial_enabled_ && controller_ != nullptr) {
+			if (serial_.isOpen()) {
 				animation_handler->set_orientation(0, active_section_controller_->is_overlay_, (Animation::Orientation)index);
-				send_to_device(controller_->get_cue(), controller_->get_cue_size());
+				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 			}
 		}
 	}
@@ -435,9 +426,9 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_reverse(checked);
 
-	if (serial_enabled_ && controller_ != nullptr) {
+	if (serial_.isOpen()) {
 		animation_handler->set_reverse(0, active_section_controller_->is_overlay_, checked);
-		send_to_device(controller_->get_cue(), controller_->get_cue_size());
+		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
 
@@ -500,7 +491,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 
 		/*
 		 * NOTE: Dynamic resizing on remote devices is disabled for now.
-		if (serial_enabled_ && controller_ != nullptr) {
+		if (serial_.isOpen()) {
 			section_handler->set_dimensions(0, active_section_controller_->is_overlay_, ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 			send_to_device(controller_->get_cue(), controller_->get_cue_size());
 		}
@@ -561,13 +552,13 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 	// TODO: Serial integration
 	switch(animation->get_type()) {
 		case AnimationType::Type::Sparkle:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, layout->widget()));
+			extra_control_widget_ = std::unique_ptr<QWidget>(new SparkleAnimationControl((SparkleAnimation*)animation, this, layout->widget()));
 			break;
 		case AnimationType::Type::Plasma:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, layout->widget()));
+			extra_control_widget_ = std::unique_ptr<QWidget>(new PlasmaAnimationControl((PlasmaAnimation*)animation, this, layout->widget()));
 			break;
 		case AnimationType::Type::Lightning:
-			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, layout->widget()));
+			extra_control_widget_ = std::unique_ptr<QWidget>(new LightningAnimationControl((LightningAnimation*)animation, this, layout->widget()));
 			break;
 		default:
 			break;

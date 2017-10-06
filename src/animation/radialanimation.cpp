@@ -1,4 +1,4 @@
-#include "../utility.h"
+#include <math.h>
 #include "radialanimation.h"
 
 namespace PixelMaestro {
@@ -35,9 +35,9 @@ namespace PixelMaestro {
 		else {	// Horizontal
 			// For each Pixel, calculate its distance from the center of the grid, then use the distance to choose the index of the correct color.
 			for (uint16_t y = 0; y < size_.y; y++) {
-				y_squared_ = Utility::square(y - center_.y);
+				y_squared_ = pow(y - center_.y, 2);
 				for (uint16_t x = 0; x < size_.x; x++) {
-					distance_ = Utility::sqrt(Utility::square(x - center_.x) + y_squared_);
+					distance_ = sqrt(pow(x - center_.x, 2) + y_squared_);
 					section->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
 				}
 			}
