@@ -4,7 +4,8 @@
 #include "ui_settingsdialog.h"
 
 // Initialize strings
-QString SettingsDialog::interface_padding = QStringLiteral("interface/padding");
+QString SettingsDialog::pixel_padding = QStringLiteral("interface/padding");
+QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
 QString SettingsDialog::serial_enabled = QStringLiteral("serial/enabled");
 QString SettingsDialog::serial_port = QStringLiteral("serial/port");
 
@@ -18,7 +19,8 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	}
 
 	// Interface settings
-	ui->paddingComboBox->setCurrentIndex(settings_.value(interface_padding).toInt());
+	ui->paddingComboBox->setCurrentIndex(settings_.value(pixel_padding).toInt());
+	ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape).toInt());
 
 	// Serial settings
 	ui->serialPortComboBox->setCurrentText(settings_.value(serial_port).toString());
@@ -27,12 +29,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 }
 
 void SettingsDialog::on_buttonBox_accepted() {
+	// Save serial options
 	settings_.setValue(serial_enabled, ui->serialCheckBox->isChecked());
 	settings_.setValue(serial_port, ui->serialPortComboBox->currentText());
-}
 
-void SettingsDialog::on_paddingComboBox_currentIndexChanged(int index) {
-	settings_.setValue(interface_padding, index);
+	// Save pixel padding
+	settings_.setValue(pixel_padding, ui->paddingComboBox->currentIndex());
+
+	// Save pixel shape
+	settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
 }
 
 void SettingsDialog::on_serialCheckBox_toggled(bool checked) {

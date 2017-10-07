@@ -13,7 +13,8 @@ class SettingsDialog : public QDialog
 		Q_OBJECT
 
 	public:
-		static QString interface_padding;
+		static QString pixel_padding;
+		static QString pixel_shape;
 		static QString serial_enabled;
 		static QString serial_port;
 
@@ -22,7 +23,6 @@ class SettingsDialog : public QDialog
 
 	private slots:
 		void on_buttonBox_accepted();
-		void on_paddingComboBox_currentIndexChanged(int index);
 		void on_serialCheckBox_toggled(bool checked);
 
 	private:

@@ -51,7 +51,16 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 			tmp_rect_.setRect(pixel * pad_, row * pad_, radius_, radius_);
 			painter.setBrush(tmp_brush_);
 			painter.setPen(Qt::PenStyle::NoPen);
-			painter.drawEllipse(tmp_rect_);
+
+			// Determine which shape to draw
+			switch (settings_.value(SettingsDialog::pixel_shape).toInt()) {
+				case 0:	// Circle
+					painter.drawEllipse(tmp_rect_);
+					break;
+				case 1:	// Rect
+					painter.drawRect(tmp_rect_);
+					break;
+			}
 		}
 	}
 }
@@ -60,36 +69,32 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
  * Resize the grid based on the number of rows and columns.
  */
 void SimpleDrawingArea::resizeEvent(QResizeEvent *event) {
-	/*
-	 * Check to see if either axis is out of bounds.
-	 * If so, resize the grid.
-	 */
 	QSize widget_size = this->size();
 
-	// Find the optimal radius
-	int optimal_width = ((widget_size.width() - pad_) / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->x) / 2;
-	int optimal_height = ((widget_size.height() - pad_) / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->y) / 2;
+	// Find the optimal radius of each Pixel
+	uint8_t max_width = widget_size.width() / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->x;
+	uint8_t max_height = widget_size.height() / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->y;
 
-	// Apply the smallest optimal radius, then recalculate the pad and offset.
-	if (optimal_width < optimal_height) {
-		radius_ = optimal_width;
+	// Find the smaller dimension
+	if (max_width < max_height) {
+		radius_ = max_width;
 	}
 	else {
-		radius_ = optimal_height;
+		radius_ = max_height;
 	}
 
-	switch (settings_.value(SettingsDialog::interface_padding).toInt()) {
-		case 0:	// None
-			pad_ = radius_;
-			break;
+	pad_ = radius_;
+
+	// Calculate radius
+	switch (settings_.value(SettingsDialog::pixel_padding).toInt()) {
 		case 1:	// Small
-			pad_ = radius_ + (radius_ / 2);
+			radius_ *= 0.8;
 			break;
 		case 2:	// Medium
-			pad_ = radius_ * 2;
+			radius_ *= 0.6;
 			break;
 		case 3:	// Large
-			pad_ = radius_ * 3;
+			radius_ *= 0.4;
 			break;
 	}
 }
