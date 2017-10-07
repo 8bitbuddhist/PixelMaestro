@@ -15,6 +15,7 @@
 #include "cue/sectioncuehandler.h"
 #include "drawingarea/simpledrawingarea.h"
 #include <QSerialPort>
+#include <QTextStream>
 #include <QWidget>
 
 namespace Ui {
@@ -42,6 +43,8 @@ class MaestroControl : public QWidget {
 
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
+		void read_from_file(QString filename);
+		void save_to_file(QString filename);
 		void send_to_device(uint8_t* out, uint8_t size);
 
 	private:
@@ -70,6 +73,7 @@ class MaestroControl : public QWidget {
 		void show_extra_controls(Animation* animation);
 		void show_canvas_controls(Canvas* canvas);
 		void set_overlay_controls_visible(bool visible);
+		void write_cue_to_stream(QTextStream* stream, uint8_t* cue, uint8_t cue_size);
 
 	private slots:
 		void on_alphaSpinBox_valueChanged(int arg1);

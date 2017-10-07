@@ -897,7 +897,10 @@
      <addaction name="action_Show_Demo"/>
     </widget>
     <addaction name="action_Open_Animation_Editor"/>
+    <addaction name="actionOpen_Maestro"/>
+    <addaction name="action_Save_Maestro"/>
     <addaction name="menuOpen_Demo"/>
+    <addaction name="separator"/>
     <addaction name="action_Close_Workspace"/>
     <addaction name="separator"/>
     <addaction name="action_Exit"/>
@@ -953,7 +956,7 @@
   </action>
   <action name="action_Open_Animation_Editor">
    <property name="text">
-    <string>Open Animation &amp;Previewer</string>
+    <string>&amp;New Maestro</string>
    </property>
   </action>
   <action name="actionDrawing_Demo">
@@ -987,6 +990,16 @@
   <action name="action_Preferences">
    <property name="text">
     <string>&amp;Preferences</string>
+   </property>
+  </action>
+  <action name="action_Save_Maestro">
+   <property name="text">
+    <string>&amp;Save Maestro...</string>
+   </property>
+  </action>
+  <action name="actionOpen_Maestro">
+   <property name="text">
+    <string>Open &amp;Maestro...</string>
    </property>
   </action>
  </widget>

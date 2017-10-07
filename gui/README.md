@@ -13,6 +13,7 @@ This is a QT-based application that lets you preview PixelMaestro animations on 
 	1. [Additional Animation Parameters](#additional-animation-parameters)
 	2. [Custom Color Schemes](#custom-color-schemes)
 	3. [Using Canvases](#using-canvases)
+	4. [Saving and Loading Configurations](#saving-and-loading-configurations)
 
 ## Main Window
 When you open the application for the first time, the workspace is blank. Use the *File* menu to access different areas of the program, such as the *Animation Previewer* or various demos. Use the *Help* link to access the complete documentation.
@@ -38,3 +39,8 @@ TODO
 
 ### Using Canvases
 TODO
+
+### Saving and Loading Configurations
+You can save the current Maestro configuration to a file by clicking *File* > *Save Maestro*. Enter a filename with the `.pmc` (PixelMaestro Cue) extension and click Save. This creates a file with a set of Cues stored on each line. You can use this file to restore your configuration at a later time or on another device by using the `CueController::run()` methods.
+
+**Note**: Loading configurations in the GUI is not currently available.

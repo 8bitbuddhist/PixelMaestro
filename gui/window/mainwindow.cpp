@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include <memory>
 #include <QDesktopServices>
+#include <QFileDialog>
 #include <QMessageBox>
 #include <QUrl>
 #include "settingsdialog.h"
@@ -18,6 +19,7 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 	this->main_layout_ = this->findChild<QLayout*>("mainLayout");
+	setWindowTitle("PixelMaestro");
 	reset_drawing_area();
 }
 
@@ -41,7 +43,9 @@ void MainWindow::reset_drawing_area() {
 	main_layout_->removeWidget(drawing_area_);
 	main_layout_->removeWidget(maestro_control_);
 	removeEventFilter(drawing_area_);
-	setWindowTitle("PixelMaestro");
+
+	ui->action_Save_Maestro->setEnabled(false);
+	ui->actionOpen_Maestro->setEnabled(false);
 
 	ui->action_Blink_Demo->setEnabled(true);
 	ui->action_Canvas_Demo->setEnabled(true);
@@ -124,6 +128,8 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 
 	ui->action_Open_Animation_Editor->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
+	ui->action_Save_Maestro->setEnabled(true);
+	//ui->actionOpen_Maestro->setEnabled(true);
 
 	statusBar()->showMessage(QString("Use the controls to modify the Section."));
 }
@@ -161,7 +167,25 @@ void MainWindow::on_action_Color_Canvas_Demo_triggered() {
 	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Color Canvas."));
 }
 
+void MainWindow::on_actionOpen_Maestro_triggered() {
+	QString filename = QFileDialog::getOpenFileName(this,
+		QString("Open PixelMaestro Cue"),
+		QDir::home().path(),
+		QString("PixelMaestro Cue (*.pmc)"));
+
+	maestro_control_->read_from_file(filename);
+}
+
 void MainWindow::on_action_Preferences_triggered() {
 	SettingsDialog settings;
 	settings.exec();
+}
+
+void MainWindow::on_action_Save_Maestro_triggered() {
+	QString filename = QFileDialog::getSaveFileName(this,
+		QString("Save PixelMaestro Cue"),
+		QDir::home().path(),
+		QString("PixelMaestro Cue (*.pmc)"));
+
+	maestro_control_->save_to_file(filename);
 }

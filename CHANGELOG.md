@@ -8,6 +8,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Animation Previewer:
 	- Added support for sending commands to devices connected via USB/serial.
 	- Added Preferences dialog. This lets you select a port for commands as well as change the appearance of the Animation Previewer. You can access it by clicking `Edit > Preferences`.
+	- Added support for saving PixelMaestro configurations to file.
 - Cue:
 	- Added classes for converting PixelMaestro actions into portable commands. This allows you to control remote devices, save and load presets, schedule commands for later exection, and more. See the [`Cue` documentation page](docs/cue.md) for details.
 	- Added Cue Demo to the GUI.
@@ -37,6 +38,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Removed extended Event classes.
 
 ### Known Issues
+- Loading Cues from a file is not supported.
 - After opening the Animation Previewer, serial devices won't display animations until you change to a different animation.
 - After changing the serial device port while the Animation Previewer is open, commands will continue being sent to the old port until you reopen the Animation Previewer.
 

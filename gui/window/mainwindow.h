@@ -31,6 +31,10 @@ class MainWindow : public QMainWindow {
 
 		void on_action_Preferences_triggered();
 
+		void on_action_Save_Maestro_triggered();
+
+		void on_actionOpen_Maestro_triggered();
+
 	private:
 		MaestroController* controller_ = nullptr;
 		QWidget* drawing_area_ = nullptr;
