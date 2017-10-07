@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.7] - In Progress
+## [v0.7] - 2017-10-07
 ### Added
 - Animation Previewer:
 	- Added support for sending commands to devices connected via USB/serial.

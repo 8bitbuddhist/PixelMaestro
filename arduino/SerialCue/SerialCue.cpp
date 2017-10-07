@@ -30,7 +30,7 @@ void setup () {
     ws.setColorOrderGRB();
 
 		maestro.set_brightness(25);
-		CueController* controller = maestro.add_cue_controller();
+		CueController* controller = maestro.set_cue_controller();
 		controller->enable_handler(CueController::Handler::AnimationHandler);
 		controller->enable_handler(CueController::Handler::CanvasHandler);
 		controller->enable_handler(CueController::Handler::MaestroHandler);

@@ -1,0 +1,16 @@
+{
+    "name": "PixelMaestro",
+    "keywords": "led, animations, display",
+    "description": "Library for generating 2D animations",
+    "include": "src/*",
+    "repository":
+    {
+        "type": "git",
+        "url": "https://code.8bitbuddhism.com/PixelMaestro/PixelMaestro.git",
+    },
+    "authors":
+    {
+        "name": "Andre Newman",
+        "url": "https://github.com/Anewman2/"
+    }
+}
