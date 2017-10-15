@@ -12,20 +12,28 @@ QString SettingsDialog::serial_port = QStringLiteral("serial/port");
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::SettingsDialog) {
 	ui->setupUi(this);
 
-	// Populate port box
-	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
-	for (QSerialPortInfo port : ports) {
-		ui->serialPortComboBox->addItem(port.systemLocation());
-	}
-
 	// Interface settings
 	ui->paddingComboBox->setCurrentIndex(settings_.value(pixel_padding).toInt());
 	ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape).toInt());
 
 	// Serial settings
-	ui->serialPortComboBox->setCurrentText(settings_.value(serial_port).toString());
 	ui->serialCheckBox->setChecked(settings_.value(serial_enabled).toBool());
 	on_serialCheckBox_toggled(ui->serialCheckBox->isChecked());
+
+	// Populate port box
+	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+	for (QSerialPortInfo port : ports) {
+		ui->serialPortComboBox->addItem(port.systemLocation());
+	}
+	if (ports.size() > 0) {
+		ui->serialCheckBox->setEnabled(true);
+		ui->serialPortComboBox->setEnabled(true);
+		ui->serialPortComboBox->setCurrentText(settings_.value(serial_port).toString());
+	}
+	else {
+		ui->serialCheckBox->setEnabled(false);
+		ui->serialPortComboBox->setEnabled(false);
+	}
 }
 
 void SettingsDialog::on_buttonBox_accepted() {

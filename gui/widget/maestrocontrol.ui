@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>405</width>
-    <height>413</height>
+    <height>280</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,6 +26,12 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="2">
+    <layout class="QHBoxLayout" name="canvasControlsLayout"/>
+   </item>
+   <item row="0" column="1">
+    <layout class="QHBoxLayout" name="extraControlsLayout"/>
+   </item>
    <item row="0" column="0">
     <layout class="QFormLayout" name="controlLayout">
      <item row="0" column="0">
@@ -175,185 +181,34 @@
         </size>
        </property>
        <property name="text">
-        <string>Color Scheme</string>
+        <string>Color Palette</string>
        </property>
       </widget>
      </item>
      <item row="7" column="1">
-      <widget class="QComboBox" name="colorComboBox">
-       <property name="minimumSize">
-        <size>
-         <width>150</width>
-         <height>0</height>
-        </size>
-       </property>
-       <property name="currentText">
-        <string/>
-       </property>
-       <property name="sizeAdjustPolicy">
-        <enum>QComboBox::AdjustToContents</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="baseColorLabel">
-       <property name="text">
-        <string>Base Color</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <layout class="QVBoxLayout" name="customColorLayout">
+      <layout class="QHBoxLayout" name="colorSchemeLayout">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QSlider" name="redSlider">
-           <property name="styleSheet">
-            <string notr="true">QSlider::handle:horizontal {
-background-color: red;
-border: 1px solid #777;
-width: 13px;
-border-radius: 4px;
-}</string>
-           </property>
-           <property name="maximum">
-            <number>255</number>
-           </property>
-           <property name="sliderPosition">
-            <number>0</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickPosition">
-            <enum>QSlider::NoTicks</enum>
-           </property>
-           <property name="tickInterval">
-            <number>5</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="greenSlider">
-           <property name="styleSheet">
-            <string notr="true">QSlider::handle:horizontal {
-background-color: green;
-border: 1px solid #777;
-width: 13px;
-border-radius: 4px;
-}</string>
-           </property>
-           <property name="maximum">
-            <number>255</number>
-           </property>
-           <property name="sliderPosition">
-            <number>0</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickInterval">
-            <number>5</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="blueSlider">
-           <property name="styleSheet">
-            <string notr="true">QSlider::handle:horizontal {
-background-color: blue;
-border: 1px solid #777;
-width: 13px;
-border-radius: 4px;
-}</string>
-           </property>
-           <property name="maximum">
-            <number>255</number>
-           </property>
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="tickInterval">
-            <number>5</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="baseColorPreviewLabel">
-           <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;{0, 0, 0}&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QComboBox" name="colorComboBox">
+         <property name="minimumSize">
+          <size>
+           <width>150</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="currentText">
+          <string/>
+         </property>
+         <property name="sizeAdjustPolicy">
+          <enum>QComboBox::AdjustToContents</enum>
+         </property>
+        </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <item>
-          <widget class="QLabel" name="num_colorsLabel">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Colors</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="num_colorsSpinBox">
-           <property name="readOnly">
-            <bool>false</bool>
-           </property>
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::PlusMinus</enum>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="value">
-            <number>10</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="thresholdLabel">
-           <property name="minimumSize">
-            <size>
-             <width>50</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Variance</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSpinBox" name="thresholdSpinBox">
-           <property name="buttonSymbols">
-            <enum>QAbstractSpinBox::PlusMinus</enum>
-           </property>
-           <property name="minimum">
-            <number>1</number>
-           </property>
-           <property name="maximum">
-            <number>255</number>
-           </property>
-           <property name="singleStep">
-            <number>5</number>
-           </property>
-           <property name="value">
-            <number>20</number>
-           </property>
-          </widget>
-         </item>
-        </layout>
+        <widget class="QPushButton" name="paletteControlButton">
+         <property name="text">
+          <string>Edit Palettes</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -402,12 +257,6 @@ border-radius: 4px;
       </widget>
      </item>
     </layout>
-   </item>
-   <item row="0" column="2">
-    <layout class="QHBoxLayout" name="canvasControlsLayout"/>
-   </item>
-   <item row="0" column="1">
-    <layout class="QHBoxLayout" name="extraControlsLayout"/>
    </item>
   </layout>
  </widget>

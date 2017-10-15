@@ -18,7 +18,7 @@ PlasmaAnimationControl::~PlasmaAnimationControl() {
 void PlasmaAnimationControl::on_resolutionDoubleSpinBox_valueChanged(double arg1) {
 	animation_->set_resolution(arg1);
 
-	if (maestro_control_->serial_.isOpen()) {
+	if (maestro_control_->serial_port_.isOpen()) {
 		maestro_control_->animation_handler->set_plasma_options(0, maestro_control_->active_section_controller_->is_overlay_, ui->sizeDoubleSpinBox->value(), arg1);
 		maestro_control_->send_to_device(maestro_control_->cue_controller_->get_cue(), maestro_control_->cue_controller_->get_cue_size());
 	}
@@ -27,7 +27,7 @@ void PlasmaAnimationControl::on_resolutionDoubleSpinBox_valueChanged(double arg1
 void PlasmaAnimationControl::on_sizeDoubleSpinBox_valueChanged(double arg1) {
 	animation_->set_size(arg1);
 
-	if (maestro_control_->serial_.isOpen()) {
+	if (maestro_control_->serial_port_.isOpen()) {
 		maestro_control_->animation_handler->set_plasma_options(0, maestro_control_->active_section_controller_->is_overlay_, arg1, ui->resolutionDoubleSpinBox->value());
 		maestro_control_->send_to_device(maestro_control_->cue_controller_->get_cue(), maestro_control_->cue_controller_->get_cue_size());
 	}

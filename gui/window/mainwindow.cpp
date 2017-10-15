@@ -129,7 +129,7 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	ui->action_Open_Animation_Editor->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	ui->action_Save_Maestro->setEnabled(true);
-	//ui->actionOpen_Maestro->setEnabled(true);
+	ui->actionOpen_Maestro->setEnabled(true);
 
 	statusBar()->showMessage(QString("Use the controls to modify the Section."));
 }

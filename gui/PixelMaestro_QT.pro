@@ -57,7 +57,9 @@ SOURCES += main.cpp\
     ../src/cue/maestrocuehandler.cpp \
     ../src/cue/sectioncuehandler.cpp \
     window/settingsdialog.cpp \
-    widget/animation/radialanimationcontrol.cpp
+    widget/animation/radialanimationcontrol.cpp \
+    controller/palettecontroller.cpp \
+    widget/palettecontrol.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -110,7 +112,9 @@ HEADERS += \
     ../src/cue/sectioncuehandler.h \
     ../src/animation/animationtype.h \
     window/settingsdialog.h \
-    widget/animation/radialanimationcontrol.h
+    widget/animation/radialanimationcontrol.h \
+    controller/palettecontroller.h \
+    widget/palettecontrol.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
@@ -120,6 +124,7 @@ FORMS	+= \
     widget/animation/sparkleanimationcontrol.ui \
     widget/canvas/canvascontrol.ui \
     window/settingsdialog.ui \
-    widget/animation/radialanimationcontrol.ui
+    widget/animation/radialanimationcontrol.ui \
+    widget/palettecontrol.ui
 
 INCLUDEPATH += $$PWD/../src

@@ -14,9 +14,6 @@ using namespace PixelMaestro;
 
 class SectionController {
 	public:
-		/// Selected MaestroControl color scheme (helper member). Defaults to ColorWheel.
-		int mc_color_scheme_ = 3;
-
 		/// Determines whether this Section is an Overlay.
 		bool is_overlay_ = false;
 

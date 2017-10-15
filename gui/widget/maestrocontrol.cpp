@@ -15,6 +15,7 @@
 #include "drawingarea/simpledrawingarea.h"
 #include "window/settingsdialog.h"
 #include "maestrocontrol.h"
+#include "widget/palettecontrol.h"
 #include <QFile>
 #include <QSettings>
 #include <QString>
@@ -34,7 +35,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	// Load settings
 	QSettings settings;
 	serial_enabled_ = settings.value(SettingsDialog::serial_enabled).toBool();
-	serial_port_ = settings.value(SettingsDialog::serial_port).toString();
+	serial_port_name_ = settings.value(SettingsDialog::serial_port).toString();
 
 	// Initialize UI
 	ui->setupUi(this);
@@ -49,15 +50,15 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
 		section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
 
-		serial_.setPortName(QString(serial_port_));
-		serial_.setBaudRate(9600);
+		serial_port_.setPortName(QString(serial_port_name_));
+		serial_port_.setBaudRate(9600);
 
 		// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
-		serial_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-		serial_.setParity(QSerialPort::Parity::NoParity);
-		serial_.setDataBits(QSerialPort::DataBits::Data8);
-		serial_.setStopBits(QSerialPort::StopBits::OneStop);
-		serial_.open(QIODevice::WriteOnly);
+		serial_port_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+		serial_port_.setParity(QSerialPort::Parity::NoParity);
+		serial_port_.setDataBits(QSerialPort::DataBits::Data8);
+		serial_port_.setStopBits(QSerialPort::StopBits::OneStop);
+		serial_port_.open(QIODevice::WriteOnly);
 	}
 }
 
@@ -70,7 +71,6 @@ void MaestroControl::get_section_settings() {
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
-	ui->num_colorsSpinBox->setValue(animation->get_num_colors());
 	ui->cycleSlider->setValue(ui->cycleSlider->maximum() - active_section_controller_->get_section()->get_animation()->get_speed());
 
 	// Get the animation type, then change to the animation without firing the signal
@@ -86,7 +86,8 @@ void MaestroControl::get_section_settings() {
 		ui->alphaSpinBox->setValue(maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->alpha);
 	}
 
-	// Get the current color scheme
+	// FIXME: Get the current color scheme
+	/*
 	if (active_section_controller_->mc_color_scheme_ != 0) {
 		ui->colorComboBox->setCurrentIndex(active_section_controller_->mc_color_scheme_);
 	}
@@ -105,6 +106,7 @@ void MaestroControl::get_section_settings() {
 		ui->blueSlider->setValue(first_color.b);
 		on_custom_color_changed();
 	}
+	*/
 }
 
 /**
@@ -119,9 +121,11 @@ void MaestroControl::initialize() {
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
 	// Populate color combo box
-	ui->colorComboBox->addItems({"Custom", "Fire", "Deep Sea", "Color Wheel"});
+	// TODO: Repopulate box after changes in Palette dialog
+	for (PaletteController::Palette palette : palette_controller_.get_palettes()) {
+		ui->colorComboBox->addItem(palette.name);
+	}
 	ui->colorComboBox->setCurrentIndex(2);
-	set_custom_color_controls_visible(false);
 
 	// Set default values
 	ui->sectionComboBox->addItem("Section 1");
@@ -142,31 +146,13 @@ void MaestroControl::initialize() {
 }
 
 /**
- * Updates the color array based on changes to the color scheme and settings.
- * @param color Base color to use when generating the array.
- */
-void MaestroControl::change_scaling_color_array(Colors::RGB color) {
-	uint32_t num_colors = (uint32_t)ui->num_colorsSpinBox->value();
-
-	uint8_t threshold = 255 - (uint8_t)ui->thresholdSpinBox->value();
-	Colors::RGB* tmp = new Colors::RGB[num_colors];
-	Colors::generate_scaling_color_array(tmp, &color, num_colors, threshold, true);
-	active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
-
-	if (serial_.isOpen()) {
-		animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
-		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-	}
-}
-
-/**
  * Sets the Overlay's transparency level.
  * @param arg1 Transparency level from 0 - 255.
  */
 void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	maestro_controller_->get_section_controller(0)->get_overlay()->alpha = arg1;
 
-	if (serial_.isOpen()) {
+	if (serial_port_.isOpen()) {
 		section_handler->set_overlay(0, active_section_controller_->is_overlay_, maestro_controller_->get_section_controller(0)->get_overlay()->mix_mode, arg1);
 		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
@@ -192,7 +178,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	show_extra_controls(animation);
 
-	if (serial_.isOpen()) {
+	if (serial_port_.isOpen()) {
 		section_handler->set_animation(0, active_section_controller_->is_overlay_, (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
 		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
@@ -225,7 +211,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 			break;
 	}
 
-	if (serial_.isOpen()) {
+	if (serial_port_.isOpen()) {
 		section_handler->set_canvas(0, active_section_controller_->is_overlay_, (CanvasType::Type)index);
 		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
@@ -240,57 +226,13 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 
-	// Delete current colors
-	if (active_section_controller_->get_section()->get_animation() != nullptr && active_section_controller_->get_section()->get_animation()->get_colors() != nullptr) {
-		delete[] active_section_controller_->get_section()->get_animation()->get_colors();
-	}
+	PaletteController::Palette* palette;
+	palette = palette_controller_.get_palette(index);
+	active_section_controller_->get_section()->get_animation()->set_colors(&palette->palette[0], palette->palette.size());
 
-	active_section_controller_->mc_color_scheme_ = index;
-	switch (index) {
-		case 0:	// Custom
-			on_custom_color_changed();
-			set_custom_color_controls_visible(true);
-			break;
-		case 1:	// Fire
-			{
-				uint8_t num_colors = 14;
-				Colors::RGB* tmp = new Colors::RGB[num_colors];
-				Colors::generate_scaling_color_array(tmp, &Colors::RED, &Colors::YELLOW, num_colors, true);
-				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
-				set_custom_color_controls_visible(false);
-
-				if (serial_.isOpen()) {
-					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
-					send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-				}
-				break;
-			}
-		case 2:	// Deep Sea
-			{
-				uint8_t num_colors = 14;
-				Colors::RGB* tmp = new Colors::RGB[num_colors];
-				Colors::generate_scaling_color_array(tmp, &Colors::BLUE, &Colors::GREEN, num_colors, true);
-				active_section_controller_->get_section()->get_animation()->set_colors(tmp, num_colors);
-				set_custom_color_controls_visible(false);
-
-				if (serial_.isOpen()) {
-					animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, num_colors);
-					send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-				}
-				break;
-			}
-		default:// Color Wheel
-			Colors::RGB* tmp = new Colors::RGB[12];
-			for (unsigned char i = 0; i < 12; i++) {
-				tmp[i] = Colors::COLORWHEEL[i];
-			}
-			active_section_controller_->get_section()->get_animation()->set_colors(tmp, 12);
-			set_custom_color_controls_visible(false);
-
-			if (serial_.isOpen()) {
-				animation_handler->set_colors(0, active_section_controller_->is_overlay_, tmp, 12);
-				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-			}
+	if (serial_port_.isOpen()) {
+		animation_handler->set_colors(0, active_section_controller_->is_overlay_, &palette->palette[0], palette->palette.size());
+		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
 
@@ -299,31 +241,6 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_columnsSpinBox_editingFinished() {
 	on_section_resize(ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-}
-
-/**
- * Changes the custom color scheme.
- */
-void MaestroControl::on_custom_color_changed() {
-	// Verify that the custom color scheme option is selected, and that the color is different from the one used in the Section.
-	if (ui->colorComboBox->currentIndex() != 0) {
-		return;
-	}
-
-	Colors::RGB new_color = {
-		(uint8_t)ui->redSlider->value(),
-		(uint8_t)ui->greenSlider->value(),
-		(uint8_t)ui->blueSlider->value()
-	};
-
-	if (!active_section_controller_->get_section()->get_animation() || !active_section_controller_->get_section()->get_animation()->get_colors()) {
-		return;
-	}
-
-	change_scaling_color_array(new_color);
-
-	ui->baseColorPreviewLabel->setText(QString("{%1, %2, %3}").arg(new_color.r).arg(new_color.g).arg(new_color.b));
-	ui->baseColorPreviewLabel->setStyleSheet(QString("QLabel { color: rgb(%1, %2, %3); font-weight: bold; }").arg(new_color.r).arg(new_color.g).arg(new_color.b));
 }
 
 /**
@@ -336,19 +253,11 @@ void MaestroControl::on_cycleSlider_valueChanged(int value) {
 		active_section_controller_->get_section()->get_animation()->set_speed(value);
 		ui->cycleSlider->setToolTip(QString::number(value));
 
-		if (serial_.isOpen()) {
+		if (serial_port_.isOpen()) {
 			animation_handler->set_speed(0, active_section_controller_->is_overlay_, value, 0);
 			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 		}
 	}
-}
-
-/**
- * Handles changes to the blue custom color slider.
- * @param value New value of the blue slider.
- */
-void MaestroControl::on_blueSlider_valueChanged(int value) {
-	on_custom_color_changed();
 }
 
 /**
@@ -358,18 +267,10 @@ void MaestroControl::on_blueSlider_valueChanged(int value) {
 void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_fade(checked);
 
-	if (serial_.isOpen()) {
+	if (serial_port_.isOpen()) {
 		animation_handler->set_fade(0, active_section_controller_->is_overlay_, checked);
 		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
-}
-
-/**
- * Handles changes to the green custom color slider.
- * @param value New value of the green slider.
- */
-void MaestroControl::on_greenSlider_valueChanged(int value) {
-	on_custom_color_changed();
 }
 
 /**
@@ -389,20 +290,12 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 				ui->alphaSpinBox->setVisible(false);
 			}
 
-			if (serial_.isOpen()) {
+			if (serial_port_.isOpen()) {
 				section_handler->set_overlay(0, active_section_controller_->is_overlay_, (Colors::MixMode)index, ui->alphaSpinBox->value());
 				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 			}
 		}
 	}
-}
-
-/**
- * Sets the number of colors in the color scheme.
- * @param arg1 New color count.
- */
-void MaestroControl::on_num_colorsSpinBox_valueChanged(int arg1) {
-	on_custom_color_changed();
 }
 
 /**
@@ -414,7 +307,7 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 		if (active_section_controller_->get_section()->get_animation()) {
 			active_section_controller_->get_section()->get_animation()->set_orientation((Animation::Orientation)index);
 
-			if (serial_.isOpen()) {
+			if (serial_port_.isOpen()) {
 				animation_handler->set_orientation(0, active_section_controller_->is_overlay_, (Animation::Orientation)index);
 				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 			}
@@ -423,11 +316,11 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 }
 
 /**
- * Handles changes to the red custom color slider.
- * @param value New value of the red slider.
+ * Opens the Palette Editor.
  */
-void MaestroControl::on_redSlider_valueChanged(int value) {
-	on_custom_color_changed();
+void MaestroControl::on_paletteControlButton_clicked() {
+	PaletteControl palette_control(&this->palette_controller_);
+	palette_control.exec();
 }
 
 /**
@@ -437,7 +330,7 @@ void MaestroControl::on_redSlider_valueChanged(int value) {
 void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 	active_section_controller_->get_section()->get_animation()->set_reverse(checked);
 
-	if (serial_.isOpen()) {
+	if (serial_port_.isOpen()) {
 		animation_handler->set_reverse(0, active_section_controller_->is_overlay_, checked);
 		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
@@ -476,14 +369,6 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 }
 
 /**
- * Sets the variance of the colors in the color scheme.
- * @param arg1 New variance between colors (0-255).
- */
-void MaestroControl::on_thresholdSpinBox_valueChanged(int arg1) {
-	on_custom_color_changed();
-}
-
-/**
  * Sets the size of the active SectionController.
  * @param x Number of rows.
  * @param y Number of columns.
@@ -514,9 +399,12 @@ void MaestroControl::read_from_file(QString filename) {
 	// TODO: Not yet implemented
 	QFile file(filename);
 	if (file.open(QFile::ReadOnly)) {
-		file.readLine((char*)cue_controller_->get_cue(), 256);
+		while (file.atEnd() == false) {
+			file.getChar((char*)cue_controller_->get_cue());
+		}
 		file.close();
 	}
+	get_section_settings();
 }
 
 void MaestroControl::save_to_file(QString filename) {
@@ -585,23 +473,7 @@ void MaestroControl::write_cue_to_stream(QTextStream* stream, uint8_t *cue, uint
 }
 
 void MaestroControl::send_to_device(uint8_t* out, uint8_t size) {
-	serial_.write((const char*)out, size);
-}
-
-/**
- * Toggles the visibility of the custom color scheme controls.
- * @param visible If true, display custom controls.
- */
-void MaestroControl::set_custom_color_controls_visible(bool visible) {
-	ui->baseColorLabel->setVisible(visible);
-	ui->baseColorPreviewLabel->setVisible(visible);
-	ui->redSlider->setVisible(visible);
-	ui->greenSlider->setVisible(visible);
-	ui->blueSlider->setVisible(visible);
-	ui->num_colorsSpinBox->setVisible(visible);
-	ui->num_colorsLabel->setVisible(visible);
-	ui->thresholdSpinBox->setVisible(visible);
-	ui->thresholdLabel->setVisible(visible);
+	serial_port_.write((const char*)out, size);
 }
 
 /**
@@ -674,8 +546,8 @@ void MaestroControl::show_canvas_controls(Canvas *canvas) {
  * Destructor.
  */
 MaestroControl::~MaestroControl() {
-	if (serial_.isOpen()) {
-		serial_.close();
+	if (serial_port_.isOpen()) {
+		serial_port_.close();
 	}
 	delete ui;
 }
