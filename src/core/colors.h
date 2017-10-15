@@ -23,6 +23,14 @@ namespace PixelMaestro {
 				/// The color's blue value.
 				uint8_t b;
 
+				RGB() {}
+
+				RGB(uint8_t red, uint8_t green, uint8_t blue) {
+					this->r = red;
+					this->g = green;
+					this->b = blue;
+				}
+
 				void operator=(RGB color_two) {
 					r = color_two.r;
 					g = color_two.g;

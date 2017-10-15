@@ -120,13 +120,6 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->addItems({"Blink", "Cycle", "Lightning", "Mandelbrot", "Merge", "Plasma", "Radial", "Random", "Solid", "Sparkle", "Wave"});
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
-	// Populate color combo box
-	// TODO: Repopulate box after changes in Palette dialog
-	for (PaletteController::Palette palette : palette_controller_.get_palettes()) {
-		ui->colorComboBox->addItem(palette.name);
-	}
-	ui->colorComboBox->setCurrentIndex(2);
-
 	// Set default values
 	ui->sectionComboBox->addItem("Section 1");
 
@@ -142,7 +135,21 @@ void MaestroControl::initialize() {
 	// Initialize Canvas controls
 	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
 
+	// TODO: Apply settings to Serial device
+
 	get_section_settings();
+
+	initialize_palettes();
+}
+
+/// Reinitializes Palettes from Palette Dialog.
+void MaestroControl::initialize_palettes() {
+	ui->colorComboBox->clear();
+
+	// Populate color combo box
+	for (PaletteController::Palette palette : palette_controller_.get_palettes()) {
+		ui->colorComboBox->addItem(QString::fromStdString(palette.name));
+	}
 }
 
 /**
@@ -226,12 +233,12 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 
-	PaletteController::Palette* palette;
-	palette = palette_controller_.get_palette(index);
-	active_section_controller_->get_section()->get_animation()->set_colors(&palette->palette[0], palette->palette.size());
+	PaletteController::Palette* palette = palette_controller_.get_palette(index);
+	active_section_controller_->get_section()->get_animation()->set_colors(&palette->colors[0], palette->colors.size());
+	active_section_controller_->palette_ = palette;
 
 	if (serial_port_.isOpen()) {
-		animation_handler->set_colors(0, active_section_controller_->is_overlay_, &palette->palette[0], palette->palette.size());
+		animation_handler->set_colors(0, active_section_controller_->is_overlay_, &palette->colors[0], palette->colors.size());
 		send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
@@ -319,8 +326,12 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
  * Opens the Palette Editor.
  */
 void MaestroControl::on_paletteControlButton_clicked() {
-	PaletteControl palette_control(&this->palette_controller_);
+	std::string palette_name = active_section_controller_->palette_->name;
+
+	PaletteControl palette_control(&this->palette_controller_, active_section_controller_->palette_->name);
 	palette_control.exec();
+	initialize_palettes();
+	ui->colorComboBox->setCurrentText(QString::fromStdString(palette_name));
 }
 
 /**

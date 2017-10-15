@@ -68,6 +68,7 @@ class MaestroControl : public QWidget {
 
 		void get_section_settings();
 		void initialize();
+		void initialize_palettes();
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
 		void set_overlay_controls_visible(bool visible);

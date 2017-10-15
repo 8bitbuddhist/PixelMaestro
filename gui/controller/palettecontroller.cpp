@@ -14,7 +14,7 @@ PaletteController::PaletteController() {
 	palettes_.push_back(Palette("Color Wheel", Colors::COLORWHEEL, 12));
 }
 
-PaletteController::Palette* PaletteController::add_palette(const char* name, Colors::RGB* colors, uint8_t num_colors) {
+PaletteController::Palette* PaletteController::add_palette(std::string name, Colors::RGB* colors, uint8_t num_colors) {
 	palettes_.push_back(Palette(name, colors, num_colors));
 	return &palettes_[palettes_.size() - 1];
 }

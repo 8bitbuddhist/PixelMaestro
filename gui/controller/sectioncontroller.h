@@ -5,6 +5,7 @@
 #ifndef SECTIONCONTROLLER_H
 #define SECTIONCONTROLLER_H
 
+#include "controller/palettecontroller.h"
 #include "core/colors.h"
 #include "core/pixel.h"
 #include "core/section.h"
@@ -17,6 +18,9 @@ class SectionController {
 		/// Determines whether this Section is an Overlay.
 		bool is_overlay_ = false;
 
+		/// Stores the current Palette (used only by MaestroControl)
+		PaletteController::Palette* palette_ = nullptr;
+
 		SectionController(Point* layout);
 		SectionController(Section* section, bool is_overlay = false);
 		~SectionController();
@@ -26,7 +30,6 @@ class SectionController {
 		SectionController* set_overlay(Colors::MixMode mix_mode, float alpha = 0.5);
 
 	private:
-
 		/// Stores the size of the grid.
 		Point dimensions_ = {0, 0};
 
