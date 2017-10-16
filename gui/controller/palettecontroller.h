@@ -26,6 +26,7 @@ class PaletteController {
 		Palette* get_palette(uint8_t index);
 		Palette* get_palette(std::string name);
 		std::vector<Palette> get_palettes();
+		void initialize_palettes();
 		void remove_palette(uint8_t index);
 
 	private:

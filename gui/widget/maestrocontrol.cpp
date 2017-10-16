@@ -86,27 +86,9 @@ void MaestroControl::get_section_settings() {
 		ui->alphaSpinBox->setValue(maestro_controller_->get_section_controller(section_type[1].toInt() - 1)->get_overlay()->alpha);
 	}
 
-	// FIXME: Get the current color scheme
-	/*
-	if (active_section_controller_->mc_color_scheme_ != 0) {
-		ui->colorComboBox->setCurrentIndex(active_section_controller_->mc_color_scheme_);
+	if (active_section_controller_->palette_ != nullptr) {
+		ui->colorComboBox->setCurrentText(QString::fromStdString(active_section_controller_->palette_->name));
 	}
-	else {
-		// Custom scheme
-		Animation* animation = active_section_controller_->get_section()->get_animation();
-		Colors::RGB first_color = Colors::BLACK;
-
-		if (animation != nullptr && animation->get_colors() != nullptr) {
-			first_color = active_section_controller_->get_section()->get_animation()->get_colors()[0];
-		}
-
-		ui->colorComboBox->setCurrentIndex(0);
-		ui->redSlider->setValue(first_color.r);
-		ui->greenSlider->setValue(first_color.g);
-		ui->blueSlider->setValue(first_color.b);
-		on_custom_color_changed();
-	}
-	*/
 }
 
 /**
@@ -233,9 +215,14 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
  */
 void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 
+	if (index < 0) {
+		return;
+	}
+
 	PaletteController::Palette* palette = palette_controller_.get_palette(index);
 	active_section_controller_->get_section()->get_animation()->set_colors(&palette->colors[0], palette->colors.size());
 	active_section_controller_->palette_ = palette;
+
 
 	if (serial_port_.isOpen()) {
 		animation_handler->set_colors(0, active_section_controller_->is_overlay_, &palette->colors[0], palette->colors.size());
@@ -407,7 +394,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 }
 
 void MaestroControl::read_from_file(QString filename) {
-	// TODO: Not yet implemented
+	// TODO: File reading not yet implemented
 	QFile file(filename);
 	if (file.open(QFile::ReadOnly)) {
 		while (file.atEnd() == false) {

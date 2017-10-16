@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.7.1] - In Progress
+### Added
+- Palette Editor: New Animation Previewer dialog allows you to create, delete, and edit color Palettes.
+
+### Removed
+- Replaced `Colors::generate_random_colors()` with a truly random generator.
+
 ## [v0.7] - 2017-10-07
 ### Added
 - Animation Previewer:

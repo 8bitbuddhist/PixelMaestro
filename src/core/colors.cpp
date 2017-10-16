@@ -63,33 +63,26 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Creates a randomly generated array of colors based off of a base color.
-
-		@param array The array to populate.
-		@param base_color The initial color.
-		@param num_colors Number of colors to generate.
-		@param range Range of possible new values.
-	*/
-	void Colors::generate_random_color_array(RGB* array, RGB* base_color, uint32_t num_colors, float range) {
-		for (uint32_t new_color_index = 0; new_color_index < num_colors; new_color_index++) {
-			array[new_color_index] = {
-				(uint8_t)(base_color->r > 0 ? base_color->r - (uint8_t)(Utility::rand((uint8_t)(base_color->r * range))) : 0),
-				(uint8_t)(base_color->g > 0 ? base_color->g - (uint8_t)(Utility::rand((uint8_t)(base_color->g * range))) : 0),
-				(uint8_t)(base_color->b > 0 ? base_color->b - (uint8_t)(Utility::rand((uint8_t)(base_color->b * range))) : 0)
-			};
+	 * Creates a randomly generated array of colors.
+	 * @param array The array to populate.
+	 * @param num_colors The number of colors to generate.
+	 */
+	void Colors::generate_random_color_array(RGB* array, uint8_t num_colors) {
+		for (uint8_t i = 0; i < num_colors; i++) {
+			array[i] = generate_random_color();
 		}
 	}
 
 	/**
-		Creates an array of colors that gradually merge from a base color to a target color.
+		Creates an array of colors that gradually blend from a base color to a target color.
 
 		@param array The array to populate.
 		@param base_color The initial color.
 		@param target_color The target color.
 		@param num_colors Number of colors in the array.
-		@param reverse If true, the second half of the array will event from target_color back to base_color.
+		@param reverse If true, the array will be mirrored from the target color back to the base color.
 	*/
-	void Colors::generate_scaling_color_array(RGB* array, RGB* base_color, RGB* target_color, uint32_t num_colors, bool reverse) {
+	void Colors::generate_scaling_color_array(RGB* array, RGB* base_color, RGB* target_color, uint8_t num_colors, bool reverse) {
 		if (reverse) {
 			num_colors /= 2;
 		}
@@ -102,8 +95,8 @@ namespace PixelMaestro {
 		};
 
 		// Apply the step distance to each index of the array.
-		for (uint32_t i = 0; i < num_colors; i++) {
-			array[i].r =	base_color->r + (step[0] * i);
+		for (uint8_t i = 0; i < num_colors; i++) {
+			array[i].r = base_color->r + (step[0] * i);
 			array[i].g = base_color->g + (step[1] * i);
 			array[i].b = base_color->b + (step[2] * i);
 		}
@@ -115,25 +108,35 @@ namespace PixelMaestro {
 			array[num_colors].b = base_color->b + (step[2] * num_colors);
 
 			// Repeat the first half of the array in reverse for each remaining color.
-			for (uint32_t i = num_colors + 1; i < (num_colors * 2); i++) {
+			for (uint8_t i = num_colors + 1; i < (num_colors * 2) + 1; i++) {
 				array[i].r = array[num_colors - (i - num_colors)].r;
 				array[i].g = array[num_colors - (i - num_colors)].g;
 				array[i].b = array[num_colors - (i - num_colors)].b;
 			}
 		}
+
+		// Handle odd number of colors
+		if (num_colors % 2 != 0) {
+			if (reverse) {
+				array[(num_colors * 2) + 1] = *base_color;
+			}
+			else {
+				array[(num_colors * 2) + 1] = *target_color;
+			}
+		}
 	}
 
 	/**
-		Creates an array of colors that gradually merge from a base color to a target color.
-		The threshold determines the difference between the target color and the base color.
+		Creates an array of colors that gradually blend from a base color to a target color.
+		The target color is determined using the range.
 
 		@param array The array to populate.
 		@param base_color The initial color.
 		@param num_colors Number of colors in the array.
-		@param range The difference in color values between the base color and the newly generated target color.
-		@param reverse If true, the array will be doubled to event from base_color to target_color, then back to base_color.
+		@param range The amount that the target color deviates from the base color.
+		@param reverse If true, the array will be mirrored from the target color back to the base color.
 	*/
-	void Colors::generate_scaling_color_array(RGB* array, RGB* base_color, uint32_t num_colors, uint8_t range, bool reverse) {
+	void Colors::generate_scaling_color_array(RGB* array, RGB* base_color, uint8_t num_colors, uint8_t range, bool reverse) {
 		RGB new_color = {
 			(uint8_t)(base_color->r - range),
 			(uint8_t)(base_color->g - range),

@@ -1,20 +1,17 @@
 #include <QAbstractButton>
+#include <QApplication>
 #include <QColorDialog>
+#include <QDesktopWidget>
+#include <QMessageBox>
 #include "palettecontrol.h"
 #include "ui_palettecontrol.h"
 
+// TODO: Add scroll area to colorsGroupBox
 PaletteControl::PaletteControl(PaletteController* controller, std::string initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControl) {
 	this->palette_controller_ = controller;
 	ui->setupUi(this);
 
-	// Initialize palette list
-	for (PaletteController::Palette palette : controller->get_palettes()) {
-		ui->paletteComboBox->addItem(QString::fromStdString(palette.name));
-	}
-
-	if (initial_palette.length() > 0) {
-		ui->paletteComboBox->setCurrentText(QString::fromStdString(initial_palette));
-	}
+	initialize_palettes(initial_palette);
 
 	// Initialize Palette creation types
 	ui->typeComboBox->addItems({"Blank", "Scaling", "Random"});
@@ -22,9 +19,40 @@ PaletteControl::PaletteControl(PaletteController* controller, std::string initia
 	set_create_palette_controls_visible(false);
 }
 
+void PaletteControl::initialize_palettes(std::string initial_palette) {
+	// Initialize palette list
+	ui->paletteComboBox->blockSignals(true);
+	ui->paletteComboBox->clear();
+	for (PaletteController::Palette palette : palette_controller_->get_palettes()) {
+		ui->paletteComboBox->addItem(QString::fromStdString(palette.name));
+	}
+	ui->paletteComboBox->blockSignals(false);
+
+	if (initial_palette.length() > 0) {
+		ui->paletteComboBox->setCurrentText(QString::fromStdString(initial_palette));
+	}
+	else {
+		ui->paletteComboBox->setCurrentIndex(0);
+	}
+
+	// Trigger a Palette redraw just for safe measure
+	on_paletteComboBox_currentIndexChanged(ui->paletteComboBox->currentIndex());
+}
+
 void PaletteControl::on_baseColorButton_clicked() {
 	base_color_ = QColorDialog::getColor(Qt::white, this, "Select Base Color");
 	set_button_color(ui->baseColorButton, base_color_.red(), base_color_.green(), base_color_.blue());
+}
+
+void PaletteControl::on_buttonBox_clicked(QAbstractButton *button) {
+	if (button == ui->buttonBox->button(QDialogButtonBox::Reset)) {
+		QMessageBox::StandardButton confirm;
+		confirm = QMessageBox::question(this, "Reset Palettes", "This will reset all Palettes to their default settings. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		if (confirm == QMessageBox::Yes) {
+			palette_controller_->initialize_palettes();
+			initialize_palettes("");
+		}
+	}
 }
 
 /// Updates the target color.
@@ -64,10 +92,7 @@ void PaletteControl::on_createButtonBox_accepted() {
 				}
 				break;
 			case 2:	// Random
-				{
-					Colors::RGB color = Colors::generate_random_color();
-					Colors::generate_random_color_array(colors, &color, num_colors);
-				}
+				Colors::generate_random_color_array(colors, num_colors);
 				break;
 		}
 
@@ -110,12 +135,16 @@ void PaletteControl::on_paletteComboBox_currentIndexChanged(int index) {
 
 	// Create new buttons and add an event handler that triggers on_color_clicked()
 	QLayout* layout = ui->colorsGroupBox->findChild<QLayout*>("colorsLayout");
+	// Get the width of the window using the screen's geometry. We'll use this to calculate the maximum width of each button.
+	int max_width = QApplication::desktop()->screenGeometry().width() / active_palette_->colors.size();
 	for (uint8_t color_index = 0; color_index < active_palette_->colors.size(); color_index++) {
 		Colors::RGB color = active_palette_->colors.at(color_index);
 		QPushButton* button = new QPushButton();
 		button->setVisible(true);
 		button->setObjectName(QString::number(color_index));
+		button->setMaximumWidth(max_width);
 		set_button_color(button, color.r, color.g, color.b);
+
 		layout->addWidget(button);
 		connect(button, &QPushButton::clicked, this, &PaletteControl::on_color_clicked);
 	}
@@ -123,9 +152,18 @@ void PaletteControl::on_paletteComboBox_currentIndexChanged(int index) {
 
 /// Deletes the current Palette.
 void PaletteControl::on_removeButton_clicked() {
-	uint16_t current_index = ui->paletteComboBox->currentIndex();
-	palette_controller_->remove_palette(current_index);
-	ui->paletteComboBox->removeItem(current_index);
+	if (palette_controller_->get_palettes().size() > 1) {
+		QMessageBox::StandardButton confirm;
+		confirm = QMessageBox::question(this, "Delete Palette", "This will delete the current Palette. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
+		if (confirm == QMessageBox::Yes) {
+			uint16_t current_index = ui->paletteComboBox->currentIndex();
+			palette_controller_->remove_palette(current_index);
+			ui->paletteComboBox->removeItem(current_index);
+		}
+	}
+	else {
+		QMessageBox::information(this, "Delete Palette", "You must have at least one Palette available.", QMessageBox::Ok);
+	}
 }
 
 /// Changes the target color.
@@ -144,9 +182,8 @@ void PaletteControl::on_typeComboBox_currentIndexChanged(int index) {
 	ui->targetColorLabel->setVisible(false);
 	ui->targetColorButton->setVisible(false);
 	ui->reverseCheckBox->setVisible(false);
+
 	switch (index) {
-		case 0:	// Blank
-			break;
 		case 1: // Scaling
 			ui->baseColorLabel->setVisible(true);
 			ui->baseColorButton->setVisible(true);
@@ -154,9 +191,7 @@ void PaletteControl::on_typeComboBox_currentIndexChanged(int index) {
 			ui->targetColorButton->setVisible(true);
 			ui->reverseCheckBox->setVisible(true);
 			break;
-		case 2:	// Random
-			ui->baseColorLabel->setVisible(true);
-			ui->baseColorButton->setVisible(true);
+		default:
 			break;
 	}
 }
@@ -177,9 +212,14 @@ void PaletteControl::set_button_color(QPushButton *button, uint8_t red, uint8_t 
  * @param visible If true, show Palette controls.
  */
 void PaletteControl::set_create_palette_controls_visible(bool visible) {
+	// Hide palette controls
+	ui->paletteComboBox->setVisible(!visible);
 	ui->createPaletteButton->setVisible(!visible);
 	ui->removeButton->setVisible(!visible);
+	ui->colorsGroupBox->setVisible(!visible);
+	ui->buttonBox->setVisible(!visible);
 
+	// Show edit controls
 	ui->nameLabel->setVisible(visible);
 	ui->nameLineEdit->setVisible(visible);
 	ui->numColorsLabel->setVisible(visible);
