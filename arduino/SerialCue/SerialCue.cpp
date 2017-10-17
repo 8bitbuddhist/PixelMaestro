@@ -1,18 +1,11 @@
 #include <Arduino.h>
-
 #include <PixelMaestro/core/maestro.h>
-#include <PixelMaestro/cue/cuecontroller.h>
-
 #include <WS2812.h>
 
 using namespace PixelMaestro;
 
-Section sections[] = {
-  Section(8, 1)
-};
-Maestro maestro(sections, 1);
-
-unsigned char char_in;
+// Creates a Maestro with a single Section
+Maestro maestro(8, 1);
 
 // WS1812 stuff
 const unsigned char LED_PIN = 10;

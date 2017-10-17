@@ -50,6 +50,10 @@ SectionController *MaestroController::get_section_controller(uint8_t index) {
 	return section_controllers_[index].get();
 }
 
+std::vector<std::shared_ptr<SectionController>> MaestroController::get_section_controllers() {
+	return section_controllers_;
+}
+
 /**
  * Returns the Show managed in this Maestro (if applicable)
  * @return Show managed by this Maestro.

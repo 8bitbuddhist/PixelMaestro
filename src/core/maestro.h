@@ -18,6 +18,7 @@ namespace PixelMaestro {
 	class Maestro {
 
 		public:
+			Maestro(uint16_t rows, uint16_t columns);
 			Maestro(Section* sections, uint8_t num_sections);
 			~Maestro();
 			CueController* get_cue_controller();
@@ -45,7 +46,7 @@ namespace PixelMaestro {
 			uint32_t last_refresh_ = 0;
 
 			/// Number of Sections managed by the Maestro.
-			uint8_t num_sections_;
+			uint8_t num_sections_ = 0;
 
 			/// The time between Section refreshes in milliseconds. Defaults to 20ms (50Hz).
 			uint16_t refresh_interval_ = 20;

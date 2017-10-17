@@ -15,10 +15,15 @@ SectionController::SectionController(Point* layout) {
 	this->section_ = new Section(dimensions_);
 }
 
-SectionController::SectionController(Section* section, bool is_overlay) {
+/**
+ * Overlay constructor.
+ * @param section Section that this Overlay controls.
+ * @param parent_controller Parent SectionController.
+ */
+SectionController::SectionController(Section* section, SectionController* parent_controller) {
 	this->dimensions_ = *section->get_dimensions();
 	this->section_ = section;
-	this->is_overlay_ = is_overlay;
+	this->parent_controller_ = parent_controller;
 }
 
 /**
@@ -28,7 +33,7 @@ SectionController::SectionController(Section* section, bool is_overlay) {
  */
 SectionController* SectionController::set_overlay(Colors::MixMode mix_mode, float alpha) {
 	section_->set_overlay(mix_mode, alpha);
-	overlay_controller_ = new SectionController(section_->get_overlay()->section, true);
+	overlay_controller_ = new SectionController(section_->get_overlay()->section, this);
 	return overlay_controller_;
 }
 
@@ -49,6 +54,14 @@ SectionController* SectionController::get_overlay_controller() {
 }
 
 /**
+ * Returns the SectionController that this Overlay belongs to.
+ * @return Parent SectionController.
+ */
+SectionController* SectionController::get_parent_controller() {
+	return parent_controller_;
+}
+
+/**
  * Returns the SectionController's underlying Section.
  * @return Section controlled by the SectionController.
  */
@@ -60,7 +73,7 @@ SectionController::~SectionController() {
 	delete overlay_controller_;
 
 	// Sections automatically delete Overlays. Only delete this Section if it's not an Overlay.
-	if (!is_overlay_) {
+	if (parent_controller_ != nullptr) {
 		delete section_;
 	}
 }

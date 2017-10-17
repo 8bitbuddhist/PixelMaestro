@@ -46,6 +46,8 @@ class MaestroControl : public QWidget {
 
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
+		int16_t get_overlay_index();
+		int16_t get_section_index();
 		void read_from_file(QString filename);
 		void save_to_file(QString filename);
 		void send_to_device(uint8_t* out, uint8_t size);

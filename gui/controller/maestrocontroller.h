@@ -19,7 +19,8 @@ class MaestroController {
 		std::shared_ptr<SectionController> add_section_controller(Point* layout);
 		Maestro* get_maestro();
 		uint8_t get_num_section_controllers();
-		SectionController *get_section_controller(uint8_t index);
+		SectionController* get_section_controller(uint8_t index);
+		std::vector<std::shared_ptr<SectionController> > get_section_controllers();
 		Show *get_show();
 
 	private:

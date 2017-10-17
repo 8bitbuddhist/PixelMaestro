@@ -10,6 +10,18 @@
 namespace PixelMaestro {
 
 	/**
+	 * Constructor. Fast-tracks creating a Maestro with a single Section.
+	 * @param rows Number of rows in the new Section.
+	 * @param columns Number of columns in the new Section.
+	 */
+	Maestro::Maestro(uint16_t rows, uint16_t columns) {
+		Section* sections = new Section[1] {
+			Section(rows, columns)
+		};
+		set_sections(sections, 1);
+	}
+
+	/**
 	 * Constructor. Creates the Maestro with the specified Sections.
 	 * @param sections Array of Sections to manage.
 	 * @param num_sections Number of Sections in the array.
