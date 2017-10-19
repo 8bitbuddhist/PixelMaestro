@@ -5,10 +5,17 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.7.1] - In Progress
 ### Added
-- Palette Editor: New Animation Previewer dialog allows you to create, delete, and edit color Palettes.
+- Palette Editor:
+	- New Animation Previewer dialog allows you to create, delete, and edit color Palettes.
+	- Added number box to Speed slider.
+	- Initial work on interactive Show scheduling (see CueInterpreter).
+- Maestro: Simpler constructor when creating a Maestro with only one Section.
 
 ### Removed
 - Replaced `Colors::generate_random_colors()` with a truly random generator.
+
+### Known Issues
+- Opening Cues from a file is still not supported.
 
 ## [v0.7] - 2017-10-07
 ### Added

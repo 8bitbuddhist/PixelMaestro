@@ -59,7 +59,8 @@ SOURCES += main.cpp\
     window/settingsdialog.cpp \
     widget/animation/radialanimationcontrol.cpp \
     controller/palettecontroller.cpp \
-    widget/palettecontrol.cpp
+    widget/palettecontrol.cpp \
+    controller/cueinterpreter.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -114,7 +115,8 @@ HEADERS += \
     window/settingsdialog.h \
     widget/animation/radialanimationcontrol.h \
     controller/palettecontroller.h \
-    widget/palettecontrol.h
+    widget/palettecontrol.h \
+    controller/cueinterpreter.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

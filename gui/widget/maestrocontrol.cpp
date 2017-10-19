@@ -45,6 +45,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	// Open serial connection to Arduino
 	if (serial_enabled_) {
 		cue_controller_ = maestro_controller_->get_maestro()->set_cue_controller();
+		cue_interpreter_ = new CueInterpreter();
 		animation_handler = static_cast<AnimationCueHandler*>(cue_controller_->enable_handler(CueController::Handler::AnimationHandler));
 		canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->enable_handler(CueController::Handler::CanvasHandler));
 		maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
@@ -62,6 +63,9 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 		// If the Serial port was configured successfully, apply the initial animation.
 		if (serial_port_.isOpen()) {
+			// Show Cue Interpreter box
+			ui->lastActionLabel->setVisible(true);
+
 			section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
 			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 		}
@@ -166,6 +170,9 @@ void MaestroControl::initialize() {
 
 	// Initialize Canvas controls
 	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
+
+	// Hide Cue Interpreter
+	ui->lastActionLabel->setVisible(false);
 
 	initialize_palettes();
 
@@ -289,16 +296,19 @@ void MaestroControl::on_columnsSpinBox_editingFinished() {
  * @param value New cycle speed.
  */
 void MaestroControl::on_cycleSlider_valueChanged(int value) {
-	if (value != active_section_controller_->get_section()->get_animation()->get_speed()) {
-		value = ui->cycleSlider->maximum() - value;
-		active_section_controller_->get_section()->get_animation()->set_speed(value);
-		ui->cycleSlider->setToolTip(QString::number(value));
+	ui->cycleSpinBox->blockSignals(true);
+	ui->cycleSpinBox->setValue(value);
+	ui->cycleSpinBox->blockSignals(false);
 
-		if (serial_port_.isOpen()) {
-			animation_handler->set_speed(get_section_index(), get_overlay_index(), value, 0);
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-		}
-	}
+	set_speed();
+}
+
+void MaestroControl::on_cycleSpinBox_editingFinished() {
+	ui->cycleSlider->blockSignals(true);
+	ui->cycleSlider->setValue(ui->cycleSpinBox->value());
+	ui->cycleSlider->blockSignals(false);
+
+	set_speed();
 }
 
 /**
@@ -442,7 +452,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 }
 
 void MaestroControl::read_from_file(QString filename) {
-	// TODO: File reading not yet implemented
+	// TODO: File reading not yet finalized
 	QFile file(filename);
 	if (file.open(QFile::ReadOnly)) {
 		while (file.atEnd() == false) {
@@ -458,7 +468,12 @@ void MaestroControl::save_to_file(QString filename) {
 	if (file.open(QFile::WriteOnly)) {
 		QTextStream textstream(&file);
 
-		// TODO: Animation-specific options
+		/*
+		 * TODO: Serialize to file
+		 * - Animation-specific options
+		 * - Handle multiple Overlays
+		 * - Palettes
+		 */
 
 		// Overlay
 		if (active_section_controller_->get_overlay()->mix_mode != Colors::MixMode::None) {
@@ -505,6 +520,17 @@ void MaestroControl::save_to_file(QString filename) {
 	}
 }
 
+void MaestroControl::set_speed() {
+	uint16_t value = ui->cycleSpinBox->value();
+	if (value != active_section_controller_->get_section()->get_animation()->get_speed()) {
+		active_section_controller_->get_section()->get_animation()->set_speed(value);
+		if (serial_port_.isOpen()) {
+			animation_handler->set_speed(get_section_index(), get_overlay_index(), value, 0);
+			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+		}
+	}
+}
+
 /**
  * Appends a Cue to a stream, followed by a newline.
  * @param stream Stream to append to.
@@ -519,6 +545,7 @@ void MaestroControl::write_cue_to_stream(QTextStream* stream, uint8_t *cue, uint
 }
 
 void MaestroControl::send_to_device(uint8_t* out, uint8_t size) {
+	ui->lastActionLabel->setText(QString::fromStdString(cue_interpreter_->interpret_cue(out)));
 	serial_port_.write((const char*)out, size);
 }
 
@@ -595,5 +622,6 @@ MaestroControl::~MaestroControl() {
 	if (serial_port_.isOpen()) {
 		serial_port_.close();
 	}
+	delete cue_interpreter_;
 	delete ui;
 }

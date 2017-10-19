@@ -5,6 +5,7 @@
 #ifndef MAESTROCONTROL_H
 #define MAESTROCONTROL_H
 
+#include "controller/cueinterpreter.h"
 #include "controller/maestrocontroller.h"
 #include "controller/palettecontroller.h"
 #include "controller/sectioncontroller.h"
@@ -36,6 +37,7 @@ class MaestroControl : public QWidget {
 
 		// Initialize CueController
 		CueController* cue_controller_ = nullptr;
+		CueInterpreter* cue_interpreter_ = nullptr;
 		AnimationCueHandler* animation_handler = nullptr;
 		CanvasCueHandler* canvas_handler = nullptr;
 		MaestroCueHandler* maestro_handler = nullptr;
@@ -74,6 +76,7 @@ class MaestroControl : public QWidget {
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
 		void set_overlay_controls_visible(bool visible);
+		void set_speed();
 		void show_extra_controls(Animation* animation);
 		void show_canvas_controls(Canvas* canvas);
 		void write_cue_to_stream(QTextStream* stream, uint8_t* cue, uint8_t cue_size);
@@ -92,6 +95,7 @@ class MaestroControl : public QWidget {
 		void on_reverse_animationCheckBox_toggled(bool checked);
 		void on_rowsSpinBox_editingFinished();
 		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
+		void on_cycleSpinBox_editingFinished();
 };
 
 #endif // MAESTROCONTROL_H

@@ -127,7 +127,7 @@ void PaletteControl::on_paletteComboBox_currentIndexChanged(int index) {
 	active_palette_ = palette_controller_->get_palette(index);
 
 	// Delete existing color buttons
-	QList<QPushButton*> buttons = ui->colorsGroupBox->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindDirectChildrenOnly);
+	QList<QPushButton*> buttons = ui->colorsGroupBox->findChildren<QPushButton*>(QString(), Qt::FindChildOption::FindChildrenRecursively);
 	for (QPushButton* button : buttons) {
 		disconnect(button, &QPushButton::clicked, this, &PaletteControl::on_color_clicked);
 		delete button;
@@ -135,14 +135,13 @@ void PaletteControl::on_paletteComboBox_currentIndexChanged(int index) {
 
 	// Create new buttons and add an event handler that triggers on_color_clicked()
 	QLayout* layout = ui->colorsGroupBox->findChild<QLayout*>("colorsLayout");
-	// Get the width of the window using the screen's geometry. We'll use this to calculate the maximum width of each button.
-	int max_width = QApplication::desktop()->screenGeometry().width() / active_palette_->colors.size();
 	for (uint8_t color_index = 0; color_index < active_palette_->colors.size(); color_index++) {
 		Colors::RGB color = active_palette_->colors.at(color_index);
 		QPushButton* button = new QPushButton();
 		button->setVisible(true);
 		button->setObjectName(QString::number(color_index));
-		button->setMaximumWidth(max_width);
+		button->setToolTip(QString::number(color_index + 1));
+		button->setMaximumWidth(40);
 		set_button_color(button, color.r, color.g, color.b);
 
 		layout->addWidget(button);
