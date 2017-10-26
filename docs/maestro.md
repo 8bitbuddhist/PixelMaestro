@@ -29,6 +29,7 @@ When you call `Maestro::update()`, pass in the program's current runtime in mill
 ```c++
 maestro.update(runtime);
 ```
+You can also force the Maestro to update using `maestro.update(runtime, true)`. This bypasses the refresh rate and immediately updates all components (except those that do their own internal time tracking, e.g. Animations).
 
 ## Changing the Refresh Rate
 The refresh rate is the amount of time (in milliseconds) between redraws. On each refresh, each Section's `update()` method is called, which triggers a redraw of the Section's Pixels. You can get the refresh rate using `get_refresh_interval()` and set the refresh rate using `set_refresh_interval()`.

@@ -14,7 +14,7 @@ MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maest
 	this->maestro_controller_ = maestro_controller;
 
 	// Initialize timers
-	timer_.setTimerType(Qt::PreciseTimer);
+	timer_.setTimerType(Qt::CoarseTimer);
 	connect(&timer_, SIGNAL(timeout()), this, SLOT(refresh_maestro()));
 
 	// Initialize runtime timer
@@ -29,6 +29,6 @@ MaestroController* MaestroDrawingArea::get_maestro_controller() {
 }
 
 void MaestroDrawingArea::refresh_maestro() {
-	maestro_controller_->get_maestro()->update(elapsed_timer_.elapsed());
+	maestro_controller_->get_maestro()->update(elapsed_timer_.elapsed(), true);
 	update();
 }

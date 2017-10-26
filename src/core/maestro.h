@@ -34,7 +34,7 @@ namespace PixelMaestro {
 			void set_running(bool running);
 			void set_sections(Section* sections, uint8_t num_sections);
 			Show* set_show(Event* events, uint16_t num_events);
-			void update(const uint32_t& current_time);
+			void update(const uint32_t& current_time, bool override = false);
 
 		private:
 			/// Sets the global brightness level from 0 - 255. Defaults to 255, or 100% brightness.

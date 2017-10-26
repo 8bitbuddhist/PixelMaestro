@@ -16,7 +16,7 @@ namespace PixelMaestro {
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, 0};
-		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {			
+		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {
 			if (orientation_ == Orientation::Vertical) {
 				start.set((uint16_t)Utility::rand(section->get_dimensions()->x), 0);
 				draw_bolt_vertical(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);

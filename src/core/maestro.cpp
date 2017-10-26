@@ -169,13 +169,14 @@ namespace PixelMaestro {
 		Main update routine.
 
 		@param current_time Program runtime.
+		@param override If true, forces the Maestro to update even if the refresh interval hasn't passed yet.
 	*/
-	void Maestro::update(const uint32_t& current_time) {
+	void Maestro::update(const uint32_t& current_time, bool override) {
 		// If running, call each Section's update method.
 		if (running_) {
 
 			// Compare the refresh time to the time since the last refresh.
-			if (current_time - last_refresh_ >= (uint32_t)refresh_interval_) {
+			if (override || current_time - last_refresh_ >= (uint32_t)refresh_interval_) {
 
 				// Run the Show
 				if (show_) {

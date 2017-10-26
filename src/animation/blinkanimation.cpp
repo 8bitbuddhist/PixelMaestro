@@ -8,7 +8,6 @@ namespace PixelMaestro {
 	void BlinkAnimation::update(Section* section) {
 		// Alternate the Pixel between its normal color and off (Colors::BLACK).
 		if (cycle_index_ == 0) {
-
 			if (orientation_ == Orientation::Vertical) {
 				for (uint16_t x = 0; x < section->get_dimensions()->x; x++) {
 					for (uint16_t y = 0; y < section->get_dimensions()->y; y++) {
@@ -17,7 +16,6 @@ namespace PixelMaestro {
 				}
 			}
 			else {	// Horizontal
-
 				for (uint16_t y = 0; y < section->get_dimensions()->y; y++) {
 					for (uint16_t x = 0; x < section->get_dimensions()->x; x++) {
 						section->set_one(x, y, get_color_at_index(x));
