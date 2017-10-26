@@ -14,7 +14,7 @@ namespace PixelMaestro {
 	 * @param time Event's start time.
 	 * @param Cue The Cue to run.
 	 */
-	Event::Event(uint32_t time, const uint8_t* cue) {
+	Event::Event(uint32_t time, uint8_t* cue) {
 		this->time_ = time;
 
 		uint8_t size = cue[CueController::Byte::SizeByte] + CueController::Byte::PayloadByte;

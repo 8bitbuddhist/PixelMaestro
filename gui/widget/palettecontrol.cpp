@@ -6,7 +6,6 @@
 #include "palettecontrol.h"
 #include "ui_palettecontrol.h"
 
-// TODO: Add scroll area to colorsGroupBox
 PaletteControl::PaletteControl(PaletteController* controller, std::string initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControl) {
 	this->palette_controller_ = controller;
 	ui->setupUi(this);

@@ -5,20 +5,21 @@
 #ifndef MAESTROCONTROL_H
 #define MAESTROCONTROL_H
 
+#include <QSerialPort>
+#include <QTextStream>
+#include <QWidget>
 #include "controller/cueinterpreter.h"
 #include "controller/maestrocontroller.h"
 #include "controller/palettecontroller.h"
 #include "controller/sectioncontroller.h"
+#include "controller/showcontroller.h"
 #include "core/colors.h"
 #include "core/maestro.h"
 #include "cue/animationcuehandler.h"
 #include "cue/canvascuehandler.h"
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
-#include "drawingarea/simpledrawingarea.h"
-#include <QSerialPort>
-#include <QTextStream>
-#include <QWidget>
+#include "widget/showcontrol.h"
 
 namespace Ui {
 	class MaestroControl;
@@ -33,11 +34,12 @@ class MaestroControl : public QWidget {
 		/// The actively controlled SectionController.
 		SectionController *active_section_controller_ = nullptr;
 
+		/// The controller for managing Palettes.
 		PaletteController palette_controller_;
 
-		// Initialize CueController
-		CueController* cue_controller_ = nullptr;
+		// Cue components
 		CueInterpreter* cue_interpreter_ = nullptr;
+		CueController* cue_controller_ = nullptr;
 		AnimationCueHandler* animation_handler = nullptr;
 		CanvasCueHandler* canvas_handler = nullptr;
 		MaestroCueHandler* maestro_handler = nullptr;
@@ -45,6 +47,9 @@ class MaestroControl : public QWidget {
 
 		/// Connection to an Arduino or other device.
 		QSerialPort serial_port_;
+
+		/// If true, only generate Cues instead of running commands
+		bool show_mode_ = false;
 
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
@@ -66,12 +71,18 @@ class MaestroControl : public QWidget {
 		/// Stores Canvas controls
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
+		/// Show dialog (if Shows are enabled)
+		std::unique_ptr<ShowControl> show_control_dialog_;
+
+		std::unique_ptr<ShowController> show_controller_;
+
 		// Load Serial connection to Arduino.
 		bool serial_enabled_ = false;
 		QString serial_port_name_;
 
 		void get_section_settings();
 		void initialize();
+		void initialize_cue_controller();
 		void initialize_palettes();
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
@@ -96,6 +107,8 @@ class MaestroControl : public QWidget {
 		void on_rowsSpinBox_editingFinished();
 		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
 		void on_cycleSpinBox_editingFinished();
+		void on_enableShowCheckBox_toggled(bool checked);
+		void on_editEventsButton_clicked();
 };
 
 #endif // MAESTROCONTROL_H

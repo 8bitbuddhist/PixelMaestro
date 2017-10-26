@@ -931,7 +931,7 @@
   </action>
   <action name="action_About">
    <property name="text">
-    <string>&amp;About</string>
+    <string>&amp;About PixelMaestro...</string>
    </property>
   </action>
   <action name="action_Exit">
@@ -989,7 +989,7 @@
   </action>
   <action name="action_Preferences">
    <property name="text">
-    <string>&amp;Preferences</string>
+    <string>&amp;Preferences...</string>
    </property>
   </action>
   <action name="action_Save_Maestro">

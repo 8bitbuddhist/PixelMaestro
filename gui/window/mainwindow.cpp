@@ -28,7 +28,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_action_About_triggered() {
-	QMessageBox::about(this, QString("PixelMaestro GUI"), QString("PixelMaestro v0.6\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
+	QMessageBox::about(this, QString("PixelMaestro GUI"), QString("PixelMaestro v0.7\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
 }
 
 void MainWindow::on_action_Exit_triggered() {

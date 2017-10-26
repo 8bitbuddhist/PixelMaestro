@@ -60,7 +60,9 @@ SOURCES += main.cpp\
     widget/animation/radialanimationcontrol.cpp \
     controller/palettecontroller.cpp \
     widget/palettecontrol.cpp \
-    controller/cueinterpreter.cpp
+    controller/cueinterpreter.cpp \
+    widget/showcontrol.cpp \
+    controller/showcontroller.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -116,7 +118,9 @@ HEADERS += \
     widget/animation/radialanimationcontrol.h \
     controller/palettecontroller.h \
     widget/palettecontrol.h \
-    controller/cueinterpreter.h
+    controller/cueinterpreter.h \
+    widget/showcontrol.h \
+    controller/showcontroller.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
@@ -127,6 +131,7 @@ FORMS	+= \
     widget/canvas/canvascontrol.ui \
     window/settingsdialog.ui \
     widget/animation/radialanimationcontrol.ui \
-    widget/palettecontrol.ui
+    widget/palettecontrol.ui \
+    widget/showcontrol.ui
 
 INCLUDEPATH += $$PWD/../src

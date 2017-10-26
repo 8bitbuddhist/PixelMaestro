@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	class Event {
 
 		public:
-			Event(uint32_t time, const uint8_t* cue);
+			Event(uint32_t time, uint8_t* cue);
 			~Event();
 			uint8_t* get_cue();
 			uint32_t get_time();
