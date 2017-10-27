@@ -411,6 +411,30 @@ void MaestroControl::on_paletteControlButton_clicked() {
 }
 
 /**
+ * Sets the delay between Animation cycles.
+ * @param value New pause interval.
+ */
+void MaestroControl::on_pauseSlider_valueChanged(int value) {
+	ui->pauseSpinBox->blockSignals(true);
+	ui->pauseSpinBox->setValue(value);
+	ui->pauseSpinBox->blockSignals(false);
+
+	set_speed();
+}
+
+/**
+ * Sets the delay between Animation cycles.
+ * @param arg1 New pause interval.
+ */
+void MaestroControl::on_pauseSpinBox_valueChanged(int arg1) {
+	ui->pauseSlider->blockSignals(true);
+	ui->pauseSlider->setValue(arg1);
+	ui->pauseSlider->blockSignals(false);
+
+	set_speed();
+}
+
+/**
  * Toggles whether the color animation is shown in reverse.
  * @param checked If true, reverse the animation.
  */
@@ -556,13 +580,16 @@ void MaestroControl::save_to_file(QString filename) {
 	}
 }
 
+/// Sets the speed and/or pause interval for the active Animation.
 void MaestroControl::set_speed() {
-	uint16_t value = ui->cycleSpinBox->value();
-	if (value != active_section_controller_->get_section()->get_animation()->get_speed()) {
-		active_section_controller_->get_section()->get_animation()->set_speed(value);
+	uint16_t pause = ui->pauseSpinBox->value();
+	uint16_t speed = ui->cycleSpinBox->value();
+	Animation* animation = active_section_controller_->get_section()->get_animation();
+	if (speed != animation->get_speed() || pause != animation->get_pause()) {
+		animation->set_speed(speed, pause);
 
 		if (cue_controller_ != nullptr) {
-			animation_handler->set_speed(get_section_index(), get_overlay_index(), value, 0);
+			animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, 0);
 			if (serial_port_.isOpen()) {
 				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
 			}

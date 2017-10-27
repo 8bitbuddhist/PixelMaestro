@@ -8,7 +8,7 @@ QT       += core gui widgets serialport
 
 TARGET = PixelMaestro_QT
 TEMPLATE = app
-QMAKE_CXXFLAGS = -Wunused -Wno-unused-parameter
+QMAKE_CXXFLAGS = -std=c++11 -Wunused -Wno-unused-parameter
 
 SOURCES += main.cpp\
 		drawingarea/maestrodrawingarea.cpp \

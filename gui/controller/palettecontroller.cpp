@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "core/colors.h"
 #include "palettecontroller.h"
 
@@ -29,7 +30,8 @@ std::vector<PaletteController::Palette> PaletteController::get_palettes() {
 
 void PaletteController::initialize_palettes() {
 	uint8_t num_colors = 14;
-	Colors::RGB colors[num_colors] = {Colors::BLACK};
+	Colors::RGB colors[num_colors];
+	std::fill(&colors[0], &colors[num_colors - 1], Colors::BLACK);
 
 	palettes_.clear();
 

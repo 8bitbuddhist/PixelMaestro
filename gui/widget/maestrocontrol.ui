@@ -294,6 +294,46 @@
        </property>
       </widget>
      </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="pauseLabel">
+       <property name="text">
+        <string>Pause</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <layout class="QHBoxLayout" name="pauseLayout">
+       <item>
+        <widget class="QSlider" name="pauseSlider">
+         <property name="maximum">
+          <number>3000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="tickPosition">
+          <enum>QSlider::TicksBelow</enum>
+         </property>
+         <property name="tickInterval">
+          <number>200</number>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="pauseSpinBox">
+         <property name="maximum">
+          <number>3000</number>
+         </property>
+         <property name="singleStep">
+          <number>10</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
     </layout>
    </item>
   </layout>

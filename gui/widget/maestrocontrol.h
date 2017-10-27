@@ -109,6 +109,8 @@ class MaestroControl : public QWidget {
 		void on_cycleSpinBox_editingFinished();
 		void on_enableShowCheckBox_toggled(bool checked);
 		void on_editEventsButton_clicked();
+		void on_pauseSlider_valueChanged(int value);
+		void on_pauseSpinBox_valueChanged(int arg1);
 };
 
 #endif // MAESTROCONTROL_H
