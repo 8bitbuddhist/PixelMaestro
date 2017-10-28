@@ -39,30 +39,31 @@ SOURCES += main.cpp\
 		../src/animation/radialanimation.cpp \
 		../src/animation/mandelbrotanimation.cpp \
 		../src/animation/plasmaanimation.cpp \
-    ../src/animation/lightninganimation.cpp \
-    widget/animation/lightninganimationcontrol.cpp \
-    widget/animation/plasmaanimationcontrol.cpp \
-    widget/animation/sparkleanimationcontrol.cpp \
-    ../src/canvas/colorcanvas.cpp \
-    demo/colorcanvasdemo.cpp \
-    ../src/canvas/animationcanvas.cpp \
-    ../src/canvas/canvas.cpp \
-    widget/canvas/canvascontrol.cpp \
-    demo/cuedemo.cpp \
-    ../src/cue/event.cpp \
-    ../src/cue/show.cpp \
-    ../src/cue/cuecontroller.cpp \
-    ../src/cue/animationcuehandler.cpp \
-    ../src/cue/canvascuehandler.cpp \
-    ../src/cue/maestrocuehandler.cpp \
-    ../src/cue/sectioncuehandler.cpp \
-    window/settingsdialog.cpp \
-    widget/animation/radialanimationcontrol.cpp \
-    controller/palettecontroller.cpp \
-    widget/palettecontrol.cpp \
-    controller/cueinterpreter.cpp \
-    widget/showcontrol.cpp \
-    controller/showcontroller.cpp
+		../src/animation/lightninganimation.cpp \
+		widget/animation/lightninganimationcontrol.cpp \
+		widget/animation/plasmaanimationcontrol.cpp \
+		widget/animation/sparkleanimationcontrol.cpp \
+		../src/canvas/colorcanvas.cpp \
+		demo/colorcanvasdemo.cpp \
+		../src/canvas/animationcanvas.cpp \
+		../src/canvas/canvas.cpp \
+		widget/canvas/canvascontrol.cpp \
+		demo/cuedemo.cpp \
+		../src/cue/event.cpp \
+		../src/cue/show.cpp \
+		../src/cue/cuecontroller.cpp \
+		../src/cue/animationcuehandler.cpp \
+		../src/cue/canvascuehandler.cpp \
+		../src/cue/maestrocuehandler.cpp \
+		../src/cue/sectioncuehandler.cpp \
+		window/settingsdialog.cpp \
+		widget/animation/radialanimationcontrol.cpp \
+		controller/palettecontroller.cpp \
+		widget/palettecontrol.cpp \
+		controller/cueinterpreter.cpp \
+		widget/showcontrol.cpp \
+		controller/showcontroller.cpp \
+    demo/animatedcanvasdemo.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -94,44 +95,52 @@ HEADERS += \
 		../src/animation/radialanimation.h \
 		../src/animation/mandelbrotanimation.h \
 		../src/animation/plasmaanimation.h \
-    ../src/animation/lightninganimation.h \
-    widget/animation/lightninganimationcontrol.h \
-    widget/animation/plasmaanimationcontrol.h \
-    widget/animation/sparkleanimationcontrol.h \
-    ../src/canvas/colorcanvas.h \
-    demo/colorcanvasdemo.h \
-    ../src/canvas/canvastype.h \
-    ../src/canvas/animationcanvas.h \
-    ../src/canvas/canvas.h \
-    widget/canvas/canvascontrol.h \
-    demo/cuedemo.h \
-    ../src/cue/event.h \
-    ../src/cue/show.h \
-    ../src/cue/cuecontroller.h \
-    ../src/cue/cuehandler.h \
-    ../src/cue/animationcuehandler.h \
-    ../src/cue/canvascuehandler.h \
-    ../src/cue/maestrocuehandler.h \
-    ../src/cue/sectioncuehandler.h \
-    ../src/animation/animationtype.h \
-    window/settingsdialog.h \
-    widget/animation/radialanimationcontrol.h \
-    controller/palettecontroller.h \
-    widget/palettecontrol.h \
-    controller/cueinterpreter.h \
-    widget/showcontrol.h \
-    controller/showcontroller.h
+		../src/animation/lightninganimation.h \
+		widget/animation/lightninganimationcontrol.h \
+		widget/animation/plasmaanimationcontrol.h \
+		widget/animation/sparkleanimationcontrol.h \
+		../src/canvas/colorcanvas.h \
+		demo/colorcanvasdemo.h \
+		../src/canvas/canvastype.h \
+		../src/canvas/animationcanvas.h \
+		../src/canvas/canvas.h \
+		widget/canvas/canvascontrol.h \
+		demo/cuedemo.h \
+		../src/cue/event.h \
+		../src/cue/show.h \
+		../src/cue/cuecontroller.h \
+		../src/cue/cuehandler.h \
+		../src/cue/animationcuehandler.h \
+		../src/cue/canvascuehandler.h \
+		../src/cue/maestrocuehandler.h \
+		../src/cue/sectioncuehandler.h \
+		../src/animation/animationtype.h \
+		window/settingsdialog.h \
+		widget/animation/radialanimationcontrol.h \
+		controller/palettecontroller.h \
+		widget/palettecontrol.h \
+		controller/cueinterpreter.h \
+		widget/showcontrol.h \
+		controller/showcontroller.h \
+    demo/animatedcanvasdemo.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
 		window/mainwindow.ui \
-    widget/animation/lightninganimationcontrol.ui \
-    widget/animation/plasmaanimationcontrol.ui \
-    widget/animation/sparkleanimationcontrol.ui \
-    widget/canvas/canvascontrol.ui \
-    window/settingsdialog.ui \
-    widget/animation/radialanimationcontrol.ui \
-    widget/palettecontrol.ui \
-    widget/showcontrol.ui
+		widget/animation/lightninganimationcontrol.ui \
+		widget/animation/plasmaanimationcontrol.ui \
+		widget/animation/sparkleanimationcontrol.ui \
+		widget/canvas/canvascontrol.ui \
+		window/settingsdialog.ui \
+		widget/animation/radialanimationcontrol.ui \
+		widget/palettecontrol.ui \
+		widget/showcontrol.ui
 
 INCLUDEPATH += $$PWD/../src
+
+DISTFILES += \
+    resources/nyan.gif \
+    resources/nyan.gif
+
+RESOURCES += \
+    resources.qrc

@@ -5,14 +5,16 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.7.1] - In Progress
 ### Added
+- Canvas: Added support for animating patterns.
+- Maestro: Added simplified constructor for creating a Maestro with only one Section.
 - Palette Editor:
-	- New Animation Previewer dialog allows you to create, delete, and edit color Palettes.
-	- Added number box to Speed slider.
-	- Initial work on interactive Show scheduling (see CueInterpreter).
-- Maestro: Simpler constructor when creating a Maestro with only one Section.
+	- New Palette Editor dialog lets you create, edit, and delete color Palettes.
+	- Added number box to speed slider.
+	- Added slider to control Animation pause threshold.
+	- Added Show editor (in progress).
 
-### Removed
-- Replaced `Colors::generate_random_colors()` with a truly random generator.
+### Modified
+- Replaced `Colors::generate_random_colors()` with a truly random color array generator.
 
 ### Known Issues
 - Opening Cues from a file is still not supported.

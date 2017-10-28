@@ -234,17 +234,18 @@ namespace PixelMaestro {
 	 * Sets a new Canvas of the specified type.
 	 * This will delete and overwrite an existing Canvas.
 	 * @param type The type of Canvas to create.
+	 * @param num_frames The number of frames in the Canvas.
 	 * @return The new Canvas.
 	 */
-	Canvas* Section::set_canvas(CanvasType::Type type) {
+	Canvas* Section::set_canvas(CanvasType::Type type, uint16_t num_frames) {
 		remove_canvas();
 
 		switch (type) {
 			case CanvasType::Type::AnimationCanvas:
-				canvas_ = new AnimationCanvas(this);
+				canvas_ = new AnimationCanvas(this, num_frames);
 				break;
 			case CanvasType::Type::ColorCanvas:
-				canvas_ = new ColorCanvas(this);
+				canvas_ = new ColorCanvas(this, num_frames);
 				break;
 		}
 
@@ -275,7 +276,7 @@ namespace PixelMaestro {
 
 		// Reinitialize the Canvas
 		if (canvas_ != nullptr) {
-			canvas_->initialize_pattern();
+			canvas_->initialize();
 		}
 
 		// Reinitialize the Overlay

@@ -11,19 +11,24 @@ namespace PixelMaestro {
 	class AnimationCanvas : public Canvas {
 		public:
 			AnimationCanvas(Section* section);
+			AnimationCanvas(Section* section, uint16_t num_frames);
 			~AnimationCanvas();
 			void activate(uint32_t pixel);
 			void deactivate(uint32_t pixel);
 			Colors::RGB get_pixel_color(uint32_t pixel);
 			CanvasType::Type get_type();
-			void initialize_pattern();
+			void initialize();
 
 		protected:
+			void delete_frames();
+
+		private:
 			/**
-				The pattern to display.
-				Stored as an array of booleans where 'true' indicates a drawn Pixel.
-			*/
-			bool* pattern_ = nullptr;
+			 * The frames in the Canvas.
+			 * Each frame consists of a boolean array where each value corresponds to a Pixel.
+			 * If true, the Pixel is active/lit.
+			 */
+			bool** frames_ = nullptr;
 	};
 }
 

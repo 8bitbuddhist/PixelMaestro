@@ -303,6 +303,69 @@ namespace PixelMaestro {
 		controller_->assemble(text_index);
 	}
 
+	void CanvasCueHandler::next_frame(uint8_t section_num, uint8_t overlay_num) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::NextFrame;
+		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+	}
+
+	void CanvasCueHandler::set_current_frame_index(uint8_t section_num, uint8_t overlay_num, uint16_t index) {
+		IntByteConvert index_byte(index);
+
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetCurrentFrameIndex;
+		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_cue()[Byte::OptionsByte] = index_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 1] = index_byte.converted_1;
+	}
+
+	void CanvasCueHandler::set_num_frames(uint8_t section_num, uint8_t overlay_num, uint16_t num_frames) {
+		IntByteConvert num_frames_byte(num_frames);
+
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetNumFrames;
+		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_cue()[Byte::OptionsByte] = num_frames_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 1] = num_frames_byte.converted_1;
+	}
+
+	void CanvasCueHandler::set_offset(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y) {
+		IntByteConvert x_byte(x);
+		IntByteConvert y_byte(y);
+
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetOffset;
+		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
+	}
+
+	void CanvasCueHandler::set_scroll(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y, bool repeat) {
+		IntByteConvert x_byte(x);
+		IntByteConvert y_byte(y);
+
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetScroll;
+		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
+		controller_->get_cue()[Byte::OptionsByte + 4] = (uint8_t)repeat;
+	}
+
 	void CanvasCueHandler::run(uint8_t *cue) {
 		Section* section = controller_->get_maestro()->get_section(cue[Byte::SectionByte]);
 
@@ -375,6 +438,8 @@ namespace PixelMaestro {
 						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 8]),
 						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 10]),
 						(bool)cue[Byte::OptionsByte + 12]);
+					break;
+				default:
 					break;
 			}
 		}
@@ -455,6 +520,37 @@ namespace PixelMaestro {
 						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 11]),
 						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 13]),
 						bool(cue[Byte::OptionsByte + 15]));
+					break;
+				default:
+					break;
+			}
+		}
+		else {	// Generic Canvas
+			Canvas* canvas = section->get_canvas();
+			switch((Action)cue[Byte::ActionByte]) {
+				case Action::NextFrame:
+					canvas->next_frame();
+					break;
+				case Action::SetCurrentFrameIndex:
+					canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+					break;
+				case Action::SetNumFrames:
+					canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+					break;
+				case Action::SetOffset:
+					canvas->set_offset(
+						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
+					);
+					break;
+				case Action::SetScroll:
+					canvas->set_scroll(
+						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+						(bool)cue[Byte::OptionsByte + 4]
+					);
+					break;
+				default:
 					break;
 			}
 		}

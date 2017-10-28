@@ -97,6 +97,21 @@ std::string CueInterpreter::interpret_canvas_cue(uint8_t *cue) {
 		case CanvasCueHandler::Action::DrawTriangle:
 			result.append(", Action: DrawTriangle");
 			break;
+		case CanvasCueHandler::Action::NextFrame:
+			result.append(", Action: NextFrame");
+			break;
+		case CanvasCueHandler::Action::SetCurrentFrameIndex:
+			result.append(", Action: SetCurrentFrameIndex");
+			break;
+		case CanvasCueHandler::Action::SetNumFrames:
+			result.append(", Action: SetNumFrames");
+			break;
+		case CanvasCueHandler::Action::SetOffset:
+			result.append(", Action: SetOffset");
+			break;
+		case CanvasCueHandler::Action::SetScroll:
+			result.append(", Action: SetScroll");
+			break;
 	}
 
 	return result;

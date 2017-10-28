@@ -6,12 +6,30 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. This initializes the color palette.
-	 * @param section The Canvas' parent Section.
-	 * @param colors The color palette to use.
+	 * Constructor. Initializes the Canvas with a single frame.
+	 * @param section Parent Section.
 	 */
 	ColorCanvas::ColorCanvas(Section* section) : Canvas(section) {
-		initialize_pattern();
+		initialize();
+	}
+
+	/**
+	 * Constructor. Initializes the Canvas with the specified number of frames.
+	 * @param section Parent Section.
+	 * @param num_frames Number of frames.
+	 */
+	ColorCanvas::ColorCanvas(Section *section, uint16_t num_frames) : Canvas(section, num_frames) {
+		initialize();
+	}
+
+	/**
+	 * Deletes the current frame set.
+	 */
+	void ColorCanvas::delete_frames() {
+		for (uint16_t i = 0; i < num_frames_; i++) {
+			delete[] frames_[i];
+		}
+		delete[] frames_;
 	}
 
 	/**
@@ -21,7 +39,7 @@ namespace PixelMaestro {
 	 * @return
 	 */
 	Colors::RGB ColorCanvas::get_pixel_color(uint32_t pixel) {
-		return color_pattern_[pixel];
+		return frames_[current_frame_index_][pixel];
 	}
 
 	// Drawing functions
@@ -30,14 +48,14 @@ namespace PixelMaestro {
 	 * @param pixel Pixel to activate.
 	 */
 	void ColorCanvas::activate(uint32_t pixel) {
-		color_pattern_[pixel] = drawing_color_;
+		frames_[current_frame_index_][pixel] = drawing_color_;
 	}
 	/**
 	 * Sets the color of the pixel at the specified index to black.
 	 * @param pixel Pixel to activate.
 	 */
 	void ColorCanvas::deactivate(uint32_t pixel) {
-		color_pattern_[pixel] = Colors::BLACK;
+		frames_[current_frame_index_][pixel] = Colors::BLACK;
 	}
 
 	/**
@@ -128,18 +146,18 @@ namespace PixelMaestro {
 		return CanvasType::Type::ColorCanvas;
 	}
 
-	/**
-	 * Reinitializes the color pattern array.
-	 */
-	void ColorCanvas::initialize_pattern() {
-		if (color_pattern_ != nullptr) {
-			delete[] color_pattern_;
+	/// Builds the Canvas.
+	void ColorCanvas::initialize() {
+		frames_ = new Colors::RGB*[num_frames_];
+		for (uint16_t i = 0; i < num_frames_; i++) {
+			frames_[i] = new Colors::RGB[section_->get_dimensions()->size()];
+			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
+				frames_[i][pixel] = Colors::BLACK;
+			}
 		}
-		color_pattern_ = new Colors::RGB[section_->get_dimensions()->size()] {Colors::BLACK};
 	}
 
 	ColorCanvas::~ColorCanvas() {
-		delete[] color_pattern_;
-		color_pattern_ = nullptr;
+		delete_frames();
 	}
 }

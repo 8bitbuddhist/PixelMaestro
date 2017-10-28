@@ -889,6 +889,7 @@
      <property name="title">
       <string>Open &amp;Demo</string>
      </property>
+     <addaction name="action_Animated_Canvas_Demo"/>
      <addaction name="action_Blink_Demo"/>
      <addaction name="action_Canvas_Demo"/>
      <addaction name="action_Color_Canvas_Demo"/>
@@ -961,7 +962,7 @@
   </action>
   <action name="actionDrawing_Demo">
    <property name="text">
-    <string>Drawing Demo</string>
+    <string>&amp;Drawing Demo</string>
    </property>
   </action>
   <action name="action_Close_Workspace">
@@ -1000,6 +1001,11 @@
   <action name="actionOpen_Maestro">
    <property name="text">
     <string>Open &amp;Maestro...</string>
+   </property>
+  </action>
+  <action name="action_Animated_Canvas_Demo">
+   <property name="text">
+    <string>&amp;Animated Canvas Demo</string>
    </property>
   </action>
  </widget>

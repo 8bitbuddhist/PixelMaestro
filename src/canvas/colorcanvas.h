@@ -11,9 +11,9 @@ namespace PixelMaestro {
 	class ColorCanvas : public Canvas {
 		public:
 			ColorCanvas(Section* section);
+			ColorCanvas(Section *section, uint16_t num_frames);
 			~ColorCanvas();
 			Colors::RGB get_pixel_color(uint32_t pixel);
-			void initialize_pattern();
 
 			// Overriden functions
 			void activate(uint32_t pixel);
@@ -25,16 +25,21 @@ namespace PixelMaestro {
 			void draw_text(Colors::RGB color, uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars);
 			void draw_triangle(Colors::RGB color, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
 			CanvasType::Type get_type();
+			void initialize();
+
+		protected:
+			void delete_frames();
 
 		private:
-			/**
-			 * The pattern to display.
-			 * Stored as an array of Color::RGB values, which are drawn directly to the Pixel.
-			*/
-			Colors::RGB* color_pattern_ = nullptr;
-
 			/// Stores the color currently being used to draw shapes.
 			Colors::RGB drawing_color_ = Colors::BLACK;
+
+			/**
+			 * The frames in the Canvas.
+			 * Each frame consists of an RGB value where each value corresponds to a Pixel.
+			 * The color value is then passed directly to the Pixel via the Section.
+			 */
+			Colors::RGB** frames_ = nullptr;
 	};
 }
 

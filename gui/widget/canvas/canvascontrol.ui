@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>439</height>
+    <height>413</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -157,7 +157,7 @@
        <item row="8" column="2">
         <widget class="QPushButton" name="eraseButton">
          <property name="text">
-          <string>Clear</string>
+          <string>Clear...</string>
          </property>
         </widget>
        </item>

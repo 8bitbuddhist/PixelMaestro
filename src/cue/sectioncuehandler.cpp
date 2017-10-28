@@ -25,12 +25,13 @@ namespace PixelMaestro {
 		controller_->assemble(colors_index);
 	}
 
-	void SectionCueHandler::set_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type) {
+	void SectionCueHandler::set_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type, uint16_t num_frames) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = canvas_type;
+		controller_->get_cue()[Byte::OptionsByte + 1] = num_frames;
 
 		controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
@@ -99,7 +100,7 @@ namespace PixelMaestro {
 				}
 				break;
 			case Action::SetCanvas:
-				section->set_canvas(CanvasType::Type(cue[Byte::OptionsByte]));
+				section->set_canvas(CanvasType::Type(cue[Byte::OptionsByte]), cue[Byte::OptionsByte + 1]);
 				break;
 			case Action::SetDimensions:
 				section->set_dimensions(

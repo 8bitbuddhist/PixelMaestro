@@ -1,4 +1,4 @@
-Unit tests for PixelMaestro built using the [Catch framework](https://github.com/philsquared/Catch).
+Unit tests for PixelMaestro created using the [Catch framework](https://github.com/philsquared/Catch).
 
 ## Getting Started
 1. Download the latest version of the Catch framework by running `git submodule update`.

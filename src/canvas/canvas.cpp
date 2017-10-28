@@ -8,11 +8,19 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. This sets the parent Section.
+	 * Constructor. This sets the parent Section and initializes a single frame.
 	 * @param section The Canvas' parent Section.
 	 */
-	Canvas::Canvas(Section* section) {
+	Canvas::Canvas(Section* section) : Canvas(section, 1) { }
+
+	/**
+	 * Constructor. This sets the parent Section and the specified number of frames.
+	 * @param section The Canvas' parent Section.
+	 * @param num_frames The number of frames to draw.
+	 */
+	Canvas::Canvas(Section* section, uint16_t num_frames) {
 		this->section_ = section;
+		this->num_frames_ = num_frames;
 	}
 
 	/**
@@ -301,11 +309,34 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Changes the current frame to the next frame.
+	 * If we've hit the total number of frames, wrap back to the first frame.
+	 */
+	void Canvas::next_frame() {
+		if (num_frames_ > 1) {
+			if (current_frame_index_ == num_frames_ - 1) {
+				current_frame_index_ = 0;
+			}
+			else {
+				current_frame_index_++;
+			}
+		}
+	}
+
+	/**
 	 * Deletes this Canvas' scrolling behavior.
 	 */
 	void Canvas::remove_scroll() {
 		delete scroll_;
 		scroll_ = nullptr;
+	}
+
+	/**
+	 * Changes the active frame.
+	 * @param index Index of the new frame.
+	 */
+	void Canvas::set_current_frame_index(uint16_t index) {
+		current_frame_index_ = index;
 	}
 
 	/**
@@ -317,6 +348,18 @@ namespace PixelMaestro {
 	void Canvas::set_offset(int16_t x, int16_t y) {
 		offset_x_ = x;
 		offset_y_ = y;
+	}
+
+	/**
+	 * Changes the number of frames, then rebuilds the Canvas.
+	 * Data in existing frames will be lost.
+	 * @param num_frames New number of frames.
+	 */
+	void Canvas::set_num_frames(uint16_t num_frames) {
+		delete_frames();
+
+		this->num_frames_ = num_frames;
+		initialize();
 	}
 
 	/**
@@ -345,14 +388,16 @@ namespace PixelMaestro {
 	 */
 	void Canvas::set_section(Section *section) {
 		this->section_ = section;
-		initialize_pattern();
+		initialize();
 	}
 
 	/**
 	 * Redraw the Canvas.
+	 * If there are multiple frames, switch to the next frame.
 	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const uint32_t& current_time) {
+		next_frame();
 		if (scroll_ != nullptr) {
 			update_scroll(current_time);
 		}

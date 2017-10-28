@@ -6,12 +6,21 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. This initializes the Pattern array.
+	 * Constructor. This initializes the Canvas with a single frame.
 	 * AnimationCanvases "paint" by showing the Section's underlying Animation.
 	 * @param section The Canvas' parent Section.
 	 */
 	AnimationCanvas::AnimationCanvas(Section* section) : Canvas(section) {
-		initialize_pattern();
+		initialize();
+	}
+
+	/**
+	 * Constructor. Initializes the Canvas with the specified number of frames.
+	 * @param section Parent Section.
+	 * @param num_frames Number of frames.
+	 */
+	AnimationCanvas::AnimationCanvas(Section *section, uint16_t num_frames) : Canvas(section, num_frames) {
+		initialize();
 	}
 
 	/**
@@ -19,7 +28,7 @@ namespace PixelMaestro {
 	 * @param pixel Pixel to activate.
 	 */
 	void AnimationCanvas::activate(uint32_t pixel) {
-		pattern_[pixel] = 1;
+		frames_[current_frame_index_][pixel] = 1;
 	}
 
 	/**
@@ -27,7 +36,17 @@ namespace PixelMaestro {
 	 * @param pixel Pixel to deactivate.
 	 */
 	void AnimationCanvas::deactivate(uint32_t pixel) {
-		pattern_[pixel] = 0;
+		frames_[current_frame_index_][pixel] = 0;
+	}
+
+	/**
+	 * Deletes the current frame set.
+	 */
+	void AnimationCanvas::delete_frames() {
+		for (uint16_t i = 0; i < num_frames_; i++) {
+			delete[] frames_[i];
+		}
+		delete[] frames_;
 	}
 
 	/**
@@ -38,7 +57,7 @@ namespace PixelMaestro {
 	 * @return Pixel's color.
 	 */
 	Colors::RGB AnimationCanvas::get_pixel_color(uint32_t pixel) {
-		if (pattern_[pixel] == 0) {
+		if (frames_[current_frame_index_][pixel] == 0) {
 			return Colors::BLACK;
 		}
 		else {
@@ -50,17 +69,18 @@ namespace PixelMaestro {
 		return CanvasType::Type::AnimationCanvas;
 	}
 
-	/**
-	 * Reinitializes the pattern array.
-	 */
-	void AnimationCanvas::initialize_pattern() {
-		if (pattern_ != nullptr) {
-			delete[] pattern_;
+	/// Builds the Canvas and sets all Pixels off.
+	void AnimationCanvas::initialize() {
+		frames_ = new bool*[num_frames_];
+		for (uint16_t i = 0; i < num_frames_; i++) {
+			frames_[i] = new bool[section_->get_dimensions()->size()];
+			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
+				frames_[i][pixel] = 0;
+			}
 		}
-		pattern_ = new bool[section_->get_dimensions()->size()] {0};
 	}
 
 	AnimationCanvas::~AnimationCanvas() {
-		delete[] pattern_;
+		delete_frames();
 	}
 }

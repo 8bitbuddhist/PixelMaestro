@@ -12,7 +12,12 @@ namespace PixelMaestro {
 				DrawPoint,
 				DrawRect,
 				DrawText,
-				DrawTriangle
+				DrawTriangle,
+				NextFrame,
+				SetCurrentFrameIndex,
+				SetNumFrames,
+				SetOffset,
+				SetScroll
 			};
 
 			enum Byte : uint8_t {
@@ -38,6 +43,11 @@ namespace PixelMaestro {
 			void draw_text(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars);
 			void draw_triangle(uint8_t section_num, uint8_t overlay_num, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
 			void draw_triangle(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
+			void next_frame(uint8_t section_num, uint8_t overlay_num);
+			void set_current_frame_index(uint8_t section_num, uint8_t overlay_num, uint16_t index);
+			void set_num_frames(uint8_t section_num, uint8_t overlay_num, uint16_t num_frames);
+			void set_offset(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y);
+			void set_scroll(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y, bool repeat);
 
 			void run(uint8_t* cue);
 	};

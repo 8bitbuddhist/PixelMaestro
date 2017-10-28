@@ -1,11 +1,12 @@
 # Canvas
-Canvases let you draw custom shapes and patterns onto a Section. Where Animations show pre-defined patterns across all Pixels, Canvases let you freely draw patterns and colors across certain Pixels.
+Canvases let you draw custom shapes and patterns onto a Section. Where Animations show pre-defined patterns, Canvases let you freely draw patterns and colors across certain Pixels. Canvases can also display simple animations using these patterns.
 
 See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
 
 ## Contents
 1. [Canvas Types](#canvas-types)
 2. [Creating a Canvas](#creating-a-canvas)
+	1. [Animating a Canvas](#animating-a-canvas)
 3. [Drawing Shapes](#drawing-shapes)
 	1. [Drawing Lines](#drawing-lines)
 	2. [Drawing Rectangles](#drawing-rectangles)
@@ -31,6 +32,22 @@ Note that nothing is drawn to the Canvas by default, so the Section will appear 
 ```c++
 ColorCanvas* canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas);
 ```
+
+If you want to display an animated Canvas, specify the number of frames in the Canvas' constructor. Frames are described in more detail in the section [Animating a Canvas](#animating-a-canvas).
+
+```c++
+int num_frames = 10;
+section-set_canvas(CanvasType::ColorCanvas, num_frames);
+```
+
+### Animating a Canvas
+Canvases are made up of `frames`. A frame is an independent drawing surface the same size and shape as of the Pixel grid. When the Canvas updates, it draws the current frame, then switches to the next frame. This creates the illusion of animation while the Section is running by rapidly drawing and switching frames.
+
+**Note:** The frame drawing rate is tied to the Maestro's refresh rate.
+
+When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing any `draw()` actions to modify the new frame. Another way to quickly jump between frames is to use `next_frame()`, which changes the current frame to the next available frame (or the first frame if we've reached the end of the animation).
+
+To change the number of frames, use `set_num_frames()`. Note that this will delete any data stored in the current frames.
 
 ## Drawing Shapes
 The Canvas class provides several `draw()` methods for drawing various shapes, elements, and patterns. For each shape you must specify where it will appear on the grid (as x and y coordinates) and any extra parameters that the shape requires.
@@ -115,7 +132,7 @@ The following code shifts the Canvas 5 Pixels to the right and 1 Pixel down.
 canvas->set_offset(5, 1);
 ```
 
-Note that the offset will be disabled if scrolling is enabled, since scrolling leverages the offset when tracking the location of the Canvas.
+Note that the offset will be disabled if scrolling is enabled, since scrolling modifies the offset values.
 
 ## Interactive Canvases
 For a demo on how to create an interactive Canvas, see the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class in the PixelMaestro GUI.

@@ -163,7 +163,7 @@ void MaestroControl::initialize() {
 	// Initialize Canvas controls
 	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
 
-	// FIXME: Hide Show controls
+	// Show controls hidden for now
 	ui->editEventsButton->setEnabled(false);
 	ui->editEventsButton->setVisible(false);
 	ui->showLabel->setVisible(false);
@@ -512,7 +512,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 }
 
 void MaestroControl::read_from_file(QString filename) {
-	// TODO: File reading not yet finalized
+	// Not yet finalized
 	QFile file(filename);
 	if (file.open(QFile::ReadOnly)) {
 		while (file.atEnd() == false) {
@@ -529,7 +529,7 @@ void MaestroControl::save_to_file(QString filename) {
 		QTextStream textstream(&file);
 
 		/*
-		 * TODO: Serialize to file
+		 * Implement serialization for:
 		 * - Animation-specific options
 		 * - Handle multiple Overlays
 		 * - Palettes
