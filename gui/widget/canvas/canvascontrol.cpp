@@ -2,15 +2,20 @@
 #include "canvas/colorcanvas.h"
 #include "canvas/fonts/font5x8.h"
 #include "canvascontrol.h"
+#include "controller/canvascontroller.h"
 #include "ui_canvascontrol.h"
 #include <QColorDialog>
+#include <QDir>
+#include <QFileDialog>
+#include <QImageReader>
 #include <QMessageBox>
 
-CanvasControl::CanvasControl(Canvas* canvas, QWidget *parent) :
+CanvasControl::CanvasControl(CanvasController* canvas_controller, QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::CanvasControl) {
 	ui->setupUi(this);
-	this->canvas_ = canvas;
+	this->canvas_controller_ = canvas_controller;
+	this->canvas_ = canvas_controller->get_canvas();
 	this->initialize();
 }
 
@@ -235,6 +240,15 @@ void CanvasControl::on_eraseButton_clicked() {
 
 void CanvasControl::on_lineRadioButton_toggled(bool checked) {
 	set_line_controls_visible(checked);
+}
+
+void CanvasControl::on_openImageButton_clicked() {
+	QString filename = QFileDialog::getOpenFileName(this,
+		QString("Open Image"),
+		QDir::home().path(),
+		QString("Images (*.bmp *.gif *.jpg *.png)"));
+
+	canvas_controller_->load_image(filename, filename.right(3).toLocal8Bit());
 }
 
 void CanvasControl::on_rectRadioButton_toggled(bool checked) {

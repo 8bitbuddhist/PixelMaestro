@@ -249,29 +249,23 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
  * @param index Index of the new Canvas type.
  */
 void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
-	Canvas* canvas = nullptr;
-
 	// Remove the existing Canvas.
 	active_section_controller_->get_section()->remove_canvas();
+	canvas_controller_.reset();
 
 	// Add the new Canvas
-	switch (index) {
-		case 1:	// Animation Canvas
-			canvas = active_section_controller_->get_section()->set_canvas(CanvasType::Type::AnimationCanvas);
-			break;
-		case 2: // Color Canvas
-			canvas = active_section_controller_->get_section()->set_canvas(CanvasType::Type::ColorCanvas);
-			break;
-	}
+	if (index > 0) {
+		canvas_controller_ = std::unique_ptr<CanvasController>(new CanvasController(active_section_controller_, (CanvasType::Type)(index - 1)));
 
-	if (cue_controller_ != nullptr) {
-		section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)index);
-		if (serial_port_.isOpen()) {
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+		if (cue_controller_ != nullptr) {
+			section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)index);
+			if (serial_port_.isOpen()) {
+				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			}
 		}
 	}
 
-	show_canvas_controls(canvas);
+	show_canvas_controls();
 }
 
 /**
@@ -489,12 +483,15 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
  */
 void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 	// Check the Canvas
+	/*
+	 * Disabled due to too many popups
 	if (canvas_control_widget_ != nullptr) {
 		CanvasControl* widget = qobject_cast<CanvasControl*>(canvas_control_widget_.get());
 		if (!widget->confirm_clear()) {
 			return;
 		}
 	}
+	*/
 
 	if ((x != active_section_controller_->get_section()->get_dimensions()->x) || (y != active_section_controller_->get_section()->get_dimensions()->y)) {
 		active_section_controller_->get_section()->set_dimensions(x, y);
@@ -666,7 +663,7 @@ void MaestroControl::show_extra_controls(Animation* animation) {
 	}
 }
 
-void MaestroControl::show_canvas_controls(Canvas *canvas) {
+void MaestroControl::show_canvas_controls() {
 	QLayout* layout = this->findChild<QLayout*>("canvasControlsLayout");
 
 	// Remove the Canvas controls.
@@ -674,8 +671,8 @@ void MaestroControl::show_canvas_controls(Canvas *canvas) {
 	layout->removeWidget(canvas_control_widget_.get());
 	canvas_control_widget_.reset();
 
-	if (canvas != nullptr) {
-		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(canvas));
+	if (canvas_controller_ != nullptr && canvas_controller_->get_canvas() != nullptr) {
+		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(canvas_controller_.get()));
 		layout->addWidget(canvas_control_widget_.get());
 	}
 }

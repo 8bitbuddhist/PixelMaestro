@@ -63,7 +63,8 @@ SOURCES += main.cpp\
 		controller/cueinterpreter.cpp \
 		widget/showcontrol.cpp \
 		controller/showcontroller.cpp \
-    demo/animatedcanvasdemo.cpp
+    demo/animatedcanvasdemo.cpp \
+    controller/canvascontroller.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -122,7 +123,8 @@ HEADERS += \
 		controller/cueinterpreter.h \
 		widget/showcontrol.h \
 		controller/showcontroller.h \
-    demo/animatedcanvasdemo.h
+    demo/animatedcanvasdemo.h \
+    controller/canvascontroller.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

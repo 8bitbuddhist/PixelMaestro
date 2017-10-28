@@ -27,8 +27,11 @@ namespace PixelMaestro {
 	 * Blanks out the Canvas (anything drawn will be lost!).
 	 */
 	void Canvas::clear() {
-		for (uint32_t pixel = 0; pixel < (uint32_t)(section_->get_dimensions()->size()); pixel++) {
-			deactivate(pixel);
+		for (uint16_t frame = 0; frame < num_frames_; frame++) {
+			set_current_frame_index(frame);
+			for (uint32_t pixel = 0; pixel < (uint32_t)(section_->get_dimensions()->size()); pixel++) {
+				deactivate(pixel);
+			}
 		}
 	}
 
@@ -352,7 +355,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Changes the number of frames, then rebuilds the Canvas.
-	 * Data in existing frames will be lost.
+	 * Existing frames will be deleted.
 	 * @param num_frames New number of frames.
 	 */
 	void Canvas::set_num_frames(uint16_t num_frames) {

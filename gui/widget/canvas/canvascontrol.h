@@ -2,6 +2,7 @@
 #define CANVASCONTROL_H
 
 #include "canvas/canvas.h"
+#include "controller/canvascontroller.h"
 #include <QButtonGroup>
 #include <QWidget>
 
@@ -15,7 +16,7 @@ class CanvasControl : public QWidget {
 		Q_OBJECT
 
 	public:
-		explicit CanvasControl(Canvas* canvas, QWidget *parent = 0);
+		explicit CanvasControl(CanvasController* canvas_controller, QWidget *parent = 0);
 		~CanvasControl();
 		bool confirm_clear();
 
@@ -36,7 +37,10 @@ class CanvasControl : public QWidget {
 
 		void on_selectColorButton_clicked();
 
+		void on_openImageButton_clicked();
+
 	private:
+		CanvasController* canvas_controller_ = nullptr;
 		Canvas* canvas_ = nullptr;
 		Colors::RGB rgb_color_ = Colors::BLACK;
 		QColor qcolor_ = QColor::fromRgb(0, 0, 0);

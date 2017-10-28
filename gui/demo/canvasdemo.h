@@ -5,9 +5,8 @@
 #ifndef PATTERNDEMO_H
 #define PATTERNDEMO_H
 
-#include "../drawingarea/simpledrawingarea.h"
 #include "controller/maestrocontroller.h"
-#include <vector>
+#include "drawingarea/simpledrawingarea.h"
 
 class CanvasDemo : public SimpleDrawingArea {
 	public:

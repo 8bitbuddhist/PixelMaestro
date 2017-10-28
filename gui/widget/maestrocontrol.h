@@ -8,6 +8,7 @@
 #include <QSerialPort>
 #include <QTextStream>
 #include <QWidget>
+#include "controller/canvascontroller.h"
 #include "controller/cueinterpreter.h"
 #include "controller/maestrocontroller.h"
 #include "controller/palettecontroller.h"
@@ -71,6 +72,8 @@ class MaestroControl : public QWidget {
 		/// Stores Canvas controls
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
+		std::unique_ptr<CanvasController> canvas_controller_;
+
 		/// Show dialog (if Shows are enabled)
 		std::unique_ptr<ShowControl> show_control_dialog_;
 
@@ -89,7 +92,7 @@ class MaestroControl : public QWidget {
 		void set_overlay_controls_visible(bool visible);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
-		void show_canvas_controls(Canvas* canvas);
+		void show_canvas_controls();
 		void write_cue_to_stream(QTextStream* stream, uint8_t* cue, uint8_t cue_size);
 
 	private slots:
