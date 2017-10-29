@@ -17,6 +17,7 @@
 #include "maestrocontrol.h"
 #include "widget/palettecontrol.h"
 #include <QFile>
+#include <QMessageBox>
 #include <QSettings>
 #include <QString>
 #include <QTextStream>
@@ -54,12 +55,15 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		serial_port_.setParity(QSerialPort::Parity::NoParity);
 		serial_port_.setDataBits(QSerialPort::DataBits::Data8);
 		serial_port_.setStopBits(QSerialPort::StopBits::OneStop);
-		serial_port_.open(QIODevice::WriteOnly);
+
+		if (!serial_port_.open(QIODevice::WriteOnly)) {
+			QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_port_.errorString()));
+		}
 
 		// If the Serial port was configured successfully, send an initial animation.
 		if (serial_port_.isOpen()) {
-			section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Blink, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
+			send_to_device();
 		}
 	}
 }
@@ -204,7 +208,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	if (cue_controller_ != nullptr) {
 		section_handler->set_overlay(get_section_index(), get_overlay_index(), maestro_controller_->get_section_controller(get_section_index())->get_overlay()->mix_mode, arg1);
 		if (cue_controller_ != nullptr) {
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			send_to_device();
 		}
 	}
 }
@@ -232,7 +236,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	if (cue_controller_ != nullptr) {
 		section_handler->set_animation(get_section_index(), get_overlay_index(), (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
 		if (serial_port_.isOpen()) {
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			send_to_device();
 		}
 	}
 
@@ -253,14 +257,19 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 	active_section_controller_->get_section()->remove_canvas();
 	canvas_controller_.reset();
 
+	if (cue_controller_ != nullptr) {
+		section_handler->remove_canvas(get_section_index(), get_overlay_index());
+		send_to_device();
+	}
+
 	// Add the new Canvas
 	if (index > 0) {
-		canvas_controller_ = std::unique_ptr<CanvasController>(new CanvasController(active_section_controller_, (CanvasType::Type)(index - 1)));
+		canvas_controller_ = std::unique_ptr<CanvasController>(new CanvasController(active_section_controller_, this, (CanvasType::Type)(index - 1)));
 
 		if (cue_controller_ != nullptr) {
-			section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)index);
+			section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1));
 			if (serial_port_.isOpen()) {
-				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+				send_to_device();
 			}
 		}
 	}
@@ -286,7 +295,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 	if (cue_controller_ != nullptr) {
 		animation_handler->set_colors(get_section_index(), get_overlay_index(), &palette->colors[0], palette->colors.size());
 		if (serial_port_.isOpen()) {
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			send_to_device();
 		}
 	}
 }
@@ -341,7 +350,7 @@ void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 	if (cue_controller_ != nullptr) {
 		animation_handler->set_fade(get_section_index(), get_overlay_index(), checked);
 		if (serial_port_.isOpen()) {
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			send_to_device();
 		}
 	}
 }
@@ -366,7 +375,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 			if (cue_controller_ != nullptr) {
 				section_handler->set_overlay(get_section_index(), get_overlay_index(), (Colors::MixMode)index, ui->alphaSpinBox->value());
 				if (serial_port_.isOpen()) {
-					send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+					send_to_device();
 				}
 			}
 		}
@@ -385,7 +394,7 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 			if (cue_controller_ != nullptr) {
 				animation_handler->set_orientation(get_section_index(), get_overlay_index(), (Animation::Orientation)index);
 				if (serial_port_.isOpen()) {
-					send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+					send_to_device();
 				}
 			}
 		}
@@ -438,7 +447,7 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 	if (cue_controller_ != nullptr) {
 		animation_handler->set_reverse(get_section_index(), get_overlay_index(), checked);
 		if (serial_port_.isOpen()) {
-			send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			send_to_device();
 		}
 	}
 }
@@ -501,7 +510,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 		if (serial_.isOpen()) {
 			section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 			if (serial_port_.isOpen()) {
-				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+				send_to_device();
 			}
 		}
 		*/
@@ -586,9 +595,9 @@ void MaestroControl::set_speed() {
 		animation->set_speed(speed, pause);
 
 		if (cue_controller_ != nullptr) {
-			animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, 0);
+			animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, pause);
 			if (serial_port_.isOpen()) {
-				send_to_device(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+				send_to_device();
 			}
 		}
 	}
@@ -605,6 +614,10 @@ void MaestroControl::write_cue_to_stream(QTextStream* stream, uint8_t *cue, uint
 		*stream << cue[i];
 	}
 	*stream << "\n";
+}
+
+void MaestroControl::send_to_device() {
+	serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
 }
 
 void MaestroControl::send_to_device(uint8_t* out, uint8_t size) {
@@ -672,7 +685,7 @@ void MaestroControl::show_canvas_controls() {
 	canvas_control_widget_.reset();
 
 	if (canvas_controller_ != nullptr && canvas_controller_->get_canvas() != nullptr) {
-		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(canvas_controller_.get()));
+		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(canvas_controller_.get(), this));
 		layout->addWidget(canvas_control_widget_.get());
 	}
 }

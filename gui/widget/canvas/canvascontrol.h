@@ -3,6 +3,7 @@
 
 #include "canvas/canvas.h"
 #include "controller/canvascontroller.h"
+#include "widget/maestrocontrol.h"
 #include <QButtonGroup>
 #include <QWidget>
 
@@ -16,7 +17,7 @@ class CanvasControl : public QWidget {
 		Q_OBJECT
 
 	public:
-		explicit CanvasControl(CanvasController* canvas_controller, QWidget *parent = 0);
+		explicit CanvasControl(CanvasController* canvas_controller, MaestroControl* maestro_control, QWidget *parent = 0);
 		~CanvasControl();
 		bool confirm_clear();
 
@@ -42,9 +43,10 @@ class CanvasControl : public QWidget {
 	private:
 		CanvasController* canvas_controller_ = nullptr;
 		Canvas* canvas_ = nullptr;
-		Colors::RGB rgb_color_ = Colors::BLACK;
-		QColor qcolor_ = QColor::fromRgb(0, 0, 0);
 		Font* font_ = nullptr;
+		MaestroControl* maestro_control_ = nullptr;
+		QColor qcolor_ = QColor::fromRgb(0, 0, 0);
+		Colors::RGB rgb_color_ = Colors::BLACK;
 		Ui::CanvasControl *ui;
 
 		QButtonGroup shape_type_group_;

@@ -28,6 +28,8 @@ namespace Ui {
 
 using namespace PixelMaestro;
 
+class CanvasController;
+
 class MaestroControl : public QWidget {
 	Q_OBJECT
 
@@ -58,6 +60,7 @@ class MaestroControl : public QWidget {
 		int16_t get_section_index();
 		void read_from_file(QString filename);
 		void save_to_file(QString filename);
+		void send_to_device();
 		void send_to_device(uint8_t* out, uint8_t size);
 
 	private:

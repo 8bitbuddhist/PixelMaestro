@@ -7,6 +7,7 @@ namespace PixelMaestro {
 	class CanvasCueHandler : public CueHandler {
 		public:
 			enum Action : uint8_t {
+				Clear,
 				DrawCircle,
 				DrawLine,
 				DrawPoint,
@@ -31,6 +32,7 @@ namespace PixelMaestro {
 
 			CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
 			~CanvasCueHandler();
+			void clear(uint8_t section_num, uint8_t overlay_num);
 			void draw_circle(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			void draw_circle(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			void draw_line(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);

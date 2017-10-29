@@ -5,6 +5,14 @@
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
+	void CanvasCueHandler::clear(uint8_t section_num, uint8_t overlay_num) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::Clear;
+		controller_->get_cue()[Byte::TypeByte] = 255;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+	}
+
 	void CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
@@ -306,7 +314,7 @@ namespace PixelMaestro {
 	void CanvasCueHandler::next_frame(uint8_t section_num, uint8_t overlay_num) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::NextFrame;
-		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::TypeByte] = 255;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 	}
@@ -316,7 +324,7 @@ namespace PixelMaestro {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetCurrentFrameIndex;
-		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::TypeByte] = 255;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = index_byte.converted_0;
@@ -328,7 +336,7 @@ namespace PixelMaestro {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetNumFrames;
-		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::TypeByte] = 255;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = num_frames_byte.converted_0;
@@ -341,7 +349,7 @@ namespace PixelMaestro {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetOffset;
-		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::TypeByte] = 255;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
@@ -356,7 +364,7 @@ namespace PixelMaestro {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetScroll;
-		controller_->get_cue()[Byte::TypeByte] = -1;
+		controller_->get_cue()[Byte::TypeByte] = 255;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
@@ -377,182 +385,191 @@ namespace PixelMaestro {
 			return;
 		}
 
-		CanvasType::Type canvas_type = (CanvasType::Type)cue[Byte::TypeByte];
-		if (canvas_type == CanvasType::AnimationCanvas) {
-			AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->get_canvas());
-			if (canvas == nullptr) return;
-			switch((Action)cue[Byte::ActionByte]) {
-				case Action::DrawCircle:
-					canvas->draw_circle(
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
-						(bool)cue[Byte::OptionsByte + 6]);
-					break;
-				case Action::DrawLine:
-					canvas->draw_line(
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 6]));
-					break;
-				case Action::DrawPoint:
-					canvas->draw_point(
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
-					break;
-				case Action::DrawRect:
-					canvas->draw_rect(
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 6]),
-						(bool)cue[Byte::OptionsByte + 8]);
-					break;
-				case Action::DrawText:
-					{
-						Font* font;
-						switch ((Font::Type)cue[Byte::OptionsByte + 4]) {
-							case Font::Type::Font5x8:
-								font = new Font5x8();
-								break;
-						}
+		switch ((CanvasType::Type)cue[Byte::TypeByte]) {
+			case CanvasType::AnimationCanvas:
+				{
+					AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->get_canvas());
+					if (canvas == nullptr) return;
+					switch((Action)cue[Byte::ActionByte]) {
+						case Action::DrawCircle:
+							canvas->draw_circle(
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
+								(bool)cue[Byte::OptionsByte + 6]);
+							break;
+						case Action::DrawLine:
+							canvas->draw_line(
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 6]));
+							break;
+						case Action::DrawPoint:
+							canvas->draw_point(
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
+							break;
+						case Action::DrawRect:
+							canvas->draw_rect(
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 6]),
+								(bool)cue[Byte::OptionsByte + 8]);
+							break;
+						case Action::DrawText:
+							{
+								Font* font;
+								switch ((Font::Type)cue[Byte::OptionsByte + 4]) {
+									case Font::Type::Font5x8:
+										font = new Font5x8();
+										break;
+								}
 
-						canvas->draw_text(
-							IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-							IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-							font,
-							(char*)&cue[Byte::OptionsByte + 6],
-							cue[Byte::OptionsByte + 5]
-						);
+								canvas->draw_text(
+									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+									font,
+									(char*)&cue[Byte::OptionsByte + 6],
+									cue[Byte::OptionsByte + 5]
+								);
 
-						delete font;
+								delete font;
+							}
+							break;
+						case Action::DrawTriangle:
+							canvas->draw_triangle(
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 6]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 8]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 10]),
+								(bool)cue[Byte::OptionsByte + 12]);
+							break;
+						default:
+							break;
 					}
-					break;
-				case Action::DrawTriangle:
-					canvas->draw_triangle(
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 6]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 8]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 10]),
-						(bool)cue[Byte::OptionsByte + 12]);
-					break;
-				default:
-					break;
-			}
-		}
-		else if (canvas_type == CanvasType::ColorCanvas) {
-			ColorCanvas* canvas = static_cast<ColorCanvas*>(section->get_canvas());
-			if (canvas == nullptr) return;
-			Colors::RGB color = {
-				cue[Byte::OptionsByte],
-				cue[Byte::OptionsByte + 1],
-				cue[Byte::OptionsByte + 2]
-			};
-			switch((Action)cue[Byte::ActionByte]) {
-				case Action::DrawCircle:
-					canvas->draw_circle(
-						color,
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
-						bool(cue[Byte::OptionsByte + 9]));
-					break;
-				case Action::DrawLine:
-					canvas->draw_line(
-						color,
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 11]));
-					break;
-				case Action::DrawPoint:
-					canvas->draw_point(
-						color,
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]));
-					break;
-				case Action::DrawRect:
-					canvas->draw_rect(
-						color,
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 9]),
-						bool(cue[Byte::OptionsByte + 11]));
-					break;
-				case Action::DrawText:
-					{
-						Font* font;
-						switch ((Font::Type)cue[Byte::OptionsByte + 7]) {
-							case Font::Type::Font5x8:
-								font = new Font5x8();
-								break;
-						}
+				}
+				break;
+			case CanvasType::ColorCanvas:
+				{
+					ColorCanvas* canvas = static_cast<ColorCanvas*>(section->get_canvas());
+					if (canvas == nullptr) return;
+					Colors::RGB color = {
+						cue[Byte::OptionsByte],
+						cue[Byte::OptionsByte + 1],
+						cue[Byte::OptionsByte + 2]
+					};
+					switch((Action)cue[Byte::ActionByte]) {
+						case Action::DrawCircle:
+							canvas->draw_circle(
+								color,
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
+								bool(cue[Byte::OptionsByte + 9]));
+							break;
+						case Action::DrawLine:
+							canvas->draw_line(
+								color,
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 9]));
+							break;
+						case Action::DrawPoint:
+							canvas->draw_point(
+								color,
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]));
+							break;
+						case Action::DrawRect:
+							canvas->draw_rect(
+								color,
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 9]),
+								bool(cue[Byte::OptionsByte + 11]));
+							break;
+						case Action::DrawText:
+							{
+								Font* font;
+								switch ((Font::Type)cue[Byte::OptionsByte + 7]) {
+									case Font::Type::Font5x8:
+										font = new Font5x8();
+										break;
+								}
 
-						Colors::RGB color = {
-							cue[Byte::OptionsByte],
-							cue[Byte::OptionsByte + 1],
-							cue[Byte::OptionsByte + 2]
-						};
+								Colors::RGB color = {
+									cue[Byte::OptionsByte],
+									cue[Byte::OptionsByte + 1],
+									cue[Byte::OptionsByte + 2]
+								};
 
-						canvas->draw_text(
-							color,
-							IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
-							IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
-							font,
-							(char*)&cue[Byte::OptionsByte + 9],
-							cue[Byte::OptionsByte + 8]
-						);
+								canvas->draw_text(
+									color,
+									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
+									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
+									font,
+									(char*)&cue[Byte::OptionsByte + 9],
+									cue[Byte::OptionsByte + 8]
+								);
 
-						delete font;
+								delete font;
+							}
+							break;
+						case Action::DrawTriangle:
+							canvas->draw_triangle(
+								color,
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 9]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 11]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 13]),
+								bool(cue[Byte::OptionsByte + 15]));
+							break;
+						default:
+							break;
 					}
-					break;
-				case Action::DrawTriangle:
-					canvas->draw_triangle(
-						color,
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 7]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 9]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 11]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 13]),
-						bool(cue[Byte::OptionsByte + 15]));
-					break;
-				default:
-					break;
-			}
-		}
-		else {	// Generic Canvas
-			Canvas* canvas = section->get_canvas();
-			switch((Action)cue[Byte::ActionByte]) {
-				case Action::NextFrame:
-					canvas->next_frame();
-					break;
-				case Action::SetCurrentFrameIndex:
-					canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
-					break;
-				case Action::SetNumFrames:
-					canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
-					break;
-				case Action::SetOffset:
-					canvas->set_offset(
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
-					);
-					break;
-				case Action::SetScroll:
-					canvas->set_scroll(
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-						IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-						(bool)cue[Byte::OptionsByte + 4]
-					);
-					break;
-				default:
-					break;
-			}
+				}
+				break;
+			default:
+				{
+					Canvas* canvas = section->get_canvas();
+					switch((Action)cue[Byte::ActionByte]) {
+						case Action::Clear:
+							canvas->clear();
+							break;
+						case Action::NextFrame:
+							canvas->next_frame();
+							break;
+						case Action::SetCurrentFrameIndex:
+							canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+							break;
+						case Action::SetNumFrames:
+							canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+							break;
+						case Action::SetOffset:
+							canvas->set_offset(
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
+							);
+							break;
+						case Action::SetScroll:
+							canvas->set_scroll(
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+								(bool)cue[Byte::OptionsByte + 4]
+							);
+							break;
+						default:
+							break;
+					}
+				}
 		}
 	}
 

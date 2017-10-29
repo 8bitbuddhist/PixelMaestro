@@ -2,6 +2,13 @@
 #include "sectioncuehandler.h"
 
 namespace PixelMaestro {
+	void SectionCueHandler::remove_canvas(uint8_t section_num, uint8_t overlay_num) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::RemoveCanvas;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+	}
+
 	void SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors) {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
@@ -73,6 +80,9 @@ namespace PixelMaestro {
 		if (section == nullptr) return;
 
 		switch ((Action)cue[Byte::ActionByte]) {
+			case Action::RemoveCanvas:
+				section->remove_canvas();
+				break;
 			case Action::SetAnimation:
 				{
 					uint8_t num_colors = cue[Byte::OptionsByte + 2];
