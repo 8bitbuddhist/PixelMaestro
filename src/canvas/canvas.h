@@ -96,8 +96,8 @@ namespace PixelMaestro {
 
 		private:
 			/// How far the Canvas is offset from the Pixel grid origin.
-			int32_t offset_x_ = 0;
-			int32_t offset_y_ = 0;
+			int16_t offset_x_ = 0;
+			int16_t offset_y_ = 0;
 
 			/// The scrolling behavior of the Canvas.
 			Scroll* scroll_ = nullptr;

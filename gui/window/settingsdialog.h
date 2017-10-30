@@ -28,6 +28,8 @@ class SettingsDialog : public QDialog
 	private:
 		QSettings settings_;
 		Ui::SettingsDialog *ui;
+
+		void check_port_combobox();
 };
 
 #endif // SETTINGSDIALOG_H

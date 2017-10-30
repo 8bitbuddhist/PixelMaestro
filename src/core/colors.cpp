@@ -1,55 +1,11 @@
 /*
-	Colors.cpp - Library for defining commonly used colors and methods for handling those colors.
+	Colors.cpp - Color handling utilities.
 */
 
 #include "../utility.h"
 #include "colors.h"
 
 namespace PixelMaestro {
-	// Simple color set
-	Colors::RGB Colors::RED 	= {255, 0, 0};
-	Colors::RGB Colors::GREEN 	= {0, 255, 0};
-	Colors::RGB Colors::BLUE 	= {0, 0, 255};
-	Colors::RGB Colors::WHITE 	= {255, 255, 255};
-	Colors::RGB Colors::BLACK 	= {0, 0, 0};
-
-	// Extended color set
-	Colors::RGB Colors::ORANGE 		= {255, 128, 0};
-	Colors::RGB Colors::YELLOW 		= {255, 255, 0};
-	Colors::RGB Colors::CHARTREUSE	= {128, 255, 0};
-	Colors::RGB Colors::SPRING 		= {0, 255, 128};
-	Colors::RGB Colors::CYAN 		= {0, 255, 255};
-	Colors::RGB Colors::AZURE 		= {0, 128, 255};
-	Colors::RGB Colors::VIOLET 		= {143, 0, 255};
-	Colors::RGB Colors::MAGENTA 	= {255, 0, 255};
-	Colors::RGB Colors::ROSE 		= {255, 0, 128};
-	Colors::RGB Colors::INDIGO 		= {75, 0, 130};
-
-	// Color collections
-	Colors::RGB Colors::COLORWHEEL[12] = {
-		Colors::RED,
-		Colors::ORANGE,
-		Colors::YELLOW,
-		Colors::CHARTREUSE,
-		Colors::GREEN,
-		Colors::SPRING,
-		Colors::CYAN,
-		Colors::AZURE,
-		Colors::BLUE,
-		Colors::VIOLET,
-		Colors::MAGENTA,
-		Colors::ROSE
-	};
-	Colors::RGB Colors::RAINBOW[7] = {
-		Colors::RED,
-		Colors::ORANGE,
-		Colors::YELLOW,
-		Colors::GREEN,
-		Colors::BLUE,
-		Colors::INDIGO,
-		Colors::VIOLET
-	};
-
 	/**
 	 * Creates a random color.
 	 * @return Random color.
@@ -176,7 +132,7 @@ namespace PixelMaestro {
 			}
 			case MixMode::Overlay:
 			{
-				if (color_two != Colors::BLACK) {
+					if (color_two != Colors::RGB {0, 0, 0}) {
 					mixed_color = color_two;
 				}
 				else {

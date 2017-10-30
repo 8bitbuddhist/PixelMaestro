@@ -24,7 +24,7 @@ namespace PixelMaestro {
 			}
 		}
 		else {
-			section->set_all(&Colors::BLACK);
+			section->set_all({0, 0, 0});
 		}
 
 		// Only run for two cycles.

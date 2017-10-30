@@ -20,20 +20,19 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	ui->serialCheckBox->setChecked(settings_.value(serial_enabled).toBool());
 	on_serialCheckBox_toggled(ui->serialCheckBox->isChecked());
 
-	// Populate port box
+	// Populate port settings
+	ui->serialCheckBox->setEnabled(true);
+	ui->serialPortComboBox->setCurrentText(settings_.value(serial_port).toString());
+}
+
+void SettingsDialog::check_port_combobox() {
 	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 	for (QSerialPortInfo port : ports) {
 		ui->serialPortComboBox->addItem(port.systemLocation());
 	}
-	if (ports.size() > 0) {
-		ui->serialCheckBox->setEnabled(true);
-		ui->serialPortComboBox->setEnabled(true);
-		ui->serialPortComboBox->setCurrentText(settings_.value(serial_port).toString());
-	}
-	else {
-		ui->serialCheckBox->setEnabled(false);
-		ui->serialPortComboBox->setEnabled(false);
-	}
+
+	// Only enable port dropdown if there are available devices
+	ui->serialPortComboBox->setEnabled(ui->serialCheckBox->isChecked() && ports.size() > 0);
 }
 
 void SettingsDialog::on_buttonBox_accepted() {
@@ -49,7 +48,7 @@ void SettingsDialog::on_buttonBox_accepted() {
 }
 
 void SettingsDialog::on_serialCheckBox_toggled(bool checked) {
-	ui->serialPortComboBox->setEnabled(checked);
+	check_port_combobox();
 }
 
 SettingsDialog::~SettingsDialog() {

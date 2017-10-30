@@ -23,7 +23,7 @@ namespace PixelMaestro {
 				*/
 				if (section->get_dimensions()->size() % 2 != 0) {
 					mid_point_ += 1;
-					section->set_one(x, mid_point_, &colors_[cycle_index_]);
+					section->set_one(x, mid_point_, get_color_at_index(cycle_index_));
 				}
 
 				mid_point_ += 1;
@@ -53,7 +53,7 @@ namespace PixelMaestro {
 				*/
 				if (section->get_dimensions()->size() % 2 != 0) {
 					mid_point_ += 1;
-					section->set_one(mid_point_, y, &colors_[cycle_index_]);
+					section->set_one(mid_point_, y, get_color_at_index(cycle_index_));
 				}
 
 				mid_point_ += 1;

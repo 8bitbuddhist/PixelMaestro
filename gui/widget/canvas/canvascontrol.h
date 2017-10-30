@@ -46,7 +46,7 @@ class CanvasControl : public QWidget {
 		Font* font_ = nullptr;
 		MaestroControl* maestro_control_ = nullptr;
 		QColor qcolor_ = QColor::fromRgb(0, 0, 0);
-		Colors::RGB rgb_color_ = Colors::BLACK;
+		Colors::RGB rgb_color_;
 		Ui::CanvasControl *ui;
 
 		QButtonGroup shape_type_group_;

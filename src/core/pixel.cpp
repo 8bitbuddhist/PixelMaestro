@@ -20,72 +20,45 @@ namespace PixelMaestro {
 	/**
 		Sets the LED's target color.
 
-		@param color New color to store.
+		@param color Target color.
 		@param fade Whether to fade to the next color.
 		@param cycle_interval The amount of time to go from the current color to next_color.
 		@param refresh_rate The refresh rate of the section. Used to calculate color events (if fading).
 	*/
-	void Pixel::set_next_color(Colors::RGB* next_color, bool fade, uint16_t cycle_interval, uint16_t refresh_rate) {
+	void Pixel::set_next_color(Colors::RGB next_color, bool fade, uint16_t cycle_interval, uint16_t refresh_rate) {
 		// Only trigger an update if the colors don't match.
-		if (next_color != next_color_) {
-			next_color_ = next_color;
-
+		if (next_color != current_color_) {
 			/*
-				If fading, calculate the steps between the current color and the next color.
+				Calculate the number of steps between the current color and the next color.
 				Use the refresh rate to determine the number of steps to take during the event.
+				If not fading, just jump one single step.
 			*/
+			float diff;
 			if (fade) {
-				float diff = cycle_interval / (float)refresh_rate;
-				step_ = {
-					(uint8_t)(Utility::abs_int(next_color_->r - current_color_.r) / diff),
-					(uint8_t)(Utility::abs_int(next_color_->g - current_color_.g) / diff),
-					(uint8_t)(Utility::abs_int(next_color_->b - current_color_.b) / diff)
-				};
-				step_count_ = diff;
+				diff = cycle_interval / (float)refresh_rate;
 			}
 			else {
-				step_count_ = 0;
+				diff = 1;
 			}
+
+			step_[0] = (next_color.r - current_color_.r) / diff;
+			step_[1] = (next_color.g - current_color_.g) / diff;
+			step_[2] = (next_color.b - current_color_.b) / diff;
+			step_count_ = diff;
 		}
 	}
 
 	/**
 		Main update routine.
+		Checks for and applies color changes.
 	*/
 	void Pixel::update() {
-		/*
-		 * If fading, run through each step and add (or subtract) the step amount.
-		 * At the end of the run (or if we're not fading), set current_color_ = next_color_.
-		 */
 		if (step_count_ > 0) {
-			// Red
-			if (next_color_->r > current_color_.r) {
-				current_color_.r += step_.r;
-			}
-			else if (next_color_->r < current_color_.r) {
-				current_color_.r -= step_.r;
-			}
-
-			// Green
-			if (next_color_->g > current_color_.g) {
-				current_color_.g += step_.g;
-			}
-			else if (next_color_->g < current_color_.g) {
-				current_color_.g -= step_.g;
-			}
-
-			// Blue
-			if (next_color_->b > current_color_.b) {
-				current_color_.b += step_.b;
-			}
-			else if (next_color_->b < current_color_.b) {
-				current_color_.b -= step_.b;
-			}
+			current_color_.r += step_[0];
+			current_color_.g += step_[1];
+			current_color_.b += step_[2];
 
 			step_count_--;
-		}
-		else {
-			current_color_ = *next_color_;
 		}
 	}
 }

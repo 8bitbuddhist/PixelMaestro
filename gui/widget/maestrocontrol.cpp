@@ -33,21 +33,17 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	// Assign easy reference variables for the Maestro
 	this->maestro_controller_ = maestro_controller;
 
-	// Load settings
-	QSettings settings;
-	serial_enabled_ = settings.value(SettingsDialog::serial_enabled).toBool();
-	serial_port_name_ = settings.value(SettingsDialog::serial_port).toString();
-
 	// Initialize UI
 	ui->setupUi(this);
 
 	this->initialize();
 
-	// Open serial connection to Arduino
-	if (serial_enabled_) {
+	// Open serial connection to Arduino (if configured)
+	QSettings settings;
+	if (settings.value(SettingsDialog::serial_enabled).toBool()) {
 		initialize_cue_controller();
 
-		serial_port_.setPortName(QString(serial_port_name_));
+		serial_port_.setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
 		serial_port_.setBaudRate(9600);
 
 		// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
@@ -616,12 +612,13 @@ void MaestroControl::write_cue_to_stream(QTextStream* stream, uint8_t *cue, uint
 	*stream << "\n";
 }
 
+/**
+ * Sends the last action performed to the configured serial device.
+ */
 void MaestroControl::send_to_device() {
-	serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
-}
-
-void MaestroControl::send_to_device(uint8_t* out, uint8_t size) {
-	serial_port_.write((const char*)out, size);
+	if (serial_port_.isOpen()) {
+		serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	}
 }
 
 /**

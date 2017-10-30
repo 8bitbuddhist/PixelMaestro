@@ -55,7 +55,7 @@ namespace PixelMaestro {
 	 * @param pixel Pixel to activate.
 	 */
 	void ColorCanvas::deactivate(uint32_t pixel) {
-		frames_[current_frame_index_][pixel] = Colors::BLACK;
+		frames_[current_frame_index_][pixel] = {0, 0, 0};
 	}
 
 	/**
@@ -152,7 +152,7 @@ namespace PixelMaestro {
 		for (uint16_t i = 0; i < num_frames_; i++) {
 			frames_[i] = new Colors::RGB[section_->get_dimensions()->size()];
 			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
-				frames_[i][pixel] = Colors::BLACK;
+				frames_[i][pixel] = {0, 0, 0};
 			}
 		}
 	}

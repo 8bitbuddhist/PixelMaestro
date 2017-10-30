@@ -1,4 +1,4 @@
-#include <algorithm>
+#include "colorpresets.h"
 #include "core/colors.h"
 #include "palettecontroller.h"
 
@@ -31,17 +31,16 @@ std::vector<PaletteController::Palette> PaletteController::get_palettes() {
 void PaletteController::initialize_palettes() {
 	uint8_t num_colors = 14;
 	Colors::RGB colors[num_colors];
-	std::fill(&colors[0], &colors[num_colors - 1], Colors::BLACK);
 
 	palettes_.clear();
 
-	Colors::generate_scaling_color_array(colors, &Colors::RED, &Colors::YELLOW, num_colors, true);
+	Colors::generate_scaling_color_array(colors, &ColorPresets::RED, &ColorPresets::YELLOW, num_colors, true);
 	palettes_.push_back(Palette("Fire", colors, num_colors));
 
-	Colors::generate_scaling_color_array(colors, &Colors::BLUE, &Colors::GREEN, num_colors, true);
+	Colors::generate_scaling_color_array(colors, &ColorPresets::BLUE, &ColorPresets::GREEN, num_colors, true);
 	palettes_.push_back(Palette("Deep Sea", colors, num_colors));
 
-	palettes_.push_back(Palette("Color Wheel", Colors::COLORWHEEL, 12));
+	palettes_.push_back(Palette("Color Wheel", ColorPresets::COLORWHEEL, 12));
 }
 
 void PaletteController::remove_palette(uint8_t index) {

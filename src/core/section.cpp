@@ -166,7 +166,7 @@ namespace PixelMaestro {
 
 		@param color New color.
 	*/
-	void Section::set_all(Colors::RGB* color) {
+	void Section::set_all(Colors::RGB color) {
 		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
 			set_one(pixel, color);
 		}
@@ -291,7 +291,7 @@ namespace PixelMaestro {
 		@param pixel The index of the Pixel to update.
 		@param color New color.
 	*/
-	void Section::set_one(uint32_t pixel, Colors::RGB* color) {
+	void Section::set_one(uint32_t pixel, Colors::RGB color) {
 		// Only continue if Pixel is within the bounds of the array.
 		if (pixel < dimensions_.size()) {
 			/*
@@ -309,7 +309,7 @@ namespace PixelMaestro {
 		@param y The row number of the Pixel.
 		@param color New color.
 	*/
-	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB* color) {
+	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB color) {
 		set_one(get_pixel_index(x, y), color);
 	}
 

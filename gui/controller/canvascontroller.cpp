@@ -41,7 +41,7 @@ void CanvasController::load_image(QString filename, QByteArray filetype) {
 						case CanvasType::AnimationCanvas:
 							{
 								// Only draw if the Pixel is not completely black
-								if (color != Colors::BLACK) {
+								if (color != Colors::RGB {0, 0, 0}) {
 									canvas_->draw_point(x, y);
 
 									if (maestro_control_ && maestro_control_->serial_port_.isOpen()) {

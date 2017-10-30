@@ -1,5 +1,6 @@
 #include "animation/waveanimation.h"
 #include "canvas/animationcanvas.h"
+#include "colorpresets.h"
 #include "demo/animatedcanvasdemo.h"
 #include "demo/blinkdemo.h"
 #include "demo/canvasdemo.h"
@@ -125,7 +126,7 @@ void MainWindow::on_actionCommand_Demo_triggered() {
 	// Update UI
 	ui->actionCommand_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates sending commands to a Maestro."));
+	statusBar()->showMessage(QString("Demonstrates how Cues can be used to perform advanced customizations."));
 }
 
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
@@ -155,7 +156,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 
 	// Initialize a new 50x50 drawing grid
 	std::shared_ptr<SectionController> section_controller = controller_->add_section_controller(new Point(50, 50));
-	section_controller->get_section()->set_animation(AnimationType::Wave, Colors::COLORWHEEL, 12);
+	section_controller->get_section()->set_animation(AnimationType::Wave, ColorPresets::COLORWHEEL, 12);
 
 	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->set_canvas(CanvasType::Type::AnimationCanvas));
 

@@ -12,7 +12,7 @@ namespace PixelMaestro {
 
 	void LightningAnimation::update(Section *section) {
 		// Clear the grid
-		section->set_all(&Colors::BLACK);
+		section->set_all({0, 0, 0});
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, 0};

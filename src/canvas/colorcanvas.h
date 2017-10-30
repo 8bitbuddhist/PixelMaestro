@@ -32,7 +32,7 @@ namespace PixelMaestro {
 
 		private:
 			/// Stores the color currently being used to draw shapes.
-			Colors::RGB drawing_color_ = Colors::BLACK;
+			Colors::RGB drawing_color_;
 
 			/**
 			 * The frames in the Canvas.

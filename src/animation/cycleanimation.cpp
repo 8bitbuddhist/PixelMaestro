@@ -6,7 +6,7 @@ namespace PixelMaestro {
 	}
 
 	void CycleAnimation::update(Section* section) {
-		section->set_all(&colors_[cycle_index_]);
+		section->set_all(get_color_at_index(cycle_index_));
 		update_cycle(0, num_colors_);
 	}
 

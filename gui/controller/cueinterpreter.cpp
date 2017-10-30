@@ -79,6 +79,9 @@ std::string CueInterpreter::interpret_canvas_cue(uint8_t *cue) {
 	}
 
 	switch((CanvasCueHandler::Action)cue[CanvasCueHandler::Byte::ActionByte]) {
+		case CanvasCueHandler::Action::Clear:
+			result.append(", Action: Clear");
+			break;
 		case CanvasCueHandler::Action::DrawCircle:
 			result.append(", Action: DrawCircle");
 			break;
@@ -135,6 +138,9 @@ std::string CueInterpreter::interpret_section_cue(uint8_t *cue) {
 	result.append(", Overlay: " + std::to_string(cue[CanvasCueHandler::Byte::OverlayByte]));
 
 	switch((SectionCueHandler::Action)cue[SectionCueHandler::Byte::ActionByte]) {
+		case SectionCueHandler::Action::RemoveCanvas:
+			result.append(", Action: RemoveCanvas");
+			break;
 		case SectionCueHandler::Action::SetAnimation:
 			result.append(", Action: SetAnimation");
 			break;

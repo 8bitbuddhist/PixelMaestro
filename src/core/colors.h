@@ -1,5 +1,5 @@
 /*
-	Colors.cpp - Library for defining commonly used colors and methods for handling those colors.
+	Colors.cpp - Color handling utilities.
 */
 
 #ifndef COLORS_H
@@ -23,9 +23,13 @@ namespace PixelMaestro {
 				/// The color's blue value.
 				uint8_t b;
 
-				RGB() {}
-
-				RGB(uint8_t red, uint8_t green, uint8_t blue) {
+				/**
+				 * Constructor. Defaults to black if no other parameters are provided.
+				 * @param red Red value.
+				 * @param green Green value.
+				 * @param blue Blue value.
+				 */
+				RGB(uint8_t red = 0, uint8_t green = 0, uint8_t blue = 0) {
 					this->r = red;
 					this->g = green;
 					this->b = blue;
@@ -92,29 +96,6 @@ namespace PixelMaestro {
 				/// Draws lit Pixels, but treats black Pixels as transparent.
 				Overlay
 			};
-
-			// Basic color set.
-			static RGB RED;
-			static RGB GREEN;
-			static RGB BLUE;
-			static RGB WHITE;
-			static RGB BLACK;
-
-			// Extended color set.
-			static RGB ORANGE;
-			static RGB YELLOW;
-			static RGB CHARTREUSE;
-			static RGB SPRING;
-			static RGB CYAN;
-			static RGB AZURE;
-			static RGB VIOLET;
-			static RGB MAGENTA;
-			static RGB ROSE;
-			static RGB INDIGO;
-
-			// Sample color arrays.
-			static RGB COLORWHEEL[];
-			static RGB RAINBOW[];
 
 			static RGB generate_random_color();
 			static void generate_random_color_array(RGB *array, uint8_t num_colors);

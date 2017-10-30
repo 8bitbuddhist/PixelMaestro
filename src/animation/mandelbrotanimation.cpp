@@ -47,7 +47,7 @@ namespace PixelMaestro {
 						section->set_one(y, x, get_color_at_index(iterations_ + cycle_index_));
 					}
 					else {
-						section->set_one(y, x, &Colors::BLACK);
+						section->set_one(y, x, {0, 0, 0});
 					}
 				}
 				else {
@@ -55,7 +55,7 @@ namespace PixelMaestro {
 						section->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
 					}
 					else {
-						section->set_one(x, y, &Colors::BLACK);
+						section->set_one(x, y, {0, 0, 0});
 					}
 				}
 			}

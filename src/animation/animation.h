@@ -24,7 +24,7 @@ namespace PixelMaestro {
 
 			Animation(Colors::RGB* colors, uint8_t num_colors);
 			virtual ~Animation();
-			Colors::RGB* get_color_at_index(uint8_t index);
+			Colors::RGB get_color_at_index(uint8_t index);
 			Colors::RGB* get_colors();
 			uint8_t get_cycle_index();
 			bool get_fade();

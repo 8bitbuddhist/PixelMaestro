@@ -79,7 +79,7 @@ void PaletteControl::on_createButtonBox_accepted() {
 			case 0:	// Blank: Show all black
 				{
 					for (uint8_t i = 0; i < num_colors; i++) {
-						colors[i] = Colors::BLACK;
+						colors[i] = {0, 0, 0};
 					}
 				}
 				break;

@@ -14,20 +14,17 @@ namespace PixelMaestro {
 
 		public:
 			Colors::RGB* get_color();
-			void set_next_color(Colors::RGB* next_color, bool fade, uint16_t cycle_speed, uint16_t refresh_rate);
+			void set_next_color(Colors::RGB next_color, bool fade, uint16_t cycle_speed, uint16_t refresh_rate);
 			void update();
 
 		private:
-			/// The Pixel's current color. Defaults to BLACK.
-			Colors::RGB current_color_ = Colors::BLACK;
+			/// The Pixel's current color.
+			Colors::RGB current_color_;
 
-			/// The Pixel's next (i.e. target) color.
-			Colors::RGB* next_color_ = &Colors::BLACK;
+			/// The size of each step from the Pixel's current color to its next color.
+			int8_t step_[3] = {0, 0, 0};
 
-			/// The size of each step from current_color_ to next_color_ (only applicable when fading).
-			Colors::RGB step_ = Colors::BLACK;
-
-			/// The number of steps from current_color_ to next_color_ (only applicable when fading).
+			/// The number of steps from the current color to the next color.
 			uint8_t step_count_ = 0;
 
 	};

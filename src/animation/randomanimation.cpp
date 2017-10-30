@@ -8,7 +8,7 @@ namespace PixelMaestro {
 
 	void RandomAnimation::update(Section* section) {
 		for (uint32_t pixel = 0; pixel < section->get_dimensions()->size(); pixel++) {
-			section->set_one(pixel, &colors_[Utility::rand(num_colors_)]);
+			section->set_one(pixel, get_color_at_index(Utility::rand(num_colors_)));
 		}
 	}
 

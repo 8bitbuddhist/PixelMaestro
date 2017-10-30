@@ -58,7 +58,7 @@ namespace PixelMaestro {
 	 */
 	Colors::RGB AnimationCanvas::get_pixel_color(uint32_t pixel) {
 		if (frames_[current_frame_index_][pixel] == 0) {
-			return Colors::BLACK;
+			return {0, 0, 0};
 		}
 		else {
 			return *section_->get_pixel(pixel)->get_color();

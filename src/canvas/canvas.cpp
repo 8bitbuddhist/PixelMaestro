@@ -430,11 +430,11 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset_x_ >= (int32_t)section_->get_dimensions()->x) {
+				if (offset_x_ >= (int16_t)section_->get_dimensions()->x) {
 					offset_x_ = 0;
 				}
 				else if (offset_x_ < 0) {
-					offset_x_ = (int32_t)section_->get_dimensions()->x;
+					offset_x_ = (int16_t)section_->get_dimensions()->x;
 				}
 
 				scroll_->last_scroll_x = current_time;
@@ -452,7 +452,7 @@ namespace PixelMaestro {
 				}
 
 				// Check the bounds of the parent Section.
-				if (offset_y_ >= (int32_t)section_->get_dimensions()->y) {
+				if (offset_y_ >= (int16_t)section_->get_dimensions()->y) {
 					offset_y_ = 0;
 				}
 				else if (offset_y_ < 0) {

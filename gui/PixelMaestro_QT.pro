@@ -64,7 +64,8 @@ SOURCES += main.cpp\
 		widget/showcontrol.cpp \
 		controller/showcontroller.cpp \
     demo/animatedcanvasdemo.cpp \
-    controller/canvascontroller.cpp
+    controller/canvascontroller.cpp \
+    ../src/colorpresets.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -124,7 +125,8 @@ HEADERS += \
 		widget/showcontrol.h \
 		controller/showcontroller.h \
     demo/animatedcanvasdemo.h \
-    controller/canvascontroller.h
+    controller/canvascontroller.h \
+    ../src/colorpresets.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

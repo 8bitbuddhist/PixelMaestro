@@ -51,7 +51,7 @@ class MaestroControl : public QWidget {
 		/// Connection to an Arduino or other device.
 		QSerialPort serial_port_;
 
-		/// If true, only generate Cues instead of running commands
+		/// If true, only generate Cues instead of modifying the Maestro.
 		bool show_mode_ = false;
 
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
@@ -61,7 +61,6 @@ class MaestroControl : public QWidget {
 		void read_from_file(QString filename);
 		void save_to_file(QString filename);
 		void send_to_device();
-		void send_to_device(uint8_t* out, uint8_t size);
 
 	private:
 		Ui::MaestroControl *ui;
@@ -75,16 +74,14 @@ class MaestroControl : public QWidget {
 		/// Stores Canvas controls
 		std::unique_ptr<QWidget> canvas_control_widget_;
 
+		/// Controller for managing Canvases.
 		std::unique_ptr<CanvasController> canvas_controller_;
 
-		/// Show dialog (if Shows are enabled)
+		/// Dialog for modifying Shows.
 		std::unique_ptr<ShowControl> show_control_dialog_;
 
+		/// Controller for managing Shows.
 		std::unique_ptr<ShowController> show_controller_;
-
-		// Load Serial connection to Arduino.
-		bool serial_enabled_ = false;
-		QString serial_port_name_;
 
 		void get_section_settings();
 		void initialize();

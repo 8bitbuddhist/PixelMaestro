@@ -1,3 +1,4 @@
+#include "colorpresets.h"
 #include "cuedemo.h"
 #include "cue/animationcuehandler.h"
 #include "cue/cuecontroller.h"
@@ -18,7 +19,7 @@ CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : Simpl
 	section_handler->set_dimensions(0, 0, 62, 9);
 	controller->run();
 
-	Colors::RGB colors_black[] = {Colors::BLACK, Colors::WHITE};
+	Colors::RGB colors_black[] = {ColorPresets::BLACK, ColorPresets::WHITE};
 	section_handler->set_animation(0, 0, AnimationType::Type::Cycle, false, colors_black, 2);
 	controller->run();
 
@@ -26,7 +27,8 @@ CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : Simpl
 	animation_handler->set_speed(0, 0, 2000, 1500);
 	controller->run();
 
-	Colors::RGB colors_white[] = {Colors::WHITE, {0, 0, 1}};
+	// Note that this isn't true black because the Overlay mixmode treats true black as transparent.
+	Colors::RGB colors_white[] = {ColorPresets::WHITE, {0, 0, 1}};
 	section_handler->set_animation(0, 1, AnimationType::Type::Cycle, false, colors_white, 2);
 	controller->run();
 
