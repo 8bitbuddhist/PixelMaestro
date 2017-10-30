@@ -65,7 +65,7 @@ namespace PixelMaestro {
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
 			Pixel* get_pixel(uint32_t pixel);
-			Colors::RGB get_pixel_color(uint32_t pixel);
+			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 			uint32_t get_pixel_index(Point* coordinates);
 			uint32_t get_pixel_index(uint16_t x, uint16_t y);
 			uint16_t get_refresh_interval();

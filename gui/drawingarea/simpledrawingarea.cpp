@@ -36,8 +36,8 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	}
 
 	for (uint16_t row = 0; row < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
-		for (uint16_t pixel = 0; pixel < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; pixel++) {			
-			tmp_rgb_ = maestro_controller_->get_maestro()->get_pixel_color(section, maestro_controller_->get_section_controller(section)->get_section()->get_pixel_index(pixel, row));
+		for (uint16_t column = 0; column < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; column++) {
+			tmp_rgb_ = maestro_controller_->get_maestro()->get_pixel_color(section, column, row);
 			tmp_color_.setRgb(tmp_rgb_.r, tmp_rgb_.g, tmp_rgb_.b);
 			tmp_brush_.setColor(tmp_color_);
 			tmp_brush_.setStyle(Qt::BrushStyle::SolidPattern);
@@ -48,7 +48,7 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 			 * Then, set the color of the pen to the color of the Pixel.
 			 * Finally, draw the Pixel to the screen.
 			 */
-			tmp_rect_.setRect(pixel * pad_, row * pad_, radius_, radius_);
+			tmp_rect_.setRect(column * pad_, row * pad_, radius_, radius_);
 			painter.setBrush(tmp_brush_);
 			painter.setPen(Qt::PenStyle::NoPen);
 

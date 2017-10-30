@@ -294,6 +294,15 @@ namespace PixelMaestro {
 
 	/**
 	 * Returns whether the given Point is in the bounds of the Canvas.
+	 * @param pixel The index of the Pixel to check.
+	 * @return Whether the Point is in bounds.
+	 */
+	bool Canvas::in_bounds(uint32_t pixel) {
+		return pixel < section_->get_dimensions()->size();
+	}
+
+	/**
+	 * Returns whether the given Point is in the bounds of the Canvas.
 	 * @param point The Point to check.
 	 * @return Whether the Point is in bounds.
 	 */

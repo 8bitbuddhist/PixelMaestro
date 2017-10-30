@@ -33,13 +33,30 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the color of the Pixel at the specified index.
-	 * If the Pixel is activated, return the Color at the specified index in the palette
-	 * @param pixel
-	 * @return
+	 * Returns the color of the Pixel at the specified coordinate.
+	 * If the Pixel is activated, return the corresponding palette color.
+	 * @param x X-coordinate.
+	 * @param y Y-coordinate.
+	 * @return Pixel color.
 	 */
-	Colors::RGB ColorCanvas::get_pixel_color(uint32_t pixel) {
-		return frames_[current_frame_index_][pixel];
+	Colors::RGB ColorCanvas::get_pixel_color(uint16_t x, uint16_t y) {
+		uint32_t pixel_index;
+
+		if (scroll_ != nullptr && scroll_->repeat) {
+			pixel_index = section_->get_pixel_index(
+				(x + offset_x_) % section_->get_dimensions()->x,
+				(y + offset_y_) % section_->get_dimensions()->y);
+		}
+		else {
+			pixel_index = section_->get_pixel_index(x - offset_x_, y - offset_y_);
+		}
+
+		if (in_bounds(pixel_index)) {
+			return frames_[current_frame_index_][pixel_index];
+		}
+		else {
+			return {0, 0, 0};
+		}
 	}
 
 	// Drawing functions

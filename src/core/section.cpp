@@ -86,23 +86,24 @@ namespace PixelMaestro {
 	/**
 		Returns the final color of the specified Pixel.
 
-		@param pixel Index of the Pixel.
+		@param x Pixel x-coordinate.
+		@param y Pixel y-coordinate.
 		@return RGB value of the Pixel's final color.
 	*/
-	Colors::RGB Section::get_pixel_color(uint32_t pixel) {
+	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y) {
 		Colors::RGB color;
 
 		// If there's a Canvas, get the color supplied by the Canvas.
 		if (canvas_ != nullptr) {
-			color = canvas_->get_pixel_color(pixel);
+			color = canvas_->get_pixel_color(x, y);
 		}
 		else {
-			color = *pixels_[pixel].get_color();
+			color = *pixels_[get_pixel_index(x, y)].get_color();
 		}
 
 		// If there's an Overlay, return the Overlay color mixed with the Section (or Canvas) color.
 		if (overlay_ != nullptr) {
-			return Colors::mix_colors(color, overlay_->section->get_pixel_color(pixel), overlay_->mix_mode, overlay_->alpha);
+			return Colors::mix_colors(color, overlay_->section->get_pixel_color(x, y), overlay_->mix_mode, overlay_->alpha);
 		}
 
 		return color;

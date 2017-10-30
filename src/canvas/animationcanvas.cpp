@@ -56,12 +56,23 @@ namespace PixelMaestro {
 	 * @param pixel Index of the pixel to check.
 	 * @return Pixel's color.
 	 */
-	Colors::RGB AnimationCanvas::get_pixel_color(uint32_t pixel) {
-		if (frames_[current_frame_index_][pixel] == 0) {
-			return {0, 0, 0};
+	Colors::RGB AnimationCanvas::get_pixel_color(uint16_t x, uint16_t y) {
+		uint32_t pixel_index;
+
+		if (scroll_ != nullptr && scroll_->repeat) {
+			pixel_index = section_->get_pixel_index(
+				(x + offset_x_) % section_->get_dimensions()->x,
+				(y + offset_y_) % section_->get_dimensions()->y);
 		}
 		else {
-			return *section_->get_pixel(pixel)->get_color();
+			pixel_index = section_->get_pixel_index(x - offset_x_, y - offset_y_);
+		}
+
+		if (in_bounds(pixel_index) && frames_[current_frame_index_][pixel_index] == 1) {
+			return *section_->get_pixel(pixel_index)->get_color();
+		}
+		else {
+			return {0, 0, 0};
 		}
 	}
 

@@ -50,7 +50,7 @@ namespace PixelMaestro {
 			virtual ~Canvas();
 			virtual void activate(uint32_t pixel) = 0;
 			virtual void deactivate(uint32_t pixel) = 0;
-			virtual Colors::RGB get_pixel_color(uint32_t pixel) = 0;
+			virtual Colors::RGB get_pixel_color(uint16_t x, uint16_t y) = 0;
 			virtual CanvasType::Type get_type() = 0;
 			virtual void initialize() = 0;
 
@@ -68,6 +68,7 @@ namespace PixelMaestro {
 			bool* get_pattern();
 			Section* get_section();
 			bool in_bounds(Point* point);
+			bool in_bounds(uint32_t pixel);
 			bool in_bounds(uint16_t x, uint16_t y);
 			void next_frame();
 			void remove_scroll();
@@ -86,6 +87,13 @@ namespace PixelMaestro {
 			/// The number of frames.
 			uint16_t num_frames_ = 0;
 
+			/// How far the Canvas is offset from the Pixel grid origin.
+			int16_t offset_x_ = 0;
+			int16_t offset_y_ = 0;
+
+			/// The scrolling behavior of the Canvas.
+			Scroll* scroll_ = nullptr;
+
 			/**
 			 * The Canvas' parent Section.
 			 * This is automatically set after using Section::set_canvas().
@@ -93,14 +101,6 @@ namespace PixelMaestro {
 			Section* section_ = nullptr;
 
 			virtual void delete_frames() = 0;
-
-		private:
-			/// How far the Canvas is offset from the Pixel grid origin.
-			int16_t offset_x_ = 0;
-			int16_t offset_y_ = 0;
-
-			/// The scrolling behavior of the Canvas.
-			Scroll* scroll_ = nullptr;
 	};
 }
 

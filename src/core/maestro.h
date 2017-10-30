@@ -22,7 +22,7 @@ namespace PixelMaestro {
 			Maestro(Section* sections, uint8_t num_sections);
 			~Maestro();
 			CueController* get_cue_controller();
-			Colors::RGB get_pixel_color(uint8_t section, uint32_t pixel);
+			Colors::RGB get_pixel_color(uint8_t section, uint16_t x, uint16_t y);
 			uint8_t get_num_sections();
 			uint16_t get_refresh_interval();
 			bool get_running();

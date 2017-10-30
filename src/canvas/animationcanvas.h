@@ -15,7 +15,7 @@ namespace PixelMaestro {
 			~AnimationCanvas();
 			void activate(uint32_t pixel);
 			void deactivate(uint32_t pixel);
-			Colors::RGB get_pixel_color(uint32_t pixel);
+			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 			CanvasType::Type get_type();
 			void initialize();
 

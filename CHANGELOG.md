@@ -18,6 +18,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added parameter to `Maestro::update()` to force a refresh.
 
 ### Changed
+- Fixed Canvas scrolling behavior.
 - Simplified Pixel color changing logic.
 - Added and fixed several Cues, especially surrounding Canvases.
 - Replaced `Colors::generate_random_colors()` with a truly random color array generator.

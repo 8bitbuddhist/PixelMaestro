@@ -107,14 +107,14 @@ canvas->draw_triangle(0, 0, 10, 0, 0, 10, true);
 The `clear()` method returns the Canvas to a blank slate by clearing out any drawn shapes. You can clear a single pixel using the `erase()` method. Note that once you clear a Canvas, there's no way to recover anything you've drawn.
 
 ## Scrolling
-Scrolling shifts the contents of a Canvas along the grid, similar to a marquee. You can scroll a Canvas horizontally, vertically, or in both directions simultaneously. Use the `set_scroll()` method to define both the direction and rate of scrolling. Scroll time is measured in terms of refresh cycles, e.g. a scroll interval of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. This value can be negative, which scrolls left instead of right for the x-axis and up instead of down for the y-axis.
+Scrolling shifts the contents of a Canvas along a Section. Scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas is scrolled 1 pixel. Use the `set_scroll()` method to define the rate of scrolling along the x and y axes. When this value is positive, the Canvas scrolls left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
 
 Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on `Canvas::update()`. Setting either axis to 0 disables scrolling on that axis. You can disable scrolling entirely by calling `remove_scroll()`.
 
-The following code scrolls 1 Pixel to the right on each refresh cycle, and 1 Pixel up every other refresh cycle.
+The following code scrolls 1 Pixel to the left on every refresh cycle and 1 Pixel down every other refresh cycle.
 
 ```c++
-canvas->set_scroll(1, -2);
+canvas->set_scroll(1, -2, false);
 ```
 
 ### Repeated Scrolling
@@ -132,7 +132,7 @@ The following code shifts the Canvas 5 Pixels to the right and 1 Pixel down.
 canvas->set_offset(5, 1);
 ```
 
-Note that the offset will be disabled if scrolling is enabled, since scrolling modifies the offset values.
+**Note:** Offset will be disabled if scrolling is enabled, since scrolling modifies the offset values.
 
 ## Interactive Canvases
 For a demo on how to create an interactive Canvas, see the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class in the PixelMaestro GUI.
