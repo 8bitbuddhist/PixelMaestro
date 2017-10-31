@@ -66,8 +66,6 @@ namespace PixelMaestro {
 			Section::Overlay* get_overlay();
 			Pixel* get_pixel(uint32_t pixel);
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
-			uint32_t get_pixel_index(Point* coordinates);
-			uint32_t get_pixel_index(uint16_t x, uint16_t y);
 			uint16_t get_refresh_interval();
 			void remove_animation();
 			void remove_canvas();
@@ -75,7 +73,6 @@ namespace PixelMaestro {
 			void set_all(Colors::RGB color);
 			Animation* set_animation(AnimationType::Type type, Colors::RGB* colors, uint8_t num_colors, bool preserve_cycle_index = true);
 			Canvas* set_canvas(CanvasType::Type type = CanvasType::Type::AnimationCanvas, uint16_t num_frames = 1);
-			void set_dimensions(Point layout);
 			void set_dimensions(uint16_t x, uint16_t y);
 			void set_one(uint32_t pixel, Colors::RGB color);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB color);

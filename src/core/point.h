@@ -59,6 +59,8 @@ namespace PixelMaestro {
 			}
 
 			Point(uint16_t x, uint16_t y);
+			uint32_t get_inline_index(Point* point);
+			uint32_t get_inline_index(uint16_t x, uint16_t y);
 			void set(uint16_t x, uint16_t y);
 			uint32_t size();
 	};

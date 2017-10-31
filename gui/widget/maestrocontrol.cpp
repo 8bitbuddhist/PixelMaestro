@@ -113,7 +113,8 @@ void MaestroControl::get_section_settings() {
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
-	ui->cycleSlider->setValue(ui->cycleSlider->maximum() - active_section_controller_->get_section()->get_animation()->get_speed());
+	ui->cycleSlider->setValue(active_section_controller_->get_section()->get_animation()->get_speed());
+	ui->pauseSlider->setValue(active_section_controller_->get_section()->get_animation()->get_pause());
 
 	/*
 	 * Get the animation type.
@@ -135,6 +136,18 @@ void MaestroControl::get_section_settings() {
 	if (active_section_controller_->palette_ != nullptr) {
 		ui->colorComboBox->setCurrentText(QString::fromStdString(active_section_controller_->palette_->name));
 	}
+
+	// Get Canvas
+	ui->canvasComboBox->blockSignals(true);
+	if (active_section_controller_->get_section()->get_canvas() != nullptr) {
+		Canvas* canvas = active_section_controller_->get_section()->get_canvas();
+		ui->canvasComboBox->setCurrentIndex((int)canvas->get_type() + 1);
+	}
+	else {
+		ui->canvasComboBox->setCurrentIndex(0);
+	}
+	show_canvas_controls();
+	ui->canvasComboBox->blockSignals(false);
 }
 
 /**
@@ -681,7 +694,7 @@ void MaestroControl::show_canvas_controls() {
 	layout->removeWidget(canvas_control_widget_.get());
 	canvas_control_widget_.reset();
 
-	if (canvas_controller_ != nullptr && canvas_controller_->get_canvas() != nullptr) {
+	if (active_section_controller_->get_section()->get_canvas() != nullptr) {
 		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(canvas_controller_.get(), this));
 		layout->addWidget(canvas_control_widget_.get());
 	}

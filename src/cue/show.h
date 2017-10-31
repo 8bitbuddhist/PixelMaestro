@@ -41,7 +41,7 @@ namespace PixelMaestro {
 			uint16_t current_index_ = 0;
 
 			/// Events used in the Show.
-			Event* events_;
+			Event* events_ = nullptr;
 
 			/// The time that the last Event ran.
 			uint32_t last_time_ = 0;

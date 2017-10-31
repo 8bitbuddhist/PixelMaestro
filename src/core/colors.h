@@ -9,8 +9,6 @@
 
 namespace PixelMaestro {
 	class Colors {
-
-		private:
 		public:
 			/// Stores an RGB definition of a color.
 			struct RGB {

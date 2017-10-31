@@ -67,7 +67,7 @@ namespace PixelMaestro {
 					 */
 					if ((test_point >= radius_squared - radius && test_point <= radius_squared + radius) ||
 						(fill && test_point < pow(radius, 2))) {
-						activate(section_->get_pixel_index(&cursor));
+						activate(section_->get_dimensions()->get_inline_index(&cursor));
 					}
 				}
 			}
@@ -100,7 +100,7 @@ namespace PixelMaestro {
 		if (target_x == origin_x) {
 			while (cursor.y != target_y) {
 				if (in_bounds(&cursor)) {
-					activate(section_->get_pixel_index(&cursor));
+					activate(section_->get_dimensions()->get_inline_index(&cursor));
 				}
 
 				if (target_y >= cursor.y) {
@@ -119,7 +119,7 @@ namespace PixelMaestro {
 			 */
 			while (cursor.x != target_x) {
 				if (in_bounds(&cursor)) {
-					activate(section_->get_pixel_index(&cursor));
+					activate(section_->get_dimensions()->get_inline_index(&cursor));
 				}
 
 				if (target_x >= origin_x) {
@@ -140,7 +140,7 @@ namespace PixelMaestro {
 	 */
 	void Canvas::draw_point(uint16_t x, uint16_t y) {
 		if (in_bounds(x, y)) {
-			activate(section_->get_pixel_index(x, y));
+			activate(section_->get_dimensions()->get_inline_index(x, y));
 		}
 	}
 
@@ -163,7 +163,7 @@ namespace PixelMaestro {
 				if (in_bounds(&cursor)) {
 					// Check whether to fill
 					if (fill) {
-						activate(section_->get_pixel_index(&cursor));
+						activate(section_->get_dimensions()->get_inline_index(&cursor));
 					}
 					else {
 						/*
@@ -172,7 +172,7 @@ namespace PixelMaestro {
 						 */
 						if ((cursor.x == origin_x || cursor.y == origin_y) ||
 							(column == size_x - 1 || row == size_y - 1)) {
-							activate(section_->get_pixel_index(&cursor));
+							activate(section_->get_dimensions()->get_inline_index(&cursor));
 						}
 					}
 				}
@@ -204,7 +204,7 @@ namespace PixelMaestro {
 				for (uint16_t row = 0; row < font->size.y; row++) {
 					if (in_bounds(&cursor)) {
 						if ((current_char[column] >> row) & 1) {
-							activate(section_->get_pixel_index(cursor.x + column, cursor.y + row));
+							activate(section_->get_dimensions()->get_inline_index(cursor.x + column, cursor.y + row));
 						}
 					}
 				}
@@ -268,7 +268,7 @@ namespace PixelMaestro {
 					t = 1 / (2 * area) * (point_a_x * point_b_y - point_a_y * point_b_x + (point_a_y - point_b_y) * cursor.x + (point_b_x - point_a_x) * cursor.y);
 
 					if (s > 0 && t > 0 && 1 - s - t > 0) {
-						activate(section_->get_pixel_index(&cursor));
+						activate(section_->get_dimensions()->get_inline_index(&cursor));
 					}
 				}
 			}
@@ -281,7 +281,7 @@ namespace PixelMaestro {
 	 * @param cursor_y The pixel's y-coordinate.
 	 */
 	void Canvas::erase(uint16_t x, uint16_t y) {
-		deactivate(section_->get_pixel_index(x, y));
+		deactivate(section_->get_dimensions()->get_inline_index(x, y));
 	}
 
 	/**

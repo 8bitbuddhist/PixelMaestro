@@ -16,7 +16,7 @@ namespace PixelMaestro {
 
 		protected:
 			/// The controller managing this Handler.
-			CueController* controller_;
+			CueController* controller_ = nullptr;
 	};
 }
 

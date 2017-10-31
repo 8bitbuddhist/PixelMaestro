@@ -27,7 +27,7 @@ namespace PixelMaestro {
 	 * @param dimensions Initial layout (rows and columns) of the Pixels.
 	 */
 	Section::Section(Point dimensions) {
-		set_dimensions(dimensions);
+		set_dimensions(dimensions.x, dimensions.y);
 	}
 
 	/**
@@ -98,7 +98,7 @@ namespace PixelMaestro {
 			color = canvas_->get_pixel_color(x, y);
 		}
 		else {
-			color = *pixels_[get_pixel_index(x, y)].get_color();
+			color = *pixels_[dimensions_.get_inline_index(x, y)].get_color();
 		}
 
 		// If there's an Overlay, return the Overlay color mixed with the Section (or Canvas) color.
@@ -107,26 +107,6 @@ namespace PixelMaestro {
 		}
 
 		return color;
-	}
-
-	/**
-	 * Returns the index of a Pixel given the Pixel's Point.
-	 * @param coordinates The Pixel's Point.
-	 * @return The index of the Pixel.
-	 */
-	uint32_t Section::get_pixel_index(Point* coordinates) {
-		return get_pixel_index(coordinates->x, coordinates->y);
-	}
-
-	/**
-		Returns the index of a Pixel given the x and y-coordinates.
-
-		@param x The Pixel's x-coordinate.
-		@param y The Pixel's y-coordinate.
-		@return The index of the Pixel.
-	*/
-	uint32_t Section::get_pixel_index(uint16_t x, uint16_t y) {
-		return (y * dimensions_.x) + x;
 	}
 
 	/**
@@ -254,15 +234,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets the Pixel array and layout used in the Section.
-
-		@param dimensions Dimensions of the Pixel array.
-	*/
-	void Section::set_dimensions(Point dimensions) {
-		set_dimensions(dimensions.x, dimensions.y);
-	}
-
-	/**
 	 * Sets the size of the Section.
 	 * @param x Number of Pixels along the x-coordinate.
 	 * @param y Number of Pixels along the y-coordinate.
@@ -282,7 +253,7 @@ namespace PixelMaestro {
 
 		// Reinitialize the Overlay
 		if (overlay_ != nullptr) {
-			overlay_->section->set_dimensions(dimensions_);
+			overlay_->section->set_dimensions(dimensions_.x, dimensions_.y);
 		}
 	}
 
@@ -311,7 +282,7 @@ namespace PixelMaestro {
 		@param color New color.
 	*/
 	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB color) {
-		set_one(get_pixel_index(x, y), color);
+		set_one(dimensions_.get_inline_index(x, y), color);
 	}
 
 	/**

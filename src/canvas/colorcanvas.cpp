@@ -43,12 +43,12 @@ namespace PixelMaestro {
 		uint32_t pixel_index;
 
 		if (scroll_ != nullptr && scroll_->repeat) {
-			pixel_index = section_->get_pixel_index(
+			pixel_index = section_->get_dimensions()->get_inline_index(
 				(x + offset_x_) % section_->get_dimensions()->x,
 				(y + offset_y_) % section_->get_dimensions()->y);
 		}
 		else {
-			pixel_index = section_->get_pixel_index(x - offset_x_, y - offset_y_);
+			pixel_index = section_->get_dimensions()->get_inline_index(x - offset_x_, y - offset_y_);
 		}
 
 		if (in_bounds(pixel_index)) {

@@ -40,6 +40,7 @@ namespace PixelMaestro {
 			/// Sets the global brightness level from 0 - 255. Defaults to 255, or 100% brightness.
 			uint8_t brightness_ = 255;
 
+			/// Controller object for reading and executing Cues.
 			CueController* cue_controller_ = nullptr;
 
 			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
