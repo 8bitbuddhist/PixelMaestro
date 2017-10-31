@@ -13,6 +13,8 @@
 
 using namespace PixelMaestro;
 
+class SectionController;
+
 class MaestroController {
 	public:
 		MaestroController();

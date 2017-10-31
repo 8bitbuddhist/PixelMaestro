@@ -9,6 +9,8 @@
 
 using namespace PixelMaestro;
 
+class MaestroController;
+
 class ShowController {
 	public:
 		ShowController(MaestroController* maestro_controller);

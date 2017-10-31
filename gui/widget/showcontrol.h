@@ -9,6 +9,8 @@ namespace Ui {
 	class ShowControl;
 }
 
+class ShowController;
+
 class ShowControl : public QDialog {
 		Q_OBJECT
 

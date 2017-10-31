@@ -264,7 +264,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 	// Remove the existing Canvas.
 	active_section_controller_->get_section()->remove_canvas();
-	canvas_controller_.reset();
+	active_section_controller_->set_canvas_controller(nullptr);
 
 	if (cue_controller_ != nullptr) {
 		section_handler->remove_canvas(get_section_index(), get_overlay_index());
@@ -273,7 +273,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 
 	// Add the new Canvas
 	if (index > 0) {
-		canvas_controller_ = std::unique_ptr<CanvasController>(new CanvasController(active_section_controller_, this, (CanvasType::Type)(index - 1)));
+		active_section_controller_->set_canvas_controller(new CanvasController(active_section_controller_, this, (CanvasType::Type)(index - 1)));
 
 		if (cue_controller_ != nullptr) {
 			section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1));
@@ -695,7 +695,7 @@ void MaestroControl::show_canvas_controls() {
 	canvas_control_widget_.reset();
 
 	if (active_section_controller_->get_section()->get_canvas() != nullptr) {
-		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(canvas_controller_.get(), this));
+		canvas_control_widget_ = std::unique_ptr<QWidget>(new CanvasControl(active_section_controller_->get_canvas_controller(), this));
 		layout->addWidget(canvas_control_widget_.get());
 	}
 }

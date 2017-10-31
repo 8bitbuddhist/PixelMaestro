@@ -5,13 +5,19 @@
 #ifndef SECTIONCONTROLLER_H
 #define SECTIONCONTROLLER_H
 
+#include "controller/canvascontroller.h"
 #include "controller/palettecontroller.h"
 #include "core/colors.h"
 #include "core/pixel.h"
 #include "core/section.h"
+#include <memory>
 #include <vector>
 
 using namespace PixelMaestro;
+
+class CanvasController;
+
+class MaestroControl;
 
 class SectionController {
 	public:
@@ -21,13 +27,18 @@ class SectionController {
 		SectionController(Point* layout);
 		SectionController(Section* section, SectionController* parent_controller_);
 		~SectionController();
+		CanvasController* get_canvas_controller();
 		Section::Overlay* get_overlay();
 		SectionController* get_overlay_controller();
 		SectionController* get_parent_controller();
 		Section* get_section();
+		CanvasController* set_canvas_controller(CanvasController* canvas_controller);
 		SectionController* set_overlay(Colors::MixMode mix_mode, float alpha = 0.5);
 
 	private:
+		/// Controller for managing Canvases.
+		std::unique_ptr<CanvasController> canvas_controller_;
+
 		/// Stores the size of the grid.
 		Point dimensions_ = {0, 0};
 

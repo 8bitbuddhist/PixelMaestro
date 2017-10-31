@@ -5,6 +5,7 @@
 #ifndef MAESTROCONTROL_H
 #define MAESTROCONTROL_H
 
+#include <memory>
 #include <QSerialPort>
 #include <QTextStream>
 #include <QWidget>
@@ -29,6 +30,14 @@ namespace Ui {
 using namespace PixelMaestro;
 
 class CanvasController;
+
+class MaestroController;
+
+class SectionController;
+
+class ShowControl;
+
+class ShowController;
 
 class MaestroControl : public QWidget {
 	Q_OBJECT
@@ -73,9 +82,6 @@ class MaestroControl : public QWidget {
 
 		/// Stores Canvas controls
 		std::unique_ptr<QWidget> canvas_control_widget_;
-
-		/// Controller for managing Canvases.
-		std::unique_ptr<CanvasController> canvas_controller_;
 
 		/// Dialog for modifying Shows.
 		std::unique_ptr<ShowControl> show_control_dialog_;
