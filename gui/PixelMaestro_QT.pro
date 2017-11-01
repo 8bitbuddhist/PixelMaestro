@@ -65,7 +65,8 @@ SOURCES += main.cpp\
 		controller/showcontroller.cpp \
     demo/animatedcanvasdemo.cpp \
     controller/canvascontroller.cpp \
-    ../src/colorpresets.cpp
+    ../src/colorpresets.cpp \
+    ../src/cue/cuehandler.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \

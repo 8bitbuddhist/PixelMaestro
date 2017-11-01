@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Changes the thickness of each spoke (vertical mode only).
+	 * Changes the size of each spoke (vertical mode only).
 	 * @param resolution New resolution.
 	 */
 	void RadialAnimation::set_resolution(uint8_t resolution) {

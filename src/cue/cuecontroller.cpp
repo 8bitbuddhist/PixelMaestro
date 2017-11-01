@@ -139,7 +139,7 @@ namespace PixelMaestro {
 		 *	3) If we've reached the buffer size limit, set the index to 0 (error / invalid Cue)
 		 */
 		if (read_index_ >= cue_[Byte::SizeByte] + Byte::PayloadByte) {
-			run();
+			run(cue_);
 			read_index_ = 0;
 		}
 		else {
@@ -153,7 +153,7 @@ namespace PixelMaestro {
 				cue_[ID3Byte] = id_[ID3Byte];
 				read_index_ = ID3Byte;
 			}
-			else if ((int16_t)read_index_ + 1 >= 256) {
+			else if ((uint16_t)read_index_ + 1 > UINT8_MAX) {
 				read_index_ = 0;
 			}
 		}

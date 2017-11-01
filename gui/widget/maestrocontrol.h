@@ -68,6 +68,7 @@ class MaestroControl : public QWidget {
 		int16_t get_overlay_index();
 		int16_t get_section_index();
 		void read_from_file(QString filename);
+		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
 		void save_to_file(QString filename);
 		void send_to_device();
 
@@ -96,7 +97,7 @@ class MaestroControl : public QWidget {
 		void set_speed();
 		void show_extra_controls(Animation* animation);
 		void show_canvas_controls();
-		void write_cue_to_stream(QTextStream* stream, uint8_t* cue, uint8_t cue_size);
+		void write_cue_to_stream(QDataStream* stream, uint8_t* cue, uint8_t cue_size);
 
 	private slots:
 		void on_alphaSpinBox_valueChanged(int arg1);

@@ -36,7 +36,7 @@ namespace PixelMaestro {
 				/// Method of blending the output from the Overlay with the base Section.
 				Colors::MixMode mix_mode = Colors::MixMode::None;
 
-				/// Transparency level of the overlaid Section (if applicable).
+				/// Transparency level of the overlaid Section.
 				uint8_t alpha;
 
 				/**
@@ -45,7 +45,7 @@ namespace PixelMaestro {
 				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For The amount of transparency that the Overlay will have (0 - 255).
 				 */
-				Overlay(Point dimensions, Colors::MixMode mix_mode, uint8_t alpha) {
+				Overlay(Point dimensions, Colors::MixMode mix_mode, uint8_t alpha = 0) {
 					this->section = new Section(dimensions);
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
@@ -61,10 +61,8 @@ namespace PixelMaestro {
 			~Section();
 			Animation* get_animation();
 			Canvas* get_canvas();
-			uint16_t get_cycle_interval();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
-			Pixel* get_pixel(uint32_t pixel);
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 			uint16_t get_refresh_interval();
 			void remove_animation();
@@ -88,7 +86,7 @@ namespace PixelMaestro {
 			Canvas* canvas_ = nullptr;
 
 			/// The logical layout of the Pixels.
-			Point dimensions_ = {0, 0};
+			Point dimensions_;
 
 			/// The Section overlaying the current section (if applicable).
 			Overlay* overlay_ = nullptr;

@@ -57,19 +57,17 @@ namespace PixelMaestro {
 	 * @return Pixel's color.
 	 */
 	Colors::RGB AnimationCanvas::get_pixel_color(uint16_t x, uint16_t y) {
-		uint32_t pixel_index;
-
 		if (scroll_ != nullptr && scroll_->repeat) {
-			pixel_index = section_->get_dimensions()->get_inline_index(
-				(x + offset_x_) % section_->get_dimensions()->x,
-				(y + offset_y_) % section_->get_dimensions()->y);
+			x = (x + offset_x_) % section_->get_dimensions()->x;
+			y = (y + offset_y_) % section_->get_dimensions()->y;
 		}
 		else {
-			pixel_index = section_->get_dimensions()->get_inline_index(x - offset_x_, y - offset_y_);
+			x = x - offset_x_;
+			y = y - offset_y_;
 		}
 
-		if (in_bounds(pixel_index) && frames_[current_frame_index_][pixel_index] == 1) {
-			return *section_->get_pixel(pixel_index)->get_color();
+		if (in_bounds(x, y) && frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] == 1) {
+			return section_->get_pixel_color(x, y);
 		}
 		else {
 			return {0, 0, 0};
@@ -88,10 +86,7 @@ namespace PixelMaestro {
 	void AnimationCanvas::initialize() {
 		frames_ = new bool*[num_frames_];
 		for (uint16_t i = 0; i < num_frames_; i++) {
-			frames_[i] = new bool[section_->get_dimensions()->size()];
-			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
-				frames_[i][pixel] = 0;
-			}
+			frames_[i] = new bool[section_->get_dimensions()->size()] {0};
 		}
 	}
 

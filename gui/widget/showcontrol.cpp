@@ -1,3 +1,4 @@
+#include <QListWidget>
 #include <QMessageBox>
 #include "cue/cuecontroller.h"
 #include "showcontrol.h"

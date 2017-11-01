@@ -5,6 +5,7 @@
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
+	// TODO: (Somehow) store frames
 	void CanvasCueHandler::clear(uint8_t section_num, uint8_t overlay_num) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::Clear;
@@ -375,11 +376,7 @@ namespace PixelMaestro {
 	}
 
 	void CanvasCueHandler::run(uint8_t *cue) {
-		Section* section = controller_->get_maestro()->get_section(cue[Byte::SectionByte]);
-
-		for (uint8_t i = 0; i < cue[Byte::OverlayByte]; i++) {
-			section = section->get_overlay()->section;
-		}
+		Section* section = get_section(cue[Byte::SectionByte], cue[Byte::OverlayByte]);
 
 		if (section == nullptr) {
 			return;

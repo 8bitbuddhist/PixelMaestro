@@ -6,6 +6,7 @@
 #define CUEHANDLER_H
 
 #include <stdint.h>
+#include "../core/section.h"
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
@@ -21,6 +22,8 @@ namespace PixelMaestro {
 		protected:
 			/// The controller managing this Handler.
 			CueController* controller_ = nullptr;
+
+			Section* get_section(uint8_t section_id, uint8_t overlay_id);
 	};
 }
 

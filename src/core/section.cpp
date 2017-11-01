@@ -75,15 +75,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Returns the Pixel at the specified index.
-
-		@param pixel The index of the Pixel in the pixels_ array.
-	*/
-	Pixel* Section::get_pixel(uint32_t pixel) {
-		return &pixels_[pixel];
-	}
-
-	/**
 		Returns the final color of the specified Pixel.
 
 		@param x Pixel x-coordinate.
@@ -270,6 +261,7 @@ namespace PixelMaestro {
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
+			// TODO: Can we get the animation to calculate speed, pause, and refresh rate so we don't have to do the calculation per-Pixel?
 			pixels_[pixel].set_next_color(color, animation_->get_fade(), animation_->get_speed() - animation_->get_pause(), *refresh_interval_);
 		}
 	}

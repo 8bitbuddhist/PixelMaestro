@@ -1,8 +1,8 @@
+#include <QDataStream>
 #include <QFile>
 #include <QMessageBox>
 #include <QSettings>
 #include <QString>
-#include <QTextStream>
 #include "animation/lightninganimation.h"
 #include "animation/lightninganimationcontrol.h"
 #include "animation/plasmaanimation.h"
@@ -36,12 +36,13 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	// Initialize UI
 	ui->setupUi(this);
 
-	this->initialize();
+	initialize();
+
+	initialize_cue_controller();
 
 	// Open serial connection to Arduino (if configured)
 	QSettings settings;
 	if (settings.value(SettingsDialog::serial_enabled).toBool()) {
-		initialize_cue_controller();
 	serial_port_.setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
 		serial_port_.setBaudRate(9600);
 
@@ -56,8 +57,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		}
 	}
 
-	// If the Serial port was configured successfully, send an initial animation.
-	// TODO: Remove all serial_port_ checks. We want to generate the Cue regardless (for Shows and other uses).
+	// Create an initial Cue.
 	if (cue_controller_ != nullptr) {
 		section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Blink, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
 		send_to_device();
@@ -514,11 +514,12 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 }
 
 void MaestroControl::read_from_file(QString filename) {
-	// Not yet finalized
 	QFile file(filename);
+
 	if (file.open(QFile::ReadOnly)) {
-		while (file.atEnd() == false) {
-			file.getChar((char*)cue_controller_->get_cue());
+		QByteArray bytes = file.readAll();
+		for (int i = 0; i < bytes.size(); i++) {
+			cue_controller_->read((uint8_t)bytes.at(i));
 		}
 		file.close();
 	}
@@ -526,59 +527,74 @@ void MaestroControl::read_from_file(QString filename) {
 }
 
 void MaestroControl::save_to_file(QString filename) {
+	if (!filename.endsWith(".pmc", Qt::CaseInsensitive)) {
+		filename.append(".pmc");
+	}
 	QFile file(filename);
 	if (file.open(QFile::WriteOnly)) {
-		QTextStream textstream(&file);
+		QDataStream datastream(&file);
 
-		/*
-		 * Implement serialization for:
-		 * - Animation-specific options
-		 * - Handle multiple Overlays
-		 * - Palettes
-		 */
-
-		// Overlay
-		if (active_section_controller_->get_overlay()->mix_mode != Colors::MixMode::None) {
-			section_handler->set_overlay(0, 0, active_section_controller_->get_overlay()->mix_mode, active_section_controller_->get_overlay()->alpha);
-			write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-			section_handler->set_animation(0, 1, (AnimationType::Type)ui->animationComboBox->currentIndex(), true, active_section_controller_->get_section()->get_animation()->get_colors(), active_section_controller_->get_section()->get_animation()->get_num_colors());
-			write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-			animation_handler->set_orientation(0, 1, (Animation::Orientation)ui->orientationComboBox->currentIndex());
-			write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-			animation_handler->set_reverse(0, 1, ui->reverse_animationCheckBox->isChecked());
-			write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-			animation_handler->set_fade(0, 1, ui->fadeCheckBox->isChecked());
-			write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-			animation_handler->set_speed(0, 1, ui->cycleSlider->maximum() - ui->cycleSlider->value(), 0);
+		// Iterate through each Section and save its settings to file
+		for (uint8_t i = 0; i < maestro_controller_->get_num_section_controllers(); i++) {
+			save_section_settings(&datastream, i, 0);
 		}
-
-		// Dimensions
-		section_handler->set_dimensions(0, 0, ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-		write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-		// Animaton & Colors
-		section_handler->set_animation(0, 0, (AnimationType::Type)ui->animationComboBox->currentIndex(), true, active_section_controller_->get_section()->get_animation()->get_colors(), active_section_controller_->get_section()->get_animation()->get_num_colors());
-		write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-		animation_handler->set_orientation(0, 0, (Animation::Orientation)ui->orientationComboBox->currentIndex());
-		write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-		animation_handler->set_reverse(0, 0, ui->reverse_animationCheckBox->isChecked());
-		write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-		animation_handler->set_fade(0, 0, ui->fadeCheckBox->isChecked());
-		write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-		animation_handler->set_speed(0, 0, ui->cycleSlider->maximum() - ui->cycleSlider->value(), 0);
-		write_cue_to_stream(&textstream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
 		file.flush();
 		file.close();
+	}
+}
+
+void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id) {
+
+	// Check for Overlay
+	if (maestro_controller_->get_section_controller(section_id)->get_overlay() != nullptr) {
+		Section* base = maestro_controller_->get_section_controller(section_id)->get_section();
+		Section::Overlay* overlay = base->get_overlay();
+
+		for (uint8_t i = 0; i < overlay_id; i++) {
+			if (overlay->section->get_overlay() != nullptr) {
+				overlay = overlay->section->get_overlay();
+			}
+			else {
+				return;
+			}
+		}
+
+		section_handler->set_overlay(section_id, overlay_id, overlay->mix_mode, overlay->alpha);
+		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+		// Recursively update all other overlays
+		save_section_settings(datastream, section_id, overlay_id + 1);
+	}
+
+	// Dimensions
+	section_handler->set_dimensions(section_id, overlay_id, ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+	// Animation & Colors
+	section_handler->set_animation(section_id, overlay_id, (AnimationType::Type)ui->animationComboBox->currentIndex(), true, active_section_controller_->get_section()->get_animation()->get_colors(), active_section_controller_->get_section()->get_animation()->get_num_colors());
+	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+	animation_handler->set_orientation(section_id, overlay_id, (Animation::Orientation)ui->orientationComboBox->currentIndex());
+	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+	animation_handler->set_reverse(section_id, overlay_id, ui->reverse_animationCheckBox->isChecked());
+	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+	animation_handler->set_fade(section_id, overlay_id, ui->fadeCheckBox->isChecked());
+	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+	animation_handler->set_speed(section_id, overlay_id, ui->cycleSlider->value(), ui->pauseSlider->value());
+	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+	// TODO: Grid size, speed, animation-specific options
+
+	// Canvas
+	if (maestro_controller_->get_section_controller(section_id)->get_canvas_controller() != nullptr) {
+		section_handler->set_canvas(section_id, overlay_id, (CanvasType::Type)(ui->canvasComboBox->currentIndex() - 1));
+		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+		// TODO: Save Canvas frames
 	}
 }
 
@@ -598,16 +614,15 @@ void MaestroControl::set_speed() {
 }
 
 /**
- * Appends a Cue to a stream, followed by a newline.
+ * Appends a Cue to a stream.
  * @param stream Stream to append to.
  * @param cue Cue to append.
  * @param cue_size Size of Cue.
  */
-void MaestroControl::write_cue_to_stream(QTextStream* stream, uint8_t *cue, uint8_t cue_size) {
+void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue, uint8_t cue_size) {
 	for (uint8_t i = 0; i < cue_size; i++) {
-		*stream << cue[i];
+		stream->writeBytes((const char*)cue, cue_size);
 	}
-	*stream << "\n";
 }
 
 /**

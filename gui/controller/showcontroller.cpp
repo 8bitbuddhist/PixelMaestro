@@ -26,8 +26,6 @@ Event* ShowController::add_event(uint16_t time, uint8_t *cue) {
 		event_descriptions_.push_back(description);
 		initialize_events();
 
-		maestro_controller_->get_maestro()->set_show(&events_[0], events_.size());
-
 		return &events_[events_.size() - 1];
 	}
 

@@ -140,12 +140,7 @@ namespace PixelMaestro {
 
 	void AnimationCueHandler::run(uint8_t *cue) {
 
-		Section* section = controller_->get_maestro()->get_section(cue[Byte::SectionByte]);
-
-		for (uint8_t i = 0; i < cue[Byte::OverlayByte]; i++) {
-			section = section->get_overlay()->section;
-		}
-
+		Section* section = get_section(cue[Byte::SectionByte], cue[Byte::OverlayByte]);
 		Animation* animation = section->get_animation();
 
 		if (section == nullptr || animation == nullptr) return;
