@@ -12,7 +12,7 @@ RadialAnimationControl::RadialAnimationControl(RadialAnimation* animation, Maest
 void RadialAnimationControl::on_resolutionSpinBox_valueChanged(int arg1) {
 	animation_->set_resolution(arg1);
 
-	if (maestro_control_->serial_port_.isOpen()) {
+	if (maestro_control_->cue_controller_ != nullptr) {
 		maestro_control_->animation_handler->set_radial_options(maestro_control_->get_section_index(), maestro_control_->get_overlay_index(), arg1);
 		maestro_control_->send_to_device();
 	}

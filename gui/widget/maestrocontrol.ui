@@ -280,17 +280,10 @@
        </property>
       </widget>
      </item>
-     <item row="12" column="0">
-      <widget class="QLabel" name="showLabel">
-       <property name="text">
-        <string>Show</string>
-       </property>
-      </widget>
-     </item>
      <item row="12" column="1">
       <widget class="QPushButton" name="editEventsButton">
        <property name="text">
-        <string>Edit Show...</string>
+        <string>Edit Show Events...</string>
        </property>
       </widget>
      </item>
@@ -333,6 +326,13 @@
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="showLabel">
+       <property name="text">
+        <string>Show</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

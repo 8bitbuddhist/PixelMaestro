@@ -8,11 +8,10 @@ A Point is a single location on a grid specified by an x and y value. Points hav
 
 ## Coordinates Versus Dimensions
 Points have two main purposes:
-1. Identify a location on a grid (e.g. a Pixel in a Section)
-2. Determine the size of a grid (e.g. the total number of values on the x and y axes).
+1. Identify a coordinate on a grid (e.g. a Pixel in a Section)
+2. Determine the size of a grid (e.g. the width and height of a Pixel grid).
 
-When used as a location identifer, a Point is simply a point: a single x-y coordinate on a grid. {2, 4} refers to a location 2 steps along the x-axis and 4 steps along the y-axis.
-When used as a size identifier, a Point dictates how big the x and y axes are. {2, 4} then refers to a grid that _has_ 2 steps along the x-axis and 4 steps along the y-axis. You might see the first use referred to as a _coordinate_, and the second use referred to as a _dimension_ (or _layout_).
+When used as a coordinate, a Point is simply a point: a single x-y coordinate. {2, 4} refers to a location 2 steps along the x-axis and 4 steps along the y-axis. When used as a dimension, a Point dictates how big the x and y axes are. {2, 4} in this case refers to a grid that has 2 points along the x-axis and 4 points along the y-axis.
 
 ## Creating a Point
 Create a new Point by defining its x and y values:
@@ -21,6 +20,7 @@ Point* point = new Point(5, 10);
 ```
 
 ## Other Methods
+* `Point::get_inline_index(x, y)`: When the Point is used as a dimension, this translates an x and y coordinate into an array index. This is especially useful for accessing Pixels, which are stored in 1-dimensional arrays.
 * `Point::set(unsigned short x, unsigned short y)`: This changes the Point's x and y values to the new specified values.
 * `Point::size()`: When the Point is used as a dimension, this identifies the size of the dimension by multiplying the x and y values.
 

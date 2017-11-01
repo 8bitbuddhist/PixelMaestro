@@ -2,6 +2,7 @@
 #define SHOWCONTROL_H
 
 #include <QDialog>
+#include <QTimer>
 #include "controller/cueinterpreter.h"
 #include "controller/showcontroller.h"
 
@@ -21,10 +22,15 @@ class ShowControl : public QDialog {
 
 	private slots:
 		void on_addEventPushButton_clicked();
+		void refresh_maestro_last_time();
 
 	private:
 		CueController* cue_controller_ = nullptr;
 		CueInterpreter cue_interpreter_;
+
+		/// Updates the current Maestro time.
+		QTimer timer_;
+
 		ShowController* show_controller_ = nullptr;
 		Ui::ShowControl *ui;
 };

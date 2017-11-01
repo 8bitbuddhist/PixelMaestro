@@ -1,3 +1,7 @@
+/*
+ * CueController - Class for converting PixelMaestro commands to and from serialized strings.
+ */
+
 #include "cuecontroller.h"
 #include "animationcuehandler.h"
 #include "canvascuehandler.h"
@@ -22,7 +26,7 @@ namespace PixelMaestro {
 		/*
 		 * Final Cue has the following form: [ID] [Checksum] [Size] [Payload]
 		 *
-		 * [ID] is a set of characters marking the start of a Cue.
+		 * [ID] is a set of pre-defined characters marking the start of a Cue.
 		 * [Size] is the size of the payload.
 		 * [Checksum] is a value generated for error detection.
 		 * [Payload] contains the actual command with parameters.
@@ -39,6 +43,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Generates a checksum for verifying the integrity of a Cue.
+	 * Calculated by summing each byte in the Cue, diving by 256, and taking the remainder.
 	 * @param cue The contents of the Cue.
 	 * @param cue_size The size of the Cue.
 	 * @return New checksum.
@@ -83,7 +88,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the current Cue.
+	 * Returns the currently cached Cue.
 	 * @return Cue buffer.
 	 */
 	uint8_t* CueController::get_cue() {
@@ -91,7 +96,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the size of the currently loaded Cue.
+	 * Returns the size of the currently cached Cue.
 	 * @return Cue size.
 	 */
 	uint8_t CueController::get_cue_size() {
@@ -104,10 +109,7 @@ namespace PixelMaestro {
 	 * @return Handler instance.
 	 */
 	CueHandler* CueController::get_handler(Handler handler) {
-		if (handlers_[(uint8_t)handler] != nullptr) {
-			return handlers_[(uint8_t)handler];
-		}
-		return nullptr;
+		return handlers_[(uint8_t)handler];
 	}
 
 	/**
@@ -128,12 +130,13 @@ namespace PixelMaestro {
 		read_index_++;
 
 		/*
-		 * Once we've read past the payload, run the Cue then reset the read index.
+		 * Check the current read index.
+		 * If we've reached the end of the payload, run the Cue then reset the read index.
 		 *
 		 * We manually set the read index in the following cases:
-		 *	1) If we successfully ran the last Cue, set the index to 0 (starts new Cue)
-		 *	2) If the last bytes read match the Cue ID string, move the ID and read index to the start of the buffer (starts a new Cue)
-		 *	3) If we've reached the buffer size, set the index to 0 (error / invalid Cue)
+		 *	1) If we successfully ran the last Cue, set the index to 0 (start a new Cue)
+		 *	2) If the last bytes read match the Cue ID string, move the ID and read index to the start of the buffer (reduces the chance of a buffer overflow / split Cue)
+		 *	3) If we've reached the buffer size limit, set the index to 0 (error / invalid Cue)
 		 */
 		if (read_index_ >= cue_[Byte::SizeByte] + Byte::PayloadByte) {
 			run();
@@ -164,7 +167,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Validates and runs the provided Cue.
+	 * Validates and runs the specified Cue.
 	 * @param cue Cue to load.
 	 */
 	void CueController::run(uint8_t *cue) {
@@ -190,15 +193,15 @@ namespace PixelMaestro {
 	 * @return True if valid, false if not.
 	 */
 	bool CueController::validate_header(uint8_t *cue) {
+		// Check the ID
 		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
 			if (cue[i] != id_[i]) {
 				return false;
 			}
 		}
 
+		// Validate the Checksum
 		uint8_t size = cue[Byte::SizeByte] + Byte::PayloadByte;
-
-		// Second, generate and compare the checksum.
 		if (cue[Byte::ChecksumByte] != checksum(cue, size)) {
 			return false;
 		}

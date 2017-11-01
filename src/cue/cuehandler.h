@@ -1,3 +1,7 @@
+/*
+ * CueHandler - Base class for mapping Cues to PixelMaestro actions.
+ */
+
 #ifndef CUEHANDLER_H
 #define CUEHANDLER_H
 

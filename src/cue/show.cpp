@@ -1,5 +1,5 @@
 /*
-	Show.cpp - Library for scheduling PixelMaestro animations.
+	Show.cpp - Library for scheduling PixelMaestro Events.
 */
 
 #include "show.h"
@@ -39,7 +39,7 @@ namespace PixelMaestro {
 
 		@param events Array of Events to queue.
 		@param num_events The number of Events in the queue.
-		@param preserve_current_index If false, reset the current Event index to 0. Defaults to true.
+		@param preserve_current_index If true, continue from the same Event index. Otherwise, start over.
 	*/
 	void Show::set_events(Event* events, uint16_t num_events, bool preserve_current_index) {
 		if (!preserve_current_index) {
@@ -87,8 +87,8 @@ namespace PixelMaestro {
 	void Show::check_next_event(const uint32_t& current_time) {
 		/*
 			Based on the timing method used, determine whether to run the Event.
-			If ABSOLUTE, compare the current time to the next Event's start time.
-			If RELATIVE, compare the time since the last Event to the next Event's start time.
+			If Absolute, compare the current time to the next Event's start time.
+			If Relative, compare the time since the last Event to the next Event's start time.
 			After running the Event, update the last run time and current Event index.
 		*/
 		uint32_t event_time = events_[current_index_].get_time();

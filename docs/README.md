@@ -3,57 +3,55 @@
 2. [Quick Start](#quick-start)
 
 # Structure
-PixelMaestro has five main components:
+PixelMaestro has three main components:
 * [Maestro](maestro.md): Main class. Handles synchronizing one or more Sections.
-* [Section](section.md): Provides the core functionality for managing and animating groups of Pixels.
-* [Pixel](pixel.md): A single RGB output.
-* [Animation](animation.md): An animation to render in a Section.
-* [Show](show.md): Provides a way of scheduling Cues to run at a later time.
+* [Section](section.md): Manages a grid of Pixels. All actions that change the display output are performed through a Section. Sections also manage Animations and Canvases.
+* [Pixel](pixel.md): A single RGB output. Each Pixel stores a color value that you can send to an output device.
 
 PixelMaestro also includes the following support classes:
-* [Canvas](canvas.md): Provides methods for drawing custom shapes and patterns onto a Section.
-* [Colors](colors.md): Provides core utilities for managing colors including several pre-defined colors, color schemes, and methods for generating new colors.
-* [Cue](cue.md): Provides utilities for serializing PixelMaestro commands.
-* [Point](point.md): Class for managing coordinates on the Pixel grid.
-* [Utility](utility.md): Shared (mostly mathematic) methods.
+* [Animation](animation.md): Various animations that can be displayed using a Section.
+* [Canvas](canvas.md): Tools for drawing custom shapes and patterns onto a Section.
+* [Colors](colors.md): Tools for defining custom colors and generating color palettes.
+	* ColorPresets: Provides several pre-defined common colors.
+* [Cue](cue.md): Provides methods serializing PixelMaestro commands.
+* [Point](point.md): Defines the size of Pixel grids as well as individual coordinates.
+* [Show](show.md): Utility for scheduling Cues to run at certain points in the program's lifecycle.
+* [Utility](utility.md): Common methods (prevents having to pull in stdlib).
 
-# Quick Start
-This Arduino-style example shows how to create a new Pixel grid 50 Pixels wide and 10 Pixels tall, draw text, and make it flash.
+# Example
+This smaple Arduino sketch shows how to create a new Pixel grid 50 Pixels wide and 10 Pixels tall, draw text, and make it flash.
 
 ```c++
 #include "canvas/canvas.h"
 #include "canvas/fonts/font5x8.h"
+#include "colorpresets.h"
 #include "core/Maestro.h"
 
 using namespace PixelMaestro;
 
-Section sections[] = {
-	// Create a new grid 50 pixels wide and 10 pixels high
-	Section(50, 10)
-};
-// Add the Section to the Maestro
-Maestro maestro(sections, 1);
+// Define a Maestro with a single Section 50 Pixels wide and 10 Pixels high.
+Maestro maestro(50, 10);
 
 void setup() {
 	// Set global brightness to 50%
 	maestro.set_brightness(128);
 
 	// Create a new blinking animation using the ColorWheel preset, then sets the animation speed to 500ms
-	Animation* animation = sections[0].set_animation(AnimationType::Blink, Colors::COLORWHEEL, 12);
+	Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Blink, ColorPresets::COLORWHEEL, 12);
 	animation->set_speed(500);
 
 	// Create a new Canvas and write "Hello world" using a 5x8 font
-	Canvas* canvas = sections[0].add_canvas();
-	canvas->draw_text(0, 0, new Font5x8(), "Hello world!");
+	Canvas* canvas = maestro.get_section(0)->add_canvas(CanvasType::AnimationCanvas);
+	canvas->draw_text(0, 0, new Font5x8(), "Hello world!", 12);
 }
 
 void loop() {
 	maestro.update(millis());
 
-	Colors::RGB *color;
-	for (unsigned int pixel = 0; pixel < sections[0]->get_dimesions()->size(); pixel++) {
-		color = maestro.get_pixel_color(0, pixel);
-		// Use `color` below, e.g. to send RGB values to a LED strip
+	for (unsigned short y = 0; y < maestro.get_section(0)->get_dimensions()->y; y++) {
+		for (unsigned short x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
+			// Retrieve the Pixel's color using `maestro.get_pixel_color(0, x, y);`
+		}
 	}
 }
 ```

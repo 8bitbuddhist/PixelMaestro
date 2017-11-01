@@ -182,9 +182,9 @@ void MainWindow::on_action_Color_Canvas_Demo_triggered() {
 
 void MainWindow::on_actionOpen_Maestro_triggered() {
 	QString filename = QFileDialog::getOpenFileName(this,
-		QString("Open PixelMaestro Cue"),
+		QString("Open PixelMaestro Cue File"),
 		QDir::home().path(),
-		QString("PixelMaestro Cue (*.pmc)"));
+		QString("PixelMaestro Cue File (*.pmc)"));
 
 	maestro_control_->read_from_file(filename);
 }

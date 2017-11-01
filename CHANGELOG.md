@@ -5,20 +5,21 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.7.1] - In Progress
 ### Added
-- Added new ColorPresets class for storing pre-defined colors and color collections. These were previous part of the Colors class.
+- Added new ColorPresets class for storing pre-defined colors and color collections. These were previously part of the Colors class.
 - Animation Previewer:
 	- New Palette Editor dialog lets you create, edit, and delete color Palettes.
 	- Added number box to speed slider.
 	- Added slider to control Animation pause threshold.
 	- Added support for loading images into Canvases.
 	- Added Show editor (in progress).
-- Canvas: Added support for animated images (GUI tools in progress).
+- Canvas: Added animation support in the form of multiple layers (or `frames`).
 - Maestro:
 	- Added simplified constructor for creating a Maestro with only one Section.
 	- Added parameter to `Maestro::update()` to force a refresh.
 
 ### Changed
 - Fixed Canvas scrolling behavior.
+- Fixed several settings from not populating correctly when switching Sections in Animation Previewer.
 - Simplified Pixel color changing logic.
 - Added and fixed several Cues, especially surrounding Canvases.
 - Replaced `Colors::generate_random_colors()` with a truly random color array generator.
@@ -34,7 +35,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Animation Previewer:
 	- Added support for sending commands to devices connected via USB/serial.
 	- Added Preferences dialog. This lets you select a port for commands as well as change the appearance of the Animation Previewer. You can access it by clicking `Edit > Preferences`.
-	- Added support for saving PixelMaestro configurations to file.
+	- Added support for saving Maestro configurations to file as a series of Cues.
 - Cue:
 	- Added classes for converting PixelMaestro actions into portable commands. This allows you to control remote devices, save and load presets, schedule commands for later exection, and more. See the [`Cue` documentation page](docs/cue.md) for details.
 	- Added Cue Demo to the GUI.

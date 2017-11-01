@@ -74,20 +74,17 @@ class MaestroControl : public QWidget {
 	private:
 		Ui::MaestroControl *ui;
 
-		/// MaestroController that this widget is controlling.
-		MaestroController* maestro_controller_ = nullptr;
+		/// Stores Canvas controls
+		std::unique_ptr<QWidget> canvas_control_widget_;
 
 		/// Stores extra animation controls
 		std::unique_ptr<QWidget> extra_control_widget_;
 
-		/// Stores Canvas controls
-		std::unique_ptr<QWidget> canvas_control_widget_;
-
-		/// Dialog for modifying Shows.
-		std::unique_ptr<ShowControl> show_control_dialog_;
+		/// MaestroController that this widget is controlling.
+		MaestroController* maestro_controller_ = nullptr;
 
 		/// Controller for managing Shows.
-		std::unique_ptr<ShowController> show_controller_;
+		ShowController* show_controller_ = nullptr;
 
 		void get_section_settings();
 		void initialize();

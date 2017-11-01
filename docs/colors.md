@@ -32,7 +32,8 @@ The `generate_random_color_array()` and `generate_scaling_color_array()` methods
 * OVERLAY: Returns the second color if the second color is not black. If the second color is black, then it returns the first color.
 
 ## Sample Colors
-PixelMaestro comes with several predefined colors. These include primary colors (red, green, blue) as well as secondary and tertiary colors.
+PixelMaestro comes with several predefined colors. These include primary colors (red, green, blue) as well as secondary and tertiary colors. These are provided by the separate `ColorPresets` class.
+
 There are also two sample color palettes:
 * `COLORWHEEL` contains a total of 12 primary, secondary, and tertiary colors.
 * `RAINBOW` contains 7 varying colors.

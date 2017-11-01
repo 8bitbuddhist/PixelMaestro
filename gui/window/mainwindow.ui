@@ -995,12 +995,12 @@
   </action>
   <action name="action_Save_Maestro">
    <property name="text">
-    <string>&amp;Save Maestro...</string>
+    <string>&amp;Save to Cue File...</string>
    </property>
   </action>
   <action name="actionOpen_Maestro">
    <property name="text">
-    <string>Open &amp;Maestro...</string>
+    <string>Open &amp;Cue File...</string>
    </property>
   </action>
   <action name="action_Animated_Canvas_Demo">

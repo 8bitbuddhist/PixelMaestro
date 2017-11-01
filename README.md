@@ -6,4 +6,4 @@ PixelMaestro does not interact directly with hardware. Instead, it acts as a buf
 **Note:** PixelMaestro is alpha software. New releases may introduce incompatible changes.
 
 ## Getting Started
-To get started, please read the [documentation](docs/README.md). You can also test PixelMaestro by running the [Qt-based frontend](gui/README.md) or [Arduino sketches](arduino).
+You can start using PixelMaestro by using the [Qt-based frontend](gui/README.md) or [Arduino sketches](arduino). To learn more, please read the [documentation](docs/README.md).

@@ -1,3 +1,8 @@
+#include <QFile>
+#include <QMessageBox>
+#include <QSettings>
+#include <QString>
+#include <QTextStream>
 #include "animation/lightninganimation.h"
 #include "animation/lightninganimationcontrol.h"
 #include "animation/plasmaanimation.h"
@@ -13,14 +18,9 @@
 #include "controller/sectioncontroller.h"
 #include "core/section.h"
 #include "drawingarea/simpledrawingarea.h"
-#include "window/settingsdialog.h"
 #include "maestrocontrol.h"
+#include "window/settingsdialog.h"
 #include "widget/palettecontrol.h"
-#include <QFile>
-#include <QMessageBox>
-#include <QSettings>
-#include <QString>
-#include <QTextStream>
 #include "ui_maestrocontrol.h"
 
 /**
@@ -42,8 +42,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	QSettings settings;
 	if (settings.value(SettingsDialog::serial_enabled).toBool()) {
 		initialize_cue_controller();
-
-		serial_port_.setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
+	serial_port_.setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
 		serial_port_.setBaudRate(9600);
 
 		// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
@@ -55,12 +54,13 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		if (!serial_port_.open(QIODevice::WriteOnly)) {
 			QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_port_.errorString()));
 		}
+	}
 
-		// If the Serial port was configured successfully, send an initial animation.
-		if (serial_port_.isOpen()) {
-			section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Blink, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
-			send_to_device();
-		}
+	// If the Serial port was configured successfully, send an initial animation.
+	// TODO: Remove all serial_port_ checks. We want to generate the Cue regardless (for Shows and other uses).
+	if (cue_controller_ != nullptr) {
+		section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Blink, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
+		send_to_device();
 	}
 }
 
@@ -176,11 +176,8 @@ void MaestroControl::initialize() {
 	// Initialize Canvas controls
 	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
 
-	// Show controls hidden for now
+	// Disable Edit Show Events box by default.
 	ui->editEventsButton->setEnabled(false);
-	ui->editEventsButton->setVisible(false);
-	ui->showLabel->setVisible(false);
-	ui->enableShowCheckBox->setVisible(false);
 
 	initialize_palettes();
 
@@ -216,9 +213,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 
 	if (cue_controller_ != nullptr) {
 		section_handler->set_overlay(get_section_index(), get_overlay_index(), maestro_controller_->get_section_controller(get_section_index())->get_overlay()->mix_mode, arg1);
-		if (cue_controller_ != nullptr) {
-			send_to_device();
-		}
+		send_to_device();
 	}
 }
 
@@ -244,9 +239,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 
 	if (cue_controller_ != nullptr) {
 		section_handler->set_animation(get_section_index(), get_overlay_index(), (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
-		if (serial_port_.isOpen()) {
-			send_to_device();
-		}
+		send_to_device();
 	}
 
 	// Reapply animation settings
@@ -277,9 +270,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 
 		if (cue_controller_ != nullptr) {
 			section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1));
-			if (serial_port_.isOpen()) {
-				send_to_device();
-			}
+			send_to_device();
 		}
 	}
 
@@ -303,9 +294,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 
 	if (cue_controller_ != nullptr) {
 		animation_handler->set_colors(get_section_index(), get_overlay_index(), &palette->colors[0], palette->colors.size());
-		if (serial_port_.isOpen()) {
-			send_to_device();
-		}
+		send_to_device();
 	}
 }
 
@@ -337,15 +326,22 @@ void MaestroControl::on_cycleSpinBox_editingFinished() {
 }
 
 void MaestroControl::on_editEventsButton_clicked() {
-	ShowControl show_control(show_controller_.get(), cue_controller_, this);
+	ShowControl show_control(show_controller_, cue_controller_, this);
 	show_control.exec();
 }
 
 void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
 	ui->editEventsButton->setEnabled(checked);
 
-	if (show_controller_ == nullptr) {
-		show_controller_ = std::unique_ptr<ShowController>(new ShowController(maestro_controller_));
+	// Initialize Show and Cue controllers if necessary
+	if (checked) {
+		if (cue_controller_ == nullptr) {
+			initialize_cue_controller();
+		}
+
+		if (show_controller_ == nullptr) {
+			show_controller_ = new ShowController(maestro_controller_);
+		}
 	}
 }
 
@@ -358,9 +354,7 @@ void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 
 	if (cue_controller_ != nullptr) {
 		animation_handler->set_fade(get_section_index(), get_overlay_index(), checked);
-		if (serial_port_.isOpen()) {
-			send_to_device();
-		}
+		send_to_device();
 	}
 }
 
@@ -383,9 +377,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 
 			if (cue_controller_ != nullptr) {
 				section_handler->set_overlay(get_section_index(), get_overlay_index(), (Colors::MixMode)index, ui->alphaSpinBox->value());
-				if (serial_port_.isOpen()) {
-					send_to_device();
-				}
+				send_to_device();
 			}
 		}
 	}
@@ -402,9 +394,7 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 
 			if (cue_controller_ != nullptr) {
 				animation_handler->set_orientation(get_section_index(), get_overlay_index(), (Animation::Orientation)index);
-				if (serial_port_.isOpen()) {
-					send_to_device();
-				}
+				send_to_device();
 			}
 		}
 	}
@@ -455,9 +445,7 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 
 	if (cue_controller_ != nullptr) {
 		animation_handler->set_reverse(get_section_index(), get_overlay_index(), checked);
-		if (serial_port_.isOpen()) {
-			send_to_device();
-		}
+		send_to_device();
 	}
 }
 
@@ -502,7 +490,7 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 	// Check the Canvas
 	/*
-	 * Disabled due to too many popups
+	 * Disabled due to an excessive amount of popups
 	if (canvas_control_widget_ != nullptr) {
 		CanvasControl* widget = qobject_cast<CanvasControl*>(canvas_control_widget_.get());
 		if (!widget->confirm_clear()) {
@@ -515,12 +503,11 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 		active_section_controller_->get_section()->set_dimensions(x, y);
 
 		/*
-		 * Disabled dynamic resizing on remote devices.
-		if (serial_.isOpen()) {
+		 * Disabled dynamic resizing on remote devices, because that would just be silly.
+		 *
+		if (cue_controller_ != nullptr) {
 			section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-			if (serial_port_.isOpen()) {
-				send_to_device();
-			}
+			send_to_device();
 		}
 		*/
 	}
@@ -605,9 +592,7 @@ void MaestroControl::set_speed() {
 
 		if (cue_controller_ != nullptr) {
 			animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, pause);
-			if (serial_port_.isOpen()) {
-				send_to_device();
-			}
+			send_to_device();
 		}
 	}
 }
@@ -629,7 +614,7 @@ void MaestroControl::write_cue_to_stream(QTextStream* stream, uint8_t *cue, uint
  * Sends the last action performed to the configured serial device.
  */
 void MaestroControl::send_to_device() {
-	if (serial_port_.isOpen()) {
+	if (cue_controller_ != nullptr) {
 		serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
@@ -704,9 +689,10 @@ void MaestroControl::show_canvas_controls() {
  * Destructor.
  */
 MaestroControl::~MaestroControl() {
-	if (cue_controller_ != nullptr) {
+	if (serial_port_.isOpen()) {
 		serial_port_.close();
 	}
 	delete cue_interpreter_;
+	delete show_controller_;
 	delete ui;
 }

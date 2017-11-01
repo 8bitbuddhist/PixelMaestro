@@ -11,6 +11,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Fast-tracks creating a Maestro with a single Section.
+	 * Note: The new Section is dynamically allocated. You will need to manually call delete once you're done using it.
 	 * @param rows Number of rows in the new Section.
 	 * @param columns Number of columns in the new Section.
 	 */
@@ -36,6 +37,14 @@ namespace PixelMaestro {
 	 */
 	CueController* Maestro::get_cue_controller() {
 		return cue_controller_;
+	}
+
+	/**
+	 * Returns the last time the Maestro was refreshed.
+	 * @return Last refresh time.
+	 */
+	uint32_t Maestro::get_last_refresh() {
+		return last_refresh_;
 	}
 
 	/**
@@ -147,9 +156,8 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets a new Show.
+	 * Creates a new Show with the specified Event list.
 	 * If a Show already exists, this updates the existing Show with the new Event list.
-	 * This also initializes a CueController if one does not already exist.
 	 *
 	 * @param events Events used in the Show.
 	 * @param num_events The number of Events.
@@ -169,15 +177,15 @@ namespace PixelMaestro {
 	/**
 		Main update routine.
 
-		@param current_time Program runtime.
-		@param override If true, forces the Maestro to update even if the refresh interval hasn't passed yet.
+		@param current_time Current program runtime.
+		@param force If true, bypass the refresh interval check and force the Maestro to update.
 	*/
-	void Maestro::update(const uint32_t& current_time, bool override) {
+	void Maestro::update(const uint32_t& current_time, bool force) {
 		// If running, call each Section's update method.
 		if (running_) {
 
 			// Compare the refresh time to the time since the last refresh.
-			if (override || current_time - last_refresh_ >= (uint32_t)refresh_interval_) {
+			if (force || current_time - last_refresh_ >= (uint32_t)refresh_interval_) {
 
 				// Run the Show
 				if (show_) {

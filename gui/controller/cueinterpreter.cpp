@@ -18,7 +18,7 @@ std::string CueInterpreter::interpret_cue(uint8_t* cue) {
 			return interpret_section_cue(cue);
 			break;
 		default:
-			return "";
+			return "No Handler found";
 	}
 }
 

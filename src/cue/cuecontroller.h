@@ -1,3 +1,7 @@
+/*
+ * CueController - Class for converting PixelMaestro commands to and from serialized strings.
+ */
+
 #ifndef CUECONTROLLER_H
 #define CUECONTROLLER_H
 
