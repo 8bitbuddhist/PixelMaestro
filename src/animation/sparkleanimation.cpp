@@ -2,7 +2,7 @@
 #include "sparkleanimation.h"
 
 namespace PixelMaestro {
-	SparkleAnimation::SparkleAnimation(Colors::RGB* colors, uint8_t num_colors, uint8_t threshold) : Animation(colors, num_colors) {
+	SparkleAnimation::SparkleAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, uint8_t threshold) : Animation(section, colors, num_colors) {
 		type_ = AnimationType::Sparkle;
 		threshold_ = threshold;
 	}
@@ -23,27 +23,27 @@ namespace PixelMaestro {
 		this->threshold_ = threshold;
 	}
 
-	void SparkleAnimation::update(Section* section) {
+	void SparkleAnimation::update() {
 		if (orientation_ == Orientation::Vertical) {
-			for (uint16_t x = 0; x < section->get_dimensions()->x; x++) {
-				for (uint16_t y = 0; y < section->get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+				for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 					if (Utility::rand(255) <= threshold_) {
-						section->set_one(x, y, get_color_at_index(y));
+						section_->set_one(x, y, get_color_at_index(y));
 					}
 					else {
-						section->set_one(x, y, {0, 0, 0});
+						section_->set_one(x, y, {0, 0, 0});
 					}
 				}
 			}
 		}
 		else {	// Horizontal
-			for (uint16_t y = 0; y < section->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < section->get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
+				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 					if (Utility::rand(255) <= threshold_) {
-						section->set_one(x, y, get_color_at_index(x));
+						section_->set_one(x, y, get_color_at_index(x));
 					}
 					else {
-						section->set_one(x, y, {0, 0, 0});
+						section_->set_one(x, y, {0, 0, 0});
 					}
 				}
 			}

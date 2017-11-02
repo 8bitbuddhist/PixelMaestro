@@ -6,9 +6,9 @@
 namespace PixelMaestro {
 	class WaveAnimation : public Animation {
 		public:
-			WaveAnimation(Colors::RGB* colors, uint8_t num_colors);
+			WaveAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			~WaveAnimation();
-			void update(Section* section);
+			void update();
 	};
 }
 

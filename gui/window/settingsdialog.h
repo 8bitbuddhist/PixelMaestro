@@ -15,6 +15,7 @@ class SettingsDialog : public QDialog
 	public:
 		static QString pixel_padding;
 		static QString pixel_shape;
+		static QString refresh_rate;
 		static QString serial_enabled;
 		static QString serial_port;
 

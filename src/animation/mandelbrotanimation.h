@@ -12,10 +12,10 @@
 namespace PixelMaestro {
 	class MandelbrotAnimation : public Animation {
 		public:
-			MandelbrotAnimation(Colors::RGB* colors, uint8_t num_colors);
+			MandelbrotAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			~MandelbrotAnimation();
 			void set_colors(Colors::RGB *colors, uint8_t num_colors);
-			void update(Section* section);
+			void update();
 
 		private:
 

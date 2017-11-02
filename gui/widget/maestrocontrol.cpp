@@ -546,9 +546,10 @@ void MaestroControl::save_to_file(QString filename) {
 
 void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id) {
 
+	Section* base = maestro_controller_->get_section_controller(section_id)->get_section();
+
 	// Check for Overlay
 	if (maestro_controller_->get_section_controller(section_id)->get_overlay() != nullptr) {
-		Section* base = maestro_controller_->get_section_controller(section_id)->get_section();
 		Section::Overlay* overlay = base->get_overlay();
 
 		for (uint8_t i = 0; i < overlay_id; i++) {
@@ -575,7 +576,7 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	section_handler->set_animation(section_id, overlay_id, (AnimationType::Type)ui->animationComboBox->currentIndex(), true, active_section_controller_->get_section()->get_animation()->get_colors(), active_section_controller_->get_section()->get_animation()->get_num_colors());
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
-	animation_handler->set_orientation(section_id, overlay_id, (Animation::Orientation)ui->orientationComboBox->currentIndex());
+	animation_handler->set_orientation(section_id, overlay_id, base->get_animation()->get_orientation());
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
 	animation_handler->set_reverse(section_id, overlay_id, ui->reverse_animationCheckBox->isChecked());
@@ -587,7 +588,35 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	animation_handler->set_speed(section_id, overlay_id, ui->cycleSlider->value(), ui->pauseSlider->value());
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
-	// TODO: Grid size, speed, animation-specific options
+	switch(base->get_animation()->get_type()) {
+		case AnimationType::Lightning:
+			{
+				LightningAnimation* animation = static_cast<LightningAnimation*>(base->get_animation());
+				animation_handler->set_lightning_options(section_id, overlay_id, animation->get_bolt_count(), animation->get_down_threshold(), animation->get_up_threshold(), animation->get_fork_chance());
+			}
+			break;
+		case AnimationType::Plasma:
+			{
+				PlasmaAnimation* animation = static_cast<PlasmaAnimation*>(base->get_animation());
+				animation_handler->set_plasma_options(section_id, overlay_id, animation->get_size(), animation->get_resolution());
+			}
+			break;
+		case AnimationType::Radial:
+			{
+				RadialAnimation* animation = static_cast<RadialAnimation*>(base->get_animation());
+				animation_handler->set_radial_options(section_id, overlay_id, animation->get_resolution());
+			}
+			break;
+		case AnimationType::Sparkle:
+			{
+				SparkleAnimation* animation = static_cast<SparkleAnimation*>(base->get_animation());
+				animation_handler->set_sparkle_options(section_id, overlay_id, animation->get_threshold());
+			}
+			break;
+		default:
+			break;
+	}
+	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
 	// Canvas
 	if (maestro_controller_->get_section_controller(section_id)->get_canvas_controller() != nullptr) {

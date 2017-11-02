@@ -180,6 +180,9 @@ namespace PixelMaestro {
 					la->set_fork_chance(cue[Byte::OptionsByte + 3]);
 				}
 				break;
+			case Action::SetOrientation:
+				animation->set_orientation((Animation::Orientation)cue[Byte::OptionsByte]);
+				break;
 			case Action::SetPlasmaOptions:
 				{
 					float size = FloatByteConvert::byte_to_float(&cue[Byte::OptionsByte]);
@@ -188,9 +191,6 @@ namespace PixelMaestro {
 					pa->set_size(size);
 					pa->set_resolution(resolution);
 				}
-				break;
-			case Action::SetOrientation:
-				animation->set_orientation((Animation::Orientation)cue[Byte::OptionsByte]);
 				break;
 			case Action::SetRadialOptions:
 				static_cast<RadialAnimation*>(animation)->set_resolution(cue[Byte::OptionsByte]);

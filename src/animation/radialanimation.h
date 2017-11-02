@@ -7,10 +7,11 @@
 namespace PixelMaestro {
 	class RadialAnimation : public Animation {
 		public:
-			RadialAnimation(Colors::RGB* colors, uint8_t num_colors);
+			RadialAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			~RadialAnimation();
+			uint8_t get_resolution();
 			void set_resolution(uint8_t resolution);
-			void update(Section* section);
+			void update();
 
 		private:
 			/// Tracks the center of the grid.

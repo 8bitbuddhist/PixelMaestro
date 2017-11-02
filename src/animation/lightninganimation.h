@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class LightningAnimation : public Animation {
 		public:
-			LightningAnimation(Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts = 1, uint8_t down_threshold = 90, uint8_t up_threshold = 166, uint8_t fork_chance_ = 4);
+			LightningAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts = 1, uint8_t down_threshold = 90, uint8_t up_threshold = 166, uint8_t fork_chance_ = 4);
 			~LightningAnimation();
 			uint8_t get_bolt_count();
 			uint8_t get_fork_chance();
@@ -15,7 +15,7 @@ namespace PixelMaestro {
 			void set_bolt_count(uint8_t bolt_count);
 			void set_fork_chance(uint8_t fork_chance);
 			void set_thresholds(uint8_t down_threshold, uint8_t up_threshold);
-			void update(Section* section);
+			void update();
 
 		private:
 			/// The chance that a bolt will drift downwards (or left in vertical mode).

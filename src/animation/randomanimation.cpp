@@ -2,13 +2,13 @@
 #include "../utility.h"
 
 namespace PixelMaestro {
-	RandomAnimation::RandomAnimation(Colors::RGB* colors, uint8_t num_colors) : Animation(colors, num_colors) {
+	RandomAnimation::RandomAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors) {
 		type_ = AnimationType::Random;
 	}
 
-	void RandomAnimation::update(Section* section) {
-		for (uint32_t pixel = 0; pixel < section->get_dimensions()->size(); pixel++) {
-			section->set_one(pixel, get_color_at_index(Utility::rand(num_colors_)));
+	void RandomAnimation::update() {
+		for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
+			section_->set_one(pixel, get_color_at_index(Utility::rand(num_colors_)));
 		}
 	}
 

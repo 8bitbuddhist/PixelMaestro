@@ -167,37 +167,37 @@ namespace PixelMaestro {
 		Animation* animation = nullptr;
 		switch(animation_type) {
 			case AnimationType::Type::Blink:
-				animation = new BlinkAnimation(colors, num_colors);
+				animation = new BlinkAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Cycle:
-				animation = new CycleAnimation(colors, num_colors);
+				animation = new CycleAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Lightning:
-				animation = new LightningAnimation(colors, num_colors);
+				animation = new LightningAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Mandelbrot:
-				animation = new MandelbrotAnimation(colors, num_colors);
+				animation = new MandelbrotAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Merge:
-				animation = new MergeAnimation(colors, num_colors);
+				animation = new MergeAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Plasma:
-				animation = new PlasmaAnimation(colors, num_colors);
+				animation = new PlasmaAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Radial:
-				animation = new RadialAnimation(colors, num_colors);
+				animation = new RadialAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Random:
-				animation = new RandomAnimation(colors, num_colors);
+				animation = new RandomAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Solid:
-				animation = new SolidAnimation(colors, num_colors);
+				animation = new SolidAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Sparkle:
-				animation = new SparkleAnimation(colors, num_colors);
+				animation = new SparkleAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Wave:
-				animation = new WaveAnimation(colors, num_colors);
+				animation = new WaveAnimation(this, colors, num_colors);
 				break;
 		}
 
@@ -271,8 +271,7 @@ namespace PixelMaestro {
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
-			// TODO: Can we get the animation to calculate speed, pause, and refresh rate so we don't have to do the calculation per-Pixel?
-			pixels_[pixel].set_next_color(color, animation_->get_fade(), animation_->get_speed() - animation_->get_pause(), *refresh_interval_);
+			pixels_[pixel].set_next_color(color, animation_->get_step_count());
 		}
 	}
 
@@ -317,7 +316,6 @@ namespace PixelMaestro {
 	*/
 	void Section::update(const uint32_t& current_time) {
 
-		// If this Section has an Overlay or Canvas, update them first.
 		if (overlay_ != nullptr) {
 			overlay_->section->update(current_time);
 		}
@@ -326,18 +324,12 @@ namespace PixelMaestro {
 			canvas_->update(current_time);
 		}
 
-		/*
-		 * Update the Pixel grid.
-		 * Only update if an Animation is set and either:
-		 *		a) The Animation has changed
-		 *		b) Fading is enabled
-		 */
-		if (animation_ != nullptr &&
-				(animation_->update(current_time, this) ||
-				 animation_->get_fade())) {
-			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-				pixels_[pixel].update();
-			}
+		if (animation_ != nullptr) {
+			animation_->update(current_time);
+		}
+
+		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+			pixels_[pixel].update();
 		}
 	}
 

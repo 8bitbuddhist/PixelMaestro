@@ -11,8 +11,11 @@ namespace PixelMaestro {
 	 * @param colors Initial color palette.
 	 * @param num_colors The number of colors in the palette.
 	 */
-	Animation::Animation(Colors::RGB* colors, uint8_t num_colors) {
+	Animation::Animation(Section* section, Colors::RGB* colors, uint8_t num_colors) {
+		this->section_ = section;
 		set_colors(colors, num_colors);
+
+		recalculate_step_count();
 	}
 
 	/**
@@ -100,11 +103,40 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the number of steps in the current cycle.
+	 * @return Cycle steps.
+	 */
+	uint8_t Animation::get_step_count() {
+		return step_count_;
+	}
+
+	/**
 	 * Returns the type of Animation.
 	 * @return Animation type.
 	 */
 	AnimationType::Type Animation::get_type() {
 		return type_;
+	}
+
+	/**
+	 * Recalculates the number of steps in the Animation.
+	 */
+	void Animation::recalculate_step_count() {
+		/*
+			Calculate the number of steps between the current color and the next color.
+			Use the refresh rate to determine the number of steps to take during the event.
+			If not fading, just jump one single step.
+		*/
+		if (fade_) {
+			step_count_ = (speed_ - pause_) / (float)section_->get_refresh_interval();
+
+			if (step_count_ == 0) {
+				step_count_ = 1;
+			}
+		}
+		else {
+			step_count_ = 1;
+		}
 	}
 
 	/**
@@ -139,6 +171,8 @@ namespace PixelMaestro {
 	 */
 	void Animation::set_fade(bool fade) {
 		fade_ = fade;
+
+		recalculate_step_count();
 	}
 
 	/**
@@ -168,16 +202,17 @@ namespace PixelMaestro {
 	void Animation::set_speed(uint16_t speed, uint16_t pause) {
 		speed_ = speed;
 		pause_ = pause;
+
+		recalculate_step_count();
 	}
 
 	/**
 	 * Updates the animation.
 	 * This checks to see if the animation should update, then calls the derived class's update method.
 	 * @param current_time The current runtime.
-	 * @param section The parent Section.
 	 * @return True if the update was processed.
 	 */
-	bool Animation::update(const uint32_t &current_time, Section *section) {
+	bool Animation::update(const uint32_t &current_time) {
 		// If the color palette is not set, exit.
 		if (num_colors_ == 0 || colors_ == nullptr) {
 			return false;
@@ -185,13 +220,13 @@ namespace PixelMaestro {
 
 		/*
 			Update the animation cycle.
-			cycle_interval_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
+			speed_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
 			If it's time for the next cycle, run the animation.
 		*/
 		if ((current_time - last_cycle_) >= speed_) {
 
 			// Run the derived Animation's update function.
-			update(section);
+			update();
 
 			// Update the last cycle time.
 			last_cycle_ = current_time;

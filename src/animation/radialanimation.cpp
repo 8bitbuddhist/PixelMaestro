@@ -2,8 +2,16 @@
 #include "radialanimation.h"
 
 namespace PixelMaestro {
-	RadialAnimation::RadialAnimation(Colors::RGB* colors, uint8_t num_colors) : Animation(colors, num_colors) {
+	RadialAnimation::RadialAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors) {
 		type_ = AnimationType::Radial;
+	}
+
+	/**
+	 * Returns the resolution of each radial.
+	 * @return Radial resolution.
+	 */
+	uint8_t RadialAnimation::get_resolution() {
+		return resolution_;
 	}
 
 	/**
@@ -14,10 +22,10 @@ namespace PixelMaestro {
 		this->resolution_ = resolution;
 	}
 
-	void RadialAnimation::update(Section* section) {
+	void RadialAnimation::update() {
 		// Check if the size of the grid has changed.
-		if (size_ != *section->get_dimensions()) {
-			size_ = *section->get_dimensions();
+		if (size_ != *section_->get_dimensions()) {
+			size_ = *section_->get_dimensions();
 			center_ = {
 				(uint16_t)(size_.x / 2),
 				(uint16_t)(size_.y / 2)
@@ -35,7 +43,7 @@ namespace PixelMaestro {
 						slope_ = ((y - center_.y) / (float)(x - center_.x)) * resolution_;
 					}
 
-					section->set_one(x, y, get_color_at_index(slope_ + cycle_index_));
+					section_->set_one(x, y, get_color_at_index(slope_ + cycle_index_));
 				}
 			}
 		}
@@ -45,7 +53,7 @@ namespace PixelMaestro {
 				y_squared_ = pow(y - center_.y, 2);
 				for (uint16_t x = 0; x < size_.x; x++) {
 					distance_ = sqrt(pow(x - center_.x, 2) + y_squared_);
-					section->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
+					section_->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
 				}
 			}
 		}

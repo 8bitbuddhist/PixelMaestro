@@ -22,7 +22,7 @@ namespace PixelMaestro {
 				Vertical
 			};
 
-			Animation(Colors::RGB* colors, uint8_t num_colors);
+			Animation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			virtual ~Animation();
 			Colors::RGB get_color_at_index(uint8_t index);
 			Colors::RGB* get_colors();
@@ -34,6 +34,7 @@ namespace PixelMaestro {
 			bool get_reverse();
 			uint16_t get_pause();
 			uint16_t get_speed();
+			uint8_t get_step_count();
 			AnimationType::Type get_type();
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);
@@ -41,8 +42,8 @@ namespace PixelMaestro {
 			void set_orientation(Orientation orientation);
 			void set_speed(uint16_t speed, uint16_t pause = 0);
 			void set_reverse(bool reverse);
-			bool update(const uint32_t& current_time, Section *section);
-			virtual void update(Section* section) = 0;
+			bool update(const uint32_t& current_time);
+			virtual void update() = 0;
 
 		protected:			
 			/// Array of colors used in the animation.
@@ -69,12 +70,19 @@ namespace PixelMaestro {
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_ = false;
 
+			/// The Animation's parent Section.
+			Section* section_ = nullptr;
+
 			/// The amount of time (in milliseconds) between animation updates. Defaults to 100.
 			uint16_t speed_ = 100;
+
+			/// The number of steps from the current cycle to the next cycle.
+			uint8_t step_count_ = 1;
 
 			/// The type of Animation. Gets set in the derived class' constructor.
 			AnimationType::Type type_;
 
+			void recalculate_step_count();
 			void update_cycle(uint8_t min, uint8_t max);
 	};
 }

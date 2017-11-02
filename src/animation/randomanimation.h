@@ -6,9 +6,9 @@
 namespace PixelMaestro {
 	class RandomAnimation : public Animation {
 		public:
-			RandomAnimation(Colors::RGB* colors, uint8_t num_colors);
+			RandomAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			~RandomAnimation();
-			void update(Section* section);
+			void update();
 	};
 }
 

@@ -6,6 +6,7 @@
 // Initialize strings
 QString SettingsDialog::pixel_padding = QStringLiteral("interface/padding");
 QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
+QString SettingsDialog::refresh_rate = QStringLiteral("maestro/refresh");
 QString SettingsDialog::serial_enabled = QStringLiteral("serial/enabled");
 QString SettingsDialog::serial_port = QStringLiteral("serial/port");
 
@@ -15,6 +16,12 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	// Interface settings
 	ui->paddingComboBox->setCurrentIndex(settings_.value(pixel_padding).toInt());
 	ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape).toInt());
+	if (settings_.value(refresh_rate).toInt()) {
+		ui->refreshSpinBox->setValue(settings_.value(refresh_rate).toInt());
+	}
+	else {
+		ui->refreshSpinBox->setValue(50);
+	}
 
 	// Serial settings
 	ui->serialCheckBox->setChecked(settings_.value(serial_enabled).toBool());
@@ -39,6 +46,7 @@ void SettingsDialog::on_buttonBox_accepted() {
 	// Save serial options
 	settings_.setValue(serial_enabled, ui->serialCheckBox->isChecked());
 	settings_.setValue(serial_port, ui->serialPortComboBox->currentText());
+	settings_.setValue(refresh_rate, ui->refreshSpinBox->value());
 
 	// Save pixel padding
 	settings_.setValue(pixel_padding, ui->paddingComboBox->currentIndex());

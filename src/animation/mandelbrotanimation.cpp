@@ -2,7 +2,7 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Colors::RGB* colors, uint8_t num_colors) : Animation(colors, num_colors) {
+	MandelbrotAnimation::MandelbrotAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors) {
 		type_ = AnimationType::Mandelbrot;
 	}
 
@@ -12,14 +12,14 @@ namespace PixelMaestro {
 		max_iterations_ = num_colors;
 	}
 
-	void MandelbrotAnimation::update(Section* section) {
-		if (size_ != *section->get_dimensions()) {
-			size_ = *section->get_dimensions();
+	void MandelbrotAnimation::update() {
+		if (size_ != *section_->get_dimensions()) {
+			size_ = *section_->get_dimensions();
 
 			// Recalculate center and width in case the Section size has changed.
 			center_ = {
-				(uint16_t)(section->get_dimensions()->x / 2),
-				(uint16_t)(section->get_dimensions()->y / 2)
+				(uint16_t)(section_->get_dimensions()->x / 2),
+				(uint16_t)(section_->get_dimensions()->y / 2)
 			};
 
 			// Calculate the scale of the pattern
@@ -44,18 +44,18 @@ namespace PixelMaestro {
 
 				if (orientation_ == Orientation::Vertical) {
 					if (iterations_ < max_iterations_) {
-						section->set_one(y, x, get_color_at_index(iterations_ + cycle_index_));
+						section_->set_one(y, x, get_color_at_index(iterations_ + cycle_index_));
 					}
 					else {
-						section->set_one(y, x, {0, 0, 0});
+						section_->set_one(y, x, {0, 0, 0});
 					}
 				}
 				else {
 					if (iterations_ < max_iterations_) {
-						section->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
+						section_->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
 					}
 					else {
-						section->set_one(x, y, {0, 0, 0});
+						section_->set_one(x, y, {0, 0, 0});
 					}
 				}
 			}

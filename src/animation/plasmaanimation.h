@@ -6,13 +6,13 @@
 namespace  PixelMaestro {
 	class PlasmaAnimation : public Animation {
 		public:
-			PlasmaAnimation(Colors::RGB* colors, uint8_t num_colors, float size = 4.0, float resolution = 32.0);
+			PlasmaAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, float size = 4.0, float resolution = 32.0);
 			~PlasmaAnimation();
 			float get_resolution();
 			float get_size();
 			void set_resolution(float resolution);
 			void set_size(float size);
-			void update(Section* section);
+			void update();
 
 		private:
 			/// The resolution of each plasma (i.e. the number of bands).

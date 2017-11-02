@@ -2,7 +2,7 @@
 #include "lightninganimation.h"
 
 namespace PixelMaestro {
-	LightningAnimation::LightningAnimation(Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold,  uint8_t fork_chance) : Animation(colors, num_colors) {
+	LightningAnimation::LightningAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold,  uint8_t fork_chance) : Animation(section, colors, num_colors) {
 		type_ = AnimationType::Lightning;
 		num_bolts_ = num_bolts;
 		down_threshold_ = down_threshold;
@@ -10,20 +10,20 @@ namespace PixelMaestro {
 		fork_chance_ = fork_chance;
 	}
 
-	void LightningAnimation::update(Section *section) {
+	void LightningAnimation::update() {
 		// Clear the grid
-		section->set_all({0, 0, 0});
+		section_->set_all({0, 0, 0});
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, 0};
 		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {
 			if (orientation_ == Orientation::Vertical) {
-				start.set((uint16_t)Utility::rand(section->get_dimensions()->x), 0);
-				draw_bolt_vertical(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
+				start.set((uint16_t)Utility::rand(section_->get_dimensions()->x), 0);
+				draw_bolt_vertical(bolt, section_, &start, down_threshold_, up_threshold_, fork_chance_);
 			}
 			else {
-				start.set(0, (uint16_t)Utility::rand(section->get_dimensions()->y));
-				draw_bolt_horizontal(bolt, section, &start, down_threshold_, up_threshold_, fork_chance_);
+				start.set(0, (uint16_t)Utility::rand(section_->get_dimensions()->y));
+				draw_bolt_horizontal(bolt, section_, &start, down_threshold_, up_threshold_, fork_chance_);
 			}
 		}
 
@@ -41,14 +41,14 @@ namespace PixelMaestro {
 		 */
 		uint16_t length;
 		if (cursor.x == 0) {
-			length = section->get_dimensions()->x;
+			length = section_->get_dimensions()->x;
 		}
 		else {
-			if ((cursor.x + (section->get_dimensions()->x * 0.25)) > section->get_dimensions()->x) {
-				length = section->get_dimensions()->x - cursor.x;
+			if ((cursor.x + (section_->get_dimensions()->x * 0.25)) > section_->get_dimensions()->x) {
+				length = section_->get_dimensions()->x - cursor.x;
 			}
 			else {
-				length = cursor.x + (section->get_dimensions()->x * 0.25);
+				length = cursor.x + (section_->get_dimensions()->x * 0.25);
 			}
 		}
 
@@ -58,7 +58,7 @@ namespace PixelMaestro {
 		for (uint16_t x = cursor.x; x < length; x++) {
 			direction_roll = Utility::rand(255);
 			if (direction_roll > up_threshold) {
-				if (cursor.y + 1 < section->get_dimensions()->y) {
+				if (cursor.y + 1 < section_->get_dimensions()->y) {
 					cursor.y += 1;
 				}
 			}
@@ -69,11 +69,11 @@ namespace PixelMaestro {
 			}
 			cursor.x++;
 
-			section->set_one(x, cursor.y, get_color_at_index(cycle_index_ + bolt_num));
+			section_->set_one(x, cursor.y, get_color_at_index(cycle_index_ + bolt_num));
 
 
 			// Check to see if we should fork the bolt
-			if (x < (uint16_t)section->get_dimensions()->x) {
+			if (x < (uint16_t)section_->get_dimensions()->x) {
 				uint8_t chance_roll = Utility::rand(255);
 				if (chance_roll < fork_chance) {
 					/*
@@ -106,14 +106,14 @@ namespace PixelMaestro {
 		 */
 		uint32_t length;
 		if (cursor.y == 0) {
-			length = section->get_dimensions()->y;
+			length = section_->get_dimensions()->y;
 		}
 		else {
-			if (cursor.y + ((section->get_dimensions()->y * 0.25)) > section->get_dimensions()->y) {
-				length = section->get_dimensions()->y - cursor.y;
+			if (cursor.y + ((section_->get_dimensions()->y * 0.25)) > section_->get_dimensions()->y) {
+				length = section_->get_dimensions()->y - cursor.y;
 			}
 			else {
-				length = cursor.y + (section->get_dimensions()->y * 0.25);
+				length = cursor.y + (section_->get_dimensions()->y * 0.25);
 			}
 		}
 
@@ -123,7 +123,7 @@ namespace PixelMaestro {
 		for (uint16_t y = cursor.y; y < length; y++) {
 			direction_roll = Utility::rand(255);
 			if (direction_roll > right_threshold) {
-				if (cursor.x + 1 < section->get_dimensions()->x) {
+				if (cursor.x + 1 < section_->get_dimensions()->x) {
 					cursor.x += 1;
 				}
 			}
@@ -134,10 +134,10 @@ namespace PixelMaestro {
 			}
 			cursor.y++;
 
-			section->set_one(cursor.x, y, get_color_at_index(cycle_index_ + bolt_num));
+			section_->set_one(cursor.x, y, get_color_at_index(cycle_index_ + bolt_num));
 
 			// Check to see if we should fork the bolt
-			if (y < (uint16_t)section->get_dimensions()->y) {
+			if (y < (uint16_t)section_->get_dimensions()->y) {
 				uint8_t chance_roll = Utility::rand(255);
 				if (chance_roll < fork_chance) {
 					/*

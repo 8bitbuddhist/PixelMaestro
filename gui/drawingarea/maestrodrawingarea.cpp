@@ -1,6 +1,8 @@
 #include "core/maestro.h"
 #include "maestrodrawingarea.h"
+#include "window/settingsdialog.h"
 #include <QElapsedTimer>
+#include <QSettings>
 #include <QTimer>
 
 using namespace PixelMaestro;
@@ -21,7 +23,15 @@ MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maest
 	elapsed_timer_.start();
 
 	// Set timer's refresh rate to the Maestro's refresh rate
-	timer_.start(maestro_controller_->get_maestro()->get_refresh_interval());
+	QSettings settings;
+	int refresh = settings.value(SettingsDialog::refresh_rate).toInt();
+	if (refresh) {
+		timer_.start(refresh);
+	}
+	else {
+		timer_.start(40);
+	}
+
 }
 
 MaestroController* MaestroDrawingArea::get_maestro_controller() {
