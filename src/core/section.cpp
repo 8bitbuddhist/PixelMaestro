@@ -75,6 +75,16 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Pixel at the specified coordinates.
+	 * @param x X-coordinate.
+	 * @param y Y-coordinate.
+	 * @return Pixel at specified index.
+	 */
+	Pixel* Section::get_pixel(uint16_t x, uint16_t y) {
+		return &pixels_[dimensions_.get_inline_index(x, y)];
+	}
+
+	/**
 		Returns the final color of the specified Pixel.
 
 		@param x Pixel x-coordinate.

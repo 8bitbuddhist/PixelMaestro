@@ -63,6 +63,7 @@ namespace PixelMaestro {
 			Canvas* get_canvas();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
+			Pixel* get_pixel(uint16_t x, uint16_t y);
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 			uint16_t get_refresh_interval();
 			void remove_animation();

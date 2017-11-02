@@ -67,7 +67,7 @@ namespace PixelMaestro {
 		}
 
 		if (in_bounds(x, y) && frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] == 1) {
-			return section_->get_pixel_color(x, y);
+			return *section_->get_pixel(x, y)->get_color();
 		}
 		else {
 			return {0, 0, 0};
