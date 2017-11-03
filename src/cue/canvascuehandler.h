@@ -9,6 +9,7 @@ namespace PixelMaestro {
 			enum Action : uint8_t {
 				Clear,
 				DrawCircle,
+				DrawFrame,
 				DrawLine,
 				DrawPoint,
 				DrawRect,
@@ -35,6 +36,8 @@ namespace PixelMaestro {
 			void clear(uint8_t section_num, uint8_t overlay_num);
 			void draw_circle(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			void draw_circle(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
+			void draw_frame(uint8_t section_num, uint8_t overlay_num, uint32_t num_pixels, bool* frame);
+			void draw_frame(uint8_t section_num, uint8_t overlay_num, uint32_t num_pixels, Colors::RGB* frame);
 			void draw_line(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
 			void draw_line(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
 			void draw_point(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y);

@@ -285,6 +285,22 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the index of the current frame.
+	 * @return Current frame index.
+	 */
+	uint16_t Canvas::get_current_frame_index() {
+		return current_frame_index_;
+	}
+
+	/**
+	 * Returns the number of frames.
+	 * @return Number of frames.
+	 */
+	uint16_t Canvas::get_num_frames() {
+		return num_frames_;
+	}
+
+	/**
 	 * Returns the Canvas' parent Section.
 	 * @return Parent Section.
 	 */

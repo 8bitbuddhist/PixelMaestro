@@ -50,6 +50,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the frame at the specified index.
+	 * @param frame Index of the frame.
+	 * @return Frame at index.
+	 */
+	bool* AnimationCanvas::get_frame(uint16_t frame) {
+		return frames_[frame];
+	}
+
+	/**
 	 * Returns the color of the Pixel at the specified index.
 	 * If the Pixel is activated, return the color of the underlying Animation.
 	 * If the Pixel is deactivated, return black.

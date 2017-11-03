@@ -85,6 +85,9 @@ std::string CueInterpreter::interpret_canvas_cue(uint8_t *cue) {
 		case CanvasCueHandler::Action::DrawCircle:
 			result.append(", Action: DrawCircle");
 			break;
+		case CanvasCueHandler::Action::DrawFrame:
+			result.append(", Action: DrawFrame");
+			break;
 		case CanvasCueHandler::Action::DrawLine:
 			result.append(", Action: DrawLine");
 			break;

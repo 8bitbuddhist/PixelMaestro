@@ -33,6 +33,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the frame at the specified index.
+	 * @param frame Index of the frame.
+	 * @return Frame at index.
+	 */
+	Colors::RGB* ColorCanvas::get_frame(uint16_t frame) {
+		return frames_[frame];
+	}
+
+	/**
 	 * Returns the color of the Pixel at the specified coordinate.
 	 * If the Pixel is activated, return the corresponding palette color.
 	 * @param x X-coordinate.

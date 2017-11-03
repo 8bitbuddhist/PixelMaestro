@@ -87,12 +87,12 @@ class MaestroControl : public QWidget {
 		/// Controller for managing Shows.
 		ShowController* show_controller_ = nullptr;
 
-		void get_section_settings();
 		void initialize();
 		void initialize_cue_controller();
 		void initialize_palettes();
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
+		void set_active_section_controller(SectionController* controller);
 		void set_overlay_controls_visible(bool visible);
 		void set_speed();
 		void show_extra_controls(Animation* animation);
