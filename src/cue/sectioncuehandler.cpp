@@ -116,6 +116,8 @@ namespace PixelMaestro {
 			case Action::SetOverlay:
 				section->set_overlay(Colors::MixMode(cue[Byte::OptionsByte]), cue[Byte::OptionsByte + 1]);
 				break;
+			default:
+				break;
 		}
 	}
 

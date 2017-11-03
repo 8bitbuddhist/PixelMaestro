@@ -2,20 +2,19 @@
 #include "canvas/colorcanvas.h"
 #include "canvas/fonts/font5x8.h"
 #include "canvascontrol.h"
-#include "controller/canvascontroller.h"
 #include "ui_canvascontrol.h"
+#include "utility/canvasutility.h"
 #include <QColorDialog>
 #include <QDir>
 #include <QFileDialog>
 #include <QImageReader>
 #include <QMessageBox>
 
-CanvasControl::CanvasControl(CanvasController* canvas_controller, MaestroControl* maestro_control, QWidget *parent) :
+CanvasControl::CanvasControl(MaestroControl* maestro_control, QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::CanvasControl) {
 	ui->setupUi(this);
-	this->canvas_controller_ = canvas_controller;
-	this->canvas_ = canvas_controller->get_canvas();
+	this->canvas_ = maestro_control->active_section_controller_->get_section()->get_canvas();
 	this->maestro_control_ = maestro_control;
 	this->initialize();
 }
@@ -279,7 +278,7 @@ void CanvasControl::on_openImageButton_clicked() {
 		QDir::home().path(),
 		QString("Images (*.bmp *.gif *.jpg *.png)"));
 
-	canvas_controller_->load_image(filename, filename.right(3).toLocal8Bit());
+	CanvasUtility::load_image(filename, canvas_, maestro_control_);
 }
 
 void CanvasControl::on_rectRadioButton_toggled(bool checked) {

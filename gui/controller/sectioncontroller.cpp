@@ -27,30 +27,6 @@ SectionController::SectionController(Section* section, SectionController* parent
 }
 
 /**
- * Returns the Section's Canvas controller.
- * @return Section's Canvas controller.
- */
-CanvasController* SectionController::get_canvas_controller() {
-	return canvas_controller_.get();
-}
-
-/**
- * Sets the Canvas Controller.
- * @param canvas_controller New Canvas Controller.
- * @return new Canvas controller.
- */
-CanvasController* SectionController::set_canvas_controller(CanvasController *canvas_controller) {
-	if (canvas_controller == nullptr) {
-		canvas_controller_.reset();
-		return nullptr;
-	}
-	else {
-		canvas_controller_ = std::unique_ptr<CanvasController>(canvas_controller);
-		return canvas_controller_.get();
-	}
-}
-
-/**
  * Adds an Overlay to the Section.
  * @param mix_mode The blending mode of the Overlay.
  * @param alpha The transparency of the Overlay.

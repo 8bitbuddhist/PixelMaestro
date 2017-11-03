@@ -1,6 +1,8 @@
 #include <QImageReader>
 #include "animatedcanvasdemo.h"
+#include "canvas/colorcanvas.h"
 #include "controller/sectioncontroller.h"
+#include "utility/canvasutility.h"
 
 AnimatedCanvasDemo::AnimatedCanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
 	// Load image
@@ -9,9 +11,8 @@ AnimatedCanvasDemo::AnimatedCanvasDemo(QWidget* parent, MaestroController* maest
 
 	maestro_controller_ = maestro_controller;
 	SectionController* section_controller = maestro_controller_->add_section_controller(&gif_size).get();
-
-	canvas_controller_ = std::unique_ptr<CanvasController>(new CanvasController(section_controller, CanvasType::ColorCanvas, gif.imageCount()));
-	canvas_controller_->load_image(":/resources/nyan.gif", "GIF");
+	Canvas* canvas = section_controller->get_section()->set_canvas(CanvasType::ColorCanvas, gif.imageCount());
+	CanvasUtility::load_image(QString(":/resources/nyan.gif"), canvas);
 
 	// Lower refresh speed
 	this->timer_.setInterval(125);

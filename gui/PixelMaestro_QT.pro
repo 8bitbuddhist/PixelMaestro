@@ -9,6 +9,8 @@ QT       += core gui widgets serialport
 TARGET = PixelMaestro_QT
 TEMPLATE = app
 QMAKE_CXXFLAGS = -std=c++11 -Wunused -Wno-unused-parameter
+QMAKE_CXXFLAGS_RELEASE -= -O2
+QMAKE_CXXFLAGS_RELEASE += -O3
 
 SOURCES += main.cpp\
 		drawingarea/maestrodrawingarea.cpp \
@@ -64,9 +66,9 @@ SOURCES += main.cpp\
 		widget/showcontrol.cpp \
 		controller/showcontroller.cpp \
     demo/animatedcanvasdemo.cpp \
-    controller/canvascontroller.cpp \
     ../src/colorpresets.cpp \
-    ../src/cue/cuehandler.cpp
+    ../src/cue/cuehandler.cpp \
+    utility/canvasutility.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -126,8 +128,8 @@ HEADERS += \
 		widget/showcontrol.h \
 		controller/showcontroller.h \
     demo/animatedcanvasdemo.h \
-    controller/canvascontroller.h \
-    ../src/colorpresets.h
+    ../src/colorpresets.h \
+    utility/canvasutility.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \

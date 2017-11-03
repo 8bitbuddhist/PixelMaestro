@@ -141,9 +141,10 @@ namespace PixelMaestro {
 	void AnimationCueHandler::run(uint8_t *cue) {
 
 		Section* section = get_section(cue[Byte::SectionByte], cue[Byte::OverlayByte]);
-		Animation* animation = section->get_animation();
+		if (section == nullptr) return;
 
-		if (section == nullptr || animation == nullptr) return;
+		Animation* animation = section->get_animation();
+		if (animation == nullptr) return;
 
 		switch((Action)cue[Byte::ActionByte]) {
 			case Action::SetColors:

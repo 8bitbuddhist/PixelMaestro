@@ -2,7 +2,6 @@
 #define CANVASCONTROL_H
 
 #include "canvas/canvas.h"
-#include "controller/canvascontroller.h"
 #include "widget/maestrocontrol.h"
 #include <QButtonGroup>
 #include <QWidget>
@@ -17,7 +16,7 @@ class CanvasControl : public QWidget {
 		Q_OBJECT
 
 	public:
-		explicit CanvasControl(CanvasController* canvas_controller, MaestroControl* maestro_control, QWidget *parent = 0);
+		explicit CanvasControl(MaestroControl* maestro_control, QWidget *parent = 0);
 		~CanvasControl();
 		bool confirm_clear();
 
@@ -41,7 +40,6 @@ class CanvasControl : public QWidget {
 		void on_openImageButton_clicked();
 
 	private:
-		CanvasController* canvas_controller_ = nullptr;
 		Canvas* canvas_ = nullptr;
 		Font* font_ = nullptr;
 		MaestroControl* maestro_control_ = nullptr;

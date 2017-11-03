@@ -9,7 +9,6 @@
 #include <QSerialPort>
 #include <QTextStream>
 #include <QWidget>
-#include "controller/canvascontroller.h"
 #include "controller/cueinterpreter.h"
 #include "controller/maestrocontroller.h"
 #include "controller/palettecontroller.h"
@@ -28,8 +27,6 @@ namespace Ui {
 }
 
 using namespace PixelMaestro;
-
-class CanvasController;
 
 class MaestroController;
 

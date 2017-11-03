@@ -413,9 +413,7 @@ namespace PixelMaestro {
 	void CanvasCueHandler::run(uint8_t *cue) {
 		Section* section = get_section(cue[Byte::SectionByte], cue[Byte::OverlayByte]);
 
-		if (section == nullptr) {
-			return;
-		}
+		if (section == nullptr) return;
 
 		switch ((CanvasType::Type)cue[Byte::TypeByte]) {
 			case CanvasType::AnimationCanvas:
