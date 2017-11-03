@@ -144,17 +144,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets all Pixels to the specified color.
-
-		@param color New color.
-	*/
-	void Section::set_all(Colors::RGB color) {
-		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-			set_one(pixel, color);
-		}
-	}
-
-	/**
 	 * Sets a new Animation.
 	 * This will delete and overwrite an existing Animation.
 	 * @param type Animation type.
@@ -264,7 +253,7 @@ namespace PixelMaestro {
 		@param pixel The index of the Pixel to update.
 		@param color New color.
 	*/
-	void Section::set_one(uint32_t pixel, Colors::RGB color) {
+	void Section::set_one(uint32_t pixel, Colors::RGB* color) {
 		// Only continue if Pixel is within the bounds of the array.
 		if (pixel < dimensions_.size()) {
 			/*
@@ -282,7 +271,7 @@ namespace PixelMaestro {
 		@param y The row number of the Pixel.
 		@param color New color.
 	*/
-	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB color) {
+	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB* color) {
 		set_one(dimensions_.get_inline_index(x, y), color);
 	}
 

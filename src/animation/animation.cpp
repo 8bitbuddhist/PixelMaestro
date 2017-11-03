@@ -27,12 +27,12 @@ namespace PixelMaestro {
 		@param index Desired index.
 		@return Color at the specified index.
 	*/
-	Colors::RGB Animation::get_color_at_index(uint8_t index) {
+	Colors::RGB* Animation::get_color_at_index(uint8_t index) {
 		if (num_colors_ > 0 && index >= num_colors_) {
-			return colors_[index % num_colors_];
+			return &colors_[index % num_colors_];
 		}
 
-		return colors_[index];
+		return &colors_[index];
 	}
 
 	/**

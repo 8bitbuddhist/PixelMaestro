@@ -23,13 +23,14 @@ namespace PixelMaestro {
 		@param next_color Target color.
 		@param step_count The number of steps to the target color.
 	*/
-	void Pixel::set_next_color(Colors::RGB next_color, uint8_t step_count) {
+	void Pixel::set_next_color(Colors::RGB* next_color, uint8_t step_count) {
 		// TODO: Unfortunately, re-add next_color_. Need it to make sure we fade to our target correctly.
 		// Only trigger an update if the colors don't match.
-		if (next_color != current_color_) {
-			step_[0] = (next_color.r - current_color_.r) / (float)step_count;
-			step_[1] = (next_color.g - current_color_.g) / (float)step_count;
-			step_[2] = (next_color.b - current_color_.b) / (float)step_count;
+		if (*next_color != current_color_) {
+			this->next_color_ = next_color;
+			step_[0] = (next_color->r - current_color_.r) / (float)step_count;
+			step_[1] = (next_color->g - current_color_.g) / (float)step_count;
+			step_[2] = (next_color->b - current_color_.b) / (float)step_count;
 			step_count_ = step_count;
 		}
 	}
@@ -39,12 +40,17 @@ namespace PixelMaestro {
 		Checks for and applies color changes.
 	*/
 	void Pixel::update() {
-		if (step_count_ > 0) {
+		if (step_count_ > 1) {	// Yes, this is intentionally set to 1
 			current_color_.r += step_[0];
 			current_color_.g += step_[1];
 			current_color_.b += step_[2];
 
 			step_count_--;
+		}
+		else {
+			if (next_color_ != nullptr) {
+				current_color_ = *next_color_;
+			}
 		}
 	}
 }

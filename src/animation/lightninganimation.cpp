@@ -1,3 +1,4 @@
+#include "../colorpresets.h"
 #include "../utility.h"
 #include "lightninganimation.h"
 
@@ -12,7 +13,9 @@ namespace PixelMaestro {
 
 	void LightningAnimation::update() {
 		// Clear the grid
-		section_->set_all({0, 0, 0});
+		for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
+			section_->set_one(pixel, &ColorPresets::BLACK);
+		}
 
 		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
 		Point start = {0, 0};

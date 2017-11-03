@@ -1,3 +1,4 @@
+#include "../colorpresets.h"
 #include "../utility.h"
 #include "mandelbrotanimation.h"
 
@@ -47,7 +48,7 @@ namespace PixelMaestro {
 						section_->set_one(y, x, get_color_at_index(iterations_ + cycle_index_));
 					}
 					else {
-						section_->set_one(y, x, {0, 0, 0});
+						section_->set_one(y, x, &ColorPresets::BLACK);
 					}
 				}
 				else {
@@ -55,7 +56,7 @@ namespace PixelMaestro {
 						section_->set_one(x, y, get_color_at_index(iterations_ + cycle_index_));
 					}
 					else {
-						section_->set_one(x, y, {0, 0, 0});
+						section_->set_one(x, y, &ColorPresets::BLACK);
 					}
 				}
 			}

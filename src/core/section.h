@@ -69,12 +69,11 @@ namespace PixelMaestro {
 			void remove_animation();
 			void remove_canvas();
 			void remove_overlay();
-			void set_all(Colors::RGB color);
 			Animation* set_animation(AnimationType::Type type, Colors::RGB* colors, uint8_t num_colors, bool preserve_cycle_index = true);
 			Canvas* set_canvas(CanvasType::Type type = CanvasType::Type::AnimationCanvas, uint16_t num_frames = 1);
 			void set_dimensions(uint16_t x, uint16_t y);
-			void set_one(uint32_t pixel, Colors::RGB color);
-			void set_one(uint16_t x, uint16_t y, Colors::RGB color);
+			void set_one(uint32_t pixel, Colors::RGB* color);
+			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
 			Section::Overlay* set_overlay(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			void set_refresh_interval(uint16_t* interval);
 			void update(const uint32_t& current_time);

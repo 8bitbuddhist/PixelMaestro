@@ -22,15 +22,14 @@ MaestroDrawingArea::MaestroDrawingArea(QWidget* parent, MaestroController* maest
 	// Initialize runtime timer
 	elapsed_timer_.start();
 
-	// Set timer's refresh rate to the Maestro's refresh rate
+	/*
+	 * Set timer's refresh rate to the Maestro's refresh rate.
+	 * If we can't load the configured refresh rate, default to 40 (25fps)
+	 */
 	QSettings settings;
-	int refresh = settings.value(SettingsDialog::refresh_rate).toInt();
-	if (refresh) {
-		timer_.start(refresh);
-	}
-	else {
-		timer_.start(40);
-	}
+	int refresh = settings.value(SettingsDialog::refresh_rate, QVariant(40)).toInt();
+	maestro_controller_->get_maestro()->set_refresh_interval(refresh);
+	timer_.start(refresh);
 
 }
 

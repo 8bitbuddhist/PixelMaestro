@@ -1,3 +1,4 @@
+#include "../colorpresets.h"
 #include "blinkanimation.h"
 
 namespace PixelMaestro {
@@ -6,7 +7,7 @@ namespace PixelMaestro {
 	}
 
 	void BlinkAnimation::update() {
-		// Alternate the Pixel between its normal color and off (Colors::BLACK).
+		// Alternate the Pixel between its normal color and off.
 		if (cycle_index_ == 0) {
 			if (orientation_ == Orientation::Vertical) {
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
@@ -24,7 +25,9 @@ namespace PixelMaestro {
 			}
 		}
 		else {
-			section_->set_all({0, 0, 0});
+			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
+				section_->set_one(pixel, &ColorPresets::BLACK);
+			}
 		}
 
 		// Only run for two cycles.
