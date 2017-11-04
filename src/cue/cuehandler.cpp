@@ -13,15 +13,15 @@ namespace PixelMaestro {
 	 */
 	Section* CueHandler::get_section(uint8_t section_id, uint8_t overlay_id) {
 
-		if (section_id >= controller_->get_maestro()->get_num_sections()) {
+		Section* section = controller_->get_maestro()->get_section(section_id);
+		if (section == nullptr) {
 			return nullptr;
 		}
 
-		Section* section = controller_->get_maestro()->get_section(section_id);
-
 		/*
 		 * Iterate until we hit the desired Overlay level.
-		 * If there is no Overlay at that level, return nothing.
+		 * If there is no Overlay at that level, return nullptr.
+		 * Important: Overlays start at index 1, not 0!
 		 */
 		if (overlay_id > 0) {
 			for (uint8_t i = 0; i < overlay_id; i++) {

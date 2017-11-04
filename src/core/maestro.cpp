@@ -92,6 +92,10 @@ namespace PixelMaestro {
 		@return Section at the specified index.
 	*/
 	Section* Maestro::get_section(uint8_t section) {
+		if (section >= num_sections_) {
+			return nullptr;
+		}
+
 		return &sections_[section];
 	}
 

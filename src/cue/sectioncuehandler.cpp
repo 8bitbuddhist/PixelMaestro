@@ -64,7 +64,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetOverlay;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = mix_mode;
+		controller_->get_cue()[Byte::OptionsByte] = (uint8_t)mix_mode;
 		controller_->get_cue()[Byte::OptionsByte + 1] = alpha;
 
 		controller_->assemble((uint8_t)Byte::OptionsByte + 2);

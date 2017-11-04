@@ -530,6 +530,8 @@ void MaestroControl::read_from_file(QString filename) {
 	 * Cues:
 	 *		SectionHandler::set_overlay() isn't working
 	 */
+
+	// Rebuild SectionController
 	set_active_section_controller(maestro_controller_->get_section_controller(0));
 }
 
@@ -541,18 +543,13 @@ void MaestroControl::save_to_file(QString filename) {
 	if (file.open(QFile::WriteOnly)) {
 		QDataStream datastream(&file);
 
-		// Iterate through each Section and save its settings to file
+		/*
+		 * Iterate through each Section and save its settings to file.
+		 * Note that Overlay IDs start at 1, not 0.
+		 */
+
 		for (uint8_t i = 0; i < maestro_controller_->get_num_section_controllers(); i++) {
 			save_section_settings(&datastream, i, 0);
-
-			// Save Overlay(s)
-			uint16_t overlay_count = 0;
-			Section::Overlay* overlay = maestro_controller_->get_section_controller(i)->get_overlay();
-			while (overlay != nullptr) {
-				overlay_count++;
-				save_section_settings(&datastream, i, overlay_count);
-				overlay = overlay->section->get_overlay();
-			}
 		}
 
 		file.flush();
@@ -571,11 +568,12 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	}
 
 	// Check for Overlay
-	if (section->get_overlay() != nullptr) {
-		Section::Overlay* overlay = section->get_overlay();
-
+	Section::Overlay* overlay = section->get_overlay();
+	if (overlay != nullptr) {
 		section_handler->set_overlay(section_id, overlay_id, overlay->mix_mode, overlay->alpha);
 		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+		save_section_settings(datastream, section_id, overlay_id + 1);
 	}
 
 	// Dimensions
@@ -805,10 +803,8 @@ void MaestroControl::show_canvas_controls() {
  * @param cue Cue to append.
  * @param cue_size Size of Cue.
  */
-void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue, uint8_t cue_size) {
-	for (uint8_t i = 0; i < cue_size; i++) {
-		stream->writeBytes((const char*)cue, cue_size);
-	}
+void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue, uint16_t cue_size) {
+	stream->writeRawData((const char*)cue, cue_size);
 }
 
 /**

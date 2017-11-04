@@ -94,7 +94,7 @@ class MaestroControl : public QWidget {
 		void set_speed();
 		void show_extra_controls(Animation* animation);
 		void show_canvas_controls();
-		void write_cue_to_stream(QDataStream* stream, uint8_t* cue, uint8_t cue_size);
+		void write_cue_to_stream(QDataStream* stream, uint8_t* cue, uint16_t cue_size);
 
 	private slots:
 		void on_alphaSpinBox_valueChanged(int arg1);

@@ -37,6 +37,8 @@ namespace PixelMaestro {
 	/**
 		Main update routine.
 		Checks for and applies color changes.
+
+		@return True if the color has changed.
 	*/
 	void Pixel::update() {
 		if (step_count_ > 1) {	// Yes, this is intentionally set to 1
