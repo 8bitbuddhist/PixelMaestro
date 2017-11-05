@@ -14,7 +14,7 @@ CanvasControl::CanvasControl(MaestroControl* maestro_control, QWidget *parent) :
 	QWidget(parent),
 	ui(new Ui::CanvasControl) {
 	ui->setupUi(this);
-	this->canvas_ = maestro_control->active_section_controller_->get_section()->get_canvas();
+	this->canvas_ = maestro_control->active_section_->get_canvas();
 	this->maestro_control_ = maestro_control;
 	this->initialize();
 }

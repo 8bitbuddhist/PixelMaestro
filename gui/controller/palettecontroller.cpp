@@ -32,7 +32,7 @@ void PaletteController::initialize_palettes() {
 	uint8_t num_colors = 14;
 	Colors::RGB colors[num_colors];
 
-	palettes_.clear();
+	//palettes_.clear();
 
 	Colors::generate_scaling_color_array(colors, &ColorPresets::RED, &ColorPresets::YELLOW, num_colors, true);
 	palettes_.push_back(Palette("Fire", colors, num_colors));

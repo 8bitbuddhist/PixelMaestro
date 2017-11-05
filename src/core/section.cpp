@@ -25,18 +25,23 @@ namespace PixelMaestro {
 	/**
 	 * Constructor. Initializes the Pixel array.
 	 * @param dimensions Initial layout (rows and columns) of the Pixels.
+	 * @param parent Parent Section (if this is an Overlay).
 	 */
-	Section::Section(Point dimensions) {
-		set_dimensions(dimensions.x, dimensions.y);
-	}
+	Section::Section(Point dimensions, Section* parent) : Section(dimensions.x, dimensions.y, parent) { }
 
 	/**
 	 * Constructor. Initializes the Pixel array.
 	 * @param x Number of rows in the Section.
 	 * @param y Number of columns in the Section.
+	 * @param parent Parent Section (if this is an Overlay).
 	 */
-	Section::Section(uint16_t x, uint16_t y) {
+	Section::Section(uint16_t x, uint16_t y, Section* parent) {
 		set_dimensions(x, y);
+		parent_section_ = parent;
+
+		if (parent_section_ != nullptr) {
+			refresh_interval_ = parent_section_->get_refresh_interval();
+		}
 	}
 
 	/**
@@ -72,6 +77,14 @@ namespace PixelMaestro {
 	 */
 	Section::Overlay* Section::get_overlay() {
 		return overlay_;
+	}
+
+	/**
+	 * Returns this Section's parent (if this is an Overlay).
+	 * @return Parent Section.
+	 */
+	Section* Section::get_parent_section() {
+		return parent_section_;
 	}
 
 	/**
@@ -113,10 +126,10 @@ namespace PixelMaestro {
 	/**
 		Returns the Section's refresh rate.
 
-		@return The refresh rate of the Section.
+		@return The Section's refresh rate.
 	*/
-	uint16_t Section::get_refresh_interval() {
-		return *refresh_interval_;
+	uint16_t* Section::get_refresh_interval() {
+		return refresh_interval_;
 	}
 
 	/**
@@ -284,8 +297,7 @@ namespace PixelMaestro {
 	 */
 	Section::Overlay* Section::set_overlay(Colors::MixMode mix_mode, uint8_t alpha) {
 		remove_overlay();
-		overlay_ = new Overlay(dimensions_, mix_mode, alpha);
-		overlay_->section->set_refresh_interval(refresh_interval_);
+		overlay_ = new Overlay(this, mix_mode, alpha);
 		return overlay_;
 	}
 

@@ -6,7 +6,7 @@
 #include "cue/sectioncuehandler.h"
 
 CueDemo::CueDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
-	maestro_controller_->add_section_controller(new Point(10, 10));
+	maestro_controller_->add_section(Point(10, 10));
 
 	Maestro* maestro = maestro_controller_->get_maestro();
 

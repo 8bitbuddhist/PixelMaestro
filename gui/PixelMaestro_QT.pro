@@ -17,7 +17,6 @@ SOURCES += main.cpp\
 		drawingarea/simpledrawingarea.cpp \
 		demo/blinkdemo.cpp \
 		widget/maestrocontrol.cpp \
-		controller/sectioncontroller.cpp \
 		controller/maestrocontroller.cpp \
 		demo/showdemo.cpp \
 		../src/canvas/fonts/font5x8.cpp \
@@ -75,7 +74,6 @@ HEADERS += \
 		drawingarea/maestrodrawingarea.h \
 		drawingarea/simpledrawingarea.h \
 		widget/maestrocontrol.h \
-		controller/sectioncontroller.h \
 		controller/maestrocontroller.h \
 		demo/showdemo.h \
 		../src/canvas/fonts/font.h \

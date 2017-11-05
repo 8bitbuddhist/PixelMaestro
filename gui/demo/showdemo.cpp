@@ -4,7 +4,6 @@
 
 #include "colorpresets.h"
 #include "controller/maestrocontroller.h"
-#include "controller/sectioncontroller.h"
 #include "cue/animationcuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "cue/event.h"
@@ -13,8 +12,7 @@
 #include "showdemo.h"
 
 ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
-	maestro_controller_ = maestro_controller;
-	maestro_controller_->add_section_controller(new Point(10, 10));
+	maestro_controller_->add_section(Point(10, 10));
 
 	CueController* controller = maestro_controller_->get_maestro()->set_cue_controller();
 

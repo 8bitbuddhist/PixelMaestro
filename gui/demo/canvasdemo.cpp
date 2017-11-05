@@ -9,19 +9,10 @@
 #include "animation/mergeanimation.h"
 #include "canvas/fonts/font5x8.h"
 #include "controller/maestrocontroller.h"
-#include "controller/sectioncontroller.h"
 #include "core/point.h"
 
 CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
-
-	// Create a new Pixel grid.
-	Point* layout = new Point(80, 80);
-
-	maestro_controller_ = maestro_controller;
-	maestro_controller_->add_section_controller(layout);
-
-	SectionController *section_controller = maestro_controller_->get_section_controller(0);
-	Section* section = section_controller->get_section();
+	Section* section = maestro_controller_->add_section(Point(80, 80));
 
 	section->set_animation(AnimationType::Merge, ColorPresets::COLORWHEEL, 12);
 

@@ -5,13 +5,8 @@
 #include "colorpresets.h"
 
 ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
-	Point* layout = new Point(80, 80);
+	Section* section = maestro_controller_->add_section(Point(80, 80));
 
-	maestro_controller_ = maestro_controller;
-	maestro_controller_->add_section_controller(layout);
-
-	SectionController *section_controller = maestro_controller_->get_section_controller(0);
-	Section* section = section_controller->get_section();
 	Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::COLORWHEEL, 12);
 	animation->set_reverse(true);
 

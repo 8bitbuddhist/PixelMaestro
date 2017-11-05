@@ -29,15 +29,15 @@ void SimpleDrawingArea::paintEvent(QPaintEvent *event) {
 	 * If there's more than one, the last Section will overwrite the first.
 	 * For more complex layouts, create a custom MaestroDrawingArea or add multiple SimpleDrawingAreas to the window.
 	 */
-	uint16_t section = 0;
-	if (last_pixel_count_ != maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->size()) {
+	Section* section = maestro_controller_->get_maestro()->get_section(0);
+	if (last_pixel_count_ != section->get_dimensions()->size()) {
 		resizeEvent(nullptr);
-		last_pixel_count_ = maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->size();
+		last_pixel_count_ = section->get_dimensions()->size();
 	}
 
-	for (uint16_t row = 0; row < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->y; row++) {
-		for (uint16_t column = 0; column < maestro_controller_->get_section_controller(section)->get_section()->get_dimensions()->x; column++) {
-			tmp_rgb_ = maestro_controller_->get_maestro()->get_pixel_color(section, column, row);
+	for (uint16_t row = 0; row < section->get_dimensions()->y; row++) {
+		for (uint16_t column = 0; column < section->get_dimensions()->x; column++) {
+			tmp_rgb_ = section->get_pixel_color(column, row);
 			tmp_color_.setRgb(tmp_rgb_.r, tmp_rgb_.g, tmp_rgb_.b);
 			tmp_brush_.setColor(tmp_color_);
 			tmp_brush_.setStyle(Qt::BrushStyle::SolidPattern);
@@ -72,8 +72,8 @@ void SimpleDrawingArea::resizeEvent(QResizeEvent *event) {
 	QSize widget_size = this->size();
 
 	// Find the optimal radius of each Pixel
-	uint8_t max_width = widget_size.width() / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->x;
-	uint8_t max_height = widget_size.height() / maestro_controller_->get_section_controller(0)->get_section()->get_dimensions()->y;
+	uint8_t max_width = widget_size.width() / maestro_controller_->get_maestro()->get_section(0)->get_dimensions()->x;
+	uint8_t max_height = widget_size.height() / maestro_controller_->get_maestro()->get_section(0)->get_dimensions()->y;
 
 	// Find the smaller dimension
 	if (max_width < max_height) {

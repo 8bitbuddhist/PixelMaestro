@@ -2,7 +2,6 @@
 #include "cue/show.h"
 #include "maestrocontroller.h"
 #include <memory>
-#include "sectioncontroller.h"
 
 using namespace PixelMaestro;
 
@@ -11,18 +10,19 @@ using namespace PixelMaestro;
  */
 MaestroController::MaestroController() {
 	maestro_ = std::unique_ptr<Maestro>(new Maestro(nullptr, 0));
-	// Set framerate to 25fps
-	maestro_->set_refresh_interval(40);
 }
 
 /**
  * Adds a new Section to the Maestro.
+ * @param dimensions New Section's layout.
+ * @return New Section.
  */
-std::shared_ptr<SectionController> MaestroController::add_section_controller(Point* layout) {
-	std::shared_ptr<SectionController> controller = std::shared_ptr<SectionController>(new SectionController(layout));
-	section_controllers_.push_back(controller);
-	reassign_sections();
-	return controller;
+Section* MaestroController::add_section(Point dimensions) {
+	//sections_.push_back(new Section(*dimensions));
+	Section* section = new Section(dimensions);
+	sections_.push_back(section);
+	maestro_->set_sections(sections_[0], sections_.size());
+	return section;
 }
 
 /**
@@ -34,27 +34,6 @@ Maestro* MaestroController::get_maestro() {
 }
 
 /**
- * Returns the number of Sections handled by this Maestro.
- * @return Number of Sections.
- */
-uint8_t MaestroController::get_num_section_controllers() {
-	return section_controllers_.size();
-}
-
-/**
- * Returns the SectionController at the specified index.
- * @param index Index of the desired SectionController.
- * @return SectionController at the specified index.
- */
-SectionController *MaestroController::get_section_controller(uint8_t index) {
-	return section_controllers_[index].get();
-}
-
-std::vector<std::shared_ptr<SectionController>> MaestroController::get_section_controllers() {
-	return section_controllers_;
-}
-
-/**
  * Returns the Show managed in this Maestro (if applicable)
  * @return Show managed by this Maestro.
  */
@@ -62,15 +41,10 @@ Show *MaestroController::get_show() {
 	return maestro_->get_show();
 }
 
-/**
- * Re-sets the Maestro's Sections based on the number of SectionControllers.
- */
-void MaestroController::reassign_sections() {
-	// Re-build the Sections vector
-	this->sections_.clear();
-	for (uint8_t i = 0; i < section_controllers_.size(); i++) {
-		sections_.push_back(section_controllers_[i]->get_section());
+MaestroController::~MaestroController() {
+	for (Section* section : sections_) {
+		delete section;
 	}
 
-	maestro_->set_sections(sections_[0], sections_.size());
+	sections_.clear();
 }

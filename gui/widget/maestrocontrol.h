@@ -12,7 +12,6 @@
 #include "controller/cueinterpreter.h"
 #include "controller/maestrocontroller.h"
 #include "controller/palettecontroller.h"
-#include "controller/sectioncontroller.h"
 #include "controller/showcontroller.h"
 #include "core/colors.h"
 #include "core/maestro.h"
@@ -30,8 +29,6 @@ using namespace PixelMaestro;
 
 class MaestroController;
 
-class SectionController;
-
 class ShowControl;
 
 class ShowController;
@@ -40,11 +37,11 @@ class MaestroControl : public QWidget {
 	Q_OBJECT
 
 	public:
-		/// The actively controlled SectionController.
-		SectionController *active_section_controller_ = nullptr;
+		/// The Section currently being controlled.
+		Section* active_section_ = nullptr;
 
 		/// The controller for managing Palettes.
-		PaletteController palette_controller_;
+		std::unique_ptr<PaletteController> palette_controller_;
 
 		// Cue components
 		CueInterpreter* cue_interpreter_ = nullptr;
@@ -89,7 +86,7 @@ class MaestroControl : public QWidget {
 		void initialize_palettes();
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
-		void set_active_section_controller(SectionController* controller);
+		void set_active_section(Section* section);
 		void set_overlay_controls_visible(bool visible);
 		void set_speed();
 		void show_extra_controls(Animation* animation);

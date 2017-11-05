@@ -21,7 +21,7 @@
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
 	ui->setupUi(this);
 	this->main_layout_ = this->findChild<QLayout*>("mainLayout");
-	setWindowTitle("PixelMaestro");
+	setWindowTitle("PixelMaestro Studio");
 	reset_drawing_area();
 }
 
@@ -132,7 +132,6 @@ void MainWindow::on_actionCommand_Demo_triggered() {
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	reset_drawing_area();
 
-	controller_->add_section_controller(new Point(10, 10));
 	maestro_control_ = new MaestroControl(main_layout_->widget(), controller_);
 	drawing_area_ = new SimpleDrawingArea(main_layout_->widget(), controller_);
 
@@ -155,10 +154,10 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	reset_drawing_area();
 
 	// Initialize a new 50x50 drawing grid
-	std::shared_ptr<SectionController> section_controller = controller_->add_section_controller(new Point(50, 50));
-	section_controller->get_section()->set_animation(AnimationType::Wave, ColorPresets::COLORWHEEL, 12);
+	Section* section = controller_->add_section(Point(50, 50));
+	section->set_animation(AnimationType::Wave, ColorPresets::COLORWHEEL, 12);
 
-	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section_controller->get_section()->set_canvas(CanvasType::Type::AnimationCanvas));
+	AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::Type::AnimationCanvas));
 
 	drawing_area_ = new CanvasDrawingArea(main_layout_->widget(), controller_, canvas);
 	installEventFilter(drawing_area_);

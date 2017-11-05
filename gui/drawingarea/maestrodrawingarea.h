@@ -6,7 +6,6 @@
 #define MAESTRODRAWINGAREA_H
 
 #include "controller/maestrocontroller.h"
-#include "controller/sectioncontroller.h"
 #include "core/colors.h"
 #include "core/maestro.h"
 #include "core/pixel.h"
