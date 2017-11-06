@@ -91,7 +91,7 @@ namespace PixelMaestro {
 
 		private:
 			/// Buffer for storing the currently loaded Cue.
-			uint8_t cue_[UINT16_MAX] = {0};
+			uint8_t cue_[UINT8_MAX] = {0};
 
 			/// Handlers for incoming Cues.
 			CueHandler* handlers_[4] {nullptr};
