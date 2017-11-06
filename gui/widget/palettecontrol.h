@@ -13,7 +13,7 @@ class PaletteControl : public QDialog {
 		Q_OBJECT
 
 	public:
-		explicit PaletteControl(PaletteController* controller, std::string initial_palette = "", QWidget *parent = 0);
+		explicit PaletteControl(PaletteController* controller, QString initial_palette = "", QWidget *parent = 0);
 		~PaletteControl();
 
 	private slots:
@@ -37,7 +37,7 @@ class PaletteControl : public QDialog {
 		QColor base_color_ = Qt::black;
 		QColor target_color_ = Qt::black;
 
-		void initialize_palettes(std::string initial_palette);
+		void initialize_palettes(QString initial_palette);
 		void set_create_palette_controls_visible(bool visible);
 };
 

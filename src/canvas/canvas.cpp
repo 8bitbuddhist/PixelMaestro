@@ -444,7 +444,7 @@ namespace PixelMaestro {
 		 */
 		if (scroll_ != nullptr) {
 			uint32_t target_time = current_time - scroll_->last_scroll_x;
-			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * *section_->get_refresh_interval()) <= target_time) {
+			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * section_->get_refresh_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_->interval_x > 0) {
@@ -466,7 +466,7 @@ namespace PixelMaestro {
 			}
 
 			target_time = current_time - scroll_->last_scroll_y;
-			if (scroll_->interval_y != 0 && (Utility::abs_int(scroll_->interval_y) * *section_->get_refresh_interval()) <= target_time) {
+			if (scroll_->interval_y != 0 && (Utility::abs_int(scroll_->interval_y) * section_->get_refresh_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_->interval_y > 0) {

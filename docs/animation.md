@@ -27,21 +27,21 @@ The following animation types are available:
 * Lightning: Displays lightning bolts branching from one end of the grid to the other.
 
 ## Creating an Animation
-To create an animation, use `Section::add_animation()` specifying the animation type and a color palette.
+To create an animation, use `Section::set_animation()` specifying the animation type and a color palette.
 
 ```c++
 #include "core/section.h"
 
 Section section(10, 10);
-Animation* animation = section.add_animation(AnimationType::Blink, Colors::COLORWHEEL, 12);
+Animation* animation = section.set_animation(AnimationType::Blink, Colors::COLORWHEEL, 12);
 ``` 
 
 Some animations (such as Sparkle) support the use of additional parameters. You can set these parameters by calling a method specific to that animation (e.g. `SparkleAnimation::set_threshold()`).
 
 ```c++
 Section section(10, 10);
-SparkleAnimation* animation = static_cast<SparkleAnimation*>(section.add_animation(AnimationType::Sparkle, Colors::COLORWHEEL, 12));
-animation.set_threshold(100);
+SparkleAnimation* animation = static_cast<SparkleAnimation*>(section.set_animation(AnimationType::Sparkle, ColorPreset::COLORWHEEL, 12));
+animation->set_threshold(100);
 ``` 
 
 ### Setting the Color Palette

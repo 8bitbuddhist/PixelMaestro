@@ -18,7 +18,6 @@ MaestroController::MaestroController() {
  * @return New Section.
  */
 Section* MaestroController::add_section(Point dimensions) {
-	//sections_.push_back(new Section(*dimensions));
 	Section* section = new Section(dimensions);
 	sections_.push_back(section);
 	maestro_->set_sections(sections_[0], sections_.size());
@@ -39,6 +38,18 @@ Maestro* MaestroController::get_maestro() {
  */
 Show *MaestroController::get_show() {
 	return maestro_->get_show();
+}
+
+/**
+ * Re-initializes the Section array.
+ */
+void MaestroController::reset_sections() {
+	for (uint8_t section = 0; section < sections_.size(); section++) {
+		delete sections_[section];
+	}
+
+	sections_.clear();
+	maestro_->set_sections(nullptr, 0);
 }
 
 MaestroController::~MaestroController() {

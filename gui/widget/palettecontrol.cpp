@@ -6,7 +6,7 @@
 #include "palettecontrol.h"
 #include "ui_palettecontrol.h"
 
-PaletteControl::PaletteControl(PaletteController* controller, std::string initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControl) {
+PaletteControl::PaletteControl(PaletteController* controller, QString initial_palette, QWidget *parent) : QDialog(parent), ui(new Ui::PaletteControl) {
 	this->palette_controller_ = controller;
 	ui->setupUi(this);
 
@@ -18,17 +18,17 @@ PaletteControl::PaletteControl(PaletteController* controller, std::string initia
 	set_create_palette_controls_visible(false);
 }
 
-void PaletteControl::initialize_palettes(std::string initial_palette) {
+void PaletteControl::initialize_palettes(QString initial_palette) {
 	// Initialize palette list
 	ui->paletteComboBox->blockSignals(true);
 	ui->paletteComboBox->clear();
-	for (PaletteController::Palette palette : palette_controller_->get_palettes()) {
-		ui->paletteComboBox->addItem(QString::fromStdString(palette.name));
+	for (uint16_t i = 0; i < palette_controller_->get_palettes()->size(); i++) {
+		ui->paletteComboBox->addItem(palette_controller_->get_palette(i)->name);
 	}
 	ui->paletteComboBox->blockSignals(false);
 
 	if (initial_palette.length() > 0) {
-		ui->paletteComboBox->setCurrentText(QString::fromStdString(initial_palette));
+		ui->paletteComboBox->setCurrentText(initial_palette);
 	}
 	else {
 		ui->paletteComboBox->setCurrentIndex(0);
@@ -96,7 +96,7 @@ void PaletteControl::on_createButtonBox_accepted() {
 		}
 
 		// Add the new Palette
-		palette_controller_->add_palette(name.toStdString().c_str(), colors, num_colors);
+		palette_controller_->add_palette(name, colors, num_colors);
 		ui->paletteComboBox->addItem(name);
 		ui->paletteComboBox->setCurrentText(name);
 
@@ -150,7 +150,7 @@ void PaletteControl::on_paletteComboBox_currentIndexChanged(int index) {
 
 /// Deletes the current Palette.
 void PaletteControl::on_removeButton_clicked() {
-	if (palette_controller_->get_palettes().size() > 1) {
+	if (palette_controller_->get_palettes()->size() > 1) {
 		QMessageBox::StandardButton confirm;
 		confirm = QMessageBox::question(this, "Delete Palette", "This will delete the current Palette. Are you sure you want to continue?", QMessageBox::Yes|QMessageBox::No);
 		if (confirm == QMessageBox::Yes) {

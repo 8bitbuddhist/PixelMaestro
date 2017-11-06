@@ -6,14 +6,13 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.8] - In Progress
 ### Added
 - Added new ColorPresets class for storing pre-defined colors and color collections. These were previously part of the Colors class.
-- Canvas: Added animation support in the form of multiple layers (or `frames`).
+- Canvas: Added support for animated images.
 - GUI:
 	- New Palette Editor dialog lets you create, edit, and delete color Palettes.
 	- Added number box to speed slider.
 	- Added slider to control Animation pause threshold.
-	- Added `CanvasUtility` class for advanced Canvas actions. Currently supports loading images into Canvases.
+	- Added ability to load images to Canvases.
 	- Added Show editor (in progress).
-	- Enabled Cue support for nearly every action in the Animation Editor.
 - Maestro:
 	- Added simplified constructor for creating a Maestro with only one Section.
 	- Added parameter to `Maestro::update()` to bypass the refresh interval and force an update.
@@ -26,17 +25,14 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Cue:
 	- Added and fixed several Cues, especially involving Canvases.
 - GUI:
+	- Enabled Cues for several Animation Editor actions.
 	- Renamed app to "PixelMaestro Studio".
 	- Renamed "Animation Previewer" to "Animation Editor".
-	- Removed SectionController middle layer.
-	- Fixed several settings that were not populating correctly when switching Sections in Animation Previewer.
+	- Fixed several settings that weren't populating correctly when switching Sections in Animation Previewer.
 	- Improved saving to and loading from PixelMaestro Cue (.pmc) files.
 
 ### Removed
 - Removed pre-defined colors and color arrays from Colors class. You can now find them in the ColorPresets class.
-
-### Known Issues
-- Opening Cues from a file is still not supported.
 
 ## [v0.7] - 2017-10-07
 ### Added

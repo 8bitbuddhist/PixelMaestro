@@ -66,7 +66,7 @@ namespace PixelMaestro {
 			Section* get_parent_section();
 			Pixel* get_pixel(uint16_t x, uint16_t y);
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
-			uint16_t* get_refresh_interval();
+			uint16_t get_refresh_interval();
 			void remove_animation();
 			void remove_canvas();
 			void remove_overlay();
@@ -76,7 +76,7 @@ namespace PixelMaestro {
 			void set_one(uint32_t pixel, Colors::RGB* color);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
 			Section::Overlay* set_overlay(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
-			void set_refresh_interval(uint16_t* interval);
+			void set_refresh_interval(uint16_t interval);
 			void update(const uint32_t& current_time);
 
 		private:
@@ -98,8 +98,8 @@ namespace PixelMaestro {
 			/// The array of Pixels managed by the Section.
 			Pixel* pixels_ = nullptr;
 
-			/// The time between Pixel redraws in milliseconds. Controlled by the Maestro.
-			uint16_t* refresh_interval_ = nullptr;
+			/// The time between Pixel redraws in milliseconds. Dictated by the Maestro.
+			uint16_t refresh_interval_ = 50;
 	};
 }
 

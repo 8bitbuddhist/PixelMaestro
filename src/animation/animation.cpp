@@ -128,7 +128,7 @@ namespace PixelMaestro {
 			If not fading, just jump one single step.
 		*/
 		if (fade_) {
-			step_count_ = (speed_ - pause_) / (float)*section_->get_refresh_interval();
+			step_count_ = (speed_ - pause_) / (float)section_->get_refresh_interval();
 
 			if (step_count_ == 0) {
 				step_count_ = 1;

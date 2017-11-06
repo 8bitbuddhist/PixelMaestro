@@ -41,7 +41,7 @@ class MaestroControl : public QWidget {
 		Section* active_section_ = nullptr;
 
 		/// The controller for managing Palettes.
-		std::unique_ptr<PaletteController> palette_controller_;
+		PaletteController palette_controller_;
 
 		// Cue components
 		CueInterpreter* cue_interpreter_ = nullptr;

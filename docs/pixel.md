@@ -8,7 +8,7 @@ A Pixel represents a single RGB output. It stores a color value, a pointer to a 
 4. [Common Methods](#common-methods)
 
 ## Creating Pixels
-Pixels don't take a constructor.
+Pixels don't take any parameters.
 ```c++
 Pixel pixel;
 ```

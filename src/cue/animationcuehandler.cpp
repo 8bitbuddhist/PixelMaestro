@@ -62,7 +62,7 @@ namespace PixelMaestro {
 
 	// General-purpose Cues
 
-	void AnimationCueHandler::set_colors(uint8_t section_num, uint8_t overlay_num, Colors::RGB *colors, uint8_t num_colors) {
+	void AnimationCueHandler::set_colors(uint8_t section_num, uint8_t overlay_num, Colors::RGB *colors, uint8_t num_colors, bool delete_old_colors) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetColors;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
@@ -78,6 +78,8 @@ namespace PixelMaestro {
 			controller_->get_cue()[colors_index] = colors[i].b;
 			colors_index++;
 		}
+
+		controller_->get_cue()[colors_index] = delete_old_colors;
 
 		controller_->assemble(colors_index);
 	}
@@ -149,10 +151,6 @@ namespace PixelMaestro {
 		switch((Action)cue[Byte::ActionByte]) {
 			case Action::SetColors:
 				{
-					if (animation->get_colors() != nullptr) {
-						delete[] animation->get_colors();
-					}
-
 					uint8_t num_colors = cue[Byte::OptionsByte];
 					uint8_t current_color_index = 1;
 					Colors::RGB* colors = new Colors::RGB[num_colors];
@@ -164,6 +162,11 @@ namespace PixelMaestro {
 						colors[i].b = cue[Byte::OptionsByte + current_color_index];
 						current_color_index++;
 					}
+
+					if (cue[current_color_index] && animation->get_colors() != nullptr) {
+						delete[] animation->get_colors();
+					}
+
 					animation->set_colors(colors, num_colors);
 				}
 				break;

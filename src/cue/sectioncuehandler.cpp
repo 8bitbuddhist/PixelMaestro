@@ -9,7 +9,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 	}
 
-	void SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors) {
+	void SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors) {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetAnimation;
@@ -28,6 +28,8 @@ namespace PixelMaestro {
 			controller_->get_cue()[colors_index] = colors[i].b;
 			colors_index++;
 		}
+
+		controller_->get_cue()[colors_index] = delete_old_colors;
 
 		controller_->assemble(colors_index);
 	}
@@ -98,7 +100,7 @@ namespace PixelMaestro {
 					}
 
 					// Delete any previous animation colors to prevent memory leaks.
-					if (section->get_animation() != nullptr && section->get_animation()->get_colors() != nullptr) {
+					if (cue[colors_index] && section->get_animation() != nullptr) {
 						delete[] section->get_animation()->get_colors();
 					}
 

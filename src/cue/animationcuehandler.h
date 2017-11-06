@@ -40,7 +40,7 @@ namespace PixelMaestro {
 			void set_sparkle_options(uint8_t section_num, uint8_t overlay_num, uint8_t threshold);
 
 			// General Animation calls
-			void set_colors(uint8_t section_num, uint8_t overlay_num, Colors::RGB* colors, uint8_t num_colors);
+			void set_colors(uint8_t section_num, uint8_t overlay_num, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors = true);
 			void set_cycle_index(uint8_t section_num, uint8_t overlay_num, uint8_t cycle_index);
 			void set_fade(uint8_t section_num, uint8_t overlay_num, bool fade);
 			void set_orientation(uint8_t section_num, uint8_t overlay_num, Animation::Orientation orientation);

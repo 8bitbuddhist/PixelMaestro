@@ -128,7 +128,7 @@ namespace PixelMaestro {
 
 		@return The Section's refresh rate.
 	*/
-	uint16_t* Section::get_refresh_interval() {
+	uint16_t Section::get_refresh_interval() {
 		return refresh_interval_;
 	}
 
@@ -306,7 +306,7 @@ namespace PixelMaestro {
 
 		@param interval Rate in milliseconds between Pixel redraws.
 	*/
-	void Section::set_refresh_interval(uint16_t* interval) {
+	void Section::set_refresh_interval(uint16_t interval) {
 		refresh_interval_ = interval;
 	}
 

@@ -133,6 +133,10 @@ namespace PixelMaestro {
 	 */
 	void Maestro::set_refresh_interval(uint16_t interval)	{
 		refresh_interval_ = interval;
+
+		for (uint8_t section = 0; section < num_sections_; section++) {
+			sections_[section].set_refresh_interval(interval);
+		}
 	}
 
 	/**
@@ -154,9 +158,8 @@ namespace PixelMaestro {
 		sections_ = sections;
 		num_sections_ = num_sections;
 
-		for (uint8_t section = 0; section < num_sections; section++) {
-			sections_[section].set_refresh_interval(&refresh_interval_);
-		}
+		// Update Sections' refresh intervals
+		set_refresh_interval(refresh_interval_);
 	}
 
 	/**

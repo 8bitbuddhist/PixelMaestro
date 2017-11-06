@@ -19,6 +19,7 @@ class MaestroController {
 		Section* add_section(Point dimensions);
 		Maestro* get_maestro();
 		Show *get_show();
+		void reset_sections();
 
 	private:
 		/// Maestro controlled by this controller.
@@ -26,8 +27,6 @@ class MaestroController {
 
 		/// Sections belonging to the Maestro. These are deleted automatically when the MaestroController is deleted.
 		std::vector<Section*> sections_;
-
-		void reassign_sections();
 };
 
 #endif // MAESTROCONTROLLER_H

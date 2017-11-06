@@ -58,7 +58,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 	// Create an initial Cue.
 	if (cue_controller_ != nullptr) {
-		section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Blink, false, &palette_controller_->get_palette(0)->colors[0], palette_controller_->get_palette(0)->colors.size());
+		section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Blink, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
 		send_to_device();
 	}
 }
@@ -108,14 +108,15 @@ int16_t MaestroControl::get_section_index() {
  * Build the initial UI.
  */
 void MaestroControl::initialize() {
-	// Create a simple Section and set it as active
+	// Clear out and re-add the Maestro's Sections
+	active_section_ = nullptr;
+	maestro_controller_->reset_sections();
 	Section* section = maestro_controller_->add_section(Point(10, 10));
-	active_section_ = section;
 
 	initialize_palettes();
 
 	// Set basic default animation
-	PaletteController::Palette* palette = palette_controller_->get_palette("Color Wheel");
+	PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
 	Animation* animation = section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
 	animation->set_speed(1000);
 
@@ -144,7 +145,6 @@ void MaestroControl::initialize() {
 
 	// Initialize Overlay controls
 	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Overlay"});
-	ui->alphaSpinBox->setVisible(false);
 
 	// Initialize Canvas controls
 	ui->canvasComboBox->addItems({"No Canvas", "Animation Canvas", "Color Canvas"});
@@ -157,15 +157,18 @@ void MaestroControl::initialize() {
 	ui->alphaSpinBox->blockSignals(false);
 	ui->canvasComboBox->blockSignals(false);
 
+	// Hide Overlay controls
+	set_overlay_controls_visible(false);
+
 	// Disable Edit Show Events box by default.
 	ui->editEventsButton->setEnabled(false);
 
-	// Hide Show controls (again)
+	// Hide Show controls (for now)
 	ui->showLabel->setVisible(false);
 	ui->editEventsButton->setVisible(false);
 	ui->enableShowCheckBox->setVisible(false);
 
-	set_active_section(active_section_);
+	set_active_section(section);
 }
 
 /// Initializes Cue components.
@@ -180,14 +183,12 @@ void MaestroControl::initialize_cue_controller() {
 
 /// Reinitializes Palettes from Palette Dialog.
 void MaestroControl::initialize_palettes() {
-	palette_controller_.reset();
-	palette_controller_ = std::unique_ptr<PaletteController>(new PaletteController());
 	ui->colorComboBox->blockSignals(true);
 	ui->colorComboBox->clear();
 
 	// Populate color combo box
-	for (PaletteController::Palette palette : palette_controller_->get_palettes()) {
-		ui->colorComboBox->addItem(QString::fromStdString(palette.name));
+	for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
+		ui->colorComboBox->addItem(palette_controller_.get_palette(i)->name);
 	}
 	ui->colorComboBox->blockSignals(false);
 }
@@ -277,7 +278,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 		return;
 	}
 
-	PaletteController::Palette* palette = palette_controller_->get_palette(index);
+	PaletteController::Palette* palette = palette_controller_.get_palette(index);
 	active_section_->get_animation()->set_colors(&palette->colors[0], palette->colors.size());
 
 	if (cue_controller_ != nullptr) {
@@ -396,7 +397,7 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 void MaestroControl::on_paletteControlButton_clicked() {
 	QString palette_name = ui->colorComboBox->currentText();
 
-	PaletteControl palette_control(palette_controller_.get(), palette_name.toStdString());
+	PaletteControl palette_control(&palette_controller_, palette_name);
 	palette_control.exec();
 	initialize_palettes();
 	ui->colorComboBox->setCurrentText(palette_name);
@@ -465,7 +466,7 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 		// Check to make sure the Section has an Overlay. If not, add one.
 		if (active_section_->get_overlay() == nullptr) {
 			active_section_->set_overlay(Colors::MixMode::None);
-			PaletteController::Palette* palette = palette_controller_->get_palette("Color Wheel");
+			PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
 			active_section_->get_overlay()->section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
 
 			if (cue_controller_ != nullptr) {
@@ -529,10 +530,6 @@ void MaestroControl::read_from_file(QString filename) {
 		file.close();
 	}
 
-	/*
-	 * FIXME: SectionHandler::set_overlay() not working
-	 */
-
 	// Reinitialize UI with base Section
 	set_active_section(maestro_controller_->get_maestro()->get_section(0));
 }
@@ -544,11 +541,6 @@ void MaestroControl::save_to_file(QString filename) {
 	QFile file(filename);
 	if (file.open(QFile::WriteOnly)) {
 		QDataStream datastream(&file);
-
-		/*
-		 * Iterate through each Section and save its settings to file.
-		 * Note that Overlay IDs start at 1, not 0.
-		 */
 
 		for (uint8_t i = 0; i < maestro_controller_->get_maestro()->get_num_sections(); i++) {
 			save_section_settings(&datastream, i, 0);
@@ -563,64 +555,56 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 
 	Section* section = maestro_controller_->get_maestro()->get_section(section_id);
 
-	if (overlay_id) {
+	if (overlay_id > 0) {
 		for (uint8_t i = 0; i < overlay_id; i++) {
 			section = section->get_overlay()->section;
 		}
 	}
 
-	// Check for Overlay
-	Section::Overlay* overlay = section->get_overlay();
-	if (overlay != nullptr) {
-		section_handler->set_overlay(section_id, overlay_id, overlay->mix_mode, overlay->alpha);
-		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
-
-		save_section_settings(datastream, section_id, overlay_id + 1);
-	}
-
 	// Dimensions
-	section_handler->set_dimensions(section_id, overlay_id, ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+	section_handler->set_dimensions(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y);
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
 	// Animation & Colors
-	section_handler->set_animation(section_id, overlay_id, (AnimationType::Type)ui->animationComboBox->currentIndex(), true, active_section_->get_animation()->get_colors(), active_section_->get_animation()->get_num_colors());
+	Animation* animation = section->get_animation();
+	section_handler->set_animation(section_id, overlay_id, animation->get_type(), false, animation->get_colors(), animation->get_num_colors(), false);
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
-	animation_handler->set_orientation(section_id, overlay_id, section->get_animation()->get_orientation());
+	animation_handler->set_orientation(section_id, overlay_id, animation->get_orientation());
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
-	animation_handler->set_reverse(section_id, overlay_id, ui->reverse_animationCheckBox->isChecked());
+	animation_handler->set_reverse(section_id, overlay_id, animation->get_reverse());
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
-	animation_handler->set_fade(section_id, overlay_id, ui->fadeCheckBox->isChecked());
+	animation_handler->set_fade(section_id, overlay_id, animation->get_fade());
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
-	animation_handler->set_speed(section_id, overlay_id, ui->cycleSlider->value(), ui->pauseSlider->value());
+	animation_handler->set_speed(section_id, overlay_id, animation->get_speed(), animation->get_pause());
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
-	switch(section->get_animation()->get_type()) {
+	switch(animation->get_type()) {
 		case AnimationType::Lightning:
 			{
-				LightningAnimation* animation = static_cast<LightningAnimation*>(section->get_animation());
-				animation_handler->set_lightning_options(section_id, overlay_id, animation->get_bolt_count(), animation->get_down_threshold(), animation->get_up_threshold(), animation->get_fork_chance());
+				LightningAnimation* la = static_cast<LightningAnimation*>(animation);
+				animation_handler->set_lightning_options(section_id, overlay_id, la->get_bolt_count(), la->get_down_threshold(), la->get_up_threshold(), la->get_fork_chance());
 			}
 			break;
 		case AnimationType::Plasma:
 			{
-				PlasmaAnimation* animation = static_cast<PlasmaAnimation*>(section->get_animation());
-				animation_handler->set_plasma_options(section_id, overlay_id, animation->get_size(), animation->get_resolution());
+				PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
+				animation_handler->set_plasma_options(section_id, overlay_id, pa->get_size(), pa->get_resolution());
 			}
 			break;
 		case AnimationType::Radial:
 			{
-				RadialAnimation* animation = static_cast<RadialAnimation*>(section->get_animation());
-				animation_handler->set_radial_options(section_id, overlay_id, animation->get_resolution());
+				RadialAnimation* ra = static_cast<RadialAnimation*>(animation);
+				animation_handler->set_radial_options(section_id, overlay_id, ra->get_resolution());
 			}
 			break;
 		case AnimationType::Sparkle:
 			{
-				SparkleAnimation* animation = static_cast<SparkleAnimation*>(section->get_animation());
-				animation_handler->set_sparkle_options(section_id, overlay_id, animation->get_threshold());
+				SparkleAnimation* sa = static_cast<SparkleAnimation*>(animation);
+				animation_handler->set_sparkle_options(section_id, overlay_id, sa->get_threshold());
 			}
 			break;
 		default:
@@ -629,7 +613,7 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 
 	// Canvas
-	Canvas* canvas = active_section_->get_canvas();
+	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
 		section_handler->set_canvas(section_id, overlay_id, canvas->get_type(), canvas->get_num_frames());
 		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
@@ -646,6 +630,15 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 			}
 			write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
 		}
+	}
+
+	// Save Overlays
+	Section::Overlay* overlay = section->get_overlay();
+	if (overlay != nullptr) {
+		section_handler->set_overlay(section_id, overlay_id, overlay->mix_mode, overlay->alpha);
+		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+
+		save_section_settings(datastream, section_id, overlay_id + 1);
 	}
 }
 
@@ -680,10 +673,10 @@ void MaestroControl::set_active_section(Section* section) {
 	ui->orientationComboBox->setCurrentIndex(animation->get_orientation());
 	ui->reverse_animationCheckBox->setChecked(animation->get_reverse());
 	ui->fadeCheckBox->setChecked(animation->get_fade());
-	ui->cycleSlider->setValue(section->get_animation()->get_speed());
-	ui->cycleSpinBox->setValue(section->get_animation()->get_speed());
-	ui->pauseSlider->setValue(section->get_animation()->get_pause());
-	ui->pauseSpinBox->setValue(section->get_animation()->get_pause());
+	ui->cycleSlider->setValue(animation->get_speed());
+	ui->cycleSpinBox->setValue(animation->get_speed());
+	ui->pauseSlider->setValue(animation->get_pause());
+	ui->pauseSpinBox->setValue(animation->get_pause());
 	ui->orientationComboBox->blockSignals(false);
 	ui->reverse_animationCheckBox->blockSignals(false);
 	ui->fadeCheckBox->blockSignals(false);
@@ -698,11 +691,11 @@ void MaestroControl::set_active_section(Section* section) {
 	 * If it's not there, add it.
 	 */
 	bool palette_found = false;
-	for (uint16_t i = 0; i < palette_controller_->get_palettes().size(); i++) {
-		PaletteController::Palette* palette = palette_controller_->get_palette(i);
-		if (&palette->colors[0] == section->get_animation()->get_colors()) {
+	for (uint16_t i = 0; i < palette_controller_.get_palettes()->size(); i++) {
+		PaletteController::Palette* palette = palette_controller_.get_palette(i);
+		if (*palette == animation->get_colors()) {
 			ui->colorComboBox->blockSignals(true);
-			ui->colorComboBox->setCurrentText(QString::fromStdString(palette->name));
+			ui->colorComboBox->setCurrentText(palette->name);
 			ui->colorComboBox->blockSignals(false);
 			palette_found = true;
 			continue;
@@ -718,17 +711,18 @@ void MaestroControl::set_active_section(Section* section) {
 		else {
 			name += "Overlay " + QString::number(get_overlay_index());
 		}
-		palette_controller_->add_palette(name.toStdString(), section->get_animation()->get_colors(), section->get_animation()->get_num_colors());
+		palette_controller_.add_palette(name, animation->get_colors(), animation->get_num_colors());
 		ui->colorComboBox->blockSignals(true);
+		ui->colorComboBox->addItem(name);
 		ui->colorComboBox->setCurrentText(name);
 		ui->colorComboBox->blockSignals(false);
 	}
 
 	// Set the animation
 	ui->animationComboBox->blockSignals(true);
-	ui->animationComboBox->setCurrentIndex(section->get_animation()->get_type());
+	ui->animationComboBox->setCurrentIndex(animation->get_type());
 	ui->animationComboBox->blockSignals(false);
-	show_extra_controls(section->get_animation());
+	show_extra_controls(animation);
 
 	// Get Overlay MixMode and alpha from the Overlay's parent section
 	if (section->get_parent_section() != nullptr) {
