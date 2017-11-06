@@ -11,6 +11,58 @@
 #include "core/point.h"
 
 /**
+ * Copies all frames to or from an AnimationCanvas.
+ * @param canvas AnimationCanvas to copy from.
+ * @param target Target frameset.
+ * @param target_x Target width.
+ * @param target_y Target height.
+ * @param copy_from_canvas If true, copy from the Canvas to the target. Otherwise, copy from the target to the Canvas.
+ */
+void CanvasUtility::copy_frameset(AnimationCanvas *canvas, bool** target, uint16_t target_x, uint16_t target_y, bool copy_from_canvas) {
+	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+		if (copy_from_canvas) {
+			Point target_bounds(target_x, target_y);
+			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
+				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+					if (x <= target_x && y <= target_y) {
+						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
+					}
+				}
+			}
+		}
+		else {
+			canvas->draw_frame(target[frame], target_x, target_y);
+		}
+	}
+}
+
+/**
+ * Copies all frames from a ColorCanvas.
+ * @param canvas ColorCanvas to copy from.
+ * @param target Target frameset.
+ * @param target_x Target width.
+ * @param target_y Target height.
+ * @param copy_from_canvas If true, copy from the Canvas to the target. Otherwise, copy from the target to the Canvas.
+ */
+void CanvasUtility::copy_frameset(ColorCanvas *canvas, Colors::RGB** target, uint16_t target_x, uint16_t target_y, bool copy_from_canvas) {
+	for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+		if (copy_from_canvas) {
+			Point target_bounds(target_x, target_y);
+			for (uint16_t y = 0; y < canvas->get_section()->get_dimensions()->y; y++) {
+				for (uint16_t x = 0; x < canvas->get_section()->get_dimensions()->x; x++) {
+					if (x <= target_x && y <= target_y) {
+						target[frame][target_bounds.get_inline_index(x, y)] = canvas->get_frame(frame)[canvas->get_section()->get_dimensions()->get_inline_index(x, y)];
+					}
+				}
+			}
+		}
+		else {
+			canvas->draw_frame(target[frame], target_x, target_y);
+		}
+	}
+}
+
+/**
  * Loads an image into the Canvas.
  * @param filename Image location.
  * @param canvas Canvas to load the image into.

@@ -22,6 +22,7 @@
 #include "window/settingsdialog.h"
 #include "widget/palettecontrol.h"
 #include "ui_maestrocontrol.h"
+#include "utility/canvasutility.h"
 
 /**
  * Constructor.
@@ -491,22 +492,57 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
  * @param y Number of columns.
  */
 void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
-	// Check the Canvas
-	/*
-	 * Disabled due to an excessive amount of popups
-	if (canvas_control_widget_ != nullptr) {
-		CanvasControl* widget = qobject_cast<CanvasControl*>(canvas_control_widget_.get());
-		if (!widget->confirm_clear()) {
-			return;
-		}
-	}
-	*/
-
 	if ((x != active_section_->get_dimensions()->x) || (y != active_section_->get_dimensions()->y)) {
-		active_section_->set_dimensions(x, y);
 
 		/*
-		 * Disabled dynamic resizing on remote devices, because that would just be silly.
+		 * Check for a Canvas.
+		 * The old Canvas gets deleted on resize.
+		 * If one is set, copy its contents to a temporary buffer, then copy it back once the new Canvas is created.
+		 */
+		if (active_section_->get_canvas() != nullptr) {
+			if (active_section_->get_canvas()->get_type() == CanvasType::AnimationCanvas) {
+				AnimationCanvas* canvas = static_cast<AnimationCanvas*>(active_section_->get_canvas());
+				// Create temporary frameset
+				Point frame_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+				bool** frames = new bool*[canvas->get_num_frames()];
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					frames[frame] = new bool[frame_bounds.size()];
+				}
+				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, true);
+
+				active_section_->set_dimensions(x, y);
+
+				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false);
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					delete[] frames[frame];
+				}
+				delete[] frames;
+			}
+			else if (active_section_->get_canvas()->get_type() == CanvasType::ColorCanvas) {
+				ColorCanvas* canvas = static_cast<ColorCanvas*>(active_section_->get_canvas());
+				// Create temporary frameset
+				Point frame_bounds(canvas->get_section()->get_dimensions()->x, canvas->get_section()->get_dimensions()->y);
+				Colors::RGB** frames = new Colors::RGB*[canvas->get_num_frames()];
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					frames[frame] = new Colors::RGB[frame_bounds.size()];
+				}
+				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, true);
+
+				active_section_->set_dimensions(x, y);
+
+				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false);
+				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
+					delete[] frames[frame];
+				}
+				delete[] frames;
+			}
+		}
+		else {	// No Canvas set
+			active_section_->set_dimensions(x, y);
+		}
+
+		/*
+		 * Disabled dynamic resizing on remote devices because it doesn't really make sense.
 		 *
 		if (cue_controller_ != nullptr) {
 			section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
@@ -525,7 +561,10 @@ void MaestroControl::read_from_file(QString filename) {
 
 		QByteArray bytes = file.readAll();
 		for (int i = 0; i < bytes.size(); i++) {
-			cue_controller_->read((uint8_t)bytes.at(i));
+			uint8_t byte = (uint8_t)bytes.at(i);
+			cue_controller_->read(byte);
+
+			send_to_device(&byte, 1);
 		}
 		file.close();
 	}
@@ -622,10 +661,10 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 			switch (canvas->get_type()) {
 				case CanvasType::AnimationCanvas:
-					canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->size(), static_cast<AnimationCanvas*>(canvas)->get_frame(frame));
+					canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<AnimationCanvas*>(canvas)->get_frame(frame));
 					break;
 				case CanvasType::ColorCanvas:
-					canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->size(), static_cast<ColorCanvas*>(canvas)->get_frame(frame));
+					canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame));
 					break;
 			}
 			write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
@@ -766,8 +805,19 @@ void MaestroControl::set_speed() {
  * Sends the last action performed to the configured serial device.
  */
 void MaestroControl::send_to_device() {
-	if (cue_controller_ != nullptr) {
+	if (serial_port_.isOpen()) {
 		serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	}
+}
+
+/**
+ * Sends data to the serial device.
+ * @param data Data to send.
+ * @param length Size of the data to send.
+ */
+void MaestroControl::send_to_device(uint8_t* data, uint8_t length) {
+	if (serial_port_.isOpen()) {
+		serial_port_.write((const char*)data, length);
 	}
 }
 

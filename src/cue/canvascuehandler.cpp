@@ -58,30 +58,34 @@ namespace PixelMaestro {
 		controller_->assemble((uint8_t)(Byte::OptionsByte + 10));
 	}
 
-	void CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t overlay_num, uint32_t num_pixels, bool *frame) {
+	void CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t overlay_num, uint16_t size_x, uint16_t size_y, bool *frame) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawFrame;
 		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = num_pixels;
+		controller_->get_cue()[Byte::OptionsByte] = size_x;
+		controller_->get_cue()[Byte::OptionsByte + 1] = size_y;
 
+		uint32_t num_pixels = size_x * size_y;
 		for (uint32_t pixel = 0; pixel < num_pixels; pixel++) {
-			controller_->get_cue()[Byte::OptionsByte + (pixel + 1)] = (uint8_t)frame[pixel];
+			controller_->get_cue()[(Byte::OptionsByte + 2) + pixel] = (uint8_t)frame[pixel];
 		}
 
 		controller_->assemble((uint8_t)(Byte::OptionsByte + num_pixels));
 	}
 
-	void CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t overlay_num, uint32_t num_pixels, Colors::RGB *frame) {
+	void CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t overlay_num, uint16_t size_x, uint16_t size_y, Colors::RGB *frame) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawFrame;
 		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = num_pixels;
+		controller_->get_cue()[Byte::OptionsByte] = size_x;
+		controller_->get_cue()[Byte::OptionsByte + 1] = size_y;
 
-		uint32_t options_index = 1;
+		uint32_t options_index = 2;
+		uint32_t num_pixels = size_x * size_y;
 		for (uint32_t pixel = 0; pixel < num_pixels; pixel++) {
 			controller_->get_cue()[Byte::OptionsByte + options_index] = frame->r;
 			options_index++;
@@ -91,7 +95,7 @@ namespace PixelMaestro {
 			options_index++;
 		}
 
-		controller_->assemble((uint8_t)(Byte::OptionsByte + num_pixels));
+		controller_->assemble((uint8_t)(Byte::OptionsByte + options_index));
 	}
 
 	void CanvasCueHandler::draw_line(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
@@ -430,8 +434,14 @@ namespace PixelMaestro {
 							break;
 						case Action::DrawFrame:
 							{
-								for (uint32_t pixel = 0; pixel < cue[Byte::OptionsByte]; pixel++) {
-									canvas->get_frame(canvas->get_current_frame_index())[pixel] = cue[Byte::OptionsByte + (pixel + 1)];
+								canvas->clear();
+								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
+								for (uint16_t y = 0; y < frame_bounds.y; y++) {
+									for (uint16_t x = 0; x < frame_bounds.x; x++) {
+										if (cue[(Byte::OptionsByte + 2) + frame_bounds.get_inline_index(x, y)] == true) {
+											canvas->draw_point(x, y);
+										}
+									}
 								}
 							}
 							break;
@@ -510,14 +520,18 @@ namespace PixelMaestro {
 							break;
 						case Action::DrawFrame:
 							{
-								uint32_t options_index = 1;
-								for (uint32_t pixel = 0; pixel < cue[Byte::OptionsByte]; pixel++) {
-									canvas->get_frame(canvas->get_current_frame_index())[pixel].r = cue[Byte::OptionsByte + options_index];
-									options_index++;
-									canvas->get_frame(canvas->get_current_frame_index())[pixel].g = cue[Byte::OptionsByte + options_index];
-									options_index++;
-									canvas->get_frame(canvas->get_current_frame_index())[pixel].b = cue[Byte::OptionsByte + options_index];
-									options_index++;
+								canvas->clear();
+								uint32_t current_index = 2;
+								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
+								for (uint16_t y = 0; y < frame_bounds.y; y++) {
+									for (uint16_t x = 0; x < frame_bounds.x; x++) {
+										Colors::RGB color(cue[Byte::OptionsByte + current_index],
+												cue[Byte::OptionsByte + current_index + 1],
+												cue[Byte::OptionsByte + current_index + 2]);
+
+										canvas->draw_point(color, x, y);
+										current_index += 3;
+									}
 								}
 							}
 							break;

@@ -65,6 +65,7 @@ class MaestroControl : public QWidget {
 		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
 		void save_to_file(QString filename);
 		void send_to_device();
+		void send_to_device(uint8_t* data, uint8_t length);
 
 	private:
 		Ui::MaestroControl *ui;

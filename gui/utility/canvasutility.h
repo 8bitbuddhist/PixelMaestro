@@ -7,13 +7,18 @@
 
 #include <QByteArray>
 #include <QString>
+#include "canvas/animationcanvas.h"
 #include "canvas/canvas.h"
+#include "canvas/colorcanvas.h"
+#include "core/colors.h"
 #include "widget/maestrocontrol.h"
 
 using namespace PixelMaestro;
 
 class CanvasUtility {
 	public:
+		static void copy_frameset(AnimationCanvas* canvas, bool** target, uint16_t target_x, uint16_t target_y, bool copy_from_canvas = true);
+		static void copy_frameset(ColorCanvas* canvas, Colors::RGB** target, uint16_t target_x, uint16_t target_y, bool copy_from_canvas = true);
 		static void load_image(QString filename, Canvas* canvas, MaestroControl* maestro_control = nullptr);
 };
 

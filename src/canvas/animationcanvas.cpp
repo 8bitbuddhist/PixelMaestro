@@ -50,6 +50,24 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Draws an existing frame over the current frame.
+	 * @param frame Frame to draw.
+	 * @param size_x Frame width.
+	 * @param size_y Frame height.
+	 */
+	void AnimationCanvas::draw_frame(bool *frame, uint16_t size_x, uint16_t size_y) {
+		clear();
+		Point frame_bounds(size_x, size_y);
+		for (uint16_t y = 0; y < size_y; y++) {
+			for (uint16_t x = 0; x < size_x; x++) {
+				if (in_bounds(x, y) && frame[frame_bounds.get_inline_index(x, y)] == true) {
+					draw_point(x, y);
+				}
+			}
+		}
+	}
+
+	/**
 	 * Returns the frame at the specified index.
 	 * @param frame Index of the frame.
 	 * @return Frame at index.
