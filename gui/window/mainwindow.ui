@@ -927,12 +927,12 @@
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Online_Help">
    <property name="text">
-    <string>&amp;Online Help</string>
+    <string>&amp;Help</string>
    </property>
   </action>
   <action name="action_About">
    <property name="text">
-    <string>&amp;About PixelMaestro...</string>
+    <string>&amp;About PixelMaestro</string>
    </property>
   </action>
   <action name="action_Exit">
@@ -990,17 +990,17 @@
   </action>
   <action name="action_Preferences">
    <property name="text">
-    <string>&amp;Preferences...</string>
+    <string>&amp;Settings</string>
    </property>
   </action>
   <action name="action_Save_Maestro">
    <property name="text">
-    <string>&amp;Save to Cue File...</string>
+    <string>&amp;Save Maestro...</string>
    </property>
   </action>
   <action name="actionOpen_Maestro">
    <property name="text">
-    <string>Open &amp;Cue File...</string>
+    <string>&amp;Open Maestro...</string>
    </property>
   </action>
   <action name="action_Animated_Canvas_Demo">

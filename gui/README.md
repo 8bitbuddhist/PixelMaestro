@@ -1,14 +1,14 @@
-# PixelMaestro GUI
-This is a QT-based application that lets you preview and control PixelMaestro animations via PC.
+# PixelMaestro Studio
+PixelMaestro Studio is a Qt-based application that lets you use the core PixelMaestro library on a PC. PixelMaestro Studio lets you preview commands, mix custom Animations, save configurations, and send commands to devices via serial connection.
 
-## Requirements
+## Build Requirements
 - QT 5
 	- QSerialPort
 
 ## Contents
 1. [Main Window](#main-window)
 	1. [Navigating Workspaces](#navigating-workspaces)
-	2. [Changing Preferences](#changing-preferences)
+	2. [Changing Settings](#changing-settings)
 2. [Using the Animation Previewer](#animation-previewer)
 	1. [Additional Animation Parameters](#additional-animation-parameters)
 	2. [Custom Color Schemes](#custom-color-schemes)
@@ -16,24 +16,24 @@ This is a QT-based application that lets you preview and control PixelMaestro an
 	4. [Saving and Loading Configurations](#saving-and-loading-configurations)
 
 ## Main Window
-When you open the application for the first time, the main window is blank. Use the *File* menu to access different areas of the program, such as the *Animation Previewer* or various demos. Use the *Help* link to access the library documentation.
+Running the application opens a blank window. Use the *File* menu to access different areas of the program, such as the *Animation Editor* or various demos. Use the *Edit* menu to access the program's *Settings*. Use the *Help* menu to access documentation.
 
 ### Navigating Workspaces
-A *Workspace* is a screen showing a running Maestro. Some Workspaces show pre-configured demos, while others let you manipulate the Maestro.
+Opening a link in the *File* menu creates a new *Workspace*. When you first open the app, no Workspaces are running. After opening a Workspace, you can see details about the Workspace in the status bar at the bottom of the window. To close the current workspace, click *Close Workspace* in the menu, or just select another Workspace.
 
-Open a Workspace by clicking *File*, then select either a Demo or the Animation Previewer. You can see details about the workspace in the status bar at the bottom of the window. If you want to close the current workspace, click *Close Workspace* in the menu, or simply select another Workspace.
+### Changing Settings
+You can change the program's settings by clicking *Edit* > *Settings*.
 
-### Changing Preferences
-You can set preferences for the program by clicking *Edit* > *Preferences*.
+*Rendering Options* control how the Maestro is rendered to the screen.
 
-The *Pixel size* and *Pixel shape* options change the appearance of Pixels drawn to the screen. You may need to close and reopen any open Workspaces before these settings will take effect.
+*Animation Editor Options* control options specific to the Animation Editor. The *Send serial commands* option lets you control a Maestro running on a device connected via USB. The device must be actively listening for PixelMaestro Cues. For an example, see the [CueServer Arduino sketch](../arduino/CueServer/CueServer.cpp).
 
-The *Send serial commands* option lets you control a Maestro running on a device connected via USB. The device must be actively listening for PixelMaestro Cues. See the SerialCue Arduino sketch for an example.
+You may need to reopen any open Workspaces before setting changes will take effect.
 
-## Using the Animation Previewer
-The Animation Previewer lets you perform actions on a running Maestro in real-time. When you open the Animation Previewer, it draws a grid of Pixels with a set of controls underneath it. It also adds a single Section and Overlay. You can perform actions such as adjust the Section's size, configure Animations, and add a Canvas.
+## Using the Animation Editor
+The Animation Editor lets you modify a Maestro in real-time. When you open the Animation Editor, it creates a new Maestro with a single Section and Overlay. You can perform actions such as adjusting the Section's size, configuring Animations, and adding Canvases.
 
-If *Send serial commands* is enabled, any actions performed in the Animation Previewer will get sent to the specified USB device.
+If *Send serial commands* is configured in the Settings dialog, any actions performed in the Animation Editor will get sent to the specified serial device.
 
 ### Additional Animation Parameters
 TODO
@@ -45,6 +45,4 @@ TODO
 TODO
 
 ### Saving and Loading Configurations
-You can save the current Maestro configuration to a file by clicking *File* > *Save Maestro*. Enter a filename with the `.pmc` (PixelMaestro Cue) extension and click Save. This creates a file with a set of Cues stored on each line. You can use this file to restore your configuration at a later time or on another device by using the `CueController::run()` methods.
-
-**Note**: Saving and loading is a WIP feature. Not all settings will be saved, and loading is not currently available.
+You can save the current Maestro configuration to a file by clicking *File* > *Save Maestro...*. Likewise, you can open a Maestro configuration using *File* > *Open Maestro...*. This file works on any device running PixelMaestro. For more information, see the [Cue documentation](../docs/cue.md).

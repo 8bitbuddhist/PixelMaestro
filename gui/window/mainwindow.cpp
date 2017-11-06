@@ -47,7 +47,6 @@ void MainWindow::reset_drawing_area() {
 	removeEventFilter(drawing_area_);
 
 	ui->action_Save_Maestro->setEnabled(false);
-	ui->actionOpen_Maestro->setEnabled(false);
 
 	ui->action_Animated_Canvas_Demo->setEnabled(true);
 	ui->action_Blink_Demo->setEnabled(true);
@@ -141,7 +140,6 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	ui->action_Open_Animation_Editor->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	ui->action_Save_Maestro->setEnabled(true);
-	ui->actionOpen_Maestro->setEnabled(true);
 
 	statusBar()->showMessage(QString("Use the controls to modify the Section."));
 }
@@ -185,6 +183,8 @@ void MainWindow::on_actionOpen_Maestro_triggered() {
 		QDir::home().path(),
 		QString("PixelMaestro Cue File (*.pmc)"));
 
+	// Initialize the Animation editor and immediately read in the Cue file.
+	on_action_Open_Animation_Editor_triggered();
 	maestro_control_->read_from_file(filename);
 }
 

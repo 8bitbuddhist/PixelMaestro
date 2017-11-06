@@ -5,31 +5,35 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.8] - In Progress
 ### Added
-- Added new ColorPresets class for storing pre-defined colors and color collections. These were previously part of the Colors class.
-- Canvas: Added support for animated images.
-- GUI:
-	- New Palette Editor dialog lets you create, edit, and delete color Palettes.
+- Canvas:
+	- Added support for animations. Learn more in the [Canvas docs](docs/canvas.md).
+- Maestro:
+	- Added simplified constructor for creating a Maestro with only one Section.
+	- Added parameter to `Maestro::update()` to bypass the refresh interval and force an update.
+- Studio:
+	- New Palette Editor dialog lets you create, edit, and delete color palettes.
 	- Added number box to speed slider.
 	- Added slider to control Animation pause threshold.
 	- Added ability to load images to Canvases.
 	- Added Show editor (in progress).
-- Maestro:
-	- Added simplified constructor for creating a Maestro with only one Section.
-	- Added parameter to `Maestro::update()` to bypass the refresh interval and force an update.
 
 ### Changed
-- Canvas: Fixed Canvas scrolling behavior.
-- Core:
-	- Improved Pixel color changing logic.
+- Canvas:
+	- Fixed Canvas scrolling behavior.
+- Colors:
+	- Moved pre-defined colors into separate `ColorPresets` class.
 	- Replaced `Colors::generate_random_colors()` with a truly random color generator.
 - Cue:
-	- Added and fixed several Cues, especially involving Canvases.
-- GUI:
-	- Enabled Cues for several Animation Editor actions.
-	- Renamed app to "PixelMaestro Studio".
+	- Added and fixed several Cues (particularly `CanvasCueHandler`).
+- Pixel:
+	- Improved Pixel color changing logic.
+- Studio:
+	- Renamed GUI to "PixelMaestro Studio".
 	- Renamed "Animation Previewer" to "Animation Editor".
-	- Fixed several settings that weren't populating correctly when switching Sections in Animation Previewer.
+	- Added Cues for several Animation Editor actions.
+	- Fixed settings not populating correctly when switching Sections in Animation Editor.
 	- Improved saving to and loading from PixelMaestro Cue (.pmc) files.
+	- Fixed Canvas contents getting deleted on resize.
 
 ### Removed
 - Removed pre-defined colors and color arrays from Colors class. You can now find them in the ColorPresets class.

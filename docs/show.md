@@ -1,5 +1,5 @@
 # Show
-Shows are used to schedule the execution of [Cues](cue.md) at some later point during the program's lifetime. To start a Show, use the `Maestro::set_show()` method. This method also requires you to pass in a set of [`Events`](#adding-events), which are explained below.
+Shows are used to schedule the execution of [Cues](cue.md) at later points during the program's lifetime. To start a Show, use the `Maestro::set_show()` method. This method also requires you to pass in a set of [`Events`](#adding-events), which are explained below.
 
 For an example of how to configure a Show, see [ShowDemo](../gui/demo/showdemo.cpp).
 
@@ -12,7 +12,7 @@ For an example of how to configure a Show, see [ShowDemo](../gui/demo/showdemo.c
 6. [Event List](#event-list)
 
 ## Creating a Show
-Create a Show by calling `Maestro::set_show()` and passing in the Events you want to run. This example creates two events using Cues: one that adds a new Canvas, and one that draws a circle onto the Canvas.
+Create a Show by calling `Maestro::set_show()` and pass in the Events you want to run. This example creates two events using Cues: one that adds a new Canvas, and one that draws a circle onto the Canvas.
 
 **Tip:** `set_show()` automatically calls `set_cue_controller()` in case you haven't already initialized a CueController.
 
@@ -52,9 +52,9 @@ An Event is executed when its `time` is matched or exceeded by the program's run
 To change or reset the Event list, use `Show::set_events()`.
 
 ## Timing Methods
-A Show can use one of two timing methods: relative or absolute. Relative time measures the amount of time that has passed since the last Event. For example, if Event 1 has a time of 1000 and Event 2 has a time of 2000 ms, Event 1 will execute 1000 ms after the program starts, and Event 2 will execute 2000 ms after Event 1.
+A Show can use one of two timing methods: relative or absolute. Relative time measures the amount of time that has passed since the last Event. For example, if Event 1 has a time of 1000 and Event 2 has a time of 2000 ms, Event 1 executes 1000 ms after the program starts, and Event 2 executes 2000 ms after Event 1.
 
-Absolute time measures the amount of time that has passed since the program started. Using the same example above, Event 1 executes 1000 ms after the program starts, and Event 2 executes 2000 ms after the program starts (1000 ms after Event 1 starts).
+Absolute time measures the amount of time that has passed since the program started. Using the same example above, Event 1 executes 1000 ms after the program starts, and Event 2 executes 2000 ms after the program starts (or1000 ms after Event 1 starts).
 
 ## Looping
 After a Show completes its last Event, it won't do anything except update the Maestro. However, with looping enabled, the Show will repeat its Events indefinitely. To enable looping, call `Show::set_looping(boolean)`. To determine whether a Show is looping, call `Show::get_looping()`. Looping only works when using relative time.

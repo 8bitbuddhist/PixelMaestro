@@ -153,7 +153,7 @@ namespace PixelMaestro {
 				cue_[ID3Byte] = id_[ID3Byte];
 				read_index_ = ID3Byte;
 			}
-			else if ((uint16_t)read_index_ + 1 > UINT8_MAX) {
+			else if ((uint32_t)read_index_ + 1 > UINT16_MAX) {
 				read_index_ = 0;
 			}
 		}

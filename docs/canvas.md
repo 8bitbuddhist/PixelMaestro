@@ -6,50 +6,52 @@ See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT applicat
 ## Contents
 1. [Canvas Types](#canvas-types)
 2. [Creating a Canvas](#creating-a-canvas)
-	1. [Animating a Canvas](#animating-a-canvas)
-3. [Drawing Shapes](#drawing-shapes)
+3. [Animating a Canvas](#animating-a-canvas)
+	1. [Switching Frames](#switching-frames)
+4. [Drawing Shapes](#drawing-shapes)
 	1. [Drawing Lines](#drawing-lines)
 	2. [Drawing Rectangles](#drawing-rectangles)
 	3. [Drawing Text](#drawing-text)
 	4. [Drawing Triangles](#drawing-triangles)
 	5. [Clearing the Canvas](#clearing-the-canvas)
-4. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
-5. [Scrolling](#scrolling)
+5. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
+6. [Scrolling](#scrolling)
 	1. [Repeated Scrolling](#repeated-scrolling)
-6. [Offsetting](#offsetting)
-7. [Interactive Canvases](#interactive-canvases)
+7. [Offsetting](#offsetting)
+8. [Interactive Canvases](#interactive-canvases)
 
 ## Canvas Types
-There are two different types of Canvases: `ColorCanvas` and `AnimationCanvas`. A `ColorCanvas` works similar to an image editor: you specify the shape to draw and the color to use when drawing the shape. You can pass any color, and the Canvas will draw that color onto the Pixel. This type of Canvas is limited on low-memory devices, since it stores an additional RGB value for each pixel.
+There are two different types of Canvases: `ColorCanvas` and `AnimationCanvas`. A `ColorCanvas` works similar to an image editor: you specify the shape to draw and the color to draw the shape in, and the Canvas draws the shape in the specified color.
 
-An `AnimationCanvas` works almost identical to a `ColorCanvas`, except instead of drawing a specific color it draws the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, any shapes drawn on the Canvas will appear to blink as if it were running the Animation normally. This is done by assigning a boolean value to each pixel: if the boolean is `true`, then the pixel is drawn (i.e. it shows the Animation). If it's `false`, then the pixel is not drawn and appears black.
+**Tip:** Color Canvases are RAM-hungry. You might run into issues on memory-tight devices (e.g. Arduino Uno).
+
+Instead of drawing a specific color, an `AnimationCanvas` draws the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, anything drawn on the Canvas will blink. Pixels that are not drawn appear black.
 
 ## Creating a Canvas
-Create a new Canvas by calling `Section::set_canvas(CanvasType::Type)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas`. This automatically creates and initializes a new Canvas of the specified type, then returns a pointer to the new Canvas.
+Create a new Canvas by calling `Section::set_canvas(CanvasType::Type, num_frames)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas` and `num_frames` sets the number of frames the Canvas contains (defaults to 1 if omitted). This initializes and returns a pointer to a new Canvas of the specified type.
 
 Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
 
 ```c++
-ColorCanvas* canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas);
+ColorCanvas* canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas));
 ```
 
-If you want to display an animated Canvas, specify the number of frames in the Canvas' constructor. Frames are described in more detail in the section [Animating a Canvas](#animating-a-canvas).
+If you want to display an animated Canvas, specify the number of frames. Frames are described in more detail in the section [Animating a Canvas](#animating-a-canvas).
 
 ```c++
 int num_frames = 10;
 section-set_canvas(CanvasType::ColorCanvas, num_frames);
 ```
 
-### Animating a Canvas
-Canvases are made up of `frames`. A frame is an independent drawing surface with the same dimensions as the Pixel grid. When the Canvas updates, it draws the current frame then switches to the next frame. This creates the illusion of animation while by rapidly drawing and switching frames.
+## Animating a Canvas
+The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames, and if multiple frames are set, the Canvas will cycle through each one on refresh. This lets you use custom drawn animations in addition to the [built-in Section animations](animation.md).
 
-**Note:** The frame drawing rate is tied to the Maestro's refresh rate.
+**Note:** The frame cycle rate is the same as the Maestro's refresh rate.
 
-You can specify the number of frames in the constructor. Omitting this value creates a Canvas with a single frame.
+You can specify the number of frames in `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `set_num_frames()`, but bear in mind this will delete the current frame set.
 
-When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing any `draw()` actions to modify the new frame. Another way to quickly jump between frames is to use `next_frame()`, which changes the current frame to the next available frame (or the first frame if we're currently on hte last frame).
-
-To change the number of frames, use `set_num_frames()`. Note that this will delete any data stored in the current frame set.
+### Switching Frames
+When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes)), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing the Canvas to render that frame instead. This also changes the target frame for any `draw()` actions. You can also quickly jump between frames using `next_frame()`, which jumps to the next available frame (or the first frame if you're currently on the last frame).
 
 ## Drawing Shapes
 The Canvas class provides several `draw()` methods for drawing various shapes, elements, and patterns. For each shape you must specify where it will appear on the grid (as x and y coordinates) and any extra parameters that the shape requires.
@@ -137,6 +139,6 @@ canvas->set_offset(5, 1);
 **Note:** Offset will be disabled if scrolling is enabled, since scrolling modifies the offset values.
 
 ## Interactive Canvases
-For a demo on how to create an interactive Canvas, see the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class in the PixelMaestro GUI.
+You can create Canvases that respond to user input using the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class. For an example, open `Drawing Demo` in PixelMaestro Studio.
 
 [Home](README.md)
