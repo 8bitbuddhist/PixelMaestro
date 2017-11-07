@@ -1,7 +1,7 @@
 # Cue
 A Cue is a serialized PixelMaestro commands. Using Cues, you can recreate a Maestro by loading a file, send commands to other devices, or [schedule commands](show.md) to run at a later time.
 
-**Warning:** Cues are RAM-hungry. You may run into issues on devices with 2KB of RAM or less.
+**Warning:** Cues are RAM-hungry. You may run into issues on low-memory devices such as an Arduino Uno.
 
 ## Contents
 1. [Enabling Cues](#enabling-cues)

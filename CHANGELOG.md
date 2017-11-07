@@ -15,6 +15,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Added number box to speed slider.
 	- Added slider to control Animation pause threshold.
 	- Added ability to load images to Canvases.
+	- Added serial device simulator for testing and previewing Cues.
 	- Added Show editor (in progress).
 
 ### Changed
@@ -24,15 +25,15 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Moved pre-defined colors into separate `ColorPresets` class.
 	- Replaced `Colors::generate_random_colors()` with a truly random color generator.
 - Cue:
-	- Added and fixed several Cues (particularly `CanvasCueHandler`).
+	- Added and fixed several Cues.
 - Pixel:
 	- Improved Pixel color changing logic.
 - Studio:
 	- Renamed GUI to "PixelMaestro Studio".
 	- Renamed "Animation Previewer" to "Animation Editor".
 	- Added Cues for several Animation Editor actions.
-	- Fixed settings not populating correctly when switching Sections in Animation Editor.
-	- Improved saving to and loading from PixelMaestro Cue (.pmc) files.
+	- Fixed settings not populating correctly when switching between Sections.
+	- Improved saving to and loading from Cue (.pmc) files.
 	- Fixed Canvas contents getting deleted on resize.
 
 ### Removed

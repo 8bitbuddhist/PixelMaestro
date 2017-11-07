@@ -20,6 +20,7 @@
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
 #include "widget/showcontrol.h"
+#include "window/virtualserialdevicedialog.h"
 
 namespace Ui {
 	class MaestroControl;
@@ -60,7 +61,7 @@ class MaestroControl : public QWidget {
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
 		int16_t get_overlay_index();
-		uint8_t get_overlay_index(Section::Overlay* overlay);
+		uint8_t get_overlay_index(Section* section);
 		int16_t get_section_index();
 		uint8_t get_section_index(Section* section);
 		void read_from_file(QString filename);
@@ -83,6 +84,9 @@ class MaestroControl : public QWidget {
 
 		/// Controller for managing Shows.
 		ShowController* show_controller_ = nullptr;
+
+		/// Virtual device for testing Cue commands.
+		std::unique_ptr<VirtualSerialDeviceDialog> virtual_device_dialog_;
 
 		void initialize();
 		void initialize_cue_controller();

@@ -43,17 +43,29 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 	// Open serial connection to Arduino (if configured)
 	QSettings settings;
 	if (settings.value(SettingsDialog::serial_enabled).toBool()) {
-	serial_port_.setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
-		serial_port_.setBaudRate(9600);
 
-		// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
-		serial_port_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
-		serial_port_.setParity(QSerialPort::Parity::NoParity);
-		serial_port_.setDataBits(QSerialPort::DataBits::Data8);
-		serial_port_.setStopBits(QSerialPort::StopBits::OneStop);
+		/*
+		 * If the virtual device is selected, connect to a new VirtualSerialDeviceDialog.
+		 * Cues are sent to the device in send_to_device().
+		 * Otherwise initialize the serial port like normal.
+		 */
+		if (settings.value(SettingsDialog::serial_port).toString().contains(SettingsDialog::virtual_device)) {
+			virtual_device_dialog_ = std::unique_ptr<VirtualSerialDeviceDialog>(new VirtualSerialDeviceDialog(this));
+			virtual_device_dialog_.get()->show();
+		}
+		else {
+			serial_port_.setPortName(QString(settings.value(SettingsDialog::serial_port).toString()));
+			serial_port_.setBaudRate(9600);
 
-		if (!serial_port_.open(QIODevice::WriteOnly)) {
-			QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_port_.errorString()));
+			// https://stackoverflow.com/questions/13312869/serial-communication-with-arduino-fails-only-on-the-first-message-after-restart
+			serial_port_.setFlowControl(QSerialPort::FlowControl::NoFlowControl);
+			serial_port_.setParity(QSerialPort::Parity::NoParity);
+			serial_port_.setDataBits(QSerialPort::DataBits::Data8);
+			serial_port_.setStopBits(QSerialPort::StopBits::OneStop);
+
+			if (!serial_port_.open(QIODevice::WriteOnly)) {
+				QMessageBox::warning(nullptr, QString("Serial Failure"), QString("Failed to open serial device: " + serial_port_.errorString()));
+			}
 		}
 	}
 
@@ -82,9 +94,9 @@ int16_t MaestroControl::get_overlay_index() {
 	return level;
 }
 
-uint8_t MaestroControl::get_overlay_index(Section::Overlay* overlay) {
+uint8_t MaestroControl::get_overlay_index(Section* section) {
 	uint8_t level = 0;
-	Section* test_section = overlay->section;
+	Section* test_section = section;
 	while (test_section->get_parent_section() != nullptr) {
 		test_section = test_section->get_parent_section();
 		level++;
@@ -233,7 +245,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	active_section_->get_parent_section()->get_overlay()->alpha = arg1;
 
 	if (cue_controller_ != nullptr) {
-		section_handler->set_overlay(get_section_index(), get_overlay_index(), active_section_->get_parent_section()->get_overlay()->mix_mode, arg1);
+		section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_overlay()->mix_mode, arg1);
 		send_to_device();
 	}
 }
@@ -397,7 +409,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 		}
 
 		if (cue_controller_ != nullptr) {
-			section_handler->set_overlay(get_section_index(), get_overlay_index(), (Colors::MixMode)index, ui->alphaSpinBox->value());
+			section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value());
 			send_to_device();
 		}
 	}
@@ -503,9 +515,7 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 				section_handler->set_overlay(get_section_index(), get_overlay_index(), overlay->mix_mode, overlay->alpha);
 				send_to_device();
 
-				//section_handler->set_animation(get_section_index(), get_overlay_index(), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true);
-				// FIXME: Overlay Cues not working properly
-				section_handler->set_animation(get_section_index(), get_overlay_index(overlay), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true);
+				section_handler->set_animation(get_section_index(), get_overlay_index(overlay->section), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true);
 				send_to_device();
 			}
 		}
@@ -575,14 +585,11 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 			active_section_->set_dimensions(x, y);
 		}
 
-		/*
-		 * Disabled dynamic resizing on remote devices because it doesn't really make sense.
-		 *
-		if (cue_controller_ != nullptr) {
+		// Only allow dynamic resizing for virtual device.
+		if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
 			section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
 			send_to_device();
 		}
-		*/
 	}
 }
 
@@ -839,7 +846,11 @@ void MaestroControl::set_speed() {
  * Sends the last action performed to the configured serial device.
  */
 void MaestroControl::send_to_device() {
-	if (serial_port_.isOpen()) {
+	if (virtual_device_dialog_ != nullptr) {
+		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(cue_controller_->get_cue(), cue_controller_->get_cue_size());
+		virtual_device_dialog_->display_cue(cue_controller_->get_cue());
+	}
+	else if (serial_port_.isOpen()) {
 		serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
 	}
 }
@@ -850,7 +861,11 @@ void MaestroControl::send_to_device() {
  * @param length Size of the data to send.
  */
 void MaestroControl::send_to_device(uint8_t* data, uint8_t length) {
-	if (serial_port_.isOpen()) {
+	if (virtual_device_dialog_ != nullptr) {
+		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(data, length);
+		virtual_device_dialog_->display_cue(data);
+	}
+	else if (serial_port_.isOpen()) {
 		serial_port_.write((const char*)data, length);
 	}
 }

@@ -33,7 +33,7 @@ You may need to reopen any open Workspaces before setting changes will take effe
 ## Using the Animation Editor
 The Animation Editor lets you modify a Maestro in real-time. When you open the Animation Editor, it creates a new Maestro with a single Section and Overlay. You can perform actions such as adjusting the Section's size, configuring Animations, and adding Canvases.
 
-If *Send serial commands* is configured in the Settings dialog, any actions performed in the Animation Editor will get sent to the specified serial device.
+If *Send serial commands* is configured in the Settings dialog, any actions performed in the Animation Editor will get sent to the specified serial device. PixelMaestro Studio automatically detects and lists USB devices connected to your PC. You can also run a simulated USB device for testing Cues by selecting *Simulated Device* in the drop-down.
 
 ### Additional Animation Parameters
 TODO

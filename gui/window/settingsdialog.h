@@ -18,6 +18,7 @@ class SettingsDialog : public QDialog
 		static QString refresh_rate;
 		static QString serial_enabled;
 		static QString serial_port;
+		static QString virtual_device;
 
 		explicit SettingsDialog(QWidget *parent = 0);
 		~SettingsDialog();

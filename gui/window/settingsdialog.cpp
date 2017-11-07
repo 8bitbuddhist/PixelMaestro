@@ -9,6 +9,7 @@ QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
 QString SettingsDialog::refresh_rate = QStringLiteral("maestro/refresh");
 QString SettingsDialog::serial_enabled = QStringLiteral("serial/enabled");
 QString SettingsDialog::serial_port = QStringLiteral("serial/port");
+QString SettingsDialog::virtual_device = QStringLiteral("Simulated Device");
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::SettingsDialog) {
 	ui->setupUi(this);
@@ -28,18 +29,22 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	on_serialCheckBox_toggled(ui->serialCheckBox->isChecked());
 
 	// Populate port settings
-	ui->serialCheckBox->setEnabled(true);
+	check_port_combobox();
 	ui->serialPortComboBox->setCurrentText(settings_.value(serial_port).toString());
 }
 
 void SettingsDialog::check_port_combobox() {
+	// Add option to select virtual serial device
+	ui->serialPortComboBox->addItem(SettingsDialog::virtual_device);
+
+	// Add actual serial devices
 	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
 	for (QSerialPortInfo port : ports) {
 		ui->serialPortComboBox->addItem(port.systemLocation());
 	}
 
-	// Only enable port dropdown if there are available devices
-	ui->serialPortComboBox->setEnabled(ui->serialCheckBox->isChecked() && ports.size() > 0);
+	// Only enable port dropdown if checked
+	ui->serialPortComboBox->setEnabled(ui->serialCheckBox->isChecked());
 }
 
 void SettingsDialog::on_buttonBox_accepted() {
@@ -56,7 +61,7 @@ void SettingsDialog::on_buttonBox_accepted() {
 }
 
 void SettingsDialog::on_serialCheckBox_toggled(bool checked) {
-	check_port_combobox();
+	ui->serialPortComboBox->setEnabled(checked);
 }
 
 SettingsDialog::~SettingsDialog() {
