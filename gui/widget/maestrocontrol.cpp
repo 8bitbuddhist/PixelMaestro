@@ -82,6 +82,34 @@ int16_t MaestroControl::get_overlay_index() {
 	return level;
 }
 
+uint8_t MaestroControl::get_overlay_index(Section::Overlay* overlay) {
+	uint8_t level = 0;
+	Section* test_section = overlay->section;
+	while (test_section->get_parent_section() != nullptr) {
+		test_section = test_section->get_parent_section();
+		level++;
+	}
+	return level;
+}
+
+uint8_t MaestroControl::get_section_index(Section* section) {
+
+	uint8_t index = 0;
+	Section* test_section = section;
+	Section* target_section = maestro_controller_->get_maestro()->get_section(0);
+	while (index < maestro_controller_->get_maestro()->get_num_sections() && target_section != test_section) {
+		index++;
+		target_section = maestro_controller_->get_maestro()->get_section(index);
+	}
+
+	if (index < maestro_controller_->get_maestro()->get_num_sections()) {
+		return index;
+	}
+	else {
+		return 0;
+	}
+}
+
 /**
  * Returns the index of the current Section.
  * @return Current Section index (or -1 if not found).
@@ -465,13 +493,19 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 	}
 	else {	// Overlay
 		// Check to make sure the Section has an Overlay. If not, add one.
-		if (active_section_->get_overlay() == nullptr) {
-			active_section_->set_overlay(Colors::MixMode::None);
+		Section::Overlay* overlay = active_section_->get_overlay();
+		if (overlay == nullptr) {
+			overlay = active_section_->set_overlay(Colors::MixMode::None);
 			PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
-			active_section_->get_overlay()->section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
+			Animation* animation = overlay->section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
 
 			if (cue_controller_ != nullptr) {
-				section_handler->set_overlay(get_section_index(), get_overlay_index(), active_section_->get_overlay()->mix_mode, active_section_->get_overlay()->alpha);
+				section_handler->set_overlay(get_section_index(), get_overlay_index(), overlay->mix_mode, overlay->alpha);
+				send_to_device();
+
+				//section_handler->set_animation(get_section_index(), get_overlay_index(), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true);
+				// FIXME: Overlay Cues not working properly
+				section_handler->set_animation(get_section_index(), get_overlay_index(overlay), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true);
 				send_to_device();
 			}
 		}
@@ -480,7 +514,7 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 		set_overlay_controls_visible(true);
 
 		// Set active Section to Overlay
-		set_active_section(active_section_->get_overlay()->section);
+		set_active_section(overlay->section);
 	}
 
 

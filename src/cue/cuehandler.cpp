@@ -22,11 +22,11 @@ namespace PixelMaestro {
 		 */
 		if (section != nullptr && overlay_id > 0) {
 			for (uint8_t i = 0; i < overlay_id; i++) {
-				if (section->get_overlay() == nullptr) {
-					section = section->set_overlay()->section;
+				if (section->get_overlay() != nullptr) {
+					section = section->get_overlay()->section;
 				}
 				else {
-					section = section->get_overlay()->section;
+					section = section->set_overlay()->section;
 				}
 			}
 		}

@@ -290,14 +290,20 @@ namespace PixelMaestro {
 
 	/**
 	 * Sets a new Overlay.
-	 * This will delete and overwrite an existing Overlay.
+	 * If an Overlay already exists, this updates the existing Overlay.
 	 * @param mix_mode The method for blending the Overlay.
 	 * @param alpha The Overlay's transparency (0 - 255.
 	 * @return New Overlay.
 	 */
 	Section::Overlay* Section::set_overlay(Colors::MixMode mix_mode, uint8_t alpha) {
-		remove_overlay();
-		overlay_ = new Overlay(this, mix_mode, alpha);
+		if (overlay_ == nullptr) {
+			overlay_ = new Overlay(this, mix_mode, alpha);
+		}
+		else {
+			overlay_->mix_mode = mix_mode;
+			overlay_->alpha = alpha;
+		}
+
 		return overlay_;
 	}
 

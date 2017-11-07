@@ -87,7 +87,7 @@ void PaletteControl::on_createButtonBox_accepted() {
 				{
 					Colors::RGB base(base_color_.red(), base_color_.green(), base_color_.blue());
 					Colors::RGB target(target_color_.red(), target_color_.green(), target_color_.blue());
-					Colors::generate_scaling_color_array(colors, &base, &target, num_colors, ui->reverseCheckBox->isChecked());
+					Colors::generate_scaling_color_array(colors, &base, &target, num_colors, (bool)ui->reverseCheckBox->isChecked());
 				}
 				break;
 			case 2:	// Random

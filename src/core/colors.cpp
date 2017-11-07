@@ -74,10 +74,12 @@ namespace PixelMaestro {
 		// Handle odd number of colors
 		if (num_colors % 2 != 0) {
 			if (reverse) {
-				array[(num_colors * 2) + 1] = *base_color;
+				//array[(num_colors * 2) + 1] = *base_color;
+				array[num_colors * 2] = *base_color;
 			}
 			else {
-				array[(num_colors * 2) + 1] = *target_color;
+				//array[(num_colors * 2) + 1] = *target_color;
+				array[num_colors * 2] = *target_color;
 			}
 		}
 	}

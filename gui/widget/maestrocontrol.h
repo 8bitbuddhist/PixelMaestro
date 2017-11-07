@@ -60,7 +60,9 @@ class MaestroControl : public QWidget {
 		explicit MaestroControl(QWidget* parent, MaestroController* maestro_controller);
 		~MaestroControl();
 		int16_t get_overlay_index();
+		uint8_t get_overlay_index(Section::Overlay* overlay);
 		int16_t get_section_index();
+		uint8_t get_section_index(Section* section);
 		void read_from_file(QString filename);
 		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
 		void save_to_file(QString filename);
