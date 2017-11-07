@@ -71,7 +71,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 	// Create an initial Cue.
 	if (cue_controller_ != nullptr) {
-		section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Blink, false, &palette_controller_.get_palette(0)->colors[0], palette_controller_.get_palette(0)->colors.size());
+		section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, false, &palette_controller_.get_palette("Color Wheel")->colors[0], palette_controller_.get_palette(0)->colors.size());
 		send_to_device();
 	}
 }
