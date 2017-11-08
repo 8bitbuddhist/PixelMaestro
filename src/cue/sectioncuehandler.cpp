@@ -7,6 +7,8 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::RemoveCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+
+		controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
 	void SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors) {

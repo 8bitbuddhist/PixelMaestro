@@ -11,6 +11,8 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::TypeByte] = 255;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+
+		controller_->assemble((uint8_t)(Byte::OptionsByte));
 	}
 
 	void CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
@@ -72,30 +74,30 @@ namespace PixelMaestro {
 			controller_->get_cue()[(Byte::OptionsByte + 2) + pixel] = (uint8_t)frame[pixel];
 		}
 
-		controller_->assemble((uint8_t)(Byte::OptionsByte + num_pixels));
+		controller_->assemble((uint8_t)((Byte::OptionsByte + 2) + num_pixels));
 	}
 
 	void CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t overlay_num, uint16_t size_x, uint16_t size_y, Colors::RGB *frame) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawFrame;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = size_x;
 		controller_->get_cue()[Byte::OptionsByte + 1] = size_y;
 
-		uint32_t options_index = 2;
+		uint32_t pixel_index = Byte::OptionsByte + 2;
 		uint32_t num_pixels = size_x * size_y;
 		for (uint32_t pixel = 0; pixel < num_pixels; pixel++) {
-			controller_->get_cue()[Byte::OptionsByte + options_index] = frame->r;
-			options_index++;
-			controller_->get_cue()[Byte::OptionsByte + options_index] = frame->g;
-			options_index++;
-			controller_->get_cue()[Byte::OptionsByte + options_index] = frame->b;
-			options_index++;
+			controller_->get_cue()[pixel_index] = frame[pixel].r;
+			pixel_index++;
+			controller_->get_cue()[pixel_index] = frame[pixel].g;
+			pixel_index++;
+			controller_->get_cue()[pixel_index] = frame[pixel].b;
+			pixel_index++;
 		}
 
-		controller_->assemble((uint8_t)(Byte::OptionsByte + options_index));
+		controller_->assemble((uint8_t)pixel_index);
 	}
 
 	void CanvasCueHandler::draw_line(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
@@ -170,7 +172,7 @@ namespace PixelMaestro {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawPoint;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = color.r;
@@ -357,6 +359,8 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::TypeByte] = 255;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+
+		controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
 	void CanvasCueHandler::set_current_frame_index(uint8_t section_num, uint8_t overlay_num, uint16_t index) {
@@ -369,6 +373,8 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = index_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = index_byte.converted_1;
+
+		controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
 	}
 
 	void CanvasCueHandler::set_num_frames(uint8_t section_num, uint8_t overlay_num, uint16_t num_frames) {
@@ -381,6 +387,8 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = num_frames_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = num_frames_byte.converted_1;
+
+		controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
 	}
 
 	void CanvasCueHandler::set_offset(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y) {
@@ -396,6 +404,8 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte + 1] = x_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
+
+		controller_->assemble((uint8_t)(Byte::OptionsByte + 4));
 	}
 
 	void CanvasCueHandler::set_scroll(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y, bool repeat) {
@@ -412,6 +422,8 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 4] = (uint8_t)repeat;
+
+		controller_->assemble((uint8_t)(Byte::OptionsByte + 5));
 	}
 
 	void CanvasCueHandler::run(uint8_t *cue) {
@@ -419,14 +431,47 @@ namespace PixelMaestro {
 
 		if (section == nullptr) return;
 
+		// Check generic actions
+		Canvas* plain_canvas = section->get_canvas();
+		switch((Action)cue[Byte::ActionByte]) {
+			case Action::Clear:
+				plain_canvas->clear();
+				break;
+			case Action::NextFrame:
+				plain_canvas->next_frame();
+				break;
+			case Action::SetCurrentFrameIndex:
+				plain_canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+				break;
+			case Action::SetNumFrames:
+				plain_canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+				break;
+			case Action::SetOffset:
+				plain_canvas->set_offset(
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
+				);
+				break;
+			case Action::SetScroll:
+				plain_canvas->set_scroll(
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+					(bool)cue[Byte::OptionsByte + 4]
+				);
+				break;
+			default:
+				break;
+		}
+
+		// Check Canvas-specific actions
 		switch ((CanvasType::Type)cue[Byte::TypeByte]) {
 			case CanvasType::AnimationCanvas:
 				{
-					AnimationCanvas* canvas = static_cast<AnimationCanvas*>(section->get_canvas());
-					if (canvas == nullptr) return;
+					AnimationCanvas* animation_canvas = static_cast<AnimationCanvas*>(section->get_canvas());
+					if (animation_canvas == nullptr) return;
 					switch((Action)cue[Byte::ActionByte]) {
 						case Action::DrawCircle:
-							canvas->draw_circle(
+							animation_canvas->draw_circle(
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
@@ -434,31 +479,31 @@ namespace PixelMaestro {
 							break;
 						case Action::DrawFrame:
 							{
-								canvas->clear();
+								animation_canvas->clear();
 								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
 								for (uint16_t y = 0; y < frame_bounds.y; y++) {
 									for (uint16_t x = 0; x < frame_bounds.x; x++) {
-										if (cue[(Byte::OptionsByte + 2) + frame_bounds.get_inline_index(x, y)] == true) {
-											canvas->draw_point(x, y);
+										if ((bool)cue[(Byte::OptionsByte + 2) + frame_bounds.get_inline_index(x, y)] == true) {
+											animation_canvas->draw_point(x, y);
 										}
 									}
 								}
 							}
 							break;
 						case Action::DrawLine:
-							canvas->draw_line(
+							animation_canvas->draw_line(
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 6]));
 							break;
 						case Action::DrawPoint:
-							canvas->draw_point(
+							animation_canvas->draw_point(
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
 							break;
 						case Action::DrawRect:
-							canvas->draw_rect(
+							animation_canvas->draw_rect(
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
@@ -474,7 +519,7 @@ namespace PixelMaestro {
 										break;
 								}
 
-								canvas->draw_text(
+								animation_canvas->draw_text(
 									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
 									font,
@@ -486,7 +531,7 @@ namespace PixelMaestro {
 							}
 							break;
 						case Action::DrawTriangle:
-							canvas->draw_triangle(
+							animation_canvas->draw_triangle(
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 4]),
@@ -502,8 +547,8 @@ namespace PixelMaestro {
 				break;
 			case CanvasType::ColorCanvas:
 				{
-					ColorCanvas* canvas = static_cast<ColorCanvas*>(section->get_canvas());
-					if (canvas == nullptr) return;
+					ColorCanvas* color_canvas = static_cast<ColorCanvas*>(section->get_canvas());
+					if (color_canvas == nullptr) return;
 					Colors::RGB color = {
 						cue[Byte::OptionsByte],
 						cue[Byte::OptionsByte + 1],
@@ -511,7 +556,7 @@ namespace PixelMaestro {
 					};
 					switch((Action)cue[Byte::ActionByte]) {
 						case Action::DrawCircle:
-							canvas->draw_circle(
+							color_canvas->draw_circle(
 								color,
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
@@ -520,23 +565,23 @@ namespace PixelMaestro {
 							break;
 						case Action::DrawFrame:
 							{
-								canvas->clear();
-								uint32_t current_index = 2;
+								color_canvas->clear();
+								uint32_t current_index = Byte::OptionsByte + 2;
 								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
 								for (uint16_t y = 0; y < frame_bounds.y; y++) {
 									for (uint16_t x = 0; x < frame_bounds.x; x++) {
-										Colors::RGB color(cue[Byte::OptionsByte + current_index],
-												cue[Byte::OptionsByte + current_index + 1],
-												cue[Byte::OptionsByte + current_index + 2]);
+										Colors::RGB color(cue[current_index],
+												cue[current_index + 1],
+												cue[current_index + 2]);
 
-										canvas->draw_point(color, x, y);
+										color_canvas->draw_point(color, x, y);
 										current_index += 3;
 									}
 								}
 							}
 							break;
 						case Action::DrawLine:
-							canvas->draw_line(
+							color_canvas->draw_line(
 								color,
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
@@ -544,13 +589,13 @@ namespace PixelMaestro {
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 9]));
 							break;
 						case Action::DrawPoint:
-							canvas->draw_point(
+							color_canvas->draw_point(
 								color,
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]));
 							break;
 						case Action::DrawRect:
-							canvas->draw_rect(
+							color_canvas->draw_rect(
 								color,
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
@@ -573,7 +618,7 @@ namespace PixelMaestro {
 									cue[Byte::OptionsByte + 2]
 								};
 
-								canvas->draw_text(
+								color_canvas->draw_text(
 									color,
 									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
 									IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
@@ -586,7 +631,7 @@ namespace PixelMaestro {
 							}
 							break;
 						case Action::DrawTriangle:
-							canvas->draw_triangle(
+							color_canvas->draw_triangle(
 								color,
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 3]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 5]),
@@ -601,39 +646,6 @@ namespace PixelMaestro {
 					}
 				}
 				break;
-			default:
-				{
-					Canvas* canvas = section->get_canvas();
-					switch((Action)cue[Byte::ActionByte]) {
-						case Action::Clear:
-							canvas->clear();
-							break;
-						case Action::NextFrame:
-							canvas->next_frame();
-							break;
-						case Action::SetCurrentFrameIndex:
-							canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
-							break;
-						case Action::SetNumFrames:
-							canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
-							break;
-						case Action::SetOffset:
-							canvas->set_offset(
-								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
-							);
-							break;
-						case Action::SetScroll:
-							canvas->set_scroll(
-								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-								(bool)cue[Byte::OptionsByte + 4]
-							);
-							break;
-						default:
-							break;
-					}
-				}
 		}
 	}
 

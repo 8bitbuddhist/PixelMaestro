@@ -25,9 +25,12 @@ VirtualSerialDeviceDialog::VirtualSerialDeviceDialog(QWidget *parent) :
 	drawing_area_ = std::unique_ptr<SimpleDrawingArea>(new SimpleDrawingArea(layout->widget(), maestro_controller_.get()));
 	layout->addWidget(drawing_area_.get());
 
+	// For debugging only
+	/*
 	interpreted = new QLabel(this);
 	interpreted->setAlignment(Qt::AlignLeft);
 	layout->addWidget(interpreted);
+	*/
 }
 
 void VirtualSerialDeviceDialog::display_cue(uint8_t* cue) {

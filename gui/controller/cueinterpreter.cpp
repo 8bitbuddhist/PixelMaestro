@@ -23,7 +23,7 @@ std::string CueInterpreter::interpret_cue(uint8_t* cue) {
 }
 
 std::string CueInterpreter::interpret_animation_cue(uint8_t *cue) {
-	std::string result;
+	std::string result = "Target: Animation, ";
 	result.append("Section: " + std::to_string(cue[AnimationCueHandler::Byte::SectionByte]) + ", ");
 	result.append("Overlay: " + std::to_string(cue[AnimationCueHandler::Byte::OverlayByte]) + ", ");
 
@@ -68,7 +68,7 @@ std::string CueInterpreter::interpret_animation_cue(uint8_t *cue) {
 }
 
 std::string CueInterpreter::interpret_canvas_cue(uint8_t *cue) {
-	std::string result;
+	std::string result = "Target: Canvas, ";
 	result.append("Section: " + std::to_string(cue[CanvasCueHandler::Byte::SectionByte]) + ", ");
 	result.append("Overlay: " + std::to_string(cue[CanvasCueHandler::Byte::OverlayByte]) + ", ");
 
@@ -79,6 +79,9 @@ std::string CueInterpreter::interpret_canvas_cue(uint8_t *cue) {
 			break;
 		case CanvasType::ColorCanvas:
 			result.append("Color, ");
+			break;
+		default:
+			result.append("None, ");
 			break;
 	}
 
@@ -132,7 +135,7 @@ std::string CueInterpreter::interpret_canvas_cue(uint8_t *cue) {
 }
 
 std::string CueInterpreter::interpret_maestro_cue(uint8_t *cue) {
-	std::string result = "Maestro, Action: ";
+	std::string result = "Target: Maestro, Action: ";
 
 	switch((MaestroCueHandler::Action)cue[MaestroCueHandler::Byte::ActionByte]) {
 		case MaestroCueHandler::Action::SetRefreshInterval:
@@ -147,7 +150,7 @@ std::string CueInterpreter::interpret_maestro_cue(uint8_t *cue) {
 }
 
 std::string CueInterpreter::interpret_section_cue(uint8_t *cue) {
-	std::string result;
+	std::string result = "Target: Section, ";
 	result.append("Section: " + std::to_string(cue[SectionCueHandler::Byte::SectionByte]) + ", ");
 	result.append("Overlay: " + std::to_string(cue[SectionCueHandler::Byte::OverlayByte]) + ", ");
 

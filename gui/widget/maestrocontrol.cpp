@@ -266,7 +266,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	// Preserve the animation cycle between changes
 	bool preserve_cycle_index = true;
 
-	Animation* animation = active_section_->set_animation((AnimationType::Type)index, 0, preserve_cycle_index);
+	Animation* animation = active_section_->set_animation((AnimationType::Type)index, nullptr, 0, preserve_cycle_index);
 
 	show_extra_controls(animation);
 
@@ -556,7 +556,13 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 
 				active_section_->set_dimensions(x, y);
 
-				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false);
+				// Only allow dynamic resizing for virtual device.
+				if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
+					section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+					send_to_device();
+				}
+
+				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false, this);
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					delete[] frames[frame];
 				}
@@ -574,7 +580,13 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 
 				active_section_->set_dimensions(x, y);
 
-				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false);
+				// Only allow dynamic resizing for virtual device.
+				if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
+					section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+					send_to_device();
+				}
+
+				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false, this);
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					delete[] frames[frame];
 				}
@@ -583,12 +595,12 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 		}
 		else {	// No Canvas set
 			active_section_->set_dimensions(x, y);
-		}
 
-		// Only allow dynamic resizing for virtual device.
-		if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
-			section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-			send_to_device();
+			// Only allow dynamic resizing for virtual device.
+			if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
+				section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
+				send_to_device();
+			}
 		}
 	}
 }
@@ -848,7 +860,9 @@ void MaestroControl::set_speed() {
 void MaestroControl::send_to_device() {
 	if (virtual_device_dialog_ != nullptr) {
 		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(cue_controller_->get_cue(), cue_controller_->get_cue_size());
-		virtual_device_dialog_->display_cue(cue_controller_->get_cue());
+
+		// For debugging only
+		//virtual_device_dialog_->display_cue(cue_controller_->get_cue());
 	}
 	else if (serial_port_.isOpen()) {
 		serial_port_.write((const char*)cue_controller_->get_cue(), cue_controller_->get_cue_size());
@@ -863,7 +877,9 @@ void MaestroControl::send_to_device() {
 void MaestroControl::send_to_device(uint8_t* data, uint8_t length) {
 	if (virtual_device_dialog_ != nullptr) {
 		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(data, length);
-		virtual_device_dialog_->display_cue(data);
+
+		// For debugging only
+		//virtual_device_dialog_->display_cue(data);
 	}
 	else if (serial_port_.isOpen()) {
 		serial_port_.write((const char*)data, length);

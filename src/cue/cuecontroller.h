@@ -90,8 +90,11 @@ namespace PixelMaestro {
 			bool validate_header(uint8_t* cue);
 
 		private:
+			/// Size of the buffer for caching Cues.
+			static const uint16_t BUFFER_SIZE = 1024;
+
 			/// Buffer for storing the currently loaded Cue.
-			uint8_t cue_[UINT8_MAX] = {0};
+			uint8_t cue_[BUFFER_SIZE] = {0};
 
 			/// Handlers for incoming Cues.
 			CueHandler* handlers_[4] {nullptr};
