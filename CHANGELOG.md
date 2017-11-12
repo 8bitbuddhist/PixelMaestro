@@ -6,16 +6,16 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.8] - In Progress
 ### Added
 - Canvas:
-	- Added support for animations. Learn more in the [Canvas docs](docs/canvas.md).
+	- Added support for animated drawings. Learn more in the [Canvas docs](docs/canvas.md).
 - Maestro:
 	- Added simplified constructor for creating a Maestro with only one Section.
 	- Added parameter to `Maestro::update()` to bypass the refresh interval and force an update.
 - Studio:
 	- New Palette Editor dialog lets you create, edit, and delete color palettes.
+	- New Simulated Device dialog lets you preview how actions performed in the Animation Editor will appear on serial devices.
 	- Added number box to speed slider.
 	- Added slider to control Animation pause threshold.
 	- Added ability to load images to Canvases.
-	- Added serial device simulator for testing and previewing Cues.
 	- Added Show editor (in progress).
 
 ### Changed
@@ -29,7 +29,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Pixel:
 	- Improved Pixel color changing logic.
 - Studio:
-	- Renamed GUI to "PixelMaestro Studio".
+	- Renamed GUI project to "PixelMaestro Studio".
 	- Renamed "Animation Previewer" to "Animation Editor".
 	- Added Cues for several Animation Editor actions.
 	- Fixed settings not populating correctly when switching between Sections.

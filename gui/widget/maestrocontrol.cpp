@@ -49,7 +49,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 		 * Cues are sent to the device in send_to_device().
 		 * Otherwise initialize the serial port like normal.
 		 */
-		if (settings.value(SettingsDialog::serial_port).toString().contains(SettingsDialog::virtual_device)) {
+		if (settings.value(SettingsDialog::serial_port).toString().contains(SettingsDialog::virtual_device_option)) {
 			virtual_device_dialog_ = std::unique_ptr<VirtualSerialDeviceDialog>(new VirtualSerialDeviceDialog(this));
 			virtual_device_dialog_.get()->show();
 		}
@@ -536,6 +536,7 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
  * @param y Number of columns.
  */
 void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
+	// Note: Resizing serial devices is intentionally unavailable.
 	if ((x != active_section_->get_dimensions()->x) || (y != active_section_->get_dimensions()->y)) {
 
 		/*
@@ -556,12 +557,6 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 
 				active_section_->set_dimensions(x, y);
 
-				// Only allow dynamic resizing for virtual device.
-				if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
-					section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-					send_to_device();
-				}
-
 				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false, this);
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					delete[] frames[frame];
@@ -580,12 +575,6 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 
 				active_section_->set_dimensions(x, y);
 
-				// Only allow dynamic resizing for virtual device.
-				if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
-					section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-					send_to_device();
-				}
-
 				CanvasUtility::copy_frameset(canvas, frames, frame_bounds.x, frame_bounds.y, false, this);
 				for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
 					delete[] frames[frame];
@@ -595,12 +584,6 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 		}
 		else {	// No Canvas set
 			active_section_->set_dimensions(x, y);
-
-			// Only allow dynamic resizing for virtual device.
-			if (cue_controller_ != nullptr && virtual_device_dialog_ != nullptr) {
-				section_handler->set_dimensions(get_section_index(), get_overlay_index(), ui->rowsSpinBox->value(), ui->columnsSpinBox->value());
-				send_to_device();
-			}
 		}
 	}
 }

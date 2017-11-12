@@ -1,5 +1,7 @@
 #include <QLabel>
+#include <QSettings>
 #include "virtualserialdevicedialog.h"
+#include "window/settingsdialog.h"
 #include "ui_virtualserialdevicedialog.h"
 #include "colorpresets.h"
 
@@ -13,7 +15,10 @@ VirtualSerialDeviceDialog::VirtualSerialDeviceDialog(QWidget *parent) :
 	// Enable and configure Maestro
 	maestro_controller_ = std::unique_ptr<MaestroController>(new MaestroController());
 	Maestro* maestro = maestro_controller_->get_maestro();
-	maestro_controller_->add_section(Point(10, 10));
+
+	QSettings settings;
+	Point size(settings.value(SettingsDialog::virtual_device_width).toUInt(), settings.value(SettingsDialog::virtual_device_height).toUInt());
+	maestro_controller_->add_section(size);
 	CueController* controller = maestro->set_cue_controller();
 	controller->enable_handler(CueController::Handler::AnimationHandler);
 	controller->enable_handler(CueController::Handler::CanvasHandler);

@@ -9,7 +9,9 @@ QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
 QString SettingsDialog::refresh_rate = QStringLiteral("maestro/refresh");
 QString SettingsDialog::serial_enabled = QStringLiteral("serial/enabled");
 QString SettingsDialog::serial_port = QStringLiteral("serial/port");
-QString SettingsDialog::virtual_device = QStringLiteral("Simulated Device");
+QString SettingsDialog::virtual_device_option = QStringLiteral("Simulated Device");
+QString SettingsDialog::virtual_device_width = QStringLiteral("serial/simulated_device/width");
+QString SettingsDialog::virtual_device_height = QStringLiteral("serial/simulated_device/height");
 
 SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::SettingsDialog) {
 	ui->setupUi(this);
@@ -30,12 +32,15 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 
 	// Populate port settings
 	check_port_combobox();
-	ui->serialPortComboBox->setCurrentText(settings_.value(serial_port).toString());
+	QString port_name = settings_.value(serial_port).toString();
+	ui->serialPortComboBox->setCurrentText(port_name);
+
+	set_simulated_device_options_visible(port_name.contains(virtual_device_option));
 }
 
 void SettingsDialog::check_port_combobox() {
 	// Add option to select virtual serial device
-	ui->serialPortComboBox->addItem(SettingsDialog::virtual_device);
+	ui->serialPortComboBox->addItem(SettingsDialog::virtual_device_option);
 
 	// Add actual serial devices
 	QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
@@ -58,12 +63,27 @@ void SettingsDialog::on_buttonBox_accepted() {
 
 	// Save pixel shape
 	settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
+
+	// Save virtual device size
+	settings_.setValue(virtual_device_width, ui->simulatedWidthSpinBox->value());
+	settings_.setValue(virtual_device_height, ui->simulatedHeightSpinBox->value());
 }
 
 void SettingsDialog::on_serialCheckBox_toggled(bool checked) {
 	ui->serialPortComboBox->setEnabled(checked);
 }
 
+void SettingsDialog::set_simulated_device_options_visible(bool visible) {
+	ui->simulatedDeviceHeightLabel->setVisible(visible);
+	ui->simulatedDeviceWidthLabel->setVisible(visible);
+	ui->simulatedHeightSpinBox->setVisible(visible);
+	ui->simulatedWidthSpinBox->setVisible(visible);
+}
+
 SettingsDialog::~SettingsDialog() {
 	delete ui;
+}
+
+void SettingsDialog::on_serialPortComboBox_currentTextChanged(const QString &arg1) {
+	set_simulated_device_options_visible(arg1.contains(virtual_device_option));
 }
