@@ -21,7 +21,6 @@
 #include "maestrocontrol.h"
 #include "window/settingsdialog.h"
 #include "widget/palettecontrol.h"
-#include "widget/sectioncontrol.h"
 #include "ui_maestrocontrol.h"
 #include "utility/canvasutility.h"
 
@@ -165,7 +164,6 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->blockSignals(true);
 	ui->orientationComboBox->blockSignals(true);
 	ui->sectionComboBox->blockSignals(true);
-	ui->overlayComboBox->blockSignals(true);
 	ui->mix_modeComboBox->blockSignals(true);
 	ui->alphaSpinBox->blockSignals(true);
 	ui->canvasComboBox->blockSignals(true);
@@ -173,7 +171,6 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->clear();
 	ui->orientationComboBox->clear();
 	ui->sectionComboBox->clear();
-	ui->overlayComboBox->clear();
 	ui->mix_modeComboBox->clear();
 	ui->alphaSpinBox->clear();
 	ui->canvasComboBox->clear();
@@ -182,9 +179,9 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->addItems({"Blink", "Cycle", "Lightning", "Mandelbrot", "Merge", "Plasma", "Radial", "Random", "Solid", "Sparkle", "Wave"});
 	ui->orientationComboBox->addItems({"Horizontal", "Vertical"});
 
-	// Set Section/Overlays
-	ui->sectionComboBox->addItem("Section 1");
-	ui->overlayComboBox->addItem("None Selected");
+	// Set default values
+	// TODO: Iterate over each Section in the Maestro and add it to the drop-down, then select Section 1 (item 0)
+	ui->sectionComboBox->addItems({"Section 1", "Overlay 1"});
 
 	// Initialize Overlay controls
 	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Overlay"});
@@ -196,7 +193,6 @@ void MaestroControl::initialize() {
 	ui->animationComboBox->blockSignals(false);
 	ui->orientationComboBox->blockSignals(false);
 	ui->sectionComboBox->blockSignals(false);
-	ui->overlayComboBox->blockSignals(false);
 	ui->mix_modeComboBox->blockSignals(false);
 	ui->alphaSpinBox->blockSignals(false);
 	ui->canvasComboBox->blockSignals(false);
@@ -358,15 +354,6 @@ void MaestroControl::on_editEventsButton_clicked() {
 	show_control.exec();
 }
 
-void MaestroControl::on_editOverlaysButton_clicked() {
-	on_editSectionsButton_clicked();
-}
-
-void MaestroControl::on_editSectionsButton_clicked() {
-	SectionControl section_control(maestro_controller_, this);
-	section_control.exec();
-}
-
 void MaestroControl::on_enableShowCheckBox_toggled(bool checked) {
 	ui->editEventsButton->setEnabled(checked);
 
@@ -437,44 +424,6 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 }
 
 /**
- * Changes the current Overlay.
- * @param index Index of the selected Overlay.
- */
-void MaestroControl::on_overlayComboBox_currentIndexChanged(int index) {
-	// If no Overlay is selected, exit.
-	if (index == 0) {
-		return;
-	}
-
-	// Get the Overlay from the currently selected Section, then iterate until we get to the correct Overlay.
-	Section* base = maestro_controller_->get_maestro()->get_section(ui->sectionComboBox->currentIndex());
-	for (int i = 0; i < index; i++) {
-		base = base->get_overlay()->section;
-	}
-
-	// Check to make sure the Section has an Overlay. If not, add one.
-	/*
-	Section::Overlay* overlay = active_section_->get_overlay();
-	if (overlay == nullptr) {
-		overlay = active_section_->set_overlay(Colors::MixMode::None);
-		PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
-		Animation* animation = overlay->section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
-
-		if (cue_controller_ != nullptr) {
-			send_to_device(section_handler->set_overlay(get_section_index(), get_overlay_index(), overlay->mix_mode, overlay->alpha));
-			send_to_device(section_handler->set_animation(get_section_index(), get_overlay_index(overlay->section), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true));
-		}
-	}
-	*/
-
-	// Show Overlay controls
-	set_overlay_controls_visible(true);
-
-	// Set active Section to Overlay
-	set_active_section(base);
-}
-
-/**
  * Opens the Palette Editor.
  */
 void MaestroControl::on_paletteControlButton_clicked() {
@@ -531,26 +480,41 @@ void MaestroControl::on_rowsSpinBox_editingFinished() {
 
 /**
  * Changes the currently selected Section.
- * @param index Index of the new Section.
+ * @param arg1 Index of the Section to switch to.
  */
-void MaestroControl::on_sectionComboBox_currentIndexChanged(int index) {
-	// Hide Overlay controls
-	set_overlay_controls_visible(false);
+void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1) {
+	QString type = arg1.split(" ")[0];
+	int id = arg1.split(" ")[1].toInt() - 1;
 
-	// List out each Overlay in the Overlay combo box
-	ui->overlayComboBox->blockSignals(true);
-	ui->overlayComboBox->clear();
-	Section* overlay = maestro_controller_->get_maestro()->get_section(index)->get_overlay()->section;
-	int overlay_index = 1;
-	while (overlay != nullptr) {
-		ui->overlayComboBox->addItem(QString("Overlay " + overlay_index));
-		overlay_index++;
-		overlay = overlay->get_overlay()->section;
+	if(QString::compare(type, "section", Qt::CaseInsensitive) == 0) {
+		// Hide Overlay controls
+		set_overlay_controls_visible(false);
+
+		// Set active controller
+		set_active_section(maestro_controller_->get_maestro()->get_section(id));
 	}
-	ui->overlayComboBox->blockSignals(false);
+	else {	// Overlay
+		// Check to make sure the Section has an Overlay. If not, add one.
+		Section::Overlay* overlay = active_section_->get_overlay();
+		if (overlay == nullptr) {
+			overlay = active_section_->set_overlay(Colors::MixMode::None);
+			PaletteController::Palette* palette = palette_controller_.get_palette("Color Wheel");
+			Animation* animation = overlay->section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
 
-	// Set active controller
-	set_active_section(maestro_controller_->get_maestro()->get_section(index));
+			if (cue_controller_ != nullptr) {
+				send_to_device(section_handler->set_overlay(get_section_index(), get_overlay_index(), overlay->mix_mode, overlay->alpha));
+				send_to_device(section_handler->set_animation(get_section_index(), get_overlay_index(overlay->section), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true));
+			}
+		}
+
+		// Show Overlay controls
+		set_overlay_controls_visible(true);
+
+		// Set active Section to Overlay
+		set_active_section(overlay->section);
+	}
+
+
 }
 
 /**

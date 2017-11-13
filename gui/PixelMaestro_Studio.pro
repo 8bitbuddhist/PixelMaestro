@@ -68,8 +68,7 @@ SOURCES += main.cpp\
     ../src/colorpresets.cpp \
     ../src/cue/cuehandler.cpp \
     utility/canvasutility.cpp \
-    window/virtualserialdevicedialog.cpp \
-    widget/sectioncontrol.cpp
+    window/virtualserialdevicedialog.cpp
 
 HEADERS += \
 		demo/blinkdemo.h \
@@ -130,8 +129,7 @@ HEADERS += \
     demo/animatedcanvasdemo.h \
     ../src/colorpresets.h \
     utility/canvasutility.h \
-    window/virtualserialdevicedialog.h \
-    widget/sectioncontrol.h
+    window/virtualserialdevicedialog.h
 
 FORMS	+= \
 		widget/maestrocontrol.ui \
@@ -144,8 +142,7 @@ FORMS	+= \
 		widget/animation/radialanimationcontrol.ui \
 		widget/palettecontrol.ui \
 		widget/showcontrol.ui \
-    window/virtualserialdevicedialog.ui \
-    widget/sectioncontrol.ui
+    window/virtualserialdevicedialog.ui
 
 INCLUDEPATH += $$PWD/../src
 

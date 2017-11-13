@@ -26,7 +26,6 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Replaced `Colors::generate_random_colors()` with a truly random color generator.
 - Cue:
 	- Added and fixed several Cues.
-	- Modified all Cues to return a pointer to the newly generated Cue.
 - Pixel:
 	- Improved Pixel color changing logic.
 - Studio:

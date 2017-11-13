@@ -29,7 +29,7 @@ SectionCueHandler* handler = static_cast<SectionCueHandler*>(controller->enable_
 ```
 
 ## Creating Cues
-You can create a Cue by calling one of the methods in an enabled CueHandler. For example, to create a Cue that changes a Section's dimensions, enable the `SectionCueHandler` and call `handler.set_dimensions(section, overlay, x, y)`, where `section` and `overlay` are the indices of the Section and Overlay you want to modify (leave the Overlay index as 0 if you just want to modify the base Section). This generates and returns a pointer to the new Cue. This also stores the Cue in the CueController's buffer, which you can access using `CueController::get_cue()`.
+You can create a Cue by calling one of the methods in an enabled CueHandler. For example, to create a Cue that changes a Section's dimensions, enable the `SectionCueHandler` and call `handler.set_dimensions(section, overlay, x, y)`, where `section` and `overlay` are the indices of the Section and Overlay you want to modify (leave the Overlay index as 0 if you just want to modify the base Section). This generates a Cue and stores it in the CueController's buffer, which you can access using `CueController::get_cue()`.
 
 **Note:** All Handler methods require you to pass in the index of the Section and Overlay you want to modify. The Overay index indicates the depth of the Overlay from the base Section (index 0 points to the base Section itself).
 
@@ -48,11 +48,10 @@ int section_index = 0;
 int overlay_index = 1;
 
 SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
-// Single-step approach
-controller->run(section_handler->add_canvas(section_index, overlay_index, CanvasType::ColorCanvas));
+section_handler->add_canvas(section_index, overlay_index, CanvasType::ColorCanvas);
+controller->run();
 
 CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasHandler));
-// Two-step approach
 canvas_handler->draw_circle(section_index, overlay_index, Colors::GREEN, 5, 5, 2, true);
 controller->run();
 ```

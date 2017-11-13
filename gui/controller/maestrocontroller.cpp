@@ -18,9 +18,10 @@ MaestroController::MaestroController() {
  * @return New Section.
  */
 Section* MaestroController::add_section(Point dimensions) {
-	sections_.push_back(new Section(dimensions));
-	maestro_->set_sections(*sections_.data(), sections_.size());
-	return sections_[sections_.size() - 1];
+	Section* section = new Section(dimensions);
+	sections_.push_back(section);
+	maestro_->set_sections(sections_[0], sections_.size());
+	return section;
 }
 
 /**
@@ -37,15 +38,6 @@ Maestro* MaestroController::get_maestro() {
  */
 Show *MaestroController::get_show() {
 	return maestro_->get_show();
-}
-
-/**
- * Removes the Section at the specified index.
- * @param section Index of the Section to be removed.
- */
-void MaestroController::remove_section(uint8_t section) {
-	sections_.erase(sections_.begin() + section);
-	maestro_->set_sections(sections_[0], sections_.size());
 }
 
 /**
