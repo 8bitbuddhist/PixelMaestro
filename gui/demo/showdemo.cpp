@@ -12,7 +12,7 @@
 #include "showdemo.h"
 
 ShowDemo::ShowDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
-	maestro_controller_->add_section(Point(10, 10));
+	maestro_controller_->set_sections(1, Point(10, 10));
 
 	CueController* controller = maestro_controller_->get_maestro()->set_cue_controller();
 

@@ -94,6 +94,7 @@ class MaestroControl : public QWidget {
 		void initialize_palettes();
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
+		void populate_overlay_combobox();
 		void set_active_section(Section* section);
 		void set_overlay_controls_visible(bool visible);
 		void set_speed();
@@ -114,12 +115,14 @@ class MaestroControl : public QWidget {
 		void on_paletteControlButton_clicked();
 		void on_reverse_animationCheckBox_toggled(bool checked);
 		void on_rowsSpinBox_editingFinished();
-		void on_sectionComboBox_currentIndexChanged(const QString &arg1);
 		void on_cycleSpinBox_editingFinished();
 		void on_enableShowCheckBox_toggled(bool checked);
 		void on_editEventsButton_clicked();
 		void on_pauseSlider_valueChanged(int value);
 		void on_pauseSpinBox_valueChanged(int arg1);
+		void on_overlayComboBox_currentIndexChanged(int index);
+		void on_sectionComboBox_currentIndexChanged(int index);
+		void on_overlaySpinBox_valueChanged(int arg1);
 };
 
 #endif // MAESTROCONTROL_H

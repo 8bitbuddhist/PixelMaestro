@@ -18,7 +18,7 @@ VirtualSerialDeviceDialog::VirtualSerialDeviceDialog(QWidget *parent) :
 
 	QSettings settings;
 	Point size(settings.value(SettingsDialog::virtual_device_width).toUInt(), settings.value(SettingsDialog::virtual_device_height).toUInt());
-	maestro_controller_->add_section(size);
+	maestro_controller_->set_sections(1, size);
 	CueController* controller = maestro->set_cue_controller();
 	controller->enable_handler(CueController::Handler::AnimationHandler);
 	controller->enable_handler(CueController::Handler::CanvasHandler);

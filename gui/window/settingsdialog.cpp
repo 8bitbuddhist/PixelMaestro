@@ -4,6 +4,7 @@
 #include "ui_settingsdialog.h"
 
 // Initialize strings
+QString SettingsDialog::num_sections = QStringLiteral("maestro/num_sections");
 QString SettingsDialog::pixel_padding = QStringLiteral("interface/padding");
 QString SettingsDialog::pixel_shape = QStringLiteral("interface/shape");
 QString SettingsDialog::refresh_rate = QStringLiteral("maestro/refresh");
@@ -19,18 +20,16 @@ SettingsDialog::SettingsDialog(QWidget *parent) : QDialog(parent), ui(new Ui::Se
 	// Interface settings
 	ui->paddingComboBox->setCurrentIndex(settings_.value(pixel_padding).toInt());
 	ui->pixelShapeComboBox->setCurrentIndex(settings_.value(pixel_shape).toInt());
-	if (settings_.value(refresh_rate).toInt()) {
-		ui->refreshSpinBox->setValue(settings_.value(refresh_rate).toInt());
-	}
-	else {
-		ui->refreshSpinBox->setValue(50);
-	}
+
+	// Maestro settings
+	ui->numSectionsSpinBox->setValue(settings_.value(num_sections, 1).toInt());
+	ui->refreshSpinBox->setValue(settings_.value(refresh_rate, 50).toInt());
 
 	// Serial settings
 	ui->serialCheckBox->setChecked(settings_.value(serial_enabled).toBool());
 	on_serialCheckBox_toggled(ui->serialCheckBox->isChecked());
 
-	// Populate port settings
+	// Port settings
 	check_port_combobox();
 	QString port_name = settings_.value(serial_port).toString();
 	ui->serialPortComboBox->setCurrentText(port_name);
@@ -53,15 +52,16 @@ void SettingsDialog::check_port_combobox() {
 }
 
 void SettingsDialog::on_buttonBox_accepted() {
-	// Save serial options
+	// Save Maestro settings
+	settings_.setValue(refresh_rate, ui->refreshSpinBox->value());
+	settings_.setValue(num_sections, ui->numSectionsSpinBox->value());
+
+	// Save serial settings
 	settings_.setValue(serial_enabled, ui->serialCheckBox->isChecked());
 	settings_.setValue(serial_port, ui->serialPortComboBox->currentText());
-	settings_.setValue(refresh_rate, ui->refreshSpinBox->value());
 
-	// Save pixel padding
+	// Save interface settings
 	settings_.setValue(pixel_padding, ui->paddingComboBox->currentIndex());
-
-	// Save pixel shape
 	settings_.setValue(pixel_shape, ui->pixelShapeComboBox->currentIndex());
 
 	// Save virtual device size

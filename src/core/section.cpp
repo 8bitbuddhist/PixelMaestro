@@ -23,6 +23,11 @@
 namespace PixelMaestro {
 
 	/**
+	 * Constructor. Initializes an empty Section.
+	 */
+	Section::Section() : Section(0, 0) { }
+
+	/**
 	 * Constructor. Initializes the Pixel array.
 	 * @param dimensions Initial layout (rows and columns) of the Pixels.
 	 * @param parent Parent Section (if this is an Overlay).
@@ -77,6 +82,20 @@ namespace PixelMaestro {
 	 */
 	Section::Overlay* Section::get_overlay() {
 		return overlay_;
+	}
+
+	/**
+	 * Returns the number of Overlays belonging to the Section.
+	 * @return Overlay count.
+	 */
+	uint8_t Section::get_num_overlays() {
+		int count = 0;
+		Section::Overlay* overlay = get_overlay();
+		while (overlay != nullptr) {
+			overlay = overlay->section->get_overlay();
+			count++;
+		}
+		return count;
 	}
 
 	/**

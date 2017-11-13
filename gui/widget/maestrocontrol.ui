@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>405</width>
-    <height>280</height>
+    <height>440</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,17 +37,31 @@
      <item row="0" column="0">
       <widget class="QLabel" name="sectionSelectLabel">
        <property name="text">
-        <string>Active Section</string>
+        <string>Section / Overlay</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <layout class="QHBoxLayout" name="sectionSelectLayout">
-       <item>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
         <widget class="QComboBox" name="sectionComboBox"/>
        </item>
-       <item>
-        <widget class="QComboBox" name="canvasComboBox"/>
+       <item row="0" column="1">
+        <widget class="QComboBox" name="overlayComboBox"/>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="overlaySpinBox">
+         <property name="maximum">
+          <number>255</number>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" alignment="Qt::AlignRight">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Number of Overlays</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -212,6 +226,16 @@
        </item>
       </layout>
      </item>
+     <item row="8" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>Canvas</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QComboBox" name="canvasComboBox"/>
+     </item>
      <item row="9" column="0">
       <widget class="QLabel" name="cycleLabel">
        <property name="minimumSize">
@@ -273,20 +297,6 @@
        </item>
       </layout>
      </item>
-     <item row="11" column="1">
-      <widget class="QCheckBox" name="enableShowCheckBox">
-       <property name="text">
-        <string>Enable Show</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="1">
-      <widget class="QPushButton" name="editEventsButton">
-       <property name="text">
-        <string>Edit Show Events...</string>
-       </property>
-      </widget>
-     </item>
      <item row="10" column="0">
       <widget class="QLabel" name="pauseLabel">
        <property name="text">
@@ -331,6 +341,20 @@
       <widget class="QLabel" name="showLabel">
        <property name="text">
         <string>Show</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1">
+      <widget class="QCheckBox" name="enableShowCheckBox">
+       <property name="text">
+        <string>Enable Show</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QPushButton" name="editEventsButton">
+       <property name="text">
+        <string>Edit Show Events...</string>
        </property>
       </widget>
      </item>

@@ -13,6 +13,7 @@ class SettingsDialog : public QDialog
 		Q_OBJECT
 
 	public:
+		static QString num_sections;
 		static QString pixel_padding;
 		static QString pixel_shape;
 		static QString refresh_rate;

@@ -12,7 +12,7 @@
 #include "core/point.h"
 
 CanvasDemo::CanvasDemo(QWidget* parent, MaestroController* maestro_controller) : SimpleDrawingArea(parent, maestro_controller) {
-	Section* section = maestro_controller_->add_section(Point(80, 80));
+	Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
 	section->set_animation(AnimationType::Merge, ColorPresets::COLORWHEEL, 12);
 

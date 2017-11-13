@@ -8,7 +8,7 @@ AnimatedCanvasDemo::AnimatedCanvasDemo(QWidget* parent, MaestroController* maest
 	QImageReader gif(":/resources/nyan.gif", "GIF");
 	Point gif_size = Point(gif.size().width(), gif.size().height());
 
-	Section* section = maestro_controller_->add_section(gif_size);
+	Section* section = maestro_controller_->set_sections(1, gif_size);
 	Canvas* canvas = section->set_canvas(CanvasType::ColorCanvas, gif.imageCount());
 	CanvasUtility::load_image(QString(":/resources/nyan.gif"), canvas);
 

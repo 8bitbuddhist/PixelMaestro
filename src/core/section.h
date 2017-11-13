@@ -56,6 +56,7 @@ namespace PixelMaestro {
 				}
 			};
 
+			Section();
 			Section(Point dimensions, Section* parent = nullptr);
 			Section(uint16_t x, uint16_t y, Section* parent = nullptr);
 			~Section();
@@ -63,6 +64,7 @@ namespace PixelMaestro {
 			Canvas* get_canvas();
 			Point* get_dimensions();
 			Section::Overlay* get_overlay();
+			uint8_t get_num_overlays();
 			Section* get_parent_section();
 			Pixel* get_pixel(uint16_t x, uint16_t y);
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
