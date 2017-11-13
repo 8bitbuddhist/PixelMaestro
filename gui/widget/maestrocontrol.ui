@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>405</width>
-    <height>280</height>
+    <width>466</width>
+    <height>444</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -47,18 +47,22 @@
         <widget class="QComboBox" name="sectionComboBox"/>
        </item>
        <item>
-        <widget class="QComboBox" name="canvasComboBox"/>
+        <widget class="QPushButton" name="editSectionsButton">
+         <property name="text">
+          <string>Edit Sections...</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="mixModeLabel">
        <property name="text">
         <string>Mix Mode / Alpha</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <layout class="QHBoxLayout" name="overlayLayout">
        <item>
         <widget class="QComboBox" name="mix_modeComboBox"/>
@@ -75,14 +79,14 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="gridSizeLabel">
        <property name="text">
         <string>Grid Size</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="sectionOptionsLayout">
        <item>
         <widget class="QSpinBox" name="rowsSpinBox">
@@ -121,7 +125,7 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="animationLabel">
        <property name="minimumSize">
         <size>
@@ -134,7 +138,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="animationLayout">
        <item>
         <widget class="QComboBox" name="animationComboBox">
@@ -151,7 +155,7 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <layout class="QHBoxLayout" name="animationOptionsLayout">
        <item>
         <widget class="QCheckBox" name="reverse_animationCheckBox">
@@ -172,7 +176,7 @@
        </item>
       </layout>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="colorLabel">
        <property name="minimumSize">
         <size>
@@ -185,7 +189,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <layout class="QHBoxLayout" name="colorSchemeLayout">
        <item>
         <widget class="QComboBox" name="colorComboBox">
@@ -213,6 +217,16 @@
       </layout>
      </item>
      <item row="9" column="0">
+      <widget class="QLabel" name="canvasLabel">
+       <property name="text">
+        <string>Canvas</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QComboBox" name="canvasComboBox"/>
+     </item>
+     <item row="10" column="0">
       <widget class="QLabel" name="cycleLabel">
        <property name="minimumSize">
         <size>
@@ -225,7 +239,7 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="10" column="1">
       <layout class="QHBoxLayout" name="speedLayout">
        <item>
         <widget class="QSlider" name="cycleSlider">
@@ -273,28 +287,14 @@
        </item>
       </layout>
      </item>
-     <item row="11" column="1">
-      <widget class="QCheckBox" name="enableShowCheckBox">
-       <property name="text">
-        <string>Enable Show</string>
-       </property>
-      </widget>
-     </item>
-     <item row="12" column="1">
-      <widget class="QPushButton" name="editEventsButton">
-       <property name="text">
-        <string>Edit Show Events...</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="pauseLabel">
        <property name="text">
         <string>Pause</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="11" column="1">
       <layout class="QHBoxLayout" name="pauseLayout">
        <item>
         <widget class="QSlider" name="pauseSlider">
@@ -327,10 +327,49 @@
        </item>
       </layout>
      </item>
-     <item row="11" column="0">
+     <item row="12" column="0">
       <widget class="QLabel" name="showLabel">
        <property name="text">
         <string>Show</string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QCheckBox" name="enableShowCheckBox">
+       <property name="text">
+        <string>Enable Show</string>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="1">
+      <widget class="QPushButton" name="editEventsButton">
+       <property name="text">
+        <string>Edit Show Events...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="overlaySelectLayout">
+       <item>
+        <widget class="QComboBox" name="overlayComboBox">
+         <property name="currentText">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editOverlaysButton">
+         <property name="text">
+          <string>Edit Overlays...</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="activeOverlayLabel">
+       <property name="text">
+        <string>Active Overlay</string>
        </property>
       </widget>
      </item>

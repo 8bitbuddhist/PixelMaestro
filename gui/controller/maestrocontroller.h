@@ -19,6 +19,7 @@ class MaestroController {
 		Section* add_section(Point dimensions);
 		Maestro* get_maestro();
 		Show *get_show();
+		void remove_section(uint8_t section);
 		void reset_sections();
 
 	private:
