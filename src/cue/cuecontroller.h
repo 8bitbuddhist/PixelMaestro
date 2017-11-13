@@ -71,7 +71,8 @@ namespace PixelMaestro {
 				AnimationHandler,
 				CanvasHandler,
 				MaestroHandler,
-				SectionHandler
+				SectionHandler,
+				ShowHandler
 			};
 
 			CueController(Maestro* maestro);
@@ -98,7 +99,7 @@ namespace PixelMaestro {
 			uint8_t cue_[BUFFER_SIZE] = {0};
 
 			/// Handlers for incoming Cues.
-			CueHandler* handlers_[4] {nullptr};
+			CueHandler* handlers_[5] {nullptr};
 
 			/// Unique ID marking the start of a Cue.
 			const uint8_t id_[3] = {'P', 'M', 'C'};

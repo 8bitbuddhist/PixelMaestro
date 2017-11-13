@@ -26,6 +26,7 @@ namespace PixelMaestro {
 			};
 
 			Show(CueController* controller, Event *events, uint16_t num_events);
+			Event* get_events();
 			bool get_looping();
 			TimingMode get_timing();
 			void set_events(Event* events, uint16_t num_events, bool preserve_current_index = true);

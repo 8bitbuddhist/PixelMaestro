@@ -7,6 +7,7 @@
 #include "canvascuehandler.h"
 #include "maestrocuehandler.h"
 #include "sectioncuehandler.h"
+#include "showcuehandler.h"
 
 namespace PixelMaestro {
 
@@ -83,6 +84,9 @@ namespace PixelMaestro {
 					break;
 				case SectionHandler:
 					handlers_[(uint8_t)Handler::SectionHandler] = new SectionCueHandler(this);
+					break;
+				case ShowHandler:
+					handlers_[(uint8_t)Handler::ShowHandler] = new ShowCueHandler(this);
 					break;
 			}
 		}

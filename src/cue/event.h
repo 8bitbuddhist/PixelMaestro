@@ -11,17 +11,20 @@ namespace PixelMaestro {
 	class Event {
 
 		public:
+			Event();
 			Event(uint32_t time, uint8_t* cue);
 			~Event();
 			uint8_t* get_cue();
 			uint32_t get_time();
+			void set_cue(uint8_t* cue);
+			void set_time(uint32_t time);
 
 		protected:
 			/// The Cue to run.
-			uint8_t* cue_;
+			uint8_t* cue_ = nullptr;
 
 			/// Time that this Event will run.
-			uint32_t time_;
+			uint32_t time_ = 0;
 
 	};
 }

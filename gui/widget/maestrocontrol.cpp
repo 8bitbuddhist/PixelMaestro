@@ -437,7 +437,7 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 void MaestroControl::on_overlayComboBox_currentIndexChanged(int index) {
 	/*
 	 * If we selected an Overlay, iterate through the Section's nested Overlays until we find it.
-	 * If we selected 'None', set the base Section as the active_section_.
+	 * If we selected 'None', use the base Section as the active Section.
 	 */
 	Section* overlay_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 	for (int i = 0; i < index; i++) {

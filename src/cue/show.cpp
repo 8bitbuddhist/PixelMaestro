@@ -18,6 +18,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the current Event set.
+	 * @return Events.
+	 */
+	Event* Show::get_events() {
+		return events_;
+	}
+
+	/**
 		Returns whether the Show loops back over its Events, or if it just ends.
 
 		@return Whether or not the Show loops.

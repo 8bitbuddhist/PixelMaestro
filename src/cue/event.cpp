@@ -9,19 +9,16 @@ using namespace PixelMaestro;
 
 namespace PixelMaestro {
 
+	Event::Event() : Event(0, nullptr) { }
+
 	/**
 	 * Constructor. Copies the provided Cue into the Event.
 	 * @param time Event's start time.
 	 * @param Cue The Cue to run.
 	 */
 	Event::Event(uint32_t time, uint8_t* cue) {
-		this->time_ = time;
-
-		uint8_t size = cue[CueController::Byte::SizeByte] + CueController::Byte::PayloadByte;
-		cue_ = new uint8_t[size];
-		for (uint8_t i = 0; i < size; i++) {
-			cue_[i] = cue[i];
-		}
+		set_time(time);
+		set_cue(cue);
 	}
 
 	/**
@@ -39,6 +36,26 @@ namespace PixelMaestro {
 	 */
 	uint32_t Event::get_time() {
 		return time_;
+	}
+
+	/**
+	 * Sets the Event's Cue.
+	 * @param cue Cue to run when the Event is triggered.
+	 */
+	void Event::set_cue(uint8_t *cue) {
+		uint8_t size = cue[CueController::Byte::SizeByte] + CueController::Byte::PayloadByte;
+		cue_ = new uint8_t[size];
+		for (uint8_t i = 0; i < size; i++) {
+			cue_[i] = cue[i];
+		}
+	}
+
+	/**
+	 * Sets the Event's start time.
+	 * @param time Time that the Event is triggered.
+	 */
+	void Event::set_time(uint32_t time) {
+		this->time_ = time;
 	}
 
 	Event::~Event() {
