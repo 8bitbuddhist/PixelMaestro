@@ -15,6 +15,7 @@ class SimpleDrawingArea : public MaestroDrawingArea {
 		void resize_pixels();
 
 	protected:
+		void draw_section(QPainter* painter, uint8_t section_index, QRect start);
 		void paintEvent(QPaintEvent *event) override;
 		void resizeEvent(QResizeEvent *event) override;
 
@@ -24,7 +25,7 @@ class SimpleDrawingArea : public MaestroDrawingArea {
 		uint8_t pad_;
 
 		/// Used to determine whether the Maestro's size has changed.
-		uint32_t last_pixel_count_ = 0;
+		std::vector<uint32_t> last_pixel_count_;
 
 	private:
 		QSettings settings_;

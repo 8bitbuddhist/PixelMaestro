@@ -13,6 +13,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Studio:
 	- New Palette Editor dialog lets you create, edit, and delete color palettes.
 	- New Simulated Device dialog lets you preview how actions performed in the Animation Editor will appear on serial devices.
+	- Added ability to display multiple Sections simultaneously.
+	- Added ability to dynamically add/remove Overlays.
+	- Added configurable number of Sections to the Settings dialog. This changes the number of Sections available in the Animation Editor.
 	- Added number box to speed slider.
 	- Added slider to control Animation pause threshold.
 	- Added ability to load images to Canvases.

@@ -122,7 +122,7 @@ class MaestroControl : public QWidget {
 		void on_pauseSpinBox_valueChanged(int arg1);
 		void on_overlayComboBox_currentIndexChanged(int index);
 		void on_sectionComboBox_currentIndexChanged(int index);
-		void on_overlaySpinBox_valueChanged(int arg1);
+		void on_overlaySpinBox_editingFinished();
 };
 
 #endif // MAESTROCONTROL_H

@@ -451,17 +451,16 @@ void MaestroControl::on_overlayComboBox_currentIndexChanged(int index) {
 	set_active_section(overlay_section);
 }
 
-void MaestroControl::on_overlaySpinBox_valueChanged(int arg1) {
+void MaestroControl::on_overlaySpinBox_editingFinished() {
 	// Get the current number of Overlays
-	int num_overlays = 0;
-	Section* base_section = maestro_controller_->get_maestro()->get_section(get_section_index());
-	Section* last_section = base_section;
+	int num_overlays = maestro_controller_->get_maestro()->get_section(get_section_index())->get_num_overlays();
+
+	Section* last_section = maestro_controller_->get_maestro()->get_section(get_section_index());
 	while (last_section->get_overlay() != nullptr) {
 		last_section = last_section->get_overlay()->section;
-		num_overlays++;
 	}
 
-	int diff = arg1 - num_overlays;
+	int diff = ui->overlaySpinBox->value() - num_overlays;
 
 	// If diff is positive, add more Overlays
 	if (diff > 0) {
