@@ -21,8 +21,9 @@ namespace PixelMaestro {
 	/**
 	 * Prepares the Cue for transport by adding header info.
 	 * @param payload_size The size of the payload.
+	 * @return Assembled Cue.
 	 */
-	void CueController::assemble(uint8_t payload_size) {
+	uint8_t* CueController::assemble(uint8_t payload_size) {
 		/*
 		 * Final Cue has the following form: [ID] [Checksum] [Size] [Payload]
 		 *
@@ -39,6 +40,8 @@ namespace PixelMaestro {
 		cue_[Byte::SizeByte] = payload_size;
 
 		cue_[Byte::ChecksumByte] = checksum(cue_, Byte::PayloadByte + payload_size);
+
+		return cue_;
 	}
 
 	/**
@@ -101,6 +104,15 @@ namespace PixelMaestro {
 	 */
 	uint8_t CueController::get_cue_size() {
 		return (cue_[Byte::SizeByte] + Byte::PayloadByte);
+	}
+
+	/**
+	 * Returns the size of the specified Cue.
+	 * @param cue Cue to measure.
+	 * @return Cue size.
+	 */
+	uint8_t CueController::get_cue_size(uint8_t *cue) {
+		return (cue[Byte::SizeByte] + Byte::PayloadByte);
 	}
 
 	/**

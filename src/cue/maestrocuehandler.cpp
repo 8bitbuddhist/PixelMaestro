@@ -2,7 +2,7 @@
 #include "maestrocuehandler.h"
 
 namespace PixelMaestro {
-	void MaestroCueHandler::set_refresh_interval(uint16_t interval) {
+	uint8_t* MaestroCueHandler::set_refresh_interval(uint16_t interval) {
 		IntByteConvert interval_byte = IntByteConvert(interval);
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
@@ -10,7 +10,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte] = interval_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 1] = interval_byte.converted_1;
 
-		controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
+		return controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
 	}
 
 	void MaestroCueHandler::run(uint8_t *cue) {

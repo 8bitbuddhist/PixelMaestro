@@ -71,8 +71,7 @@ MaestroControl::MaestroControl(QWidget* parent, MaestroController* maestro_contr
 
 	// Create an initial Cue.
 	if (cue_controller_ != nullptr) {
-		section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, false, &palette_controller_.get_palette("Color Wheel")->colors[0], palette_controller_.get_palette(0)->colors.size());
-		send_to_device();
+		send_to_device(section_handler->set_animation(get_section_index(), get_overlay_index(), AnimationType::Solid, false, &palette_controller_.get_palette("Color Wheel")->colors[0], palette_controller_.get_palette(0)->colors.size()));
 	}
 }
 
@@ -245,8 +244,7 @@ void MaestroControl::on_alphaSpinBox_valueChanged(int arg1) {
 	active_section_->get_parent_section()->get_overlay()->alpha = arg1;
 
 	if (cue_controller_ != nullptr) {
-		section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_overlay()->mix_mode, arg1);
-		send_to_device();
+		send_to_device(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), active_section_->get_parent_section()->get_overlay()->mix_mode, arg1));
 	}
 }
 
@@ -271,8 +269,7 @@ void MaestroControl::on_animationComboBox_currentIndexChanged(int index) {
 	show_extra_controls(animation);
 
 	if (cue_controller_ != nullptr) {
-		section_handler->set_animation(get_section_index(), get_overlay_index(), (AnimationType::Type)index, preserve_cycle_index, nullptr, 0);
-		send_to_device();
+		send_to_device(section_handler->set_animation(get_section_index(), get_overlay_index(), (AnimationType::Type)index, preserve_cycle_index, nullptr, 0));
 	}
 
 	// Reapply animation settings
@@ -292,8 +289,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 	active_section_->remove_canvas();
 
 	if (cue_controller_ != nullptr) {
-		section_handler->remove_canvas(get_section_index(), get_overlay_index());
-		send_to_device();
+		send_to_device(section_handler->remove_canvas(get_section_index(), get_overlay_index()));
 	}
 
 	// Add the new Canvas
@@ -301,8 +297,7 @@ void MaestroControl::on_canvasComboBox_currentIndexChanged(int index) {
 		active_section_->set_canvas((CanvasType::Type)(index - 1));
 
 		if (cue_controller_ != nullptr) {
-			section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1));
-			send_to_device();
+			send_to_device(section_handler->set_canvas(get_section_index(), get_overlay_index(), (CanvasType::Type)(index - 1)));
 		}
 	}
 
@@ -323,8 +318,7 @@ void MaestroControl::on_colorComboBox_currentIndexChanged(int index) {
 	active_section_->get_animation()->set_colors(&palette->colors[0], palette->colors.size());
 
 	if (cue_controller_ != nullptr) {
-		animation_handler->set_colors(get_section_index(), get_overlay_index(), &palette->colors[0], palette->colors.size());
-		send_to_device();
+		send_to_device(animation_handler->set_colors(get_section_index(), get_overlay_index(), &palette->colors[0], palette->colors.size()));
 	}
 }
 
@@ -383,8 +377,7 @@ void MaestroControl::on_fadeCheckBox_toggled(bool checked) {
 	active_section_->get_animation()->set_fade(checked);
 
 	if (cue_controller_ != nullptr) {
-		animation_handler->set_fade(get_section_index(), get_overlay_index(), checked);
-		send_to_device();
+		send_to_device(animation_handler->set_fade(get_section_index(), get_overlay_index(), checked));
 	}
 }
 
@@ -409,8 +402,7 @@ void MaestroControl::on_mix_modeComboBox_currentIndexChanged(int index) {
 		}
 
 		if (cue_controller_ != nullptr) {
-			section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value());
-			send_to_device();
+			send_to_device(section_handler->set_overlay(get_section_index(), get_overlay_index(active_section_->get_parent_section()), (Colors::MixMode)index, ui->alphaSpinBox->value()));
 		}
 	}
 }
@@ -425,8 +417,7 @@ void MaestroControl::on_orientationComboBox_currentIndexChanged(int index) {
 			active_section_->get_animation()->set_orientation((Animation::Orientation)index);
 
 			if (cue_controller_ != nullptr) {
-				animation_handler->set_orientation(get_section_index(), get_overlay_index(), (Animation::Orientation)index);
-				send_to_device();
+				send_to_device(animation_handler->set_orientation(get_section_index(), get_overlay_index(), (Animation::Orientation)index));
 			}
 		}
 	}
@@ -476,8 +467,7 @@ void MaestroControl::on_reverse_animationCheckBox_toggled(bool checked) {
 	active_section_->get_animation()->set_reverse(checked);
 
 	if (cue_controller_ != nullptr) {
-		animation_handler->set_reverse(get_section_index(), get_overlay_index(), checked);
-		send_to_device();
+		send_to_device(animation_handler->set_reverse(get_section_index(), get_overlay_index(), checked));
 	}
 }
 
@@ -512,11 +502,8 @@ void MaestroControl::on_sectionComboBox_currentIndexChanged(const QString &arg1)
 			Animation* animation = overlay->section->set_animation(AnimationType::Solid, &palette->colors[0], palette->colors.size());
 
 			if (cue_controller_ != nullptr) {
-				section_handler->set_overlay(get_section_index(), get_overlay_index(), overlay->mix_mode, overlay->alpha);
-				send_to_device();
-
-				section_handler->set_animation(get_section_index(), get_overlay_index(overlay->section), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true);
-				send_to_device();
+				send_to_device(section_handler->set_overlay(get_section_index(), get_overlay_index(), overlay->mix_mode, overlay->alpha));
+				send_to_device(section_handler->set_animation(get_section_index(), get_overlay_index(overlay->section), animation->get_type(), true, animation->get_colors(), animation->get_num_colors(), true));
 			}
 		}
 
@@ -638,24 +625,24 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 
 	// Dimensions
 	section_handler->set_dimensions(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y);
-	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	// Animation & Colors
 	Animation* animation = section->get_animation();
 	section_handler->set_animation(section_id, overlay_id, animation->get_type(), false, animation->get_colors(), animation->get_num_colors(), false);
-	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	animation_handler->set_orientation(section_id, overlay_id, animation->get_orientation());
-	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	animation_handler->set_reverse(section_id, overlay_id, animation->get_reverse());
-	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	animation_handler->set_fade(section_id, overlay_id, animation->get_fade());
-	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	animation_handler->set_speed(section_id, overlay_id, animation->get_speed(), animation->get_pause());
-	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	switch(animation->get_type()) {
 		case AnimationType::Lightning:
@@ -685,13 +672,13 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 		default:
 			break;
 	}
-	write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+	write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 	// Canvas
 	Canvas* canvas = section->get_canvas();
 	if (canvas != nullptr) {
 		section_handler->set_canvas(section_id, overlay_id, canvas->get_type(), canvas->get_num_frames());
-		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+		write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 		// Draw and save each frame
 		for (uint16_t frame = 0; frame < canvas->get_num_frames(); frame++) {
@@ -703,7 +690,7 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 					canvas_handler->draw_frame(section_id, overlay_id, section->get_dimensions()->x, section->get_dimensions()->y, static_cast<ColorCanvas*>(canvas)->get_frame(frame));
 					break;
 			}
-			write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+			write_cue_to_stream(datastream, cue_controller_->get_cue());
 		}
 	}
 
@@ -711,7 +698,7 @@ void MaestroControl::save_section_settings(QDataStream* datastream, uint8_t sect
 	Section::Overlay* overlay = section->get_overlay();
 	if (overlay != nullptr) {
 		section_handler->set_overlay(section_id, overlay_id, overlay->mix_mode, overlay->alpha);
-		write_cue_to_stream(datastream, cue_controller_->get_cue(), cue_controller_->get_cue_size());
+		write_cue_to_stream(datastream, cue_controller_->get_cue());
 
 		save_section_settings(datastream, section_id, overlay_id + 1);
 	}
@@ -831,8 +818,7 @@ void MaestroControl::set_speed() {
 		animation->set_speed(speed, pause);
 
 		if (cue_controller_ != nullptr) {
-			animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, pause);
-			send_to_device();
+			send_to_device(animation_handler->set_speed(get_section_index(), get_overlay_index(), speed, pause));
 		}
 	}
 }
@@ -853,13 +839,21 @@ void MaestroControl::send_to_device() {
 }
 
 /**
+ * Sends the specified Cue to the serial device.
+ * @param cue Cue to send.
+ */
+void MaestroControl::send_to_device(uint8_t *cue) {
+	send_to_device(cue, cue_controller_->get_cue_size(cue));
+}
+
+/**
  * Sends data to the serial device.
  * @param data Data to send.
  * @param length Size of the data to send.
  */
 void MaestroControl::send_to_device(uint8_t* data, uint8_t length) {
 	if (virtual_device_dialog_ != nullptr) {
-		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(data, length);
+		virtual_device_dialog_->get_maestro()->get_cue_controller()->run(data);
 
 		// For debugging only
 		//virtual_device_dialog_->display_cue(data);
@@ -939,10 +933,9 @@ void MaestroControl::show_canvas_controls() {
  * Appends a Cue to a stream.
  * @param stream Stream to append to.
  * @param cue Cue to append.
- * @param cue_size Size of Cue.
  */
-void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue, uint16_t cue_size) {
-	stream->writeRawData((const char*)cue, cue_size);
+void MaestroControl::write_cue_to_stream(QDataStream* stream, uint8_t* cue) {
+	stream->writeRawData((const char*)cue, cue_controller_->get_cue_size(cue));
 }
 
 /**

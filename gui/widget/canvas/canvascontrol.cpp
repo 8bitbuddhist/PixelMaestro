@@ -25,8 +25,7 @@ bool CanvasControl::confirm_clear() {
 	if (confirm == QMessageBox::Yes) {
 		canvas_->clear();
 		if (maestro_control_ && maestro_control_->cue_controller_) {
-			maestro_control_->canvas_handler->clear(maestro_control_->get_section_index(), maestro_control_->get_overlay_index());
-			maestro_control_->send_to_device();
+			maestro_control_->send_to_device(maestro_control_->canvas_handler->clear(maestro_control_->get_section_index(), maestro_control_->get_overlay_index()));
 		}
 
 		return true;

@@ -2,16 +2,16 @@
 #include "sectioncuehandler.h"
 
 namespace PixelMaestro {
-	void SectionCueHandler::remove_canvas(uint8_t section_num, uint8_t overlay_num) {
+	uint8_t* SectionCueHandler::remove_canvas(uint8_t section_num, uint8_t overlay_num) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::RemoveCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 
-		controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
-	void SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors) {
+	uint8_t* SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors) {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetAnimation;
@@ -33,10 +33,10 @@ namespace PixelMaestro {
 
 		controller_->get_cue()[colors_index] = delete_old_colors;
 
-		controller_->assemble(colors_index);
+		return controller_->assemble(colors_index);
 	}
 
-	void SectionCueHandler::set_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type, uint16_t num_frames) {
+	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type, uint16_t num_frames) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetCanvas;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
@@ -44,10 +44,10 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte] = canvas_type;
 		controller_->get_cue()[Byte::OptionsByte + 1] = num_frames;
 
-		controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
-	void SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y) {
+	uint8_t* SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y) {
 		IntByteConvert x_byte = IntByteConvert(x);
 		IntByteConvert y_byte = IntByteConvert(y);
 
@@ -60,10 +60,10 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
 
-		controller_->assemble((uint8_t)Byte::OptionsByte + 4);
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
 	}
 
-	void SectionCueHandler::set_overlay(uint8_t section_num, uint8_t overlay_num, Colors::MixMode mix_mode, uint8_t alpha) {
+	uint8_t* SectionCueHandler::set_overlay(uint8_t section_num, uint8_t overlay_num, Colors::MixMode mix_mode, uint8_t alpha) {
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetOverlay;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
@@ -71,7 +71,7 @@ namespace PixelMaestro {
 		controller_->get_cue()[Byte::OptionsByte] = (uint8_t)mix_mode;
 		controller_->get_cue()[Byte::OptionsByte + 1] = alpha;
 
-		controller_->assemble((uint8_t)Byte::OptionsByte + 2);
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
 	void SectionCueHandler::run(uint8_t *cue) {

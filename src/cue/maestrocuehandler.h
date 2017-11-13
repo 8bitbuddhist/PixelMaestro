@@ -12,14 +12,14 @@ namespace PixelMaestro {
 			};
 
 			enum Byte : uint8_t {
-				HandlerByte = (int)CueController::Byte::PayloadByte,
+				HandlerByte = (uint8_t)CueController::Byte::PayloadByte,
 				ActionByte,
 				OptionsByte
 			};
 
 			MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
 			~MaestroCueHandler();
-			void set_refresh_interval(uint16_t interval);
+			uint8_t* set_refresh_interval(uint16_t interval);
 			void run(uint8_t *cue);
 	};
 }

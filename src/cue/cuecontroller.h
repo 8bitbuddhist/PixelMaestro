@@ -76,11 +76,12 @@ namespace PixelMaestro {
 
 			CueController(Maestro* maestro);
 			~CueController();
-			void assemble(uint8_t payload_size);
+			uint8_t* assemble(uint8_t payload_size);
 			uint8_t checksum(uint8_t* cue, uint8_t cue_size);
 			CueHandler* enable_handler(Handler handler);
 			uint8_t* get_cue();
 			uint8_t get_cue_size();
+			uint8_t get_cue_size(uint8_t* cue);
 			CueHandler* get_handler(Handler handler);
 			Maestro* get_maestro();
 			void read(uint8_t byte);
