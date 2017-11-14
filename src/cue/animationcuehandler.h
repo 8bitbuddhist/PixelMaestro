@@ -45,7 +45,7 @@ namespace PixelMaestro {
 			uint8_t* set_fade(uint8_t section_num, uint8_t overlay_num, bool fade);
 			uint8_t* set_orientation(uint8_t section_num, uint8_t overlay_num, Animation::Orientation orientation);
 			uint8_t* set_reverse(uint8_t section_num, uint8_t overlay_num, bool reverse);
-			uint8_t* set_speed(uint8_t section_num, uint8_t overlay_num, uint16_t speed, uint16_t pause);
+			uint8_t* set_speed(uint8_t section_num, uint8_t overlay_num, uint16_t speed, uint16_t pause = 0);
 
 			void run(uint8_t* cue);
 	};

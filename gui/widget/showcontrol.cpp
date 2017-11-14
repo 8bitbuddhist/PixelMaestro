@@ -37,9 +37,6 @@ void ShowControl::on_addEventPushButton_clicked() {
 
 /// Redraws the Event list.
 void ShowControl::refresh_event_list() {
-	/* TODO: Crash when reopening dialog.
-	 * Looks like a memory allocation issue? Sometimes it happens after adding two Events, sometimes just one
-	 */
 	for (uint8_t i = 0; i < show_controller_->get_num_events(); i++) {
 		new QListWidgetItem(show_controller_->get_event_description(i), ui->eventListWidget);
 	}

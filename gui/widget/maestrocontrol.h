@@ -19,6 +19,7 @@
 #include "cue/canvascuehandler.h"
 #include "cue/maestrocuehandler.h"
 #include "cue/sectioncuehandler.h"
+#include "cue/showcuehandler.h"
 #include "widget/showcontrol.h"
 #include "window/virtualserialdevicedialog.h"
 
@@ -51,6 +52,7 @@ class MaestroControl : public QWidget {
 		CanvasCueHandler* canvas_handler = nullptr;
 		MaestroCueHandler* maestro_handler = nullptr;
 		SectionCueHandler* section_handler = nullptr;
+		ShowCueHandler* show_handler = nullptr;
 
 		/// Connection to an Arduino or other device.
 		QSerialPort serial_port_;
@@ -65,7 +67,6 @@ class MaestroControl : public QWidget {
 		int16_t get_section_index();
 		uint8_t get_section_index(Section* section);
 		void read_from_file(QString filename);
-		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
 		void save_to_file(QString filename);
 		void send_to_device();
 		void send_to_device(uint8_t* cue);
@@ -95,6 +96,8 @@ class MaestroControl : public QWidget {
 		void on_ui_changed();
 		void on_section_resize(uint16_t x, uint16_t y);
 		void populate_overlay_combobox();
+		void save_maestro_settings(QDataStream* datastream);
+		void save_section_settings(QDataStream* datastream, uint8_t section_id, uint8_t overlay_id);
 		void set_active_section(Section* section);
 		void set_overlay_controls_visible(bool visible);
 		void set_speed();

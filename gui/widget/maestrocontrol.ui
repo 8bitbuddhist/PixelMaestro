@@ -42,37 +42,57 @@
       </widget>
      </item>
      <item row="0" column="1">
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
+      <layout class="QHBoxLayout" name="sectionConfigLayout">
+       <item>
         <widget class="QComboBox" name="sectionComboBox"/>
        </item>
-       <item row="0" column="1">
+       <item>
         <widget class="QComboBox" name="overlayComboBox"/>
        </item>
-       <item row="1" column="1">
+      </layout>
+     </item>
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="overlayConfigLayout">
+       <item>
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>Number of Overlays</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QSpinBox" name="overlaySpinBox">
          <property name="maximum">
           <number>255</number>
          </property>
         </widget>
        </item>
-       <item row="1" column="0" alignment="Qt::AlignRight">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Number of Overlays</string>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
          </property>
-        </widget>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
+     <item row="2" column="0">
       <widget class="QLabel" name="mixModeLabel">
        <property name="text">
         <string>Mix Mode / Alpha</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
+     <item row="2" column="1">
       <layout class="QHBoxLayout" name="overlayLayout">
        <item>
         <widget class="QComboBox" name="mix_modeComboBox"/>
@@ -89,14 +109,14 @@
        </item>
       </layout>
      </item>
-     <item row="2" column="0">
+     <item row="3" column="0">
       <widget class="QLabel" name="gridSizeLabel">
        <property name="text">
         <string>Grid Size</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
+     <item row="3" column="1">
       <layout class="QHBoxLayout" name="sectionOptionsLayout">
        <item>
         <widget class="QSpinBox" name="rowsSpinBox">
@@ -135,7 +155,7 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="0">
+     <item row="4" column="0">
       <widget class="QLabel" name="animationLabel">
        <property name="minimumSize">
         <size>
@@ -148,7 +168,7 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="1">
+     <item row="4" column="1">
       <layout class="QHBoxLayout" name="animationLayout">
        <item>
         <widget class="QComboBox" name="animationComboBox">
@@ -165,7 +185,7 @@
        </item>
       </layout>
      </item>
-     <item row="5" column="1">
+     <item row="6" column="1">
       <layout class="QHBoxLayout" name="animationOptionsLayout">
        <item>
         <widget class="QCheckBox" name="reverse_animationCheckBox">
@@ -186,7 +206,7 @@
        </item>
       </layout>
      </item>
-     <item row="7" column="0">
+     <item row="8" column="0">
       <widget class="QLabel" name="colorLabel">
        <property name="minimumSize">
         <size>
@@ -199,7 +219,7 @@
        </property>
       </widget>
      </item>
-     <item row="7" column="1">
+     <item row="8" column="1">
       <layout class="QHBoxLayout" name="colorSchemeLayout">
        <item>
         <widget class="QComboBox" name="colorComboBox">
@@ -226,17 +246,7 @@
        </item>
       </layout>
      </item>
-     <item row="8" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Canvas</string>
-       </property>
-      </widget>
-     </item>
-     <item row="8" column="1">
-      <widget class="QComboBox" name="canvasComboBox"/>
-     </item>
-     <item row="9" column="0">
+     <item row="11" column="0">
       <widget class="QLabel" name="cycleLabel">
        <property name="minimumSize">
         <size>
@@ -249,7 +259,7 @@
        </property>
       </widget>
      </item>
-     <item row="9" column="1">
+     <item row="11" column="1">
       <layout class="QHBoxLayout" name="speedLayout">
        <item>
         <widget class="QSlider" name="cycleSlider">
@@ -297,14 +307,14 @@
        </item>
       </layout>
      </item>
-     <item row="10" column="0">
+     <item row="12" column="0">
       <widget class="QLabel" name="pauseLabel">
        <property name="text">
         <string>Pause</string>
        </property>
       </widget>
      </item>
-     <item row="10" column="1">
+     <item row="12" column="1">
       <layout class="QHBoxLayout" name="pauseLayout">
        <item>
         <widget class="QSlider" name="pauseSlider">
@@ -337,24 +347,55 @@
        </item>
       </layout>
      </item>
-     <item row="11" column="0">
+     <item row="13" column="0">
       <widget class="QLabel" name="showLabel">
        <property name="text">
         <string>Show</string>
        </property>
       </widget>
      </item>
-     <item row="11" column="1">
-      <widget class="QCheckBox" name="enableShowCheckBox">
-       <property name="text">
-        <string>Enable Show</string>
-       </property>
-      </widget>
+     <item row="13" column="1">
+      <layout class="QHBoxLayout" name="showLayout">
+       <item alignment="Qt::AlignRight">
+        <widget class="QCheckBox" name="enableShowCheckBox">
+         <property name="text">
+          <string>Enable Show</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="editEventsButton">
+         <property name="text">
+          <string>Edit Events...</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
      </item>
-     <item row="12" column="1">
-      <widget class="QPushButton" name="editEventsButton">
+     <item row="9" column="1">
+      <layout class="QHBoxLayout" name="canvasLayout">
+       <item>
+        <widget class="QComboBox" name="canvasComboBox"/>
+       </item>
+      </layout>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label">
        <property name="text">
-        <string>Edit Show Events...</string>
+        <string>Canvas</string>
        </property>
       </widget>
      </item>

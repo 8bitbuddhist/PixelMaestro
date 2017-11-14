@@ -7,25 +7,26 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 - Canvas:
 	- Added support for animated drawings. Learn more in the [Canvas docs](docs/canvas.md).
+- Cues:
+	- Added CueHandler for Shows.
 - Maestro:
 	- Added simplified constructor for creating a Maestro with only one Section.
-	- Added parameter to `Maestro::update()` to bypass the refresh interval and force an update.
+	- Added the option to bypass a Maestro's refresh rate and force it to update.
 - Studio:
 	- New Palette Editor dialog lets you create, edit, and delete color palettes.
 	- New Simulated Device dialog lets you preview how actions performed in the Animation Editor will appear on serial devices.
-	- Added ability to display multiple Sections simultaneously.
-	- Added ability to dynamically add/remove Overlays.
-	- Added configurable number of Sections to the Settings dialog. This changes the number of Sections available in the Animation Editor.
+	- Added support for displaying and controlling multiple Sections simultaneously. You can set the number of Sections in the Settings window.
+	- Added the ability to add and remove Overlays.
 	- Added number box to speed slider.
 	- Added slider to control Animation pause threshold.
-	- Added ability to load images to Canvases.
+	- Added support for loading images into Canvases.
 	- Added Show editor (in progress).
 
 ### Changed
 - Canvas:
 	- Fixed Canvas scrolling behavior.
 - Colors:
-	- Moved pre-defined colors into separate `ColorPresets` class.
+	- Moved pre-defined colors and palettes into `ColorPresets` class.
 	- Replaced `Colors::generate_random_colors()` with a truly random color generator.
 - Cue:
 	- Added and fixed several Cues.
@@ -38,6 +39,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 	- Fixed settings not populating correctly when switching between Sections.
 	- Improved saving to and loading from Cue (.pmc) files.
 	- Fixed Canvas contents getting deleted on resize.
+	- Set minimum application window size.
+	- Changed status bar text when opening Workspaces.
+	- Updated several demos.
 
 ### Removed
 - Removed pre-defined colors and color arrays from Colors class. You can now find them in the ColorPresets class.

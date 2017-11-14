@@ -230,6 +230,7 @@ void MaestroControl::initialize_cue_controller() {
 	canvas_handler = static_cast<CanvasCueHandler*>(cue_controller_->enable_handler(CueController::Handler::CanvasHandler));
 	maestro_handler = static_cast<MaestroCueHandler*>(cue_controller_->enable_handler(CueController::Handler::MaestroHandler));
 	section_handler = static_cast<SectionCueHandler*>(cue_controller_->enable_handler(CueController::Handler::SectionHandler));
+	show_handler = static_cast<ShowCueHandler*>(cue_controller_->enable_handler(CueController::Handler::ShowHandler));
 }
 
 /// Reinitializes Palettes from Palette Dialog.
@@ -654,6 +655,16 @@ void MaestroControl::save_to_file(QString filename) {
 
 		file.flush();
 		file.close();
+	}
+}
+
+void MaestroControl::save_maestro_settings(QDataStream *datastream) {
+	// Save Show settings
+	Show* show = maestro_controller_->get_maestro()->get_show();
+	if (show != nullptr) {
+		write_cue_to_stream(datastream, show_handler->set_events(show->get_events(), show->get_num_events()));
+		write_cue_to_stream(datastream, show_handler->set_looping(show->get_looping()));
+		write_cue_to_stream(datastream, show_handler->set_timing(show->get_timing()));
 	}
 }
 

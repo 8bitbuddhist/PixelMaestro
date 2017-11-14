@@ -30,7 +30,7 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_action_About_triggered() {
-	QMessageBox::about(this, QString("PixelMaestro GUI"), QString("PixelMaestro v0.7\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
+	QMessageBox::about(this, QString("PixelMaestro GUI"), QString("PixelMaestro v0.8\n\nPixelMaestro is a library for creating and rendering 2D animations and patterns.\n\n© 2017"));
 }
 
 void MainWindow::on_action_Exit_triggered() {
@@ -42,6 +42,11 @@ void MainWindow::on_action_Online_Help_triggered() {
 }
 
 void MainWindow::reset_drawing_area() {
+	// Remove status bar label
+	for (QLabel* label : statusBar()->findChildren<QLabel*>(QString(), Qt::FindDirectChildrenOnly)) {
+		delete label;
+	}
+
 	main_layout_->removeWidget(drawing_area_);
 	main_layout_->removeWidget(maestro_control_);
 	removeEventFilter(drawing_area_);
@@ -81,7 +86,7 @@ void MainWindow::on_action_Animated_Canvas_Demo_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	ui->action_Animated_Canvas_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates using animations in a Canvas."));
+	statusBar()->addWidget(new QLabel("Demonstrates using animated images in Canvases"));
 }
 
 void MainWindow::on_action_Blink_Demo_triggered() {
@@ -91,7 +96,7 @@ void MainWindow::on_action_Blink_Demo_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	ui->action_Blink_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates the Blink animation."));
+	statusBar()->addWidget(new QLabel("Demonstrates a simple Blink animation"));
 }
 
 void MainWindow::on_action_Show_Demo_triggered() {
@@ -101,7 +106,7 @@ void MainWindow::on_action_Show_Demo_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	ui->action_Show_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates using Shows to change animations."));
+	statusBar()->addWidget(new QLabel("Demonstrates using a Show to update a Maestro"));
 }
 
 void MainWindow::on_action_Canvas_Demo_triggered() {
@@ -113,7 +118,7 @@ void MainWindow::on_action_Canvas_Demo_triggered() {
 	// Update UI
 	ui->action_Canvas_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Canvas."));
+	statusBar()->addWidget(new QLabel("Demonstrates drawing shapes on a Canvas"));
 }
 
 void MainWindow::on_actionCommand_Demo_triggered() {
@@ -125,7 +130,7 @@ void MainWindow::on_actionCommand_Demo_triggered() {
 	// Update UI
 	ui->actionCommand_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates how Cues can be used to perform advanced customizations."));
+	statusBar()->addWidget(new QLabel("Demonstrates configuring a Maestro using Cues"));
 }
 
 void MainWindow::on_action_Open_Animation_Editor_triggered() {
@@ -140,8 +145,6 @@ void MainWindow::on_action_Open_Animation_Editor_triggered() {
 	ui->action_Open_Animation_Editor->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
 	ui->action_Save_Maestro->setEnabled(true);
-
-	statusBar()->showMessage(QString("Use the controls to modify the Section."));
 }
 
 void MainWindow::on_action_Close_Workspace_triggered() {
@@ -162,7 +165,7 @@ void MainWindow::on_actionDrawing_Demo_triggered() {
 	main_layout_->addWidget(drawing_area_);
 	ui->actionDrawing_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Left-click to draw, right-click to erase, Delete to clear."));
+	statusBar()->addWidget(new QLabel("Demonstrates an interactive Canvas. Left-click = draw, right-click = erase, Delete =  clear"));
 }
 
 void MainWindow::on_action_Color_Canvas_Demo_triggered() {
@@ -174,7 +177,7 @@ void MainWindow::on_action_Color_Canvas_Demo_triggered() {
 	// Update UI
 	ui->action_Color_Canvas_Demo->setEnabled(false);
 	ui->action_Close_Workspace->setEnabled(true);
-	statusBar()->showMessage(QString("Demonstrates the shapes you can draw on a Color Canvas."));
+	statusBar()->addWidget(new QLabel("Demonstrates drawing on a Color Canvas"));
 }
 
 void MainWindow::on_actionOpen_Maestro_triggered() {

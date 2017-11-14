@@ -8,6 +8,7 @@ ColorCanvasDemo::ColorCanvasDemo(QWidget* parent, MaestroController* maestro_con
 	Section* section = maestro_controller_->set_sections(1, Point(80, 80));
 
 	Animation* animation = section->set_animation(AnimationType::Radial, ColorPresets::COLORWHEEL, 12);
+	animation->set_speed(250);
 	animation->set_reverse(true);
 
 	Section::Overlay* overlay = section->set_overlay(Colors::MixMode::Overlay);

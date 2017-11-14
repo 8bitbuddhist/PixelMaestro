@@ -9,7 +9,7 @@ using namespace PixelMaestro;
 
 namespace PixelMaestro {
 
-	Event::Event() : Event(0, nullptr) { }
+	Event::Event() { }
 
 	/**
 	 * Constructor. Copies the provided Cue into the Event.
@@ -19,6 +19,18 @@ namespace PixelMaestro {
 	Event::Event(uint32_t time, uint8_t* cue) {
 		set_time(time);
 		set_cue(cue);
+	}
+
+	Event::Event(const Event &other) {
+		set_cue(other.cue_);
+		this->time_ = other.time_;
+	}
+
+	Event* Event::operator=(const Event& other) {
+		delete [] cue_;
+		set_cue(other.cue_);
+		this->time_ = other.time_;
+		return this;
 	}
 
 	/**
