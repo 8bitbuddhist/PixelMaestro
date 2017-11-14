@@ -1,7 +1,7 @@
 # Canvas
-Canvases let you draw custom shapes and patterns onto a Section. Where Animations show pre-defined patterns, Canvases let you draw freely using those patterns or using custom colors. Canvases can also display simple animations by scrolling the pattern or displaying multiple different patterns in rapid succession.
+Canvases let you draw custom shapes and patterns onto a Section. Where Animations show pre-defined patterns across the entire Section, Canvases let you draw specific shapes. Canvases can also scroll and display animated images independently of the Section.
 
-See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT application for an example.
+See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in PixelMaestro Studio for an example.
 
 ## Contents
 1. [Canvas Types](#canvas-types)
@@ -21,22 +21,20 @@ See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in the PixelMaestro QT applicat
 8. [Interactive Canvases](#interactive-canvases)
 
 ## Canvas Types
-There are two different types of Canvases: `ColorCanvas` and `AnimationCanvas`. A `ColorCanvas` works similar to an image editor: you specify the shape to draw and the color to draw the shape in, and the Canvas draws the shape in the specified color.
+There are two different types of Canvases: `ColorCanvas` and `AnimationCanvas`. A `ColorCanvas` works like an image editor: you specify the shape to draw and the color to draw the shape in, and the Canvas draws the shape in that color.
 
-**Tip:** Color Canvases are RAM-hungry. You might run into issues on memory-tight devices (e.g. Arduino Uno).
-
-Instead of drawing a specific color, an `AnimationCanvas` draws the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, anything drawn on the Canvas will blink. Pixels that are not drawn appear black.
+An `AnimationCanvas`, on the other hand, doesn't draw a specific color but instead draws the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, drawn Pixels appear to blink while the remaining Pixels appear black.
 
 ## Creating a Canvas
-Create a new Canvas by calling `Section::set_canvas(CanvasType::Type, num_frames)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas` and `num_frames` sets the number of frames the Canvas contains (defaults to 1 if omitted). This initializes and returns a pointer to a new Canvas of the specified type.
+Create a new Canvas by calling `Section::set_canvas(CanvasType::Type, num_frames)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas` and `num_frames` is the number of frames the Canvas contains (1 by default). This initializes and returns a pointer to a new Canvas of the specified type.
 
-Note that nothing is drawn to the Canvas by default, so the Section will appear to be blank.
+Note that nothing is drawn to the Canvas by default, so the entire Section will appear blank even if an Animation is running.
 
 ```c++
 ColorCanvas* canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas));
 ```
 
-If you want to display an animated Canvas, specify the number of frames. Frames are described in more detail in the section [Animating a Canvas](#animating-a-canvas).
+If you want to display an animated Canvas, increase the number of frames to 2 or higher. Frames are described in more detail in the section [Animating a Canvas](#animating-a-canvas).
 
 ```c++
 int num_frames = 10;
@@ -44,23 +42,21 @@ section-set_canvas(CanvasType::ColorCanvas, num_frames);
 ```
 
 ## Animating a Canvas
-The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames, and if multiple frames are set, the Canvas will cycle through each one on refresh. This lets you use custom drawn animations in addition to the [built-in Section animations](animation.md).
+The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames, and if multiple frames are set, the Canvas will cycle through each one on each refresh. This lets you create and control animated images in a manner similar to [Section Animations](animation.md).
 
-**Note:** The frame cycle rate is the same as the Maestro's refresh rate.
+**Note:** The time between frames is the same as the Maestro's refresh rate.
 
 You can specify the number of frames in `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `set_num_frames()`, but bear in mind this will delete the current frame set.
 
 ### Switching Frames
-When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes)), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing the Canvas to render that frame instead. This also changes the target frame for any `draw()` actions. You can also quickly jump between frames using `next_frame()`, which jumps to the next available frame (or the first frame if you're currently on the last frame).
+When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes)), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing any new actions to modify that frame instead. You can also quickly jump between frames using `next_frame()`, which jumps to the next available frame (or the first frame if you're currently on the last frame).
 
 ## Drawing Shapes
-The Canvas class provides several `draw()` methods for drawing various shapes, elements, and patterns. For each shape you must specify where it will appear on the grid (as x and y coordinates) and any extra parameters that the shape requires.
+The Canvas class provides several `draw()` methods for drawing various shapes and patterns. For each shape, specify its starting point on the grid (as x and y coordinates) and any extra parameters that the shape requires.
 
-**Note:** When calling a draw method on a ColorCanvas, you will also need to pass the Color you want to use to draw the shape.
+**Note:** When calling a draw method on a ColorCanvas, you will also need to pass the color that you want to draw the shape in.
 
-The Canvas uses a Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section, with increasing values moving to the right and down.
-
-For an example of drawing various shapes, see the [CanvasDemo](../gui/demo/canvasdemo.cpp).
+The Canvas uses a Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section, with increasing values moving to the right and down. For an example of drawing various shapes, see the [CanvasDemo](../gui/demo/canvasdemo.cpp).
 
 ### Drawing Lines
 The `draw_line` method lets you draw a line from one point to another. Enter the coordinate where the line starts and the coordinate where the line ends.
@@ -108,7 +104,7 @@ canvas->draw_triangle(0, 0, 10, 0, 0, 10, true);
 ```
 
 ### Clearing the Canvas
-The `clear()` method returns the Canvas to a blank slate by setting all Pixels back to their default state. You can clear a single pixel using the `erase()` method. Note that once you clear a Canvas, there's no way to recover anything you've drawn.
+Use `clear()` to return the Canvas to a blank slate by turning all Pixels off. You can clear a single pixel using the `erase()` method. Note that once you clear a Canvas, there's no way to recover anything you've drawn.
 
 ## Scrolling
 Scrolling shifts the contents of a Canvas along the Section. Scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.

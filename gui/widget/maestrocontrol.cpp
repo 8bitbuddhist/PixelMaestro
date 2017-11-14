@@ -185,14 +185,6 @@ void MaestroControl::initialize() {
 	}
 	ui->sectionComboBox->setCurrentIndex(0);
 
-	ui->overlayComboBox->addItem(QString("None"));
-	Section::Overlay* overlay = section->get_overlay();
-	int overlay_index = 1;
-	while (overlay != nullptr) {
-		ui->overlayComboBox->addItem(QString("Overlay ") + QString::number(overlay_index));
-		overlay_index++;
-	}
-
 	// Initialize Overlay controls
 	ui->mix_modeComboBox->addItems({"None", "Alpha", "Multiply", "Overlay"});
 
@@ -220,6 +212,8 @@ void MaestroControl::initialize() {
 	ui->enableShowCheckBox->setVisible(false);
 
 	set_active_section(section);
+
+	populate_overlay_combobox();
 }
 
 /// Initializes Cue components.
@@ -611,7 +605,7 @@ void MaestroControl::on_section_resize(uint16_t x, uint16_t y) {
 void MaestroControl::populate_overlay_combobox() {
 	ui->overlayComboBox->blockSignals(true);
 	ui->overlayComboBox->clear();
-	ui->overlayComboBox->addItem("None");
+	ui->overlayComboBox->addItem("Not Selected");
 
 	for (uint8_t overlay = 1; overlay <= maestro_controller_->get_maestro()->get_section(get_section_index())->get_num_overlays(); overlay++) {
 		ui->overlayComboBox->addItem(QString("Overlay ") + QString::number(overlay));

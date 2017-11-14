@@ -4,54 +4,16 @@
 
 # Structure
 PixelMaestro has three main components:
-* [Maestro](maestro.md): Main class. Handles synchronizing one or more Sections.
-* [Section](section.md): Manages a grid of Pixels. All actions that change the display output are performed through a Section. Sections also manage Animations and Canvases.
-* [Pixel](pixel.md): A single RGB output. Each Pixel stores a color value that you can send to an output device.
+* [Maestro](maestro.md): Maestros handle synchronizing one or more Sections. They are the primary PixelMaestro components.
+* [Section](section.md): Sections manage groups of Pixels. Any actions that affect the display or output (e.g. Animations and Canvases) are managed by a Section.
+* [Pixel](pixel.md): Pixels store color values for output. Each Pixel can store a 24-bit color value. Pixels are managed by Sections.
 
 PixelMaestro also includes the following support classes:
-* [Animation](animation.md): Various animations that can be displayed using a Section.
-* [Canvas](canvas.md): Tools for drawing custom shapes and patterns onto a Section.
-* [Colors](colors.md): Tools for defining custom colors and generating color palettes.
-	* ColorPresets: Provides several pre-defined common colors.
-* [Cue](cue.md): Provides methods serializing PixelMaestro commands.
-* [Point](point.md): Defines the size of Pixel grids as well as individual coordinates.
-* [Show](show.md): Utility for scheduling Cues to run at certain points in the program's lifecycle.
-* [Utility](utility.md): Common methods (prevents having to pull in stdlib).
-
-# Example
-This smaple Arduino sketch shows how to create a new Pixel grid 50 Pixels wide and 10 Pixels tall, draw text, and make it flash.
-
-```c++
-#include "canvas/canvas.h"
-#include "canvas/fonts/font5x8.h"
-#include "colorpresets.h"
-#include "core/Maestro.h"
-
-using namespace PixelMaestro;
-
-// Define a Maestro with a single Section 50 Pixels wide and 10 Pixels high.
-Maestro maestro(50, 10);
-
-void setup() {
-	// Set global brightness to 50%
-	maestro.set_brightness(128);
-
-	// Create a new blinking animation using the ColorWheel preset, then sets the animation speed to 500ms
-	Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Blink, ColorPresets::COLORWHEEL, 12);
-	animation->set_speed(500);
-
-	// Create a new Canvas and write "Hello world" using a 5x8 font
-	Canvas* canvas = maestro.get_section(0)->add_canvas(CanvasType::AnimationCanvas);
-	canvas->draw_text(0, 0, new Font5x8(), "Hello world!", 12);
-}
-
-void loop() {
-	maestro.update(millis());
-
-	for (unsigned short y = 0; y < maestro.get_section(0)->get_dimensions()->y; y++) {
-		for (unsigned short x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-			// Retrieve the Pixel's color using `maestro.get_pixel_color(0, x, y);`
-		}
-	}
-}
-```
+* [Animation](animation.md): Animations display various patterns on a Section.
+* [Canvas](canvas.md): Canvases draw custom shapes and patterns onto a Section.
+* [Colors](colors.md): Colors store 24-bit RGB values (8 bits to the red, green, and blue channels each). This class provides tools for generating custom colors and palettes.
+	* ColorPresets: Contains several pre-defined common colors.
+* [Cue](cue.md): Cues let you convert PixelMaestro commands into packets that can be saved to a file or sent to other devices.
+* [Point](point.md): Points correspond to Pixel coordinates on a Section. They are also used in some cases to set the size of the Pixel grid.
+* [Show](show.md): Shows schedule Cues to run at certain times in the program's lifecycle.
+* [Utility](utility.md): Utilities are common methods shared across classes.
