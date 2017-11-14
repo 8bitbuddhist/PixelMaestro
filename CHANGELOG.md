@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.8.1] - In Progress
+### Changed
+- Split PixelMaestro Studio into separate project.
+
 ## [v0.8] - 2017-11-13
 ### Added
 - Canvas:
