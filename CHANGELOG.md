@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.8] - In Progress
+## [v0.8] - 2017-11-13
 ### Added
 - Canvas:
 	- Added support for animated drawings. Learn more in the [Canvas docs](docs/canvas.md).
