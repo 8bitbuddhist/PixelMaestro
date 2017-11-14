@@ -39,9 +39,9 @@ void loop() {
 
     maestro.update(millis());
 
-    for (unsigned int pixel = 0; pixel < maestro.get_section(0)->get_dimensions()->size(); pixel++) {
-      ws.set_crgb_at(pixel, RGBtoCRGB(maestro.get_pixel_color(0, pixel)));
-    }
+		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
+			ws.set_crgb_at(x, RGBtoCRGB(maestro.get_pixel_color(0, x, 0)));
+		}
 
     ws.sync();
 }
