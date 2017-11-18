@@ -352,6 +352,13 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Deletes the frame timing controller.
+	 */
+	void Canvas::remove_frame_timing() {
+		delete frame_timing_;
+	}
+
+	/**
 	 * Deletes this Canvas' scrolling behavior.
 	 */
 	void Canvas::remove_scroll() {
@@ -365,6 +372,19 @@ namespace PixelMaestro {
 	 */
 	void Canvas::set_current_frame_index(uint16_t index) {
 		current_frame_index_ = index;
+	}
+
+	/**
+	 * Sets the amount of time between frames.
+	 * @param speed Amount of time between frames.
+	 */
+	void Canvas::set_frame_timing(uint16_t speed) {
+		if (!frame_timing_) {
+			frame_timing_ = new Timing(speed);
+		}
+		else {
+			frame_timing_->set_speed(speed);
+		}
 	}
 
 	/**
@@ -425,7 +445,9 @@ namespace PixelMaestro {
 	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const uint32_t& current_time) {
-		next_frame();
+		if (frame_timing_ && frame_timing_->update(current_time)) {
+			next_frame();
+		}
 		if (scroll_ != nullptr) {
 			update_scroll(current_time);
 		}
@@ -490,6 +512,7 @@ namespace PixelMaestro {
 	}
 
 	Canvas::~Canvas() {
+		remove_frame_timing();
 		remove_scroll();
 	}
 }

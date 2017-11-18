@@ -42,11 +42,11 @@ section-set_canvas(CanvasType::ColorCanvas, num_frames);
 ```
 
 ## Animating a Canvas
-The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames, and if multiple frames are set, the Canvas will cycle through each one on each refresh. This lets you create and control animated images in a manner similar to [Section Animations](animation.md).
+The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames, and if multiple frames are set, the Canvas will cycle through each one on each update. This lets you create and control animated images in a manner similar to [Section Animations](animation.md).
 
-**Note:** The time between frames is the same as the Maestro's refresh rate.
+You can set the amount of time (in milliseconds) between frames using `set_frame_timing(milliseconds)`. 
 
-You can specify the number of frames in `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `set_num_frames()`, but bear in mind this will delete the current frame set.
+You can specify the number of frames when calling `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `set_num_frames()`, but bear in mind this will delete the current frame set.
 
 ### Switching Frames
 When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes)), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing any new actions to modify that frame instead. You can also quickly jump between frames using `next_frame()`, which jumps to the next available frame (or the first frame if you're currently on the last frame).

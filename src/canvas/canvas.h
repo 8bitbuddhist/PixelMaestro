@@ -9,6 +9,7 @@
 #include "../core/colors.h"
 #include "../core/point.h"
 #include "../core/section.h"
+#include "../core/timing.h"
 #include "fonts/font.h"
 #include "canvastype.h"
 
@@ -71,8 +72,10 @@ namespace PixelMaestro {
 			bool in_bounds(uint32_t pixel);
 			bool in_bounds(uint16_t x, uint16_t y);
 			void next_frame();
+			void remove_frame_timing();
 			void remove_scroll();
 			void set_current_frame_index(uint16_t index);
+			void set_frame_timing(uint16_t speed);
 			void set_num_frames(uint16_t num_frames);
 			void set_offset(int16_t x, int16_t y);
 			void set_scroll(int16_t x, int16_t y, bool repeat);
@@ -83,6 +86,9 @@ namespace PixelMaestro {
 		protected:
 			/// The index of the current frame.
 			uint16_t current_frame_index_ = 0;
+
+			/// Controls timings for frame animations.
+			Timing* frame_timing_ = nullptr;
 
 			/// The number of frames.
 			uint16_t num_frames_ = 0;

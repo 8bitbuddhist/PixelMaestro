@@ -3,7 +3,17 @@ All notable changes to this project will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.8.1] - In Progress
+## [v0.9] - In Progress
+### Added
+- New Timing class handles animations and other time-based actions.
+- Canvas:
+	- Added `set_frame_timing()` to control delay between frame switches.
+
+### Changed
+- Animation:
+	- Replaced `get/set_speed()` and `get/set_pause()` methods with `get/set_timing()`.	
+
+## [v0.8.1] - 2017-11-14
 ### Changed
 - Split PixelMaestro Studio into separate project.
 

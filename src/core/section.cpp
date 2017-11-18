@@ -292,7 +292,7 @@ namespace PixelMaestro {
 				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
 				This results in the Pixel finishing early and waiting until the next cycle.
 			*/
-			pixels_[pixel].set_next_color(color, animation_->get_step_count());
+			pixels_[pixel].set_next_color(color, animation_->get_timing()->get_step_count());
 		}
 	}
 

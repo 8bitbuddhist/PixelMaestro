@@ -14,8 +14,6 @@ namespace PixelMaestro {
 	Animation::Animation(Section* section, Colors::RGB* colors, uint8_t num_colors) {
 		this->section_ = section;
 		set_colors(colors, num_colors);
-
-		recalculate_step_count();
 	}
 
 	/**
@@ -78,14 +76,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the amount of time (in milliseconds) to wait before starting an animation cycle.
-	 * @return Pause time.
-	 */
-	uint16_t Animation::get_pause() {
-		return pause_;
-	}
-
-	/**
 	 * Returns whether the animation is running in reverse.
 	 *
 	 * @return True if running in reverse.
@@ -98,16 +88,8 @@ namespace PixelMaestro {
 	 * Returns the animation's speed.
 	 * @return Speed.
 	 */
-	uint16_t Animation::get_speed() {
-		return speed_;
-	}
-
-	/**
-	 * Returns the number of steps in the current cycle.
-	 * @return Cycle steps.
-	 */
-	uint8_t Animation::get_step_count() {
-		return step_count_;
+	AnimationTiming* Animation::get_timing() {
+		return &timing_;
 	}
 
 	/**
@@ -116,27 +98,6 @@ namespace PixelMaestro {
 	 */
 	AnimationType::Type Animation::get_type() {
 		return type_;
-	}
-
-	/**
-	 * Recalculates the number of steps in the Animation.
-	 */
-	void Animation::recalculate_step_count() {
-		/*
-			Calculate the number of steps between the current color and the next color.
-			Use the refresh rate to determine the number of steps to take during the event.
-			If not fading, just jump one single step.
-		*/
-		if (fade_) {
-			step_count_ = (speed_ - pause_) / (float)section_->get_refresh_interval();
-
-			if (step_count_ == 0) {
-				step_count_ = 1;
-			}
-		}
-		else {
-			step_count_ = 1;
-		}
 	}
 
 	/**
@@ -172,7 +133,7 @@ namespace PixelMaestro {
 	void Animation::set_fade(bool fade) {
 		fade_ = fade;
 
-		recalculate_step_count();
+		timing_.recalculate_step_count(fade, section_->get_refresh_interval());
 	}
 
 	/**
@@ -199,11 +160,9 @@ namespace PixelMaestro {
 	 * @param speed Amount of time (in milliseconds) between animation cycles.
 	 * @param pause AMount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	void Animation::set_speed(uint16_t speed, uint16_t pause) {
-		speed_ = speed;
-		pause_ = pause;
-
-		recalculate_step_count();
+	void Animation::set_timing(uint16_t speed, uint16_t pause) {
+		timing_.set_speed(speed, pause);
+		timing_.recalculate_step_count(fade_, section_->get_refresh_interval());
 	}
 
 	/**
@@ -218,18 +177,9 @@ namespace PixelMaestro {
 			return false;
 		}
 
-		/*
-			Update the animation cycle.
-			speed_ tracks the amount of time between cycles, while last_cycle_ tracks the time of the last change.
-			If it's time for the next cycle, run the animation.
-		*/
-		if ((current_time - last_cycle_) >= speed_) {
-
+		if (timing_.update(current_time)) {
 			// Run the derived Animation's update function.
 			update();
-
-			// Update the last cycle time.
-			last_cycle_ = current_time;
 
 			return true;
 		}

@@ -209,7 +209,7 @@ namespace PixelMaestro {
 				{
 					uint16_t speed = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
 					uint16_t pause = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]);
-					animation->set_speed(speed, pause);
+					animation->set_timing(speed, pause);
 				}
 				break;
 		}

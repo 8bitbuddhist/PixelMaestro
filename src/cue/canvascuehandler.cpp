@@ -377,6 +377,20 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
 	}
 
+	uint8_t* CanvasCueHandler::set_frame_timing(uint8_t section_num, uint8_t overlay_num, uint16_t speed) {
+		IntByteConvert speed_byte(speed);
+
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetFrameTiming;
+		controller_->get_cue()[Byte::TypeByte] = 255;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_cue()[Byte::OptionsByte] = speed_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 1] = speed_byte.converted_1;
+
+		return controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
+	}
+
 	uint8_t* CanvasCueHandler::set_num_frames(uint8_t section_num, uint8_t overlay_num, uint16_t num_frames) {
 		IntByteConvert num_frames_byte(num_frames);
 
@@ -442,6 +456,9 @@ namespace PixelMaestro {
 				break;
 			case Action::SetCurrentFrameIndex:
 				plain_canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+				break;
+			case Action::SetFrameTiming:
+				plain_canvas->set_frame_timing(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
 				break;
 			case Action::SetNumFrames:
 				plain_canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));

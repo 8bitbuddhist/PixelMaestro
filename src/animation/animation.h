@@ -9,6 +9,7 @@
 #include "animationtype.h"
 #include "../core/colors.h"
 #include "../core/section.h"
+#include "../core/timing.h"
 
 namespace PixelMaestro {
 	class Section;
@@ -32,15 +33,13 @@ namespace PixelMaestro {
 			uint32_t get_num_pixels();
 			Orientation get_orientation();
 			bool get_reverse();
-			uint16_t get_pause();
-			uint16_t get_speed();
-			uint8_t get_step_count();
+			AnimationTiming* get_timing();
 			AnimationType::Type get_type();
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
 			void set_orientation(Orientation orientation);
-			void set_speed(uint16_t speed, uint16_t pause = 0);
+			void set_timing(uint16_t speed, uint16_t pause = 0);
 			void set_reverse(bool reverse);
 			bool update(const uint32_t& current_time);
 			virtual void update() = 0;
@@ -55,17 +54,11 @@ namespace PixelMaestro {
 			/// Whether to fade between cycles. Defaults to true.
 			bool fade_ = true;
 
-			/// The amount of time (in milliseconds) since the last animation cycle change.
-			uint32_t last_cycle_ = 0;
-
 			/// The number of colors in colors_.
 			uint8_t num_colors_ = 0;
 
 			/// The orientation of the animation. Defaults to HORIZONTAL.
 			Orientation orientation_ = Orientation::Horizontal;
-
-			/// The amount of time (in milliseconds) to wait before starting an animation cycle. Defaults to 0.
-			uint16_t pause_ = 0;
 
 			/// Whether to animate the current animation in reverse. Defaults to false.
 			bool reverse_ = false;
@@ -73,16 +66,12 @@ namespace PixelMaestro {
 			/// The Animation's parent Section.
 			Section* section_ = nullptr;
 
-			/// The amount of time (in milliseconds) between animation updates. Defaults to 100.
-			uint16_t speed_ = 100;
-
-			/// The number of steps from the current cycle to the next cycle.
-			uint8_t step_count_ = 1;
+			/// The Animation's timing system.
+			AnimationTiming timing_;
 
 			/// The type of Animation. Gets set in the derived class' constructor.
 			AnimationType::Type type_;
 
-			void recalculate_step_count();
 			void update_cycle(uint8_t min, uint8_t max);
 	};
 }
