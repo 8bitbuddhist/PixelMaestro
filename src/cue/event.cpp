@@ -21,18 +21,6 @@ namespace PixelMaestro {
 		set_cue(cue);
 	}
 
-	Event::Event(const Event &other) {
-		set_cue(other.cue_);
-		this->time_ = other.time_;
-	}
-
-	Event* Event::operator=(const Event& other) {
-		delete [] cue_;
-		set_cue(other.cue_);
-		this->time_ = other.time_;
-		return this;
-	}
-
 	/**
 	 * Returns the Event's Cue.
 	 * The Show passes this to the CueController when the Event runs.
@@ -55,10 +43,14 @@ namespace PixelMaestro {
 	 * @param cue Cue to run when the Event is triggered.
 	 */
 	void Event::set_cue(uint8_t *cue) {
+		if (this->cue_ != nullptr) {
+			delete [] this->cue_;
+		}
+
 		uint8_t size = cue[CueController::Byte::SizeByte] + CueController::Byte::PayloadByte;
-		cue_ = new uint8_t[size];
+		this->cue_ = new uint8_t[size];
 		for (uint8_t i = 0; i < size; i++) {
-			cue_[i] = cue[i];
+			this->cue_[i] = cue[i];
 		}
 	}
 

@@ -112,9 +112,9 @@ namespace PixelMaestro {
 	/**
 	 * Resets the center of the Animation to the Section center.
 	 */
-	void Animation::set_center() {
-		center_.set((uint16_t)(section_->get_dimensions()->x / 2),
-					(uint16_t)(section_->get_dimensions()->y / 2));
+	Point* Animation::set_center() {
+		return set_center((uint16_t)(section_->get_dimensions()->x / 2),
+						  (uint16_t)(section_->get_dimensions()->y / 2));
 	}
 
 	/**
@@ -122,8 +122,9 @@ namespace PixelMaestro {
 	 * @param x X-axis center.
 	 * @param y Y-axis center.
 	 */
-	void Animation::set_center(uint16_t x, uint16_t y) {
+	Point* Animation::set_center(uint16_t x, uint16_t y) {
 		center_.set(x, y);
+		return &center_;
 	}
 
 	/**
@@ -159,7 +160,7 @@ namespace PixelMaestro {
 	void Animation::set_fade(bool fade) {
 		fade_ = fade;
 
-		timing_.recalculate_step_count(fade, section_->get_refresh_interval());
+		timing_.recalculate_step_count(fade, section_->get_maestro()->get_timing()->get_interval());
 	}
 
 	/**
@@ -186,9 +187,11 @@ namespace PixelMaestro {
 	 * @param speed Amount of time (in milliseconds) between animation cycles.
 	 * @param pause AMount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	void Animation::set_timing(uint16_t speed, uint16_t pause) {
-		timing_.set_speed(speed, pause);
-		timing_.recalculate_step_count(fade_, section_->get_refresh_interval());
+	AnimationTiming* Animation::set_timing(uint16_t speed, uint16_t pause) {
+		timing_.set_interval(speed, pause);
+		timing_.recalculate_step_count(fade_, section_->get_maestro()->get_timing()->get_interval());
+
+		return &timing_;
 	}
 
 	/**

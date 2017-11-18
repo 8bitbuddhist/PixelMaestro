@@ -14,7 +14,6 @@ namespace PixelMaestro {
 		public:
 			MandelbrotAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			~MandelbrotAnimation();
-			void set_center_offset(int16_t x, int16_t y);
 			void set_colors(Colors::RGB *colors, uint8_t num_colors);
 			void update();
 

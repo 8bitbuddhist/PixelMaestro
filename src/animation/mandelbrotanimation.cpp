@@ -7,11 +7,12 @@ namespace PixelMaestro {
 		type_ = AnimationType::Mandelbrot;
 	}
 
-	void MandelbrotAnimation::set_center_offset(int16_t x, int16_t y) {
-		center_.x += x;
-		center_.y += y;
-	}
-
+	/**
+	 * Overrides Animation::SetColors.
+	 * Sets the number of iterations equal to the number of colors
+	 * @param colors
+	 * @param num_colors
+	 */
 	void MandelbrotAnimation::set_colors(Colors::RGB *colors, uint8_t num_colors) {
 		colors_ = colors;
 		num_colors_ = num_colors;

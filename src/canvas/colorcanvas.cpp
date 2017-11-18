@@ -67,19 +67,19 @@ namespace PixelMaestro {
 	 * @return Pixel color.
 	 */
 	Colors::RGB ColorCanvas::get_pixel_color(uint16_t x, uint16_t y) {
-		uint32_t pixel_index;
+		Point pixel_index;
 
 		if (scroll_ != nullptr && scroll_->repeat) {
-			pixel_index = section_->get_dimensions()->get_inline_index(
+			pixel_index.set(
 				(x + offset_x_) % section_->get_dimensions()->x,
 				(y + offset_y_) % section_->get_dimensions()->y);
 		}
 		else {
-			pixel_index = section_->get_dimensions()->get_inline_index(x - offset_x_, y - offset_y_);
+			pixel_index.set(x - offset_x_, y - offset_y_);
 		}
 
-		if (in_bounds(pixel_index)) {
-			return frames_[current_frame_index_][pixel_index];
+		if (in_bounds(pixel_index.x, pixel_index.y)) {
+			return frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(&pixel_index)];
 		}
 		else {
 			return {0, 0, 0};
@@ -89,17 +89,19 @@ namespace PixelMaestro {
 	// Drawing functions
 	/**
 	 * Sets the color of the pixel at the specified index to the current drawing color.
-	 * @param pixel Pixel to activate.
+	 * @param x X coordinate.
+	 * @param y Y coordinate.
 	 */
-	void ColorCanvas::activate(uint32_t pixel) {
-		frames_[current_frame_index_][pixel] = drawing_color_;
+	void ColorCanvas::activate(uint16_t x, uint16_t y) {
+		frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] = drawing_color_;
 	}
 	/**
 	 * Sets the color of the pixel at the specified index to black.
-	 * @param pixel Pixel to activate.
+	 * @param x X coordinate.
+	 * @param y Y coordinate.
 	 */
-	void ColorCanvas::deactivate(uint32_t pixel) {
-		frames_[current_frame_index_][pixel] = {0, 0, 0};
+	void ColorCanvas::deactivate(uint16_t x, uint16_t y) {
+		frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] = {0, 0, 0};
 	}
 
 	/**

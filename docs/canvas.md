@@ -44,7 +44,7 @@ section-set_canvas(CanvasType::ColorCanvas, num_frames);
 ## Animating a Canvas
 The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames, and if multiple frames are set, the Canvas will cycle through each one on each update. This lets you create and control animated images in a manner similar to [Section Animations](animation.md).
 
-You can set the amount of time (in milliseconds) between frames using `set_frame_timing(milliseconds)`. 
+You can set the amount of time (in milliseconds) between frames using `set_frame_timing(milliseconds)`.
 
 You can specify the number of frames when calling `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `set_num_frames()`, but bear in mind this will delete the current frame set.
 

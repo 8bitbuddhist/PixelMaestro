@@ -40,14 +40,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the last time the Maestro was refreshed.
-	 * @return Last refresh time.
-	 */
-	uint32_t Maestro::get_last_refresh() {
-		return last_refresh_;
-	}
-
-	/**
 		Returns the number of Sections.
 
 		@return Number of Sections.
@@ -65,24 +57,6 @@ namespace PixelMaestro {
 	 */
 	Colors::RGB Maestro::get_pixel_color(uint8_t section, uint16_t x, uint16_t y) {
 		return sections_[section].get_pixel_color(x, y) * (float)(brightness_ / (float)255);
-	}
-
-	/**
-		Returns the Maestro's refresh interval.
-
-		@return Amount of time between refreshes (in ms).
-	*/
-	uint16_t Maestro::get_refresh_interval() {
-		return refresh_interval_;
-	}
-
-	/**
-		Returns whether the Maestro is running.
-
-		@return Whether the Maestro is running.
-	*/
-	bool Maestro::get_running() {
-		return running_;
 	}
 
 	/**
@@ -108,6 +82,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Gets the Maestro's update timing.
+	 * @return Maestro timing.
+	 */
+	Timing* Maestro::get_timing() {
+		return &timing_;
+	}
+
+	/**
 	 * Sets the Maestro's global brightness level.
 	 * @param brightness Brightness level from 0 (off) to 255 (full).
 	 */
@@ -128,27 +110,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the Maestro's refresh interval.
-	 * @param interval New refresh interval.
-	 */
-	void Maestro::set_refresh_interval(uint16_t interval)	{
-		refresh_interval_ = interval;
-
-		for (uint8_t section = 0; section < num_sections_; section++) {
-			sections_[section].set_refresh_interval(interval);
-		}
-	}
-
-	/**
-		Sets whether the Maestro is running.
-
-		@param running Whether or not the Maestro is running.
-	*/
-	void Maestro::set_running(bool running) {
-		running_ = running;
-	}
-
-	/**
 		Sets the Sections used in the Maestro.
 
 		@param sections Array of Sections.
@@ -158,8 +119,9 @@ namespace PixelMaestro {
 		sections_ = sections;
 		num_sections_ = num_sections;
 
-		// Update Sections' refresh intervals
-		set_refresh_interval(refresh_interval_);
+		for (uint16_t section = 0; section < num_sections; section++) {
+			sections_[section].set_maestro(this);
+		}
 	}
 
 	/**
@@ -182,30 +144,32 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the interval between Maestro updates.
+	 * @param interval Update interval.
+	 * @return New Maestro timing.
+	 */
+	Timing* Maestro::set_timing(uint16_t interval) {
+		timing_.set_interval(interval);
+		return &timing_;
+	}
+
+	/**
 		Main update routine.
 
 		@param current_time Current program runtime.
 		@param force If true, bypass the refresh interval check and force the Maestro to update.
 	*/
 	void Maestro::update(const uint32_t& current_time, bool force) {
-		// If running, call each Section's update method.
-		if (running_) {
+		// Update if the time is exceeded or if force is true
+		if (timing_.update(current_time) || force) {
+			// Run the Show
+			if (show_) {
+				show_->update(current_time);
+			}
 
-			// Compare the refresh time to the time since the last refresh.
-			if (force || current_time - last_refresh_ >= (uint32_t)refresh_interval_) {
-
-				// Run the Show
-				if (show_) {
-					show_->update(current_time);
-				}
-
-				// Update each Section
-				for (uint8_t section = 0; section < num_sections_; section++) {
-					sections_[section].update(current_time);
-				}
-
-				// Update the last refresh time.
-				last_refresh_ = current_time;
+			// Update each Section
+			for (uint8_t section = 0; section < num_sections_; section++) {
+				sections_[section].update(current_time);
 			}
 		}
 	}

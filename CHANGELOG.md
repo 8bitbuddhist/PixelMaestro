@@ -6,12 +6,20 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.9] - In Progress
 ### Added
 - New Timing class handles animations and other time-based actions.
+- Arduino:
+	- Added NeoPixel sketch.
 - Canvas:
 	- Added `set_frame_timing()` to control delay between frame switches.
 
 ### Changed
-- Animation:
-	- Replaced `get/set_speed()` and `get/set_pause()` methods with `get/set_timing()`.	
+- All components that rely on timing (Animation speed/pause, Maestro refresh, Canvas scrolling, etc) now use the Timing class. `get/set_speed()`, `get/set_refresh_interval()` etc. now use `get/set_timing()`.
+- Section:
+	- Added a pointer to each Section's parent Maestro.
+	
+### Removed
+- Maestro:
+	- Removed `running` option.
+- Removed a variety of redundant, unused, and extraneous functions/methods.
 
 ## [v0.8.1] - 2017-11-14
 ### Changed

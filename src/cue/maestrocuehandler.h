@@ -8,7 +8,7 @@ namespace PixelMaestro {
 	class MaestroCueHandler : public CueHandler {
 		public:
 			enum Action : uint8_t {
-				SetRefreshInterval
+				SetTiming
 			};
 
 			enum Byte : uint8_t {
@@ -19,7 +19,7 @@ namespace PixelMaestro {
 
 			MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
 			~MaestroCueHandler();
-			uint8_t* set_refresh_interval(uint16_t interval);
+			uint8_t* set_timing(uint16_t interval);
 			void run(uint8_t *cue);
 	};
 }

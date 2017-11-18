@@ -24,19 +24,20 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Enables the pixel at the specified index.
-	 * @param pixel Pixel to activate.
+	 * Enables the pixel at the specified coordinates.
+	 * @param x X coordinate.
+	 * @param y Y coordinate.
 	 */
-	void AnimationCanvas::activate(uint32_t pixel) {
-		frames_[current_frame_index_][pixel] = 1;
+	void AnimationCanvas::activate(uint16_t x, uint16_t y) {
+		frames_[current_frame_index_][get_section()->get_dimensions()->get_inline_index(x, y)] = 1;
 	}
 
 	/**
 	 * Deactivates (turns off) the pixel at the specified index.
 	 * @param pixel Pixel to deactivate.
 	 */
-	void AnimationCanvas::deactivate(uint32_t pixel) {
-		frames_[current_frame_index_][pixel] = 0;
+	void AnimationCanvas::deactivate(uint16_t x, uint16_t y) {
+		frames_[current_frame_index_][get_section()->get_dimensions()->get_inline_index(x, y)] = 0;
 	}
 
 	/**

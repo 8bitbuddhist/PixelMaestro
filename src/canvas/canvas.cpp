@@ -29,8 +29,10 @@ namespace PixelMaestro {
 	void Canvas::clear() {
 		for (uint16_t frame = 0; frame < num_frames_; frame++) {
 			set_current_frame_index(frame);
-			for (uint32_t pixel = 0; pixel < (uint32_t)(section_->get_dimensions()->size()); pixel++) {
-				deactivate(pixel);
+			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
+				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+					deactivate(x, y);
+				}
 			}
 		}
 	}
@@ -57,7 +59,7 @@ namespace PixelMaestro {
 		uint32_t radius_squared = pow(radius, 2);
 		for (cursor.x = origin_x - radius; cursor.x <= origin_x + radius; cursor.x++) {
 			for (cursor.y = origin_y - radius; cursor.y <= origin_y + radius; cursor.y++) {
-				if (in_bounds(&cursor)) {
+				if (in_bounds(cursor.x, cursor.y)) {
 					// Check that cursor_x and cursor_y satisfy the equation
 					test_point = pow(cursor.x - origin_x, 2) + pow(cursor.y - origin_y, 2);
 					/*
@@ -67,7 +69,7 @@ namespace PixelMaestro {
 					 */
 					if ((test_point >= radius_squared - radius && test_point <= radius_squared + radius) ||
 						(fill && test_point < pow(radius, 2))) {
-						activate(section_->get_dimensions()->get_inline_index(&cursor));
+						activate(cursor.x, cursor.y);
 					}
 				}
 			}
@@ -99,8 +101,8 @@ namespace PixelMaestro {
 		// Handle vertical lines
 		if (target_x == origin_x) {
 			while (cursor.y != target_y) {
-				if (in_bounds(&cursor)) {
-					activate(section_->get_dimensions()->get_inline_index(&cursor));
+				if (in_bounds(cursor.x, cursor.y)) {
+					activate(cursor.x, cursor.y);
 				}
 
 				if (target_y >= cursor.y) {
@@ -118,8 +120,8 @@ namespace PixelMaestro {
 			 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
 			 */
 			while (cursor.x != target_x) {
-				if (in_bounds(&cursor)) {
-					activate(section_->get_dimensions()->get_inline_index(&cursor));
+				if (in_bounds(cursor.x, cursor.y)) {
+					activate(cursor.x, cursor.y);
 				}
 
 				if (target_x >= origin_x) {
@@ -140,7 +142,7 @@ namespace PixelMaestro {
 	 */
 	void Canvas::draw_point(uint16_t x, uint16_t y) {
 		if (in_bounds(x, y)) {
-			activate(section_->get_dimensions()->get_inline_index(x, y));
+			activate(x, y);
 		}
 	}
 
@@ -160,10 +162,10 @@ namespace PixelMaestro {
 			cursor.y = origin_y;
 			for (uint16_t row = 0; row < size_y; row++) {
 				cursor.y = origin_y + row;
-				if (in_bounds(&cursor)) {
+				if (in_bounds(cursor.x, cursor.y)) {
 					// Check whether to fill
 					if (fill) {
-						activate(section_->get_dimensions()->get_inline_index(&cursor));
+						activate(cursor.x, cursor.y);
 					}
 					else {
 						/*
@@ -172,7 +174,7 @@ namespace PixelMaestro {
 						 */
 						if ((cursor.x == origin_x || cursor.y == origin_y) ||
 							(column == size_x - 1 || row == size_y - 1)) {
-							activate(section_->get_dimensions()->get_inline_index(&cursor));
+							activate(cursor.x, cursor.y);
 						}
 					}
 				}
@@ -202,9 +204,9 @@ namespace PixelMaestro {
 			current_char = font->get_char(text[letter]);
 			for (uint16_t column = 0; column < font->size.x; column++) {
 				for (uint16_t row = 0; row < font->size.y; row++) {
-					if (in_bounds(&cursor)) {
+					if (in_bounds(cursor.x, cursor.y)) {
 						if ((current_char[column] >> row) & 1) {
-							activate(section_->get_dimensions()->get_inline_index(cursor.x + column, cursor.y + row));
+							activate(cursor.x + column, cursor.y + row);
 						}
 					}
 				}
@@ -241,12 +243,6 @@ namespace PixelMaestro {
 			float area, s, t;
 			area = 0.5 *(-point_b_y*point_c_x + point_a_y*(-point_b_x + point_c_x) + point_a_x*(point_b_y - point_c_y) + point_b_x*point_c_y);
 
-			// Calculate the rectangular bounds of the triangle. This allows us to iterate over a smaller set of Pixels rather than the entire grid.
-			uint16_t min_x = 0;
-			uint16_t max_x = section_->get_dimensions()->x - 1;
-			uint16_t min_y = 0;
-			uint16_t max_y = section_->get_dimensions()->y - 1;
-
 			/*
 			 * Is point a < point b?
 			 *	Yes: Is point a < point c?
@@ -256,10 +252,10 @@ namespace PixelMaestro {
 			 *		Yes: Return point b
 			 *		No: Return point c
 			 */
-			min_x = (point_a_x < point_b_x ? (point_c_x < point_a_x ? point_c_x : point_a_x) : (point_b_x < point_c_x ? point_b_x : point_c_x));
-			max_x = (point_a_x > point_b_x ? (point_c_x > point_a_x ? point_c_x : point_a_x) : (point_b_x > point_c_x ? point_b_x : point_c_x));
-			min_y = (point_a_y < point_b_y ? (point_c_y < point_a_y ? point_c_y : point_a_y) : (point_b_y < point_c_y ? point_b_y : point_c_y));
-			max_y = (point_a_y > point_b_y ? (point_c_y > point_a_y ? point_c_y : point_a_y) : (point_b_y > point_c_y ? point_b_y : point_c_y));
+			uint16_t min_x = (point_a_x < point_b_x ? (point_c_x < point_a_x ? point_c_x : point_a_x) : (point_b_x < point_c_x ? point_b_x : point_c_x));
+			uint16_t max_x = (point_a_x > point_b_x ? (point_c_x > point_a_x ? point_c_x : point_a_x) : (point_b_x > point_c_x ? point_b_x : point_c_x));
+			uint16_t min_y = (point_a_y < point_b_y ? (point_c_y < point_a_y ? point_c_y : point_a_y) : (point_b_y < point_c_y ? point_b_y : point_c_y));
+			uint16_t max_y = (point_a_y > point_b_y ? (point_c_y > point_a_y ? point_c_y : point_a_y) : (point_b_y > point_c_y ? point_b_y : point_c_y));
 
 			// For each point in the "rectangle", determine whether it lies inside the triangle. If so, fill it in.
 			for (cursor.x = min_x; cursor.x < max_x; cursor.x++) {
@@ -268,7 +264,7 @@ namespace PixelMaestro {
 					t = 1 / (2 * area) * (point_a_x * point_b_y - point_a_y * point_b_x + (point_a_y - point_b_y) * cursor.x + (point_b_x - point_a_x) * cursor.y);
 
 					if (s > 0 && t > 0 && 1 - s - t > 0) {
-						activate(section_->get_dimensions()->get_inline_index(&cursor));
+						activate(cursor.x, cursor.y);
 					}
 				}
 			}
@@ -281,7 +277,7 @@ namespace PixelMaestro {
 	 * @param cursor_y The pixel's y-coordinate.
 	 */
 	void Canvas::erase(uint16_t x, uint16_t y) {
-		deactivate(section_->get_dimensions()->get_inline_index(x, y));
+		deactivate(x, y);
 	}
 
 	/**
@@ -306,24 +302,6 @@ namespace PixelMaestro {
 	 */
 	Section* Canvas::get_section() {
 		return section_;
-	}
-
-	/**
-	 * Returns whether the given Point is in the bounds of the Canvas.
-	 * @param pixel The index of the Pixel to check.
-	 * @return Whether the Point is in bounds.
-	 */
-	bool Canvas::in_bounds(uint32_t pixel) {
-		return pixel < section_->get_dimensions()->size();
-	}
-
-	/**
-	 * Returns whether the given Point is in the bounds of the Canvas.
-	 * @param point The Point to check.
-	 * @return Whether the Point is in bounds.
-	 */
-	bool Canvas::in_bounds(Point* point) {
-		return in_bounds(point->x, point->y);
 	}
 
 	/**
@@ -383,7 +361,7 @@ namespace PixelMaestro {
 			frame_timing_ = new Timing(speed);
 		}
 		else {
-			frame_timing_->set_speed(speed);
+			frame_timing_->set_interval(speed);
 		}
 	}
 
@@ -466,7 +444,7 @@ namespace PixelMaestro {
 		 */
 		if (scroll_ != nullptr) {
 			uint32_t target_time = current_time - scroll_->last_scroll_x;
-			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * section_->get_refresh_interval()) <= target_time) {
+			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * section_->get_maestro()->get_timing()->get_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_->interval_x > 0) {
@@ -488,7 +466,7 @@ namespace PixelMaestro {
 			}
 
 			target_time = current_time - scroll_->last_scroll_y;
-			if (scroll_->interval_y != 0 && (Utility::abs_int(scroll_->interval_y) * section_->get_refresh_interval()) <= target_time) {
+			if (scroll_->interval_y != 0 && (Utility::abs_int(scroll_->interval_y) * section_->get_maestro()->get_timing()->get_interval()) <= target_time) {
 
 				// Increment or decrement the offset depending on the scroll direction.
 				if (scroll_->interval_y > 0) {

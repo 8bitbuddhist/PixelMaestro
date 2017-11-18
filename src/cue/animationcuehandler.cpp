@@ -140,16 +140,16 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)(Byte::OptionsByte + 1));
 	}
 
-	uint8_t* AnimationCueHandler::set_speed(uint8_t section_num, uint8_t overlay_num, uint16_t speed, uint16_t pause) {
-		IntByteConvert speed_byte(speed);
+	uint8_t* AnimationCueHandler::set_timing(uint8_t section_num, uint8_t overlay_num, uint16_t interval, uint16_t pause) {
+		IntByteConvert interval_byte(interval);
 		IntByteConvert pause_byte(pause);
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetSpeed;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetTiming;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = speed_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = speed_byte.converted_1;
+		controller_->get_cue()[Byte::OptionsByte] = interval_byte.converted_0;
+		controller_->get_cue()[Byte::OptionsByte + 1] = interval_byte.converted_1;
 		controller_->get_cue()[Byte::OptionsByte + 2] = pause_byte.converted_0;
 		controller_->get_cue()[Byte::OptionsByte + 3] = pause_byte.converted_1;
 
@@ -225,11 +225,11 @@ namespace PixelMaestro {
 			case Action::SetSparkleOptions:
 				static_cast<SparkleAnimation*>(animation)->set_threshold(cue[Byte::OptionsByte]);
 				break;
-			case Action::SetSpeed:
+			case Action::SetTiming:
 				{
-					uint16_t speed = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
+					uint16_t interval = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
 					uint16_t pause = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]);
-					animation->set_timing(speed, pause);
+					animation->set_timing(interval, pause);
 				}
 				break;
 		}

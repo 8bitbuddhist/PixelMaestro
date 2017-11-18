@@ -10,6 +10,7 @@
 #include "../cue/show.h"
 #include "colors.h"
 #include "section.h"
+#include "timing.h"
 
 namespace PixelMaestro {
 	class CueController;
@@ -22,18 +23,16 @@ namespace PixelMaestro {
 			Maestro(Section* sections, uint8_t num_sections);
 			~Maestro();
 			CueController* get_cue_controller();
-			uint32_t get_last_refresh();
 			Colors::RGB get_pixel_color(uint8_t section, uint16_t x, uint16_t y);
 			uint8_t get_num_sections();
-			uint16_t get_refresh_interval();
-			bool get_running();
 			Section* get_section(uint8_t section);
 			Show* get_show();
+			Timing* get_timing();
 			void set_brightness(uint8_t brightness);
 			CueController* set_cue_controller();
-			void set_refresh_interval(uint16_t interval);
 			void set_running(bool running);
 			void set_sections(Section* sections, uint8_t num_sections);
+			Timing* set_timing(uint16_t interval);
 			Show* set_show(Event* events, uint16_t num_events);
 			void update(const uint32_t& current_time, bool force = false);
 
@@ -44,23 +43,17 @@ namespace PixelMaestro {
 			/// Controller object for reading and executing Cues.
 			CueController* cue_controller_ = nullptr;
 
-			/// The time since the Pixels were last refreshed in milliseconds. Defaults to 0.
-			uint32_t last_refresh_ = 0;
-
 			/// Number of Sections managed by the Maestro.
 			uint8_t num_sections_ = 0;
-
-			/// The time between Section refreshes in milliseconds. Defaults to 20ms (50Hz).
-			uint16_t refresh_interval_ = 20;
-
-			/// Active running state of the Maestro.
-			bool running_ = true;
 
 			/// Sections managed by the Maestro.
 			Section* sections_ = nullptr;
 
 			/// Show managed by the Maestro.
 			Show* show_ = nullptr;
+
+			/// The time between Section refreshes in milliseconds. Defaults to 20ms (50Hz).
+			Timing timing_ = Timing(20);
 	};
 }
 

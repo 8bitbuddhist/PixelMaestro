@@ -91,7 +91,7 @@ namespace PixelMaestro {
 				/// Multiplies the base color by the overlay color.
 				Multiply,
 
-				/// Draws lit Pixels, but treats black Pixels as transparent.
+				/// Only draws non-black Pixels. Black pixels are rendered transparent.
 				Overlay
 			};
 

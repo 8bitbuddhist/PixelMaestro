@@ -24,11 +24,13 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Initializes an empty Section.
+	 * @param Maestro The Section's parent Maestro.
 	 */
 	Section::Section() : Section(0, 0) { }
 
 	/**
 	 * Constructor. Initializes the Pixel array.
+	 * @param Maestro The Section's parent Maestro.
 	 * @param dimensions Initial layout (rows and columns) of the Pixels.
 	 * @param parent Parent Section (if this is an Overlay).
 	 */
@@ -43,10 +45,6 @@ namespace PixelMaestro {
 	Section::Section(uint16_t x, uint16_t y, Section* parent) {
 		set_dimensions(x, y);
 		parent_section_ = parent;
-
-		if (parent_section_ != nullptr) {
-			refresh_interval_ = parent_section_->get_refresh_interval();
-		}
 	}
 
 	/**
@@ -73,6 +71,14 @@ namespace PixelMaestro {
 	*/
 	Point* Section::get_dimensions() {
 		return &dimensions_;
+	}
+
+	/**
+	 * Returns the Section's parent Maestro.
+	 * @return Parent Maestro.
+	 */
+	Maestro* Section::get_maestro() {
+		return maestro_;
 	}
 
 	/**
@@ -140,15 +146,6 @@ namespace PixelMaestro {
 		}
 
 		return color;
-	}
-
-	/**
-		Returns the Section's refresh rate.
-
-		@return The Section's refresh rate.
-	*/
-	uint16_t Section::get_refresh_interval() {
-		return refresh_interval_;
 	}
 
 	/**
@@ -224,7 +221,7 @@ namespace PixelMaestro {
 
 		if (animation_) {
 			if (preserve_cycle_index) {
-				animation->set_cycle_index(animation_->get_cycle_index());
+				animation->set_cycle_index(this->animation_->get_cycle_index());
 			}
 			remove_animation();
 		}
@@ -280,6 +277,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the Section's parent Maestro.
+	 * @param maestro Parent Maestro.
+	 */
+	void Section::set_maestro(Maestro *maestro) {
+		this->maestro_ = maestro;
+	}
+
+	/**
 		Sets the specified Pixel to a new color.
 
 		@param pixel The index of the Pixel to update.
@@ -324,15 +329,6 @@ namespace PixelMaestro {
 		}
 
 		return overlay_;
-	}
-
-	/**
-		Sets the refresh rate of the Section (how quickly the Pixels update).
-
-		@param interval Rate in milliseconds between Pixel redraws.
-	*/
-	void Section::set_refresh_interval(uint16_t interval) {
-		refresh_interval_ = interval;
 	}
 
 	/**

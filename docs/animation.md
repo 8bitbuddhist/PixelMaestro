@@ -65,7 +65,7 @@ animation->set_orientation(Animation::Orientations::VERTICAL);
 ```
 
 ## Changing the Animation Speed
-You can set the animation's speed in the constructor or via the `set_timing()` method. Speed is the amount of time (in milliseconds) between animation cycles. For example, an animation with 5 cycles and a speed of 100 will take 500ms (5 * 100) to finish, while the same animation with a speed of 500 will take 2500ms (5 * 500) to finish.
+You can set the animation's speed via the `set_timing()` method. Speed is the amount of time (in milliseconds) between animation cycles. For example, an animation with 5 cycles and a speed of 100 will take 500ms (5 * 100) to finish, while the same animation with a speed of 500 will take 2500ms (5 * 500) to finish.
 
 You can also set a pause interval. Pause is the amount of time (in milliseconds) that the cycle is delayed. For example, consider an Animation with a speed of 500ms and fading enabled. Normally the Animation would gradually fade over the course of the entire 500ms. But if you set a pause interval of 300ms, the Animation won't start fading until 300ms have passed. This results in the Animation "rushing" over the last 200ms. Pause only works while fading is enabled.
 

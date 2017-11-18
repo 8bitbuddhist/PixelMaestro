@@ -7,8 +7,7 @@ As the name implies, Maestros are responsible for coordinating all other PixelMa
 3. [Changing the Refresh Rate](#changing-the-refresh-rate)
 4. [Interacting with Sections](#interacting-with-sections)
 5. [Setting a Global Brightness Level](#setting-a-global-brightness-level)
-6. [Toggling the Running State](#toggling-the-running-state)
-7. [Creating a Show](#creating-a-show)
+6. [Creating a Show](#creating-a-show)
 
 ## Creating a Maestro
 When creating a Maestro, you need to pass in the Sections it will be controlling. The following snippet creates two Sections, one with a 10x20 Pixel grid and another with a 20x30 grid.
@@ -47,9 +46,6 @@ You can retrieve a Section using `get_section()`. Pass in the index of the desir
 
 ## Setting a Global Brightness Level
 Use `set_brightness()` to set a global brightness level for all Pixels. Global brightness is applied when retrieving a Pixel color via `get_pixel_color(section, index)`. Brightness ranges from 0 (off) to 255 (full).
-
-## Toggling the Running State
-You can pause the Maestro using `set_running(bool)`. When you resume, it will pick up exactly where it left off (unless you are running a Show, in which case it will execute each Event that should have ran while the Maestro was paused).
 
 ## Creating a Show
 Shows let you plan out actions that will execute at a later point in the Mastro's runtime. For more information, see the [Show documentation](show.md).

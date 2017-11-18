@@ -49,8 +49,8 @@ namespace PixelMaestro {
 
 			// Virtual functions - must be implemented in derived Canvases.
 			virtual ~Canvas();
-			virtual void activate(uint32_t pixel) = 0;
-			virtual void deactivate(uint32_t pixel) = 0;
+			virtual void activate(uint16_t x, uint16_t y) = 0;
+			virtual void deactivate(uint16_t x, uint16_t y) = 0;
 			virtual Colors::RGB get_pixel_color(uint16_t x, uint16_t y) = 0;
 			virtual CanvasType::Type get_type() = 0;
 			virtual void initialize() = 0;
@@ -68,8 +68,6 @@ namespace PixelMaestro {
 			uint16_t get_current_frame_index();
 			uint16_t get_num_frames();
 			Section* get_section();
-			bool in_bounds(Point* point);
-			bool in_bounds(uint32_t pixel);
 			bool in_bounds(uint16_t x, uint16_t y);
 			void next_frame();
 			void remove_frame_timing();

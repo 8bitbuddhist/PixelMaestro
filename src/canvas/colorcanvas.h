@@ -16,8 +16,8 @@ namespace PixelMaestro {
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 
 			// Overriden functions
-			void activate(uint32_t pixel);
-			void deactivate(uint32_t pixel);
+			void activate(uint16_t x, uint16_t y);
+			void deactivate(uint16_t x, uint16_t y);
 			void draw_circle(Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			void draw_frame(Colors::RGB* frame, uint16_t size_x, uint16_t size_y);
 			void draw_line(Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
