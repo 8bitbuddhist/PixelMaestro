@@ -14,17 +14,11 @@ namespace PixelMaestro {
 			void update();
 
 		private:
-			/// Tracks the center of the grid.
-			Point center_ = {0, 0};
-
 			/// Tracks the distance of the current point from the center.
 			uint16_t distance_ = 0;
 
 			/// In vertical mode, this defines the wideness of each spoke coming from the center.
 			uint8_t resolution_ = 10;
-
-			/// Stores the last grid size. This is used to recalculate the center if the grid changes.
-			Point size_ = {0, 0};
 
 			/// Stores the slope between a Pixel and the center of the grid.
 			uint16_t slope_;

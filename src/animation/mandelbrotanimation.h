@@ -14,6 +14,7 @@ namespace PixelMaestro {
 		public:
 			MandelbrotAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			~MandelbrotAnimation();
+			void set_center_offset(int16_t x, int16_t y);
 			void set_colors(Colors::RGB *colors, uint8_t num_colors);
 			void update();
 
@@ -21,9 +22,6 @@ namespace PixelMaestro {
 
 			/// Stores complex real and imaginary numbers for each Pixel.
 			double c_real_, c_imaginary_;
-
-			/// The center of the image.
-			Point center_ = {0, 0};
 
 			/// Stores the calculated width of the image.
 			double image_width_;
@@ -33,9 +31,6 @@ namespace PixelMaestro {
 
 			/// Maximum number of iterations to run. Defaults to num_colors.
 			uint8_t max_iterations_ = 10;
-
-			/// Stores grid size for comparison.
-			Point size_ = {0, 0};
 
 			/// Temporary holders for Mandelbrot function.
 			double x_, x_2_, y_;

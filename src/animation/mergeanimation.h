@@ -13,9 +13,6 @@ namespace PixelMaestro {
 		private:
 			/// Counter for the current Pixel index.
 			uint16_t count_ = 0;
-
-			/// Stores the array center.
-			uint16_t mid_point_ = 0;
 	};
 }
 

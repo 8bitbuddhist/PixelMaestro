@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include "animationtype.h"
 #include "../core/colors.h"
+#include "../core/point.h"
 #include "../core/section.h"
 #include "../core/timing.h"
 
@@ -25,6 +26,7 @@ namespace PixelMaestro {
 
 			Animation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			virtual ~Animation();
+			Point* get_center();
 			Colors::RGB* get_color_at_index(uint8_t index);
 			Colors::RGB* get_colors();
 			uint8_t get_cycle_index();
@@ -35,6 +37,8 @@ namespace PixelMaestro {
 			bool get_reverse();
 			AnimationTiming* get_timing();
 			AnimationType::Type get_type();
+			void set_center();
+			void set_center(uint16_t x, uint16_t y);
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
@@ -44,7 +48,10 @@ namespace PixelMaestro {
 			bool update(const uint32_t& current_time);
 			virtual void update() = 0;
 
-		protected:			
+		protected:
+			/// The center of the image.
+			Point center_ = {0, 0};
+
 			/// Array of colors used in the animation.
 			Colors::RGB* colors_ = nullptr;
 
