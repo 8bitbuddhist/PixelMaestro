@@ -9,12 +9,13 @@
 #include "../core/colors.h"
 #include "../core/point.h"
 #include "../core/section.h"
-#include "../core/timing.h"
+#include "../core/timing/timing.h"
 #include "fonts/font.h"
 #include "canvastype.h"
 
 namespace PixelMaestro {
 	class Section;
+	class Timing;
 
 	class Canvas {
 		public:

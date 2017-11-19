@@ -10,11 +10,11 @@
 #include "../core/colors.h"
 #include "../core/point.h"
 #include "../core/section.h"
-#include "../core/timing.h"
+#include "../core/timing/animationtiming.h"
 
 namespace PixelMaestro {
+	class AnimationTiming;
 	class Section;
-
 	class Animation {
 		public:
 
@@ -34,6 +34,7 @@ namespace PixelMaestro {
 			uint8_t get_num_colors();
 			Orientation get_orientation();
 			bool get_reverse();
+			Section* get_section();
 			AnimationTiming* get_timing();
 			AnimationType::Type get_type();
 			Point* set_center();
@@ -48,7 +49,7 @@ namespace PixelMaestro {
 			virtual void update() = 0;
 
 		protected:
-			/// The center of the image.
+			/// The center of the animation.
 			Point center_ = {0, 0};
 
 			/// Array of colors used in the animation.
@@ -73,7 +74,7 @@ namespace PixelMaestro {
 			Section* section_ = nullptr;
 
 			/// The Animation's timing system.
-			AnimationTiming timing_;
+			AnimationTiming* timing_ = nullptr;
 
 			/// The type of Animation. Gets set in the derived class' constructor.
 			AnimationType::Type type_;

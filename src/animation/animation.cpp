@@ -15,6 +15,8 @@ namespace PixelMaestro {
 		this->section_ = section;
 		set_center();
 		set_colors(colors, num_colors);
+
+		timing_ = new AnimationTiming(this);
 	}
 
 	/**
@@ -94,11 +96,19 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Animation's parent Section.
+	 * @return Parent Section.
+	 */
+	Section* Animation::get_section() {
+		return section_;
+	}
+
+	/**
 	 * Returns the animation's speed.
 	 * @return Speed.
 	 */
 	AnimationTiming* Animation::get_timing() {
-		return &timing_;
+		return timing_;
 	}
 
 	/**
@@ -159,8 +169,7 @@ namespace PixelMaestro {
 	 */
 	void Animation::set_fade(bool fade) {
 		fade_ = fade;
-
-		timing_.recalculate_step_count(fade, section_->get_maestro()->get_timing()->get_interval());
+		timing_->recalculate_step_count();
 	}
 
 	/**
@@ -188,10 +197,10 @@ namespace PixelMaestro {
 	 * @param pause AMount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
 	AnimationTiming* Animation::set_timing(uint16_t speed, uint16_t pause) {
-		timing_.set_interval(speed, pause);
-		timing_.recalculate_step_count(fade_, section_->get_maestro()->get_timing()->get_interval());
+		timing_->set_interval(speed, pause);
+		timing_->recalculate_step_count();
 
-		return &timing_;
+		return timing_;
 	}
 
 	/**
@@ -206,7 +215,7 @@ namespace PixelMaestro {
 			return false;
 		}
 
-		if (timing_.update(current_time)) {
+		if (timing_->update(current_time)) {
 			// Run the derived Animation's update function.
 			update();
 
@@ -244,5 +253,7 @@ namespace PixelMaestro {
 		}
 	}
 
-	Animation::~Animation() { }
+	Animation::~Animation() {
+		delete timing_;
+	}
 }

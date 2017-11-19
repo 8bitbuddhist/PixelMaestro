@@ -10,7 +10,7 @@
 #include "../cue/show.h"
 #include "colors.h"
 #include "section.h"
-#include "timing.h"
+#include "timing/timing.h"
 
 namespace PixelMaestro {
 	class CueController;
