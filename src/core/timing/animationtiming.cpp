@@ -39,14 +39,9 @@ namespace PixelMaestro {
 		 */
 		if (animation_->get_fade()) {
 			step_count_ = (interval_ - pause_) / (float)animation_->get_section()->get_maestro()->get_timing()->get_interval();
-
-			// Make sure step_count_ is at least 1
-			if (step_count_ == 0) {
-				step_count_ = 1;
-			}
 		}
 		else {
-			step_count_ = 1;
+			step_count_ = 0;
 		}
 	}
 
