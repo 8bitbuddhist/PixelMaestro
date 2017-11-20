@@ -50,6 +50,7 @@ namespace PixelMaestro {
 				 */
 				Overlay(Section* parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
 					this->section = new Section(*parent->get_dimensions(), parent);
+					this->section->set_maestro(parent->get_maestro());
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
 				}

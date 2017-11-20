@@ -22,6 +22,29 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Copy constructor.
+	 * Added to support storing Events in a vector in PixelMaestro Studio.
+	 * @param other Event to copy.
+	 */
+	Event::Event(const Event &other) {
+		set_cue(other.cue_);
+		this->time_ = other.time_;
+	}
+
+	/**
+	 * Copy assignment operator.
+	 * Added to support storing Events in a vector in PixelMaestro Studio.
+	 * @param other Event to copy.
+	 * @return New Event.
+	 */
+	Event* Event::operator=(const Event& other) {
+		delete [] cue_;
+		set_cue(other.cue_);
+		this->time_ = other.time_;
+		return this;
+	}
+
+	/**
 	 * Returns the Event's Cue.
 	 * The Show passes this to the CueController when the Event runs.
 	 * @return Cue.

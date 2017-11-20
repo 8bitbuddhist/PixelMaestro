@@ -134,7 +134,7 @@ namespace PixelMaestro {
 			}
 			case MixMode::Overlay:
 			{
-					if (color_two != Colors::RGB {0, 0, 0}) {
+				if (color_two != Colors::RGB {0, 0, 0}) {
 					mixed_color = color_two;
 				}
 				else {
