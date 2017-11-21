@@ -30,7 +30,6 @@ namespace PixelMaestro {
 			Timing* get_timing();
 			void set_brightness(uint8_t brightness);
 			CueController* set_cue_controller();
-			void set_running(bool running);
 			void set_sections(Section* sections, uint8_t num_sections);
 			Timing* set_timing(uint16_t interval);
 			Show* set_show(Event* events, uint16_t num_events);

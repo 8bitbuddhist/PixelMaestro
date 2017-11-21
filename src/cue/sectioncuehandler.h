@@ -11,6 +11,7 @@ namespace PixelMaestro {
 		public:
 			enum Action : uint8_t {
 				RemoveCanvas,
+				RemoveOverlay,
 				SetAnimation,
 				SetCanvas,
 				SetDimensions,
@@ -28,6 +29,7 @@ namespace PixelMaestro {
 			SectionCueHandler(CueController* controller) : CueHandler(controller) { }
 			~SectionCueHandler();
 			uint8_t* remove_canvas(uint8_t section_num, uint8_t overlay_num);
+			uint8_t* remove_overlay(uint8_t section_num, uint8_t overlay_num);
 			uint8_t* set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors = true);
 			uint8_t* set_canvas(uint8_t section_num, uint8_t overlay_num, CanvasType::Type canvas_type, uint16_t num_frames = 1);
 			uint8_t* set_dimensions(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y);

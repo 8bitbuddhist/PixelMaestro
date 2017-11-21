@@ -30,34 +30,6 @@ namespace PixelMaestro {
 				return !operator==(point_two);
 			}
 
-			Point operator+(Point point_two) {
-				return {
-					(uint16_t)(x + point_two.x),
-					(uint16_t)(y + point_two.y)
-				};
-			}
-
-			Point operator-(Point point_two) {
-				return {
-					(uint16_t)(x - point_two.x),
-					(uint16_t)(y - point_two.y)
-				};
-			}
-
-			Point operator*(Point point_two) {
-				return {
-					(uint16_t)(x * point_two.x),
-					(uint16_t)(y * point_two.y)
-				};
-			}
-
-			Point operator/(Point point_two) {
-				return {
-					(uint16_t)(x / point_two.x),
-					(uint16_t)(y / point_two.y)
-				};
-			}
-
 			Point(uint16_t x = 0, uint16_t y = 0);
 			uint32_t get_inline_index(Point* point);
 			uint32_t get_inline_index(uint16_t x, uint16_t y);

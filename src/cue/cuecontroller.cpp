@@ -140,8 +140,9 @@ namespace PixelMaestro {
 	 * Reads a Cue byte-by-byte into the buffer.
 	 * Once the end of the Cue has been reached, the Cue runs and the reader resets for the next Cue.
 	 * @param byte Byte to read into the buffer.
+	 * @return True if the Cue was successfully executed.
 	 */
-	void CueController::read(uint8_t byte) {
+	bool CueController::read(uint8_t byte) {
 		cue_[read_index_] = byte;
 		read_index_++;
 
@@ -157,6 +158,7 @@ namespace PixelMaestro {
 		if (read_index_ >= cue_[Byte::SizeByte] + Byte::PayloadByte) {
 			run(cue_);
 			read_index_ = 0;
+			return true;
 		}
 		else {
 			if (read_index_ > ID3Byte &&
@@ -173,6 +175,7 @@ namespace PixelMaestro {
 				read_index_ = 0;
 			}
 		}
+		return false;
 	}
 
 	/**

@@ -69,9 +69,7 @@ namespace PixelMaestro {
 			Point* get_dimensions();
 			Maestro* get_maestro();
 			Section::Overlay* get_overlay();
-			uint8_t get_num_overlays();
 			Section* get_parent_section();
-			Pixel* get_pixel(uint16_t x, uint16_t y);
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 			void remove_animation();
 			void remove_canvas();

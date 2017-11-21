@@ -62,12 +62,21 @@ namespace PixelMaestro {
 
 	// General-purpose Cues
 
+	uint8_t* AnimationCueHandler::reset_center(uint8_t section_num, uint8_t overlay_num) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::ResetCenter;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
+	}
+
 	uint8_t* AnimationCueHandler::set_center(uint8_t section_num, uint8_t overlay_num, uint16_t center_x, uint16_t center_y) {
 		IntByteConvert center_x_byte(center_x);
 		IntByteConvert center_y_byte(center_y);
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetFade;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetCenter;
 		controller_->get_cue()[Byte::SectionByte] = section_num;
 		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
 		controller_->get_cue()[Byte::OptionsByte] = center_x_byte.converted_0;
@@ -165,6 +174,9 @@ namespace PixelMaestro {
 		if (animation == nullptr) return;
 
 		switch((Action)cue[Byte::ActionByte]) {
+			case Action::ResetCenter:
+				animation->reset_center();
+				break;
 			case Action::SetCenter:
 				animation->set_center(IntByteConvert::byte_to_int(&cue[OptionsByte]),
 									  IntByteConvert::byte_to_int(&cue[OptionsByte + 2]));

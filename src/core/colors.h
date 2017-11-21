@@ -47,35 +47,11 @@ namespace PixelMaestro {
 					return !operator==(color_two);
 				}
 
-				RGB operator+(RGB color_two) {
-					return {
-						(uint8_t)((r + color_two.r) % 255),
-						(uint8_t)((g + color_two.g) % 255),
-						(uint8_t)((b + color_two.b) % 255)
-					};
-				}
-
-				RGB operator-(RGB color_two) {
-					return {
-						(uint8_t)((r - color_two.r) % 255),
-						(uint8_t)((g - color_two.g) % 255),
-						(uint8_t)((b - color_two.b) % 255)
-					};
-				}
-
 				RGB operator*(float multiplier) {
 					return {
 						(uint8_t)(r * multiplier),
 						(uint8_t)(g * multiplier),
 						(uint8_t)(b * multiplier)
-					};
-				}
-
-				RGB operator/(float divisor) {
-					return {
-						(uint8_t)(r / divisor),
-						(uint8_t)(g / divisor),
-						(uint8_t)(b / divisor)
 					};
 				}
 			};

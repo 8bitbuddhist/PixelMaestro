@@ -37,7 +37,7 @@ namespace PixelMaestro {
 			Section* get_section();
 			AnimationTiming* get_timing();
 			AnimationType::Type get_type();
-			Point* set_center();
+			Point* reset_center();
 			Point* set_center(uint16_t x, uint16_t y);
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);

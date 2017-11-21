@@ -10,6 +10,7 @@ namespace PixelMaestro {
 	class AnimationCueHandler : public CueHandler {
 		public:
 			enum Action : uint8_t {
+				ResetCenter,
 				SetCenter,
 				SetColors,
 				SetCycleIndex,
@@ -41,6 +42,8 @@ namespace PixelMaestro {
 			uint8_t* set_sparkle_options(uint8_t section_num, uint8_t overlay_num, uint8_t threshold);
 
 			// General Animation calls
+			uint8_t* reset_center(uint8_t section_num, uint8_t overlay_num);
+			uint8_t* set_center(uint8_t section_num, uint8_t overlay_num);
 			uint8_t* set_center(uint8_t section_num, uint8_t overlay_num, uint16_t center_x, uint16_t center_y);
 			uint8_t* set_colors(uint8_t section_num, uint8_t overlay_num, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors = true);
 			uint8_t* set_cycle_index(uint8_t section_num, uint8_t overlay_num, uint8_t cycle_index);

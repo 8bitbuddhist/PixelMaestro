@@ -91,35 +91,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the number of Overlays belonging to the Section.
-	 * @return Overlay count.
-	 */
-	uint8_t Section::get_num_overlays() {
-		int count = 0;
-		Section::Overlay* overlay = get_overlay();
-		while (overlay != nullptr) {
-			overlay = overlay->section->get_overlay();
-			count++;
-		}
-		return count;
-	}
-
-	/**
 	 * Returns this Section's parent (if this is an Overlay).
 	 * @return Parent Section.
 	 */
 	Section* Section::get_parent_section() {
 		return parent_section_;
-	}
-
-	/**
-	 * Returns the Pixel at the specified coordinates.
-	 * @param x X-coordinate.
-	 * @param y Y-coordinate.
-	 * @return Pixel at specified index.
-	 */
-	Pixel* Section::get_pixel(uint16_t x, uint16_t y) {
-		return &pixels_[dimensions_.get_inline_index(x, y)];
 	}
 
 	/**
@@ -264,6 +240,11 @@ namespace PixelMaestro {
 		// Resize the Pixel grid
 		delete [] pixels_;
 		pixels_ = new Pixel[dimensions_.size()];
+
+		// Reset the Animation's center
+		if (animation_ != nullptr) {
+			animation_->reset_center();
+		}
 
 		// Reinitialize the Canvas
 		if (canvas_ != nullptr) {

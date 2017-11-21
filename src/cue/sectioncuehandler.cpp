@@ -11,6 +11,15 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
+	uint8_t* SectionCueHandler::remove_overlay(uint8_t section_num, uint8_t overlay_num) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::RemoveOverlay;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
+	}
+
 	uint8_t* SectionCueHandler::set_animation(uint8_t section_num, uint8_t overlay_num, AnimationType::Type animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors) {
 
 		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
@@ -82,6 +91,9 @@ namespace PixelMaestro {
 		switch ((Action)cue[Byte::ActionByte]) {
 			case Action::RemoveCanvas:
 				section->remove_canvas();
+				break;
+			case Action::RemoveOverlay:
+				section->remove_overlay();
 				break;
 			case Action::SetAnimation:
 				{

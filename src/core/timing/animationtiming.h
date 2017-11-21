@@ -6,7 +6,7 @@
 #define ANIMATIONTIMING_H
 
 #include <stdint.h>
-#include "animation/animation.h"
+#include "../../animation/animation.h"
 #include "timing.h"
 
 namespace PixelMaestro {

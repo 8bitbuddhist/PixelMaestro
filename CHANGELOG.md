@@ -6,6 +6,8 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v0.9] - In Progress
 ### Added
 - New Timing class handles animations and other time-based actions.
+- Animation Editor:
+	- Revamped Show editor. You can now queue events to run at a later time.
 - Arduino:
 	- Added NeoPixel sketch.
 - Canvas:
