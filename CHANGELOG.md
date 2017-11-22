@@ -1,13 +1,11 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.9] - In Progress
 ### Added
 - New Timing class handles animations and other time-based actions.
-- Animation Editor:
-	- Revamped Show editor. You can now queue events to run at a later time.
 - Arduino:
 	- Added NeoPixel sketch.
 - Canvas:
@@ -16,12 +14,12 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Changed
 - All components that rely on timing (Animation speed/pause, Maestro refresh, Canvas scrolling, etc) now use the Timing class. `get/set_speed()`, `get/set_refresh_interval()` etc. now use `get/set_timing()`.
 - Section:
-	- Added a pointer to each Section's parent Maestro.
+	- Added a reference to each Section's parent Maestro.
 	
 ### Removed
 - Maestro:
 	- Removed `running` option.
-- Removed a variety of redundant, unused, and extraneous functions/methods.
+- Removed several redundant or unused functions/methods.
 
 ## [v0.8.1] - 2017-11-14
 ### Changed

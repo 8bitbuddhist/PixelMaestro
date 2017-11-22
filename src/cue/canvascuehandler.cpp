@@ -363,6 +363,16 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
+	uint8_t* CanvasCueHandler::remove_frame_timing(uint8_t section_num, uint8_t overlay_num) {
+		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::RemoveFrameTiming;
+		controller_->get_cue()[Byte::TypeByte] = 255;
+		controller_->get_cue()[Byte::SectionByte] = section_num;
+		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
+	}
+
 	uint8_t* CanvasCueHandler::set_current_frame_index(uint8_t section_num, uint8_t overlay_num, uint16_t index) {
 		IntByteConvert index_byte(index);
 
@@ -453,6 +463,9 @@ namespace PixelMaestro {
 				break;
 			case Action::NextFrame:
 				plain_canvas->next_frame();
+				break;
+			case Action::RemoveFrameTiming:
+				plain_canvas->remove_frame_timing();
 				break;
 			case Action::SetCurrentFrameIndex:
 				plain_canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));

@@ -85,26 +85,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Creates an array of colors that gradually blend from a base color to a target color.
-		The target color is determined using the range.
-
-		@param array The array to populate.
-		@param base_color The initial color.
-		@param num_colors Number of colors in the array.
-		@param range The amount that the target color deviates from the base color.
-		@param reverse If true, the array will be mirrored from the target color back to the base color.
-	*/
-	void Colors::generate_scaling_color_array(RGB* array, RGB* base_color, uint8_t num_colors, uint8_t range, bool reverse) {
-		RGB new_color = {
-			(uint8_t)(base_color->r - range),
-			(uint8_t)(base_color->g - range),
-			(uint8_t)(base_color->b - range)
-		};
-
-		generate_scaling_color_array(array, base_color, &new_color, num_colors, reverse);
-	}
-
-	/**
 		Mixes two colors.
 
 		@param color_one The first color to mix.

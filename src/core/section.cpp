@@ -99,6 +99,17 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Pixel at the specified index.
+	 * Used by AnimationCanvases to get underlying color values.
+	 * @param x Pixel x coordinate.
+	 * @param y Pixel y coordinate.
+	 * @return Pixel.
+	 */
+	Pixel* Section::get_pixel(uint16_t x, uint16_t y) {
+		return &pixels_[dimensions_.get_inline_index(x, y)];
+	}
+
+	/**
 		Returns the final color of the specified Pixel.
 
 		@param x Pixel x-coordinate.

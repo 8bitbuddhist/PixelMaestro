@@ -178,8 +178,9 @@ namespace PixelMaestro {
 				animation->reset_center();
 				break;
 			case Action::SetCenter:
-				animation->set_center(IntByteConvert::byte_to_int(&cue[OptionsByte]),
-									  IntByteConvert::byte_to_int(&cue[OptionsByte + 2]));
+				animation->set_center(
+					IntByteConvert::byte_to_int(&cue[OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[OptionsByte + 2]));
 				break;
 			case Action::SetColors:
 				{
@@ -221,11 +222,9 @@ namespace PixelMaestro {
 				break;
 			case Action::SetPlasmaOptions:
 				{
-					float size = FloatByteConvert::byte_to_float(&cue[Byte::OptionsByte]);
-					float resolution = FloatByteConvert::byte_to_float(&cue[Byte::OptionsByte + 4]);
 					PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
-					pa->set_size(size);
-					pa->set_resolution(resolution);
+					pa->set_size(FloatByteConvert::byte_to_float(&cue[Byte::OptionsByte]));
+					pa->set_resolution(FloatByteConvert::byte_to_float(&cue[Byte::OptionsByte + 4]));
 				}
 				break;
 			case Action::SetRadialOptions:
@@ -238,11 +237,9 @@ namespace PixelMaestro {
 				static_cast<SparkleAnimation*>(animation)->set_threshold(cue[Byte::OptionsByte]);
 				break;
 			case Action::SetTiming:
-				{
-					uint16_t interval = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
-					uint16_t pause = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]);
-					animation->set_timing(interval, pause);
-				}
+				animation->set_timing(
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
 				break;
 		}
 	}

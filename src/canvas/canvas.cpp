@@ -330,7 +330,8 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Deletes the frame timing controller.
+	 * Removes the frame timing mechanism, disabling frame animations.
+	 * Used in PixelMaestro Studio to support individual frame editing.
 	 */
 	void Canvas::remove_frame_timing() {
 		delete frame_timing_;
