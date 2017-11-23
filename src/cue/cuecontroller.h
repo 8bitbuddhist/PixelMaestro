@@ -62,7 +62,8 @@ namespace PixelMaestro {
 				ID2Byte,
 				ID3Byte,
 				ChecksumByte,
-				SizeByte,
+				SizeByte1,
+				SizeByte2,
 				PayloadByte
 			};
 
@@ -75,14 +76,15 @@ namespace PixelMaestro {
 				ShowHandler
 			};
 
-			CueController(Maestro* maestro);
+			CueController(Maestro* maestro, uint16_t buffer_size = UINT8_MAX);
 			~CueController();
-			uint8_t* assemble(uint8_t payload_size);
-			uint8_t checksum(uint8_t* cue, uint8_t cue_size);
+			uint8_t* assemble(uint16_t payload_size);
+			uint8_t checksum(uint8_t* cue, uint16_t cue_size);
 			CueHandler* enable_handler(Handler handler);
-			uint8_t* get_cue();
-			uint8_t get_cue_size();
-			uint8_t get_cue_size(uint8_t* cue);
+			uint8_t* get_buffer();
+			uint16_t get_buffer_size();
+			uint16_t get_cue_size();
+			uint16_t get_cue_size(uint8_t* cue);
 			CueHandler* get_handler(Handler handler);
 			Maestro* get_maestro();
 			bool read(uint8_t byte);
@@ -93,10 +95,10 @@ namespace PixelMaestro {
 
 		private:
 			/// Size of the buffer for caching Cues.
-			static const uint16_t BUFFER_SIZE = 1024;
+			uint32_t buffer_size_;
 
 			/// Buffer for storing the currently loaded Cue.
-			uint8_t cue_[BUFFER_SIZE] = {0};
+			uint8_t* buffer_ = nullptr;
 
 			/// Handlers for incoming Cues.
 			CueHandler* handlers_[5] {nullptr};

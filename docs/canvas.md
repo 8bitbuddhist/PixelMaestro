@@ -1,5 +1,5 @@
 # Canvas
-Canvases let you draw custom shapes and patterns onto a Section. Where Animations show pre-defined patterns across the entire Section, Canvases let you draw specific shapes. Canvases can also scroll and display animated images independently of the Section.
+Canvases let you draw custom shapes and patterns onto a Section. Where Animations only show pre-defined patterns, Canvases let you draw specific shapes and patterns. Canvases can also display their own animations.
 
 See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in PixelMaestro Studio for an example.
 
@@ -21,14 +21,14 @@ See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in PixelMaestro Studio for an e
 8. [Interactive Canvases](#interactive-canvases)
 
 ## Canvas Types
-There are two different types of Canvases: `ColorCanvas` and `AnimationCanvas`. A `ColorCanvas` works like an image editor: you specify the shape to draw and the color to draw the shape in, and the Canvas draws the shape in that color.
+There are two types of Canvases: `ColorCanvases` and `AnimationCanvases`. A `ColorCanvas` works like an image editor: you choose the shape you want to draw and the color to draw it in, and the Canvas draws the shape in that color.
 
-An `AnimationCanvas`, on the other hand, doesn't draw a specific color but instead draws the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, drawn Pixels appear to blink while the remaining Pixels appear black.
+An `AnimationCanvas` doesn't let you choose a color, but draws the shape using the Section's underlying Animation. For example, if the Section is running a `BlinkAnimation`, drawn Pixels appear to blink while the remaining Pixels appear off.
 
 ## Creating a Canvas
-Create a new Canvas by calling `Section::set_canvas(CanvasType::Type, num_frames)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas` and `num_frames` is the number of frames the Canvas contains (1 by default). This initializes and returns a pointer to a new Canvas of the specified type.
+Create a new Canvas by calling `Section::set_canvas(CanvasType::Type, num_frames)`, where CanvasType is either `AnimationCanvas` or `ColorCanvas` and `num_frames` is the number of frames the Canvas contains (1 by default).
 
-Note that nothing is drawn to the Canvas by default, so the entire Section will appear blank even if an Animation is running.
+Note that nothing is drawn to the Canvas by default, so the Pixel grid will appear blank even if an Animation is running.
 
 ```c++
 ColorCanvas* canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas));
@@ -42,11 +42,9 @@ section-set_canvas(CanvasType::ColorCanvas, num_frames);
 ```
 
 ## Animating a Canvas
-The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames, and if multiple frames are set, the Canvas will cycle through each one on each update. This lets you create and control animated images in a manner similar to [Section Animations](animation.md).
+The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames and will cycle through each frame on a set interval. This lets you create and control animated images in a manner similar to [Section Animations](animation.md).
 
-You can set the amount of time (in milliseconds) between frames using `set_frame_timing(milliseconds)`.
-
-You can specify the number of frames when calling `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `set_num_frames()`, but bear in mind this will delete the current frame set.
+You can specify the number of frames when calling `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `Canvas::set_num_frames()`, but bear in mind this will delete the current frame set. You can set the amount of time (in milliseconds) between frames using `Canvas::set_frame_timing(milliseconds)`.
 
 ### Switching Frames
 When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes)), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing any new actions to modify that frame instead. You can also quickly jump between frames using `next_frame()`, which jumps to the next available frame (or the first frame if you're currently on the last frame).
@@ -54,9 +52,9 @@ When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing
 ## Drawing Shapes
 The Canvas class provides several `draw()` methods for drawing various shapes and patterns. For each shape, specify its starting point on the grid (as x and y coordinates) and any extra parameters that the shape requires.
 
-**Note:** When calling a draw method on a ColorCanvas, you will also need to pass the color that you want to draw the shape in.
+**Note:** When calling a draw method on a ColorCanvas, you will also need to pass the color that you want to draw the shape in. This is not required for an AnimationCanvas.
 
-The Canvas uses a Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the Section, with increasing values moving to the right and down. For an example of drawing various shapes, see the [CanvasDemo](../gui/demo/canvasdemo.cpp).
+Canvases use a Cartesian coordinate system. The origin (0, 0) is at the top-left corner of the grid, with positive values moving to the right and down. For example, (5, 10) means 5 pixels to the right and 10 pixels down. If you tell the Canvas to draw outside of these dimensions, the Canvas will recognize it as 'out of bounds' and ignore the command.
 
 ### Drawing Lines
 The `draw_line` method lets you draw a line from one point to another. Enter the coordinate where the line starts and the coordinate where the line ends.
@@ -76,7 +74,7 @@ canvas->erase(0, 5);
 ```
 
 ### Drawing Rectangles
-The `draw_rect()` method draws a box with the specified origin, size, and whether to `fill` the box or just draw the outline.
+The `draw_rect()` method draws a simple box with the specified origin, size, and whether to `fill` the box or just draw the outline.
 
 ```c++
 // Draw the outline of a 10 x 10 rectangle 
@@ -104,12 +102,14 @@ canvas->draw_triangle(0, 0, 10, 0, 0, 10, true);
 ```
 
 ### Clearing the Canvas
-Use `clear()` to return the Canvas to a blank slate by turning all Pixels off. You can clear a single pixel using the `erase()` method. Note that once you clear a Canvas, there's no way to recover anything you've drawn.
+Use `clear()` to return the Canvas to a blank slate. You can clear a single Pixel using the `erase()` method. Note that once you clear a Canvas, there's no way to recover anything you've drawn.
 
 ## Scrolling
-Scrolling shifts the contents of a Canvas along the Section. Scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
+Scrolling shifts the contents of a Canvas along the Pixel grid. Scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
 
-Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on `update()`. Setting either axis to 0 disables scrolling on that axis. You can also stop scrolling by calling `remove_scroll()`, which completely removes all scrolling behavior.
+Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on each `update()` of the Canvas (i.e. on each Maestro update). Setting either axis to 0 disables scrolling on that axis. You can also stop scrolling by calling `remove_scroll()`, which completely disables all scrolling behavior.
+
+**Note:** Disabling scrolling will stop the Canvas in its current location. If you want to move the Canvas back to the center, set its [offset](#offsetting) to 0.
 
 The following code scrolls 1 Pixel to the left on every refresh cycle and 1 Pixel down every other refresh cycle. `false` disables repeat scrolling, which is described in the next section.
 
@@ -118,7 +118,7 @@ canvas->set_scroll(1, -2, false);
 ```
 
 ### Repeated Scrolling
-By default, the Canvas will scroll out of frame before jumping back to its starting point when it reaches the end of the scroll, i.e, when the scroll amount equals the Canvas width. Setting the `repeat` property to `true` wraps the Canvas around from one end of the grid to the opposite end, making it appear to scroll infinitely.
+By default, the Canvas will scroll out of frame before jumping back to its starting point when it reaches the end of its scroll (i.e. when it "falls off" the grid). Setting the `repeat` property to `true` wraps the Canvas around from one end of the grid to the opposite end, making it appear to scroll infinitely.
 
 ```c++
 canvas->set_scroll(1, -2, true);
@@ -135,6 +135,6 @@ canvas->set_offset(5, 1);
 **Note:** Offset will be disabled if scrolling is enabled, since scrolling modifies the offset values.
 
 ## Interactive Canvases
-You can create Canvases that respond to user input using the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class. For an example, open `Drawing Demo` in PixelMaestro Studio.
+You can create Canvases that respond to user input using the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class. For an example, open the `Drawing Demo` in PixelMaestro Studio.
 
 [Home](README.md)

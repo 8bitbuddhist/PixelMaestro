@@ -6,13 +6,13 @@
 
 namespace PixelMaestro {
 	uint8_t* CanvasCueHandler::clear(uint8_t section_num, uint8_t overlay_num) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::Clear;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::Clear;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte));
+		return controller_->assemble(Byte::OptionsByte);
 	}
 
 	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
@@ -20,20 +20,20 @@ namespace PixelMaestro {
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert radius_byte(radius);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawCircle;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 4] = radius_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 5] = radius_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 6] = (uint8_t)fill;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawCircle;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = radius_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = radius_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = (uint8_t)fill;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 7));
+		return controller_->assemble(Byte::OptionsByte + 7);
 	}
 
 	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
@@ -41,63 +41,82 @@ namespace PixelMaestro {
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert radius_byte(radius);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawCircle;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = color.r;
-		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
-		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 7] = radius_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 8] = radius_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 9] = (uint8_t)fill;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawCircle;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = color.r;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = color.g;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = color.b;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = radius_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 8] = radius_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 9] = (uint8_t)fill;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 10));
+		return controller_->assemble(Byte::OptionsByte + 10);
 	}
 
 	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t overlay_num, uint16_t size_x, uint16_t size_y, bool *frame) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawFrame;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = size_x;
-		controller_->get_cue()[Byte::OptionsByte + 1] = size_y;
-
-		uint32_t num_pixels = size_x * size_y;
-		for (uint32_t pixel = 0; pixel < num_pixels; pixel++) {
-			controller_->get_cue()[(Byte::OptionsByte + 2) + pixel] = (uint8_t)frame[pixel];
+		// Check the size of the buffer. If it's not big enough to store the frame, exit.
+		if ((size_x * size_y) > controller_->get_buffer_size()) {
+			return nullptr;
 		}
 
-		return controller_->assemble((uint8_t)((Byte::OptionsByte + 2) + num_pixels));
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawFrame;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = size_x;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = size_y;
+
+		uint16_t current_index = Byte::OptionsByte + 2;
+		Point grid(size_x, size_y);
+		for (uint16_t y = 0; y < size_y; y++) {
+			for (uint16_t x = 0; x < size_x; x++) {
+				controller_->get_buffer()[current_index] = (uint8_t)frame[grid.get_inline_index(x, y)];
+				current_index++;
+			}
+		}
+
+		return controller_->assemble(current_index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t overlay_num, uint16_t size_x, uint16_t size_y, Colors::RGB *frame) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawFrame;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = size_x;
-		controller_->get_cue()[Byte::OptionsByte + 1] = size_y;
 
-		uint32_t pixel_index = Byte::OptionsByte + 2;
-		uint32_t num_pixels = size_x * size_y;
-		for (uint32_t pixel = 0; pixel < num_pixels; pixel++) {
-			controller_->get_cue()[pixel_index] = frame[pixel].r;
-			pixel_index++;
-			controller_->get_cue()[pixel_index] = frame[pixel].g;
-			pixel_index++;
-			controller_->get_cue()[pixel_index] = frame[pixel].b;
-			pixel_index++;
+		// TODO: Fix not saving correctly
+
+		// Check the size of the buffer. If it's not big enough to store the frame, exit.
+		if ((size_x * size_y) * 3 > controller_->get_buffer_size()) {
+			return nullptr;
 		}
 
-		return controller_->assemble((uint8_t)pixel_index);
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawFrame;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = size_x;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = size_y;
+
+		uint16_t current_index = Byte::OptionsByte + 2;
+		Point grid(size_x, size_y);
+		for (uint16_t y = 0; y < size_y; y++) {
+			for (uint16_t x = 0; x < size_x; x++) {
+				controller_->get_buffer()[current_index] = frame[grid.get_inline_index(x, y)].r;
+				current_index++;
+				controller_->get_buffer()[current_index] = frame[grid.get_inline_index(x, y)].g;
+				current_index++;
+				controller_->get_buffer()[current_index] = frame[grid.get_inline_index(x, y)].b;
+				current_index++;
+			}
+		}
+
+		return controller_->assemble(current_index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_line(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
@@ -106,21 +125,21 @@ namespace PixelMaestro {
 		IntByteConvert target_x_byte(target_x);
 		IntByteConvert target_y_byte(target_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawLine;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 4] = target_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 5] = target_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 6] = target_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 7] = target_y_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawLine;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = target_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = target_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = target_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = target_y_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 8));
+		return controller_->assemble(Byte::OptionsByte + 8);
 	}
 
 	uint8_t* CanvasCueHandler::draw_line(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
@@ -129,61 +148,61 @@ namespace PixelMaestro {
 		IntByteConvert target_x_byte(target_x);
 		IntByteConvert target_y_byte(target_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawLine;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = color.r;
-		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
-		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 7] = target_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 8] = target_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 9] = target_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 10] = target_y_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawLine;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = color.r;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = color.g;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = color.b;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = target_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 8] = target_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 9] = target_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 10] = target_y_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 11));
+		return controller_->assemble(Byte::OptionsByte + 11);
 	}
 
 	uint8_t* CanvasCueHandler::draw_point(uint8_t section_num, uint8_t overlay_num, uint16_t x, uint16_t y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawPoint;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawPoint;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 4));
+		return controller_->assemble(Byte::OptionsByte + 4);
 	}
 
 	uint8_t* CanvasCueHandler::draw_point(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t x, uint16_t y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawPoint;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = color.r;
-		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
-		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
-		controller_->get_cue()[Byte::OptionsByte + 3] = x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 4] = x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 5] = y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 6] = y_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawPoint;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = color.r;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = color.g;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = color.b;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = y_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 7));
+		return controller_->assemble(Byte::OptionsByte + 7);
 	}
 
 	uint8_t* CanvasCueHandler::draw_rect(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
@@ -192,22 +211,22 @@ namespace PixelMaestro {
 		IntByteConvert size_x_byte(size_x);
 		IntByteConvert size_y_byte(size_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawRect;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 4] = size_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 5] = size_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 6] = size_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 7] = size_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 8] = (uint8_t)fill;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawRect;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = size_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = size_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = size_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = size_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 8] = (uint8_t)fill;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 9));
+		return controller_->assemble(Byte::OptionsByte + 9);
 	}
 
 	uint8_t* CanvasCueHandler::draw_rect(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
@@ -216,25 +235,25 @@ namespace PixelMaestro {
 		IntByteConvert size_x_byte(size_x);
 		IntByteConvert size_y_byte(size_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawRect;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = color.r;
-		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
-		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 7] = size_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 8] = size_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 9] = size_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 10] = size_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 11] = (uint8_t)fill;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawRect;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = color.r;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = color.g;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = color.b;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = size_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 8] = size_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 9] = size_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 10] = size_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 11] = (uint8_t)fill;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 12));
+		return controller_->assemble(Byte::OptionsByte + 12);
 	}
 
 	uint8_t* CanvasCueHandler::draw_triangle(uint8_t section_num, uint8_t overlay_num, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
@@ -245,26 +264,26 @@ namespace PixelMaestro {
 		IntByteConvert point_c_x_byte(point_c_x);
 		IntByteConvert point_c_y_byte(point_c_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawTriangle;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = point_a_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = point_a_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = point_a_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = point_a_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 4] = point_b_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 5] = point_b_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 6] = point_b_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 7] = point_b_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 8] = point_c_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 9] = point_c_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 10] = point_c_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 11] = point_c_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 12] = (uint8_t)fill;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawTriangle;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = point_a_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = point_a_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = point_a_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = point_a_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = point_b_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = point_b_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = point_b_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = point_b_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 8] = point_c_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 9] = point_c_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 10] = point_c_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 11] = point_c_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 12] = (uint8_t)fill;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 13));
+		return controller_->assemble(Byte::OptionsByte + 13);
 	}
 
 	uint8_t* CanvasCueHandler::draw_triangle(uint8_t section_num, uint8_t overlay_num, Colors::RGB color, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
@@ -275,50 +294,50 @@ namespace PixelMaestro {
 		IntByteConvert point_c_x_byte(point_c_x);
 		IntByteConvert point_c_y_byte(point_c_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawTriangle;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = color.r;
-		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
-		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
-		controller_->get_cue()[Byte::OptionsByte + 3] = point_a_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 4] = point_a_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 5] = point_a_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 6] = point_a_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 7] = point_b_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 8] = point_b_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 9] = point_b_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 10] = point_b_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 11] = point_c_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 12] = point_c_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 13] = point_c_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 14] = point_c_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 15] = (uint8_t)fill;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawTriangle;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = color.r;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = color.g;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = color.b;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = point_a_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = point_a_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = point_a_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = point_a_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = point_b_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 8] = point_b_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 9] = point_b_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 10] = point_b_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 11] = point_c_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 12] = point_c_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 13] = point_c_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 14] = point_c_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 15] = (uint8_t)fill;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 16));
+		return controller_->assemble(Byte::OptionsByte + 16);
 	}
 
 	uint8_t* CanvasCueHandler::draw_text(uint8_t section_num, uint8_t overlay_num, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawText;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 4] = (uint8_t)font;
-		controller_->get_cue()[Byte::OptionsByte + 5] = num_chars;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawText;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::AnimationCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = (uint8_t)font;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = num_chars;
 
 		uint8_t text_index = Byte::OptionsByte + 6;
 		for (uint8_t i = 0; i < num_chars; i++) {
-			controller_->get_cue()[text_index] = text[i];
+			controller_->get_buffer()[text_index] = text[i];
 			text_index++;
 		}
 
@@ -329,24 +348,24 @@ namespace PixelMaestro {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::DrawText;
-		controller_->get_cue()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = color.r;
-		controller_->get_cue()[Byte::OptionsByte + 1] = color.g;
-		controller_->get_cue()[Byte::OptionsByte + 2] = color.b;
-		controller_->get_cue()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 7] = (uint8_t)font;
-		controller_->get_cue()[Byte::OptionsByte + 8] = num_chars;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::DrawText;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = color.r;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = color.g;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = color.b;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = origin_x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = origin_x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = origin_y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 6] = origin_y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 7] = (uint8_t)font;
+		controller_->get_buffer()[Byte::OptionsByte + 8] = num_chars;
 
 		uint8_t text_index = Byte::OptionsByte + 9;
 		for (uint8_t i = 0; i < num_chars; i++) {
-			controller_->get_cue()[text_index] = text[i];
+			controller_->get_buffer()[text_index] = text[i];
 			text_index++;
 		}
 
@@ -354,100 +373,100 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::next_frame(uint8_t section_num, uint8_t overlay_num) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::NextFrame;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::NextFrame;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(Byte::OptionsByte);
 	}
 
 	uint8_t* CanvasCueHandler::remove_frame_timing(uint8_t section_num, uint8_t overlay_num) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::RemoveFrameTiming;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::RemoveFrameTiming;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(Byte::OptionsByte);
 	}
 
 	uint8_t* CanvasCueHandler::set_current_frame_index(uint8_t section_num, uint8_t overlay_num, uint16_t index) {
 		IntByteConvert index_byte(index);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetCurrentFrameIndex;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = index_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = index_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetCurrentFrameIndex;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = index_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = index_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
+		return controller_->assemble(Byte::OptionsByte + 2);
 	}
 
 	uint8_t* CanvasCueHandler::set_frame_timing(uint8_t section_num, uint8_t overlay_num, uint16_t speed) {
 		IntByteConvert speed_byte(speed);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetFrameTiming;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = speed_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = speed_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetFrameTiming;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = speed_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = speed_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
+		return controller_->assemble(Byte::OptionsByte + 2);
 	}
 
 	uint8_t* CanvasCueHandler::set_num_frames(uint8_t section_num, uint8_t overlay_num, uint16_t num_frames) {
 		IntByteConvert num_frames_byte(num_frames);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetNumFrames;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = num_frames_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = num_frames_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetNumFrames;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = num_frames_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = num_frames_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
+		return controller_->assemble(Byte::OptionsByte + 2);
 	}
 
 	uint8_t* CanvasCueHandler::set_offset(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetOffset;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetOffset;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 4));
+		return controller_->assemble(Byte::OptionsByte + 4);
 	}
 
 	uint8_t* CanvasCueHandler::set_scroll(uint8_t section_num, uint8_t overlay_num, int16_t x, int16_t y, bool repeat) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetScroll;
-		controller_->get_cue()[Byte::TypeByte] = 255;
-		controller_->get_cue()[Byte::SectionByte] = section_num;
-		controller_->get_cue()[Byte::OverlayByte] = overlay_num;
-		controller_->get_cue()[Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 3] = y_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 4] = (uint8_t)repeat;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetScroll;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::OverlayByte] = overlay_num;
+		controller_->get_buffer()[Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = (uint8_t)repeat;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 5));
+		return controller_->assemble(Byte::OptionsByte + 5);
 	}
 
 	void CanvasCueHandler::run(uint8_t *cue) {
@@ -513,7 +532,7 @@ namespace PixelMaestro {
 								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
 								for (uint16_t y = 0; y < frame_bounds.y; y++) {
 									for (uint16_t x = 0; x < frame_bounds.x; x++) {
-										if ((bool)cue[(Byte::OptionsByte + 2) + frame_bounds.get_inline_index(x, y)] == true) {
+										if (cue[Byte::OptionsByte + 2 + frame_bounds.get_inline_index(x, y)] == 1) {
 											animation_canvas->draw_point(x, y);
 										}
 									}

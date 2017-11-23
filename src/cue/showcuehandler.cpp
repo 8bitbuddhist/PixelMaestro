@@ -5,25 +5,25 @@ namespace PixelMaestro {
 	uint8_t* ShowCueHandler::set_events(Event *events, uint16_t num_events, bool preserve_current_index) {
 		IntByteConvert num_events_byte(num_events);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetEvents;
-		controller_->get_cue()[Byte::OptionsByte] = num_events_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = num_events_byte.converted_1;
-		controller_->get_cue()[Byte::OptionsByte + 2] = (uint8_t)preserve_current_index;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetEvents;
+		controller_->get_buffer()[Byte::OptionsByte] = num_events_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = num_events_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = (uint8_t)preserve_current_index;
 
 		int options_index = Byte::OptionsByte + 3;
 		for (uint16_t event_index = 0; event_index < num_events; event_index++) {
 			// Save time
 			IntByteConvert event_time(events[event_index].get_time());
-			controller_->get_cue()[options_index] = event_time.converted_0;
+			controller_->get_buffer()[options_index] = event_time.converted_0;
 			options_index++;
-			controller_->get_cue()[options_index] = event_time.converted_1;
+			controller_->get_buffer()[options_index] = event_time.converted_1;
 			options_index++;
 
 			// Save Cue
 			uint8_t* event_cue = events[event_index].get_cue();
 			for (uint16_t cue_index = 0; cue_index < controller_->get_cue_size(event_cue); cue_index++) {
-				controller_->get_cue()[options_index] = event_cue[cue_index];
+				controller_->get_buffer()[options_index] = event_cue[cue_index];
 				options_index++;
 			}
 		}
@@ -32,17 +32,17 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* ShowCueHandler::set_looping(bool loop) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetLooping;
-		controller_->get_cue()[Byte::OptionsByte] = (uint8_t)loop;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetLooping;
+		controller_->get_buffer()[Byte::OptionsByte] = (uint8_t)loop;
 
 		return controller_->assemble(Byte::OptionsByte + 1);
 	}
 
 	uint8_t* ShowCueHandler::set_timing(Show::TimingMode timing) {
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
-		controller_->get_cue()[Byte::ActionByte] = (uint8_t)Action::SetEvents;
-		controller_->get_cue()[Byte::OptionsByte] = (uint8_t)timing;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetEvents;
+		controller_->get_buffer()[Byte::OptionsByte] = (uint8_t)timing;
 
 		return controller_->assemble(Byte::OptionsByte + 1);
 	}

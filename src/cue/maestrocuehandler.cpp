@@ -5,12 +5,12 @@ namespace PixelMaestro {
 	uint8_t* MaestroCueHandler::set_timing(uint16_t interval) {
 		IntByteConvert interval_byte = IntByteConvert(interval);
 
-		controller_->get_cue()[Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
-		controller_->get_cue()[Byte::ActionByte] = Action::SetTiming;
-		controller_->get_cue()[Byte::OptionsByte] = interval_byte.converted_0;
-		controller_->get_cue()[Byte::OptionsByte + 1] = interval_byte.converted_1;
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
+		controller_->get_buffer()[Byte::ActionByte] = Action::SetTiming;
+		controller_->get_buffer()[Byte::OptionsByte] = interval_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = interval_byte.converted_1;
 
-		return controller_->assemble((uint8_t)(Byte::OptionsByte + 2));
+		return controller_->assemble((Byte::OptionsByte + 2));
 	}
 
 	void MaestroCueHandler::run(uint8_t *cue) {

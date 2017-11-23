@@ -1,5 +1,5 @@
 # Maestro
-As the name implies, Maestros are responsible for coordinating all other PixelMaestro components. In addition to managing Sections directly, Maestros set global parameters such as the Pixel refresh rate, brightness level, [Cue controller](cue.md), and [Show handler](show.md).
+Maestros coordinate all other PixelMaestro components. In addition to managing Sections and [Show events](show.md), Maestros control global parameters such as the refresh rate and brightness level.
 
 ## Contents
 1. [Creating a Maestro](#creating-a-maestro)
@@ -10,7 +10,7 @@ As the name implies, Maestros are responsible for coordinating all other PixelMa
 6. [Creating a Show](#creating-a-show)
 
 ## Creating a Maestro
-When creating a Maestro, you need to pass in the Sections it will be controlling. The following snippet creates two Sections, one with a 10x20 Pixel grid and another with a 20x30 grid.
+When creating a Maestro, you need to provide the Sections it will be controlling. The following code creates two Sections; one with a 10x20 Pixel grid and another with a 20x30 grid:
 ```c++
 int num_sections = 2;
 Section sections[] = {
@@ -20,7 +20,7 @@ Section sections[] = {
 Maestro maestro(sections, num_sections);
 ```
 
-If you only want to use a single Section, just pass the grid dimensions into the Maestro's constructor. The Maestro dynamically allocates the new Section:
+If you only want to use a single Section, just pass the grid dimensions into the Maestro's constructor. The Maestro automatically creates the new Section:
 ```c++
 Maestro maestro(10, 20);
 ```
@@ -28,18 +28,18 @@ Maestro maestro(10, 20);
 You can also use `Maestro::set_sections()` to set the Maestro's Sections.
 
 ## Updating the Maestro
-The `Maestro::update()` method triggers an update of every component managed by the Maestro. The time between refreshes is determined by the `refresh_interval`, which defaults to 50 milliseconds (or 20 frames per second). This means that every 50ms, every component will run through its update routine, such as drawing an animation or canvas frame.
+The `Maestro::update()` method triggers an update of every component managed by the Maestro. The time between refreshes is determined by the `refresh_interval`, which defaults to 50 milliseconds (or 20 updates per second). This means that every 50ms, every component will run through its update routine. Animations and Canvases will draw the next frame, Pixels will calculate their current color, etc.
 
-**Note:** `Maestro::update()` is non-blocking, meaning it will not prevent other processes or tasks from executing even on a single-threaded device.
+**Tip:** `Maestro::update()` is non-blocking, meaning it will not prevent other processes or tasks from executing even on single-threaded devices.
 
 When you call `Maestro::update()`, pass in the program's current runtime in milliseconds. The Maestro uses the runtime to determine whether it should update (by comparing the runtime to the last time the update was executed). The Maestro then calls `Section::update()` on each of its Sections, which in turn update all of their managed components.
 ```c++
 maestro.update(runtime);
 ```
-If necessary, you can bypass the runtime check and force the Maestro to update using `maestro.update(runtime, true)`. This immediately updates every Section regardless of the Maestro's last update time.
+If necessary, you can bypass the runtime check and force the Maestro to update using `maestro.update(runtime, true)`. This immediately updates every component regardless of the Maestro's last update time.
 
 ## Changing the Refresh Rate
-The refresh rate is the amount of time (in milliseconds) before the Maestro updates its Sections. This defaults to 50ms (or 20fps). You can get the refresh rate using `get_refresh_interval()` and set the refresh rate using `set_refresh_interval()`.
+The refresh rate is the amount of time (in milliseconds) between updates. This defaults to 50ms (or 20 updates per second). You can get the refresh rate using `get_timing()` and set the refresh rate using `set_timing()`.
 
 ## Interacting with Sections
 You can retrieve a Section using `get_section()`. Pass in the index of the desired Section. For more information, see the [Section documentation](section.md).

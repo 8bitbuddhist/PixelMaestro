@@ -289,11 +289,28 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the frame timing mechanism.
+	 * Used in PixelMaestro Studio.
+	 * @return Frame timing.
+	 */
+	Timing* Canvas::get_frame_timing() {
+		return frame_timing_;
+	}
+
+	/**
 	 * Returns the number of frames.
 	 * @return Number of frames.
 	 */
 	uint16_t Canvas::get_num_frames() {
 		return num_frames_;
+	}
+
+	/**
+	 * Returns the Canvas' scrolling behavior.
+	 * @return Scroll object.
+	 */
+	Canvas::Scroll* Canvas::get_scroll() {
+		return scroll_;
 	}
 
 	/**
@@ -335,6 +352,7 @@ namespace PixelMaestro {
 	 */
 	void Canvas::remove_frame_timing() {
 		delete frame_timing_;
+		frame_timing_ = nullptr;
 	}
 
 	/**

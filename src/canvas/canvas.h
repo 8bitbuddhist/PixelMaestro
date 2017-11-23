@@ -67,7 +67,9 @@ namespace PixelMaestro {
 			void draw_triangle(uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
 			void erase(uint16_t x, uint16_t y);
 			uint16_t get_current_frame_index();
+			Timing* get_frame_timing();
 			uint16_t get_num_frames();
+			Scroll* get_scroll();
 			Section* get_section();
 			bool in_bounds(uint16_t x, uint16_t y);
 			void next_frame();

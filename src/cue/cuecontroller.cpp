@@ -14,9 +14,12 @@ namespace PixelMaestro {
 	/**
 	 * Constructor.
 	 * @param maestro Maestro that processed Cues will run on.
+	 * @param buffer_size The size of the Cue buffer (defaults to 256).
 	 */
-	CueController::CueController(Maestro* maestro) {
-		maestro_ = maestro;
+	CueController::CueController(Maestro* maestro, uint16_t buffer_size) {
+		this->maestro_ = maestro;
+		this->buffer_size_ = buffer_size;
+		this->buffer_ = new uint8_t[buffer_size] {0};
 	}
 
 	/**
@@ -24,7 +27,7 @@ namespace PixelMaestro {
 	 * @param payload_size The size of the payload.
 	 * @return Assembled Cue.
 	 */
-	uint8_t* CueController::assemble(uint8_t payload_size) {
+	uint8_t* CueController::assemble(uint16_t payload_size) {
 		/*
 		 * Final Cue has the following form: [ID] [Checksum] [Size] [Payload]
 		 *
@@ -35,14 +38,16 @@ namespace PixelMaestro {
 		 */
 
 		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
-			cue_[i] = id_[i];
+			buffer_[i] = id_[i];
 		}
 
-		cue_[Byte::SizeByte] = payload_size;
+		IntByteConvert size(payload_size);
+		buffer_[Byte::SizeByte1] = size.converted_0;
+		buffer_[Byte::SizeByte2] = size.converted_1;
 
-		cue_[Byte::ChecksumByte] = checksum(cue_, Byte::PayloadByte + payload_size);
+		buffer_[Byte::ChecksumByte] = checksum(buffer_, Byte::PayloadByte + payload_size);
 
-		return cue_;
+		return buffer_;
 	}
 
 	/**
@@ -52,9 +57,9 @@ namespace PixelMaestro {
 	 * @param cue_size The size of the Cue.
 	 * @return New checksum.
 	 */
-	uint8_t CueController::checksum(uint8_t *cue, uint8_t cue_size) {
+	uint8_t CueController::checksum(uint8_t *cue, uint16_t cue_size) {
 		uint32_t sum = 0;
-		for (uint8_t i = 0; i < cue_size; i++) {
+		for (uint16_t i = 0; i < cue_size; i++) {
 
 			// Make sure we don't include the checksum in its own calculation
 			if (i != Byte::ChecksumByte) {
@@ -98,16 +103,24 @@ namespace PixelMaestro {
 	 * Returns the currently cached Cue.
 	 * @return Cue buffer.
 	 */
-	uint8_t* CueController::get_cue() {
-		return cue_;
+	uint8_t* CueController::get_buffer() {
+		return buffer_;
+	}
+
+	/**
+	 * Returns the size of the Cue buffer.
+	 * @return Buffer size.
+	 */
+	uint16_t CueController::get_buffer_size() {
+		return buffer_size_;
 	}
 
 	/**
 	 * Returns the size of the currently cached Cue.
 	 * @return Cue size.
 	 */
-	uint8_t CueController::get_cue_size() {
-		return (cue_[Byte::SizeByte] + Byte::PayloadByte);
+	uint16_t CueController::get_cue_size() {
+		return (IntByteConvert::byte_to_int(&buffer_[CueController::Byte::SizeByte1]) + Byte::PayloadByte);
 	}
 
 	/**
@@ -115,8 +128,8 @@ namespace PixelMaestro {
 	 * @param cue Cue to measure.
 	 * @return Cue size.
 	 */
-	uint8_t CueController::get_cue_size(uint8_t *cue) {
-		return (cue[Byte::SizeByte] + Byte::PayloadByte);
+	uint16_t CueController::get_cue_size(uint8_t *cue) {
+		return (IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + Byte::PayloadByte);
 	}
 
 	/**
@@ -143,7 +156,7 @@ namespace PixelMaestro {
 	 * @return True if the Cue was successfully executed.
 	 */
 	bool CueController::read(uint8_t byte) {
-		cue_[read_index_] = byte;
+		buffer_[read_index_] = byte;
 		read_index_++;
 
 		/*
@@ -155,23 +168,23 @@ namespace PixelMaestro {
 		 *	2) If the last bytes read match the Cue ID string, move the ID and read index to the start of the buffer (reduces the chance of a buffer overflow / split Cue)
 		 *	3) If we've reached the buffer size limit, set the index to 0 (error / invalid Cue)
 		 */
-		if (read_index_ >= cue_[Byte::SizeByte] + Byte::PayloadByte) {
-			run(cue_);
+		if (read_index_ >= IntByteConvert::byte_to_int(&buffer_[Byte::SizeByte1]) + Byte::PayloadByte) {
+			run(buffer_);
 			read_index_ = 0;
 			return true;
 		}
 		else {
 			if (read_index_ > ID3Byte &&
-				(cue_[read_index_ - ID3Byte] == id_[ID1Byte] &&
-				 cue_[read_index_ - ID2Byte] == id_[ID2Byte] &&
-				 cue_[read_index_] == id_[ID3Byte])) {
+				(buffer_[read_index_ - ID3Byte] == id_[ID1Byte] &&
+				 buffer_[read_index_ - ID2Byte] == id_[ID2Byte] &&
+				 buffer_[read_index_] == id_[ID3Byte])) {
 
-				cue_[ID1Byte] = id_[ID1Byte];
-				cue_[ID2Byte] = id_[ID2Byte];
-				cue_[ID3Byte] = id_[ID3Byte];
+				buffer_[ID1Byte] = id_[ID1Byte];
+				buffer_[ID2Byte] = id_[ID2Byte];
+				buffer_[ID3Byte] = id_[ID3Byte];
 				read_index_ = ID3Byte;
 			}
-			else if ((uint16_t)read_index_ + 1 > BUFFER_SIZE) {
+			else if ((uint16_t)read_index_ + 1 > buffer_size_) {
 				read_index_ = 0;
 			}
 		}
@@ -182,7 +195,7 @@ namespace PixelMaestro {
 	 * Runs the currently loaded Cue.
 	 */
 	void CueController::run() {
-		handlers_[cue_[Byte::PayloadByte]]->run(cue_);
+		handlers_[buffer_[Byte::PayloadByte]]->run(buffer_);
 	}
 
 	/**
@@ -220,7 +233,7 @@ namespace PixelMaestro {
 		}
 
 		// Validate the Checksum
-		uint8_t size = cue[Byte::SizeByte] + Byte::PayloadByte;
+		uint16_t size = IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + Byte::PayloadByte;
 		if (cue[Byte::ChecksumByte] != checksum(cue, size)) {
 			return false;
 		}
@@ -229,6 +242,7 @@ namespace PixelMaestro {
 	}
 
 	CueController::~CueController() {
+		delete [] buffer_;
 		for (uint8_t i = 0; i < 4; i++) {
 			delete handlers_[i];
 		}
