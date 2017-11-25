@@ -184,7 +184,7 @@ namespace PixelMaestro {
 				buffer_[ID3Byte] = id_[ID3Byte];
 				read_index_ = ID3Byte;
 			}
-			else if ((uint16_t)read_index_ + 1 > buffer_size_) {
+			else if ((uint32_t)read_index_ + 1 > buffer_size_) {
 				read_index_ = 0;
 			}
 		}

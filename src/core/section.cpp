@@ -32,7 +32,7 @@ namespace PixelMaestro {
 	 * Constructor. Initializes the Pixel array.
 	 * @param Maestro The Section's parent Maestro.
 	 * @param dimensions Initial layout (rows and columns) of the Pixels.
-	 * @param parent Parent Section (if this is an Overlay).
+	 * @param parent Parent Section (if this is an Layer).
 	 */
 	Section::Section(Point dimensions, Section* parent) : Section(dimensions.x, dimensions.y, parent) { }
 
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 	 * Constructor. Initializes the Pixel array.
 	 * @param x Number of rows in the Section.
 	 * @param y Number of columns in the Section.
-	 * @param parent Parent Section (if this is an Overlay).
+	 * @param parent Parent Section (if this is an Layer).
 	 */
 	Section::Section(uint16_t x, uint16_t y, Section* parent) {
 		set_dimensions(x, y);
@@ -82,16 +82,16 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the Overlay (if one exists).
+	 * Returns the Layer (if one exists).
 	 *
-	 * @return Active Overlay.
+	 * @return Active Layer.
 	 */
-	Section::Overlay* Section::get_overlay() {
-		return overlay_;
+	Section::Layer* Section::get_layer() {
+		return layer_;
 	}
 
 	/**
-	 * Returns this Section's parent (if this is an Overlay).
+	 * Returns this Section's parent (if this is an Layer).
 	 * @return Parent Section.
 	 */
 	Section* Section::get_parent_section() {
@@ -127,9 +127,9 @@ namespace PixelMaestro {
 			color = *pixels_[dimensions_.get_inline_index(x, y)].get_color();
 		}
 
-		// If there's an Overlay, return the Overlay color mixed with the Section (or Canvas) color.
-		if (overlay_ != nullptr) {
-			return Colors::mix_colors(color, overlay_->section->get_pixel_color(x, y), overlay_->mix_mode, overlay_->alpha);
+		// If there's an Layer, return the Layer color mixed with the Section (or Canvas) color.
+		if (layer_ != nullptr) {
+			return Colors::mix_colors(color, layer_->section->get_pixel_color(x, y), layer_->mix_mode, layer_->alpha);
 		}
 
 		return color;
@@ -152,11 +152,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Deletes the current Overlay.
+	 * Deletes the current Layer.
 	 */
-	void Section::remove_overlay() {
-		delete overlay_;
-		overlay_ = nullptr;
+	void Section::remove_layer() {
+		delete layer_;
+		layer_ = nullptr;
 	}
 
 	/**
@@ -262,9 +262,9 @@ namespace PixelMaestro {
 			canvas_->initialize();
 		}
 
-		// Reinitialize the Overlay
-		if (overlay_ != nullptr) {
-			overlay_->section->set_dimensions(dimensions_.x, dimensions_.y);
+		// Reinitialize the Layer
+		if (layer_ != nullptr) {
+			layer_->section->set_dimensions(dimensions_.x, dimensions_.y);
 		}
 	}
 
@@ -305,22 +305,22 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets a new Overlay.
-	 * If an Overlay already exists, this updates the existing Overlay.
-	 * @param mix_mode The method for blending the Overlay.
-	 * @param alpha The Overlay's transparency (0 - 255.
-	 * @return New Overlay.
+	 * Sets a new Layer.
+	 * If an Layer already exists, this updates the existing Layer.
+	 * @param mix_mode The method for blending the Layer.
+	 * @param alpha The Layer's transparency (0 - 255.
+	 * @return New Layer.
 	 */
-	Section::Overlay* Section::set_overlay(Colors::MixMode mix_mode, uint8_t alpha) {
-		if (overlay_ == nullptr) {
-			overlay_ = new Overlay(this, mix_mode, alpha);
+	Section::Layer* Section::set_layer(Colors::MixMode mix_mode, uint8_t alpha) {
+		if (layer_ == nullptr) {
+			layer_ = new Layer(this, mix_mode, alpha);
 		}
 		else {
-			overlay_->mix_mode = mix_mode;
-			overlay_->alpha = alpha;
+			layer_->mix_mode = mix_mode;
+			layer_->alpha = alpha;
 		}
 
-		return overlay_;
+		return layer_;
 	}
 
 	/**
@@ -330,8 +330,8 @@ namespace PixelMaestro {
 	*/
 	void Section::update(const uint32_t& current_time) {
 
-		if (overlay_ != nullptr) {
-			overlay_->section->update(current_time);
+		if (layer_ != nullptr) {
+			layer_->section->update(current_time);
 		}
 
 		if (canvas_ != nullptr) {
@@ -350,7 +350,7 @@ namespace PixelMaestro {
 	Section::~Section() {
 		remove_animation();
 		remove_canvas();
-		remove_overlay();
+		remove_layer();
 
 		delete [] pixels_;
 	}

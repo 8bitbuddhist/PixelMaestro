@@ -15,6 +15,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - All components that rely on timing (Animation speed/pause, Maestro refresh, Canvas scrolling, etc) now use the Timing class. `get/set_speed()`, `get/set_refresh_interval()` etc. now use `get/set_timing()`.
 - Section:
 	- Added a reference to each Section's parent Maestro.
+	- Renamed `Overlays` to `Layers`.
 	
 ### Removed
 - Maestro:

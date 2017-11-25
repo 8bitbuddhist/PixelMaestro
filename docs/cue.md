@@ -41,11 +41,11 @@ SectionCueHandler* handler = static_cast<SectionCueHandler*>(controller->enable_
 ```
 
 ## Creating Cues
-You can create a Cue by calling one of the methods in an enabled CueHandler. For example, to create a Cue that changes a Section's dimensions, enable the `SectionCueHandler` and call `handler.set_dimensions(section, overlay, x, y)`, where `section` and `overlay` are the indices of the Section and Overlay you want to modify (leave the Overlay index as 0 if you want to modify the base Section). This generates a Cue and stores it in the CueController's buffer, which you can access using `CueController::get_cue()`.
+You can create a Cue by calling one of the methods in an enabled CueHandler. For example, to create a Cue that changes a Section's dimensions, enable the `SectionCueHandler` and call `handler.set_dimensions(section, layer, x, y)`, where `section` and `layer` are the indices of the Section and Layer you want to modify (leave the Layer index as 0 if you want to modify the base Section). This generates a Cue and stores it in the CueController's buffer, which you can access using `CueController::get_cue()`.
 
-**Note:** Most CueHandler methods require you to pass in the index of the Section and Overlay you want to modify. The Overlay index indicates the depth of the Overlay from the base Section (index 0 points to the base Section itself).
+**Note:** Most CueHandler methods require you to pass in the index of the Section and Layer you want to modify. The Layer index indicates the depth of the Layer from the base Section (index 0 points to the base Section itself).
 
-The following example creates a Canvas on an Overlay and draws a circle onto the Canvas:
+The following example creates a Canvas on an Layer and draws a circle onto the Canvas:
 ```c++
 #include "cue/cuecontroller.h"
 #include "cue/canvascuehandler.h"
@@ -55,16 +55,16 @@ The following example creates a Canvas on an Overlay and draws a circle onto the
 // The index of the Section (in `Maestro::sections_`).
 int section_index = 0;
 
-// How far down the Overlay is.
-// For example, an index of 1 affects the base Section's Overlay, while an index of 2 affects the Overlay's Overlay.
-int overlay_index = 1;
+// How far down the Layer is.
+// For example, an index of 1 affects the base Section's Layer, while an index of 2 affects the Layer's Layer.
+int layer_index = 1;
 
 SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_handler(CueController::Handler::SectionHandler));
-section_handler->add_canvas(section_index, overlay_index, CanvasType::ColorCanvas);
+section_handler->add_canvas(section_index, layer_index, CanvasType::ColorCanvas);
 controller->run();
 
 CanvasCueHandler* canvas_handler = static_cast<CanvasCueHandler*>(controller->enable_handler(CueController::Handler::CanvasHandler));
-canvas_handler->draw_circle(section_index, overlay_index, Colors::GREEN, 5, 5, 2, true);
+canvas_handler->draw_circle(section_index, layer_index, Colors::GREEN, 5, 5, 2, true);
 controller->run();
 ```
 
@@ -103,7 +103,7 @@ Payloads vary in length depending on the command (stored in the _size_ component
 2. **Action**: the CueHandler-specific method that created this Cue. CueHandlers use this to determine which PixelMaestro command to run using this Cue.
 3. **Type**: identifies one of several possible options, e.g. a Canvas type or Animation type. Only certain CueHandlers use this parameter.
 4. **Section**: the index of the Section that this Cue modifies.
-4. **Overlay**: the index of the Overlay that this Cue modifies in relation to the Section (e.g. a value of *2* affects the Section's Overlay's Overlay).
+4. **Layer**: the index of the Layer that this Cue modifies in relation to the Section (e.g. a value of *2* affects the Section's Layer's Layer).
 5. **Options**: A variable-length set of options specific to each Action. Most Options are less than 10 bytes long, but some (e.g. setting color arrays or copying Canvas frames) can easily reach 1KB+.
 
 [Home](README.md)

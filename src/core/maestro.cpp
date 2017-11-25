@@ -53,7 +53,7 @@ namespace PixelMaestro {
 	 * @param section Section to retrieve the Pixel from.
 	 * @param x Pixel's x-coordinate.
 	 * @param y Pixel's y-coordinate.
-	 * @return Pixel color after adjusting for Overlays and brightness.
+	 * @return Pixel color after adjusting for Layers and brightness.
 	 */
 	Colors::RGB Maestro::get_pixel_color(uint8_t section, uint16_t x, uint16_t y) {
 		return sections_[section].get_pixel_color(x, y) * (float)(brightness_ / (float)255);

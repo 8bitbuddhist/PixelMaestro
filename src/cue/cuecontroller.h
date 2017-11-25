@@ -95,7 +95,7 @@ namespace PixelMaestro {
 
 		private:
 			/// Size of the buffer for caching Cues.
-			uint32_t buffer_size_;
+			uint16_t buffer_size_;
 
 			/// Buffer for storing the currently loaded Cue.
 			uint8_t* buffer_ = nullptr;
@@ -110,7 +110,7 @@ namespace PixelMaestro {
 			Maestro* maestro_ = nullptr;
 
 			/// Index for tracking buffer reads while loading a Cue by byte.
-			uint8_t read_index_ = 0;
+			uint16_t read_index_ = 0;
 	};
 }
 

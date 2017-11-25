@@ -26,7 +26,7 @@ Colors::RGB fuchsia = red + blue;	// {255, 0, 255}
 The `generate_random_color_array()` and `generate_scaling_color_array()` methods can quickly create new color palettes. Pass in a starting color, the array that you want to populate, and the number of colors you wish to generate. You can also provide additional parameters to tweak the output of the palette.
 
 ## Mixing Colors
-`mix_colors()` blends two colors together and returns the result. This is primarily used for Section Overlays, but it can also be used on its own. You can use a variety of different color mixing options provided by the `MixMode` enum:
+`mix_colors()` blends two colors together and returns the result. This is primarily used for Section Layers, but it can also be used on its own. You can use a variety of different color mixing options provided by the `MixMode` enum:
 * ALPHA: Blends the second color with the first color by the specified amount (0 - 255, where 0 is none and 255 is full).
 * MULTIPLY: Multiplies the first color by the second.
 * OVERLAY: Returns the second color if the second color is not black. If the second color is black, then it returns the first color.

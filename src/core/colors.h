@@ -61,14 +61,14 @@ namespace PixelMaestro {
 				/// Do not mix the colors.
 				None,
 
-				/// Mixes both colors with a specific blend percentage (blending is applied to the Overlay).
+				/// Mixes both colors with a specific blend percentage (blending is applied to the Layer).
 				Alpha,
 
-				/// Multiplies the base color by the overlay color.
+				/// Multiplies the base color by the layer color.
 				Multiply,
 
 				/// Only draws non-black Pixels. Black pixels are rendered transparent.
-				Overlay
+				Layer
 			};
 
 			static RGB generate_random_color();

@@ -112,7 +112,7 @@ namespace PixelMaestro {
 				mixed_color.b = color_one.b * (float)(color_two.b / (float)255);
 				break;
 			}
-			case MixMode::Overlay:
+			case MixMode::Layer:
 			{
 				if (color_two != Colors::RGB {0, 0, 0}) {
 					mixed_color = color_two;

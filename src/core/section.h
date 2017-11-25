@@ -26,17 +26,17 @@ namespace PixelMaestro {
 
 		public:
 			/**
-				Overlays a second Section on top of the current one.
+				Layers a second Section on top of the current one.
 				When getting color output, use get_pixel_color(). This returns RGB values after blending the two Sections together.
 			*/
-			struct Overlay {
+			struct Layer {
 				/**
-				 * The Section to use as the overlay.
-				 * This is different from the Section containing the Overlay object.
+				 * The Section to use as the layer.
+				 * This is different from the Section containing the Layer object.
 				 */
 				Section* section = nullptr;
 
-				/// Method of blending the output from the Overlay with the base Section.
+				/// Method of blending the output from the Layer with the base Section.
 				Colors::MixMode mix_mode = Colors::MixMode::None;
 
 				/// Transparency level of the overlaid Section.
@@ -44,18 +44,18 @@ namespace PixelMaestro {
 
 				/**
 				 * Constructor.
-				 * @param section Section to use as the Overlay.
+				 * @param section Section to use as the Layer.
 				 * @param mix_mode Color mixing method to use.
-				 * @param alpha For The amount of transparency that the Overlay will have (0 - 255).
+				 * @param alpha For The amount of transparency that the Layer will have (0 - 255).
 				 */
-				Overlay(Section* parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
+				Layer(Section* parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
 					this->section = new Section(*parent->get_dimensions(), parent);
 					this->section->set_maestro(parent->get_maestro());
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
 				}
 
-				~Overlay() {
+				~Layer() {
 					delete this->section;
 				}
 			};
@@ -68,20 +68,20 @@ namespace PixelMaestro {
 			Canvas* get_canvas();
 			Point* get_dimensions();
 			Maestro* get_maestro();
-			Section::Overlay* get_overlay();
+			Section::Layer* get_layer();
 			Section* get_parent_section();
 			Pixel* get_pixel(uint16_t x, uint16_t y);
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 			void remove_animation();
 			void remove_canvas();
-			void remove_overlay();
+			void remove_layer();
 			Animation* set_animation(AnimationType::Type type, Colors::RGB* colors, uint8_t num_colors, bool preserve_cycle_index = true);
 			Canvas* set_canvas(CanvasType::Type type = CanvasType::Type::AnimationCanvas, uint16_t num_frames = 1);
 			void set_dimensions(uint16_t x, uint16_t y);
 			void set_maestro(Maestro* maestro);
 			void set_one(uint32_t pixel, Colors::RGB* color);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
-			Section::Overlay* set_overlay(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
+			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			void update(const uint32_t& current_time);
 
 		private:
@@ -97,10 +97,10 @@ namespace PixelMaestro {
 			/// The Section's parent Maestro.
 			Maestro* maestro_ = nullptr;
 
-			/// The Section overlaying the current section (if applicable).
-			Overlay* overlay_ = nullptr;
+			/// The Section layering the current section (if applicable).
+			Layer* layer_ = nullptr;
 
-			/// The Section's parent (if this is an Overlay).
+			/// The Section's parent (if this is an Layer).
 			Section* parent_section_ = nullptr;
 
 			/// The array of Pixels managed by the Section.

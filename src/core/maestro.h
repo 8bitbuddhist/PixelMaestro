@@ -51,8 +51,8 @@ namespace PixelMaestro {
 			/// Show managed by the Maestro.
 			Show* show_ = nullptr;
 
-			/// The time between Section refreshes in milliseconds. Defaults to 20ms (50Hz).
-			Timing timing_ = Timing(20);
+			/// The time between Section refreshes in milliseconds. Defaults to 50ms (20 refreshes per second).
+			Timing timing_ = Timing(50);
 	};
 }
 
