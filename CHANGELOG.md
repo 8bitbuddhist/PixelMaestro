@@ -3,7 +3,7 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.9] - In Progress
+## [v0.9] - 2017-11-28
 ### Added
 - New Timing class handles animations and other time-based actions.
 - Arduino:
@@ -13,6 +13,8 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 - All components that rely on timing (Animation speed/pause, Maestro refresh, Canvas scrolling, etc) now use the Timing class. `get/set_speed()`, `get/set_refresh_interval()` etc. now use `get/set_timing()`.
+- Cue:
+	- Fixed issue where Show Cues weren't properly saving or loading.
 - Section:
 	- Added a reference to each Section's parent Maestro.
 	- Renamed `Overlays` to `Layers`.

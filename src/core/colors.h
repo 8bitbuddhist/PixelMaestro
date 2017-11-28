@@ -64,11 +64,11 @@ namespace PixelMaestro {
 				/// Mixes both colors with a specific blend percentage (blending is applied to the Layer).
 				Alpha,
 
-				/// Multiplies the base color by the layer color.
+				/// Multiplies the base color by the layered color.
 				Multiply,
 
-				/// Only draws non-black Pixels. Black pixels are rendered transparent.
-				Layer
+				/// Only draws the layered color if it's not black. Black pixels are rendered transparent.
+				Overlay
 			};
 
 			static RGB generate_random_color();

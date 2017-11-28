@@ -477,6 +477,7 @@ namespace PixelMaestro {
 
 		// Check generic actions
 		Canvas* plain_canvas = section->get_canvas();
+		if (plain_canvas == nullptr) return;
 		switch((Action)cue[Byte::ActionByte]) {
 			case Action::Clear:
 				plain_canvas->clear();

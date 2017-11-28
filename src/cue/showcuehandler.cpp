@@ -53,7 +53,7 @@ namespace PixelMaestro {
 			case Action::SetEvents:
 				{
 					// Delete existing Events
-					delete show->get_events();
+					delete [] show->get_events();
 					uint16_t num_events = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
 					bool preserve_cycle_index = cue[Byte::OptionsByte + 2];
 
@@ -64,6 +64,9 @@ namespace PixelMaestro {
 						// Set time
 						uint32_t time = IntByteConvert::byte_to_int(&cue[options_index]);
 						events[event].set_time(time);
+
+						// Skip past the cue time to get the cue itself
+						options_index += 2;
 
 						// Set Cues
 						uint16_t event_cue_size = controller_->get_cue_size(&cue[options_index]);
