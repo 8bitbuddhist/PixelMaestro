@@ -21,5 +21,3 @@ The following components aren't used directly, but are still a vital part of the
 * [Points](point.md): Points identify specific locations on the Pixel grid. They're also used to define the size of the grid.
 * Timing: Timings track the update frequency for many PixelMaestro events such as component updates, Pixel redraws, and Canvas scrolls.
 * [Utilities](utility.md): Utilities are common methods shared across classes.
-
-[![Support this project on Patreon](https://c5.patreon.com/external/logo/become_a_patron_button@2x.png)](https://www.patreon.com/bePatron?u=8547028)
