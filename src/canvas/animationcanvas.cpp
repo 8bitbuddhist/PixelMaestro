@@ -3,6 +3,7 @@
  */
 
 #include "animationcanvas.h"
+#include "../utility.h"
 
 namespace PixelMaestro {
 	/**
@@ -86,8 +87,9 @@ namespace PixelMaestro {
 	 */
 	Colors::RGB AnimationCanvas::get_pixel_color(uint16_t x, uint16_t y) {
 		if (scroll_ != nullptr && scroll_->repeat) {
-			x = (x + offset_x_) % section_->get_dimensions()->x;
-			y = (y + offset_y_) % section_->get_dimensions()->y;
+			// No idea why this works, but I'll take it
+			x = ((section_->get_dimensions()->x - 1) - (x - offset_x_)) % section_->get_dimensions()->x;
+			y = ((section_->get_dimensions()->y - 1) - (y - offset_y_)) % section_->get_dimensions()->y;
 		}
 		else {
 			x = x - offset_x_;

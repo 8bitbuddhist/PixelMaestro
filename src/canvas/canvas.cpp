@@ -421,7 +421,7 @@ namespace PixelMaestro {
 			scroll_ = new Scroll(x, y, repeat);
 		}
 		else {
-			scroll_->interval_x = y;
+			scroll_->interval_x = x;
 			scroll_->interval_y = y;
 			scroll_->repeat = repeat;
 		}

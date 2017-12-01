@@ -3,6 +3,16 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.10] - In Progress
+### Added
+- Show
+	- Added `get_current_index()` to get the current queued Event.
+- Added new `cuefiles` folder to `examples` folder.
+
+### Changed
+- Moved `arduino` folder into new `examples` folder.
+- Fixed behavior of scrolling Canvases with repeat enabled.
+
 ## [v0.9] - 2017-11-28
 ### Added
 - New Timing class handles animations and other time-based actions.

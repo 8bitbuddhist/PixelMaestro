@@ -23,12 +23,13 @@ CueController* controller = maestro.set_cue_controller();
 ```
 
 ### Setting the Buffer Size
-While Cues are being processed, they are loaded into a temporary buffer. This buffer must be large enough to hold an entire Cue or the Cue will not be processed. While most Cues are relatively small (~20-30 bytes), some Cues (especially Canvas-related Cues) can be several thousand bytes long. Since embedded devices often have limited memory, the CueController dynamically allocates the buffer on initialization. This way, you can use a small buffer on smaller devices and larger buffers on larger devices.
+While Cues are being processed, they are loaded into a temporary buffer. This buffer must be large enough to hold an entire Cue or the Cue will not be processed. While most Cues are relatively small (~20-30 bytes), some Cues (especially Canvas and Show Cues) can be several kilobytes. Since embedded devices often have limited memory, the CueController dynamically allocates the buffer on initialization. This way, you can use a small buffer on smaller devices and larger buffers on larger devices (up to a maximum 65,536).
 
 Set the buffer size when calling `maestro.set_cue_controller()`. Leaving this empty creates a buffer 256 bytes long.
 
 ```c++
-CueController* controller = maestro.set_cue_controller(65536);
+uint16_t buffer_size = 65536;
+CueController* controller = maestro.set_cue_controller(buffer_size);
 ```
 
 ### Enabling CueHandlers
@@ -45,7 +46,7 @@ You can create a Cue by calling one of the methods in an enabled CueHandler. For
 
 **Note:** Most CueHandler methods require you to pass in the index of the Section and Layer you want to modify. The Layer index indicates the depth of the Layer from the base Section (index 0 points to the base Section itself).
 
-The following example creates a Canvas on an Layer and draws a circle onto the Canvas:
+The following example creates a Canvas on a Layer, then draws a circle onto the Canvas:
 ```c++
 #include "cue/cuecontroller.h"
 #include "cue/canvascuehandler.h"
@@ -71,7 +72,7 @@ controller->run();
 ## Running Cues
 After calling a CueHandler method, you can immediately run the Cue using `CueController::run()`. You can also run a Cue using `CueController::run(unsigned char* cue)` and passing the Cue as the parameter. This lets you pass in Cues from external sources such as files. You can also run multiple Cues sequentially using `CueController::run(unsigned char* cues, unsigned char num_cues)`.
 
-For cases where you need to read in parts of a Cue at a time (e.g. using `Serial.read()` on an Arduino), use `CueController::read(byte)`. This reads each byte into the CueController's buffer until the Cue has loaded completely, then it automatically executes the Cue. The buffer then resets and repeats the process for the next incoming Cue.
+For cases where you need to read in parts of a Cue at a time (e.g. using `Serial.read()` on an Arduino), use `CueController::read(byte)`. This reads each byte into the CueController's buffer until the Cue has loaded completely, then automatically executes the Cue. The buffer then resets and repeats the process for the next incoming Cue.
 
 ```c++
 // Setup

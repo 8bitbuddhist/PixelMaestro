@@ -26,6 +26,7 @@ namespace PixelMaestro {
 			};
 
 			Show(CueController* controller, Event *events, uint16_t num_events);
+			uint16_t get_current_index();
 			Event* get_events();
 			bool get_looping();
 			uint16_t get_num_events();
@@ -46,6 +47,7 @@ namespace PixelMaestro {
 			Event* events_ = nullptr;
 
 			/// The time that the last Event ran.
+			// TODO: Replace with Timing class
 			uint32_t last_time_ = 0;
 
 			/// Whether to loop over the Event list.

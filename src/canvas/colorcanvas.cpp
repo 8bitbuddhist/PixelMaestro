@@ -67,19 +67,17 @@ namespace PixelMaestro {
 	 * @return Pixel color.
 	 */
 	Colors::RGB ColorCanvas::get_pixel_color(uint16_t x, uint16_t y) {
-		Point pixel_index;
-
 		if (scroll_ != nullptr && scroll_->repeat) {
-			pixel_index.set(
-				(x + offset_x_) % section_->get_dimensions()->x,
-				(y + offset_y_) % section_->get_dimensions()->y);
+			x = ((section_->get_dimensions()->x - 1) - (x - offset_x_)) % section_->get_dimensions()->x;
+			y = ((section_->get_dimensions()->y - 1) - (y - offset_y_)) % section_->get_dimensions()->y;
 		}
 		else {
-			pixel_index.set(x - offset_x_, y - offset_y_);
+			x -= offset_x_;
+			y -= offset_y_;
 		}
 
-		if (in_bounds(pixel_index.x, pixel_index.y)) {
-			return frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(&pixel_index)];
+		if (in_bounds(x, y)) {
+			return frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
 		}
 		else {
 			return {0, 0, 0};

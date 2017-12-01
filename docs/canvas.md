@@ -34,7 +34,7 @@ Note that nothing is drawn to the Canvas by default, so the Pixel grid will appe
 ColorCanvas* canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas));
 ```
 
-If you want to display an animated Canvas, increase the number of frames to 2 or higher. Frames are described in more detail in the section [Animating a Canvas](#animating-a-canvas).
+If you want to show an animated image, increase the number of frames to 2 or higher. Frames are described in more detail in the section [Animating a Canvas](#animating-a-canvas).
 
 ```c++
 int num_frames = 10;
@@ -42,12 +42,12 @@ section-set_canvas(CanvasType::ColorCanvas, num_frames);
 ```
 
 ## Animating a Canvas
-The area that you draw on a Canvas is called a `frame`. A frame is a completely independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames and will cycle through each frame on a set interval. This lets you create and control animated images in a manner similar to [Section Animations](animation.md).
+The area that you draw on a Canvas is called a `frame`. A frame is an independent drawing surface with the same dimensions as the Pixel grid. Canvases can have multiple frames and will cycle through each frame on a set interval. This essentially turns the Canvas into a video player.
 
 You can specify the number of frames when calling `Section::set_canvas()`. Omitting this value defaults to a single frame. You can also change the number of frames in an existing Canvas using `Canvas::set_num_frames()`, but bear in mind this will delete the current frame set. You can set the amount of time (in milliseconds) between frames using `Canvas::set_frame_timing(milliseconds)`.
 
 ### Switching Frames
-When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes)), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing any new actions to modify that frame instead. You can also quickly jump between frames using `next_frame()`, which jumps to the next available frame (or the first frame if you're currently on the last frame).
+When using one of the `draw()` methods (detailed under [Drawing Shapes](#drawing-shapes)), drawing occurs on the current active frame, which you can find using `get_current_frame_index()`. Using `set_current_frame_index()` changes the active frame to the specified frame, causing any new actions to modify that frame instead. You can also switch between frames using `next_frame()`, which jumps to the next available frame (or the first frame if you're currently on the last frame).
 
 ## Drawing Shapes
 The Canvas class provides several `draw()` methods for drawing various shapes and patterns. For each shape, specify its starting point on the grid (as x and y coordinates) and any extra parameters that the shape requires.
@@ -102,10 +102,10 @@ canvas->draw_triangle(0, 0, 10, 0, 0, 10, true);
 ```
 
 ### Clearing the Canvas
-Use `clear()` to return the Canvas to a blank slate. You can clear a single Pixel using the `erase()` method. Note that once you clear a Canvas, there's no way to recover anything you've drawn.
+Use `clear()` to return the current frame to a blank slate. You can clear a single Pixel using the `erase()` method. Note that once you clear a frame, there's no way to recover anything you've drawn.
 
 ## Scrolling
-Scrolling shifts the contents of a Canvas along the Pixel grid. Scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
+Scrolling shifts the contents of the Canvas along the Pixel grid. Unlike other timing methods, scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
 
 Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on each `update()` of the Canvas (i.e. on each Maestro update). Setting either axis to 0 disables scrolling on that axis. You can also stop scrolling by calling `remove_scroll()`, which completely disables all scrolling behavior.
 

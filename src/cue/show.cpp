@@ -18,6 +18,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the index of the next Event to run.
+	 * @return Current Event index.
+	 */
+	uint16_t Show::get_current_index() {
+		return current_index_;
+	}
+
+	/**
 	 * Returns the current Event set.
 	 * @return Events.
 	 */
@@ -88,9 +96,14 @@ namespace PixelMaestro {
 
 		@param current_time Program runtime.
 	*/
-	void Show::update(const uint32_t& current_time) {		
+	void Show::update(const uint32_t& current_time) {
+		// Make sure we have at least one Event
+		if (num_events_ == 0) {
+			return;
+		}
+
 		// Only run if we're looping, or if we haven't reached the end of the Event list yet.
-		if (loop_ || (!loop_ && current_index_ != num_events_)) {
+		if (loop_ || (!loop_ && current_index_ < num_events_)) {
 			check_next_event(current_time);
 		}
 	}
