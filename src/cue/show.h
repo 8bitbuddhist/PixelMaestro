@@ -46,8 +46,10 @@ namespace PixelMaestro {
 			/// Events used in the Show.
 			Event* events_ = nullptr;
 
-			/// The time that the last Event ran.
-			// TODO: Replace with Timing class
+			/**
+			 * The time that the last Event ran.
+			 * We don't use Timing.h because we don't need to track an interval.
+			 */
 			uint32_t last_time_ = 0;
 
 			/// Whether to loop over the Event list.

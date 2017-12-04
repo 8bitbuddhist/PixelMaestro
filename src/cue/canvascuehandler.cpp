@@ -87,9 +87,6 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, Colors::RGB *frame) {
-
-		// TODO: Fix not saving correctly
-
 		// Check the size of the buffer. If it's not big enough to store the frame, exit.
 		if ((size_x * size_y) * 3 > controller_->get_buffer_size()) {
 			return nullptr;

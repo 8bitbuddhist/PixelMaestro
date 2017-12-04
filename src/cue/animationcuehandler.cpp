@@ -196,11 +196,17 @@ namespace PixelMaestro {
 						current_color_index++;
 					}
 
-					if (cue[current_color_index] && animation->get_colors() != nullptr) {
-						delete[] animation->get_colors();
-					}
+					/*
+					 * Delete the old palette after setting the new one.
+					 * We force an update so that the Animation no longer references the old palette.
+					 * NOTE: This could negatively affect timing.
+					 */
+					Colors::RGB* old_palette = animation->get_colors();
 
 					animation->set_colors(colors, num_colors);
+					animation->update(0);
+
+					delete [] old_palette;
 				}
 				break;
 			case Action::SetCycleIndex:
