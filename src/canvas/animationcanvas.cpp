@@ -86,15 +86,6 @@ namespace PixelMaestro {
 	 * @return Pixel's color.
 	 */
 	Colors::RGB AnimationCanvas::get_pixel_color(uint16_t x, uint16_t y) {
-		if (scroll_ != nullptr && scroll_->repeat) {
-			x = (x + offset_x_) % section_->get_dimensions()->x;
-			y = (y + offset_y_) % section_->get_dimensions()->y;
-		}
-		else {
-			x += offset_x_;
-			y += offset_y_;
-		}
-
 		if (in_bounds(x, y) && frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] == 1) {
 			return *section_->get_pixel(x, y)->get_color();
 		}

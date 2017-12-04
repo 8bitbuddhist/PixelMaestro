@@ -26,7 +26,7 @@ namespace PixelMaestro {
 
 			Animation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			virtual ~Animation();
-			Point* get_center();
+			Point get_center();
 			Colors::RGB* get_color_at_index(uint8_t index);
 			Colors::RGB* get_colors();
 			uint8_t get_cycle_index();
@@ -37,8 +37,6 @@ namespace PixelMaestro {
 			Section* get_section();
 			AnimationTiming* get_timing();
 			AnimationType::Type get_type();
-			Point* reset_center();
-			Point* set_center(uint16_t x, uint16_t y);
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);

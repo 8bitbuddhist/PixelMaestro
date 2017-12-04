@@ -83,6 +83,38 @@ namespace PixelMaestro {
 		return controller_->assemble(Byte::OptionsByte + 2);
 	}
 
+	uint8_t* SectionCueHandler::set_offset(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
+		IntByteConvert x_byte(x);
+		IntByteConvert y_byte(y);
+
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetOffset;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
+
+		return controller_->assemble(Byte::OptionsByte + 4);
+	}
+
+	uint8_t* SectionCueHandler::set_scroll(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
+		IntByteConvert x_byte(x);
+		IntByteConvert y_byte(y);
+
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetScroll;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
+
+		return controller_->assemble(Byte::OptionsByte + 4);
+	}
+
 	void SectionCueHandler::run(uint8_t *cue) {
 		Section* section = get_section(cue[Byte::SectionByte], cue[Byte::LayerByte]);
 
@@ -131,6 +163,18 @@ namespace PixelMaestro {
 				break;
 			case Action::SetLayer:
 				section->set_layer(Colors::MixMode(cue[Byte::OptionsByte]), cue[Byte::OptionsByte + 1]);
+				break;
+			case Action::SetOffset:
+				section->set_offset(
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
+				);
+				break;
+			case Action::SetScroll:
+				section->set_scroll(
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
+				);
 				break;
 			default:
 				break;

@@ -13,7 +13,6 @@ namespace PixelMaestro {
 	 */
 	Animation::Animation(Section* section, Colors::RGB* colors, uint8_t num_colors) {
 		this->section_ = section;
-		reset_center();
 		set_colors(colors, num_colors);
 
 		timing_ = new AnimationTiming(this);
@@ -23,8 +22,9 @@ namespace PixelMaestro {
 	 * Returns the Animation's center.
 	 * @return Animation's center.
 	 */
-	Point* Animation::get_center() {
-		return &center_;
+	Point Animation::get_center() {
+		return Point(section_->get_dimensions()->x / 2,
+					 section_->get_dimensions()->y / 2);
 	}
 
 	/**
@@ -117,24 +117,6 @@ namespace PixelMaestro {
 	 */
 	AnimationType::Type Animation::get_type() {
 		return type_;
-	}
-
-	/**
-	 * Resets the center of the Animation to the Section center.
-	 */
-	Point* Animation::reset_center() {
-		return set_center((uint16_t)(section_->get_dimensions()->x / 2),
-						  (uint16_t)(section_->get_dimensions()->y / 2));
-	}
-
-	/**
-	 * Sets the center of the image.
-	 * @param x X-axis center.
-	 * @param y Y-axis center.
-	 */
-	Point* Animation::set_center(uint16_t x, uint16_t y) {
-		center_.set(x, y);
-		return &center_;
 	}
 
 	/**

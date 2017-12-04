@@ -15,10 +15,7 @@ See the [CanvasDemo](../gui/demo/canvasdemo.cpp) in PixelMaestro Studio for an e
 	4. [Drawing Triangles](#drawing-triangles)
 	5. [Clearing the Canvas](#clearing-the-canvas)
 5. [Setting Background and Foreground Colors](#setting-background-and-foreground-colors)
-6. [Scrolling](#scrolling)
-	1. [Repeated Scrolling](#repeated-scrolling)
-7. [Offsetting](#offsetting)
-8. [Interactive Canvases](#interactive-canvases)
+6. [Interactive Canvases](#interactive-canvases)
 
 ## Canvas Types
 There are two types of Canvases: `ColorCanvases` and `AnimationCanvases`. A `ColorCanvas` works like an image editor: you choose the shape you want to draw and the color to draw it in, and the Canvas draws the shape in that color.
@@ -103,36 +100,6 @@ canvas->draw_triangle(0, 0, 10, 0, 0, 10, true);
 
 ### Clearing the Canvas
 Use `clear()` to return the current frame to a blank slate. You can clear a single Pixel using the `erase()` method. Note that once you clear a frame, there's no way to recover anything you've drawn.
-
-## Scrolling
-Scrolling shifts the contents of the Canvas along the Pixel grid. Unlike other timing methods, scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls to the left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
-
-Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on each `update()` of the Canvas (i.e. on each Maestro update). Setting either axis to 0 disables scrolling on that axis. You can also stop scrolling by calling `remove_scroll()`, which completely disables all scrolling behavior.
-
-**Note:** Disabling scrolling will stop the Canvas in its current location. If you want to move the Canvas back to the center, set its [offset](#offsetting) to 0.
-
-The following code scrolls 1 Pixel to the left on every refresh cycle and 1 Pixel down every other refresh cycle. `false` disables repeat scrolling, which is described in the next section.
-
-```c++
-canvas->set_scroll(1, -2, false);
-```
-
-### Repeated Scrolling
-By default, the Canvas will scroll out of frame before jumping back to its starting point when it reaches the end of its scroll (i.e. when it "falls off" the grid). Setting the `repeat` property to `true` wraps the Canvas around from one end of the grid to the opposite end, making it appear to scroll infinitely.
-
-```c++
-canvas->set_scroll(1, -2, true);
-```
-
-## Offsetting
-Offsetting shifts the Canvas' starting point to another place on the Pixel grid. By default the offset is set to 0, meaning the starting point is the same as the Pixel grid's starting point. These values can be negative.
-
-The following code shifts the Canvas 5 Pixels to the right and 1 Pixel down.
-```c++
-canvas->set_offset(5, 1);
-```
-
-**Note:** Offset will be disabled if scrolling is enabled, since scrolling modifies the offset values.
 
 ## Interactive Canvases
 You can create Canvases that respond to user input using the [CanvasDrawingArea](../gui/drawingarea/canvasdrawingarea.h) class. For an example, open the `Drawing Demo` in PixelMaestro Studio.

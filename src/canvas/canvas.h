@@ -19,35 +19,6 @@ namespace PixelMaestro {
 
 	class Canvas {
 		public:
-			/// Defines the scrolling behavior of a Canvas.
-			struct Scroll {
-				/// The direction and rate that the Canvas will scroll along the x-axis.
-				int16_t interval_x = 0;
-				/// The direction and rate that the Canvas will scroll along the y-axis.
-				int16_t interval_y = 0;
-
-				/// The last time the Canvas scrolled along the x-axis.
-				uint32_t last_scroll_x = 0;
-				/// The last time the Canvas scrolled along the y-axis.
-				uint32_t last_scroll_y = 0;
-
-				/// Whether to repeat the Pattern while scrolling over the grid.
-				bool repeat = false;
-
-				/**
-				 * Constructor. Sets the scroll rate and direction.
-				 * @param x Scrolling along the x-axis.
-				 * @param y Scrolling along the y-axis.
-				 * @param repeat If true, repeat the Canvas while scrolling.
-				 */
-				Scroll(int16_t x, int16_t y, bool repeat) {
-					this->interval_x = x;
-					this->interval_y = y;
-					this->repeat = repeat;
-				}
-
-			};
-
 			// Virtual functions - must be implemented in derived Canvases.
 			virtual ~Canvas();
 			virtual void activate(uint16_t x, uint16_t y) = 0;
@@ -69,20 +40,16 @@ namespace PixelMaestro {
 			uint16_t get_current_frame_index();
 			Timing* get_frame_timing();
 			uint16_t get_num_frames();
-			Scroll* get_scroll();
 			Section* get_section();
 			bool in_bounds(uint16_t x, uint16_t y);
 			void next_frame();
 			void remove_frame_timing();
-			void remove_scroll();
 			void set_current_frame_index(uint16_t index);
 			void set_frame_timing(uint16_t speed);
 			void set_num_frames(uint16_t num_frames);
 			void set_offset(int16_t x, int16_t y);
-			void set_scroll(int16_t x, int16_t y, bool repeat);
 			void set_section(Section* section_);
 			void update(const uint32_t& current_time);
-			void update_scroll(const uint32_t& current_time);
 
 		protected:
 			/// The index of the current frame.
@@ -93,13 +60,6 @@ namespace PixelMaestro {
 
 			/// The number of frames.
 			uint16_t num_frames_ = 0;
-
-			/// How far the Canvas is offset from the Pixel grid origin.
-			int16_t offset_x_ = 0;
-			int16_t offset_y_ = 0;
-
-			/// The scrolling behavior of the Canvas.
-			Scroll* scroll_ = nullptr;
 
 			/**
 			 * The Canvas' parent Section.

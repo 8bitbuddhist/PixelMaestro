@@ -306,14 +306,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the Canvas' scrolling behavior.
-	 * @return Scroll object.
-	 */
-	Canvas::Scroll* Canvas::get_scroll() {
-		return scroll_;
-	}
-
-	/**
 	 * Returns the Canvas' parent Section.
 	 * @return Parent Section.
 	 */
@@ -356,14 +348,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Deletes this Canvas' scrolling behavior.
-	 */
-	void Canvas::remove_scroll() {
-		delete scroll_;
-		scroll_ = nullptr;
-	}
-
-	/**
 	 * Changes the active frame.
 	 * @param index Index of the new frame.
 	 */
@@ -385,17 +369,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the distance that the Canvas is offset from the Pixel grid origin.
-	 * Note: This can't be used in combination with set_scroll_interval().
-	 * @param x Offset along the x-axis.
-	 * @param y Offset along the y-axis.
-	 */
-	void Canvas::set_offset(int16_t x, int16_t y) {
-		offset_x_ = x;
-		offset_y_ = y;
-	}
-
-	/**
 	 * Changes the number of frames, then rebuilds the Canvas.
 	 * Existing frames will be deleted.
 	 * @param num_frames New number of frames.
@@ -405,26 +378,6 @@ namespace PixelMaestro {
 
 		this->num_frames_ = num_frames;
 		initialize();
-	}
-
-	/**
-	 * Sets the direction and rate that the Canvas will scroll in.
-	 * Note: This can't be used in combination with set_offset().
-	 * Scroll time is determined by the Section refresh rate * the scroll interval, so an interval of '5' means scrolling occurs once on that axis every 5 refreshes.
-	 * Setting an axis to 0 (default) disables scrolling on that axis.
-	 *
-	 * @param x Scrolling interval along the x-axis.
-	 * @param y Scrolling interval along the y-axis.
-	 */
-	void Canvas::set_scroll(int16_t x, int16_t y, bool repeat) {
-		if (scroll_ == nullptr) {
-			scroll_ = new Scroll(x, y, repeat);
-		}
-		else {
-			scroll_->interval_x = x;
-			scroll_->interval_y = y;
-			scroll_->repeat = repeat;
-		}
 	}
 
 	/**
@@ -445,71 +398,9 @@ namespace PixelMaestro {
 		if (frame_timing_ && frame_timing_->update(current_time)) {
 			next_frame();
 		}
-		if (scroll_ != nullptr) {
-			update_scroll(current_time);
-		}
-	}
-
-	/**
-	 * Scrolls the Canvas by 1 increment.
-	 * @param current_time The program's current runtime).
-	 */
-	void Canvas::update_scroll(const uint32_t& current_time) {
-		/*
-		 * If Scroll::interval is set, scroll the Canvas.
-		 * The interval dictates how many refreshes will occur before the Canvas is scrolled.
-		 * For each axis, determine the impact of interval_<axis> and make the change.
-		 * For the part of the Canvas that gets pushed off the grid, wrap back to the opposite side.
-		 */
-		if (scroll_ != nullptr) {
-			uint32_t target_time = current_time - scroll_->last_scroll_x;
-			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * section_->get_maestro()->get_timing()->get_interval()) <= target_time) {
-
-				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_->interval_x > 0) {
-					offset_x_++;
-				}
-				else if (scroll_->interval_x < 0) {
-					offset_x_--;
-				}
-
-				// Check the bounds of the parent Section.
-				if (offset_x_ >= (int16_t)section_->get_dimensions()->x) {
-					offset_x_ = 0;
-				}
-				else if (offset_x_ < 0) {
-					offset_x_ = (int16_t)section_->get_dimensions()->x;
-				}
-
-				scroll_->last_scroll_x = current_time;
-			}
-
-			target_time = current_time - scroll_->last_scroll_y;
-			if (scroll_->interval_y != 0 && (Utility::abs_int(scroll_->interval_y) * section_->get_maestro()->get_timing()->get_interval()) <= target_time) {
-
-				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_->interval_y > 0) {
-					offset_y_++;
-				}
-				else if (scroll_->interval_y < 0) {
-					offset_y_--;
-				}
-
-				// Check the bounds of the parent Section.
-				if (offset_y_ >= (int16_t)section_->get_dimensions()->y) {
-					offset_y_ = 0;
-				}
-				else if (offset_y_ < 0) {
-					offset_y_ = section_->get_dimensions()->y;
-				}
-
-				scroll_->last_scroll_y = current_time;
-			}
-		}
 	}
 
 	Canvas::~Canvas() {
 		remove_frame_timing();
-		remove_scroll();
 	}
 }

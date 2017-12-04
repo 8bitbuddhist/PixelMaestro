@@ -6,9 +6,11 @@ Sections manage a set of Pixels and the various PixelMaestro components that int
 2. [Animating a Section](#animating-a-section)
 3. [Displaying Custom Shapes and Patterns](#displaying-custom-shapes-and-patterns)
 4. [Using Layers](#using-layers)
-5. [Retrieving Pixels and Colors](#retrieving-pixels-and-colors)
-6. [Updating a Section](#updating-a-section)
-7. [Other Methods](#other-methods)
+5. [Scrolling](#scrolling)
+	1. [Offsetting](#offsetting)
+6. [Retrieving Pixels and Colors](#retrieving-pixels-and-colors)
+7. [Updating a Section](#updating-a-section)
+8. [Other Methods](#other-methods)
 
 ## Creating a Section
 When creating a Section, pass the layout of its Pixel grid in the constructor:
@@ -47,6 +49,28 @@ Section base = Section(10, 10);
 Layer* layer = base.set_layer(Colors::MixMode::ALPHA, 127);
 layer->section->set_animation(AnimationType::RadialAnimation, ColorPresets::COLORWHEEL, 12);
 ```
+
+## Scrolling
+Scrolling shifts the contents of the Section along the Pixel grid. Unlike other timing methods, scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before scrolling 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Section scrolls to the left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
+
+Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on each `update()` of the Section (i.e. on each Maestro update). Setting either axis to 0 disables scrolling on that axis. You can also stop scrolling by calling `remove_scroll()`, which completely disables all scrolling behavior.
+
+**Note:** Disabling scrolling will stop the grid in its current location. If you want to move the grid back to the center, set its [offset](#offsetting) to 0.
+
+The following code scrolls 1 Pixel to the left on every refresh cycle and 1 Pixel down every other refresh cycle.
+
+```c++
+section->set_scroll(1, -2);
+```
+
+### Offsetting
+Scrolling works by modifying the Section's offset values. You can manually modify these values in order to shift the Section without having to automatically scroll it.
+
+```c++
+section->set_offset(5, 1);
+```
+
+**Note:** Offset will be disabled if scrolling is enabled, since scrolling uses the offset values.
 
 ## Retrieving Pixels and Colors
 At any given time, you can pull a Pixel's color value using the `get_pixel_color(x, y)` method. This takes the Pixel's raw color, processes the Canvas and Layer (if set), and returns an RGB value which you can forward to your output device.

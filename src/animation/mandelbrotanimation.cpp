@@ -19,14 +19,15 @@ namespace PixelMaestro {
 		max_iterations_ = num_colors;
 	}
 
-	void MandelbrotAnimation::update() {		
+	void MandelbrotAnimation::update() {
+		Point center = get_center();
 		// Calculate the scale of the pattern
 		image_width_ = 4.0 / section_->get_dimensions()->x;
 
 		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-			c_imaginary_ = (y - center_.y) * image_width_;
+			c_imaginary_ = (y - center.y) * image_width_;
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-				c_real_ = (x - center_.x) * image_width_;
+				c_real_ = (x - center.x) * image_width_;
 
 				x_ = 0;
 				y_ = 0;

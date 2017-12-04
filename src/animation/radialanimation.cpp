@@ -23,15 +23,16 @@ namespace PixelMaestro {
 	}
 
 	void RadialAnimation::update() {
+		Point center = get_center();
 		if (orientation_ == Orientation::Vertical) {
 			// For each Pixel, calculate the slope from the center.
 			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-					if (x == center_.x || y == center_.y) {
+					if (x == center.x || y == center.y) {
 						slope_ = 0;
 					}
 					else {
-						slope_ = ((y - center_.y) / (float)(x - center_.x)) * resolution_;
+						slope_ = ((y - center.y) / (float)(x - center.x)) * resolution_;
 					}
 
 					section_->set_one(x, y, get_color_at_index(slope_ + cycle_index_));
@@ -41,9 +42,9 @@ namespace PixelMaestro {
 		else {	// Horizontal
 			// For each Pixel, calculate its distance from the center of the grid, then use the distance to choose the index of the correct color.
 			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-				y_squared_ = pow(y - center_.y, 2);
+				y_squared_ = pow(y - center.y, 2);
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-					distance_ = sqrt(pow(x - center_.x, 2) + y_squared_);
+					distance_ = sqrt(pow(x - center.x, 2) + y_squared_);
 					section_->set_one(x, y, get_color_at_index(distance_ + cycle_index_));
 				}
 			}

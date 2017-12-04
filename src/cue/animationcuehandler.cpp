@@ -61,32 +61,6 @@ namespace PixelMaestro {
 	}
 
 	// General-purpose Cues
-
-	uint8_t* AnimationCueHandler::reset_center(uint8_t section_num, uint8_t layer_num) {
-		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::ResetCenter;
-		controller_->get_buffer()[Byte::SectionByte] = section_num;
-		controller_->get_buffer()[Byte::LayerByte] = layer_num;
-
-		return controller_->assemble(Byte::OptionsByte);
-	}
-
-	uint8_t* AnimationCueHandler::set_center(uint8_t section_num, uint8_t layer_num, uint16_t center_x, uint16_t center_y) {
-		IntByteConvert center_x_byte(center_x);
-		IntByteConvert center_y_byte(center_y);
-
-		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetCenter;
-		controller_->get_buffer()[Byte::SectionByte] = section_num;
-		controller_->get_buffer()[Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[Byte::OptionsByte] = center_x_byte.converted_0;
-		controller_->get_buffer()[Byte::OptionsByte + 1] = center_x_byte.converted_1;
-		controller_->get_buffer()[Byte::OptionsByte + 2] = center_y_byte.converted_0;
-		controller_->get_buffer()[Byte::OptionsByte + 3] = center_y_byte.converted_1;
-
-		return controller_->assemble((Byte::OptionsByte + 4));
-	}
-
 	uint8_t* AnimationCueHandler::set_colors(uint8_t section_num, uint8_t layer_num, Colors::RGB *colors, uint8_t num_colors, bool delete_old_colors) {
 		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
 		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetColors;
@@ -174,14 +148,6 @@ namespace PixelMaestro {
 		if (animation == nullptr) return;
 
 		switch((Action)cue[Byte::ActionByte]) {
-			case Action::ResetCenter:
-				animation->reset_center();
-				break;
-			case Action::SetCenter:
-				animation->set_center(
-					IntByteConvert::byte_to_int(&cue[OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[OptionsByte + 2]));
-				break;
 			case Action::SetColors:
 				{
 					uint8_t num_colors = cue[Byte::OptionsByte];

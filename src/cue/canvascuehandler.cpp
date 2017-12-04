@@ -431,41 +431,6 @@ namespace PixelMaestro {
 		return controller_->assemble(Byte::OptionsByte + 2);
 	}
 
-	uint8_t* CanvasCueHandler::set_offset(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
-		IntByteConvert x_byte(x);
-		IntByteConvert y_byte(y);
-
-		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetOffset;
-		controller_->get_buffer()[Byte::TypeByte] = 255;
-		controller_->get_buffer()[Byte::SectionByte] = section_num;
-		controller_->get_buffer()[Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
-
-		return controller_->assemble(Byte::OptionsByte + 4);
-	}
-
-	uint8_t* CanvasCueHandler::set_scroll(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y, bool repeat) {
-		IntByteConvert x_byte(x);
-		IntByteConvert y_byte(y);
-
-		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetScroll;
-		controller_->get_buffer()[Byte::TypeByte] = 255;
-		controller_->get_buffer()[Byte::SectionByte] = section_num;
-		controller_->get_buffer()[Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
-		controller_->get_buffer()[Byte::OptionsByte + 4] = (uint8_t)repeat;
-
-		return controller_->assemble(Byte::OptionsByte + 5);
-	}
-
 	void CanvasCueHandler::run(uint8_t *cue) {
 		Section* section = get_section(cue[Byte::SectionByte], cue[Byte::LayerByte]);
 
@@ -493,19 +458,6 @@ namespace PixelMaestro {
 				break;
 			case Action::SetNumFrames:
 				plain_canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
-				break;
-			case Action::SetOffset:
-				plain_canvas->set_offset(
-					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
-				);
-				break;
-			case Action::SetScroll:
-				plain_canvas->set_scroll(
-					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
-					(bool)cue[Byte::OptionsByte + 4]
-				);
 				break;
 			default:
 				break;

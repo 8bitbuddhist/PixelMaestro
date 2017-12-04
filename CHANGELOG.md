@@ -5,16 +5,22 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.10] - In Progress
 ### Added
+- Added new `cuefiles` folder to `examples` folder.
 - Show
 	- Added `get_current_index()` to get the current queued Event.
-- Added new `cuefiles` folder to `examples` folder.
 
 ### Changed
 - Moved `arduino` folder into new `examples` folder.
-- Pixel
-	- Added nullptr check to `Pixel::set_next_color()` to prevent weird colors when using color changing Cues.
+- Animation
 - Canvas
 	- Fixed Canvas scrolling while repeat is enabled.
+	- Moved scrolling and offseting methods to Section.
+- Pixel
+	- Added nullptr check to `Pixel::set_next_color()` to prevent invalid colors when using color changing Cues.
+	
+### Removed
+- Removed ability to set an Animation's center (use Section offset instead).
+- Removed `Scroll::repeat` parameter. The grid will repeat by default.
 
 ## [v0.9] - 2017-11-28
 ### Added

@@ -19,9 +19,7 @@ namespace PixelMaestro {
 				RemoveFrameTiming,
 				SetCurrentFrameIndex,
 				SetFrameTiming,
-				SetNumFrames,
-				SetOffset,
-				SetScroll
+				SetNumFrames
 			};
 
 			enum Byte : uint8_t {
@@ -55,8 +53,6 @@ namespace PixelMaestro {
 			uint8_t* set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t index);
 			uint8_t* set_frame_timing(uint8_t section_num, uint8_t layer_num, uint16_t speed);
 			uint8_t* set_num_frames(uint8_t section_num, uint8_t layer_num, uint16_t num_frames);
-			uint8_t* set_offset(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y);
-			uint8_t* set_scroll(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y, bool repeat);
 
 			void run(uint8_t* cue);
 	};

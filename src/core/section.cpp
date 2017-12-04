@@ -16,6 +16,7 @@
 #include "../animation/waveanimation.h"
 #include "../canvas/animationcanvas.h"
 #include "../canvas/colorcanvas.h"
+#include "../utility.h"
 #include "colors.h"
 #include "pixel.h"
 #include "section.h"
@@ -91,6 +92,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Section's offset.
+	 * @return Offset.
+	 */
+	Point* Section::get_offset() {
+		return &offset_;
+	}
+
+	/**
 	 * Returns this Section's parent (if this is an Layer).
 	 * @return Parent Section.
 	 */
@@ -119,6 +128,10 @@ namespace PixelMaestro {
 	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y) {
 		Colors::RGB color;
 
+		// Adjust coordinates based on offet
+		x = (x + offset_.x) % dimensions_.x;
+		y = (y + offset_.y) % dimensions_.y;
+
 		// If there's a Canvas, get the color supplied by the Canvas.
 		if (canvas_ != nullptr) {
 			color = canvas_->get_pixel_color(x, y);
@@ -133,6 +146,14 @@ namespace PixelMaestro {
 		}
 
 		return color;
+	}
+
+	/**
+	 * Returns the Section's scrolling behavior.
+	 * @return Scrolling behavior.
+	 */
+	Section::Scroll* Section::get_scroll() {
+		return scroll_;
 	}
 
 	/**
@@ -157,6 +178,14 @@ namespace PixelMaestro {
 	void Section::remove_layer() {
 		delete layer_;
 		layer_ = nullptr;
+	}
+
+	/**
+	 * Deletes the Section's scrolling behavior.
+	 */
+	void Section::remove_scroll() {
+		delete scroll_;
+		scroll_ = nullptr;
 	}
 
 	/**
@@ -252,11 +281,6 @@ namespace PixelMaestro {
 		delete [] pixels_;
 		pixels_ = new Pixel[dimensions_.size()];
 
-		// Reset the Animation's center
-		if (animation_ != nullptr) {
-			animation_->reset_center();
-		}
-
 		// Reinitialize the Canvas
 		if (canvas_ != nullptr) {
 			canvas_->initialize();
@@ -269,11 +293,41 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets a new Layer.
+	 * If an Layer already exists, this updates the existing Layer.
+	 * @param mix_mode The method for blending the Layer.
+	 * @param alpha The Layer's transparency (0 - 255.
+	 * @return New Layer.
+	 */
+	Section::Layer* Section::set_layer(Colors::MixMode mix_mode, uint8_t alpha) {
+		if (layer_ == nullptr) {
+			layer_ = new Layer(this, mix_mode, alpha);
+		}
+		else {
+			layer_->mix_mode = mix_mode;
+			layer_->alpha = alpha;
+		}
+
+		return layer_;
+	}
+
+	/**
 	 * Sets the Section's parent Maestro.
 	 * @param maestro Parent Maestro.
 	 */
 	void Section::set_maestro(Maestro *maestro) {
 		this->maestro_ = maestro;
+	}
+
+	/**
+	 * Sets the Section's offset, which shifts the Section's output along the Pixel grid.
+	 * @param x Offset along the x axis.
+	 * @param y Offset along the y axis.
+	 * @return Offset.
+	 */
+	Point* Section::set_offset(uint16_t x, uint16_t y) {
+		offset_.set(x, y);
+		return &offset_;
 	}
 
 	/**
@@ -305,22 +359,23 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets a new Layer.
-	 * If an Layer already exists, this updates the existing Layer.
-	 * @param mix_mode The method for blending the Layer.
-	 * @param alpha The Layer's transparency (0 - 255.
-	 * @return New Layer.
+	 * Sets the direction and rate that the Section will scroll in.
+	 * Scroll time is determined by the Section refresh rate * the scroll interval, so an interval of '5' means scrolling occurs once on that axis every 5 refreshes.
+	 * Setting an axis to 0 (default) disables scrolling on that axis.
+	 *
+	 * @param x Scrolling interval along the x-axis.
+	 * @param y Scrolling interval along the y-axis.
 	 */
-	Section::Layer* Section::set_layer(Colors::MixMode mix_mode, uint8_t alpha) {
-		if (layer_ == nullptr) {
-			layer_ = new Layer(this, mix_mode, alpha);
+	Section::Scroll* Section::set_scroll(int16_t x, int16_t y) {
+		if (scroll_ == nullptr) {
+			scroll_ = new Scroll(x, y);
 		}
 		else {
-			layer_->mix_mode = mix_mode;
-			layer_->alpha = alpha;
+			scroll_->interval_x = x;
+			scroll_->interval_y = y;
 		}
 
-		return layer_;
+		return scroll_;
 	}
 
 	/**
@@ -342,8 +397,70 @@ namespace PixelMaestro {
 			animation_->update(current_time);
 		}
 
+		if (scroll_ != nullptr) {
+			update_scroll(current_time);
+		}
+
 		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
 			pixels_[pixel].update();
+		}
+	}
+
+	/**
+	 * Scrolls the Section by 1 increment.
+	 * @param current_time The program's current runtime.
+	 */
+	void Section::update_scroll(const uint32_t &current_time) {
+		/*
+		 * If Scroll::interval is set, scroll the Section.
+		 * The interval dictates how many refreshes will occur before the Section scrolls.
+		 * For each axis, determine the impact of interval_<axis> and make the change.
+		 * For the part of the Section that gets pushed off the grid, wrap back to the opposite side.
+		 */
+		if (scroll_ != nullptr) {
+			uint32_t target_time = current_time - scroll_->last_scroll_x;
+			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * maestro_->get_timing()->get_interval()) <= target_time) {
+
+				// Increment or decrement the offset depending on the scroll direction.
+				if (scroll_->interval_x > 0) {
+					offset_.x++;
+
+					if (offset_.x >= dimensions_.x) {
+						offset_.x = 0;
+					}
+				}
+				else if (scroll_->interval_x < 0) {
+					offset_.x--;
+
+					if (offset_.x == 0) {
+						offset_.x = dimensions_.x;
+					}
+				}
+
+				scroll_->last_scroll_x = current_time;
+			}
+
+			target_time = current_time - scroll_->last_scroll_y;
+			if (scroll_->interval_y != 0 && (Utility::abs_int(scroll_->interval_y) * maestro_->get_timing()->get_interval()) <= target_time) {
+
+				// Increment or decrement the offset depending on the scroll direction.
+				if (scroll_->interval_y > 0) {
+					offset_.y++;
+
+					if (offset_.y >= dimensions_.y) {
+						offset_.y = 0;
+					}
+				}
+				else if (scroll_->interval_y < 0) {
+					offset_.y--;
+
+					if (offset_.y == 0) {
+						offset_.y = dimensions_.y;
+					}
+				}
+
+				scroll_->last_scroll_y = current_time;
+			}
 		}
 	}
 
@@ -351,6 +468,7 @@ namespace PixelMaestro {
 		remove_animation();
 		remove_canvas();
 		remove_layer();
+		remove_scroll();
 
 		delete [] pixels_;
 	}
