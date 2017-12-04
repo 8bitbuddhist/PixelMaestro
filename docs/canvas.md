@@ -105,7 +105,7 @@ canvas->draw_triangle(0, 0, 10, 0, 0, 10, true);
 Use `clear()` to return the current frame to a blank slate. You can clear a single Pixel using the `erase()` method. Note that once you clear a frame, there's no way to recover anything you've drawn.
 
 ## Scrolling
-Scrolling shifts the contents of the Canvas along the Pixel grid. Unlike other timing methods, scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
+Scrolling shifts the contents of the Canvas along the Pixel grid. Unlike other timing methods, scroll time is measured in terms of refresh cycles, e.g. a value of `2` means the Section will refresh twice before the Canvas scrolls 1 pixel. Use `set_scroll()` to define the scroll rate along the x and y axes. When this value is positive, the Canvas scrolls to the left on the x-axis and up on the y-axis, otherwise it scrolls right on x and down on y.
 
 Call `update_scroll()` to trigger a scroll. A scroll is also triggered automatically on each `update()` of the Canvas (i.e. on each Maestro update). Setting either axis to 0 disables scrolling on that axis. You can also stop scrolling by calling `remove_scroll()`, which completely disables all scrolling behavior.
 

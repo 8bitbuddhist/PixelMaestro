@@ -1,3 +1,8 @@
+/*
+ * NeoPixel.cpp - Configures an 8 LED NeoPixel strip.
+ * You can control the strip by connecting to its controlling Arduino using PixelMaestro Studio.
+ */
+
 #include <Arduino.h>
 #include <PixelMaestro/core/maestro.h>
 #include <Adafruit_NeoPixel.h>

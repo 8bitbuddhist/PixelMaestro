@@ -11,7 +11,10 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Changed
 - Moved `arduino` folder into new `examples` folder.
-- Fixed behavior of scrolling Canvases with repeat enabled.
+- Pixel
+	- Added nullptr check to `Pixel::set_next_color()` to prevent weird colors when using color changing Cues.
+- Canvas
+	- Fixed Canvas scrolling while repeat is enabled.
 
 ## [v0.9] - 2017-11-28
 ### Added
