@@ -129,18 +129,18 @@ namespace PixelMaestro {
 		Colors::RGB color;
 
 		// Adjust coordinates based on offet
-		x = (x + offset_.x) % dimensions_.x;
-		y = (y + offset_.y) % dimensions_.y;
+		uint16_t offset_x = (x + offset_.x) % dimensions_.x;
+		uint16_t offset_y = (y + offset_.y) % dimensions_.y;
 
 		// If there's a Canvas, get the color supplied by the Canvas.
 		if (canvas_ != nullptr) {
-			color = canvas_->get_pixel_color(x, y);
+			color = canvas_->get_pixel_color(offset_x, offset_y);
 		}
 		else {
-			color = *pixels_[dimensions_.get_inline_index(x, y)].get_color();
+			color = *pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
 		}
 
-		// If there's an Layer, return the Layer color mixed with the Section (or Canvas) color.
+		// If there's a Layer, return the Layer color mixed with the Section (or Canvas) color.
 		if (layer_ != nullptr) {
 			return Colors::mix_colors(color, layer_->section->get_pixel_color(x, y), layer_->mix_mode, layer_->alpha);
 		}

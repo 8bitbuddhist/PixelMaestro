@@ -1,10 +1,15 @@
+/*
+ * WS2812.cpp - Creates an 8 LED strip using the Light WS2812 library and displays a Wave animation.
+ */
+
 #include <Arduino.h>
 #include <PixelMaestro/core/maestro.h>
+#include <PixelMaestro/colorpresets.h>
 #include <WS2812.h>
 
 using namespace PixelMaestro;
 
-// Creates a Maestro with a single Section
+// Create a Maestro with a Section 8 pixels wide and 1 pixel high
 Maestro maestro(8, 1);
 
 // WS1812 stuff
@@ -22,21 +27,15 @@ void setup () {
     ws.setOutput(LED_PIN);
     ws.setColorOrderGRB();
 
+		// Set global brightness to 10%
 		maestro.set_brightness(25);
-		CueController* controller = maestro.set_cue_controller();
-		controller->enable_handler(CueController::Handler::AnimationHandler);
-		controller->enable_handler(CueController::Handler::CanvasHandler);
-		controller->enable_handler(CueController::Handler::MaestroHandler);
-		controller->enable_handler(CueController::Handler::SectionHandler);
 
-		Serial.begin(9600);
+		// Create a new blinking animation, set a new Palette, then set the speed to 500ms.
+		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Type::Wave, ColorPresets::COLORWHEEL, 12);
+		animation->set_timing(500);
 }
 
 void loop() {
-		if (Serial.available()) {
-			maestro.get_cue_controller()->read(Serial.read());
-		}
-
     maestro.update(millis());
 
 		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {

@@ -3,20 +3,18 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.10] - In Progress
+## [v0.10] - 2017-12-05
 ### Added
-- Added new `cuefiles` folder to `examples` folder.
-- Show
-	- Added `get_current_index()` to get the current queued Event.
+- Arduino: Added new sketches and modified existing sketches for clarity.
+- Docs: Moved all docs into a GitHub wiki.
+- Show: Added `get_current_index()` to get the current queued Event.
 
 ### Changed
+- Moved project into Beta state.
 - Moved `arduino` folder into new `examples` folder.
-- Animation
-- Canvas
-	- Fixed Canvas scrolling while repeat is enabled.
-	- Moved scrolling and offseting methods to Section.
-- Pixel
-	- Added nullptr check to `Pixel::set_next_color()` to prevent invalid colors when using color changing Cues.
+- Canvas: Moved scrolling and offseting methods to Section.
+- Pixel: Added nullptr check to `Pixel::set_next_color()` to prevent invalid colors when using color changing Cues.
+- Several bugfixes and optimizations.
 	
 ### Removed
 - Removed ability to set an Animation's center (use Section offset instead).

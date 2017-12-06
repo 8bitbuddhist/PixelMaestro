@@ -42,7 +42,7 @@ namespace PixelMaestro {
 
 		controller_->get_buffer()[colors_index] = delete_old_colors;
 
-		return controller_->assemble(colors_index);
+		return controller_->assemble(colors_index + 1);
 	}
 
 	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t layer_num, CanvasType::Type canvas_type, uint16_t num_frames) {
@@ -53,7 +53,7 @@ namespace PixelMaestro {
 		controller_->get_buffer()[Byte::OptionsByte] = canvas_type;
 		controller_->get_buffer()[Byte::OptionsByte + 1] = num_frames;
 
-		return controller_->assemble(Byte::OptionsByte);
+		return controller_->assemble(Byte::OptionsByte + 2);
 	}
 
 	uint8_t* SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {

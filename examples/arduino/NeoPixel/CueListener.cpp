@@ -1,6 +1,6 @@
 /*
- * NeoPixel.cpp - Configures an 8 LED NeoPixel strip.
- * You can control the strip by connecting to its controlling Arduino using PixelMaestro Studio.
+ * NeoPixel.cpp - Creates an 8 LED NeoPixel strip that listens for Cues.
+ * You can control the strip by connecting the Arduino to PixelMaestro Studio over USB.
  */
 
 #include <Arduino.h>
@@ -9,7 +9,7 @@
 
 using namespace PixelMaestro;
 
-// Creates a Maestro with a single Section
+// Creates a Maestro with a single 8x1 Section
 Maestro maestro(8, 1);
 
 // Initializes the NeoPixel strip on pin 10
@@ -18,26 +18,37 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(maestro.get_section(0)->get_dimensio
 void setup () {
     strip.begin();
 
+		// Sets the global brightness to 10%
 		maestro.set_brightness(25);
+
+		/*
+		 * Initializes the Cue Controller and CueHandlers.
+		 * To reduce the program size, only enable the CueHandlers you need.
+		 */
 		CueController* controller = maestro.set_cue_controller();
 		controller->enable_handler(CueController::Handler::AnimationHandler);
 		controller->enable_handler(CueController::Handler::CanvasHandler);
 		controller->enable_handler(CueController::Handler::MaestroHandler);
 		controller->enable_handler(CueController::Handler::SectionHandler);
+		controller->enable_handler(CueController::Handler::ShowHandler);
 
 		Serial.begin(9600);
 }
 
 void loop() {
+		// Listens for incoming Cues
 		if (Serial.available()) {
 			maestro.get_cue_controller()->read(Serial.read());
 		}
 
     maestro.update(millis());
 
-		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-			Colors::RGB color = maestro.get_pixel_color(0, x, 0);
-			strip.setPixelColor(x, color.r, color.g, color.b);
+		// Copies each Pixel's color to the NeoPixel strip
+		for (unsigned char y = 0; y < maestro.get_section(0)->get_dimensions()->y; y++) {
+			for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
+				Colors::RGB color = maestro.get_pixel_color(0, x, y);
+				strip.setPixelColor(x, color.r, color.g, color.b);
+			}
 		}
 
 		strip.show();
