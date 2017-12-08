@@ -145,11 +145,6 @@ namespace PixelMaestro {
 						}
 					}
 
-					// Delete any previous animation colors to prevent memory leaks.
-					if (cue[colors_index] && section->get_animation() != nullptr) {
-						delete[] section->get_animation()->get_colors();
-					}
-
 					section->set_animation((AnimationType::Type)cue[SectionCueHandler::Byte::OptionsByte], colors, num_colors, (bool)cue[Byte::OptionsByte + 1]);
 				}
 				break;
