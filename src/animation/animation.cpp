@@ -22,7 +22,7 @@ namespace PixelMaestro {
 	 * Returns the Animation's center.
 	 * @return Animation's center.
 	 */
-	Point Animation::get_center() {
+	Point Animation::get_center() const {
 		return Point(section_->get_dimensions()->x / 2,
 					 section_->get_dimensions()->y / 2);
 	}
@@ -36,7 +36,7 @@ namespace PixelMaestro {
 		@param index Desired index.
 		@return Color at the specified index.
 	*/
-	Colors::RGB* Animation::get_color_at_index(uint8_t index) {
+	Colors::RGB* Animation::get_color_at_index(uint8_t index) const {
 		if (num_colors_ > 0 && index >= num_colors_) {
 			return &colors_[index % num_colors_];
 		}
@@ -48,7 +48,7 @@ namespace PixelMaestro {
 	 * Returns the color palette.
 	 * @return Color palette.
 	 */
-	Colors::RGB* Animation::get_colors() {
+	Colors::RGB* Animation::get_colors() const {
 		return colors_;
 	}
 
@@ -57,7 +57,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Cycle index.
 	 */
-	uint8_t Animation::get_cycle_index() {
+	uint8_t Animation::get_cycle_index() const {
 		return cycle_index_;
 	}
 
@@ -65,7 +65,7 @@ namespace PixelMaestro {
 	 * Returns whether the animation is fading.
 	 * @return True if fading.
 	 */
-	bool Animation::get_fade() {
+	bool Animation::get_fade() const {
 		return fade_;
 	}
 
@@ -74,7 +74,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Number of colors in the color palette.
 	 */
-	uint8_t Animation::get_num_colors() {
+	uint8_t Animation::get_num_colors() const {
 		return num_colors_;
 	}
 
@@ -82,7 +82,7 @@ namespace PixelMaestro {
 	 * Returns the animation's orientation.
 	 * @return Animation's orientation
 	 */
-	Animation::Orientation Animation::get_orientation() {
+	Animation::Orientation Animation::get_orientation() const {
 		return orientation_;
 	}
 
@@ -91,7 +91,7 @@ namespace PixelMaestro {
 	 *
 	 * @return True if running in reverse.
 	 */
-	bool Animation::get_reverse() {
+	bool Animation::get_reverse() const {
 		return reverse_;
 	}
 
@@ -99,7 +99,7 @@ namespace PixelMaestro {
 	 * Returns the Animation's parent Section.
 	 * @return Parent Section.
 	 */
-	Section* Animation::get_section() {
+	Section* Animation::get_section() const {
 		return section_;
 	}
 
@@ -107,7 +107,7 @@ namespace PixelMaestro {
 	 * Returns the animation's speed.
 	 * @return Speed.
 	 */
-	AnimationTiming* Animation::get_timing() {
+	AnimationTiming* Animation::get_timing() const {
 		return timing_;
 	}
 
@@ -115,7 +115,7 @@ namespace PixelMaestro {
 	 * Returns the type of Animation.
 	 * @return Animation type.
 	 */
-	AnimationType::Type Animation::get_type() {
+	AnimationType::Type Animation::get_type() const {
 		return type_;
 	}
 

@@ -12,7 +12,7 @@ namespace PixelMaestro {
 	 * Returns the plasma resolution.
 	 * @return Plasma resolution.
 	 */
-	float PlasmaAnimation::get_resolution() {
+	float PlasmaAnimation::get_resolution() const {
 		return resolution_;
 	}
 
@@ -20,7 +20,7 @@ namespace PixelMaestro {
 	 * Returns the plasma size.
 	 * @return Plasma size.
 	 */
-	float PlasmaAnimation::get_size() {
+	float PlasmaAnimation::get_size() const {
 		return size_;
 	}
 

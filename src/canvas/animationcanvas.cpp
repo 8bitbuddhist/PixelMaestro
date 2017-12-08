@@ -74,7 +74,7 @@ namespace PixelMaestro {
 	 * @param frame Index of the frame.
 	 * @return Frame at index.
 	 */
-	bool* AnimationCanvas::get_frame(uint16_t frame) {
+	bool* AnimationCanvas::get_frame(uint16_t frame) const {
 		return frames_[frame];
 	}
 
@@ -98,7 +98,7 @@ namespace PixelMaestro {
 	 * Returns the Canvas type.
 	 * @return Type of Canvas.
 	 */
-	CanvasType::Type AnimationCanvas::get_type() {
+	CanvasType::Type AnimationCanvas::get_type() const {
 		return CanvasType::Type::AnimationCanvas;
 	}
 

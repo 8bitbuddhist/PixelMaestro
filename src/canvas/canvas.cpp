@@ -284,7 +284,7 @@ namespace PixelMaestro {
 	 * Returns the index of the current frame.
 	 * @return Current frame index.
 	 */
-	uint16_t Canvas::get_current_frame_index() {
+	uint16_t Canvas::get_current_frame_index() const {
 		return current_frame_index_;
 	}
 
@@ -293,7 +293,7 @@ namespace PixelMaestro {
 	 * Used in PixelMaestro Studio.
 	 * @return Frame timing.
 	 */
-	Timing* Canvas::get_frame_timing() {
+	Timing* Canvas::get_frame_timing() const {
 		return frame_timing_;
 	}
 
@@ -301,7 +301,7 @@ namespace PixelMaestro {
 	 * Returns the number of frames.
 	 * @return Number of frames.
 	 */
-	uint16_t Canvas::get_num_frames() {
+	uint16_t Canvas::get_num_frames() const {
 		return num_frames_;
 	}
 
@@ -309,7 +309,7 @@ namespace PixelMaestro {
 	 * Returns the Canvas' parent Section.
 	 * @return Parent Section.
 	 */
-	Section* Canvas::get_section() {
+	Section* Canvas::get_section() const {
 		return section_;
 	}
 
@@ -319,7 +319,7 @@ namespace PixelMaestro {
 	 * @param y The y-coordinate to check.
 	 * @return Whether the Point is in bounds.
 	 */
-	bool Canvas::in_bounds(uint16_t x, uint16_t y) {
+	bool Canvas::in_bounds(uint16_t x, uint16_t y) const {
 		return (x < section_->get_dimensions()->x) && (y < section_->get_dimensions()->y);
 	}
 

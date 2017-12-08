@@ -21,7 +21,7 @@ namespace PixelMaestro {
 	 * Returns the index of the next Event to run.
 	 * @return Current Event index.
 	 */
-	uint16_t Show::get_current_index() {
+	uint16_t Show::get_current_index() const {
 		return current_index_;
 	}
 
@@ -29,7 +29,7 @@ namespace PixelMaestro {
 	 * Returns the current Event set.
 	 * @return Events.
 	 */
-	Event* Show::get_events() {
+	Event* Show::get_events() const {
 		return events_;
 	}
 
@@ -38,7 +38,7 @@ namespace PixelMaestro {
 
 		@return Whether or not the Show loops.
 	*/
-	bool Show::get_looping() {
+	bool Show::get_looping() const {
 		return loop_;
 	}
 
@@ -46,7 +46,7 @@ namespace PixelMaestro {
 	 * Returns the number of Events.
 	 * @return Event count.
 	 */
-	uint16_t Show::get_num_events() {
+	uint16_t Show::get_num_events() const {
 		return num_events_;
 	}
 
@@ -54,7 +54,7 @@ namespace PixelMaestro {
 	 * Returns the timing method used to run the Show.
 	 * @return Timing method.
 	 */
-	Show::TimingMode Show::get_timing() {
+	Show::TimingMode Show::get_timing() const {
 		return timing_;
 	}
 

@@ -71,9 +71,9 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Enables the specified CueHandler.
+	 * Enables the specified CueHandler, or returns the CueHandler if it already exists.
 	 * @param handler CueHandler to enable.
-	 * @return New CueHandler.
+	 * @return CueHandler instance.
 	 */
 	CueHandler* CueController::enable_handler(Handler handler) {
 		if (handlers_[(uint8_t)handler] == nullptr) {
@@ -103,7 +103,7 @@ namespace PixelMaestro {
 	 * Returns the currently cached Cue.
 	 * @return Cue buffer.
 	 */
-	uint8_t* CueController::get_buffer() {
+	uint8_t* CueController::get_buffer() const {
 		return buffer_;
 	}
 
@@ -111,7 +111,7 @@ namespace PixelMaestro {
 	 * Returns the size of the Cue buffer.
 	 * @return Buffer size.
 	 */
-	uint16_t CueController::get_buffer_size() {
+	uint16_t CueController::get_buffer_size() const {
 		return buffer_size_;
 	}
 
@@ -119,7 +119,7 @@ namespace PixelMaestro {
 	 * Returns the size of the currently cached Cue.
 	 * @return Cue size.
 	 */
-	uint16_t CueController::get_cue_size() {
+	uint16_t CueController::get_cue_size() const {
 		return (IntByteConvert::byte_to_int(&buffer_[CueController::Byte::SizeByte1]) + Byte::PayloadByte);
 	}
 
@@ -128,7 +128,7 @@ namespace PixelMaestro {
 	 * @param cue Cue to measure.
 	 * @return Cue size.
 	 */
-	uint16_t CueController::get_cue_size(uint8_t *cue) {
+	uint16_t CueController::get_cue_size(uint8_t *cue) const {
 		return (IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + Byte::PayloadByte);
 	}
 
@@ -137,7 +137,7 @@ namespace PixelMaestro {
 	 * @param handler Handler to get.
 	 * @return Handler instance.
 	 */
-	CueHandler* CueController::get_handler(Handler handler) {
+	CueHandler* CueController::get_handler(Handler handler) const {
 		return handlers_[(uint8_t)handler];
 	}
 
@@ -145,7 +145,7 @@ namespace PixelMaestro {
 	 * Returns the controller's Maestro.
 	 * @return Maestro controlling this CueController.
 	 */
-	Maestro* CueController::get_maestro() {
+	Maestro* CueController::get_maestro() const {
 		return maestro_;
 	}
 

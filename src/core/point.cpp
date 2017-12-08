@@ -21,7 +21,7 @@ namespace PixelMaestro {
 	 * @param y Y-coordinate.
 	 * @return Index of the coordinate when translated to a 1D array.
 	 */
-	uint32_t Point::get_inline_index(uint16_t x, uint16_t y) {
+	uint32_t Point::get_inline_index(uint16_t x, uint16_t y) const {
 		return (y * this->x) + x;
 	}
 

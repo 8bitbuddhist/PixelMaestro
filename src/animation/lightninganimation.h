@@ -8,10 +8,10 @@ namespace PixelMaestro {
 		public:
 			LightningAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts = 1, uint8_t down_threshold = 90, uint8_t up_threshold = 166, uint8_t fork_chance_ = 4);
 			~LightningAnimation();
-			uint8_t get_bolt_count();
-			uint8_t get_fork_chance();
-			uint8_t get_down_threshold();
-			uint8_t get_up_threshold();
+			uint8_t get_bolt_count() const;
+			uint8_t get_fork_chance() const;
+			uint8_t get_down_threshold() const;
+			uint8_t get_up_threshold() const;
 			void set_bolt_count(uint8_t bolt_count);
 			void set_fork_chance(uint8_t fork_chance);
 			void set_thresholds(uint8_t down_threshold, uint8_t up_threshold);

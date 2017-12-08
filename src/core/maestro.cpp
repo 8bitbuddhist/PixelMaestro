@@ -35,7 +35,7 @@ namespace PixelMaestro {
 	 * Returns the active Cue controller.
 	 * @return Cue controller.
 	 */
-	CueController* Maestro::get_cue_controller() {
+	CueController* Maestro::get_cue_controller() const {
 		return cue_controller_;
 	}
 
@@ -44,7 +44,7 @@ namespace PixelMaestro {
 
 		@return Number of Sections.
 	*/
-	uint8_t Maestro::get_num_sections() {
+	uint8_t Maestro::get_num_sections() const {
 		return num_sections_;
 	}
 
@@ -55,7 +55,7 @@ namespace PixelMaestro {
 	 * @param y Pixel's y-coordinate.
 	 * @return Pixel color after adjusting for Layers and brightness.
 	 */
-	Colors::RGB Maestro::get_pixel_color(uint8_t section, uint16_t x, uint16_t y) {
+	Colors::RGB Maestro::get_pixel_color(uint8_t section, uint16_t x, uint16_t y) const {
 		return sections_[section].get_pixel_color(x, y) * (float)(brightness_ / (float)255);
 	}
 
@@ -65,7 +65,7 @@ namespace PixelMaestro {
 		@param section Index of the Section to return.
 		@return Section at the specified index.
 	*/
-	Section* Maestro::get_section(uint8_t section) {
+	Section* Maestro::get_section(uint8_t section) const {
 		if (section >= num_sections_) {
 			return nullptr;
 		}
@@ -77,7 +77,7 @@ namespace PixelMaestro {
 	 * Returns the current Show.
 	 * @return Active Show.
 	 */
-	Show* Maestro::get_show() {
+	Show* Maestro::get_show() const {
 		return show_;
 	}
 
@@ -85,8 +85,8 @@ namespace PixelMaestro {
 	 * Gets the Maestro's update timing.
 	 * @return Maestro timing.
 	 */
-	Timing* Maestro::get_timing() {
-		return &timing_;
+	Timing* Maestro::get_timing() const {
+		return const_cast<Timing*>(&timing_);
 	}
 
 	/**

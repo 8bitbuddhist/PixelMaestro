@@ -17,7 +17,7 @@ namespace PixelMaestro {
 	 * Returns the interval between events.
 	 * @return Interval.
 	 */
-	uint16_t Timing::get_interval() {
+	uint16_t Timing::get_interval() const {
 		return interval_;
 	}
 
@@ -25,7 +25,7 @@ namespace PixelMaestro {
 	 * Returns the last update time.
 	 * @return Last update time.
 	 */
-	uint32_t Timing::get_last_time() {
+	uint32_t Timing::get_last_time() const {
 		return last_time_;
 	}
 

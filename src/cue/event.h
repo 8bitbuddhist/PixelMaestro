@@ -16,8 +16,8 @@ namespace PixelMaestro {
 			Event(const Event& other);
 			Event* operator=(const Event& other);
 			~Event();
-			uint8_t* get_cue();
-			uint32_t get_time();
+			uint8_t* get_cue() const;
+			uint32_t get_time() const;
 			void set_cue(uint8_t* cue);
 			void set_time(uint32_t time);
 

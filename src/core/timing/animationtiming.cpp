@@ -17,7 +17,7 @@ namespace PixelMaestro {
 	 * Returns the amount of time (in milliseconds) to wait before starting an animation cycle.
 	 * @return Pause interval.
 	 */
-	uint16_t AnimationTiming::get_pause() {
+	uint16_t AnimationTiming::get_pause() const {
 		return pause_;
 	}
 
@@ -25,7 +25,7 @@ namespace PixelMaestro {
 	 * Returns the number of steps in the current cycle.
 	 * @return Cycle steps.
 	 */
-	uint8_t AnimationTiming::get_step_count() {
+	uint8_t AnimationTiming::get_step_count() const {
 		return step_count_;
 	}
 

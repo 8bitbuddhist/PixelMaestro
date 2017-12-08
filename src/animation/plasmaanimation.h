@@ -8,8 +8,8 @@ namespace  PixelMaestro {
 		public:
 			PlasmaAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, float size = 4.0, float resolution = 32.0);
 			~PlasmaAnimation();
-			float get_resolution();
-			float get_size();
+			float get_resolution() const;
+			float get_size() const;
 			void set_resolution(float resolution);
 			void set_size(float size);
 			void update();

@@ -12,7 +12,7 @@ namespace PixelMaestro {
 	 * Returns the threshold for activating a Pixel.
 	 * @return Activation threshold.
 	 */
-	uint8_t SparkleAnimation::get_threshold() {
+	uint8_t SparkleAnimation::get_threshold() const {
 		return threshold_;
 	}
 

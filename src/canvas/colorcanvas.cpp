@@ -55,7 +55,7 @@ namespace PixelMaestro {
 	 * @param frame Index of the frame.
 	 * @return Frame at index.
 	 */
-	Colors::RGB* ColorCanvas::get_frame(uint16_t frame) {
+	Colors::RGB* ColorCanvas::get_frame(uint16_t frame) const {
 		return frames_[frame];
 	}
 
@@ -177,7 +177,7 @@ namespace PixelMaestro {
 	 * Returns the Canvas type.
 	 * @return Canvas type.
 	 */
-	CanvasType::Type ColorCanvas::get_type() {
+	CanvasType::Type ColorCanvas::get_type() const {
 		return CanvasType::Type::ColorCanvas;
 	}
 

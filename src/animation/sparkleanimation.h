@@ -8,7 +8,7 @@ namespace PixelMaestro {
 		public:
 			SparkleAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, uint8_t threshold = 25);
 			~SparkleAnimation();
-			uint8_t get_threshold();
+			uint8_t get_threshold() const;
 			void set_threshold(uint8_t threshold);
 			void update();
 

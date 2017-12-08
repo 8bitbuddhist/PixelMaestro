@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	 * @param layer Layer depth level.
 	 * @return Matching Section/Layer or nullptr if not found.
 	 */
-	Section* CueHandler::get_section(uint8_t section_id, uint8_t layer_id) {
+	Section* CueHandler::get_section(uint8_t section_id, uint8_t layer_id) const {
 
 		Section* section = controller_->get_maestro()->get_section(section_id);
 

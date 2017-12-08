@@ -26,17 +26,17 @@ namespace PixelMaestro {
 
 			Animation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			virtual ~Animation();
-			Point get_center();
-			Colors::RGB* get_color_at_index(uint8_t index);
-			Colors::RGB* get_colors();
-			uint8_t get_cycle_index();
-			bool get_fade();
-			uint8_t get_num_colors();
-			Orientation get_orientation();
-			bool get_reverse();
-			Section* get_section();
-			AnimationTiming* get_timing();
-			AnimationType::Type get_type();
+			Point get_center() const;
+			Colors::RGB* get_color_at_index(uint8_t index) const;
+			Colors::RGB* get_colors() const;
+			uint8_t get_cycle_index() const;
+			bool get_fade() const;
+			uint8_t get_num_colors() const;
+			Orientation get_orientation() const;
+			bool get_reverse() const;
+			Section* get_section() const;
+			AnimationTiming* get_timing() const;
+			AnimationType::Type get_type() const;
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);

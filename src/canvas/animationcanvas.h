@@ -16,9 +16,9 @@ namespace PixelMaestro {
 			void activate(uint16_t x, uint16_t y);
 			void deactivate(uint16_t x, uint16_t y);
 			void draw_frame(bool* frame, uint16_t size_x, uint16_t size_y);
-			bool* get_frame(uint16_t frame);
+			bool* get_frame(uint16_t frame) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
-			CanvasType::Type get_type();
+			CanvasType::Type get_type() const;
 			void initialize();
 
 		protected:

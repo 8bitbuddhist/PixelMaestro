@@ -14,8 +14,8 @@ namespace PixelMaestro {
 	class AnimationTiming : public Timing {
 		public:
 			AnimationTiming(Animation* animation);
-			uint16_t get_pause();
-			uint8_t get_step_count();
+			uint16_t get_pause() const;
+			uint8_t get_step_count() const;
 			void recalculate_step_count();
 			void set_interval(uint16_t interval, uint16_t pause = 0);
 

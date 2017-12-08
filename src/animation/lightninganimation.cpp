@@ -165,7 +165,7 @@ namespace PixelMaestro {
 	 * Returns the number of bolts.
 	 * @return Bolt count.
 	 */
-	uint8_t LightningAnimation::get_bolt_count() {
+	uint8_t LightningAnimation::get_bolt_count() const {
 		return num_bolts_;
 	}
 
@@ -173,7 +173,7 @@ namespace PixelMaestro {
 	 * Returns the fork chance.
 	 * @return Fork chance.
 	 */
-	uint8_t LightningAnimation::get_fork_chance() {
+	uint8_t LightningAnimation::get_fork_chance() const {
 		return fork_chance_;
 	}
 
@@ -181,7 +181,7 @@ namespace PixelMaestro {
 	 * Returns the down threshold.
 	 * @return Down threshold.
 	 */
-	uint8_t LightningAnimation::get_down_threshold() {
+	uint8_t LightningAnimation::get_down_threshold() const {
 		return down_threshold_;
 	}
 
@@ -189,7 +189,7 @@ namespace PixelMaestro {
 	 * Returns the up threshold.
 	 * @return Up threshold.
 	 */
-	uint8_t LightningAnimation::get_up_threshold() {
+	uint8_t LightningAnimation::get_up_threshold() const {
 		return up_threshold_;
 	}
 

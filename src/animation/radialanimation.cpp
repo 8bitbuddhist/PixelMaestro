@@ -10,7 +10,7 @@ namespace PixelMaestro {
 	 * Returns the resolution of each radial.
 	 * @return Radial resolution.
 	 */
-	uint8_t RadialAnimation::get_resolution() {
+	uint8_t RadialAnimation::get_resolution() const {
 		return resolution_;
 	}
 

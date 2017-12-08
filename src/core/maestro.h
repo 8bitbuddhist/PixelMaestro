@@ -22,12 +22,12 @@ namespace PixelMaestro {
 			Maestro(uint16_t rows, uint16_t columns);
 			Maestro(Section* sections, uint8_t num_sections);
 			~Maestro();
-			CueController* get_cue_controller();
-			Colors::RGB get_pixel_color(uint8_t section, uint16_t x, uint16_t y);
-			uint8_t get_num_sections();
-			Section* get_section(uint8_t section);
-			Show* get_show();
-			Timing* get_timing();
+			CueController* get_cue_controller() const;
+			Colors::RGB get_pixel_color(uint8_t section, uint16_t x, uint16_t y) const;
+			uint8_t get_num_sections() const;
+			Section* get_section(uint8_t section) const;
+			Show* get_show() const;
+			Timing* get_timing() const;
 			void set_brightness(uint8_t brightness);
 			CueController* set_cue_controller(uint16_t buffer_size = UINT8_MAX);
 			void set_sections(Section* sections, uint8_t num_sections);

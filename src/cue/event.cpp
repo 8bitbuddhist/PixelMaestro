@@ -49,7 +49,7 @@ namespace PixelMaestro {
 	 * The Show passes this to the CueController when the Event runs.
 	 * @return Cue.
 	 */
-	uint8_t* Event::get_cue() {
+	uint8_t* Event::get_cue() const {
 		return cue_;
 	}
 
@@ -57,7 +57,7 @@ namespace PixelMaestro {
 	 * Returns the time that this Event will run.
 	 * @return Event's start time.
 	 */
-	uint32_t Event::get_time() {
+	uint32_t Event::get_time() const {
 		return time_;
 	}
 

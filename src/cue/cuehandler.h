@@ -23,7 +23,7 @@ namespace PixelMaestro {
 			/// The controller managing this Handler.
 			CueController* controller_ = nullptr;
 
-			Section* get_section(uint8_t section_id, uint8_t layer_id);
+			Section* get_section(uint8_t section_id, uint8_t layer_id) const;
 	};
 }
 

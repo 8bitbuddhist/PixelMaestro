@@ -11,8 +11,8 @@ namespace PixelMaestro {
 	class Timing {
 		public:
 			Timing(uint16_t speed = 1000);
-			uint16_t get_interval();
-			uint32_t get_last_time();
+			uint16_t get_interval() const;
+			uint32_t get_last_time() const;
 			void set_interval(uint16_t interval);
 			bool update(const uint32_t& current_time);
 

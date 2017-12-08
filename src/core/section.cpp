@@ -53,7 +53,7 @@ namespace PixelMaestro {
 
 		@return Current animation.
 	*/
-	Animation* Section::get_animation() {
+	Animation* Section::get_animation() const {
 		return animation_;
 	}
 
@@ -61,7 +61,7 @@ namespace PixelMaestro {
 	 * Returns the Section's Canvas.
 	 * @return Section's Canvas.
 	 */
-	Canvas* Section::get_canvas() {
+	Canvas* Section::get_canvas() const {
 		return canvas_;
 	}
 
@@ -78,7 +78,7 @@ namespace PixelMaestro {
 	 * Returns the Section's parent Maestro.
 	 * @return Parent Maestro.
 	 */
-	Maestro* Section::get_maestro() {
+	Maestro* Section::get_maestro() const {
 		return maestro_;
 	}
 
@@ -87,7 +87,7 @@ namespace PixelMaestro {
 	 *
 	 * @return Active Layer.
 	 */
-	Section::Layer* Section::get_layer() {
+	Section::Layer* Section::get_layer() const {
 		return layer_;
 	}
 
@@ -103,7 +103,7 @@ namespace PixelMaestro {
 	 * Returns this Section's parent (if this is an Layer).
 	 * @return Parent Section.
 	 */
-	Section* Section::get_parent_section() {
+	Section* Section::get_parent_section() const {
 		return parent_section_;
 	}
 
@@ -114,7 +114,7 @@ namespace PixelMaestro {
 	 * @param y Pixel y coordinate.
 	 * @return Pixel.
 	 */
-	Pixel* Section::get_pixel(uint16_t x, uint16_t y) {
+	Pixel* Section::get_pixel(uint16_t x, uint16_t y) const {
 		return &pixels_[dimensions_.get_inline_index(x, y)];
 	}
 
@@ -152,7 +152,7 @@ namespace PixelMaestro {
 	 * Returns the Section's scrolling behavior.
 	 * @return Scrolling behavior.
 	 */
-	Section::Scroll* Section::get_scroll() {
+	Section::Scroll* Section::get_scroll() const {
 		return scroll_;
 	}
 
