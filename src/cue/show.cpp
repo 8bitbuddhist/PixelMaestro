@@ -34,6 +34,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the time that the last Event ran.
+	 * @return Last Event time.
+	 */
+	uint32_t Show::get_last_time() const {
+		return last_time_;
+	}
+
+	/**
 		Returns whether the Show loops back over its Events, or if it just ends.
 
 		@return Whether or not the Show loops.

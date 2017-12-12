@@ -28,6 +28,7 @@ namespace PixelMaestro {
 			Show(CueController* controller, Event *events, uint16_t num_events);
 			uint16_t get_current_index() const;
 			Event* get_events() const;
+			uint32_t get_last_time() const;
 			bool get_looping() const;
 			uint16_t get_num_events() const;
 			TimingMode get_timing() const;
