@@ -8,7 +8,6 @@
 namespace PixelMaestro {
 	class AnimationType {
 		public:
-			// TODO: Add Wireworld animation: https://en.wikipedia.org/wiki/Wireworld
 			/// The type of animation.
 			enum Type : uint8_t {
 				Blink,

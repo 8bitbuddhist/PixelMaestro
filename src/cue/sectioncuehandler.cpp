@@ -145,7 +145,17 @@ namespace PixelMaestro {
 						}
 					}
 
+					// If an Animation already exists, delete the old color palette before deleting the animation.
+					Colors::RGB* old_palette = nullptr;
+					if (section->get_animation() != nullptr) {
+						old_palette = section->get_animation()->get_colors();
+					}
+
 					section->set_animation((AnimationType::Type)cue[SectionCueHandler::Byte::OptionsByte], colors, num_colors, (bool)cue[Byte::OptionsByte + 1]);
+
+					if (old_palette != nullptr) {
+						delete [] old_palette;
+					}
 				}
 				break;
 			case Action::SetCanvas:

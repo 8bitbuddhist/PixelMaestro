@@ -165,7 +165,8 @@ namespace PixelMaestro {
 					/*
 					 * Delete the old palette after setting the new one.
 					 * We force an update so that the Animation no longer references the old palette.
-					 * NOTE: This could negatively affect timing.
+					 * NOTE: This throws off timing, but only for a single frame.
+					 *		Shouldn't be noticeable except for slow animations or when fading is disabled.
 					 */
 					Colors::RGB* old_palette = animation->get_colors();
 

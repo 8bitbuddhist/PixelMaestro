@@ -3,6 +3,11 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.11] - In Progress
+### Changed
+- SectionCueHandler: Fixed issue in `SetAnimation` where the old color palette was deleted before the new palette was assigned.
+- ShowCueHandler: Fixed issue where `SetTiming` was identified as `SetEvents`, causing Show Cues to fail.
+
 ## [v0.10] - 2017-12-05
 ### Added
 - Arduino: Added new sketches and modified existing sketches for clarity.
