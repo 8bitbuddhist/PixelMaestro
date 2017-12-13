@@ -194,10 +194,10 @@ namespace PixelMaestro {
 	 * @param type Animation type.
 	 * @param colors The color palette.
 	 * @param num_colors The number of colors in the palette.
-	 * @param preserve_cycle_index If true, the cycle index from the old Animation transfers over to the new Animation.
+	 * @param preserve_settings If true, the generic configurations in the old Animation (cycle index, orientation, fade, reverse, speed, and pause) are copied to the new Animation.
 	 * @return New Animation.
 	 */
-	Animation* Section::set_animation(AnimationType::Type animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_cycle_index) {
+	Animation* Section::set_animation(AnimationType::Type animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_settings) {
 		Animation* animation = nullptr;
 		switch(animation_type) {
 			case AnimationType::Type::Blink:
@@ -236,8 +236,15 @@ namespace PixelMaestro {
 		}
 
 		if (animation_) {
-			if (preserve_cycle_index) {
+			if (preserve_settings) {
 				animation->set_cycle_index(this->animation_->get_cycle_index());
+				animation->set_fade(this->animation_->get_fade());
+				animation->set_orientation(this->animation_->get_orientation());
+				animation->set_reverse(this->animation_->get_reverse());
+
+				if (this->animation_->get_timing() != nullptr) {
+					animation->set_timing(this->animation_->get_timing()->get_interval(), this->animation_->get_timing()->get_pause());
+				}
 			}
 			remove_animation();
 		}
