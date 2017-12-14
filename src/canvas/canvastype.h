@@ -15,7 +15,10 @@ namespace PixelMaestro {
 				AnimationCanvas,
 
 				/// Draws Pixels using custom colors.
-				ColorCanvas
+				ColorCanvas,
+
+				/// Draws Pixels using a pre-defined color palette.
+				PaletteCanvas
 			};
 	};
 }

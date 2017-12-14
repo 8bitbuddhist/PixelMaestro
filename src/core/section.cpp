@@ -16,6 +16,7 @@
 #include "../animation/waveanimation.h"
 #include "../canvas/animationcanvas.h"
 #include "../canvas/colorcanvas.h"
+#include "../canvas/palettecanvas.h"
 #include "../utility.h"
 #include "colors.h"
 #include "pixel.h"
@@ -269,6 +270,9 @@ namespace PixelMaestro {
 				break;
 			case CanvasType::Type::ColorCanvas:
 				canvas_ = new ColorCanvas(this, num_frames);
+				break;
+			case CanvasType::Type::PaletteCanvas:
+				canvas_ = new PaletteCanvas(this, num_frames, nullptr, 0);
 				break;
 		}
 
