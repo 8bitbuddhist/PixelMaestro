@@ -28,6 +28,7 @@ namespace PixelMaestro {
 			uint8_t get_color_index(Colors::RGB* color) const;
 			Colors::RGB* get_colors() const;
 			uint8_t* get_frame(uint16_t frame) const;
+			uint8_t get_num_colors() const;
 			CanvasType::Type get_type() const;
 			void initialize();
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);

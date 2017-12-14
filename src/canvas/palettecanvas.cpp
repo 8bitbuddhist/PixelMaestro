@@ -207,6 +207,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the number of colors in the palette.
+	 * @return Number of colors.
+	 */
+	uint8_t PaletteCanvas::get_num_colors() const {
+		return num_colors_;
+	}
+
+	/**
 	 * Returns the Canvas type.
 	 * @return Canvas type.
 	 */
