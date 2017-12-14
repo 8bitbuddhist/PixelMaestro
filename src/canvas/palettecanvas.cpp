@@ -105,7 +105,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a circle using the specified color.
-	 * @param color_index Index of the color to draw with. Setting this to 255 draws black.
+	 * @param color_index Index of the color to draw with. Setting this to an invalid index draws black.
 	 * @param origin_x Center x coordinate.
 	 * @param origin_y Center y coordinate.
 	 * @param radius The circle's radius.
@@ -118,7 +118,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a line using the specified color.
-	 * @param color_index Index of the color to draw with. Setting this to 255 draws black.
+	 * @param color_index Index of the color to draw with. Setting this to an invalid index draws black.
 	 * @param cursor_x Starting point x coordinate.
 	 * @param cursor_y Starting point y coordinate.
 	 * @param target_x Ending point x coordinate.
@@ -131,7 +131,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a single pixel using the specified color.
-	 * @param color_index Index of the color to draw with. Setting this to 255 draws black.
+	 * @param color_index Index of the color to draw with. Setting this to an invalid index draws black.
 	 * @param cursor_x Pixel x coordinate.
 	 * @param cursor_y Pixel y coordinate.
 	 */
@@ -142,7 +142,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a rectangle using the specified color.
-	 * @param color_index Index of the color to draw with. Setting this to 255 draws black.
+	 * @param color_index Index of the color to draw with. Setting this to an invalid index draws black.
 	 * @param origin_x Top-left corner x coordinate.
 	 * @param origin_y Top-left corner y coordinate.
 	 * @param size_x Width of the rectangle.
@@ -156,7 +156,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws text using the specified color.
-	 * @param color_index Index of the color to draw with. Setting this to 255 draws black.
+	 * @param color_index Index of the color to draw with. Setting this to an invalid index draws black.
 	 * @param origin_x Top-left x coordinate.
 	 * @param origin_y Top-left y coordinate.
 	 * @param font The Font to draw the text in.
@@ -169,7 +169,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Draws a triangle using the specified color.
-	 * @param color_index Index of the color to draw with. Setting this to 255 draws black.
+	 * @param color_index Index of the color to draw with. Setting this to an invalid index draws black.
 	 * @param point_a_x First point x-coordinate.
 	 * @param point_a_y First point y-coordinate.
 	 * @param point_b_x Second point x-coordinate.
@@ -188,7 +188,7 @@ namespace PixelMaestro {
 	 * @param color Color to search for.
 	 * @return Index in the palette (or 255 if not found).
 	 */
-	uint8_t PaletteCanvas::get_color_index(Colors::RGB *color) {
+	uint8_t PaletteCanvas::get_color_index(Colors::RGB *color) const {
 		for (uint8_t index = 0; index < num_colors_; index++) {
 			if (*color == colors_[index]) {
 				return index;
@@ -196,6 +196,14 @@ namespace PixelMaestro {
 		}
 
 		return 255;
+	}
+
+	/**
+	 * Returns the color palette.
+	 * @return Color palette.
+	 */
+	Colors::RGB* PaletteCanvas::get_colors() const {
+		return colors_;
 	}
 
 	/**

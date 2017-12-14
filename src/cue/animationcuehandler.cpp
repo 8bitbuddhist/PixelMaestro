@@ -68,7 +68,7 @@ namespace PixelMaestro {
 		controller_->get_buffer()[Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[Byte::OptionsByte] = num_colors;
 
-		uint8_t colors_index = Byte::OptionsByte + 1;
+		uint16_t colors_index = Byte::OptionsByte + 1;
 		for (uint8_t i = 0; i < num_colors; i++) {
 			controller_->get_buffer()[colors_index] = colors[i].r;
 			colors_index++;
@@ -151,7 +151,7 @@ namespace PixelMaestro {
 			case Action::SetColors:
 				{
 					uint8_t num_colors = cue[Byte::OptionsByte];
-					uint8_t current_color_index = 1;
+					uint16_t current_color_index = 1;
 					Colors::RGB* colors = new Colors::RGB[num_colors];
 					for (uint8_t i = 0; i < num_colors; i++) {
 						colors[i].r = cue[Byte::OptionsByte + current_color_index];

@@ -377,6 +377,8 @@ namespace PixelMaestro {
 		delete_frames();
 
 		this->num_frames_ = num_frames;
+		this->current_frame_index_ = 0;
+
 		initialize();
 	}
 

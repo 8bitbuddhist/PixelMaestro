@@ -25,7 +25,8 @@ namespace PixelMaestro {
 			void draw_rect(uint8_t color, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
 			void draw_text(uint8_t color, uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars);
 			void draw_triangle(uint8_t color, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
-			uint8_t get_color_index(Colors::RGB* color);
+			uint8_t get_color_index(Colors::RGB* color) const;
+			Colors::RGB* get_colors() const;
 			uint8_t* get_frame(uint16_t frame) const;
 			CanvasType::Type get_type() const;
 			void initialize();

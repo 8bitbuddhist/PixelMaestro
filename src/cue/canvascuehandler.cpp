@@ -562,6 +562,27 @@ namespace PixelMaestro {
 		return controller_->assemble(Byte::OptionsByte);
 	}
 
+	uint8_t* CanvasCueHandler::set_colors(uint8_t section_num, uint8_t layer_num, Colors::RGB *colors, uint8_t num_colors) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetColors;
+		controller_->get_buffer()[Byte::TypeByte] = (uint8_t)CanvasType::PaletteCanvas;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[Byte::OptionsByte] = num_colors;
+
+		uint16_t colors_index = Byte::OptionsByte + 1;
+		for (uint8_t i = 0; i < num_colors; i++) {
+			controller_->get_buffer()[colors_index] = colors[i].r;
+			colors_index++;
+			controller_->get_buffer()[colors_index] = colors[i].g;
+			colors_index++;
+			controller_->get_buffer()[colors_index] = colors[i].b;
+			colors_index++;
+		}
+
+		return controller_->assemble(colors_index);
+	}
+
 	uint8_t* CanvasCueHandler::set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t index) {
 		IntByteConvert index_byte(index);
 
@@ -892,6 +913,28 @@ namespace PixelMaestro {
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 9]),
 								IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 11]),
 								(bool)cue[Byte::OptionsByte + 13]);
+							break;
+						case Action::SetColors:
+							{
+								uint8_t num_colors = cue[Byte::OptionsByte];
+								uint16_t current_color_index = 1;
+								Colors::RGB* colors = new Colors::RGB[num_colors];
+								for (uint8_t i = 0; i < num_colors; i++) {
+									colors[i].r = cue[Byte::OptionsByte + current_color_index];
+									current_color_index++;
+									colors[i].g = cue[Byte::OptionsByte + current_color_index];
+									current_color_index++;
+									colors[i].b = cue[Byte::OptionsByte + current_color_index];
+									current_color_index++;
+								}
+
+								//Delete the old palette after setting the new one.
+								Colors::RGB* old_palette = palette_canvas->get_colors();
+
+								palette_canvas->set_colors(colors, num_colors);
+
+								delete [] old_palette;
+							}
 							break;
 						default:
 							break;

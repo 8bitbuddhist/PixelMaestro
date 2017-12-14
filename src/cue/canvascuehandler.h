@@ -17,6 +17,7 @@ namespace PixelMaestro {
 				DrawTriangle,
 				NextFrame,
 				RemoveFrameTiming,
+				SetColors,
 				SetCurrentFrameIndex,
 				SetFrameTiming,
 				SetNumFrames
@@ -64,6 +65,7 @@ namespace PixelMaestro {
 
 			uint8_t* next_frame(uint8_t section_num, uint8_t layer_num);
 			uint8_t* remove_frame_timing(uint8_t section_num, uint8_t layer_num);
+			uint8_t* set_colors(uint8_t section_num, uint8_t layer_num, Colors::RGB* colors, uint8_t num_colors);
 			uint8_t* set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t index);
 			uint8_t* set_frame_timing(uint8_t section_num, uint8_t layer_num, uint16_t speed);
 			uint8_t* set_num_frames(uint8_t section_num, uint8_t layer_num, uint16_t num_frames);

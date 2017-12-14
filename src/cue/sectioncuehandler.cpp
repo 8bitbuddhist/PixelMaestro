@@ -30,7 +30,7 @@ namespace PixelMaestro {
 		controller_->get_buffer()[Byte::OptionsByte + 1] = (uint8_t)preserve_cycle_index;
 		controller_->get_buffer()[Byte::OptionsByte + 2] = num_colors;
 
-		uint8_t colors_index = Byte::OptionsByte + 3;
+		uint16_t colors_index = Byte::OptionsByte + 3;
 		for (uint8_t i = 0; i < num_colors; i++) {
 			controller_->get_buffer()[colors_index] = colors[i].r;
 			colors_index++;
@@ -130,7 +130,7 @@ namespace PixelMaestro {
 			case Action::SetAnimation:
 				{
 					uint8_t num_colors = cue[Byte::OptionsByte + 2];
-					uint8_t colors_index = Byte::OptionsByte + 3;
+					uint16_t colors_index = Byte::OptionsByte + 3;
 					Colors::RGB* colors = nullptr;
 
 					if (num_colors > 0) {
