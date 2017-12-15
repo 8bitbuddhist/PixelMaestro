@@ -4,6 +4,9 @@ All notable changes to PixelMaestro will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.11] - In Progress
+### Added
+- Added `PaletteCanvas` class. PaletteCanvases draw shapes using colors defined in a palette, similar to Animations.
+
 ### Changed
 - SectionCueHandler: Fixed issue in `SetAnimation` where the old color palette was deleted before the new palette was assigned.
 - ShowCueHandler: Fixed issue where `SetTiming` was identified as `SetEvents`, causing Show Cues to fail.

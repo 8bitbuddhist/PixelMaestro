@@ -289,7 +289,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the frame timing mechanism.
+	 * Returns the frame timing.
 	 * Used in PixelMaestro Studio.
 	 * @return Frame timing.
 	 */
@@ -339,7 +339,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Removes the frame timing mechanism, disabling frame animations.
+	 * Removes the frame timing, disabling frame animations.
 	 * Used in PixelMaestro Studio to support individual frame editing.
 	 */
 	void Canvas::remove_frame_timing() {
