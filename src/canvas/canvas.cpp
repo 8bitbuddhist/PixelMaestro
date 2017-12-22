@@ -328,13 +328,11 @@ namespace PixelMaestro {
 	 * If we've hit the total number of frames, wrap back to the first frame.
 	 */
 	void Canvas::next_frame() {
-		if (num_frames_ > 1) {
-			if (current_frame_index_ == num_frames_ - 1) {
-				current_frame_index_ = 0;
-			}
-			else {
-				current_frame_index_++;
-			}
+		if (current_frame_index_ < num_frames_ - 1) {
+			current_frame_index_++;
+		}
+		else {
+			current_frame_index_ = 0;
 		}
 	}
 
@@ -352,7 +350,12 @@ namespace PixelMaestro {
 	 * @param index Index of the new frame.
 	 */
 	void Canvas::set_current_frame_index(uint16_t index) {
-		current_frame_index_ = index;
+		if (index >= num_frames_) {
+			current_frame_index_ = num_frames_ - 1;
+		}
+		else {
+			current_frame_index_ = index;
+		}
 	}
 
 	/**

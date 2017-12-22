@@ -256,7 +256,7 @@ namespace PixelMaestro {
 
 	/**
 	 * Sets a new Canvas of the specified type.
-	 * This will delete and overwrite an existing Canvas.
+	 * This will overwrite the existing Canvas.
 	 * @param type The type of Canvas to create.
 	 * @param num_frames The number of frames in the Canvas.
 	 * @return The new Canvas.

@@ -5,7 +5,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.11] - In Progress
 ### Added
-- Added `PaletteCanvas` class. PaletteCanvases draw shapes using colors defined in a palette, similar to Animations.
+- Added `PaletteCanvas` class. PaletteCanvases draw shapes using colors defined in a palette, similar to Animations. PaletteCanvases are a memory-friendly alternative to ColorCanvases.
 
 ### Changed
 - SectionCueHandler: Fixed issue in `SetAnimation` where the old color palette was deleted before the new palette was assigned.

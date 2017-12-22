@@ -671,8 +671,7 @@ namespace PixelMaestro {
 		switch ((CanvasType::Type)cue[Byte::TypeByte]) {
 			case CanvasType::AnimationCanvas:
 				{
-					AnimationCanvas* animation_canvas = static_cast<AnimationCanvas*>(section->get_canvas());
-					if (animation_canvas == nullptr) return;
+					AnimationCanvas* animation_canvas = static_cast<AnimationCanvas*>(plain_canvas);
 					switch((Action)cue[Byte::ActionByte]) {
 						case Action::DrawCircle:
 							animation_canvas->draw_circle(
@@ -683,7 +682,6 @@ namespace PixelMaestro {
 							break;
 						case Action::DrawFrame:
 							{
-								animation_canvas->clear();
 								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
 								for (uint16_t y = 0; y < frame_bounds.y; y++) {
 									for (uint16_t x = 0; x < frame_bounds.x; x++) {
@@ -746,8 +744,7 @@ namespace PixelMaestro {
 				break;
 			case CanvasType::ColorCanvas:
 				{
-					ColorCanvas* color_canvas = static_cast<ColorCanvas*>(section->get_canvas());
-					if (color_canvas == nullptr) return;
+					ColorCanvas* color_canvas = static_cast<ColorCanvas*>(plain_canvas);
 					Colors::RGB color = {
 						cue[Byte::OptionsByte],
 						cue[Byte::OptionsByte + 1],
@@ -764,7 +761,6 @@ namespace PixelMaestro {
 							break;
 						case Action::DrawFrame:
 							{
-								color_canvas->clear();
 								uint32_t current_index = Byte::OptionsByte + 2;
 								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
 								for (uint16_t y = 0; y < frame_bounds.y; y++) {
@@ -842,8 +838,7 @@ namespace PixelMaestro {
 				break;
 			case CanvasType::PaletteCanvas:
 				{
-					PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(section->get_canvas());
-					if (palette_canvas == nullptr) return;
+					PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(plain_canvas);
 					switch((Action)cue[Byte::ActionByte]) {
 						case Action::DrawCircle:
 							palette_canvas->draw_circle(
@@ -855,7 +850,6 @@ namespace PixelMaestro {
 							break;
 						case Action::DrawFrame:
 							{
-								palette_canvas->clear();
 								Point frame_bounds(cue[Byte::OptionsByte], cue[Byte::OptionsByte + 1]);
 								for (uint16_t y = 0; y < frame_bounds.y; y++) {
 									for (uint16_t x = 0; x < frame_bounds.x; x++) {

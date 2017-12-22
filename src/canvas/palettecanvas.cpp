@@ -32,8 +32,10 @@ namespace PixelMaestro {
 	 * Deletes the current frame set.
 	 */
 	void PaletteCanvas::delete_frames() {
-		for (uint16_t i = 0; i < num_frames_; i++) {
-			delete[] frames_[i];
+		if (frames_ != nullptr) {
+			for (uint16_t i = 0; i < num_frames_; i++) {
+				delete[] frames_[i];
+			}
 		}
 		delete[] frames_;
 	}

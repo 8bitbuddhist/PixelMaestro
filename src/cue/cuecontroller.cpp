@@ -209,17 +209,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Validates and runs multiple Cues sequentially.
-	 * @param cues Cues to load.
-	 * @param num_cues Number of Cues to load.
-	 */
-	void CueController::run(uint8_t *cues, uint8_t num_cues) {
-		for (uint8_t i = 0; i < num_cues; i++) {
-			run(&cues[i]);
-		}
-	}
-
-	/**
 	 * Validates the header and checksum of the provided Cue.
 	 * @param cue Cue to validate.
 	 * @return True if valid, false if not.

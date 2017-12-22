@@ -90,7 +90,6 @@ namespace PixelMaestro {
 			bool read(uint8_t byte);
 			void run();
 			void run(uint8_t* cue);
-			void run(uint8_t* cues, uint8_t num_cues);
 			bool validate_header(uint8_t* cue);
 
 		private:
