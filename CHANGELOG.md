@@ -5,11 +5,17 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.11] - In Progress
 ### Added
-- Added `PaletteCanvas` class. PaletteCanvases draw shapes using colors defined in a palette, similar to Animations. PaletteCanvases are a memory-friendly alternative to ColorCanvases.
+- Added `PaletteCanvas` class. PaletteCanvases draw shapes using colors defined in a palette, similar to Animations.
 
 ### Changed
-- SectionCueHandler: Fixed issue in `SetAnimation` where the old color palette was deleted before the new palette was assigned.
-- ShowCueHandler: Fixed issue where `SetTiming` was identified as `SetEvents`, causing Show Cues to fail.
+- AnimationCueController: Fixed index counter overflow when processing large color palettes.
+- Canvas:
+	- Fixed exception when setting frame count below `current_frame_index`.
+	- Fixed and added checks on `next_frame()`, `delete_frames()`, and `set_current_frame_index()`.
+- Cues:
+	- Fixed issue in `SectionCueHandler::set_animation()` where the old color palette was deleted before the new palette was assigned.
+	- Fixed issue where `ShowCueHandler::Actions::SetTiming` was identified as `SetEvents`, causing Show Cues to fail.
+- Section: Added ability to copy attributes when using `Section::set_animation()`.
 
 ## [v0.10] - 2017-12-05
 ### Added
