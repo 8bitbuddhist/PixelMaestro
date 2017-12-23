@@ -396,24 +396,32 @@ namespace PixelMaestro {
 	*/
 	void Section::update(const uint32_t& current_time) {
 
+		/*
+		 * Rendering is done in a specific order.
+		 * First, update all layers.
+		 * Second, update the Animation. This sets next_color_ for each Pixel.
+		 * Now that next_color_ is set, update each Pixel.
+		 * Next, draw the Canvas.
+		 * Once everything's together, scroll the result.
+		 */
 		if (layer_ != nullptr) {
 			layer_->section->update(current_time);
-		}
-
-		if (canvas_ != nullptr) {
-			canvas_->update(current_time);
 		}
 
 		if (animation_ != nullptr) {
 			animation_->update(current_time);
 		}
 
-		if (scroll_ != nullptr) {
-			update_scroll(current_time);
-		}
-
 		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
 			pixels_[pixel].update();
+		}
+
+		if (canvas_ != nullptr) {
+			canvas_->update(current_time);
+		}
+
+		if (scroll_ != nullptr) {
+			update_scroll(current_time);
 		}
 	}
 

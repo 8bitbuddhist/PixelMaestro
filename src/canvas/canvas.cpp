@@ -395,8 +395,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Redraw the Canvas.
-	 * If there are multiple frames, switch to the next frame.
+	 * Update the Canvas. If the Canvas is animated, switch to the next frame.
 	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const uint32_t& current_time) {
