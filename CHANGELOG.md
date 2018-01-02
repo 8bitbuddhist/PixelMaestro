@@ -3,7 +3,9 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.11] - In Progress
+## [v0.12] - In Progress
+
+## [v0.11] - 2017-12-23
 ### Added
 - Added `PaletteCanvas` class. PaletteCanvases draw shapes using colors defined in a palette, similar to Animations.
 

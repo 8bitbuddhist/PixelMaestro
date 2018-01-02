@@ -236,7 +236,11 @@ namespace PixelMaestro {
 				break;
 		}
 
-		if (animation_) {
+		/*
+		 * Check for an existing Animation.
+		 * If one exists and preserve_settings is true, copy the old Animation's settings to the new Animation.
+		 */
+		if (this->animation_) {
 			if (preserve_settings) {
 				animation->set_cycle_index(this->animation_->get_cycle_index());
 				animation->set_fade(this->animation_->get_fade());
@@ -250,7 +254,7 @@ namespace PixelMaestro {
 			remove_animation();
 		}
 
-		animation_ = animation;
+		this->animation_ = animation;
 		return animation_;
 	}
 
@@ -350,11 +354,12 @@ namespace PixelMaestro {
 	void Section::set_one(uint32_t pixel, Colors::RGB* color) {
 		// Only continue if Pixel is within the bounds of the array.
 		if (pixel < dimensions_.size()) {
-			/*
-				If pause is enabled, trick the Pixel into thinking the cycle is shorter than it is.
-				This results in the Pixel finishing early and waiting until the next cycle.
-			*/
-			pixels_[pixel].set_next_color(color, animation_->get_timing()->get_step_count());
+			if (animation_ != nullptr) {
+				pixels_[pixel].set_next_color(color, animation_->get_timing()->get_step_count());
+			}
+			else {
+				pixels_[pixel].set_next_color(color, 1);
+			}
 		}
 	}
 
