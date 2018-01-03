@@ -14,6 +14,7 @@
 #include "maestro.h"
 #include "point.h"
 #include "pixel.h"
+#include "utility.h"
 
 namespace PixelMaestro {
 	class Canvas;
@@ -27,29 +28,124 @@ namespace PixelMaestro {
 		public:
 			/// Sets the Section's scrolling behavior.
 			struct Scroll {
-				/// The direction and rate that the Section will scroll along the x-axis.
-				int16_t interval_x = 0;
-				/// The direction and rate that the Section will scroll along the y-axis.
-				int16_t interval_y = 0;
-
-				/// The last time the Section scrolled along the x-axis.
-				uint32_t last_scroll_x = 0;
-				/// The last time the Section scrolled along the y-axis.
-				uint32_t last_scroll_y = 0;
-
-				/// How far the Section is offset from the origin on the x-axis.
-				int16_t offset_x_ = 0;
-				/// How far the Section is offset from the origin on the y-axis.
-				int16_t offset_y_ = 0;
+				/// If true, reverses the scrolling direction along the x axis.
+				bool reverse_x = false;
+				/// If true, reverses the scrolling direction along the y axis.
+				bool reverse_y = false;
 
 				/**
-				 * Constructor. Sets the scroll rate and direction.
-				 * @param x Scrolling along the x-axis.
-				 * @param y Scrolling along the y-axis.
+				 * Sets the amount of time between a single x-axis step.
+				 * Overrides step_x when step_x is less than 1.
 				 */
-				Scroll(int16_t x, int16_t y) {
-					this->interval_x = x;
-					this->interval_y = y;
+				Timing* timing_x = nullptr;
+				/**
+				 * Sets the amount of time between a single y-axis step.
+				 * Overrides step_y when step_y is less than 1.
+				 */
+				Timing* timing_y = nullptr;
+
+				/**
+				 * Sets the number of y-axis steps to take with each update.
+				 * Overridden by timing_x when this is calculated to be less than 1.
+				 */
+				int16_t step_x = 0;
+				/**
+				 * Sets the number of y-axis steps to take with each update.
+				 * Overridden by timing_y when this is calculated to be less than 1.
+				 */
+				int16_t step_y = 0;
+
+				/// Removes the timing interval along the x axis.
+				void remove_timing_x() {
+					delete timing_x;
+					timing_x = nullptr;
+				}
+
+				/// Removes the timing interval along the y axis.
+				void remove_timing_y() {
+					delete timing_y;
+					timing_y = nullptr;
+				}
+
+				/**
+				 * Sets the scrolling behavior.
+				 * The step count is calculated by factoring in the Pixel grid size and Maestro refresh rate.
+				 * @param refresh_interval Amount of time between Maestro refreshes.
+				 * @param dimensions The dimensions of the parent Section.
+				 * @param interval_x The amount of time to complete a scroll along the x axis.
+				 * @param interval_y The amount of time to complete a scroll along the y axis.
+				 */
+				void set(uint16_t refresh_interval, Point* dimensions, int16_t interval_x, int16_t interval_y) {
+					// Toggle reverse flags if the corresponding intervals are negative.
+					this->reverse_x = (interval_x < 0);
+					this->reverse_y = (interval_y < 0);
+
+					/*
+					 * Calculate step counts.
+					 * Using the scroll interval, we need to determine how to change the offset values on each refresh.
+					 *
+					 * If the scroll interval is fast, each update moves the image > 1 pixel.
+					 * In this case, we simply adjust the offset by the number of pixels it needs to skip over per refresh.
+					 *
+					 * If the scroll interval is slow, each update moves the image < 1 pixel.
+					 * In this case, we calculate the amount of time until the offset needs to move again.
+					 * Since the time is larger than the Maestro's refresh interval, scrolling won't occur for multiple refreshes.
+					 * When scrolling does occur, it moves just one pixel.
+					 */
+
+					// Calculate the x-axis step count.
+					/*
+					 * Divide the x interval by the Maestro's refresh rate, then divide the Section's x-axis size by the result.
+					 * This gives you the number of pixels to move over per refresh.
+					 */
+					float x = dimensions->x / (float)(Utility::abs_int(interval_x) / (float)refresh_interval);
+					// If x is less than 1 pixel, calculate the amount of time until the Section scrolls by 1 pixel.
+					if (x < 1) {
+						uint16_t interval = (1 / x) * refresh_interval;
+						if (timing_x) {
+							timing_x->set_interval(interval);
+						}
+						else {
+							timing_x = new Timing(interval);
+						}
+					}
+					// x is greater than 1 pixel, so use that as our step amount.
+					else {
+						remove_timing_x();
+						step_x = x;
+					}
+
+					float y = dimensions->y / (float)(Utility::abs_int(interval_y) / (float)refresh_interval);
+					if (y > 0 && y < 1) {
+						uint16_t interval = (1 / x) * refresh_interval;
+						if (timing_y) {
+							timing_y->set_interval(interval);
+						}
+						else {
+							timing_y = new Timing(interval);
+						}
+					}
+					else {
+						remove_timing_y();
+						step_y = y;
+					}
+				}
+
+				/**
+				 * Constructor. Sets the scrolling behavior.
+				 * The step count is calculated by factoring in the Pixel grid size and Maestro refresh rate.
+				 * @param refresh_interval Amount of time between Maestro refreshes.
+				 * @param dimensions The dimensions of the parent Section.
+				 * @param interval_x The amount of time to complete a scroll along the x axis.
+				 * @param interval_y The amount of time to complete a scroll along the y axis.
+				 */
+				Scroll(uint16_t refresh_interval, Point* dimensions, int16_t interval_x, int16_t interval_y) {
+					set(refresh_interval, dimensions, interval_x, interval_y);
+				}
+
+				~Scroll() {
+					delete timing_x;
+					delete timing_y;
 				}
 			};
 

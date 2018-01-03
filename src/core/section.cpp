@@ -375,20 +375,20 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the direction and rate that the Section will scroll in.
-	 * Scroll time is determined by the Section refresh rate * the scroll interval, so an interval of '5' means scrolling occurs once on that axis every 5 refreshes.
-	 * Setting an axis to 0 (default) disables scrolling on that axis.
+	 * Sets the direction and rate that the Section will scroll.
+	 * The values determine the amount of time until the Section completes a single scroll along the respective axis.
+	 * Using a negative value reverses the scrolling direction.
+	 * Setting either axis to 0 disables scrolling on that axis.
 	 *
-	 * @param x Scrolling interval along the x-axis.
-	 * @param y Scrolling interval along the y-axis.
+	 * @param x Scrolling interval along the x axis.
+	 * @param y Scrolling interval along the y axis.
 	 */
 	Section::Scroll* Section::set_scroll(int16_t x, int16_t y) {
 		if (scroll_ == nullptr) {
-			scroll_ = new Scroll(x, y);
+			scroll_ = new Scroll(this->get_maestro()->get_timing()->get_interval(), this->get_dimensions(), x, y);
 		}
 		else {
-			scroll_->interval_x = x;
-			scroll_->interval_y = y;
+			scroll_->set(this->get_maestro()->get_timing()->get_interval(), this->get_dimensions(), x, y);
 		}
 
 		return scroll_;
@@ -431,61 +431,68 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Scrolls the Section by 1 increment.
+	 * Scrolls the Section.
 	 * @param current_time The program's current runtime.
 	 */
 	void Section::update_scroll(const uint32_t &current_time) {
-		/*
-		 * If Scroll::interval is set, scroll the Section.
-		 * The interval dictates how many refreshes will occur before the Section scrolls.
-		 * For each axis, determine the impact of interval_<axis> and make the change.
-		 * For the part of the Section that gets pushed off the grid, wrap back to the opposite side.
-		 */
-		if (scroll_ != nullptr) {
-			uint32_t target_time = current_time - scroll_->last_scroll_x;
-			if (scroll_->interval_x != 0 && (Utility::abs_int(scroll_->interval_x) * maestro_->get_timing()->get_interval()) <= target_time) {
 
-				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_->interval_x > 0) {
-					offset_.x++;
+		// Scroll x axis
+		int32_t x_step = 0;
 
-					if (offset_.x >= dimensions_.x) {
-						offset_.x = 0;
-					}
-				}
-				else if (scroll_->interval_x < 0) {
-					offset_.x--;
-
-					if (offset_.x == 0) {
-						offset_.x = dimensions_.x;
-					}
-				}
-
-				scroll_->last_scroll_x = current_time;
-			}
-
-			target_time = current_time - scroll_->last_scroll_y;
-			if (scroll_->interval_y != 0 && (Utility::abs_int(scroll_->interval_y) * maestro_->get_timing()->get_interval()) <= target_time) {
-
-				// Increment or decrement the offset depending on the scroll direction.
-				if (scroll_->interval_y > 0) {
-					offset_.y++;
-
-					if (offset_.y >= dimensions_.y) {
-						offset_.y = 0;
-					}
-				}
-				else if (scroll_->interval_y < 0) {
-					offset_.y--;
-
-					if (offset_.y == 0) {
-						offset_.y = dimensions_.y;
-					}
-				}
-
-				scroll_->last_scroll_y = current_time;
+		// If timing is used (scrolling < 1 pixel per update), determine whether it's time to scroll.
+		if (scroll_->timing_x != nullptr) {
+			if (scroll_->timing_x->update(current_time)) {
+				x_step = 1;
 			}
 		}
+		// If timing is not used (scrolling > 1 pixel per update), apply the scroll amount directly to the offset.
+		else if (scroll_->step_x > 0) {
+			x_step = scroll_->step_x;
+		}
+
+		// Check to see if we need to reverse the x-axis movement
+		if (scroll_->reverse_x) {
+			x_step *= -1;
+		}
+
+		// Check to see if we need to reset the offset
+		if (x_step > 0 && offset_.x >= dimensions_.x) {
+			offset_.x = 0;
+		}
+		else if (x_step < 0 && offset_.x == 0) {
+			offset_.x = dimensions_.x;
+		}
+
+		// Finally, apply the movement
+		offset_.x += x_step;
+
+
+		// Scroll y axis
+		int32_t y_step = 0;
+		if (scroll_->timing_y != nullptr) {
+			if (scroll_->timing_y->update(current_time)) {
+				y_step = 1;
+			}
+		}
+		else if (scroll_->step_y > 0) {
+			y_step = scroll_->step_y;
+		}
+
+		// Check to see if we need to reverse the y-axis movement
+		if (scroll_->reverse_y) {
+			y_step *= -1;
+		}
+
+		// Check to see if we need to reset the offset
+		if (y_step > 0 && offset_.y >= dimensions_.y) {
+			offset_.y = 0;
+		}
+		else if (y_step < 0 && offset_.y == 0) {
+			offset_.y = dimensions_.y;
+		}
+
+		// Finally, apply the movement
+		offset_.y += y_step;
 	}
 
 	Section::~Section() {
