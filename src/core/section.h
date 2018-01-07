@@ -48,12 +48,12 @@ namespace PixelMaestro {
 				 * Sets the number of y-axis steps to take with each update.
 				 * Overridden by timing_x when this is calculated to be less than 1.
 				 */
-				int16_t step_x = 0;
+				uint16_t step_x = 0;
 				/**
 				 * Sets the number of y-axis steps to take with each update.
 				 * Overridden by timing_y when this is calculated to be less than 1.
 				 */
-				int16_t step_y = 0;
+				uint16_t step_y = 0;
 
 				/// Removes the timing interval along the x axis.
 				void remove_timing_x() {
@@ -74,31 +74,31 @@ namespace PixelMaestro {
 				 * @param dimensions The dimensions of the parent Section.
 				 * @param interval_x The amount of time to complete a scroll along the x axis.
 				 * @param interval_y The amount of time to complete a scroll along the y axis.
+				 * @param reverse_x If true, reverses the scrolling direction along the x axis.
+				 * @param reverse_y If true, reverses the scrolling direction along the y axis.
 				 */
-				void set(uint16_t refresh_interval, Point* dimensions, int16_t interval_x, int16_t interval_y) {
-					// Toggle reverse flags if the corresponding intervals are negative.
-					this->reverse_x = (interval_x < 0);
-					this->reverse_y = (interval_y < 0);
-
+				void set(uint16_t refresh_interval, Point* dimensions, uint16_t interval_x, uint16_t interval_y, bool reverse_x = false, bool reverse_y = false) {
+					this->reverse_x = reverse_x;
+					this->reverse_y = reverse_y;
 					/*
 					 * Calculate step counts.
 					 * Using the scroll interval, we need to determine how to change the offset values on each refresh.
 					 *
-					 * If the scroll interval is fast, each update moves the image > 1 pixel.
-					 * In this case, we simply adjust the offset by the number of pixels it needs to skip over per refresh.
+					 * If the interval is low (Section scrolls quickly), each update moves the image > 1 pixel.
+					 * In this case, we simply adjust the offset by the number of pixels it needs to move per refresh.
 					 *
-					 * If the scroll interval is slow, each update moves the image < 1 pixel.
-					 * In this case, we calculate the amount of time until the offset needs to move again.
-					 * Since the time is larger than the Maestro's refresh interval, scrolling won't occur for multiple refreshes.
-					 * When scrolling does occur, it moves just one pixel.
+					 * If the interval is high (Section scrolls slowly), each update moves the image < 1 pixel.
+					 * In this case, we calculate the amount of time until the offset moves 1 pixel.
+					 * If this time is larger than the Maestro's refresh interval, scrolling won't occur until at least the next refresh.
 					 */
 
-					// Calculate the x-axis step count.
 					/*
+					 * Calculate the x-axis step count.
+					 *
 					 * Divide the x interval by the Maestro's refresh rate, then divide the Section's x-axis size by the result.
 					 * This gives you the number of pixels to move over per refresh.
 					 */
-					float x = dimensions->x / (float)(Utility::abs_int(interval_x) / (float)refresh_interval);
+					float x = dimensions->x / (float)(interval_x / (float)refresh_interval);
 					// If x is less than 1 pixel, calculate the amount of time until the Section scrolls by 1 pixel.
 					if (x < 1) {
 						uint16_t interval = (1 / x) * refresh_interval;
@@ -109,13 +109,13 @@ namespace PixelMaestro {
 							timing_x = new Timing(interval);
 						}
 					}
-					// x is greater than 1 pixel, so use that as our step amount.
+					// x is greater than 1 pixel, so use x as our step amount.
 					else {
 						remove_timing_x();
 						step_x = x;
 					}
 
-					float y = dimensions->y / (float)(Utility::abs_int(interval_y) / (float)refresh_interval);
+					float y = dimensions->y / (float)(interval_y / (float)refresh_interval);
 					if (y > 0 && y < 1) {
 						uint16_t interval = (1 / x) * refresh_interval;
 						if (timing_y) {
@@ -129,18 +129,6 @@ namespace PixelMaestro {
 						remove_timing_y();
 						step_y = y;
 					}
-				}
-
-				/**
-				 * Constructor. Sets the scrolling behavior.
-				 * The step count is calculated by factoring in the Pixel grid size and Maestro refresh rate.
-				 * @param refresh_interval Amount of time between Maestro refreshes.
-				 * @param dimensions The dimensions of the parent Section.
-				 * @param interval_x The amount of time to complete a scroll along the x axis.
-				 * @param interval_y The amount of time to complete a scroll along the y axis.
-				 */
-				Scroll(uint16_t refresh_interval, Point* dimensions, int16_t interval_x, int16_t interval_y) {
-					set(refresh_interval, dimensions, interval_x, interval_y);
 				}
 
 				~Scroll() {
@@ -210,7 +198,7 @@ namespace PixelMaestro {
 			Point* set_offset(uint16_t x, uint16_t y);
 			void set_one(uint32_t pixel, Colors::RGB* color);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
-			Scroll* set_scroll(int16_t x, int16_t y);
+			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			void update(const uint32_t& current_time);
 			void update_scroll(const uint32_t& current_time);
 

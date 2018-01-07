@@ -4,6 +4,8 @@ All notable changes to PixelMaestro will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.12] - In Progress
+### Changed
+- Section: Changed Scrolling parameters. Parameters now represent the amount of time to complete a scroll along the respective axis. Added separate reverse parameters for reversing the scrolling direction.
 
 ## [v0.11] - 2017-12-23
 ### Added

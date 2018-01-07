@@ -382,14 +382,15 @@ namespace PixelMaestro {
 	 *
 	 * @param x Scrolling interval along the x axis.
 	 * @param y Scrolling interval along the y axis.
+	 * @param reverse_x If true, reverses the scrolling direction along the x axis.
+	 * @param reverse_y If true, reverses the scrolling direction along the y axis.
 	 */
-	Section::Scroll* Section::set_scroll(int16_t x, int16_t y) {
+	Section::Scroll* Section::set_scroll(uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
 		if (scroll_ == nullptr) {
-			scroll_ = new Scroll(this->get_maestro()->get_timing()->get_interval(), this->get_dimensions(), x, y);
+			scroll_ = new Scroll();
 		}
-		else {
-			scroll_->set(this->get_maestro()->get_timing()->get_interval(), this->get_dimensions(), x, y);
-		}
+
+		scroll_->set(this->get_maestro()->get_timing()->get_interval(), this->get_dimensions(), x, y, reverse_x, reverse_y);
 
 		return scroll_;
 	}

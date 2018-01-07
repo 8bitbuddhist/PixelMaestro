@@ -99,7 +99,7 @@ namespace PixelMaestro {
 		return controller_->assemble(Byte::OptionsByte + 4);
 	}
 
-	uint8_t* SectionCueHandler::set_scroll(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
+	uint8_t* SectionCueHandler::set_scroll(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
@@ -111,8 +111,10 @@ namespace PixelMaestro {
 		controller_->get_buffer()[Byte::OptionsByte + 1] = x_byte.converted_1;
 		controller_->get_buffer()[Byte::OptionsByte + 2] = y_byte.converted_0;
 		controller_->get_buffer()[Byte::OptionsByte + 3] = y_byte.converted_1;
+		controller_->get_buffer()[Byte::OptionsByte + 4] = (uint8_t)reverse_x;
+		controller_->get_buffer()[Byte::OptionsByte + 5] = (uint8_t)reverse_y;
 
-		return controller_->assemble(Byte::OptionsByte + 4);
+		return controller_->assemble(Byte::OptionsByte + 6);
 	}
 
 	void SectionCueHandler::run(uint8_t *cue) {
@@ -178,7 +180,9 @@ namespace PixelMaestro {
 			case Action::SetScroll:
 				section->set_scroll(
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2])
+					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]),
+					(bool)cue[Byte::OptionsByte + 4],
+					(bool)cue[Byte::OptionsByte + 5]
 				);
 				break;
 			default:
