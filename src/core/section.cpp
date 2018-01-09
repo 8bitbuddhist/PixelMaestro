@@ -437,63 +437,66 @@ namespace PixelMaestro {
 	 */
 	void Section::update_scroll(const uint32_t &current_time) {
 
+		uint16_t x_step, y_step = 0;
+
 		// Scroll x axis
-		int32_t x_step = 0;
+		if (scroll_->timing_x != nullptr || scroll_->step_x != 0) {
+			// If timing is used (scrolling < 1 pixel per update), determine whether it's time to scroll.
+			if (scroll_->timing_x != nullptr) {
+				if (scroll_->timing_x->update(current_time)) {
+					x_step = 1;
+				}
+			}
+			// If timing is not used (scrolling > 1 pixel per update), apply the scroll amount directly to the offset.
+			else if (scroll_->step_x > 0) {
+				x_step = scroll_->step_x;
+			}
 
-		// If timing is used (scrolling < 1 pixel per update), determine whether it's time to scroll.
-		if (scroll_->timing_x != nullptr) {
-			if (scroll_->timing_x->update(current_time)) {
-				x_step = 1;
+			// Check to see if we need to reset the offset
+			if (!scroll_->reverse_x && offset_.x >= dimensions_.x) {
+				offset_.x = 0;
+			}
+			else if (scroll_->reverse_x && offset_.x == 0) {
+				offset_.x = dimensions_.x;
+			}
+
+			// Finally, apply the movement
+			if (!scroll_->reverse_x) {
+				offset_.x += x_step;
+			}
+			else {
+				offset_.x -= x_step;
 			}
 		}
-		// If timing is not used (scrolling > 1 pixel per update), apply the scroll amount directly to the offset.
-		else if (scroll_->step_x > 0) {
-			x_step = scroll_->step_x;
-		}
-
-		// Check to see if we need to reverse the x-axis movement
-		if (scroll_->reverse_x) {
-			x_step *= -1;
-		}
-
-		// Check to see if we need to reset the offset
-		if (x_step > 0 && offset_.x >= dimensions_.x) {
-			offset_.x = 0;
-		}
-		else if (x_step < 0 && offset_.x == 0) {
-			offset_.x = dimensions_.x;
-		}
-
-		// Finally, apply the movement
-		offset_.x += x_step;
 
 
-		// Scroll y axis
-		int32_t y_step = 0;
-		if (scroll_->timing_y != nullptr) {
-			if (scroll_->timing_y->update(current_time)) {
-				y_step = 1;
+		// Repeat for y axis
+		if (scroll_->timing_y != nullptr || scroll_->step_y != 0) {
+			if (scroll_->timing_y != nullptr) {
+				if (scroll_->timing_y->update(current_time)) {
+					y_step = 1;
+				}
+			}
+			else if (scroll_->step_y > 0) {
+				y_step = scroll_->step_y;
+			}
+
+			// Check to see if we need to reset the offset
+			if (!scroll_->reverse_y && offset_.y >= dimensions_.y) {
+				offset_.y = 0;
+			}
+			else if (scroll_->reverse_y && offset_.y == 0) {
+				offset_.y = dimensions_.y;
+			}
+
+			// Finally, apply the movement
+			if (!scroll_->reverse_y) {
+				offset_.y += y_step;
+			}
+			else {
+				offset_.y -= y_step;
 			}
 		}
-		else if (scroll_->step_y > 0) {
-			y_step = scroll_->step_y;
-		}
-
-		// Check to see if we need to reverse the y-axis movement
-		if (scroll_->reverse_y) {
-			y_step *= -1;
-		}
-
-		// Check to see if we need to reset the offset
-		if (y_step > 0 && offset_.y >= dimensions_.y) {
-			offset_.y = 0;
-		}
-		else if (y_step < 0 && offset_.y == 0) {
-			offset_.y = dimensions_.y;
-		}
-
-		// Finally, apply the movement
-		offset_.y += y_step;
 	}
 
 	Section::~Section() {

@@ -100,7 +100,7 @@ namespace PixelMaestro {
 					 */
 					float x = dimensions->x / (float)(interval_x / (float)refresh_interval);
 					// If x is less than 1 pixel, calculate the amount of time until the Section scrolls by 1 pixel.
-					if (x < 1) {
+					if (x > 0 && x < 1) {
 						uint16_t interval = (1 / x) * refresh_interval;
 						if (timing_x) {
 							timing_x->set_interval(interval);
