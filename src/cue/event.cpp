@@ -65,14 +65,14 @@ namespace PixelMaestro {
 	 * Sets the Event's Cue.
 	 * @param cue Cue to run when the Event is triggered.
 	 */
-	void Event::set_cue(uint8_t *cue) {
+	void Event::set_cue(uint8_t* cue) {
 		if (this->cue_ != nullptr) {
 			delete [] this->cue_;
 		}
 
-		uint8_t size = IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + CueController::Byte::PayloadByte;
+		uint16_t size = IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + CueController::Byte::PayloadByte;
 		this->cue_ = new uint8_t[size];
-		for (uint8_t i = 0; i < size; i++) {
+		for (uint16_t i = 0; i < size; i++) {
 			this->cue_[i] = cue[i];
 		}
 	}
