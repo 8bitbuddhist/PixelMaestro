@@ -3,9 +3,12 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.12] - In Progress
+## [v0.12] - 2018-01-22
 ### Changed
-- Section: Changed Scrolling parameters. Parameters now represent the amount of time to complete a scroll along the respective axis. Added separate reverse parameters for reversing the scrolling direction.
+- Event: Increased buffer size.
+- Section:
+	- Changed Scrolling parameters. Parameters now represent the amount of time to complete a scroll along the respective axis. Added separate reverse parameters for reversing the scrolling direction.
+	- Modified `set_one()` so that it can be used without an Animation.
 
 ## [v0.11] - 2017-12-23
 ### Added
@@ -33,7 +36,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Canvas: Moved scrolling and offseting methods to Section.
 - Pixel: Added nullptr check to `Pixel::set_next_color()` to prevent invalid colors when using color changing Cues.
 - Several bugfixes and optimizations.
-	
+
 ### Removed
 - Removed ability to set an Animation's center (use Section offset instead).
 - Removed `Scroll::repeat` parameter. The grid will repeat by default.
@@ -53,7 +56,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Section:
 	- Added a reference to each Section's parent Maestro.
 	- Renamed `Overlays` to `Layers`.
-	
+
 ### Removed
 - Maestro:
 	- Removed `running` option.
@@ -170,7 +173,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Known Issues
 - Fatal exception when closing the Animation Previewer without quitting the program.
 
-## [v0.6] - 2017-09-17 
+## [v0.6] - 2017-09-17
 ### Added
 - Animations:
 	- New Animations interface.
