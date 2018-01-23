@@ -14,7 +14,7 @@
 #include "maestro.h"
 #include "point.h"
 #include "pixel.h"
-#include "utility.h"
+#include "../utility.h"
 
 namespace PixelMaestro {
 	class Canvas;
