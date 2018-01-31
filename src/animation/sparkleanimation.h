@@ -13,6 +13,7 @@ namespace PixelMaestro {
 			void update();
 
 		private:
+			Colors::RGB black_ = {0, 0, 0};
 			/**
 			 * Threshold for activating a Pixel (0 - 100).
 			 * The higher the threshold, the more likely a Pixel will be activated.

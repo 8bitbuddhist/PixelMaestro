@@ -18,6 +18,7 @@ namespace PixelMaestro {
 			void update();
 
 		private:
+			Colors::RGB black_ = {0, 0, 0};
 
 			/// Stores complex real and imaginary numbers for each Pixel.
 			double c_real_, c_imaginary_;

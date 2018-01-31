@@ -1,4 +1,3 @@
-#include "../colorpresets.h"
 #include "../utility.h"
 #include "sparkleanimation.h"
 
@@ -32,7 +31,7 @@ namespace PixelMaestro {
 						section_->set_one(x, y, get_color_at_index(y));
 					}
 					else {
-						section_->set_one(x, y, &ColorPresets::BLACK);
+						section_->set_one(x, y, &black_);
 					}
 				}
 			}
@@ -44,7 +43,7 @@ namespace PixelMaestro {
 						section_->set_one(x, y, get_color_at_index(x));
 					}
 					else {
-						section_->set_one(x, y, &ColorPresets::BLACK);
+						section_->set_one(x, y, &black_);
 					}
 				}
 			}

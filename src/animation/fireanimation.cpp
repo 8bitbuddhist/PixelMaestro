@@ -3,12 +3,7 @@
 namespace PixelMaestro {
 	FireAnimation::FireAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors)	{
 		type_ = AnimationType::Fire;
-
-		// Initialize color index array
-		color_indices_ = new uint8_t*[section_->get_dimensions()->y];
-		for (uint8_t y = 0; y < section_->get_dimensions()->y; y++) {
-			color_indices_[y] = new uint8_t[section_->get_dimensions()->x] {0};
-		}
+		reset_color_indices(section->get_dimensions());
 	}
 
 	uint8_t FireAnimation::get_divisor() {
@@ -17,6 +12,21 @@ namespace PixelMaestro {
 
 	uint8_t FireAnimation::get_multiplier() {
 		return this->multiplier_;
+	}
+
+	void FireAnimation::reset_color_indices(Point *dimensions) {
+		// Clear color indices
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
+			delete [] buffer_[y];
+		}
+		delete [] buffer_;
+
+		// Re-initialize color indices
+		dimensions_.set(dimensions->x, dimensions->y);
+		buffer_ = new uint8_t*[dimensions->y];
+		for (uint8_t y = 0; y < dimensions->y; y++) {
+			buffer_[y] = new uint8_t[dimensions->x] {0};
+		}
 	}
 
 	void FireAnimation::set_divisor(uint8_t divisor) {
@@ -28,46 +38,41 @@ namespace PixelMaestro {
 	}
 
 	void FireAnimation::update() {
+		// Check to see if the grid size has changed
+		if (dimensions_ != *section_->get_dimensions()) {
+			reset_color_indices(section_->get_dimensions());
+		}
+
 		// Initialize the bottom row
-		for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-			//color_indices_[section_->get_dimensions()->y - 1][x] = Utility::rand(32768) % num_colors_;
-			color_indices_[section_->get_dimensions()->y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % num_colors_;
+		for (uint16_t x = 0; x < dimensions_.x; x++) {
+			buffer_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % num_colors_;
 		}
 
 		// Update the remaining pixels
-		for (uint16_t y = 0; y < section_->get_dimensions()->y - 1; y++) {
-			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+		for (uint16_t y = 0; y < dimensions_.y - 1; y++) {
+			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				// http://lodev.org/cgtutor/fire.html
-				color_indices_[y][x] =
-					((color_indices_[(y + 1) % section_->get_dimensions()->y][(x - 1 + section_->get_dimensions()->x) % section_->get_dimensions()->x] +
-					color_indices_[(y + 1) % section_->get_dimensions()->y][x % section_->get_dimensions()->x] +
-					color_indices_[(y + 1) % section_->get_dimensions()->y][(x + 1) % section_->get_dimensions()->x] +
-					color_indices_[(y + 2) % section_->get_dimensions()->y][x % section_->get_dimensions()->x]) *
+				buffer_[y][x] =
+					((buffer_[(y + 1) % dimensions_.y][(x - 1 + dimensions_.x) % dimensions_.x] +
+					buffer_[(y + 1) % dimensions_.y][x % dimensions_.x] +
+					buffer_[(y + 1) % dimensions_.y][(x + 1) % dimensions_.x] +
+					buffer_[(y + 2) % dimensions_.y][x % dimensions_.x]) *
 					this->multiplier_) / this->divisor_;
-
-				/*
-				 * fire[y][x] =
-				((fire[(y + 1) % h][(x - 1 + w) % w]
-				+ fire[(y + 1) % h][(x) % w]
-				+ fire[(y + 1) % h][(x + 1) % w]
-				+ fire[(y + 2) % h][(x) % w])
-				* 32) / 129;
-				*/
 			}
 		}
 
-		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-				section_->set_one(x, y, &colors_[color_indices_[y][x] % num_colors_]);
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
+			for (uint16_t x = 0; x < dimensions_.x; x++) {
+				section_->set_one(x, y, &colors_[buffer_[y][x] % num_colors_]);
 			}
 		}
 	}
 
 	FireAnimation::~FireAnimation() {
-		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-			delete [] color_indices_[y];
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
+			delete [] buffer_[y];
 		}
 
-		delete [] color_indices_;
+		delete [] buffer_;
 	}
 }

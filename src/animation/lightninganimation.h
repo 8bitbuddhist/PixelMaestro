@@ -18,6 +18,8 @@ namespace PixelMaestro {
 			void update();
 
 		private:
+			Colors::RGB black_ = {0, 0, 0};
+
 			/// The chance that a bolt will drift downwards (or left in vertical mode).
 			uint8_t down_threshold_;
 
