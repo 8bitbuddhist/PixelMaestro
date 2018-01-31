@@ -3,6 +3,11 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.13] - In Progress
+### Added
+- Animations
+	- Added new Fire animation.
+
 ## [v0.12] - 2018-01-22
 ### Changed
 - Event: Increased buffer size.

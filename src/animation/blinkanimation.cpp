@@ -1,4 +1,3 @@
-#include "../colorpresets.h"
 #include "blinkanimation.h"
 
 namespace PixelMaestro {
@@ -26,7 +25,7 @@ namespace PixelMaestro {
 		}
 		else {
 			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
-				section_->set_one(pixel, &ColorPresets::BLACK);
+				section_->set_one(pixel, &black_);
 			}
 		}
 

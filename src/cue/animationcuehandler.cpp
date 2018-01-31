@@ -1,3 +1,4 @@
+#include "../animation/fireanimation.h"
 #include "../animation/lightninganimation.h"
 #include "../animation/plasmaanimation.h"
 #include "../animation/radialanimation.h"
@@ -7,6 +8,17 @@
 namespace PixelMaestro {
 
 	// Animation-specific Cues
+	uint8_t* AnimationCueHandler::set_fire_options(uint8_t section_num, uint8_t layer_num, uint8_t multiplier, uint8_t divisor) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetFireOptions;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[Byte::OptionsByte] = multiplier;
+		controller_->get_buffer()[Byte::OptionsByte + 1] = divisor;
+
+		return controller_->assemble((Byte::OptionsByte + 2));
+	}
+
 	uint8_t* AnimationCueHandler::set_lightning_options(uint8_t section_num, uint8_t layer_num, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance) {
 		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
 		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetLightningOptions;
@@ -180,6 +192,13 @@ namespace PixelMaestro {
 				break;
 			case Action::SetFade:
 				animation->set_fade(cue[Byte::OptionsByte]);
+				break;
+			case Action::SetFireOptions:
+				{
+					FireAnimation* fa = static_cast<FireAnimation*>(animation);
+					fa->set_multiplier(cue[Byte::OptionsByte]);
+					fa->set_divisor(cue[Byte::OptionsByte + 1]);
+				}
 				break;
 			case Action::SetLightningOptions:
 				{

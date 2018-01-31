@@ -5,6 +5,7 @@
 
 #include "../animation/blinkanimation.h"
 #include "../animation/cycleanimation.h"
+#include "../animation/fireanimation.h"
 #include "../animation/lightninganimation.h"
 #include "../animation/mandelbrotanimation.h"
 #include "../animation/mergeanimation.h"
@@ -206,6 +207,9 @@ namespace PixelMaestro {
 				break;
 			case AnimationType::Type::Cycle:
 				animation = new CycleAnimation(this, colors, num_colors);
+				break;
+			case AnimationType::Type::Fire:
+				animation = new FireAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Type::Lightning:
 				animation = new LightningAnimation(this, colors, num_colors);
