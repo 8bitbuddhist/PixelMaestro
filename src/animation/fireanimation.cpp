@@ -1,13 +1,10 @@
+#include "../utility.h"
 #include "fireanimation.h"
 
 namespace PixelMaestro {
 	FireAnimation::FireAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors)	{
 		type_ = AnimationType::Fire;
 		reset_color_indices(section->get_dimensions());
-	}
-
-	uint8_t FireAnimation::get_divisor() {
-		return this->divisor_;
 	}
 
 	uint8_t FireAnimation::get_multiplier() {
@@ -29,10 +26,6 @@ namespace PixelMaestro {
 		}
 	}
 
-	void FireAnimation::set_divisor(uint8_t divisor) {
-		this->divisor_ = divisor;
-	}
-
 	void FireAnimation::set_multiplier(uint8_t multiplier) {
 		this->multiplier_ = multiplier;
 	}
@@ -43,24 +36,25 @@ namespace PixelMaestro {
 			reset_color_indices(section_->get_dimensions());
 		}
 
-		// Initialize the bottom row
+		// Initialize the bottom row buffer
 		for (uint16_t x = 0; x < dimensions_.x; x++) {
 			buffer_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % num_colors_;
 		}
 
-		// Update the remaining pixels
+		// Set the buffer for the remaining pixels
 		for (uint16_t y = 0; y < dimensions_.y - 1; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				// http://lodev.org/cgtutor/fire.html
 				buffer_[y][x] =
-					((buffer_[(y + 1) % dimensions_.y][(x - 1 + dimensions_.x) % dimensions_.x] +
+					(buffer_[(y + 1) % dimensions_.y][(x - 1 + dimensions_.x) % dimensions_.x] +
 					buffer_[(y + 1) % dimensions_.y][x % dimensions_.x] +
 					buffer_[(y + 1) % dimensions_.y][(x + 1) % dimensions_.x] +
 					buffer_[(y + 2) % dimensions_.y][x % dimensions_.x]) *
-					this->multiplier_) / this->divisor_;
+					(float)((this->multiplier_ + 200) / (float)1000);	// 200 is just a magic number added to the multiplier to get a decently sized flame effect without hitting the limits of uint8_t.
 			}
 		}
 
+		// Apply the buffer to the Pixel grid
 		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				section_->set_one(x, y, &colors_[buffer_[y][x] % num_colors_]);
