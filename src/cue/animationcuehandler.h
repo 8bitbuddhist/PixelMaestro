@@ -13,14 +13,14 @@ namespace PixelMaestro {
 				SetColors,
 				SetCycleIndex,
 				SetFade,
-				SetFireOptions,
 				SetLightningOptions,
 				SetOrientation,
 				SetPlasmaOptions,
 				SetRadialOptions,
 				SetReverse,
 				SetSparkleOptions,
-				SetTiming
+				SetTiming,
+				SetFireOptions
 			};
 
 			enum Byte : uint8_t {

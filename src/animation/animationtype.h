@@ -12,7 +12,6 @@ namespace PixelMaestro {
 			enum Type : uint8_t {
 				Blink,
 				Cycle,
-				Fire,
 				Lightning,
 				Mandelbrot,
 				Merge,
@@ -21,7 +20,8 @@ namespace PixelMaestro {
 				Random,
 				Solid,
 				Sparkle,
-				Wave
+				Wave,
+				Fire
 			};
 	};
 }
