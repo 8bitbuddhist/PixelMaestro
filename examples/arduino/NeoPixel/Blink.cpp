@@ -22,7 +22,7 @@ void setup () {
 		maestro.set_brightness(25);
 
 		// Creates a new blinking animation and sets the color palette to the ColorWheel preset
-		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Type::Blink, ColorPresets::COLORWHEEL, 12);
+		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Type::Blink, ColorPresets::Colorwheel, 12);
 
 		// Sets the amount of time between animation cycles to 500ms
 		animation->set_timing(500);

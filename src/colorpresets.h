@@ -11,27 +11,27 @@ namespace PixelMaestro {
 	class ColorPresets {
 		public:
 			// Basic color set.
-			static Colors::RGB RED;
-			static Colors::RGB GREEN;
-			static Colors::RGB BLUE;
-			static Colors::RGB WHITE;
-			static Colors::RGB BLACK;
+			static Colors::RGB Red;
+			static Colors::RGB Green;
+			static Colors::RGB Blue;
+			static Colors::RGB White;
+			static Colors::RGB Black;
 
 			// Extended color set.
-			static Colors::RGB ORANGE;
-			static Colors::RGB YELLOW;
-			static Colors::RGB CHARTREUSE;
-			static Colors::RGB SPRING;
-			static Colors::RGB CYAN;
-			static Colors::RGB AZURE;
-			static Colors::RGB VIOLET;
-			static Colors::RGB MAGENTA;
-			static Colors::RGB ROSE;
-			static Colors::RGB INDIGO;
+			static Colors::RGB Orange;
+			static Colors::RGB Yellow;
+			static Colors::RGB Chartreuse;
+			static Colors::RGB Spring;
+			static Colors::RGB Cyan;
+			static Colors::RGB Azure;
+			static Colors::RGB Violet;
+			static Colors::RGB Magenta;
+			static Colors::RGB Rose;
+			static Colors::RGB Indigo;
 
 			// Sample color arrays.
-			static Colors::RGB COLORWHEEL[];
-			static Colors::RGB RAINBOW[];
+			static Colors::RGB Colorwheel[];
+			static Colors::RGB Rainbow[];
 	};
 }
 
