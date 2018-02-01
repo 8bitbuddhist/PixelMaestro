@@ -36,11 +36,11 @@ void setup () {
 }
 
 void loop() {
-    maestro.update(millis());
+    if (maestro.update(millis())) {
+  		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
+  			ws.set_crgb_at(x, RGBtoCRGB(maestro.get_pixel_color(0, x, 0)));
+  		}
 
-		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-			ws.set_crgb_at(x, RGBtoCRGB(maestro.get_pixel_color(0, x, 0)));
-		}
-
-    ws.sync();
+      ws.sync();
+    }
 }

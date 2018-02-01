@@ -159,8 +159,9 @@ namespace PixelMaestro {
 
 		@param current_time Current program runtime.
 		@param force If true, bypass the refresh interval check and force the Maestro to update.
+		@return True if the Maestro has changed.
 	*/
-	void Maestro::update(const uint32_t& current_time, bool force) {
+	bool Maestro::update(const uint32_t& current_time, bool force) {
 		// Update if the time is exceeded or if force is true
 		if (timing_.update(current_time) || force) {
 			// Run the Show
@@ -172,7 +173,11 @@ namespace PixelMaestro {
 			for (uint8_t section = 0; section < num_sections_; section++) {
 				sections_[section].update(current_time);
 			}
+
+			return true;
 		}
+
+		return false;
 	}
 
 	Maestro::~Maestro() {

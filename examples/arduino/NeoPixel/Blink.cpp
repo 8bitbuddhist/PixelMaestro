@@ -29,15 +29,15 @@ void setup () {
 }
 
 void loop() {
-    maestro.update(millis());
+    if (maestro.update(millis())) {
+  		// Copies each Pixel's color to the NeoPixel strip
+  		for (unsigned char y = 0; y < maestro.get_section(0)->get_dimensions()->y; y++) {
+  			for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
+  				Colors::RGB color = maestro.get_pixel_color(0, x, y);
+  				strip.setPixelColor(x, color.r, color.g, color.b);
+  			}
+  		}
 
-		// Copies each Pixel's color to the NeoPixel strip
-		for (unsigned char y = 0; y < maestro.get_section(0)->get_dimensions()->y; y++) {
-			for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-				Colors::RGB color = maestro.get_pixel_color(0, x, y);
-				strip.setPixelColor(x, color.r, color.g, color.b);
-			}
-		}
-
-		strip.show();
+  		strip.show();
+    }
 }
