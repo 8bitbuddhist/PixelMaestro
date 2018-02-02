@@ -199,6 +199,7 @@ namespace PixelMaestro {
 			void set_one(uint32_t pixel, Colors::RGB* color);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
 			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
+			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);
 			void update_scroll(const uint32_t& current_time);
 

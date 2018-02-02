@@ -33,6 +33,7 @@ namespace PixelMaestro {
 			void set_sections(Section* sections, uint8_t num_sections);
 			Timing* set_timing(uint16_t interval);
 			Show* set_show(Event* events, uint16_t num_events);
+			void sync(const uint32_t& new_time = 0);
 			bool update(const uint32_t& current_time, bool force = false);
 
 		private:

@@ -155,6 +155,17 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets each component's last refresh time (including the Maestro itself).
+	 * @param new_time The new refresh time. Leave blank to set to 0.
+	 */
+	void Maestro::sync(const uint32_t& new_time) {
+		this->get_timing()->set_last_time(new_time);
+		for (uint8_t section = 0; section < num_sections_; section++) {
+			sections_[section].sync(new_time);
+		}
+	}
+
+	/**
 		Main update routine.
 
 		@param current_time Current program runtime.

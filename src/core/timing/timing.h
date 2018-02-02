@@ -14,6 +14,7 @@ namespace PixelMaestro {
 			uint16_t get_interval() const;
 			uint32_t get_last_time() const;
 			void set_interval(uint16_t interval);
+			void set_last_time(uint32_t last_time = 0);
 			bool update(const uint32_t& current_time);
 
 		protected:

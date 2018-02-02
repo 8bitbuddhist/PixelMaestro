@@ -39,6 +39,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the last time the timer ran.
+	 * @param last_time Time (in milliseconds) that the timer last ran.
+	 */
+	void Timing::set_last_time(uint32_t last_time) {
+		this->last_time_ = last_time;
+	}
+
+	/**
 	 * Checks timings.
 	 * @param current_time Current program runtime.
 	 * @return If the runtime exceeds the interval, return true.

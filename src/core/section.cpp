@@ -400,6 +400,26 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the last update time of each component's timer.
+	 * @param new_time New last refresh time.
+	 */
+	void Section::sync(const uint32_t &new_time) {
+		if (layer_ != nullptr) {
+			layer_->section->sync(new_time);
+		}
+		if (animation_ != nullptr) {
+			animation_->get_timing()->set_last_time(new_time);
+		}
+		if (canvas_ != nullptr && canvas_->get_frame_timing() != nullptr) {
+			canvas_->get_frame_timing()->set_last_time(new_time);
+		}
+		if (scroll_ != nullptr) {
+			scroll_->timing_x->set_last_time(new_time);
+			scroll_->timing_y->set_last_time(new_time);
+		}
+	}
+
+	/**
 		Main update routine.
 
 		@param current_time Program runtime.
