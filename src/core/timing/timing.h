@@ -15,6 +15,8 @@ namespace PixelMaestro {
 			uint32_t get_last_time() const;
 			void set_interval(uint16_t interval);
 			void set_last_time(uint32_t last_time = 0);
+			void start();
+			void stop();
 			bool update(const uint32_t& current_time);
 
 		protected:
@@ -23,6 +25,9 @@ namespace PixelMaestro {
 
 			/// The amount of time (in milliseconds) between events.
 			uint16_t interval_;
+
+			/// Whether the timer is currently running.
+			bool running_ = true;
 	};
 }
 

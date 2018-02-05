@@ -625,6 +625,26 @@ namespace PixelMaestro {
 		return controller_->assemble(Byte::OptionsByte + 2);
 	}
 
+	uint8_t* CanvasCueHandler::start_frame_timing(uint8_t section_num, uint8_t layer_num) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::StartFrameTiming;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+
+		return controller_->assemble(Byte::OptionsByte);
+	}
+
+	uint8_t* CanvasCueHandler::stop_frame_timing(uint8_t section_num, uint8_t layer_num) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::StopFrameTiming;
+		controller_->get_buffer()[Byte::TypeByte] = 255;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+
+		return controller_->assemble(Byte::OptionsByte);
+	}
+
 	Font* CanvasCueHandler::get_font(Font::Type font_type) {
 		Font* font = nullptr;
 		switch (font_type) {
@@ -662,6 +682,16 @@ namespace PixelMaestro {
 				break;
 			case Action::SetNumFrames:
 				plain_canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]));
+				break;
+			case Action::StartFrameTiming:
+				if (plain_canvas->get_frame_timing()) {
+					plain_canvas->get_frame_timing()->start();
+				}
+				break;
+			case Action::StopFrameTiming:
+				if (plain_canvas->get_frame_timing()) {
+					plain_canvas->get_frame_timing()->stop();
+				}
 				break;
 			default:
 				break;

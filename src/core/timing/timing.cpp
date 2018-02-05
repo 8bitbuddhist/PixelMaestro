@@ -4,6 +4,7 @@
 
 #include "timing.h"
 
+// TODO: Add ability to start and stop timer
 namespace PixelMaestro {
 	/**
 	 * Constructor. Sets the speed interval.
@@ -46,13 +47,23 @@ namespace PixelMaestro {
 		this->last_time_ = last_time;
 	}
 
+	/// Starts the timer.
+	void Timing::start() {
+		running_ = true;
+	}
+
+	/// Stops the timer.
+	void Timing::stop() {
+		running_ = false;
+	}
+
 	/**
 	 * Checks timings.
 	 * @param current_time Current program runtime.
 	 * @return If the runtime exceeds the interval, return true.
 	 */
 	bool Timing::update(const uint32_t& current_time) {
-		if ((current_time - last_time_) >= interval_) {
+		if (running_ && ((current_time - last_time_) >= interval_)) {
 			last_time_ = current_time;
 			return true;
 		}

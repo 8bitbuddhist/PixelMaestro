@@ -150,6 +150,24 @@ namespace PixelMaestro {
 		return controller_->assemble((Byte::OptionsByte + 4));
 	}
 
+	uint8_t* AnimationCueHandler::start(uint8_t section_num, uint8_t layer_num) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::Start;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+
+		return controller_->assemble(Byte::OptionsByte);
+	}
+
+	uint8_t* AnimationCueHandler::stop(uint8_t section_num, uint8_t layer_num) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::Stop;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+
+		return controller_->assemble(Byte::OptionsByte);
+	}
+
 	void AnimationCueHandler::run(uint8_t *cue) {
 
 		Section* section = get_section(cue[Byte::SectionByte], cue[Byte::LayerByte]);
@@ -229,6 +247,16 @@ namespace PixelMaestro {
 				animation->set_timing(
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
+				break;
+			case Action::Start:
+				if (animation->get_timing()) {
+					animation->get_timing()->start();
+				}
+				break;
+			case Action::Stop:
+				if (animation->get_timing()) {
+					animation->get_timing()->stop();
+				}
 				break;
 		}
 	}

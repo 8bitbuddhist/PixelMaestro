@@ -32,6 +32,20 @@ namespace PixelMaestro {
 		return controller_->assemble((Byte::OptionsByte + 2));
 	}
 
+	uint8_t* MaestroCueHandler::start() {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
+		controller_->get_buffer()[Byte::ActionByte] = Action::Start;
+
+		return controller_->assemble(Byte::OptionsByte);
+	}
+
+	uint8_t* MaestroCueHandler::stop() {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
+		controller_->get_buffer()[Byte::ActionByte] = Action::Stop;
+
+		return controller_->assemble(Byte::OptionsByte);
+	}
+
 	uint8_t* MaestroCueHandler::sync(const uint32_t new_time) {
 		IntByteConvert last_time_byte(new_time);
 
@@ -44,26 +58,27 @@ namespace PixelMaestro {
 	}
 
 	void MaestroCueHandler::run(uint8_t *cue) {
+		Maestro* maestro = controller_->get_maestro();
 		switch((Action)cue[MaestroCueHandler::Byte::ActionByte]) {
 			case Action::SetShow:
 				{
 					// Initialize the Show in two steps
-					controller_->get_maestro()->set_show(nullptr, 0);
+					maestro->set_show(nullptr, 0);
 
 					// TODO: Initialize Events
 				}
 				break;
 			case Action::SetTiming:
-				{
-					uint32_t interval = IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]);
-					controller_->get_maestro()->set_timing(interval);
-				}
+				maestro->set_timing(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]));
+				break;
+			case Action::Start:
+				maestro->get_timing()->start();
+				break;
+			case Action::Stop:
+				maestro->get_timing()->stop();
 				break;
 			case Action::Sync:
-				{
-					uint32_t new_time = IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]);
-					controller_->get_maestro()->sync(new_time);
-				}
+				maestro->sync(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]));
 				break;
 		}
 	}

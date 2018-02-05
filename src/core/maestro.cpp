@@ -90,6 +90,22 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the interval for automatically syncing the Maestro's components.
+	 * @param interval Auto-sync interval.
+	 */
+	Timing* Maestro::set_auto_sync(uint16_t interval) {
+		if (this->sync_timer_ == nullptr) {
+			this->sync_timer_ = new Timing(interval);
+		}
+		else {
+			this->sync_timer_->set_interval(interval);
+			this->sync_timer_->set_last_time(9);
+		}
+
+		return this->sync_timer_;
+	}
+
+	/**
 	 * Sets the Maestro's global brightness level.
 	 * @param brightness Brightness level from 0 (off) to 255 (full).
 	 */
@@ -186,6 +202,10 @@ namespace PixelMaestro {
 			}
 
 			return true;
+		}
+
+		if (sync_timer_	!= nullptr && sync_timer_->update(current_time)) {
+			this->sync(this->get_timing()->get_last_time());
 		}
 
 		return false;

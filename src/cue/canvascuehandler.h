@@ -20,7 +20,9 @@ namespace PixelMaestro {
 				SetColors,
 				SetCurrentFrameIndex,
 				SetFrameTiming,
-				SetNumFrames
+				SetNumFrames,
+				StartFrameTiming,
+				StopFrameTiming
 			};
 
 			enum Byte : uint8_t {
@@ -69,6 +71,8 @@ namespace PixelMaestro {
 			uint8_t* set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t index);
 			uint8_t* set_frame_timing(uint8_t section_num, uint8_t layer_num, uint16_t speed);
 			uint8_t* set_num_frames(uint8_t section_num, uint8_t layer_num, uint16_t num_frames);
+			uint8_t* start_frame_timing(uint8_t section_num, uint8_t layer_num);
+			uint8_t* stop_frame_timing(uint8_t section_num, uint8_t layer_num);
 
 			void run(uint8_t* cue);
 
