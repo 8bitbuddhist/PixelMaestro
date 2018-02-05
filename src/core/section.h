@@ -37,34 +37,34 @@ namespace PixelMaestro {
 				 * Sets the amount of time between a single x-axis step.
 				 * Overrides step_x when step_x is less than 1.
 				 */
-				Timing* timing_x = nullptr;
+				Timer* timer_x = nullptr;
 				/**
 				 * Sets the amount of time between a single y-axis step.
 				 * Overrides step_y when step_y is less than 1.
 				 */
-				Timing* timing_y = nullptr;
+				Timer* timer_y = nullptr;
 
 				/**
 				 * Sets the number of y-axis steps to take with each update.
-				 * Overridden by timing_x when this is calculated to be less than 1.
+				 * Overridden by timer_x when this is calculated to be less than 1.
 				 */
 				uint16_t step_x = 0;
 				/**
 				 * Sets the number of y-axis steps to take with each update.
-				 * Overridden by timing_y when this is calculated to be less than 1.
+				 * Overridden by timer_y when this is calculated to be less than 1.
 				 */
 				uint16_t step_y = 0;
 
-				/// Removes the timing interval along the x axis.
-				void remove_timing_x() {
-					delete timing_x;
-					timing_x = nullptr;
+				/// Removes the x axis timer.
+				void remove_timer_x() {
+					delete timer_x;
+					timer_x = nullptr;
 				}
 
-				/// Removes the timing interval along the y axis.
-				void remove_timing_y() {
-					delete timing_y;
-					timing_y = nullptr;
+				/// Removes the y axis timer.
+				void remove_timer_y() {
+					delete timer_y;
+					timer_y = nullptr;
 				}
 
 				/**
@@ -102,38 +102,38 @@ namespace PixelMaestro {
 					// If x is less than 1 pixel, calculate the amount of time until the Section scrolls by 1 pixel.
 					if (x > 0 && x < 1) {
 						uint16_t interval = (1 / x) * refresh_interval;
-						if (timing_x) {
-							timing_x->set_interval(interval);
+						if (timer_x) {
+							timer_x->set_interval(interval);
 						}
 						else {
-							timing_x = new Timing(interval);
+							timer_x = new Timer(interval);
 						}
 					}
 					// x is greater than 1 pixel, so use x as our step amount.
 					else {
-						remove_timing_x();
+						remove_timer_x();
 						step_x = x;
 					}
 
 					float y = dimensions->y / (float)(interval_y / (float)refresh_interval);
 					if (y > 0 && y < 1) {
 						uint16_t interval = (1 / x) * refresh_interval;
-						if (timing_y) {
-							timing_y->set_interval(interval);
+						if (timer_y) {
+							timer_y->set_interval(interval);
 						}
 						else {
-							timing_y = new Timing(interval);
+							timer_y = new Timer(interval);
 						}
 					}
 					else {
-						remove_timing_y();
+						remove_timer_y();
 						step_y = y;
 					}
 				}
 
 				~Scroll() {
-					delete timing_x;
-					delete timing_y;
+					delete timer_x;
+					delete timer_y;
 				}
 			};
 

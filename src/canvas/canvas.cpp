@@ -289,12 +289,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the frame timing.
+	 * Returns the frame timer.
 	 * Used in PixelMaestro Studio.
-	 * @return Frame timing.
+	 * @return Frame timer.
 	 */
-	Timing* Canvas::get_frame_timing() const {
-		return frame_timing_;
+	Timer* Canvas::get_frame_timer() const {
+		return frame_timer_;
 	}
 
 	/**
@@ -337,12 +337,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Removes the frame timing, disabling frame animations.
-	 * Used in PixelMaestro Studio to support individual frame editing.
+	 * Removes the frame timer, disabling frame animations.
 	 */
-	void Canvas::remove_frame_timing() {
-		delete frame_timing_;
-		frame_timing_ = nullptr;
+	void Canvas::remove_frame_timer() {
+		delete frame_timer_;
+		frame_timer_ = nullptr;
 	}
 
 	/**
@@ -362,12 +361,12 @@ namespace PixelMaestro {
 	 * Sets the amount of time between frames.
 	 * @param speed Amount of time between frames.
 	 */
-	void Canvas::set_frame_timing(uint16_t speed) {
-		if (!frame_timing_) {
-			frame_timing_ = new Timing(speed);
+	void Canvas::set_frame_timer(uint16_t speed) {
+		if (!frame_timer_) {
+			frame_timer_ = new Timer(speed);
 		}
 		else {
-			frame_timing_->set_interval(speed);
+			frame_timer_->set_interval(speed);
 		}
 	}
 
@@ -399,12 +398,12 @@ namespace PixelMaestro {
 	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const uint32_t& current_time) {
-		if (frame_timing_ && frame_timing_->update(current_time)) {
+		if (frame_timer_ && frame_timer_->update(current_time)) {
 			next_frame();
 		}
 	}
 
 	Canvas::~Canvas() {
-		remove_frame_timing();
+		remove_frame_timer();
 	}
 }

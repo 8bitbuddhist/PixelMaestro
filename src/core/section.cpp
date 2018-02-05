@@ -251,8 +251,8 @@ namespace PixelMaestro {
 				animation->set_orientation(this->animation_->get_orientation());
 				animation->set_reverse(this->animation_->get_reverse());
 
-				if (this->animation_->get_timing() != nullptr) {
-					animation->set_timing(this->animation_->get_timing()->get_interval(), this->animation_->get_timing()->get_pause());
+				if (this->animation_->get_timer() != nullptr) {
+					animation->set_timer(this->animation_->get_timer()->get_interval(), this->animation_->get_timer()->get_pause());
 				}
 			}
 			remove_animation();
@@ -359,7 +359,7 @@ namespace PixelMaestro {
 		// Only continue if Pixel is within the bounds of the array.
 		if (pixel < dimensions_.size()) {
 			if (animation_ != nullptr) {
-				pixels_[pixel].set_next_color(color, animation_->get_timing()->get_step_count());
+				pixels_[pixel].set_next_color(color, animation_->get_timer()->get_step_count());
 			}
 			else {
 				pixels_[pixel].set_next_color(color, 1);
@@ -394,7 +394,7 @@ namespace PixelMaestro {
 			scroll_ = new Scroll();
 		}
 
-		scroll_->set(this->get_maestro()->get_timing()->get_interval(), this->get_dimensions(), x, y, reverse_x, reverse_y);
+		scroll_->set(this->get_maestro()->get_timer()->get_interval(), this->get_dimensions(), x, y, reverse_x, reverse_y);
 
 		return scroll_;
 	}
@@ -408,14 +408,14 @@ namespace PixelMaestro {
 			layer_->section->sync(new_time);
 		}
 		if (animation_ != nullptr) {
-			animation_->get_timing()->set_last_time(new_time);
+			animation_->get_timer()->set_last_time(new_time);
 		}
-		if (canvas_ != nullptr && canvas_->get_frame_timing() != nullptr) {
-			canvas_->get_frame_timing()->set_last_time(new_time);
+		if (canvas_ != nullptr && canvas_->get_frame_timer() != nullptr) {
+			canvas_->get_frame_timer()->set_last_time(new_time);
 		}
 		if (scroll_ != nullptr) {
-			scroll_->timing_x->set_last_time(new_time);
-			scroll_->timing_y->set_last_time(new_time);
+			scroll_->timer_x->set_last_time(new_time);
+			scroll_->timer_y->set_last_time(new_time);
 		}
 	}
 
@@ -464,14 +464,14 @@ namespace PixelMaestro {
 		uint16_t x_step, y_step = 0;
 
 		// Scroll x axis
-		if (scroll_->timing_x != nullptr || scroll_->step_x != 0) {
-			// If timing is used (scrolling < 1 pixel per update), determine whether it's time to scroll.
-			if (scroll_->timing_x != nullptr) {
-				if (scroll_->timing_x->update(current_time)) {
+		if (scroll_->timer_x != nullptr || scroll_->step_x != 0) {
+			// If a timer is used (scrolling < 1 pixel per update), determine whether it's time to scroll.
+			if (scroll_->timer_x != nullptr) {
+				if (scroll_->timer_x->update(current_time)) {
 					x_step = 1;
 				}
 			}
-			// If timing is not used (scrolling > 1 pixel per update), apply the scroll amount directly to the offset.
+			// If a timer is not used (scrolling > 1 pixel per update), apply the scroll amount directly to the offset.
 			else if (scroll_->step_x > 0) {
 				x_step = scroll_->step_x;
 			}
@@ -495,9 +495,9 @@ namespace PixelMaestro {
 
 
 		// Repeat for y axis
-		if (scroll_->timing_y != nullptr || scroll_->step_y != 0) {
-			if (scroll_->timing_y != nullptr) {
-				if (scroll_->timing_y->update(current_time)) {
+		if (scroll_->timer_y != nullptr || scroll_->step_y != 0) {
+			if (scroll_->timer_y != nullptr) {
+				if (scroll_->timer_y->update(current_time)) {
 					y_step = 1;
 				}
 			}

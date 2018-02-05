@@ -134,12 +134,12 @@ namespace PixelMaestro {
 		return controller_->assemble((Byte::OptionsByte + 1));
 	}
 
-	uint8_t* AnimationCueHandler::set_timing(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t pause) {
+	uint8_t* AnimationCueHandler::set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t pause) {
 		IntByteConvert interval_byte(interval);
 		IntByteConvert pause_byte(pause);
 
 		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetTiming;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetTimer;
 		controller_->get_buffer()[Byte::SectionByte] = section_num;
 		controller_->get_buffer()[Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[Byte::OptionsByte] = interval_byte.converted_0;
@@ -194,7 +194,7 @@ namespace PixelMaestro {
 					/*
 					 * Delete the old palette after setting the new one.
 					 * We force an update so that the Animation no longer references the old palette.
-					 * WARNING: This throws off timing, but only for a single frame. Shouldn't be noticeable except for slow animations or when fading is disabled.
+					 * WARNING: This throws off the timer, but only for a single frame. Shouldn't be noticeable except for slow animations or when fading is disabled.
 					 */
 					Colors::RGB* old_palette = animation->get_colors();
 
@@ -243,19 +243,19 @@ namespace PixelMaestro {
 			case Action::SetSparkleOptions:
 				static_cast<SparkleAnimation*>(animation)->set_threshold(cue[Byte::OptionsByte]);
 				break;
-			case Action::SetTiming:
-				animation->set_timing(
+			case Action::SetTimer:
+				animation->set_timer(
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
 				break;
 			case Action::Start:
-				if (animation->get_timing()) {
-					animation->get_timing()->start();
+				if (animation->get_timer()) {
+					animation->get_timer()->start();
 				}
 				break;
 			case Action::Stop:
-				if (animation->get_timing()) {
-					animation->get_timing()->stop();
+				if (animation->get_timer()) {
+					animation->get_timer()->stop();
 				}
 				break;
 		}

@@ -15,7 +15,7 @@ namespace PixelMaestro {
 		this->section_ = section;
 		set_colors(colors, num_colors);
 
-		timing_ = new AnimationTiming(this);
+		timer_ = new AnimationTimer(this);
 	}
 
 	/**
@@ -104,11 +104,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the animation's speed.
-	 * @return Speed.
+	 * Returns the animation's timer.
+	 * @return Animation timer.
 	 */
-	AnimationTiming* Animation::get_timing() const {
-		return timing_;
+	AnimationTimer* Animation::get_timer() const {
+		return timer_;
 	}
 
 	/**
@@ -151,7 +151,7 @@ namespace PixelMaestro {
 	 */
 	void Animation::set_fade(bool fade) {
 		fade_ = fade;
-		timing_->recalculate_step_count();
+		timer_->recalculate_step_count();
 	}
 
 	/**
@@ -178,11 +178,11 @@ namespace PixelMaestro {
 	 * @param speed Amount of time (in milliseconds) between animation cycles.
 	 * @param pause AMount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	AnimationTiming* Animation::set_timing(uint16_t speed, uint16_t pause) {
-		timing_->set_interval(speed, pause);
-		timing_->recalculate_step_count();
+	AnimationTimer* Animation::set_timer(uint16_t speed, uint16_t pause) {
+		timer_->set_interval(speed, pause);
+		timer_->recalculate_step_count();
 
-		return timing_;
+		return timer_;
 	}
 
 	/**
@@ -197,7 +197,7 @@ namespace PixelMaestro {
 			return false;
 		}
 
-		if (timing_->update(current_time)) {
+		if (timer_->update(current_time)) {
 			// Run the derived Animation's update function.
 			update();
 
@@ -236,6 +236,6 @@ namespace PixelMaestro {
 	}
 
 	Animation::~Animation() {
-		delete timing_;
+		delete timer_;
 	}
 }

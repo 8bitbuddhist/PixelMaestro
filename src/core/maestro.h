@@ -10,7 +10,7 @@
 #include "../cue/show.h"
 #include "colors.h"
 #include "section.h"
-#include "timing/timing.h"
+#include "timer/timer.h"
 
 namespace PixelMaestro {
 	class CueController;
@@ -27,12 +27,12 @@ namespace PixelMaestro {
 			uint8_t get_num_sections() const;
 			Section* get_section(uint8_t section) const;
 			Show* get_show() const;
-			Timing* get_timing() const;
-			Timing* set_auto_sync(uint16_t interval);
+			Timer* get_timer() const;
+			Timer* set_auto_sync(uint16_t interval);
 			void set_brightness(uint8_t brightness);
 			CueController* set_cue_controller(uint16_t buffer_size = UINT8_MAX);
 			void set_sections(Section* sections, uint8_t num_sections);
-			Timing* set_timing(uint16_t interval);
+			Timer* set_timer(uint16_t interval);
 			Show* set_show(Event* events, uint16_t num_events);
 			void sync(const uint32_t& new_time = 0);
 			bool update(const uint32_t& current_time, bool force = false);
@@ -54,10 +54,10 @@ namespace PixelMaestro {
 			Show* show_ = nullptr;
 
 			///The time between component re-syncs.
-			Timing* sync_timer_ = nullptr;
+			Timer* sync_timer_ = nullptr;
 
 			/// The time between Section refreshes in milliseconds. Defaults to 50ms (20 refreshes per second).
-			Timing timing_ = Timing(50);
+			Timer timer_ = Timer(50);
 	};
 }
 

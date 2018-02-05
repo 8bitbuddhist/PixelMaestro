@@ -1,16 +1,16 @@
 /*
- * Timing - Class for managing time-sensitive actions.
+ * Timer - Class for managing time-sensitive actions.
  */
 
-#ifndef TIMING_H
-#define TIMING_H
+#ifndef TIMER_H
+#define TIMER_H
 
 #include <stdint.h>
 
 namespace PixelMaestro {
-	class Timing {
+	class Timer {
 		public:
-			Timing(uint16_t speed = 1000);
+			Timer(uint16_t speed = 1000);
 			uint16_t get_interval() const;
 			uint32_t get_last_time() const;
 			void set_interval(uint16_t interval);
@@ -31,4 +31,4 @@ namespace PixelMaestro {
 	};
 }
 
-#endif // TIMING_H
+#endif // TIMER_H

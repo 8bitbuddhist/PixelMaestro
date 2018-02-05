@@ -82,20 +82,20 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Gets the Maestro's update timing.
-	 * @return Maestro timing.
+	 * Gets the Maestro's update timer.
+	 * @return Maestro timer.
 	 */
-	Timing* Maestro::get_timing() const {
-		return const_cast<Timing*>(&timing_);
+	Timer* Maestro::get_timer() const {
+		return const_cast<Timer*>(&timer_);
 	}
 
 	/**
 	 * Sets the interval for automatically syncing the Maestro's components.
 	 * @param interval Auto-sync interval.
 	 */
-	Timing* Maestro::set_auto_sync(uint16_t interval) {
+	Timer* Maestro::set_auto_sync(uint16_t interval) {
 		if (this->sync_timer_ == nullptr) {
-			this->sync_timer_ = new Timing(interval);
+			this->sync_timer_ = new Timer(interval);
 		}
 		else {
 			this->sync_timer_->set_interval(interval);
@@ -163,11 +163,11 @@ namespace PixelMaestro {
 	/**
 	 * Sets the interval between Maestro updates.
 	 * @param interval Update interval.
-	 * @return New Maestro timing.
+	 * @return Maestro timer.
 	 */
-	Timing* Maestro::set_timing(uint16_t interval) {
-		timing_.set_interval(interval);
-		return &timing_;
+	Timer* Maestro::set_timer(uint16_t interval) {
+		timer_.set_interval(interval);
+		return &timer_;
 	}
 
 	/**
@@ -175,7 +175,7 @@ namespace PixelMaestro {
 	 * @param new_time The new refresh time. Leave blank to set to 0.
 	 */
 	void Maestro::sync(const uint32_t& new_time) {
-		this->get_timing()->set_last_time(new_time);
+		this->get_timer()->set_last_time(new_time);
 		for (uint8_t section = 0; section < num_sections_; section++) {
 			sections_[section].sync(new_time);
 		}
@@ -190,7 +190,7 @@ namespace PixelMaestro {
 	*/
 	bool Maestro::update(const uint32_t& current_time, bool force) {
 		// Update if the time is exceeded or if force is true
-		if (timing_.update(current_time) || force) {
+		if (timer_.update(current_time) || force) {
 			// Run the Show
 			if (show_) {
 				show_->update(current_time);
@@ -205,7 +205,7 @@ namespace PixelMaestro {
 		}
 
 		if (sync_timer_	!= nullptr && sync_timer_->update(current_time)) {
-			this->sync(this->get_timing()->get_last_time());
+			this->sync(this->get_timer()->get_last_time());
 		}
 
 		return false;

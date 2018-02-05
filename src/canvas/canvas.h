@@ -9,13 +9,13 @@
 #include "../core/colors.h"
 #include "../core/point.h"
 #include "../core/section.h"
-#include "../core/timing/timing.h"
+#include "../core/timer/timer.h"
 #include "fonts/font.h"
 #include "canvastype.h"
 
 namespace PixelMaestro {
 	class Section;
-	class Timing;
+	class Timer;
 
 	class Canvas {
 		public:
@@ -38,14 +38,14 @@ namespace PixelMaestro {
 			void draw_triangle(uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
 			void erase(uint16_t x, uint16_t y);
 			uint16_t get_current_frame_index() const;
-			Timing* get_frame_timing() const;
+			Timer* get_frame_timer() const;
 			uint16_t get_num_frames() const;
 			Section* get_section() const;
 			bool in_bounds(uint16_t x, uint16_t y) const;
 			void next_frame();
-			void remove_frame_timing();
+			void remove_frame_timer();
 			void set_current_frame_index(uint16_t index);
-			void set_frame_timing(uint16_t speed);
+			void set_frame_timer(uint16_t speed);
 			void set_num_frames(uint16_t num_frames);
 			void set_offset(int16_t x, int16_t y);
 			void set_section(Section* section_);
@@ -55,8 +55,8 @@ namespace PixelMaestro {
 			/// The index of the current frame.
 			uint16_t current_frame_index_ = 0;
 
-			/// Controls timings for frame animations.
-			Timing* frame_timing_ = nullptr;
+			/// Timer for frame animations.
+			Timer* frame_timer_ = nullptr;
 
 			/// The number of frames.
 			uint16_t num_frames_ = 0;

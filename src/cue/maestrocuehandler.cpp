@@ -21,11 +21,11 @@ namespace PixelMaestro {
 		}
 	}
 
-	uint8_t* MaestroCueHandler::set_timing(uint16_t interval) {
+	uint8_t* MaestroCueHandler::set_timer(uint16_t interval) {
 		IntByteConvert interval_byte = IntByteConvert(interval);
 
 		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
-		controller_->get_buffer()[Byte::ActionByte] = Action::SetTiming;
+		controller_->get_buffer()[Byte::ActionByte] = Action::SetTimer;
 		controller_->get_buffer()[Byte::OptionsByte] = interval_byte.converted_0;
 		controller_->get_buffer()[Byte::OptionsByte + 1] = interval_byte.converted_1;
 
@@ -68,14 +68,14 @@ namespace PixelMaestro {
 					// TODO: Initialize Events
 				}
 				break;
-			case Action::SetTiming:
-				maestro->set_timing(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]));
+			case Action::SetTimer:
+				maestro->set_timer(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]));
 				break;
 			case Action::Start:
-				maestro->get_timing()->start();
+				maestro->get_timer()->start();
 				break;
 			case Action::Stop:
-				maestro->get_timing()->stop();
+				maestro->get_timer()->stop();
 				break;
 			case Action::Sync:
 				maestro->sync(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]));
