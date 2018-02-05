@@ -25,7 +25,7 @@ void setup () {
 		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Type::Blink, ColorPresets::Colorwheel, 12);
 
 		// Sets the amount of time between animation cycles to 500ms
-		animation->set_timing(500);
+		animation->set_timer(500);
 }
 
 void loop() {

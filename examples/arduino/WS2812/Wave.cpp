@@ -32,7 +32,7 @@ void setup () {
 
 		// Create a new wave animation, change the palette to ColorWheel, then set the speed to 500ms.
 		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Type::Wave, ColorPresets::Colorwheel, 12);
-		animation->set_timing(500);
+		animation->set_timer(500);
 }
 
 void loop() {
