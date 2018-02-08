@@ -28,7 +28,6 @@ namespace PixelMaestro {
 			Section* get_section(uint8_t section) const;
 			Show* get_show() const;
 			Timer* get_timer() const;
-			Timer* set_auto_sync(uint16_t interval);
 			void set_brightness(uint8_t brightness);
 			CueController* set_cue_controller(uint16_t buffer_size = UINT8_MAX);
 			void set_sections(Section* sections, uint8_t num_sections);
@@ -44,6 +43,9 @@ namespace PixelMaestro {
 			/// Controller object for reading and executing Cues.
 			CueController* cue_controller_ = nullptr;
 
+			/// Tracks whether the Sections were allocated by the user or by the Maestro.
+			bool dynamically_allocated_sections_ = false;
+
 			/// Number of Sections managed by the Maestro.
 			uint8_t num_sections_ = 0;
 
@@ -53,10 +55,7 @@ namespace PixelMaestro {
 			/// Show managed by the Maestro.
 			Show* show_ = nullptr;
 
-			///The time between component re-syncs.
-			Timer* sync_timer_ = nullptr;
-
-			/// The time between Section refreshes in milliseconds. Defaults to 50ms (20 refreshes per second).
+			/// The time between refreshes in milliseconds. Defaults to 50ms (20 refreshes per second).
 			Timer timer_ = Timer(50);
 	};
 }

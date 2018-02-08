@@ -11,7 +11,6 @@ namespace PixelMaestro {
 
 	/**
 	 * Constructor. Fast-tracks creating a Maestro with a single Section.
-	 * Note: The new Section is dynamically allocated. You will need to manually call delete once you're done using it.
 	 * @param rows Number of rows in the new Section.
 	 * @param columns Number of columns in the new Section.
 	 */
@@ -20,6 +19,7 @@ namespace PixelMaestro {
 			Section(rows, columns)
 		};
 		set_sections(sections, 1);
+		dynamically_allocated_sections_ = true;
 	}
 
 	/**
@@ -87,22 +87,6 @@ namespace PixelMaestro {
 	 */
 	Timer* Maestro::get_timer() const {
 		return const_cast<Timer*>(&timer_);
-	}
-
-	/**
-	 * Sets the interval for automatically syncing the Maestro's components.
-	 * @param interval Auto-sync interval.
-	 */
-	Timer* Maestro::set_auto_sync(uint16_t interval) {
-		if (this->sync_timer_ == nullptr) {
-			this->sync_timer_ = new Timer(interval);
-		}
-		else {
-			this->sync_timer_->set_interval(interval);
-			this->sync_timer_->set_last_time(9);
-		}
-
-		return this->sync_timer_;
 	}
 
 	/**
@@ -204,15 +188,19 @@ namespace PixelMaestro {
 			return true;
 		}
 
-		if (sync_timer_	!= nullptr && sync_timer_->update(current_time)) {
-			this->sync(this->get_timer()->get_last_time());
-		}
-
 		return false;
 	}
 
 	Maestro::~Maestro() {
 		delete cue_controller_;
 		delete show_;
+
+		if (dynamically_allocated_sections_) {
+			for (uint8_t section = 0; section < num_sections_; section++) {
+				delete sections_[section];
+			}
+
+			delete [] sections_;
+		}
 	}
 }
