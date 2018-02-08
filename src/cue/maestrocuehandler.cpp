@@ -3,22 +3,12 @@
 #include "showcuehandler.h"
 
 namespace PixelMaestro {
-	uint8_t* MaestroCueHandler::set_show(Event *events, uint16_t num_events, bool preserve_event_index) {
-		// TODO: This doesn't seem right. Review this.
-		bool has_events = (events != nullptr && num_events > 0);
-		if (has_events) {
-			static_cast<ShowCueHandler*>(controller_->get_handler(CueController::Handler::ShowHandler))->set_events(events, num_events, preserve_event_index);
-		}
-
+	uint8_t* MaestroCueHandler::set_show() {
+		// Note: This only initializes the Show. You still need to set Events using ShowCueHandler::set_events().
 		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
 		controller_->get_buffer()[Byte::ActionByte] = Action::SetShow;
 
-		if (!has_events) {
-			return controller_->assemble(Byte::OptionsByte);
-		}
-		else {
-			return controller_->get_buffer();
-		}
+		return controller_->assemble(Byte::OptionsByte);
 	}
 
 	uint8_t* MaestroCueHandler::set_timer(uint16_t interval) {
@@ -61,12 +51,7 @@ namespace PixelMaestro {
 		Maestro* maestro = controller_->get_maestro();
 		switch((Action)cue[MaestroCueHandler::Byte::ActionByte]) {
 			case Action::SetShow:
-				{
-					// Initialize the Show in two steps
-					maestro->set_show(nullptr, 0);
-
-					// TODO: Initialize Events
-				}
+				maestro->set_show(nullptr, 0);
 				break;
 			case Action::SetTimer:
 				maestro->set_timer(IntByteConvert::byte_to_int(&cue[MaestroCueHandler::Byte::OptionsByte]));
