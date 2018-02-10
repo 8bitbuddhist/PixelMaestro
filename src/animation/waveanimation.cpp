@@ -1,6 +1,10 @@
 #include "waveanimation.h"
 
 namespace PixelMaestro {
+	/*
+	 * TODO: Add ability to change the starting point for each row.
+	 * Considered adding a `skew` parameter, which sets the offset of the bottom row from the top (or left from right if vertically oriented).
+	 */
 	WaveAnimation::WaveAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors) {
 		type_ = AnimationType::Wave;
 	}

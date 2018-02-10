@@ -197,7 +197,7 @@ namespace PixelMaestro {
 
 		if (dynamically_allocated_sections_) {
 			for (uint8_t section = 0; section < num_sections_; section++) {
-				delete sections_[section];
+				delete &sections_[section];
 			}
 
 			delete [] sections_;

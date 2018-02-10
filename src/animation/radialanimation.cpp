@@ -2,6 +2,7 @@
 #include "radialanimation.h"
 
 namespace PixelMaestro {
+	// TODO: Run calculations once on resize
 	RadialAnimation::RadialAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors) {
 		type_ = AnimationType::Radial;
 	}
