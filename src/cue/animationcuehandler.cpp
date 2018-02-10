@@ -3,6 +3,7 @@
 #include "../animation/plasmaanimation.h"
 #include "../animation/radialanimation.h"
 #include "../animation/sparkleanimation.h"
+#include "../animation/waveanimation.h"
 #include "animationcuehandler.h"
 
 namespace PixelMaestro {
@@ -67,6 +68,16 @@ namespace PixelMaestro {
 		controller_->get_buffer()[Byte::SectionByte] = section_num;
 		controller_->get_buffer()[Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[Byte::OptionsByte] = threshold;
+
+		return controller_->assemble((Byte::OptionsByte + 1));
+	}
+
+	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, uint8_t skew) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetWaveOptions;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[Byte::OptionsByte] = skew;
 
 		return controller_->assemble((Byte::OptionsByte + 1));
 	}
@@ -247,6 +258,9 @@ namespace PixelMaestro {
 				animation->set_timer(
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]),
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
+				break;
+			case Action::SetWaveOptions:
+				static_cast<WaveAnimation*>(animation)->set_skew(cue[Byte::OptionsByte]);
 				break;
 			case Action::Start:
 				if (animation->get_timer()) {
