@@ -8,13 +8,13 @@ namespace PixelMaestro {
 		public:
 			WaveAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
 			~WaveAnimation();
-			uint8_t get_skew();
-			void set_skew(uint8_t skew);
+			int8_t get_skew();
+			void set_skew(int8_t skew);
 			void update();
 
 		private:
 			/// The amount to offset each row (or column).
-			uint8_t skew_ = 0;
+			int8_t skew_ = 0;
 	};
 }
 

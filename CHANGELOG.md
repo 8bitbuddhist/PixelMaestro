@@ -7,6 +7,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ### Added
 - Animations
 	- Added new Fire animation.
+	- Added `skew` parameter to Merge and Wave animations. Skew offsets each row (or column) by the specified number of Pixels.
 - Cues
 	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You will need to call `ShowCueHandler::set_events()` separately to initialize the Event list.
 

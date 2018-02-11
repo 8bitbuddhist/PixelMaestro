@@ -72,12 +72,12 @@ namespace PixelMaestro {
 		return controller_->assemble((Byte::OptionsByte + 1));
 	}
 
-	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, uint8_t skew) {
+	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, int8_t skew) {
 		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
 		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetWaveOptions;
 		controller_->get_buffer()[Byte::SectionByte] = section_num;
 		controller_->get_buffer()[Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[Byte::OptionsByte] = skew;
+		controller_->get_buffer()[Byte::OptionsByte] = (uint8_t)skew;
 
 		return controller_->assemble((Byte::OptionsByte + 1));
 	}
@@ -260,7 +260,7 @@ namespace PixelMaestro {
 					IntByteConvert::byte_to_int(&cue[Byte::OptionsByte + 2]));
 				break;
 			case Action::SetWaveOptions:
-				static_cast<WaveAnimation*>(animation)->set_skew(cue[Byte::OptionsByte]);
+				static_cast<WaveAnimation*>(animation)->set_skew((int8_t)cue[Byte::OptionsByte]);
 				break;
 			case Action::Start:
 				if (animation->get_timer()) {
