@@ -23,6 +23,7 @@ namespace PixelMaestro {
 				SetFireOptions,
 				Start,
 				Stop,
+				SetMergeOptions,
 				SetWaveOptions
 			};
 
@@ -40,6 +41,7 @@ namespace PixelMaestro {
 			// Animation-specific calls
 			uint8_t* set_fire_options(uint8_t section_num, uint8_t layer_num, uint8_t multiplier);
 			uint8_t* set_lightning_options(uint8_t section_num, uint8_t layer_num, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance);
+			uint8_t* set_merge_options(uint8_t section_num, uint8_t layer_num, int8_t skew);
 			uint8_t* set_plasma_options(uint8_t section_num, uint8_t layer_num, float size, float resolution);
 			uint8_t* set_radial_options(uint8_t section_num, uint8_t layer_num, uint8_t resolution);
 			uint8_t* set_sparkle_options(uint8_t section_num, uint8_t layer_num, uint8_t threshold);

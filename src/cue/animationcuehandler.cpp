@@ -1,5 +1,6 @@
 #include "../animation/fireanimation.h"
 #include "../animation/lightninganimation.h"
+#include "../animation/mergeanimation.h"
 #include "../animation/plasmaanimation.h"
 #include "../animation/radialanimation.h"
 #include "../animation/sparkleanimation.h"
@@ -30,6 +31,16 @@ namespace PixelMaestro {
 		controller_->get_buffer()[Byte::OptionsByte + 3] = fork_chance;
 
 		return controller_->assemble((Byte::OptionsByte + 4));
+	}
+
+	uint8_t* AnimationCueHandler::set_merge_options(uint8_t section_num, uint8_t layer_num, int8_t skew) {
+		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetMergeOptions;
+		controller_->get_buffer()[Byte::SectionByte] = section_num;
+		controller_->get_buffer()[Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[Byte::OptionsByte] = (uint8_t)skew;
+
+		return controller_->assemble((Byte::OptionsByte + 1));
 	}
 
 	uint8_t* AnimationCueHandler::set_plasma_options(uint8_t section_num, uint8_t layer_num, float size, float resolution) {
@@ -234,6 +245,9 @@ namespace PixelMaestro {
 					la->set_thresholds(cue[Byte::OptionsByte + 1], cue[Byte::OptionsByte + 2]);
 					la->set_fork_chance(cue[Byte::OptionsByte + 3]);
 				}
+				break;
+			case Action::SetMergeOptions:
+				static_cast<MergeAnimation*>(animation)->set_skew((int8_t)cue[Byte::OptionsByte]);
 				break;
 			case Action::SetOrientation:
 				animation->set_orientation((Animation::Orientation)cue[Byte::OptionsByte]);

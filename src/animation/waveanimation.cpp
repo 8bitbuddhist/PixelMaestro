@@ -17,10 +17,10 @@ namespace PixelMaestro {
 		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 				if (orientation_ == Vertical) {
-					section_->set_one(x, y, get_color_at_index(y + (cycle_index_ + (int8_t)(x * skew_))));
+					section_->set_one(x, y, get_color_at_index(y + cycle_index_ + (x * skew_)));
 				}
 				else {	// Horizontal
-					section_->set_one(x, y, get_color_at_index(x + (cycle_index_ + (int8_t)(y * skew_))));
+					section_->set_one(x, y, get_color_at_index(x + cycle_index_ + (y * skew_)));
 				}
 			}
 		}
