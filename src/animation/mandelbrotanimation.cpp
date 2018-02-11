@@ -65,11 +65,11 @@ namespace PixelMaestro {
 		for (uint8_t x = 0; x < dimensions_.x; x++) {
 			for (uint8_t y = 0; y < dimensions_.y; y++) {
 				if (orientation_ == Orientation::Vertical) {
+					// FIXME: Not a good way of doing vertical orientation because it doesn't account for out-of-bounds pixels.
 					if (map_[y][x] != 255) {
 						section_->set_one(y, x, get_color_at_index(map_[y][x] + cycle_index_));
 					}
 					else {
-						// FIXME: Not a good way of doing vertical orientation because it doesn't account for out-of-bounds pixels.
 						section_->set_one(y, x, &black_);
 					}
 				}
