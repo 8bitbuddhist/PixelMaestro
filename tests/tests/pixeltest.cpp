@@ -1,7 +1,7 @@
 #include "../catch/single_include/catch.hpp"
-#include "colorpresets.h"
-#include "core/colors.h"
-#include "core/pixel.h"
+#include "../../src/colorpresets.h"
+#include "../../src/core/colors.h"
+#include "../../src/core/pixel.h"
 #include "pixeltest.h"
 
 using namespace PixelMaestro;

@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 #include "../catch/single_include/catch.hpp"
-#include "colorpresets.h"
+#include "../../src/colorpresets.h"
 #include "colorstest.h"
 
 using namespace PixelMaestro;
@@ -40,11 +40,9 @@ TEST_CASE("Can generate random color array.", "[Array]") {
 
 	Colors::generate_random_color_array(new_array, num_colors);
 
-	// Ensure non-zero value for blue. There's a chance that blue was randomly set to 0, but it's unlikely.
+	// There's a (very) small chance that black could have been randomly generated, but we'll assume it wasn't.
 	for (unsigned char index = 0; index < num_colors; index++) {
-		REQUIRE(new_array[index].r == 0);
-		REQUIRE(new_array[index].g == 0);
-		REQUIRE(new_array[index].b != 0);
+		REQUIRE(new_array[index].r + new_array[index].g + new_array[index].b != 0);
 	}
 }
 

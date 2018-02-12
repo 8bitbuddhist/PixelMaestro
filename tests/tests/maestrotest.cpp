@@ -1,9 +1,9 @@
 #include "../catch/single_include/catch.hpp"
-#include "animation/solidanimation.h"
-#include "animation/cycleanimation.h"
-#include "core/maestro.h"
-#include "core/section.h"
-#include "colorpresets.h"
+#include "../../src/animation/solidanimation.h"
+#include "../../src/animation/cycleanimation.h"
+#include "../../src/core/maestro.h"
+#include "../../src/core/section.h"
+#include "../../src/colorpresets.h"
 
 using namespace PixelMaestro;
 
@@ -15,7 +15,7 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	  Section(s1_point),
 	  Section(s2_point)
 	};
-	Maestro maestro(sections, 1);
+	Maestro maestro(sections, 2);
 
 	SECTION("Get Maestro Sections.") {
 		Section* s1 = maestro.get_section(0);
