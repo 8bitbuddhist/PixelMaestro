@@ -37,11 +37,10 @@ namespace PixelMaestro {
 	 * @param other Event to copy.
 	 * @return New Event.
 	 */
-	Event* Event::operator=(const Event& other) {
-		delete [] cue_;
+	Event& Event::operator=(const Event& other) {
 		set_cue(other.cue_);
 		this->time_ = other.time_;
-		return this;
+		return *this;
 	}
 
 	/**
