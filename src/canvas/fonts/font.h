@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	class Font {
 		public:
 			/// Types of fonts available.
-			enum Type :uint8_t {
+			enum class Type :uint8_t {
 				Font5x8
 			};
 

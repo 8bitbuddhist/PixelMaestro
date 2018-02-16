@@ -5,13 +5,13 @@ namespace PixelMaestro {
 	uint8_t* ShowCueHandler::set_events(Event *events, uint16_t num_events, bool preserve_current_index) {
 		IntByteConvert num_events_byte(num_events);
 
-		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetEvents;
-		controller_->get_buffer()[Byte::OptionsByte] = num_events_byte.converted_0;
-		controller_->get_buffer()[Byte::OptionsByte + 1] = num_events_byte.converted_1;
-		controller_->get_buffer()[Byte::OptionsByte + 2] = (uint8_t)preserve_current_index;
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetEvents;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = num_events_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = num_events_byte.converted_1;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = (uint8_t)preserve_current_index;
 
-		int options_index = Byte::OptionsByte + 3;
+		int options_index = (uint8_t)Byte::OptionsByte + 3;
 		for (uint16_t event_index = 0; event_index < num_events; event_index++) {
 			// Save time
 			IntByteConvert event_time(events[event_index].get_time());
@@ -32,19 +32,19 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* ShowCueHandler::set_looping(bool loop) {
-		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetLooping;
-		controller_->get_buffer()[Byte::OptionsByte] = (uint8_t)loop;
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetLooping;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)loop;
 
-		return controller_->assemble(Byte::OptionsByte + 1);
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
 	}
 
 	uint8_t* ShowCueHandler::set_timing(Show::TimingMode timing) {
-		controller_->get_buffer()[Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
-		controller_->get_buffer()[Byte::ActionByte] = (uint8_t)Action::SetTiming;
-		controller_->get_buffer()[Byte::OptionsByte] = (uint8_t)timing;
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetTiming;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)timing;
 
-		return controller_->assemble(Byte::OptionsByte + 1);
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
 	}
 
 	void ShowCueHandler::run(uint8_t *cue) {
@@ -52,17 +52,17 @@ namespace PixelMaestro {
 
 		if (show == nullptr) return;
 
-		switch((Action)cue[Byte::ActionByte]) {
+		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
 			case Action::SetEvents:
 				{
 					// Delete existing Events
 					delete [] show->get_events();
-					uint16_t num_events = IntByteConvert::byte_to_int(&cue[Byte::OptionsByte]);
-					bool preserve_cycle_index = cue[Byte::OptionsByte + 2];
+					uint16_t num_events = IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]);
+					bool preserve_cycle_index = cue[(uint8_t)Byte::OptionsByte + 2];
 
 					// Rebuild Event list
 					Event* events = new Event[num_events];
-					int options_index = Byte::OptionsByte + 3;
+					int options_index = (uint8_t)Byte::OptionsByte + 3;
 					for (uint16_t event = 0; event < num_events; event++) {
 						// Set time
 						uint32_t time = IntByteConvert::byte_to_int(&cue[options_index]);
@@ -81,10 +81,10 @@ namespace PixelMaestro {
 				}
 				break;
 			case Action::SetLooping:
-				show->set_looping((bool)cue[Byte::OptionsByte]);
+				show->set_looping((bool)cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetTiming:
-				show->set_timing((Show::TimingMode)cue[Byte::OptionsByte]);
+				show->set_timing((Show::TimingMode)cue[(uint8_t)Byte::OptionsByte]);
 				break;
 		}
 	}

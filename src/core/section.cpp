@@ -199,43 +199,43 @@ namespace PixelMaestro {
 	 * @param preserve_settings If true, the generic configurations in the old Animation (cycle index, orientation, fade, reverse, speed, and pause) are copied to the new Animation.
 	 * @return New Animation.
 	 */
-	Animation* Section::set_animation(AnimationType::Type animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_settings) {
+	Animation* Section::set_animation(AnimationType animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_settings) {
 		Animation* animation = nullptr;
 		switch(animation_type) {
-			case AnimationType::Type::Blink:
+			case AnimationType::Blink:
 				animation = new BlinkAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Cycle:
+			case AnimationType::Cycle:
 				animation = new CycleAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Fire:
+			case AnimationType::Fire:
 				animation = new FireAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Lightning:
+			case AnimationType::Lightning:
 				animation = new LightningAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Mandelbrot:
+			case AnimationType::Mandelbrot:
 				animation = new MandelbrotAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Merge:
+			case AnimationType::Merge:
 				animation = new MergeAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Plasma:
+			case AnimationType::Plasma:
 				animation = new PlasmaAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Radial:
+			case AnimationType::Radial:
 				animation = new RadialAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Random:
+			case AnimationType::Random:
 				animation = new RandomAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Solid:
+			case AnimationType::Solid:
 				animation = new SolidAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Sparkle:
+			case AnimationType::Sparkle:
 				animation = new SparkleAnimation(this, colors, num_colors);
 				break;
-			case AnimationType::Type::Wave:
+			case AnimationType::Wave:
 				animation = new WaveAnimation(this, colors, num_colors);
 				break;
 		}
@@ -269,17 +269,17 @@ namespace PixelMaestro {
 	 * @param num_frames The number of frames in the Canvas.
 	 * @return The new Canvas.
 	 */
-	Canvas* Section::set_canvas(CanvasType::Type type, uint16_t num_frames) {
+	Canvas* Section::set_canvas(CanvasType type, uint16_t num_frames) {
 		remove_canvas();
 
 		switch (type) {
-			case CanvasType::Type::AnimationCanvas:
+			case CanvasType::AnimationCanvas:
 				canvas_ = new AnimationCanvas(this, num_frames);
 				break;
-			case CanvasType::Type::ColorCanvas:
+			case CanvasType::ColorCanvas:
 				canvas_ = new ColorCanvas(this, num_frames);
 				break;
-			case CanvasType::Type::PaletteCanvas:
+			case CanvasType::PaletteCanvas:
 				canvas_ = new PaletteCanvas(this, num_frames, nullptr, 0);
 				break;
 		}

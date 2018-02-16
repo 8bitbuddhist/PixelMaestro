@@ -16,7 +16,7 @@ namespace PixelMaestro {
 	void WaveAnimation::update() {
 		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-				if (orientation_ == Vertical) {
+				if (orientation_ == Orientation::Vertical) {
 					section_->set_one(x, y, get_color_at_index(y + cycle_index_ + (x * skew_)));
 				}
 				else {	// Horizontal

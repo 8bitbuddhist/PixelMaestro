@@ -37,15 +37,15 @@ namespace PixelMaestro {
 		 * [Payload] contains the actual command with parameters.
 		 */
 
-		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
+		for (uint8_t i = 0; i < (uint8_t)Byte::ChecksumByte; i++) {
 			buffer_[i] = id_[i];
 		}
 
 		IntByteConvert size(payload_size);
-		buffer_[Byte::SizeByte1] = size.converted_0;
-		buffer_[Byte::SizeByte2] = size.converted_1;
+		buffer_[(uint8_t)Byte::SizeByte1] = size.converted_0;
+		buffer_[(uint8_t)Byte::SizeByte2] = size.converted_1;
 
-		buffer_[Byte::ChecksumByte] = checksum(buffer_, Byte::PayloadByte + payload_size);
+		buffer_[(uint8_t)Byte::ChecksumByte] = checksum(buffer_, (uint8_t)Byte::PayloadByte + payload_size);
 
 		return buffer_;
 	}
@@ -62,7 +62,7 @@ namespace PixelMaestro {
 		for (uint16_t i = 0; i < cue_size; i++) {
 
 			// Make sure we don't include the checksum in its own calculation
-			if (i != Byte::ChecksumByte) {
+			if (i != (uint8_t)Byte::ChecksumByte) {
 				sum += cue[i];
 			}
 		}
@@ -78,19 +78,19 @@ namespace PixelMaestro {
 	CueHandler* CueController::enable_handler(Handler handler) {
 		if (handlers_[(uint8_t)handler] == nullptr) {
 			switch(handler) {
-				case AnimationHandler:
+				case Handler::AnimationHandler:
 					handlers_[(uint8_t)Handler::AnimationHandler] = new AnimationCueHandler(this);
 					break;
-				case CanvasHandler:
+				case Handler::CanvasHandler:
 					handlers_[(uint8_t)Handler::CanvasHandler] = new CanvasCueHandler(this);
 					break;
-				case MaestroHandler:
+				case Handler::MaestroHandler:
 					handlers_[(uint8_t)Handler::MaestroHandler] = new MaestroCueHandler(this);
 					break;
-				case SectionHandler:
+				case Handler::SectionHandler:
 					handlers_[(uint8_t)Handler::SectionHandler] = new SectionCueHandler(this);
 					break;
-				case ShowHandler:
+				case Handler::ShowHandler:
 					handlers_[(uint8_t)Handler::ShowHandler] = new ShowCueHandler(this);
 					break;
 			}
@@ -120,7 +120,7 @@ namespace PixelMaestro {
 	 * @return Cue size.
 	 */
 	uint16_t CueController::get_cue_size() const {
-		return (IntByteConvert::byte_to_int(&buffer_[CueController::Byte::SizeByte1]) + Byte::PayloadByte);
+		return (IntByteConvert::byte_to_int(&buffer_[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte);
 	}
 
 	/**
@@ -129,7 +129,7 @@ namespace PixelMaestro {
 	 * @return Cue size.
 	 */
 	uint16_t CueController::get_cue_size(uint8_t *cue) const {
-		return (IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + Byte::PayloadByte);
+		return (IntByteConvert::byte_to_int(&cue[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte);
 	}
 
 	/**
@@ -168,21 +168,21 @@ namespace PixelMaestro {
 		 *	2) If the last bytes read match the Cue ID string, move the ID and read index to the start of the buffer (reduces the chance of a buffer overflow / split Cue)
 		 *	3) If we've reached the buffer size limit, set the index to 0 (error / invalid Cue)
 		 */
-		if (read_index_ >= IntByteConvert::byte_to_int(&buffer_[Byte::SizeByte1]) + Byte::PayloadByte) {
+		if (read_index_ >= IntByteConvert::byte_to_int(&buffer_[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte) {
 			run(buffer_);
 			read_index_ = 0;
 			return true;
 		}
 		else {
-			if (read_index_ > ID3Byte &&
-				(buffer_[read_index_ - ID3Byte] == id_[ID1Byte] &&
-				 buffer_[read_index_ - ID2Byte] == id_[ID2Byte] &&
-				 buffer_[read_index_] == id_[ID3Byte])) {
+			if (read_index_ > (uint8_t)Byte::ID3Byte &&
+				(buffer_[read_index_ - (uint8_t)Byte::ID3Byte] == id_[(uint8_t)Byte::ID1Byte] &&
+				 buffer_[read_index_ - (uint8_t)Byte::ID2Byte] == id_[(uint8_t)Byte::ID2Byte] &&
+				 buffer_[read_index_] == id_[(uint8_t)Byte::ID3Byte])) {
 
-				buffer_[ID1Byte] = id_[ID1Byte];
-				buffer_[ID2Byte] = id_[ID2Byte];
-				buffer_[ID3Byte] = id_[ID3Byte];
-				read_index_ = ID3Byte;
+				buffer_[(uint8_t)Byte::ID1Byte] = id_[(uint8_t)Byte::ID1Byte];
+				buffer_[(uint8_t)Byte::ID2Byte] = id_[(uint8_t)Byte::ID2Byte];
+				buffer_[(uint8_t)Byte::ID3Byte] = id_[(uint8_t)Byte::ID3Byte];
+				read_index_ = (uint8_t)Byte::ID3Byte;
 			}
 			else if ((uint32_t)read_index_ >= buffer_size_) {
 				read_index_ = 0;
@@ -195,7 +195,7 @@ namespace PixelMaestro {
 	 * Runs the currently loaded Cue.
 	 */
 	void CueController::run() {
-		handlers_[buffer_[Byte::PayloadByte]]->run(buffer_);
+		handlers_[buffer_[(uint8_t)Byte::PayloadByte]]->run(buffer_);
 	}
 
 	/**
@@ -204,7 +204,7 @@ namespace PixelMaestro {
 	 */
 	void CueController::run(uint8_t *cue) {
 		if (validate_header(cue)) {
-			handlers_[cue[Byte::PayloadByte]]->run(cue);
+			handlers_[cue[(uint8_t)Byte::PayloadByte]]->run(cue);
 		}
 	}
 
@@ -215,15 +215,15 @@ namespace PixelMaestro {
 	 */
 	bool CueController::validate_header(uint8_t *cue) {
 		// Check the ID
-		for (uint8_t i = 0; i < Byte::ChecksumByte; i++) {
+		for (uint8_t i = 0; i < (uint8_t)Byte::ChecksumByte; i++) {
 			if (cue[i] != id_[i]) {
 				return false;
 			}
 		}
 
 		// Validate the Checksum
-		uint16_t size = IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + Byte::PayloadByte;
-		if (cue[Byte::ChecksumByte] != checksum(cue, size)) {
+		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte;
+		if (cue[(uint8_t)Byte::ChecksumByte] != checksum(cue, size)) {
 			return false;
 		}
 

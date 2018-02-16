@@ -15,7 +15,7 @@ namespace PixelMaestro {
 
 	void MergeAnimation::update() {
 		Point center = get_center();
-		if (orientation_ == Vertical) {
+		if (orientation_ == Orientation::Vertical) {
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 				count_ = 0;
 

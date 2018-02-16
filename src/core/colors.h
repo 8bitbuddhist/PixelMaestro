@@ -57,7 +57,7 @@ namespace PixelMaestro {
 			};
 
 			/// Determines the blending algorithm used when mixing two colors.
-			enum MixMode : uint8_t {
+			enum class MixMode : uint8_t {
 				/// Do not mix the colors.
 				None,
 

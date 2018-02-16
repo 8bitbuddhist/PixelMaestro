@@ -69,7 +69,7 @@ namespace PixelMaestro {
 			delete [] this->cue_;
 		}
 
-		uint16_t size = IntByteConvert::byte_to_int(&cue[CueController::Byte::SizeByte1]) + CueController::Byte::PayloadByte;
+		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)CueController::Byte::PayloadByte;
 		this->cue_ = new uint8_t[size];
 		for (uint16_t i = 0; i < size; i++) {
 			this->cue_[i] = cue[i];

@@ -6,20 +6,17 @@
 #define CANVASTYPE_H
 
 namespace PixelMaestro {
-	class CanvasType {
-		public:
-			/// Lists the types of Canvases available.
-			enum Type : uint8_t {
+	/// The types of Canvases available.
+	enum class CanvasType : uint8_t {
 
-				/// Traditional Canvas. Draws Pixels using the underlying Section Animation.
-				AnimationCanvas,
+		/// Traditional Canvas. Draws Pixels using the underlying Section Animation.
+		AnimationCanvas,
 
-				/// Draws Pixels using custom colors.
-				ColorCanvas,
+		/// Draws Pixels using custom colors.
+		ColorCanvas,
 
-				/// Draws Pixels using a pre-defined color palette.
-				PaletteCanvas
-			};
+		/// Draws Pixels using a pre-defined color palette.
+		PaletteCanvas
 	};
 }
 

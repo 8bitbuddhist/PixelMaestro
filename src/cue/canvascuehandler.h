@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class CanvasCueHandler : public CueHandler {
 		public:
-			enum Action : uint8_t {
+			enum class Action : uint8_t {
 				Clear,
 				DrawCircle,
 				DrawFrame,
@@ -25,8 +25,8 @@ namespace PixelMaestro {
 				StopFrameTimer
 			};
 
-			enum Byte : uint8_t {
-				HandlerByte = CueController::Byte::PayloadByte,
+			enum class Byte : uint8_t {
+				HandlerByte = (uint8_t)CueController::Byte::PayloadByte,
 				ActionByte,
 				TypeByte,
 				SectionByte,

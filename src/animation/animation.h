@@ -19,7 +19,7 @@ namespace PixelMaestro {
 		public:
 
 			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. CycleAnimation).
-			enum Orientation : uint8_t {
+			enum class Orientation : uint8_t {
 				Horizontal,
 				Vertical
 			};
@@ -36,7 +36,7 @@ namespace PixelMaestro {
 			bool get_reverse() const;
 			Section* get_section() const;
 			AnimationTimer* get_timer() const;
-			AnimationType::Type get_type() const;
+			AnimationType get_type() const;
 			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
@@ -75,7 +75,7 @@ namespace PixelMaestro {
 			AnimationTimer* timer_ = nullptr;
 
 			/// The type of Animation. Gets set in the derived class' constructor.
-			AnimationType::Type type_;
+			AnimationType type_;
 
 			void update_cycle(uint8_t min, uint8_t max);
 	};

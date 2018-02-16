@@ -100,8 +100,8 @@ namespace PixelMaestro {
 	 * Returns the Canvas type.
 	 * @return Type of Canvas.
 	 */
-	CanvasType::Type AnimationCanvas::get_type() const {
-		return CanvasType::Type::AnimationCanvas;
+	CanvasType AnimationCanvas::get_type() const {
+		return CanvasType::AnimationCanvas;
 	}
 
 	/// Builds the Canvas and defaults all Pixels to off.

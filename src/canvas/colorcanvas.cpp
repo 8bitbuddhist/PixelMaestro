@@ -179,8 +179,8 @@ namespace PixelMaestro {
 	 * Returns the Canvas type.
 	 * @return Canvas type.
 	 */
-	CanvasType::Type ColorCanvas::get_type() const {
-		return CanvasType::Type::ColorCanvas;
+	CanvasType ColorCanvas::get_type() const {
+		return CanvasType::ColorCanvas;
 	}
 
 	/// Builds the Canvas.

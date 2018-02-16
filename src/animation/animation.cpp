@@ -115,7 +115,7 @@ namespace PixelMaestro {
 	 * Returns the type of Animation.
 	 * @return Animation type.
 	 */
-	AnimationType::Type Animation::get_type() const {
+	AnimationType Animation::get_type() const {
 		return type_;
 	}
 
