@@ -461,7 +461,7 @@ namespace PixelMaestro {
 	 */
 	void Section::update_scroll(const uint32_t &current_time) {
 
-		uint16_t x_step, y_step = 0;
+		uint16_t x_step = 0, y_step = 0;
 
 		// Scroll x axis
 		if (scroll_->timer_x != nullptr || scroll_->step_x != 0) {
