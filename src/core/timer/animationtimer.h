@@ -14,17 +14,18 @@ namespace PixelMaestro {
 	class AnimationTimer : public Timer {
 		public:
 			AnimationTimer(Animation* animation);
-			uint16_t get_pause() const;
+			uint16_t get_delay() const;
 			uint8_t get_step_count() const;
 			void recalculate_step_count();
-			void set_interval(uint16_t interval, uint16_t pause = 0);
+			void set_interval(uint16_t interval, uint16_t delay = 0);
+			bool update(const uint32_t& current_time);
 
 		private:
 			/// The timer's parent Animation.
 			Animation* animation_ = nullptr;
 
 			/// The amount of time (in milliseconds) to wait before starting an animation cycle. Defaults to 0.
-			uint16_t pause_;
+			uint16_t delay_;
 
 			/// The number of steps from the current cycle to the next cycle.
 			uint8_t step_count_ = 1;

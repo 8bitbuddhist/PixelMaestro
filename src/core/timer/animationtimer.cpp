@@ -17,8 +17,8 @@ namespace PixelMaestro {
 	 * Returns the amount of time (in milliseconds) to wait before starting an animation cycle.
 	 * @return Pause interval.
 	 */
-	uint16_t AnimationTimer::get_pause() const {
-		return pause_;
+	uint16_t AnimationTimer::get_delay() const {
+		return delay_;
 	}
 
 	/**
@@ -38,7 +38,7 @@ namespace PixelMaestro {
 		 * Otherwise, just jump to the next cycle.
 		 */
 		if (animation_->get_fade()) {
-			step_count_ = (interval_ - pause_) / (float)animation_->get_section()->get_maestro()->get_timer()->get_interval();
+			step_count_ = interval_ / (float)animation_->get_section()->get_maestro()->get_timer()->get_interval();
 		}
 		else {
 			step_count_ = 0;
@@ -49,11 +49,25 @@ namespace PixelMaestro {
 	 * Sets the amount of time between events.
 	 *
 	 * @param interval Amount of time (in milliseconds) between events.
-	 * @param pause The amount of time (in milliseconds) to wait before starting an animation cycle.
+	 * @param delay The amount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	void AnimationTimer::set_interval(uint16_t interval, uint16_t pause) {
+	void AnimationTimer::set_interval(uint16_t interval, uint16_t delay) {
 		this->interval_ = interval;
-		this->pause_ = pause;
+		this->delay_ = delay;
 		this->recalculate_step_count();
+	}
+
+	/**
+	 * Checks if the timer has gone off.
+	 * @param current_time Current program runtime.
+	 * @return If the runtime exceeds the interval, return true.
+	 */
+	bool AnimationTimer::update(const uint32_t& current_time) {
+		if (running_ && ((current_time - last_time_) >= (interval_ + delay_))) {
+			last_time_ = current_time;
+			return true;
+		}
+
+		return false;
 	}
 }

@@ -252,7 +252,7 @@ namespace PixelMaestro {
 				animation->set_reverse(this->animation_->get_reverse());
 
 				if (this->animation_->get_timer() != nullptr) {
-					animation->set_timer(this->animation_->get_timer()->get_interval(), this->animation_->get_timer()->get_pause());
+					animation->set_timer(this->animation_->get_timer()->get_interval(), this->animation_->get_timer()->get_delay());
 				}
 			}
 			remove_animation();

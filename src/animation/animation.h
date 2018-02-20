@@ -41,7 +41,7 @@ namespace PixelMaestro {
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
 			void set_orientation(Orientation orientation);
-			AnimationTimer* set_timer(uint16_t speed, uint16_t pause = 0);
+			AnimationTimer* set_timer(uint16_t speed, uint16_t delay = 0);
 			void set_reverse(bool reverse);
 			bool update(const uint32_t& current_time);
 			virtual void update() = 0;
