@@ -75,7 +75,7 @@ namespace PixelMaestro {
 			AnimationTimer* timer_ = nullptr;
 
 			/// The type of Animation. Gets set in the derived class' constructor.
-			AnimationType type_;
+			AnimationType type_ = AnimationType::Solid;
 
 			void update_cycle(uint8_t min, uint8_t max);
 	};

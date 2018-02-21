@@ -106,6 +106,7 @@ namespace PixelMaestro {
 
 	/// Builds the Canvas and defaults all Pixels to off.
 	void AnimationCanvas::initialize() {
+		delete_frames();
 		frames_ = new bool*[num_frames_];
 		for (uint16_t i = 0; i < num_frames_; i++) {
 			frames_[i] = new bool[section_->get_dimensions()->size()] {0};

@@ -27,7 +27,7 @@ namespace PixelMaestro {
 			virtual CanvasType get_type() const = 0;
 			virtual void initialize() = 0;
 
-			Canvas(Section* section);
+			explicit Canvas(Section* section);
 			Canvas(Section* section, uint16_t num_frames);
 			void clear();
 			void draw_circle(uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
@@ -48,7 +48,6 @@ namespace PixelMaestro {
 			void set_frame_timer(uint16_t speed);
 			void set_num_frames(uint16_t num_frames);
 			void set_offset(int16_t x, int16_t y);
-			void set_section(Section* section_);
 			void update(const uint32_t& current_time);
 
 		protected:

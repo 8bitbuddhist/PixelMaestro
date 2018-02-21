@@ -13,7 +13,7 @@ namespace PixelMaestro {
 	class CueController;
 	class CueHandler {
 		public:
-			CueHandler(CueController* controller) {
+			explicit CueHandler(CueController* controller) {
 				controller_ = controller;
 			}
 			virtual ~CueHandler() { }

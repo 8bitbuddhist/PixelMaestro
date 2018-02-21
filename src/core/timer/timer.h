@@ -10,7 +10,7 @@
 namespace PixelMaestro {
 	class Timer {
 		public:
-			Timer(uint16_t speed = 1000);
+			explicit Timer(uint16_t interval = 1000);
 			uint16_t get_interval() const;
 			uint32_t get_last_time() const;
 			void set_interval(uint16_t interval);

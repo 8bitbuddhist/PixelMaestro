@@ -9,26 +9,23 @@ namespace PixelMaestro {
 	void MandelbrotAnimation::map() {
 		// Initialize Mandelbrot calculation variables
 		Point center = get_center();	// Used to place the Mandelbrot on the grid.
-		double c_real_, c_imaginary_;	// Stores complex real and imaginary numbers for each Pixel.
-		double image_width_;			// Stores the calculated width of the image.
-		double x_, x_2_, y_;			// Temporary variables for Mandelbrot function.
 
-		// Calculate the scale of the pattern
-		image_width_ = 4.0 / section_->get_dimensions()->x;
+		// Calculate the size/scale of the pattern
+		double image_width_ = 4.0 / section_->get_dimensions()->x;
 
 		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-			c_imaginary_ = (y - center.y) * image_width_;
+			double c_imaginary = (y - center.y) * image_width_;
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-				c_real_ = (x - center.x) * image_width_;
+				double c_real = (x - center.x) * image_width_;
 
-				x_ = 0;
-				y_ = 0;
+				double temp_x = 0;
+				double temp_y = 0;
 				iterations_ = 0;
 
-				while ((x_ * x_) + (y_ * y_) < 4 && iterations_ < max_iterations_) {
-					x_2_ = (x_ * x_) - (y_ * y_) + c_real_;
-					y_ = (2.0 * x_ * y_) + c_imaginary_;
-					x_ = x_2_;
+				while ((temp_x * temp_x) + (temp_y * temp_y) < 4 && iterations_ < max_iterations_) {
+					double temp_x_2 = (temp_x * temp_x) - (temp_y * temp_y) + c_real;
+					temp_y = (2.0 * temp_x * temp_y) + c_imaginary;
+					temp_x = temp_x_2;
 					iterations_++;
 				}
 

@@ -8,7 +8,7 @@ namespace PixelMaestro {
 		public:
 			FireAnimation(Section* section, Colors::RGB* colors = nullptr, uint8_t num_colors = 0);
 			~FireAnimation();
-			uint8_t get_multiplier();
+			uint8_t get_multiplier() const;
 			void map();
 			void set_multiplier(uint8_t multiplier);
 			void update();

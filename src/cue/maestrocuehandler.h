@@ -21,7 +21,7 @@ namespace PixelMaestro {
 				OptionsByte
 			};
 
-			MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
+			explicit MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
 			~MaestroCueHandler();
 			uint8_t* set_show();
 			uint8_t* set_timer(uint16_t interval);

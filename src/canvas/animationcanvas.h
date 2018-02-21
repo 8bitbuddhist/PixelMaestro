@@ -10,7 +10,7 @@
 namespace PixelMaestro {
 	class AnimationCanvas : public Canvas {
 		public:
-			AnimationCanvas(Section* section);
+			explicit AnimationCanvas(Section* section);
 			AnimationCanvas(Section* section, uint16_t num_frames);
 			~AnimationCanvas();
 			void activate(uint16_t x, uint16_t y);

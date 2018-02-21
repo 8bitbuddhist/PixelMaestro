@@ -13,6 +13,7 @@ namespace PixelMaestro {
 	class Pixel {
 
 		public:
+			Pixel() {}
 			Colors::RGB* get_color();
 			void set_next_color(Colors::RGB* next_color, uint8_t step_count);
 			void update();

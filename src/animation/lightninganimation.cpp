@@ -33,7 +33,6 @@ namespace PixelMaestro {
 	}
 
 	void LightningAnimation::draw_bolt_horizontal(uint8_t bolt_num, Section* section, Point* start, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance) {
-		uint8_t direction_roll;
 		Point cursor = {start->x, start->y};
 
 		/*
@@ -58,7 +57,7 @@ namespace PixelMaestro {
 		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
 		 */
 		for (uint16_t x = cursor.x; x < length; x++) {
-			direction_roll = Utility::rand(255);
+			uint8_t direction_roll = Utility::rand(255);
 			if (direction_roll > up_threshold) {
 				if (cursor.y + 1 < section_->get_dimensions()->y) {
 					cursor.y += 1;
@@ -98,7 +97,6 @@ namespace PixelMaestro {
 	}
 
 	void LightningAnimation::draw_bolt_vertical(uint8_t bolt_num, Section* section, Point* start, uint8_t left_threshold, uint8_t right_threshold, uint8_t fork_chance) {
-		uint8_t direction_roll;
 		Point cursor = {start->x, start->y};
 
 		/*
@@ -123,7 +121,7 @@ namespace PixelMaestro {
 		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
 		 */
 		for (uint16_t y = cursor.y; y < length; y++) {
-			direction_roll = Utility::rand(255);
+			uint8_t direction_roll = Utility::rand(255);
 			if (direction_roll > right_threshold) {
 				if (cursor.x + 1 < section_->get_dimensions()->x) {
 					cursor.x += 1;

@@ -156,9 +156,9 @@ namespace PixelMaestro {
 		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
 	}
 
-	uint8_t* AnimationCueHandler::set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t pause) {
+	uint8_t* AnimationCueHandler::set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t delay) {
 		IntByteConvert interval_byte(interval);
-		IntByteConvert pause_byte(pause);
+		IntByteConvert delay_byte(delay);
 
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetTimer;
@@ -166,8 +166,8 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = interval_byte.converted_0;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = interval_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = pause_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = pause_byte.converted_1;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = delay_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = delay_byte.converted_1;
 
 		return controller_->assemble(((uint8_t)Byte::OptionsByte + 4));
 	}

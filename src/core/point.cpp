@@ -16,6 +16,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Copy constructor.
+	 * @param other Point to copy.
+	 */
+	Point::Point(const Point &other) {
+		set(other.x, other.y);
+	}
+
+	/**
 	 * When used as a dimension, translates a coordinate into a 1-dimensional array index.
 	 * @param x X-coordinate.
 	 * @param y Y-coordinate.
@@ -39,7 +47,7 @@ namespace PixelMaestro {
 	 * When used as a dimension, returns x * y.
 	 * @return X value multiplied by the Y value.
 	 */
-	uint32_t Point::size() {
+	uint32_t Point::size() const {
 		return x * y;
 	}
 }

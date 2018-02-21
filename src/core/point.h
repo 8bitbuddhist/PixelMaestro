@@ -22,18 +22,19 @@ namespace PixelMaestro {
 				y = point_two.y;
 			}
 
-			bool operator==(Point point_two) {
+			bool operator==(Point point_two) const {
 				return (x == point_two.x && y == point_two.y);
 			}
 
-			bool operator!=(Point point_two) {
+			bool operator!=(Point point_two) const {
 				return !operator==(point_two);
 			}
 
 			Point(uint16_t x = 0, uint16_t y = 0);
+			Point(const Point& other);
 			uint32_t get_inline_index(uint16_t x, uint16_t y) const;
 			void set(uint16_t x, uint16_t y);
-			uint32_t size();
+			uint32_t size() const;
 	};
 }
 

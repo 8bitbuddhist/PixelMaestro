@@ -33,21 +33,31 @@ namespace PixelMaestro {
 					this->b = blue;
 				}
 
+				/**
+				 * Copy constructor.
+				 * @param other RGB to copy.
+				 */
+				RGB(const RGB& other) {
+					this->r = other.r;
+					this->g = other.g;
+					this->b = other.b;
+				}
+
 				void operator=(RGB color_two) {
 					r = color_two.r;
 					g = color_two.g;
 					b = color_two.b;
 				}
 
-				bool operator==(RGB color_two) {
+				bool operator==(RGB color_two) const {
 					return r == color_two.r && g == color_two.g && b == color_two.b;
 				}
 
-				bool operator!=(RGB color_two) {
+				bool operator!=(RGB color_two) const {
 					return !operator==(color_two);
 				}
 
-				RGB operator*(float multiplier) {
+				RGB operator*(float multiplier) const {
 					return {
 						(uint8_t)(r * multiplier),
 						(uint8_t)(g * multiplier),

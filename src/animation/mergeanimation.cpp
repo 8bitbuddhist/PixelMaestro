@@ -5,7 +5,7 @@ namespace PixelMaestro {
 		type_ = AnimationType::Merge;
 	}
 
-	int8_t MergeAnimation::get_skew() {
+	int8_t MergeAnimation::get_skew() const {
 		return skew_;
 	}
 

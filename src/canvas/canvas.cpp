@@ -192,8 +192,6 @@ namespace PixelMaestro {
 	void Canvas::draw_text(uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars) {
 		Point cursor = {origin_x, origin_y};
 
-		uint8_t* current_char;
-
 		for (uint16_t letter = 0; letter < num_chars; letter++) {
 
 			/*
@@ -201,7 +199,7 @@ namespace PixelMaestro {
 			 * Each bit in the char corresponds to an individual pixel.
 			 * We use bitmasking to get the bit value, then enable the pixel based on that bit.
 			 */
-			current_char = font->get_char(text[letter]);
+			uint8_t* current_char = font->get_char(text[letter]);
 			for (uint16_t column = 0; column < font->size.x; column++) {
 				for (uint16_t row = 0; row < font->size.y; row++) {
 					if (in_bounds(cursor.x, cursor.y)) {
@@ -381,15 +379,6 @@ namespace PixelMaestro {
 		this->num_frames_ = num_frames;
 		this->current_frame_index_ = 0;
 
-		initialize();
-	}
-
-	/**
-	 * Changes the Canvas' parent Section.
-	 * @param section New Section.
-	 */
-	void Canvas::set_section(Section *section) {
-		this->section_ = section;
 		initialize();
 	}
 

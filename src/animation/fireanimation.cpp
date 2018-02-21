@@ -6,7 +6,7 @@ namespace PixelMaestro {
 		type_ = AnimationType::Fire;
 	}
 
-	uint8_t FireAnimation::get_multiplier() {
+	uint8_t FireAnimation::get_multiplier() const {
 		return this->multiplier_;
 	}
 

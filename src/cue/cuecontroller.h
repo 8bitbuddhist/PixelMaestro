@@ -23,7 +23,7 @@ namespace PixelMaestro {
 
 			Converter converted;
 
-			FloatByteConvert(float float_val) {
+			explicit FloatByteConvert(float float_val) {
 				converted.val = float_val;
 			}
 
@@ -44,7 +44,7 @@ namespace PixelMaestro {
 			uint8_t converted_0 = 0;
 			uint8_t converted_1 = 0;
 
-			IntByteConvert(uint32_t val) {
+			explicit IntByteConvert(uint32_t val) {
 				converted_0 = val / 256;
 				converted_1 = val % 256;
 			}

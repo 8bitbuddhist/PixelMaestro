@@ -35,7 +35,7 @@ namespace PixelMaestro {
 				OptionsByte
 			};
 
-			AnimationCueHandler(CueController* controller) : CueHandler(controller) { }
+			explicit AnimationCueHandler(CueController* controller) : CueHandler(controller) { }
 			~AnimationCueHandler();
 
 			// Animation-specific calls
@@ -53,7 +53,7 @@ namespace PixelMaestro {
 			uint8_t* set_fade(uint8_t section_num, uint8_t layer_num, bool fade);
 			uint8_t* set_orientation(uint8_t section_num, uint8_t layer_num, Animation::Orientation orientation);
 			uint8_t* set_reverse(uint8_t section_num, uint8_t layer_num, bool reverse);
-			uint8_t* set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t pause = 0);
+			uint8_t* set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t delay = 0);
 			uint8_t* start(uint8_t section_num, uint8_t layer_num);
 			uint8_t* stop(uint8_t section_num, uint8_t layer_num);
 

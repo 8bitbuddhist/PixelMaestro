@@ -5,7 +5,7 @@ namespace PixelMaestro {
 		type_ = AnimationType::Wave;
 	}
 
-	int8_t WaveAnimation::get_skew() {
+	int8_t WaveAnimation::get_skew() const {
 		return skew_;
 	}
 

@@ -26,7 +26,7 @@ namespace PixelMaestro {
 	 * Added to support storing Events in a vector in PixelMaestro Studio.
 	 * @param other Event to copy.
 	 */
-	Event::Event(const Event &other) {
+	Event::Event(const Event& other) {
 		set_cue(other.cue_);
 		this->time_ = other.time_;
 	}

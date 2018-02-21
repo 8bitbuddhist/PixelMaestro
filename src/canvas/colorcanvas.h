@@ -10,7 +10,7 @@
 namespace PixelMaestro {
 	class ColorCanvas : public Canvas {
 		public:
-			ColorCanvas(Section* section);
+			explicit ColorCanvas(Section* section);
 			ColorCanvas(Section *section, uint16_t num_frames);
 			~ColorCanvas();
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);

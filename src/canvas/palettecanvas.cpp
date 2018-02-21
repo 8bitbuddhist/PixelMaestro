@@ -186,21 +186,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Searches for the color in the palette, and if found returns the index of the first match.
-	 * @param color Color to search for.
-	 * @return Index in the palette (or 255 if not found).
-	 */
-	uint8_t PaletteCanvas::get_color_index(Colors::RGB *color) const {
-		for (uint8_t index = 0; index < num_colors_; index++) {
-			if (*color == colors_[index]) {
-				return index;
-			}
-		}
-
-		return 255;
-	}
-
-	/**
 	 * Returns the color palette.
 	 * @return Color palette.
 	 */
@@ -226,6 +211,7 @@ namespace PixelMaestro {
 
 	/// Builds the Canvas.
 	void PaletteCanvas::initialize() {
+		delete_frames();
 		frames_ = new uint8_t*[num_frames_];
 		for (uint16_t frame = 0; frame < num_frames_; frame++) {
 			frames_[frame] = new uint8_t[section_->get_dimensions()->size()];

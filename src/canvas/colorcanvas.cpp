@@ -185,6 +185,7 @@ namespace PixelMaestro {
 
 	/// Builds the Canvas.
 	void ColorCanvas::initialize() {
+		delete_frames();
 		frames_ = new Colors::RGB*[num_frames_];
 		for (uint16_t i = 0; i < num_frames_; i++) {
 			frames_[i] = new Colors::RGB[section_->get_dimensions()->size()];

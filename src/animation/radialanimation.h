@@ -17,7 +17,7 @@ namespace PixelMaestro {
 			uint8_t resolution_ = 10;
 
 			/// Tracks whether the orientation has changed.
-			Animation::Orientation last_orientation_;
+			Animation::Orientation last_orientation_ = Orientation::Horizontal;
 
 			void map();
 	};
