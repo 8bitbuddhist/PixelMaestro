@@ -6,6 +6,24 @@
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
+
+	uint8_t* CanvasCueHandler::activate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
+		IntByteConvert x_byte(x);
+		IntByteConvert y_byte(y);
+
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Activate;
+		controller_->get_buffer()[(uint8_t)Byte::TypeByte] = 255;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
+	}
+
 	uint8_t* CanvasCueHandler::clear(uint8_t section_num, uint8_t layer_num) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Clear;
@@ -14,6 +32,23 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 
 		return controller_->assemble((uint8_t)Byte::OptionsByte);
+	}
+
+	uint8_t* CanvasCueHandler::deactivate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
+		IntByteConvert x_byte(x);
+		IntByteConvert y_byte(y);
+
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Deactivate;
+		controller_->get_buffer()[(uint8_t)Byte::TypeByte] = 255;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
 	}
 
 	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t layer_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
@@ -689,8 +724,20 @@ namespace PixelMaestro {
 		Canvas* plain_canvas = section->get_canvas();
 		if (plain_canvas == nullptr) return;
 		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
+			case Action::Activate:
+				plain_canvas->activate(
+					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
+				);
+				break;
 			case Action::Clear:
 				plain_canvas->clear();
+				break;
+			case Action::Deactivate:
+				plain_canvas->deactivate(
+					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
+				);
 				break;
 			case Action::NextFrame:
 				plain_canvas->next_frame();

@@ -8,8 +8,11 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Animations
 	- Added new Fire animation.
 	- Added `skew` parameter to Merge and Wave animations. Skew offsets each row (or column) by the specified number of Pixels.
+- Canvas
+	- Added `ColorCanvas/PaletteCanvas::set_drawing_color()`, which sets the color used when calling `activate()`.
 - Cues
 	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You will need to call `ShowCueHandler::set_events()` separately to initialize the Event list.
+	- Added Cues for `Canvas::activate()` and `Canvas::deactivate()`.
 
 ## [v0.12] - 2018-01-22
 ### Changed

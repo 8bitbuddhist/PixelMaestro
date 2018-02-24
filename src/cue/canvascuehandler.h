@@ -23,7 +23,9 @@ namespace PixelMaestro {
 				SetNumFrames,
 				StartFrameTimer,
 				StopFrameTimer,
-				SetDrawingColor
+				SetDrawingColor,
+				Activate,
+				Deactivate
 			};
 
 			enum class Byte : uint8_t {
@@ -37,7 +39,9 @@ namespace PixelMaestro {
 
 			explicit CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
 			~CanvasCueHandler();
+			uint8_t* activate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
 			uint8_t* clear(uint8_t section_num, uint8_t layer_num);
+			uint8_t* deactivate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
 			uint8_t* draw_circle(uint8_t section_num, uint8_t layer_num, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			uint8_t* draw_circle(uint8_t section_num, uint8_t layer_num, Colors::RGB color, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			uint8_t* draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
