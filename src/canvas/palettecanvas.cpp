@@ -231,6 +231,14 @@ namespace PixelMaestro {
 		this->num_colors_ = num_colors;
 	}
 
+	/**
+	 * Sets the color used for drawing.
+	 * @param color_index Index of the color used for drawing.
+	 */
+	void PaletteCanvas::set_drawing_color(uint8_t color_index) {
+		drawing_color_index_ = color_index;
+	}
+
 	PaletteCanvas::~PaletteCanvas() {
 		delete_frames();
 	}

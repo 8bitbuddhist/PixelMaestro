@@ -195,6 +195,14 @@ namespace PixelMaestro {
 		}
 	}
 
+	/**
+	 * Sets the color used for drawing.
+	 * @param color Drawing color.
+	 */
+	void ColorCanvas::set_drawing_color(Colors::RGB color) {
+		drawing_color_ = color;
+	}
+
 	ColorCanvas::~ColorCanvas() {
 		delete_frames();
 	}

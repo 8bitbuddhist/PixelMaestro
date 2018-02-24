@@ -28,6 +28,7 @@ namespace PixelMaestro {
 			Colors::RGB* get_frame(uint16_t frame) const;
 			CanvasType get_type() const;
 			void initialize();
+			void set_drawing_color(Colors::RGB color);
 
 		protected:
 			void delete_frames();

@@ -597,6 +597,30 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
+	uint8_t* CanvasCueHandler::set_drawing_color(uint8_t section_num, uint8_t layer_num, Colors::RGB color) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetDrawingColor;
+		controller_->get_buffer()[(uint8_t)Byte::TypeByte] = (uint8_t)CanvasType::ColorCanvas;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = color.r;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = color.g;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = color.b;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 3);
+	}
+
+	uint8_t* CanvasCueHandler::set_drawing_color(uint8_t section_num, uint8_t layer_num, uint8_t color_index) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetDrawingColor;
+		controller_->get_buffer()[(uint8_t)Byte::TypeByte] = (uint8_t)CanvasType::PaletteCanvas;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = color_index;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
+	}
+
 	uint8_t* CanvasCueHandler::set_frame_timer(uint8_t section_num, uint8_t layer_num, uint16_t speed) {
 		IntByteConvert speed_byte(speed);
 
@@ -861,6 +885,15 @@ namespace PixelMaestro {
 								IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 13]),
 								bool(cue[(uint8_t)Byte::OptionsByte + 15]));
 							break;
+						case Action::SetDrawingColor:
+							color_canvas->set_drawing_color(
+								Colors::RGB(
+									cue[(uint8_t)Byte::OptionsByte],
+									cue[(uint8_t)Byte::OptionsByte + 1],
+									cue[(uint8_t)Byte::OptionsByte + 2]
+								)
+							);
+							break;
 						default:
 							break;
 					}
@@ -959,6 +992,9 @@ namespace PixelMaestro {
 
 								delete [] old_palette;
 							}
+							break;
+						case Action::SetDrawingColor:
+							palette_canvas->set_drawing_color(cue[(uint8_t)Byte::OptionsByte]);
 							break;
 						default:
 							break;
