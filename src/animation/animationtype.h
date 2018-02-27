@@ -12,7 +12,6 @@ namespace PixelMaestro {
 		Cycle,
 		Lightning,
 		Mandelbrot,
-		Merge,
 		Plasma,
 		Radial,
 		Random,

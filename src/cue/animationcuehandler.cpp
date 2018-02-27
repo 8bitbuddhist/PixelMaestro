@@ -1,6 +1,5 @@
 #include "../animation/fireanimation.h"
 #include "../animation/lightninganimation.h"
-#include "../animation/mergeanimation.h"
 #include "../animation/plasmaanimation.h"
 #include "../animation/radialanimation.h"
 #include "../animation/sparkleanimation.h"
@@ -31,16 +30,6 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = fork_chance;
 
 		return controller_->assemble(((uint8_t)Byte::OptionsByte + 4));
-	}
-
-	uint8_t* AnimationCueHandler::set_merge_options(uint8_t section_num, uint8_t layer_num, int8_t skew) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetMergeOptions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)skew;
-
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
 	}
 
 	uint8_t* AnimationCueHandler::set_plasma_options(uint8_t section_num, uint8_t layer_num, float size, float resolution) {
@@ -83,14 +72,15 @@ namespace PixelMaestro {
 		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
 	}
 
-	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, int8_t skew) {
+	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, bool merge, int8_t skew) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetWaveOptions;
 		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)skew;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)merge;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = (uint8_t)skew;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(((uint8_t)Byte::OptionsByte + 2));
 	}
 
 	// General-purpose Cues
@@ -246,9 +236,6 @@ namespace PixelMaestro {
 					la->set_fork_chance(cue[(uint8_t)Byte::OptionsByte + 3]);
 				}
 				break;
-			case Action::SetMergeOptions:
-				static_cast<MergeAnimation*>(animation)->set_skew((int8_t)cue[(uint8_t)Byte::OptionsByte]);
-				break;
 			case Action::SetOrientation:
 				animation->set_orientation((Animation::Orientation)cue[(uint8_t)Byte::OptionsByte]);
 				break;
@@ -274,7 +261,11 @@ namespace PixelMaestro {
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2]));
 				break;
 			case Action::SetWaveOptions:
-				static_cast<WaveAnimation*>(animation)->set_skew((int8_t)cue[(uint8_t)Byte::OptionsByte]);
+				{
+					WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
+					wa->set_merge((bool)cue[(uint8_t)Byte::OptionsByte]);
+					wa->set_skew((int8_t)cue[(uint8_t)Byte::OptionsByte + 1]);
+				}
 				break;
 			case Action::Start:
 				if (animation->get_timer()) {

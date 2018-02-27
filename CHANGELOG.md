@@ -4,6 +4,8 @@ All notable changes to PixelMaestro will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.13] - In Progress
+WARNING: This update breaks backwards compatability with earlier Cuefiles.
+
 ### Added
 - Animations
 	- Added new Fire animation.
@@ -13,6 +15,10 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - Cues
 	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You will need to call `ShowCueHandler::set_events()` separately to initialize the Event list.
 	- Added Cues for `Canvas::activate()` and `Canvas::deactivate()`.
+	
+### Removed
+- Animations
+	- Merge animation is now a part of the Wave animation. Use `WaveAnimation::set_merge(boolean)` to recreate a MergeAnimation.
 
 ## [v0.12] - 2018-01-22
 ### Changed

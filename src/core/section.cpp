@@ -8,7 +8,6 @@
 #include "../animation/fireanimation.h"
 #include "../animation/lightninganimation.h"
 #include "../animation/mandelbrotanimation.h"
-#include "../animation/mergeanimation.h"
 #include "../animation/plasmaanimation.h"
 #include "../animation/radialanimation.h"
 #include "../animation/randomanimation.h"
@@ -216,9 +215,6 @@ namespace PixelMaestro {
 				break;
 			case AnimationType::Mandelbrot:
 				animation = new MandelbrotAnimation(this, colors, num_colors);
-				break;
-			case AnimationType::Merge:
-				animation = new MergeAnimation(this, colors, num_colors);
 				break;
 			case AnimationType::Plasma:
 				animation = new PlasmaAnimation(this, colors, num_colors);
