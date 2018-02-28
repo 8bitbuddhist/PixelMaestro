@@ -10,6 +10,7 @@ namespace PixelMaestro {
 	class SectionCueHandler : public CueHandler {
 		public:
 			enum class Action : uint8_t {
+				RemoveAnimation,
 				RemoveCanvas,
 				RemoveLayer,
 				SetAnimation,
@@ -30,6 +31,7 @@ namespace PixelMaestro {
 
 			explicit SectionCueHandler(CueController* controller) : CueHandler(controller) { }
 			~SectionCueHandler();
+			uint8_t* remove_animation(uint8_t section_num, uint8_t layer_num);
 			uint8_t* remove_canvas(uint8_t section_num, uint8_t layer_num);
 			uint8_t* remove_layer(uint8_t section_num, uint8_t layer_num);
 			uint8_t* set_animation(uint8_t section_num, uint8_t layer_num, AnimationType animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors = true);

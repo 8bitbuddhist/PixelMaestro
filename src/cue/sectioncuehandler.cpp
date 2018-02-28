@@ -2,6 +2,15 @@
 #include "sectioncuehandler.h"
 
 namespace PixelMaestro {
+	uint8_t* SectionCueHandler::remove_animation(uint8_t section_num, uint8_t layer_num) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveAnimation;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
+	}
+
 	uint8_t* SectionCueHandler::remove_canvas(uint8_t section_num, uint8_t layer_num) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveCanvas;
@@ -123,6 +132,9 @@ namespace PixelMaestro {
 		if (section == nullptr) return;
 
 		switch ((Action)cue[(uint8_t)Byte::ActionByte]) {
+			case Action::RemoveAnimation:
+				section->remove_animation();
+				break;
 			case Action::RemoveCanvas:
 				section->remove_canvas();
 				break;

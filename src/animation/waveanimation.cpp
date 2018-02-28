@@ -5,16 +5,16 @@ namespace PixelMaestro {
 		type_ = AnimationType::Wave;
 	}
 
-	bool WaveAnimation::get_merge() const {
-		return merge_;
+	bool WaveAnimation::get_mirror() const {
+		return mirror_;
 	}
 
 	int8_t WaveAnimation::get_skew() const {
 		return skew_;
 	}
 
-	void WaveAnimation::set_merge(bool merge) {
-		this->merge_ = merge;
+	void WaveAnimation::set_mirror(bool mirror) {
+		this->mirror_ = mirror;
 	}
 
 	void WaveAnimation::set_skew(int8_t skew) {
@@ -22,7 +22,7 @@ namespace PixelMaestro {
 	}
 
 	void WaveAnimation::update() {
-		if (merge_) {
+		if (mirror_) {
 			Point center = get_center();
 			if (orientation_ == Orientation::Vertical) {
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {

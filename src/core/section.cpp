@@ -142,8 +142,9 @@ namespace PixelMaestro {
 		}
 
 		// If there's a Layer, return the Layer color mixed with the Section (or Canvas) color.
+		// TODO: With Alpha, layers 2+ levels deep will cause parent colors to disappear if alpha is non-zero
 		if (layer_ != nullptr) {
-			return Colors::mix_colors(color, layer_->section->get_pixel_color(x, y), layer_->mix_mode, layer_->alpha);
+			color = Colors::mix_colors(color, layer_->section->get_pixel_color(x, y), layer_->mix_mode, layer_->alpha);
 		}
 
 		return color;

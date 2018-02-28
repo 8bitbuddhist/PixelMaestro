@@ -3,8 +3,8 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.13] - In Progress
-WARNING: This update breaks backwards compatability with earlier Cuefiles.
+## [v0.20] - In Progress
+WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefiles.
 
 ### Added
 - Animations
@@ -18,7 +18,7 @@ WARNING: This update breaks backwards compatability with earlier Cuefiles.
 	
 ### Removed
 - Animations
-	- Merge animation is now a part of the Wave animation. Use `WaveAnimation::set_merge(boolean)` to recreate a MergeAnimation.
+	- Merge animation is now set using the `mirror` parameter in the Wave animation. Use `WaveAnimation::set_mirror(boolean)` to recreate a MergeAnimation.
 
 ## [v0.12] - 2018-01-22
 ### Changed
