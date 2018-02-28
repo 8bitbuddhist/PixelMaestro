@@ -15,10 +15,15 @@ WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefi
 - Cues
 	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You will need to call `ShowCueHandler::set_events()` separately to initialize the Event list.
 	- Added Cues for `Canvas::activate()` and `Canvas::deactivate()`.
+	- Added Cue for `Section::remove_animation()`.
+	
+### Changed
+- Layers
+	- Rewrote Layer mixing algorithm. This fixes an issue when combining the Overlay and Alpha MixModes in Sections with 2+ Layers.
 	
 ### Removed
 - Animations
-	- Merge animation is now set using the `mirror` parameter in the Wave animation. Use `WaveAnimation::set_mirror(boolean)` to recreate a MergeAnimation.
+	- Merge animation is merged with the Wave animation. Use `WaveAnimation::set_mirror(true)` to simulate merging.
 
 ## [v0.12] - 2018-01-22
 ### Changed

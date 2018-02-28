@@ -124,30 +124,42 @@ namespace PixelMaestro {
 
 		@param x Pixel x-coordinate.
 		@param y Pixel y-coordinate.
+		@param base_color The color to use as a base when blending in Layers.
 		@return RGB value of the Pixel's final color.
 	*/
-	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y) {
-		Colors::RGB color;
+	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color) {
 
 		// Adjust coordinates based on offet
 		uint16_t offset_x = (x + offset_.x) % dimensions_.x;
 		uint16_t offset_y = (y + offset_.y) % dimensions_.y;
 
-		// If there's a Canvas, get the color supplied by the Canvas.
+		Colors::RGB section_color;
+
 		if (canvas_ != nullptr) {
-			color = canvas_->get_pixel_color(offset_x, offset_y);
+			section_color = canvas_->get_pixel_color(offset_x, offset_y);
 		}
 		else {
-			color = *pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+			section_color = *pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
 		}
 
-		// If there's a Layer, return the Layer color mixed with the Section (or Canvas) color.
-		// TODO: With Alpha, layers 2+ levels deep will cause parent colors to disappear if alpha is non-zero
+		/*
+		 * If this is a Layer, combine the parent Section's color with the Layer.
+		 * This is done recursively, with each Layer building on top of it's parent's final color.
+		 */
+		if (parent_section_ != nullptr) {
+			section_color = Colors::mix_colors(
+							 *base_color,
+							 layer_color,
+							 parent_section_->get_layer()->mix_mode,
+							 parent_section_->get_layer()->alpha);
+		}
+
+		// If this Section has a Layer, merge in the Layer's color output.
 		if (layer_ != nullptr) {
-			color = Colors::mix_colors(color, layer_->section->get_pixel_color(x, y), layer_->mix_mode, layer_->alpha);
+			section_color = layer_->section->get_pixel_color(x, y, &section_color);
 		}
 
-		return color;
+		return section_color;
 	}
 
 	/**
