@@ -322,7 +322,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Changes the current frame to the next frame.
+	 * Advances the animation to the next frame.
 	 * If we've hit the total number of frames, wrap back to the first frame.
 	 */
 	void Canvas::next_frame() {
@@ -331,6 +331,19 @@ namespace PixelMaestro {
 		}
 		else {
 			current_frame_index_ = 0;
+		}
+	}
+
+	/**
+	 * Moves the animation back a frame.
+	 * If we've hit the first frame, jump to the last frame.
+	 */
+	void Canvas::previous_frame() {
+		if (current_frame_index_ > 0) {
+			current_frame_index_--;
+		}
+		else {
+			current_frame_index_ = num_frames_ - 1;
 		}
 	}
 

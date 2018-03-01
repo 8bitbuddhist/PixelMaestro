@@ -43,6 +43,7 @@ namespace PixelMaestro {
 			Section* get_section() const;
 			bool in_bounds(uint16_t x, uint16_t y) const;
 			void next_frame();
+			void previous_frame();
 			void remove_frame_timer();
 			void set_current_frame_index(uint16_t index);
 			void set_frame_timer(uint16_t speed);

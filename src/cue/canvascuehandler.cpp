@@ -587,6 +587,16 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
+	uint8_t* CanvasCueHandler::previous_frame(uint8_t section_num, uint8_t layer_num) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::PreviousFrame;
+		controller_->get_buffer()[(uint8_t)Byte::TypeByte] = 255;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
+	}
+
 	uint8_t* CanvasCueHandler::remove_frame_timer(uint8_t section_num, uint8_t layer_num) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveFrameTimer;
@@ -741,6 +751,9 @@ namespace PixelMaestro {
 				break;
 			case Action::NextFrame:
 				plain_canvas->next_frame();
+				break;
+			case Action::PreviousFrame:
+				plain_canvas->previous_frame();
 				break;
 			case Action::RemoveFrameTimer:
 				plain_canvas->remove_frame_timer();

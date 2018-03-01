@@ -38,6 +38,7 @@ namespace PixelMaestro {
 			}
 		}
 		delete[] frames_;
+		frames_ = nullptr;
 	}
 
 	/**

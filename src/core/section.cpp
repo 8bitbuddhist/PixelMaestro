@@ -148,8 +148,8 @@ namespace PixelMaestro {
 		 */
 		if (parent_section_ != nullptr) {
 			section_color = Colors::mix_colors(
-							 *base_color,
-							 layer_color,
+							 base_color,
+							 &section_color,
 							 parent_section_->get_layer()->mix_mode,
 							 parent_section_->get_layer()->alpha);
 		}
