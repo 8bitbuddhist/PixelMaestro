@@ -5,6 +5,7 @@
 #ifndef PALETTECANVAS_H
 #define PALETTECANVAS_H
 
+#include "../core/palette.h"
 #include "canvas.h"
 
 namespace PixelMaestro {
@@ -25,21 +26,17 @@ namespace PixelMaestro {
 			void draw_rect(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
 			void draw_text(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars);
 			void draw_triangle(uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
-			Colors::RGB* get_colors() const;
 			uint8_t* get_frame(uint16_t frame) const;
-			uint8_t get_num_colors() const;
+			Palette* get_palette() const;
 			CanvasType get_type() const;
 			void initialize();
-			void set_colors(Colors::RGB* colors, uint8_t num_colors);
+			void set_palette(Colors::RGB* colors, uint8_t num_colors);
 			void set_drawing_color(uint8_t color_index);
 
 		protected:
 			void delete_frames();
 
 		private:
-			/// The color palette.
-			Colors::RGB* colors_ = nullptr;
-
 			/// The index of the color currently being used to draw shapes.
 			uint8_t drawing_color_index_ = 0;
 
@@ -49,8 +46,8 @@ namespace PixelMaestro {
 			 */
 			uint8_t** frames_ = nullptr;
 
-			/// The number of colors in the palette.
-			uint8_t num_colors_	= 0;
+			/// Color palette used in the Canvas.
+			Palette* palette_ = nullptr;
 	};
 }
 

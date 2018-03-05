@@ -1,7 +1,7 @@
 #include "waveanimation.h"
 
 namespace PixelMaestro {
-	WaveAnimation::WaveAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors) {
+	WaveAnimation::WaveAnimation(Section* section) : Animation(section) {
 		type_ = AnimationType::Wave;
 	}
 
@@ -30,7 +30,7 @@ namespace PixelMaestro {
 
 					// Note: COLUMN MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
 					for (int32_t y = center.y; y >= 0; y--) {
-						section_->set_one(x, y, get_color_at_index(count + cycle_index_ + (x * skew_)));
+						section_->set_one(x, y, palette_->get_color_at_index(count + cycle_index_ + (x * skew_)));
 						count++;
 					}
 
@@ -41,7 +41,7 @@ namespace PixelMaestro {
 					uint8_t offset = 0;
 					if (section_->get_dimensions()->size() % 2 != 0) {
 						offset += 1;
-						section_->set_one(x, center.y + offset, get_color_at_index(cycle_index_ + (x * skew_)));
+						section_->set_one(x, center.y + offset, palette_->get_color_at_index(cycle_index_ + (x * skew_)));
 					}
 
 					offset += 1;
@@ -49,7 +49,7 @@ namespace PixelMaestro {
 					// Go from the center to the last
 					count = 0;
 					for (uint16_t y = center.y + offset; y < section_->get_dimensions()->y; y++) {
-						section_->set_one(x, y, get_color_at_index(count + cycle_index_ + (x * skew_)));
+						section_->set_one(x, y, palette_->get_color_at_index(count + cycle_index_ + (x * skew_)));
 						count++;
 					}
 				}
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 
 					// Note: ROW MUST BE A SIGNED INT IN ORDER TO ACCESS INDEX 0.
 					for (int32_t x = center.x; x >= 0; x--) {
-						section_->set_one(x, y, get_color_at_index(count + cycle_index_ + (y * skew_)));
+						section_->set_one(x, y, palette_->get_color_at_index(count + cycle_index_ + (y * skew_)));
 						count++;
 					}
 
@@ -71,7 +71,7 @@ namespace PixelMaestro {
 					uint8_t offset = 0;
 					if (section_->get_dimensions()->size() % 2 != 0) {
 						offset += 1;
-						section_->set_one(center.x + offset, y, get_color_at_index(cycle_index_ + (y * skew_)));
+						section_->set_one(center.x + offset, y, palette_->get_color_at_index(cycle_index_ + (y * skew_)));
 					}
 
 					offset += 1;
@@ -79,7 +79,7 @@ namespace PixelMaestro {
 					// Go from the center to the last
 					count = 0;
 					for (uint16_t x = center.x + offset; x < section_->get_dimensions()->x; x++) {
-						section_->set_one(x, y, get_color_at_index(count + cycle_index_ + (y * skew_)));
+						section_->set_one(x, y, palette_->get_color_at_index(count + cycle_index_ + (y * skew_)));
 						count++;
 					}
 				}
@@ -89,16 +89,16 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 					if (orientation_ == Orientation::Vertical) {
-						section_->set_one(x, y, get_color_at_index(y + cycle_index_ + (x * skew_)));
+						section_->set_one(x, y, palette_->get_color_at_index(y + cycle_index_ + (x * skew_)));
 					}
 					else {	// Horizontal
-						section_->set_one(x, y, get_color_at_index(x + cycle_index_ + (y * skew_)));
+						section_->set_one(x, y, palette_->get_color_at_index(x + cycle_index_ + (y * skew_)));
 					}
 				}
 			}
 		}
 
-		update_cycle(0, num_colors_);
+		update_cycle(0, palette_->get_size());
 	}
 
 	WaveAnimation::~WaveAnimation() {}

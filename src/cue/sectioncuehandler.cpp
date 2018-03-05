@@ -29,29 +29,16 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte);
 	}
 
-	uint8_t* SectionCueHandler::set_animation(uint8_t section_num, uint8_t layer_num, AnimationType animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors) {
+	uint8_t* SectionCueHandler::set_animation(uint8_t section_num, uint8_t layer_num, AnimationType animation_type, bool preserve_settings) {
 
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetAnimation;
 		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)animation_type;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = (uint8_t)preserve_cycle_index;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = num_colors;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = (uint8_t)preserve_settings;
 
-		uint16_t colors_index = (uint8_t)Byte::OptionsByte + 3;
-		for (uint8_t i = 0; i < num_colors; i++) {
-			controller_->get_buffer()[colors_index] = colors[i].r;
-			colors_index++;
-			controller_->get_buffer()[colors_index] = colors[i].g;
-			colors_index++;
-			controller_->get_buffer()[colors_index] = colors[i].b;
-			colors_index++;
-		}
-
-		controller_->get_buffer()[colors_index] = delete_old_colors;
-
-		return controller_->assemble(colors_index + 1);
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
 	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t layer_num, CanvasType canvas_type, uint16_t num_frames) {
@@ -142,35 +129,8 @@ namespace PixelMaestro {
 				section->remove_layer();
 				break;
 			case Action::SetAnimation:
-				{
-					uint8_t num_colors = cue[(uint8_t)Byte::OptionsByte + 2];
-					uint16_t colors_index = (uint8_t)Byte::OptionsByte + 3;
-					Colors::RGB* colors = nullptr;
-
-					if (num_colors > 0) {
-						colors = new Colors::RGB[num_colors];
-						for (uint8_t i = 0; i < num_colors; i++) {
-							colors[i].r = cue[colors_index];
-							colors_index++;
-							colors[i].g = cue[colors_index];
-							colors_index++;
-							colors[i].b = cue[colors_index];
-							colors_index++;
-						}
-					}
-
-					// If an Animation already exists, delete the old color palette before deleting the animation.
-					Colors::RGB* old_palette = nullptr;
-					if (section->get_animation() != nullptr) {
-						old_palette = section->get_animation()->get_colors();
-					}
-
-					section->set_animation((AnimationType)cue[(uint8_t)Byte::OptionsByte], colors, num_colors, (bool)cue[(uint8_t)Byte::OptionsByte + 1]);
-
-					if (old_palette != nullptr) {
-						delete [] old_palette;
-					}
-				}
+				section->set_animation((AnimationType)cue[(uint8_t)Byte::OptionsByte],
+						(bool)cue[(uint8_t)Byte::OptionsByte + 1]);
 				break;
 			case Action::SetCanvas:
 				section->set_canvas(CanvasType(cue[(uint8_t)Byte::OptionsByte]), cue[(uint8_t)Byte::OptionsByte + 1]);

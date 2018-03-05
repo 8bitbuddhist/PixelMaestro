@@ -84,28 +84,6 @@ namespace PixelMaestro {
 	}
 
 	// General-purpose Cues
-	uint8_t* AnimationCueHandler::set_colors(uint8_t section_num, uint8_t layer_num, Colors::RGB *colors, uint8_t num_colors, bool delete_old_colors) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetColors;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = num_colors;
-
-		uint16_t colors_index = (uint8_t)Byte::OptionsByte + 1;
-		for (uint8_t i = 0; i < num_colors; i++) {
-			controller_->get_buffer()[colors_index] = colors[i].r;
-			colors_index++;
-			controller_->get_buffer()[colors_index] = colors[i].g;
-			colors_index++;
-			controller_->get_buffer()[colors_index] = colors[i].b;
-			colors_index++;
-		}
-
-		controller_->get_buffer()[colors_index] = delete_old_colors;
-
-		return controller_->assemble(colors_index);
-	}
-
 	uint8_t* AnimationCueHandler::set_cycle_index(uint8_t section_num, uint8_t layer_num, uint8_t cycle_index) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetCycleIndex;
@@ -134,6 +112,27 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)orientation;
 
 		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+	}
+
+	uint8_t* AnimationCueHandler::set_palette(uint8_t section_num, uint8_t layer_num, Palette* palette) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetPalette;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = palette->get_size();
+
+		uint16_t colors_index = (uint8_t)Byte::OptionsByte + 1;
+		for (uint8_t i = 0; i < palette->get_size(); i++) {
+			Colors::RGB* color = palette->get_color_at_index(i);
+			controller_->get_buffer()[colors_index] = color->r;
+			colors_index++;
+			controller_->get_buffer()[colors_index] = color->g;
+			colors_index++;
+			controller_->get_buffer()[colors_index] = color->b;
+			colors_index++;
+		}
+
+		return controller_->assemble(colors_index);
 	}
 
 	uint8_t* AnimationCueHandler::set_reverse(uint8_t section_num, uint8_t layer_num, bool reverse) {
@@ -189,33 +188,6 @@ namespace PixelMaestro {
 		if (animation == nullptr) return;
 
 		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
-			case Action::SetColors:
-				{
-					uint8_t num_colors = cue[(uint8_t)Byte::OptionsByte];
-					uint16_t current_color_index = 1;
-					Colors::RGB* colors = new Colors::RGB[num_colors];
-					for (uint8_t i = 0; i < num_colors; i++) {
-						colors[i].r = cue[(uint8_t)Byte::OptionsByte + current_color_index];
-						current_color_index++;
-						colors[i].g = cue[(uint8_t)Byte::OptionsByte + current_color_index];
-						current_color_index++;
-						colors[i].b = cue[(uint8_t)Byte::OptionsByte + current_color_index];
-						current_color_index++;
-					}
-
-					/*
-					 * Delete the old palette after setting the new one.
-					 * We force an update so that the Animation no longer references the old palette.
-					 * WARNING: This throws off the timer, but only for a single frame. Shouldn't be noticeable except for slow animations or when fading is disabled.
-					 */
-					Colors::RGB* old_palette = animation->get_colors();
-
-					animation->set_colors(colors, num_colors);
-					animation->update(0);
-
-					delete [] old_palette;
-				}
-				break;
 			case Action::SetCycleIndex:
 				animation->set_cycle_index(cue[(uint8_t)Byte::OptionsByte]);
 				break;
@@ -238,6 +210,34 @@ namespace PixelMaestro {
 				break;
 			case Action::SetOrientation:
 				animation->set_orientation((Animation::Orientation)cue[(uint8_t)Byte::OptionsByte]);
+				break;
+			case Action::SetPalette:
+				{
+					uint8_t num_colors = cue[(uint8_t)Byte::OptionsByte];
+					uint16_t current_color_index = 1;
+					Colors::RGB* colors = new Colors::RGB[num_colors];
+					for (uint8_t i = 0; i < num_colors; i++) {
+						colors[i].r = cue[(uint8_t)Byte::OptionsByte + current_color_index];
+						current_color_index++;
+						colors[i].g = cue[(uint8_t)Byte::OptionsByte + current_color_index];
+						current_color_index++;
+						colors[i].b = cue[(uint8_t)Byte::OptionsByte + current_color_index];
+						current_color_index++;
+					}
+
+					/*
+					 * Delete the old palette after setting the new one.
+					 * We force an update so that the Animation no longer references the old palette.
+					 * WARNING: This throws off the timer, but only for a single frame. Shouldn't be noticeable except for slow animations or when fading is disabled.
+					 */
+					Palette* old_palette = animation->get_palette();
+					Palette* new_palette = new Palette(colors, num_colors, true);
+
+					animation->set_palette(new_palette);
+					animation->update(0);
+
+					delete old_palette;
+				}
 				break;
 			case Action::SetPlasmaOptions:
 				{

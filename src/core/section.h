@@ -190,7 +190,7 @@ namespace PixelMaestro {
 			void remove_canvas();
 			void remove_layer();
 			void remove_scroll();
-			Animation* set_animation(AnimationType animation_type, Colors::RGB* colors, uint8_t num_colors, bool preserve_settings = true);
+			Animation* set_animation(AnimationType animation_type, bool preserve_settings = true);
 			Canvas* set_canvas(CanvasType type = CanvasType::AnimationCanvas, uint16_t num_frames = 1);
 			void set_dimensions(uint16_t x, uint16_t y);
 			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);

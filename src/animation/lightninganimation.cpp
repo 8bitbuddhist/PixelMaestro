@@ -2,12 +2,8 @@
 #include "lightninganimation.h"
 
 namespace PixelMaestro {
-	LightningAnimation::LightningAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold,  uint8_t fork_chance) : Animation(section, colors, num_colors) {
+	LightningAnimation::LightningAnimation(Section* section) : Animation(section) {
 		type_ = AnimationType::Lightning;
-		num_bolts_ = num_bolts;
-		down_threshold_ = down_threshold;
-		up_threshold_ = up_threshold;
-		fork_chance_ = fork_chance;
 	}
 
 	void LightningAnimation::update() {
@@ -29,7 +25,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		update_cycle(0, num_colors_);
+		update_cycle(0, palette_->get_size());
 	}
 
 	void LightningAnimation::draw_bolt_horizontal(uint8_t bolt_num, Section* section, Point* start, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance) {
@@ -70,7 +66,7 @@ namespace PixelMaestro {
 			}
 			cursor.x++;
 
-			section_->set_one(x, cursor.y, get_color_at_index(cycle_index_ + bolt_num));
+			section_->set_one(x, cursor.y, palette_->get_color_at_index(cycle_index_ + bolt_num));
 
 
 			// Check to see if we should fork the bolt
@@ -134,7 +130,7 @@ namespace PixelMaestro {
 			}
 			cursor.y++;
 
-			section_->set_one(cursor.x, y, get_color_at_index(cycle_index_ + bolt_num));
+			section_->set_one(cursor.x, y, palette_->get_color_at_index(cycle_index_ + bolt_num));
 
 			// Check to see if we should fork the bolt
 			if (y < (uint16_t)section_->get_dimensions()->y) {

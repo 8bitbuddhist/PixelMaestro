@@ -34,7 +34,7 @@ namespace PixelMaestro {
 			uint8_t* remove_animation(uint8_t section_num, uint8_t layer_num);
 			uint8_t* remove_canvas(uint8_t section_num, uint8_t layer_num);
 			uint8_t* remove_layer(uint8_t section_num, uint8_t layer_num);
-			uint8_t* set_animation(uint8_t section_num, uint8_t layer_num, AnimationType animation_type, bool preserve_cycle_index, Colors::RGB* colors, uint8_t num_colors, bool delete_old_colors = true);
+			uint8_t* set_animation(uint8_t section_num, uint8_t layer_num, AnimationType animation_type, bool preserve_settings = false);
 			uint8_t* set_canvas(uint8_t section_num, uint8_t layer_num, CanvasType canvas_type, uint16_t num_frames = 1);
 			uint8_t* set_dimensions(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
 			uint8_t* set_layer(uint8_t section_num, uint8_t layer_num, Colors::MixMode mix_mode, uint8_t alpha);

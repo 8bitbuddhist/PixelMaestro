@@ -2,7 +2,7 @@
 #include "fireanimation.h"
 
 namespace PixelMaestro {
-	FireAnimation::FireAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : MappedAnimation(section, colors, num_colors)	{
+	FireAnimation::FireAnimation(Section* section) : MappedAnimation(section)	{
 		type_ = AnimationType::Fire;
 	}
 
@@ -36,7 +36,7 @@ namespace PixelMaestro {
 		*/
 			// Initialize the bottom row buffer
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % num_colors_;
+				map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_size();
 			}
 
 			// Set the buffer for the remaining pixels
@@ -65,7 +65,7 @@ namespace PixelMaestro {
 		// Apply the buffer to the Pixel grid
 		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				section_->set_one(x, y, &colors_[map_[y][x] % num_colors_]);
+				section_->set_one(x, y, &palette_->get_colors()[map_[y][x] % palette_->get_size()]);
 			}
 		}
 	}

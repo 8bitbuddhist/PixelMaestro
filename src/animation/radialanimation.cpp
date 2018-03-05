@@ -2,7 +2,7 @@
 #include "radialanimation.h"
 
 namespace PixelMaestro {
-	RadialAnimation::RadialAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : MappedAnimation(section, colors, num_colors) {
+	RadialAnimation::RadialAnimation(Section* section) : MappedAnimation(section) {
 		type_ = AnimationType::Radial;
 	}
 
@@ -64,11 +64,11 @@ namespace PixelMaestro {
 
 		for (uint8_t x = 0; x < dimensions_.x; x++) {
 			for (uint8_t y = 0; y < dimensions_.y; y++) {
-				section_->set_one(x, y, get_color_at_index(map_[y][x] + cycle_index_));
+				section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_));
 			}
 		}
 
-		update_cycle(0, num_colors_);
+		update_cycle(0, palette_->get_size());
 	}
 
 	RadialAnimation::~RadialAnimation() {}

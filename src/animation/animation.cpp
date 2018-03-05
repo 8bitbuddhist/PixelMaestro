@@ -8,14 +8,10 @@ namespace PixelMaestro {
 	/**
 	 * Constructor.
 	 * @param section The Section that this animation will render in.
-	 * @param colors Initial color palette.
-	 * @param num_colors The number of colors in the palette.
 	 */
-	Animation::Animation(Section* section, Colors::RGB* colors, uint8_t num_colors) {
+	Animation::Animation(Section* section) {
 		this->section_ = section;
-		set_colors(colors, num_colors);
-
-		timer_ = new AnimationTimer(this);
+		this->timer_ = new AnimationTimer(this);
 	}
 
 	/**
@@ -25,31 +21,6 @@ namespace PixelMaestro {
 	Point Animation::get_center() const {
 		return Point(section_->get_dimensions()->x / 2,
 					 section_->get_dimensions()->y / 2);
-	}
-
-	/**
-		Returns the color at the specified index.
-		If the index exceeds the size of the color palette, the index will wrap around to the start of the array and count the remainder.
-		For example, if the Section has 10 Pixels and 5 Colors, the Pixel at index 7 will use the color at index 2 (7 % 5 == 2).
-		Used mainly to determine which color a Pixel should use during an animation based on where it is in the array.
-
-		@param index Desired index.
-		@return Color at the specified index.
-	*/
-	Colors::RGB* Animation::get_color_at_index(uint8_t index) const {
-		if (num_colors_ > 0 && index >= num_colors_) {
-			return &colors_[index % num_colors_];
-		}
-
-		return &colors_[index];
-	}
-
-	/**
-	 * Returns the color palette.
-	 * @return Color palette.
-	 */
-	Colors::RGB* Animation::get_colors() const {
-		return colors_;
 	}
 
 	/**
@@ -70,20 +41,19 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the number of colors in the animation's palette.
-	 *
-	 * @return Number of colors in the color palette.
-	 */
-	uint8_t Animation::get_num_colors() const {
-		return num_colors_;
-	}
-
-	/**
 	 * Returns the animation's orientation.
 	 * @return Animation's orientation
 	 */
 	Animation::Orientation Animation::get_orientation() const {
 		return orientation_;
+	}
+
+	/**
+	 * Returns the color palette.
+	 * @return Color palette.
+	 */
+	Palette* Animation::get_palette() const {
+		return palette_;
 	}
 
 	/**
@@ -120,25 +90,13 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Sets a new color palette.
-
-		@param colors New color palette.
-		@param num_colors Number of colors in the palette.
-	*/
-	void Animation::set_colors(Colors::RGB* colors, uint8_t num_colors) {
-		colors_ = colors;
-		num_colors_ = num_colors;
-	}
-
-	/**
 	 * Sets the cycle index to the specified index.
-	 * To be safe, we keep it under num_colors_.
 	 *
 	 * @param index New cycle index.
 	 */
 	void Animation::set_cycle_index(uint8_t index) {
-		if (num_colors_ && index > num_colors_) {
-			index %= num_colors_;
+		if (palette_ != nullptr && index > palette_->get_size()) {
+			index %= palette_->get_size();
 		}
 
 		cycle_index_ = index;
@@ -160,7 +118,16 @@ namespace PixelMaestro {
 	 * @param orientation New orientation.
 	 */
 	void Animation::set_orientation(Orientation orientation) {
-		orientation_ = orientation;
+		this->orientation_ = orientation;
+	}
+
+	/**
+	 * Sets a new color palette.
+	 *
+	 * @param palette New Palette.
+	 */
+	void Animation::set_palette(Palette* palette) {
+		this->palette_ = palette;
 	}
 
 	/**
@@ -169,7 +136,7 @@ namespace PixelMaestro {
 		@param reverse If true, run in reverse.
 	 */
 	void Animation::set_reverse(bool reverse) {
-		reverse_ = reverse;
+		this->reverse_ = reverse;
 	}
 
 	/**
@@ -193,7 +160,7 @@ namespace PixelMaestro {
 	 */
 	bool Animation::update(const uint32_t &current_time) {
 		// If the color palette is not set, exit.
-		if (num_colors_ == 0 || colors_ == nullptr) {
+		if (palette_->get_size() == 0 || palette_ == nullptr) {
 			return false;
 		}
 

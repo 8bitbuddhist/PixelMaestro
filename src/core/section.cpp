@@ -204,48 +204,47 @@ namespace PixelMaestro {
 
 	/**
 	 * Sets a new Animation.
-	 * This will delete and overwrite an existing Animation.
+	 *
 	 * @param type Animation type.
-	 * @param colors The color palette.
-	 * @param num_colors The number of colors in the palette.
-	 * @param preserve_settings If true, the generic configurations in the old Animation (cycle index, orientation, fade, reverse, speed, and pause) are copied to the new Animation.
+	 * @param palette The color palette to use.
+	 * @param preserve_settings If true, the generic configurations in the old Animation (Palette, cycle index, orientation, fade, reverse, speed, and pause) are copied to the new Animation.
 	 * @return New Animation.
 	 */
-	Animation* Section::set_animation(AnimationType animation_type, Colors::RGB *colors, uint8_t num_colors, bool preserve_settings) {
-		Animation* animation = nullptr;
+	Animation* Section::set_animation(AnimationType animation_type, bool preserve_settings) {
+		Animation* new_animation = nullptr;
 		switch(animation_type) {
 			case AnimationType::Blink:
-				animation = new BlinkAnimation(this, colors, num_colors);
+				new_animation = new BlinkAnimation(this);
 				break;
 			case AnimationType::Cycle:
-				animation = new CycleAnimation(this, colors, num_colors);
+				new_animation = new CycleAnimation(this);
 				break;
 			case AnimationType::Fire:
-				animation = new FireAnimation(this, colors, num_colors);
+				new_animation = new FireAnimation(this);
 				break;
 			case AnimationType::Lightning:
-				animation = new LightningAnimation(this, colors, num_colors);
+				new_animation = new LightningAnimation(this);
 				break;
 			case AnimationType::Mandelbrot:
-				animation = new MandelbrotAnimation(this, colors, num_colors);
+				new_animation = new MandelbrotAnimation(this);
 				break;
 			case AnimationType::Plasma:
-				animation = new PlasmaAnimation(this, colors, num_colors);
+				new_animation = new PlasmaAnimation(this);
 				break;
 			case AnimationType::Radial:
-				animation = new RadialAnimation(this, colors, num_colors);
+				new_animation = new RadialAnimation(this);
 				break;
 			case AnimationType::Random:
-				animation = new RandomAnimation(this, colors, num_colors);
+				new_animation = new RandomAnimation(this);
 				break;
 			case AnimationType::Solid:
-				animation = new SolidAnimation(this, colors, num_colors);
+				new_animation = new SolidAnimation(this);
 				break;
 			case AnimationType::Sparkle:
-				animation = new SparkleAnimation(this, colors, num_colors);
+				new_animation = new SparkleAnimation(this);
 				break;
 			case AnimationType::Wave:
-				animation = new WaveAnimation(this, colors, num_colors);
+				new_animation = new WaveAnimation(this);
 				break;
 		}
 
@@ -253,21 +252,22 @@ namespace PixelMaestro {
 		 * Check for an existing Animation.
 		 * If one exists and preserve_settings is true, copy the old Animation's settings to the new Animation.
 		 */
-		if (this->animation_) {
+		if (this->animation_ != nullptr) {
 			if (preserve_settings) {
-				animation->set_cycle_index(this->animation_->get_cycle_index());
-				animation->set_fade(this->animation_->get_fade());
-				animation->set_orientation(this->animation_->get_orientation());
-				animation->set_reverse(this->animation_->get_reverse());
+				new_animation->set_palette(this->animation_->get_palette());
+				new_animation->set_cycle_index(this->animation_->get_cycle_index());
+				new_animation->set_fade(this->animation_->get_fade());
+				new_animation->set_orientation(this->animation_->get_orientation());
+				new_animation->set_reverse(this->animation_->get_reverse());
 
 				if (this->animation_->get_timer() != nullptr) {
-					animation->set_timer(this->animation_->get_timer()->get_interval(), this->animation_->get_timer()->get_delay());
+					new_animation->set_timer(this->animation_->get_timer()->get_interval(), this->animation_->get_timer()->get_delay());
 				}
 			}
 			remove_animation();
 		}
 
-		this->animation_ = animation;
+		this->animation_ = new_animation;
 		return animation_;
 	}
 

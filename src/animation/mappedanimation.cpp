@@ -1,7 +1,7 @@
 #include "mappedanimation.h"
 
 namespace PixelMaestro {
-	MappedAnimation::MappedAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : Animation(section, colors, num_colors) { }
+	MappedAnimation::MappedAnimation(Section* section) : Animation(section) { }
 
 	/**
 	 * Regenerates the color-to-pixel map.

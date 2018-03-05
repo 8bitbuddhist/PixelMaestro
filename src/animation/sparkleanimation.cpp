@@ -2,9 +2,8 @@
 #include "sparkleanimation.h"
 
 namespace PixelMaestro {
-	SparkleAnimation::SparkleAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors, uint8_t threshold) : Animation(section, colors, num_colors) {
+	SparkleAnimation::SparkleAnimation(Section* section) : Animation(section) {
 		type_ = AnimationType::Sparkle;
-		threshold_ = threshold;
 	}
 
 	/**
@@ -28,7 +27,7 @@ namespace PixelMaestro {
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 				for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 					if (Utility::rand(255) <= threshold_) {
-						section_->set_one(x, y, get_color_at_index(y));
+						section_->set_one(x, y, palette_->get_color_at_index(y));
 					}
 					else {
 						section_->set_one(x, y, &black_);
@@ -40,7 +39,7 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 					if (Utility::rand(255) <= threshold_) {
-						section_->set_one(x, y, get_color_at_index(x));
+						section_->set_one(x, y, palette_->get_color_at_index(x));
 					}
 					else {
 						section_->set_one(x, y, &black_);

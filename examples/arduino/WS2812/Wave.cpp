@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include <PixelMaestro/core/maestro.h>
+#include <PixelMaestro/core/palette.h>
 #include <PixelMaestro/colorpresets.h>
 #include <WS2812.h>
 
@@ -31,7 +32,7 @@ void setup () {
 		maestro.set_brightness(25);
 
 		// Create a new wave animation, change the palette to ColorWheel, then set the speed to 500ms.
-		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Wave, ColorPresets::Colorwheel, 12);
+		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Wave, new Palette(ColorPresets::Colorwheel, 12));
 		animation->set_timer(500);
 }
 

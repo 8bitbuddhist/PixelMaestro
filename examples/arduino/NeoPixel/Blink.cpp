@@ -4,6 +4,7 @@
 
 #include <Arduino.h>
 #include <PixelMaestro/core/maestro.h>
+#include <PixelMaestro/core/palette.h>
 #include <PixelMaestro/colorpresets.h>
 #include <Adafruit_NeoPixel.h>
 
@@ -22,7 +23,7 @@ void setup () {
 		maestro.set_brightness(25);
 
 		// Creates a new blinking animation and sets the color palette to the ColorWheel preset
-		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Blink, ColorPresets::Colorwheel, 12);
+		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Blink, new Palette(ColorPresets::Colorwheel, 12));
 
 		// Sets the amount of time between animation cycles to 500ms
 		animation->set_timer(500);

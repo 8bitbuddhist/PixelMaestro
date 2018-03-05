@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class BlinkAnimation : public Animation {
 		public:
-			BlinkAnimation(Section* section, Colors::RGB* colors = nullptr, uint8_t num_colors = 0);
+			BlinkAnimation(Section* section);
 			~BlinkAnimation();
 			void update();
 

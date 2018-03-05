@@ -14,7 +14,7 @@
 namespace PixelMaestro {
 	class MappedAnimation : public Animation {
 		public:
-			MappedAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors);
+			MappedAnimation(Section* section);
 			~MappedAnimation();
 
 		protected:

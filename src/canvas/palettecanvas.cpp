@@ -12,7 +12,7 @@ namespace PixelMaestro {
 	 * @param num_colors Number of colors in the palette.
 	 */
 	PaletteCanvas::PaletteCanvas(Section* section, Colors::RGB* colors, uint8_t num_colors) : Canvas(section) {
-		set_colors(colors, num_colors);
+		palette_ = new Palette(colors, num_colors);
 		initialize();
 	}
 
@@ -24,7 +24,7 @@ namespace PixelMaestro {
 	 * @param num_colors Number of colors in the palette.
 	 */
 	PaletteCanvas::PaletteCanvas(Section *section, uint16_t num_frames, Colors::RGB* colors, uint8_t num_colors) : Canvas(section, num_frames) {
-		set_colors(colors, num_colors);
+		palette_ = new Palette(colors, num_colors);
 		initialize();
 	}
 
@@ -80,8 +80,8 @@ namespace PixelMaestro {
 		if (in_bounds(x, y)) {
 			uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
 
-			if (index < num_colors_) {
-				return colors_[index];
+			if (index < palette_->get_size()) {
+				return *palette_->get_color_at_index(index);
 			}
 		}
 
@@ -188,18 +188,11 @@ namespace PixelMaestro {
 
 	/**
 	 * Returns the color palette.
+	 *
 	 * @return Color palette.
 	 */
-	Colors::RGB* PaletteCanvas::get_colors() const {
-		return colors_;
-	}
-
-	/**
-	 * Returns the number of colors in the palette.
-	 * @return Number of colors.
-	 */
-	uint8_t PaletteCanvas::get_num_colors() const {
-		return num_colors_;
+	Palette* PaletteCanvas::get_palette() const {
+		return palette_;
 	}
 
 	/**
@@ -227,9 +220,8 @@ namespace PixelMaestro {
 	 * @param colors Palette colors.
 	 * @param num_colors Number of colors in the palette.
 	 */
-	void PaletteCanvas::set_colors(Colors::RGB *colors, uint8_t num_colors) {
-		this->colors_ = colors;
-		this->num_colors_ = num_colors;
+	void PaletteCanvas::set_palette(Colors::RGB *colors, uint8_t num_colors) {
+		palette_->set_colors(colors, num_colors);
 	}
 
 	/**
@@ -241,6 +233,7 @@ namespace PixelMaestro {
 	}
 
 	PaletteCanvas::~PaletteCanvas() {
+		delete palette_;
 		delete_frames();
 	}
 }

@@ -2,7 +2,7 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Section* section, Colors::RGB* colors, uint8_t num_colors) : MappedAnimation(section, colors, num_colors) {
+	MandelbrotAnimation::MandelbrotAnimation(Section* section) : MappedAnimation(section) {
 		type_ = AnimationType::Mandelbrot;
 	}
 
@@ -45,9 +45,8 @@ namespace PixelMaestro {
 	 * @param colors
 	 * @param num_colors
 	 */
-	void MandelbrotAnimation::set_colors(Colors::RGB *colors, uint8_t num_colors) {
-		colors_ = colors;
-		num_colors_ = num_colors;
+	void MandelbrotAnimation::set_palette(Colors::RGB *colors, uint8_t num_colors) {
+		palette_->set_colors(colors, num_colors);
 		max_iterations_ = num_colors;
 	}
 
@@ -64,7 +63,7 @@ namespace PixelMaestro {
 				if (orientation_ == Orientation::Vertical) {
 					// FIXME: Not a good way of doing vertical orientation because it doesn't account for out-of-bounds pixels.
 					if (map_[y][x] != 255) {
-						section_->set_one(y, x, get_color_at_index(map_[y][x] + cycle_index_));
+						section_->set_one(y, x, palette_->get_color_at_index(map_[y][x] + cycle_index_));
 					}
 					else {
 						section_->set_one(y, x, &black_);
@@ -72,7 +71,7 @@ namespace PixelMaestro {
 				}
 				else {
 					if (map_[y][x] != 255) {
-						section_->set_one(x, y, get_color_at_index(map_[y][x] + cycle_index_));
+						section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_));
 					}
 					else {
 						section_->set_one(x, y, &black_);
@@ -81,7 +80,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		update_cycle(0, num_colors_);
+		update_cycle(0, palette_->get_size());
 	}
 
 	MandelbrotAnimation::~MandelbrotAnimation() {}

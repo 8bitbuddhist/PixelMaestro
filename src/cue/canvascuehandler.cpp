@@ -1046,11 +1046,11 @@ namespace PixelMaestro {
 								}
 
 								//Delete the old palette after setting the new one.
-								Colors::RGB* old_palette = palette_canvas->get_colors();
+								Colors::RGB* old_palette_colors = palette_canvas->get_palette()->get_colors();
 
-								palette_canvas->set_colors(colors, num_colors);
+								palette_canvas->set_palette(colors, num_colors);
 
-								delete [] old_palette;
+								delete [] old_palette_colors;
 							}
 							break;
 						case Action::SetDrawingColor:
