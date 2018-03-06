@@ -18,10 +18,10 @@ namespace PixelMaestro {
 				NextFrame,
 				PreviousFrame,
 				RemoveFrameTimer,
-				SetColors,
 				SetCurrentFrameIndex,
 				SetFrameTimer,
 				SetNumFrames,
+				SetPalette,
 				StartFrameTimer,
 				StopFrameTimer,
 				SetDrawingColor,
@@ -74,12 +74,12 @@ namespace PixelMaestro {
 			uint8_t* next_frame(uint8_t section_num, uint8_t layer_num);
 			uint8_t* previous_frame(uint8_t section_num, uint8_t layer_num);
 			uint8_t* remove_frame_timer(uint8_t section_num, uint8_t layer_num);
-			uint8_t* set_colors(uint8_t section_num, uint8_t layer_num, Colors::RGB* colors, uint8_t num_colors);
 			uint8_t* set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t index);
 			uint8_t* set_drawing_color(uint8_t section_num, uint8_t layer_num, Colors::RGB color);
 			uint8_t* set_drawing_color(uint8_t section_num, uint8_t layer_num, uint8_t color_index);
 			uint8_t* set_frame_timer(uint8_t section_num, uint8_t layer_num, uint16_t speed);
 			uint8_t* set_num_frames(uint8_t section_num, uint8_t layer_num, uint16_t num_frames);
+			uint8_t* set_palette(uint8_t section_num, uint8_t layer_num, Palette* palette);
 			uint8_t* start_frame_timer(uint8_t section_num, uint8_t layer_num);
 			uint8_t* stop_frame_timer(uint8_t section_num, uint8_t layer_num);
 

@@ -6,25 +6,11 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. Initializes the Canvas with a single frame.
-	 * @param section Parent Section.
-	 * @param colors Color palette.
-	 * @param num_colors Number of colors in the palette.
-	 */
-	PaletteCanvas::PaletteCanvas(Section* section, Colors::RGB* colors, uint8_t num_colors) : Canvas(section) {
-		palette_ = new Palette(colors, num_colors);
-		initialize();
-	}
-
-	/**
 	 * Constructor. Initializes the Canvas with the specified number of frames.
 	 * @param section Parent Section.
 	 * @param num_frames Number of frames.
-	 * @param colors Color palette.
-	 * @param num_colors Number of colors in the palette.
 	 */
-	PaletteCanvas::PaletteCanvas(Section *section, uint16_t num_frames, Colors::RGB* colors, uint8_t num_colors) : Canvas(section, num_frames) {
-		palette_ = new Palette(colors, num_colors);
+	PaletteCanvas::PaletteCanvas(Section *section, uint16_t num_frames) : Canvas(section, num_frames) {
 		initialize();
 	}
 
@@ -216,20 +202,19 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the Canvas' palette.
-	 * @param colors Palette colors.
-	 * @param num_colors Number of colors in the palette.
-	 */
-	void PaletteCanvas::set_palette(Colors::RGB *colors, uint8_t num_colors) {
-		palette_->set_colors(colors, num_colors);
-	}
-
-	/**
 	 * Sets the color used for drawing.
 	 * @param color_index Index of the color used for drawing.
 	 */
 	void PaletteCanvas::set_drawing_color(uint8_t color_index) {
 		drawing_color_index_ = color_index;
+	}
+
+	/**
+	 * Sets the Canvas' Palette.
+	 * @param palette New Palette.
+	 */
+	void PaletteCanvas::set_palette(Palette* palette) {
+		this->palette_ = palette;
 	}
 
 	PaletteCanvas::~PaletteCanvas() {

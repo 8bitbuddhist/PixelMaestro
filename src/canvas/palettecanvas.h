@@ -11,8 +11,7 @@
 namespace PixelMaestro {
 	class PaletteCanvas : public Canvas {
 		public:
-			PaletteCanvas(Section* section, Colors::RGB* colors, uint8_t num_colors);
-			PaletteCanvas(Section *section, uint16_t num_frames, Colors::RGB* colors, uint8_t num_colors);
+			PaletteCanvas(Section *section, uint16_t num_frames = 1);
 			~PaletteCanvas();
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y);
 
@@ -30,8 +29,8 @@ namespace PixelMaestro {
 			Palette* get_palette() const;
 			CanvasType get_type() const;
 			void initialize();
-			void set_palette(Colors::RGB* colors, uint8_t num_colors);
 			void set_drawing_color(uint8_t color_index);
+			void set_palette(Palette* palette);
 
 		protected:
 			void delete_frames();

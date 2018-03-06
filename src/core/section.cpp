@@ -289,7 +289,7 @@ namespace PixelMaestro {
 				canvas_ = new ColorCanvas(this, num_frames);
 				break;
 			case CanvasType::PaletteCanvas:
-				canvas_ = new PaletteCanvas(this, num_frames, nullptr, 0);
+				canvas_ = new PaletteCanvas(this, num_frames);
 				break;
 		}
 
