@@ -18,6 +18,8 @@ WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefi
 	- Added Cue for `Section::remove_animation()`.
 	
 ### Changed
+- Animations
+	- Removed vertical orientation for Mandelbrot animations.
 - Layers
 	- Rewrote Layer mixing algorithm. This fixes an issue when combining the Overlay and Alpha MixModes in Sections with 2+ Layers.
 	
