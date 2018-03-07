@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class LightningAnimation : public Animation {
 		public:
-			LightningAnimation(Section* section);
+			explicit LightningAnimation(Section* section);
 			~LightningAnimation();
 			uint8_t get_bolt_count() const;
 			uint8_t get_fork_chance() const;

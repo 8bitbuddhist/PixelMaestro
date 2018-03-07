@@ -6,7 +6,7 @@
 namespace  PixelMaestro {
 	class PlasmaAnimation : public Animation {
 		public:
-			PlasmaAnimation(Section* section);
+			explicit PlasmaAnimation(Section* section);
 			~PlasmaAnimation();
 			float get_resolution() const;
 			float get_size() const;

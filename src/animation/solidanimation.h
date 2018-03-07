@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class SolidAnimation : public Animation {
 		public:
-			SolidAnimation(Section* section);
+			explicit SolidAnimation(Section* section);
 			~SolidAnimation();
 			void update();
 	};

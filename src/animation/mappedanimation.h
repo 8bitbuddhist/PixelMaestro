@@ -14,7 +14,7 @@
 namespace PixelMaestro {
 	class MappedAnimation : public Animation {
 		public:
-			MappedAnimation(Section* section);
+			explicit MappedAnimation(Section* section);
 			~MappedAnimation();
 
 		protected:

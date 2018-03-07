@@ -6,7 +6,7 @@
 namespace PixelMaestro {
 	class CycleAnimation : public Animation {
 		public:
-			CycleAnimation(Section* section);
+			explicit CycleAnimation(Section* section);
 			~CycleAnimation();
 			void update();
 	};

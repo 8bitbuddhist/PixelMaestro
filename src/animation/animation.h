@@ -25,7 +25,7 @@ namespace PixelMaestro {
 				Vertical
 			};
 
-			Animation(Section* section);
+			explicit Animation(Section* section);
 			virtual ~Animation();
 			Point get_center() const;
 			uint8_t get_cycle_index() const;
