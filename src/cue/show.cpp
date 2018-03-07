@@ -63,7 +63,7 @@ namespace PixelMaestro {
 	 * @return Timing method.
 	 */
 	Show::TimingMode Show::get_timing() const {
-		return timing_;
+		return timing_mode_;
 	}
 
 	/**
@@ -95,8 +95,8 @@ namespace PixelMaestro {
 
 		@param timing Timing mode used.
 	*/
-	void Show::set_timing(TimingMode timing) {
-		timing_ = timing;
+	void Show::set_timing_mode(TimingMode timing_mode) {
+		timing_mode_ = timing_mode;
 	}
 
 	/**
@@ -131,8 +131,8 @@ namespace PixelMaestro {
 		 */
 		uint32_t event_time = events_[current_index_].get_time();
 		if (event_time != 0 &&
-			((timing_ == TimingMode::Absolute && (current_time >= event_time)) ||
-			(timing_ == TimingMode::Relative && ((current_time - last_time_) >= event_time)))) {
+			((timing_mode_ == TimingMode::Absolute && (current_time >= event_time)) ||
+			(timing_mode_ == TimingMode::Relative && ((current_time - last_time_) >= event_time)))) {
 			cue_controller_->run(events_[current_index_].get_cue());
 			last_time_ = current_time;
 			update_event_index();

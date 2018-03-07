@@ -33,8 +33,8 @@ namespace PixelMaestro {
 			uint16_t get_num_events() const;
 			TimingMode get_timing() const;
 			void set_events(Event* events, uint16_t num_events, bool preserve_current_index = true);
-			void set_timing(TimingMode timing);
 			void set_looping(bool loop);
+			void set_timing_mode(TimingMode timing_mode);
 			void update(const uint32_t& current_time);
 
 		private:
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 			uint16_t num_events_;
 
 			/// Method for measuring a Event's start time. Defaults to Absolute.
-			TimingMode timing_ = TimingMode::Absolute;
+			TimingMode timing_mode_ = TimingMode::Absolute;
 
 			void check_next_event(const uint32_t& current_time);
 			void update_event_index();

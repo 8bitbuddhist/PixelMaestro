@@ -161,7 +161,7 @@ namespace PixelMaestro {
 				 * @param alpha For The amount of transparency that the Layer will have (0 - 255).
 				 */
 				Layer(Section* parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
-					this->section = new Section(*parent->get_dimensions(), parent);
+					this->section = new Section(parent->get_dimensions()->x, parent->get_dimensions()->y, parent);
 					this->section->set_maestro(parent->get_maestro());
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
@@ -173,7 +173,6 @@ namespace PixelMaestro {
 			};
 
 			Section();
-			Section(Point dimensions, Section* parent = nullptr);
 			Section(uint16_t x, uint16_t y, Section* parent = nullptr);
 			~Section();
 			Animation* get_animation() const;

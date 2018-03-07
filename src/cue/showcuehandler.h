@@ -11,7 +11,7 @@ namespace PixelMaestro {
 			enum class Action : uint8_t {
 				SetEvents,
 				SetLooping,
-				SetTiming
+				SetTimingMode
 			};
 
 			enum class Byte : uint8_t {
@@ -25,7 +25,7 @@ namespace PixelMaestro {
 
 			uint8_t* set_events(Event* events, uint16_t num_events, bool preserve_current_index = true);
 			uint8_t* set_looping(bool loop);
-			uint8_t* set_timing(Show::TimingMode timing);
+			uint8_t* set_timing_mode(Show::TimingMode timing);
 			void run(uint8_t *cue);
 	};
 }

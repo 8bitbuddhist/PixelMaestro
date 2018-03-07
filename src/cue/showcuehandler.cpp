@@ -39,9 +39,9 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
 	}
 
-	uint8_t* ShowCueHandler::set_timing(Show::TimingMode timing) {
+	uint8_t* ShowCueHandler::set_timing_mode(Show::TimingMode timing) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetTiming;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetTimingMode;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)timing;
 
 		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
@@ -83,8 +83,8 @@ namespace PixelMaestro {
 			case Action::SetLooping:
 				show->set_looping((bool)cue[(uint8_t)Byte::OptionsByte]);
 				break;
-			case Action::SetTiming:
-				show->set_timing((Show::TimingMode)cue[(uint8_t)Byte::OptionsByte]);
+			case Action::SetTimingMode:
+				show->set_timing_mode((Show::TimingMode)cue[(uint8_t)Byte::OptionsByte]);
 				break;
 		}
 	}
