@@ -3,8 +3,16 @@
 #include "showcuehandler.h"
 
 namespace PixelMaestro {
+
+	uint8_t* MaestroCueHandler::set_brightness(uint8_t brightness) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetBrightness;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = brightness;
+
+		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+	}
+
 	uint8_t* MaestroCueHandler::set_show() {
-		// Note: This only initializes the Show. You still need to set Events using ShowCueHandler::set_events().
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetShow;
 
@@ -50,6 +58,9 @@ namespace PixelMaestro {
 	void MaestroCueHandler::run(uint8_t *cue) {
 		Maestro* maestro = controller_->get_maestro();
 		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
+			case Action::SetBrightness:
+				maestro->set_brightness(cue[(uint8_t)Byte::OptionsByte]);
+				break;
 			case Action::SetShow:
 				maestro->set_show(nullptr, 0);
 				break;

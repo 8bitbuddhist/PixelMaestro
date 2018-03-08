@@ -11,47 +11,23 @@ namespace PixelMaestro {
 	}
 
 	void FireAnimation::map() {
-		// FIXME: Fix vertical orientation alignment along right side of grid.
-		/*
-		if (orientation_ == Orientation::Vertical) {
-			// Initialize the right row buffer
-			for (uint16_t y = 0; y < dimensions_.y; y++) {
-				map_[y][dimensions_.x - 1] = Utility::abs_int(32768 + Utility::rand()) % num_colors_;
-			}
+		// Initialize the bottom row buffer
+		for (uint16_t x = 0; x < dimensions_.x; x++) {
+			map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_size();
+		}
 
-			// Set the buffer for the remaining pixels
-			for (uint16_t x = 1; x < dimensions_.x; x++) {
-				for (uint16_t y = 0; y < dimensions_.y; y++) {
-					// http://lodev.org/cgtutor/fire.html
-					map_[y][x] =
-						(map_[(y - 1 + dimensions_.y) % dimensions_.y][(x + 1) % dimensions_.x] +
-						map_[y % dimensions_.y][(x + 1) % dimensions_.x] +
-						map_[(y + 1) % dimensions_.y][(x + 1) % dimensions_.x] +
-						map_[y % dimensions_.y][(x + 2) % dimensions_.x]) *
-						(float)((this->multiplier_ + 200) / (float)1000);	// 200 is just a magic number added to the multiplier to get a decently sized flame effect without hitting the limits of uint8_t.
-				}
+		// Set the buffer for the remaining pixels
+		for (uint16_t y = 0; y < dimensions_.y - 1; y++) {
+			for (uint16_t x = 0; x < dimensions_.x; x++) {
+				// http://lodev.org/cgtutor/fire.html
+				map_[y][x] =
+					(map_[(y + 1) % dimensions_.y][(x - 1 + dimensions_.x) % dimensions_.x] +
+					map_[(y + 1) % dimensions_.y][x % dimensions_.x] +
+					map_[(y + 1) % dimensions_.y][(x + 1) % dimensions_.x] +
+					map_[(y + 2) % dimensions_.y][x % dimensions_.x]) *
+					(float)((this->multiplier_ + 200) / (float)1000);	// 200 is a magic number added to the multiplier to get a decently sized flame effect without hitting the limits of uint8_t.
 			}
 		}
-		else {
-		*/
-			// Initialize the bottom row buffer
-			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_size();
-			}
-
-			// Set the buffer for the remaining pixels
-			for (uint16_t y = 0; y < dimensions_.y - 1; y++) {
-				for (uint16_t x = 0; x < dimensions_.x; x++) {
-					// http://lodev.org/cgtutor/fire.html
-					map_[y][x] =
-						(map_[(y + 1) % dimensions_.y][(x - 1 + dimensions_.x) % dimensions_.x] +
-						map_[(y + 1) % dimensions_.y][x % dimensions_.x] +
-						map_[(y + 1) % dimensions_.y][(x + 1) % dimensions_.x] +
-						map_[(y + 2) % dimensions_.y][x % dimensions_.x]) *
-						(float)((this->multiplier_ + 200) / (float)1000);	// 200 is a magic number added to the multiplier to get a decently sized flame effect without hitting the limits of uint8_t.
-				}
-			}
-		// }
 	}
 
 	void FireAnimation::set_multiplier(uint8_t multiplier) {

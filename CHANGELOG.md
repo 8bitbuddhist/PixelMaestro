@@ -8,24 +8,32 @@ WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefi
 
 ### Added
 - Animations
-	- Added new Fire animation.
-	- Added `skew` parameter to Merge and Wave animations. Skew offsets each row (or column) by the specified number of Pixels.
+	- Added new `Palette` class for managing color palettes.
+	- Added fire animation.
+	- Added `skew` and `mirror` parameters to Wave animation. Skew offsets each row (or column) by the specified number of Pixels. Mirror reflects the grid along the orientation axis.
 - Canvas
-	- Added `ColorCanvas/PaletteCanvas::set_drawing_color()`, which sets the color used when calling `activate()`.
+	- Added `Canvas::set_drawing_color()`, which sets the color used when calling `activate()`. Applies to ColorCanvases and PaletteCanvases.
 - Cues
-	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You will need to call `ShowCueHandler::set_events()` separately to initialize the Event list.
 	- Added Cues for `Canvas::activate()` and `Canvas::deactivate()`.
 	- Added Cue for `Section::remove_animation()`.
 	
 ### Changed
 - Animations
 	- Removed vertical orientation for Mandelbrot animations.
+	- Renamed `Animation::pause` to `Animation::delay`. Now it actually acts as a delay timer, waiting the specified amount of time before starting the next cycle.
 - Layers
 	- Rewrote Layer mixing algorithm. This fixed an issue when combining the Overlay and Alpha MixModes in Sections with more than one Layer.
+- Shows
+	- Renamed `set_timing()` to `set_timing_mode()` to prevent confusion with Timers.
 	
 ### Removed
 - Animations
-	- Merge animation is merged with the Wave animation. Use `WaveAnimation::set_mirror(true)` to simulate merging.
+	- Removed color parameters from `Section::set_animation()`. You must now set a color palette using `Animation::set_colors()`.
+	- Replaced color arrays with new `Palette` class. You will have to set a Palette using `Animation::set_colors()`. Both Animations and PaletteCanvases can use Palettes.
+	- Merge animation is replaced by the Wave animation. Use `WaveAnimation::set_mirror(true)` to simulate merging.
+	- Removed Mandelbrot animation's vertical orientation.
+- Cues
+	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You will need to call `ShowCueHandler::set_events()` to initialize the Event list.
 
 ## [v0.12] - 2018-01-22
 ### Changed

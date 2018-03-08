@@ -160,7 +160,7 @@ namespace PixelMaestro {
 	 */
 	bool Animation::update(const uint32_t &current_time) {
 		// If the color palette is not set, exit.
-		if (palette_->get_size() == 0 || palette_ == nullptr) {
+		if (palette_ == nullptr || palette_->get_size() == 0) {
 			return false;
 		}
 

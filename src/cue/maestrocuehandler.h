@@ -8,6 +8,7 @@ namespace PixelMaestro {
 	class MaestroCueHandler : public CueHandler {
 		public:
 			enum class Action : uint8_t {
+				SetBrightness,
 				SetShow,
 				SetTimer,
 				Start,
@@ -23,6 +24,7 @@ namespace PixelMaestro {
 
 			explicit MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
 			~MaestroCueHandler();
+			uint8_t* set_brightness(uint8_t brightness);
 			uint8_t* set_show();
 			uint8_t* set_timer(uint16_t interval);
 			uint8_t* start();
