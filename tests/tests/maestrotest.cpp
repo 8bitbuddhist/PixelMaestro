@@ -12,8 +12,8 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	Point s2_point(20, 20);
 
 	Section sections[] = {
-	  Section(s1_point),
-	  Section(s2_point)
+	  Section(s1_point.x, s1_point.y),
+	  Section(s2_point.x, s2_point.y)
 	};
 	Maestro maestro(sections, 2);
 
@@ -27,39 +27,28 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 
 	SECTION("Verify update works.") {
 		Section* s1 = maestro.get_section(0);
-		Animation* animation = s1->set_animation(AnimationType::Solid, ColorPresets::Colorwheel, 12);
-		animation->set_timer(100);
-		animation->set_fade(false);
+		s1->set_one(0, 0, &ColorPresets::White);
+		maestro.update(1);
 
-		maestro.update(101);
-
-		REQUIRE(*s1->get_pixel(0, 0)->get_color() == ColorPresets::Colorwheel[0]);
+		REQUIRE(maestro.get_pixel_color(0, 0, 0) == ColorPresets::White);
 	}
 
 	SECTION("Verify global brightness works.") {
-		Section* s1 = maestro.get_section(0);
-		Animation* animation = s1->set_animation(AnimationType::Solid, ColorPresets::Colorwheel, 12);
-		animation->set_timer(100);
-		animation->set_fade(false);
+		maestro.set_brightness(0);
+		maestro.update(2);
 
-		maestro.set_brightness(127);
-		maestro.update(101);
-
-		REQUIRE(maestro.get_pixel_color(0, 0, 0) == (ColorPresets::Colorwheel[0] * 0.5));
+		REQUIRE(maestro.get_pixel_color(0, 0, 0) == ColorPresets::Black);
 	}
 
 	SECTION("Verify running state works.") {
-		Section* s1 = maestro.get_section(0);
-		s1->set_animation(AnimationType::Solid, ColorPresets::Colorwheel, 12);
-
 		maestro.get_timer()->stop();
 
 		// Run a few updates
 		for (unsigned char i = 0; i < 5; i++) {
-			maestro.update(100 * i);
+			maestro.update(i);
 		}
 
-		REQUIRE(*s1->get_pixel(0, 0)->get_color() == ColorPresets::Black);
+		REQUIRE(maestro.get_pixel_color(0, 0, 0) == ColorPresets::Black);
 	}
 
 }

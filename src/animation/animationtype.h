@@ -10,6 +10,7 @@ namespace PixelMaestro {
 	enum class AnimationType : uint8_t {
 		Blink,
 		Cycle,
+		Fire,
 		Lightning,
 		Mandelbrot,
 		Plasma,
@@ -17,8 +18,7 @@ namespace PixelMaestro {
 		Random,
 		Solid,
 		Sparkle,
-		Wave,
-		Fire
+		Wave
 	};
 }
 

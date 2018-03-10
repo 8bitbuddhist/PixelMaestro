@@ -6,6 +6,7 @@
 #define COLORPRESETS_H
 
 #include "core/colors.h"
+#include "core/palette.h"
 
 namespace PixelMaestro {
 	class ColorPresets {
@@ -32,6 +33,10 @@ namespace PixelMaestro {
 			// Sample color arrays.
 			static Colors::RGB Colorwheel[];
 			static Colors::RGB Rainbow[];
+
+			// Sample Palettes.
+			static Palette Colorwheel_Palette;
+			static Palette Rainbow_Palette;
 	};
 }
 
