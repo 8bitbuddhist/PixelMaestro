@@ -165,7 +165,7 @@ namespace PixelMaestro {
 		 *
 		 * We manually set the read index in the following cases:
 		 *	1) If we successfully ran the last Cue, set the index to 0 (start a new Cue)
-		 *	2) If the last bytes read match the Cue ID string, move the ID and read index to the start of the buffer (reduces the chance of a buffer overflow / split Cue)
+		 *	2) If the last bytes read match the Cue ID string BUT are not part of the `ShowCueHandler::set_events` Cue, move the ID and read index to the start of the buffer (reduces the chance of a buffer overflow / split Cue)
 		 *	3) If we've reached the buffer size limit, set the index to 0 (error / invalid Cue)
 		 */
 		if (read_index_ >= IntByteConvert::byte_to_int(&buffer_[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte) {
@@ -174,7 +174,9 @@ namespace PixelMaestro {
 			return true;
 		}
 		else {
+			// TODO: Make this more readable
 			if (read_index_ > (uint8_t)Byte::ID3Byte &&
+				(buffer_[(uint8_t)Byte::PayloadByte] == (uint8_t)Handler::ShowHandler && buffer_[(uint8_t)ShowCueHandler::Byte::ActionByte] != (uint8_t)ShowCueHandler::Action::SetEvents) &&
 				(buffer_[read_index_ - (uint8_t)Byte::ID3Byte] == id_[(uint8_t)Byte::ID1Byte] &&
 				 buffer_[read_index_ - (uint8_t)Byte::ID2Byte] == id_[(uint8_t)Byte::ID2Byte] &&
 				 buffer_[read_index_] == id_[(uint8_t)Byte::ID3Byte])) {

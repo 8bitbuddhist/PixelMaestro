@@ -68,6 +68,7 @@ namespace PixelMaestro {
 			};
 
 			/// The different handlers available for running Cues.
+			/// TODO: Rename to "*CueHandler*
 			enum class Handler : uint8_t {
 				AnimationHandler,
 				CanvasHandler,

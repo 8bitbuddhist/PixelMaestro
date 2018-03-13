@@ -123,16 +123,14 @@ namespace PixelMaestro {
 	 */
 	void Show::check_next_event(const uint32_t& current_time) {
 		/*
-		 * First, only run if the Event has a valid time set (i.e. > 0).
 		 * Based on the timing method used, determine whether to run the Event.
 		 *   If Absolute, compare the current time to the next Event's start time.
 		 *   If Relative, compare the time since the last Event to the next Event's start time.
 		 * After running the Event, update the last run time and current Event index.
 		 */
 		uint32_t event_time = events_[current_index_].get_time();
-		if (event_time != 0 &&
-			((timing_mode_ == TimingMode::Absolute && (current_time >= event_time)) ||
-			(timing_mode_ == TimingMode::Relative && ((current_time - last_time_) >= event_time)))) {
+		if ((timing_mode_ == TimingMode::Absolute && (current_time >= event_time)) ||
+			(timing_mode_ == TimingMode::Relative && ((current_time - last_time_) >= event_time))) {
 			cue_controller_->run(events_[current_index_].get_cue());
 			last_time_ = current_time;
 			update_event_index();
