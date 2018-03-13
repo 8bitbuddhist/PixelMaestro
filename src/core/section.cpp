@@ -418,8 +418,8 @@ namespace PixelMaestro {
 			canvas_->get_frame_timer()->set_last_time(new_time);
 		}
 		if (scroll_ != nullptr) {
-			scroll_->timer_x->set_last_time(new_time);
-			scroll_->timer_y->set_last_time(new_time);
+			if (scroll_->timer_x != nullptr) scroll_->timer_x->set_last_time(new_time);
+			if (scroll_->timer_y != nullptr) scroll_->timer_y->set_last_time(new_time);
 		}
 	}
 

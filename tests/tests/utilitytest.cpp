@@ -4,8 +4,10 @@
 
 using namespace PixelMaestro;
 
-TEST_CASE("RNG returns a non-zero value.", "[int]") {
-	REQUIRE(Utility::rand() != 0);
+TEST_CASE("RNG returns a value other than its starting value.", "[int]") {
+	int old_num = 10000;
+	int new_num = Utility::rand(old_num);
+	REQUIRE(new_num != old_num);
 }
 
 TEST_CASE("abs_int returns absolute value.", "[int]") {

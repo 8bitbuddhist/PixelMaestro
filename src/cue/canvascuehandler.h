@@ -7,7 +7,9 @@ namespace PixelMaestro {
 	class CanvasCueHandler : public CueHandler {
 		public:
 			enum class Action : uint8_t {
+				Activate,
 				Clear,
+				Deactivate,
 				DrawCircle,
 				DrawFrame,
 				DrawLine,
@@ -19,14 +21,12 @@ namespace PixelMaestro {
 				PreviousFrame,
 				RemoveFrameTimer,
 				SetCurrentFrameIndex,
+				SetDrawingColor,
 				SetFrameTimer,
 				SetNumFrames,
 				SetPalette,
 				StartFrameTimer,
-				StopFrameTimer,
-				SetDrawingColor,
-				Activate,
-				Deactivate
+				StopFrameTimer
 			};
 
 			enum class Byte : uint8_t {

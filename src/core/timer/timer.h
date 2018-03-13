@@ -24,7 +24,7 @@ namespace PixelMaestro {
 			uint32_t last_time_ = 0;
 
 			/// The amount of time (in milliseconds) between events.
-			uint16_t interval_;
+			uint16_t interval_ = 1000;
 
 			/// Whether the timer is currently running.
 			bool running_ = true;

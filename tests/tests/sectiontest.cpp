@@ -43,14 +43,15 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 	SECTION("Verify that different Canvas types can be added.") {
 		Animation* animation = section->set_animation(AnimationType::Solid);
 		animation->set_palette(&palette);
+		animation->set_timer(100);
 		animation->set_fade(false);
 
 		// Draw a filled in animation rectangle
 		AnimationCanvas* animation_canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::AnimationCanvas));
 		animation_canvas->draw_rect(0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
 
-		maestro.update(201);
-		REQUIRE(section->get_pixel_color(0, 0) != ColorPresets::Black);
+		maestro.update(100);
+		REQUIRE(section->get_pixel_color(0, 0) == *palette.get_color_at_index(0));
 
 		// Delete the Canvas
 		section->remove_canvas();
@@ -81,7 +82,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		layer_animation->set_timer(100);
 		layer_animation->set_fade(false);
 
-		maestro.update(301);
+		maestro.update(100);
 
 		// Test no mix mode
 		REQUIRE(section->get_pixel_color(0, 0) == section_colors[0]);
@@ -93,12 +94,13 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 
 		// Test Multiply mix mode
 		layer->mix_mode = Colors::MixMode::Multiply;
-		REQUIRE(section->get_pixel_color(0, 0) == layer_colors[1]);
-
-		// Test Layer mix mode
-		layer->mix_mode = Colors::MixMode::Overlay;
 		REQUIRE(section->get_pixel_color(0, 0) == layer_colors[0]);
-		maestro.update(401);
-		REQUIRE(section->get_pixel_color(0, 0) == layer_colors[1]);
+
+		/*
+		 * Test Overlay mix mode
+		 * Since the Overlay is black, it registers as transparent, so we expect the Section color.
+		 */
+		layer->mix_mode = Colors::MixMode::Overlay;
+		REQUIRE(section->get_pixel_color(0, 0) == section_colors[0]);
 	}
 }

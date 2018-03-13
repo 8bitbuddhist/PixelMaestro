@@ -28,25 +28,18 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	SECTION("Verify update works.") {
 		Section* s1 = maestro.get_section(0);
 		s1->set_one(0, 0, &ColorPresets::White);
-		maestro.update(1);
 
+		// Try without forcing a refresh
+		REQUIRE(maestro.update(0, false) == false);
+
+		// Force refresh
+		REQUIRE(maestro.update(0, true) == true);
 		REQUIRE(maestro.get_pixel_color(0, 0, 0) == ColorPresets::White);
 	}
 
 	SECTION("Verify global brightness works.") {
 		maestro.set_brightness(0);
-		maestro.update(2);
-
-		REQUIRE(maestro.get_pixel_color(0, 0, 0) == ColorPresets::Black);
-	}
-
-	SECTION("Verify running state works.") {
-		maestro.get_timer()->stop();
-
-		// Run a few updates
-		for (unsigned char i = 0; i < 5; i++) {
-			maestro.update(i);
-		}
+		maestro.update(0, true);
 
 		REQUIRE(maestro.get_pixel_color(0, 0, 0) == ColorPresets::Black);
 	}

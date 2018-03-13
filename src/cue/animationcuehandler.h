@@ -12,6 +12,7 @@ namespace PixelMaestro {
 			enum class Action : uint8_t {
 				SetCycleIndex,
 				SetFade,
+				SetFireOptions,
 				SetLightningOptions,
 				SetOrientation,
 				SetPalette,
@@ -20,10 +21,9 @@ namespace PixelMaestro {
 				SetReverse,
 				SetSparkleOptions,
 				SetTimer,
-				SetFireOptions,
+				SetWaveOptions,
 				Start,
-				Stop,
-				SetWaveOptions
+				Stop
 			};
 
 			enum class Byte : uint8_t {

@@ -228,7 +228,7 @@ namespace PixelMaestro {
 					/*
 					 * Delete the old palette after setting the new one.
 					 * We force an update so that the Animation no longer references the old palette.
-					 * WARNING: This throws off the timer, but only for a single frame. Shouldn't be noticeable except for slow animations or when fading is disabled.
+					 * This throws off the timer, but only for a single frame.
 					 */
 					Palette* old_palette = animation->get_palette();
 					Palette* new_palette = new Palette(colors, num_colors, true);

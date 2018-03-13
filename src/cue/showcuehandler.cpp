@@ -11,7 +11,7 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = num_events_byte.converted_1;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = (uint8_t)preserve_current_index;
 
-		int options_index = (uint8_t)Byte::OptionsByte + 3;
+		uint16_t options_index = (uint8_t)Byte::OptionsByte + 3;
 		for (uint16_t event_index = 0; event_index < num_events; event_index++) {
 			// Save time
 			IntByteConvert event_time(events[event_index].get_time());
