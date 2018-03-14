@@ -78,20 +78,20 @@ namespace PixelMaestro {
 	CueHandler* CueController::enable_handler(Handler handler) {
 		if (handlers_[(uint8_t)handler] == nullptr) {
 			switch(handler) {
-				case Handler::AnimationHandler:
-					handlers_[(uint8_t)Handler::AnimationHandler] = new AnimationCueHandler(this);
+				case Handler::AnimationCueHandler:
+					handlers_[(uint8_t)Handler::AnimationCueHandler] = new AnimationCueHandler(this);
 					break;
-				case Handler::CanvasHandler:
-					handlers_[(uint8_t)Handler::CanvasHandler] = new CanvasCueHandler(this);
+				case Handler::CanvasCueHandler:
+					handlers_[(uint8_t)Handler::CanvasCueHandler] = new CanvasCueHandler(this);
 					break;
-				case Handler::MaestroHandler:
-					handlers_[(uint8_t)Handler::MaestroHandler] = new MaestroCueHandler(this);
+				case Handler::MaestroCueHandler:
+					handlers_[(uint8_t)Handler::MaestroCueHandler] = new MaestroCueHandler(this);
 					break;
-				case Handler::SectionHandler:
-					handlers_[(uint8_t)Handler::SectionHandler] = new SectionCueHandler(this);
+				case Handler::SectionCueHandler:
+					handlers_[(uint8_t)Handler::SectionCueHandler] = new SectionCueHandler(this);
 					break;
-				case Handler::ShowHandler:
-					handlers_[(uint8_t)Handler::ShowHandler] = new ShowCueHandler(this);
+				case Handler::ShowCueHandler:
+					handlers_[(uint8_t)Handler::ShowCueHandler] = new ShowCueHandler(this);
 					break;
 			}
 		}
@@ -165,8 +165,8 @@ namespace PixelMaestro {
 		 *
 		 * We manually set the read index in the following cases:
 		 *	1) If we successfully ran the last Cue, set the index to 0 (start a new Cue)
-		 *	2) If the last bytes read match the Cue ID string BUT are not part of the `ShowCueHandler::set_events` Cue, move the ID and read index to the start of the buffer (reduces the chance of a buffer overflow / split Cue)
-		 *	3) If we've reached the buffer size limit, set the index to 0 (error / invalid Cue)
+		 *	2) If the last bytes read match the Cue ID string but are not part of `ShowCueHandler::set_events`, move the ID and read index to the start of the buffer. This lets the Cue use the entire buffer. The SetEvents check is important, since Events are formatted as normal Cues and would otherwise pass the check.
+		 *	3) If we've reached the buffer size limit, set the index to 0 (indicates a read error or an invalid Cue).
 		 */
 		if (read_index_ >= IntByteConvert::byte_to_int(&buffer_[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte) {
 			run(buffer_);
@@ -174,12 +174,12 @@ namespace PixelMaestro {
 			return true;
 		}
 		else {
-			// TODO: Make this more readable
 			if (read_index_ > (uint8_t)Byte::ID3Byte &&
-				(buffer_[(uint8_t)Byte::PayloadByte] == (uint8_t)Handler::ShowHandler && buffer_[(uint8_t)ShowCueHandler::Byte::ActionByte] != (uint8_t)ShowCueHandler::Action::SetEvents) &&
-				(buffer_[read_index_ - (uint8_t)Byte::ID3Byte] == id_[(uint8_t)Byte::ID1Byte] &&
-				 buffer_[read_index_ - (uint8_t)Byte::ID2Byte] == id_[(uint8_t)Byte::ID2Byte] &&
-				 buffer_[read_index_] == id_[(uint8_t)Byte::ID3Byte])) {
+					(buffer_[(uint8_t)Byte::PayloadByte] == (uint8_t)Handler::ShowCueHandler &&
+						buffer_[(uint8_t)ShowCueHandler::Byte::ActionByte] != (uint8_t)ShowCueHandler::Action::SetEvents) &&
+					(buffer_[read_index_ - (uint8_t)Byte::ID3Byte] == id_[(uint8_t)Byte::ID1Byte] &&
+						buffer_[read_index_ - (uint8_t)Byte::ID2Byte] == id_[(uint8_t)Byte::ID2Byte] &&
+						buffer_[read_index_] == id_[(uint8_t)Byte::ID3Byte])) {
 
 				buffer_[(uint8_t)Byte::ID1Byte] = id_[(uint8_t)Byte::ID1Byte];
 				buffer_[(uint8_t)Byte::ID2Byte] = id_[(uint8_t)Byte::ID2Byte];

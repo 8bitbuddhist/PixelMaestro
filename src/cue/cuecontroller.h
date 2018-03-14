@@ -68,13 +68,12 @@ namespace PixelMaestro {
 			};
 
 			/// The different handlers available for running Cues.
-			/// TODO: Rename to "*CueHandler*
 			enum class Handler : uint8_t {
-				AnimationHandler,
-				CanvasHandler,
-				MaestroHandler,
-				SectionHandler,
-				ShowHandler
+				AnimationCueHandler,
+				CanvasCueHandler,
+				MaestroCueHandler,
+				SectionCueHandler,
+				ShowCueHandler
 			};
 
 			CueController(Maestro* maestro, uint16_t buffer_size = UINT8_MAX);

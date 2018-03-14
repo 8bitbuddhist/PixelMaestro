@@ -5,7 +5,7 @@ namespace PixelMaestro {
 	uint8_t* ShowCueHandler::set_events(Event *events, uint16_t num_events, bool preserve_current_index) {
 		IntByteConvert num_events_byte(num_events);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetEvents;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = num_events_byte.converted_0;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = num_events_byte.converted_1;
@@ -32,7 +32,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* ShowCueHandler::set_looping(bool loop) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetLooping;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)loop;
 
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* ShowCueHandler::set_timing_mode(Show::TimingMode timing) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowHandler;
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::ShowCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetTimingMode;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)timing;
 

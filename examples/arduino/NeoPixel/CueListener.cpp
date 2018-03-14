@@ -26,11 +26,11 @@ void setup () {
 		 * To reduce the program size, only enable the CueHandlers you need.
 		 */
 		CueController* controller = maestro.set_cue_controller();
-		controller->enable_handler(CueController::Handler::AnimationHandler);
-		controller->enable_handler(CueController::Handler::CanvasHandler);
-		controller->enable_handler(CueController::Handler::MaestroHandler);
-		controller->enable_handler(CueController::Handler::SectionHandler);
-		controller->enable_handler(CueController::Handler::ShowHandler);
+		controller->enable_handler(CueController::Handler::AnimationCueHandler);
+		controller->enable_handler(CueController::Handler::CanvasCueHandler);
+		controller->enable_handler(CueController::Handler::MaestroCueHandler);
+		controller->enable_handler(CueController::Handler::SectionCueHandler);
+		controller->enable_handler(CueController::Handler::ShowCueHandler);
 
 		Serial.begin(9600);
 }
