@@ -12,54 +12,66 @@ namespace PixelMaestro {
 			section_->set_one(pixel, &black_);
 		}
 
-		// Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
+		/**
+		 * Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
+		 * "102" is an integer representation of the maximum length of the grid that a single fork can cover (102 is 40% of the grid).
+		 */
 		Point start = {0, 0};
 		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {
 			if (orientation_ == Orientation::Vertical) {
 				start.set((uint16_t)Utility::rand(section_->get_dimensions()->x), 0);
-				draw_bolt_vertical(bolt, section_, &start, down_threshold_, up_threshold_, fork_chance_);
+				draw_bolt_vertical(bolt, &start, drift_, fork_chance_, 102);
 			}
 			else {
 				start.set(0, (uint16_t)Utility::rand(section_->get_dimensions()->y));
-				draw_bolt_horizontal(bolt, section_, &start, down_threshold_, up_threshold_, fork_chance_);
+				draw_bolt_horizontal(bolt, &start, drift_, fork_chance_, 102);
 			}
 		}
 
 		update_cycle(0, palette_->get_size());
 	}
 
-	void LightningAnimation::draw_bolt_horizontal(uint8_t bolt_num, Section* section, Point* start, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance) {
+	/**
+	 * Draw a horizontal bolt.
+	 * @param bolt_num The bolt's number in the drawing order.
+	 * @param start The bolt's starting location.
+	 * @param drift The chance/direction that the bolt will drift in.
+	 * @param fork_chance The chance that the bolt will fork.
+	 * @param max_fork_length The max length of the bolt's fork, if it does fork.
+	 */
+	void LightningAnimation::draw_bolt_horizontal(uint8_t bolt_num, Point* start, int8_t drift, uint8_t fork_chance, uint8_t max_fork_length) {
 		Point cursor = {start->x, start->y};
 
 		/*
 		 * Calculate the maximum length of the bolt.
 		 * For the main bolt, we set the length equal to the length of the grid.
-		 * For off-shoots, we cap the distance at 25% of the grid length.
+		 * For forks, we cap the distance at a percentage of the grid length (calculated using max_fork_length).
 		 */
 		uint16_t length;
 		if (cursor.x == 0) {
 			length = section_->get_dimensions()->x;
 		}
 		else {
-			if ((cursor.x + (section_->get_dimensions()->x * 0.25)) > section_->get_dimensions()->x) {
+			if ((cursor.x + (section_->get_dimensions()->x * (max_fork_length / (float)100))) > section_->get_dimensions()->x) {
 				length = section_->get_dimensions()->x - cursor.x;
 			}
 			else {
-				length = cursor.x + (section_->get_dimensions()->x * 0.25);
+				length = cursor.x + (section_->get_dimensions()->x * (max_fork_length / (float)100));
 			}
 		}
 
 		/*
-		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
+		 * For each step along the grid, generate a random number and compare it to the drift threshold.
+		 * This determines the direction that the bolt moves in.
 		 */
 		for (uint16_t x = cursor.x; x < length; x++) {
-			uint8_t direction_roll = Utility::rand(255);
-			if (direction_roll > up_threshold) {
+			int8_t drift_roll = Utility::rand(UINT8_MAX) - INT8_MAX;
+			if (drift_roll > drift) {
 				if (cursor.y + 1 < section_->get_dimensions()->y) {
 					cursor.y += 1;
 				}
 			}
-			else if (direction_roll < down_threshold) {
+			else {
 				if (cursor.y - 1 >= 0) {
 					cursor.y -= 1;
 				}
@@ -68,62 +80,61 @@ namespace PixelMaestro {
 
 			section_->set_one(x, cursor.y, palette_->get_color_at_index(cycle_index_ + bolt_num));
 
-
-			// Check to see if we should fork the bolt
+			// Check to see if we should fork the bolt.
 			if (x < (uint16_t)section_->get_dimensions()->x) {
-				uint8_t chance_roll = Utility::rand(255);
-				if (chance_roll < fork_chance) {
+				uint8_t fork_roll = Utility::rand(UINT8_MAX);
+				if (fork_roll < fork_chance) {
+
 					/*
-					 * If we fork, reduce the fork chance by 50%.
-					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.
+					 * If we forked...
+					 *	1) Change the drift so that it sends the bolt away from the parent. We do this by increasing the drift threshold to 85% in the opposite direciton, making it extremely likely that the bolt will move that way.
+					 *	2) Reduce the chance of another fork by 50%.
+					 *	3) Reduce the length of the next fork by a random amount. We don't want forks longer than their parents.
 					 */
-					if (direction_roll > up_threshold) {
-						// Default thresholds are 80% and 60%
-						draw_bolt_horizontal(bolt_num, section, &cursor, 204, 153, fork_chance / 2);
-					}
-					else if (direction_roll < down_threshold) {
-						draw_bolt_horizontal(bolt_num, section, &cursor, 102, 51, fork_chance / 2);
+					if (drift_roll < drift) {
+						draw_bolt_horizontal(bolt_num, &cursor, 90, fork_chance / 2, Utility::rand(max_fork_length));
 					}
 					else {
-						draw_bolt_horizontal(bolt_num, section, &cursor, up_threshold, down_threshold, fork_chance / 2);
+						// Invert threshold
+						draw_bolt_horizontal(bolt_num, &cursor, -90, fork_chance / 2, Utility::rand(max_fork_length));
 					}
 				}
 			}
 		}
 	}
 
-	void LightningAnimation::draw_bolt_vertical(uint8_t bolt_num, Section* section, Point* start, uint8_t left_threshold, uint8_t right_threshold, uint8_t fork_chance) {
+	/**
+	 * Draws a vertical bolt. See draw_horizontal_fork() for comments.
+	 * @param bolt_num The bolt's number in the drawing order.
+	 * @param start The bolt's starting location.
+	 * @param drift The chance/direction that the bolt will drift in.
+	 * @param fork_chance The chance that the bolt will fork.
+	 * @param max_fork_length The max length of the bolt's fork, if it does fork.
+	 */
+	void LightningAnimation::draw_bolt_vertical(uint8_t bolt_num, Point* start, int8_t drift, uint8_t fork_chance, uint8_t max_fork_length) {
 		Point cursor = {start->x, start->y};
 
-		/*
-		 * Calculate the maximum length of the bolt.
-		 * For the main bolt, we set the length equal to the length of the grid.
-		 * For off-shoots, we cap the distance at 25% of the grid length.
-		 */
 		uint32_t length;
 		if (cursor.y == 0) {
 			length = section_->get_dimensions()->y;
 		}
 		else {
-			if (cursor.y + ((section_->get_dimensions()->y * 0.25)) > section_->get_dimensions()->y) {
+			if (cursor.y + ((section_->get_dimensions()->y * (max_fork_length / (float)100))) > section_->get_dimensions()->y) {
 				length = section_->get_dimensions()->y - cursor.y;
 			}
 			else {
-				length = cursor.y + (section_->get_dimensions()->y * 0.25);
+				length = cursor.y + (section_->get_dimensions()->y * (max_fork_length / (float)100));
 			}
 		}
 
-		/*
-		 * For each step along the grid, roll the dice and compare it to the down/up thresholds.
-		 */
 		for (uint16_t y = cursor.y; y < length; y++) {
-			uint8_t direction_roll = Utility::rand(255);
-			if (direction_roll > right_threshold) {
+			int8_t drift_roll = Utility::rand(UINT8_MAX) - INT8_MAX;
+			if (drift_roll < drift) {	// Intentionally inverted from draw_bolt_horizontal.
 				if (cursor.x + 1 < section_->get_dimensions()->x) {
 					cursor.x += 1;
 				}
 			}
-			else if (direction_roll < left_threshold) {
+			else {
 				if (cursor.x - 1 >= 0) {
 					cursor.x -= 1;
 				}
@@ -132,22 +143,14 @@ namespace PixelMaestro {
 
 			section_->set_one(cursor.x, y, palette_->get_color_at_index(cycle_index_ + bolt_num));
 
-			// Check to see if we should fork the bolt
 			if (y < (uint16_t)section_->get_dimensions()->y) {
-				uint8_t chance_roll = Utility::rand(255);
-				if (chance_roll < fork_chance) {
-					/*
-					 * If we fork, reduce the fork chance by 50%.
-					 * We also want to adjust the direction params based on the previous bolt's direction, e.g. if the parent bolt was going up, we want to primarily go down.
-					 */
-					if (direction_roll > right_threshold) {
-						draw_bolt_vertical(bolt_num, section, &cursor, 204, 153, fork_chance / 2);
-					}
-					else if (direction_roll < left_threshold) {
-						draw_bolt_vertical(bolt_num, section, &cursor, 102, 51, fork_chance / 2);
+				uint8_t fork_roll = Utility::rand(UINT8_MAX);
+				if (fork_roll < fork_chance) {
+					if (drift_roll > drift) {
+						draw_bolt_vertical(bolt_num, &cursor, 90, fork_chance / 2, Utility::rand(max_fork_length));
 					}
 					else {
-						draw_bolt_vertical(bolt_num, section, &cursor, right_threshold, left_threshold, fork_chance / 2);
+						draw_bolt_vertical(bolt_num, &cursor, -90, fork_chance / 2, Utility::rand(max_fork_length));
 					}
 				}
 			}
@@ -171,19 +174,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the down threshold.
-	 * @return Down threshold.
+	 * Returns the amount of drift.
+	 * @return Drift amount.
 	 */
-	uint8_t LightningAnimation::get_down_threshold() const {
-		return down_threshold_;
-	}
-
-	/**
-	 * Returns the up threshold.
-	 * @return Up threshold.
-	 */
-	uint8_t LightningAnimation::get_up_threshold() const {
-		return up_threshold_;
+	int8_t LightningAnimation::get_drift() const {
+		return drift_;
 	}
 
 	/**
@@ -203,13 +198,13 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the chances of a bolt drifting in a certain direction.
-	 * @param down_threshold Chances of a bolt drifting downwards (left in vertical orientation).
-	 * @param up_threshold Chances of a bolt drifting upwards (right in vertical orientation).
+	 * Sets the amount of drift.
+	 * Negative values increase the amount of negative drift (left or down).
+	 * Positive values increase the amount of positive drift (right or up).
+	 * @param drift Drift amount.
 	 */
-	void LightningAnimation::set_thresholds(uint8_t down_threshold, uint8_t up_threshold) {
-		this->down_threshold_ = down_threshold;
-		this->up_threshold_ = up_threshold;
+	void LightningAnimation::set_drift(int8_t drift) {
+		this->drift_ = drift;
 	}
 
 	LightningAnimation::~LightningAnimation() {}

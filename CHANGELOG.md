@@ -4,27 +4,39 @@ All notable changes to PixelMaestro will be documented in this file.
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.20] - In Progress
-WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefiles.
+WARNING: This update breaks backwards compatability with Cuefiles from v0.12 and earlier.
 
 ### Added
 - Animations
-	- Added new `Palette` class for managing color palettes.
+	- Added new `Palette` class for managing color palettes. Palettes take and store an array of `RGB` colors for use in `Animations` and `PaletteCanvases`.
 	- Added fire animation.
 	- Added `skew` and `mirror` parameters to Wave animation. Skew offsets each row (or column) by the specified number of Pixels. Mirror reflects the grid along the orientation axis.
 - Canvas
 	- Added `Canvas::set_drawing_color()`, which sets the color used when calling `activate()`. Applies to ColorCanvases and PaletteCanvases.
+- ColorPresets
+	- Added Palette presets.
 - Cues
-	- Added Cues for `Canvas::activate()` and `Canvas::deactivate()`.
-	- Added Cue for `Section::remove_animation()`.
+	- Added `Canvas::activate()` and `Canvas::deactivate()` Cues.
+	- Added `Section::remove_animation()` Cue.
+	- Added `Maestro::set_brightness()` Cue.
+- Maestros
+	- Added boolean return value to `Maestro::update()`. This returns true if the Maestro runs its update (i.e. its refresh Timer triggers).
+- Timers
+	- Added `start()` and `stop()` methods to all Timers..
 	
 ### Changed
 - Animations
-	- Removed vertical orientation for Mandelbrot animations.
+	- Removed vertical orientation from the Mandelbrot Animation.
 	- Renamed `Animation::pause` to `Animation::delay`. Now it actually acts as a delay timer, waiting the specified amount of time before starting the next cycle.
+	- Replaced `LightningAnimation::up_threshold` and `LightningAnimation::down_threshold` with `LightningAnimation::drift`. Drift is a signed integer, where negative values indicate a downward drift and positive values indicate a upward drift.
 - Layers
-	- Rewrote Layer mixing algorithm. This fixed an issue when combining the Overlay and Alpha MixModes in Sections with more than one Layer.
+	- Rewrote Layer mixing algorithm. This fixes an issue when combining the Overlay and Alpha MixModes in Sections with more than one Layer.
 - Shows
-	- Renamed `set_timing()` to `set_timing_mode()` to prevent confusion with Timers.
+	- Renamed `set_timing()` to `set_timing_mode()` to prevent confusion with `Timers`.
+- Timers
+	- Set default interval time to `1000`.
+	- Changed `AnimationTimer::pause` to `delay`. Now it waits the specified amount of time before running the next cycle.
+- _Many_ bugfixes.
 	
 ### Removed
 - Animations
@@ -33,7 +45,9 @@ WARNING: This update breaks backwards compatability with v0.12 and earlier Cuefi
 	- Merge animation is replaced by the Wave animation. Use `WaveAnimation::set_mirror(true)` to simulate merging.
 	- Removed Mandelbrot animation's vertical orientation.
 - Cues
-	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You will need to call `ShowCueHandler::set_events()` to initialize the Event list.
+	- Removed Events list parameter from `MaestroCueHandler::set_show()`. You need to call `ShowCueHandler::set_events()` to initialize the Event list.
+- Shows
+	- Removed requirement that Events needed to have an Event time > 0. Events with an event time of 0 will now run immediately.
 
 ## [v0.12] - 2018-01-22
 ### Changed

@@ -5,6 +5,11 @@
 #ifndef COLORS_H
 #define COLORS_H
 
+// When compiling for Windows, Colors::RGB conflicts with the Win32 RGB macro
+#if defined(_WIN32) && defined(RGB)
+	#undef RGB
+#endif
+
 #include <stdint.h>
 
 namespace PixelMaestro {

@@ -19,17 +19,16 @@ namespace PixelMaestro {
 		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
 	}
 
-	uint8_t* AnimationCueHandler::set_lightning_options(uint8_t section_num, uint8_t layer_num, uint8_t num_bolts, uint8_t down_threshold, uint8_t up_threshold, uint8_t fork_chance) {
+	uint8_t* AnimationCueHandler::set_lightning_options(uint8_t section_num, uint8_t layer_num, uint8_t num_bolts, int8_t drift, uint8_t fork_chance) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetLightningOptions;
 		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = num_bolts;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = down_threshold;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = up_threshold;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = fork_chance;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = (uint8_t)drift;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = fork_chance;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 4));
+		return controller_->assemble(((uint8_t)Byte::OptionsByte + 3));
 	}
 
 	uint8_t* AnimationCueHandler::set_plasma_options(uint8_t section_num, uint8_t layer_num, float size, float resolution) {
@@ -204,8 +203,8 @@ namespace PixelMaestro {
 				{
 					LightningAnimation* la = static_cast<LightningAnimation*>(animation);
 					la->set_bolt_count(cue[(uint8_t)Byte::OptionsByte]);
-					la->set_thresholds(cue[(uint8_t)Byte::OptionsByte + 1], cue[(uint8_t)Byte::OptionsByte + 2]);
-					la->set_fork_chance(cue[(uint8_t)Byte::OptionsByte + 3]);
+					la->set_drift((int8_t)cue[(uint8_t)Byte::OptionsByte + 1]);
+					la->set_fork_chance(cue[(uint8_t)Byte::OptionsByte + 2]);
 				}
 				break;
 			case Action::SetOrientation:
