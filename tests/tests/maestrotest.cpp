@@ -3,7 +3,10 @@
 #include "../../src/animation/cycleanimation.h"
 #include "../../src/core/maestro.h"
 #include "../../src/core/section.h"
+#include "../../src/core/timer/timer.h"
 #include "../../src/colorpresets.h"
+#include "../../src/cue/cuecontroller.h"
+#include "../../src/cue/show.h"
 
 using namespace PixelMaestro;
 
@@ -17,7 +20,13 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	};
 	Maestro maestro(sections, 2);
 
-	SECTION("Get Maestro Sections.") {
+	SECTION("Verify Maestro Sections.") {
+		REQUIRE(maestro.get_num_sections() == 2);
+		REQUIRE(maestro.get_section(0) == &sections[0]);
+		REQUIRE(maestro.get_section(1) == &sections[1]);
+	}
+
+	SECTION("Verify Section dimensions.") {
 		Section* s1 = maestro.get_section(0);
 		REQUIRE(*s1->get_dimensions() == s1_point);
 
@@ -44,4 +53,27 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 		REQUIRE(maestro.get_pixel_color(0, 0, 0) == ColorPresets::Black);
 	}
 
+	SECTION("Verify timer works.") {
+		int interval = 2500;
+		maestro.set_timer(interval);
+
+		Timer* timer = maestro.get_timer();
+		REQUIRE(timer != nullptr);
+		REQUIRE(timer->get_interval() == interval);
+		REQUIRE(maestro.update(interval + 1) == true);
+	}
+
+	SECTION("Verify CueController initialization works.") {
+		int buffer_size = 12345;
+		maestro.set_cue_controller(buffer_size);
+
+		REQUIRE (maestro.get_cue_controller() != nullptr);
+		REQUIRE(maestro.get_cue_controller()->get_buffer_size() == buffer_size);
+	}
+
+	SECTION("Verify Show initialization works.") {
+		Show* show = maestro.set_show(nullptr, 0);
+		REQUIRE(show != nullptr);
+		REQUIRE(maestro.get_cue_controller() != nullptr);
+	}
 }

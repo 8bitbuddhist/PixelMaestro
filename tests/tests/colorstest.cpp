@@ -87,4 +87,8 @@ TEST_CASE("Can mix colors.", "[Colors::RGB]") {
 		REQUIRE(Colors::mix_colors(&ColorPresets::Red, &ColorPresets::Blue, Colors::MixMode::Overlay) == ColorPresets::Blue);
 		REQUIRE(Colors::mix_colors(&ColorPresets::Red, &ColorPresets::Black, Colors::MixMode::Overlay) == ColorPresets::Red);
 	}
+
+	SECTION("No mix mode returns color 1.") {
+		REQUIRE(Colors::mix_colors(&ColorPresets::Red, &ColorPresets::Black, Colors::MixMode::None) == ColorPresets::Red);
+	}
 }

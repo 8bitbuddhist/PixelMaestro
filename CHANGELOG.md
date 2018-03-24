@@ -3,6 +3,8 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.21] - In Progress
+
 ## [v0.20] - 2018-03-17
 WARNING: This update breaks backwards compatability with Cuefiles from v0.12 and earlier.
 
