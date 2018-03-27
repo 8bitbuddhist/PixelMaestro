@@ -80,7 +80,11 @@ namespace PixelMaestro {
 			~CueController();
 			uint8_t* assemble(uint16_t payload_size);
 			uint8_t checksum(uint8_t* cue, uint16_t cue_size);
-			CueHandler* enable_handler(Handler handler);
+			CueHandler* enable_animation_cue_handler();
+			CueHandler* enable_canvas_cue_handler();
+			CueHandler* enable_maestro_cue_handler();
+			CueHandler* enable_section_cue_handler();
+			CueHandler* enable_show_cue_handler();
 			uint8_t* get_buffer() const;
 			uint16_t get_buffer_size() const;
 			uint16_t get_cue_size() const;

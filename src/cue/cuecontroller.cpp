@@ -70,33 +70,44 @@ namespace PixelMaestro {
 		return (sum % 256);
 	}
 
-	/**
-	 * Enables the specified CueHandler, or returns the CueHandler if it already exists.
-	 * @param handler CueHandler to enable.
-	 * @return CueHandler instance.
-	 */
-	CueHandler* CueController::enable_handler(Handler handler) {
-		if (handlers_[(uint8_t)handler] == nullptr) {
-			switch(handler) {
-				case Handler::AnimationCueHandler:
-					handlers_[(uint8_t)Handler::AnimationCueHandler] = new AnimationCueHandler(this);
-					break;
-				case Handler::CanvasCueHandler:
-					handlers_[(uint8_t)Handler::CanvasCueHandler] = new CanvasCueHandler(this);
-					break;
-				case Handler::MaestroCueHandler:
-					handlers_[(uint8_t)Handler::MaestroCueHandler] = new MaestroCueHandler(this);
-					break;
-				case Handler::SectionCueHandler:
-					handlers_[(uint8_t)Handler::SectionCueHandler] = new SectionCueHandler(this);
-					break;
-				case Handler::ShowCueHandler:
-					handlers_[(uint8_t)Handler::ShowCueHandler] = new ShowCueHandler(this);
-					break;
-			}
+	CueHandler* CueController::enable_animation_cue_handler() {
+		uint8_t handler	= (uint8_t)Handler::AnimationCueHandler;
+		if (handlers_[handler] == nullptr) {
+			handlers_[handler] = new AnimationCueHandler(this);
 		}
+		return handlers_[handler];
+	}
 
-		return handlers_[(uint8_t)handler];
+	CueHandler* CueController::enable_canvas_cue_handler() {
+		uint8_t handler	= (uint8_t)Handler::CanvasCueHandler;
+		if (handlers_[handler] == nullptr) {
+			handlers_[handler] = new CanvasCueHandler(this);
+		}
+		return handlers_[handler];
+	}
+
+	CueHandler* CueController::enable_maestro_cue_handler() {
+		uint8_t handler	= (uint8_t)Handler::MaestroCueHandler;
+		if (handlers_[handler] == nullptr) {
+			handlers_[handler] = new MaestroCueHandler(this);
+		}
+		return handlers_[handler];
+	}
+
+	CueHandler* CueController::enable_section_cue_handler() {
+		uint8_t handler	= (uint8_t)Handler::SectionCueHandler;
+		if (handlers_[handler] == nullptr) {
+			handlers_[handler] = new SectionCueHandler(this);
+		}
+		return handlers_[handler];
+	}
+
+	CueHandler* CueController::enable_show_cue_handler() {
+		uint8_t handler	= (uint8_t)Handler::ShowCueHandler;
+		if (handlers_[handler] == nullptr) {
+			handlers_[handler] = new ShowCueHandler(this);
+		}
+		return handlers_[handler];
 	}
 
 	/**
@@ -206,7 +217,9 @@ namespace PixelMaestro {
 	 */
 	void CueController::run(uint8_t *cue) {
 		if (validate_header(cue)) {
-			handlers_[cue[(uint8_t)Byte::PayloadByte]]->run(cue);
+			if (handlers_[cue[(uint8_t)Byte::PayloadByte]] != nullptr) {
+				handlers_[cue[(uint8_t)Byte::PayloadByte]]->run(cue);
+			}
 		}
 	}
 
