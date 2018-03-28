@@ -83,7 +83,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Enables the Canvs CueHandler.
+	 * Enables the Canvas CueHandler.
 	 * @return New handler.
 	 */
 	CueHandler* CueController::enable_canvas_cue_handler() {

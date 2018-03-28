@@ -21,6 +21,10 @@ Maestro maestro(8, 1);
 // Initialize the NeoPixel strip on pin 10
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(maestro.get_section(0)->get_dimensions()->x, 10, NEO_GRB + NEO_KHZ800);
 
+// Soft-resets the Arduino
+void(* reset) (void) = 0;
+
+// Runs Cues stored in EEPROM
 void run_eeprom_cue() {
   for (uint16_t index = 0; index < EEPROM.length(); index++) {
     maestro.get_cue_controller()->read(EEPROM[index]);
@@ -36,12 +40,11 @@ void setup () {
 		/*
 		 * Initializes the Cue Controller and CueHandlers.
      *
-     * WARNING: To limit memory usage and avoid crashing, the CanvasCueHandler is disabled by default.
-     * If you want to use Canvases, disable another CueHandler or use a microcontroller with more SRAM.
+     * WARNING: To reduce sketch size, disable one or more CueHandlers.
 		 */
 		CueController* controller = maestro.set_cue_controller();
     controller->enable_animation_cue_handler();
-    //controller->enable_canvas_cue_handler();
+    controller->enable_canvas_cue_handler();
     controller->enable_maestro_cue_handler();
     controller->enable_section_cue_handler();
     controller->enable_show_cue_handler();
@@ -81,7 +84,7 @@ void loop() {
       else if (header[0] == 'R' && header[1] == 'O' && header[2] == 'M' && header[3] == 'E' && header[4] == 'N' && header[5] == 'D') {
         eeprom_read = false;
         eeprom_index = 0;
-        run_eeprom_cue();
+        reset();
       }
 
       // Reset the EEPROM and header counters.

@@ -28,6 +28,10 @@ namespace PixelMaestro {
 		public:
 			/// Sets the Section's scrolling behavior.
 			struct Scroll {
+				/// The original x interval. NOTE: This is a hacky workaround for dealing with Cues.
+				uint16_t interval_x = 0;
+				/// The original y interval. This is a hacky workaround for dealing with Cues.
+				uint16_t interval_y = 0;
 				/// If true, reverses the scrolling direction along the x axis.
 				bool reverse_x = false;
 				/// If true, reverses the scrolling direction along the y axis.
@@ -78,6 +82,8 @@ namespace PixelMaestro {
 				 * @param reverse_y If true, reverses the scrolling direction along the y axis.
 				 */
 				void set(uint16_t refresh_interval, Point* dimensions, uint16_t interval_x, uint16_t interval_y, bool reverse_x = false, bool reverse_y = false) {
+					this->interval_x = interval_x;
+					this->interval_y = interval_y;
 					this->reverse_x = reverse_x;
 					this->reverse_y = reverse_y;
 					/*
