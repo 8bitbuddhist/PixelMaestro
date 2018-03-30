@@ -1,7 +1,16 @@
+/*
+ * MappedAnimation - Abstract Animation class that maps palette colors to pixels.
+ * Used for Animations that need to either perform expensive per-pixel calculations, or store temporary grid data to a buffer.
+ * Derived classes implement map() and override update().
+ * See FireAnimation and MandelbrotAnimation for examples.
+ */
+
 #include "mappedanimation.h"
 
 namespace PixelMaestro {
-	MappedAnimation::MappedAnimation(Section* section) : Animation(section) { }
+	MappedAnimation::MappedAnimation(Section* section) : Animation(section) {
+		rebuild_map();
+	}
 
 	/**
 	 * Regenerates the color-to-pixel map.
@@ -25,7 +34,7 @@ namespace PixelMaestro {
 	 * On each update, check to see if the grid size has changed. If so, remap the colors.
 	 */
 	void MappedAnimation::update() {
-		// Rebuild if the grid size has changed.
+		// Rebuild if the grid size has changed
 		if (dimensions_ != *section_->get_dimensions()) {
 			rebuild_map();
 			dimensions_	= *section_->get_dimensions();

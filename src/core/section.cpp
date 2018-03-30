@@ -356,30 +356,20 @@ namespace PixelMaestro {
 	/**
 		Sets the specified Pixel to a new color.
 
-		@param pixel The index of the Pixel to update.
-		@param color New color.
-	*/
-	void Section::set_one(uint32_t pixel, Colors::RGB* color) {
-		// Only continue if Pixel is within the bounds of the array.
-		if (pixel < dimensions_.size()) {
-			if (animation_ != nullptr) {
-				pixels_[pixel].set_next_color(color, animation_->get_timer()->get_step_count());
-			}
-			else {
-				pixels_[pixel].set_next_color(color, 1);
-			}
-		}
-	}
-
-	/**
-		Sets the specified Pixel to a new color.
-
-		@param x The column number of the Pixel.
-		@param y The row number of the Pixel.
+		@param x The Pixel's column.
+		@param y The Pixel's row.
 		@param color New color.
 	*/
 	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB* color) {
-		set_one(dimensions_.get_inline_index(x, y), color);
+		// Only continue if the Pixel is within the bounds of the array.
+		if (x < dimensions_.x && y < dimensions_.y) {
+			if (animation_ != nullptr) {
+				pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, animation_->get_timer()->get_step_count());
+			}
+			else {
+				pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, 1);
+			}
+		}
 	}
 
 	/**

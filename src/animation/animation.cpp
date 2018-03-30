@@ -173,8 +173,6 @@ namespace PixelMaestro {
 		return false;
 	}
 
-	// Private methods
-
 	/**
 		Incremnets the current animation cycle.
 		If reverse_animation_ is true, this decrements the cycle, moving the animation backwards.

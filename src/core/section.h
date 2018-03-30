@@ -28,10 +28,11 @@ namespace PixelMaestro {
 		public:
 			/// Sets the Section's scrolling behavior.
 			struct Scroll {
-				/// The original x interval. NOTE: This is a hacky workaround for dealing with Cues.
+				/// The original x interval. This is a hacky workaround for dealing with Cues.
 				uint16_t interval_x = 0;
-				/// The original y interval. This is a hacky workaround for dealing with Cues.
+				/// The original y interval.
 				uint16_t interval_y = 0;
+
 				/// If true, reverses the scrolling direction along the x axis.
 				bool reverse_x = false;
 				/// If true, reverses the scrolling direction along the y axis.
@@ -201,7 +202,6 @@ namespace PixelMaestro {
 			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			void set_maestro(Maestro* maestro);
 			Point* set_offset(uint16_t x, uint16_t y);
-			void set_one(uint32_t pixel, Colors::RGB* color);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
 			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			void sync(const uint32_t& new_time);

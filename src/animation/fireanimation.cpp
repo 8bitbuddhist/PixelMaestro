@@ -6,17 +6,21 @@ namespace PixelMaestro {
 		type_ = AnimationType::Fire;
 	}
 
+	/**
+	 * Returns the multiplier, which changes the height of the flames.
+	 * @return Flame multiplier.
+	 */
 	uint8_t FireAnimation::get_multiplier() const {
 		return this->multiplier_;
 	}
 
 	void FireAnimation::map() {
-		// Initialize the bottom row buffer
+		// Randomize the bottom row
 		for (uint16_t x = 0; x < dimensions_.x; x++) {
 			map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_size();
 		}
 
-		// Set the buffer for the remaining pixels
+		// Calculate the remaining Pixels based on the bottom row
 		for (uint16_t y = 0; y < dimensions_.y - 1; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				// http://lodev.org/cgtutor/fire.html
@@ -30,6 +34,10 @@ namespace PixelMaestro {
 		}
 	}
 
+	/**
+	 * Sets the multiplier, which determines the height of the flames.
+	 * @param multiplier Flame height.
+	 */
 	void FireAnimation::set_multiplier(uint8_t multiplier) {
 		this->multiplier_ = multiplier;
 	}

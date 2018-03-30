@@ -5,6 +5,17 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v0.21] - In Progress
 
+### Added
+- Arduino
+	- Added EEPROM sketch that downloads, stores, and reads Cuefiles to and from an Arduino's EEPROM.
+	
+### Changed
+- Animations
+	- Converted Plasma animation to a `MappedAnimation`.
+- CueController
+	- Replaced `enable_handler()` with separate methods to reduce Arduino sketch sizes.
+	- Fixed crash when reading a Cue whose CueHandler isn't enabled.
+
 ## [v0.20] - 2018-03-17
 WARNING: This update breaks backwards compatability with Cuefiles from v0.12 and earlier.
 

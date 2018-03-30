@@ -17,7 +17,6 @@ namespace PixelMaestro {
 			~Palette();
 			Colors::RGB* get_color_at_index(uint8_t index) const;
 			Colors::RGB* get_colors() const;
-			bool get_delete_colors_on_destruction() const;
 			uint8_t get_size() const;
 			void set_colors(Colors::RGB* colors, uint8_t size);
 

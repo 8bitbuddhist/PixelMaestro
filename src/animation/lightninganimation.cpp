@@ -8,13 +8,15 @@ namespace PixelMaestro {
 
 	void LightningAnimation::update() {
 		// Clear the grid
-		for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
-			section_->set_one(pixel, &black_);
+		for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
+				section_->set_one(x, y, &black_);
+			}
 		}
 
-		/**
+		/*
 		 * Assume horizontal movement. Choose a random point on the y-axis starting at 0, then move from left to right.
-		 * "102" is an integer representation of the maximum length of the grid that a single fork can cover (102 is 40% of the grid).
+		 * "102" is the maximum length of the grid that a single fork can cover (102 equates to 40%).
 		 */
 		Point start = {0, 0};
 		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {

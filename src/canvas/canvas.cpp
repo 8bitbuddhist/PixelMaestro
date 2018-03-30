@@ -1,5 +1,5 @@
 /*
- * Canvas.cpp -Base class for drawing patterns on a Section.
+ * Canvas.cpp - Base class for drawing patterns on a Section.
  */
 
 #include <math.h>

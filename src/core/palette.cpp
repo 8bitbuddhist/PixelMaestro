@@ -18,7 +18,7 @@ namespace PixelMaestro {
 	 */
 	Palette::Palette(const Palette &other) {
 		set_colors(other.get_colors(), other.get_size());
-		this->delete_colors_on_destruction_ = other.get_delete_colors_on_destruction();
+		this->delete_colors_on_destruction_ = other.delete_colors_on_destruction_;
 	}
 
 	/**
@@ -28,7 +28,7 @@ namespace PixelMaestro {
 	 */
 	Palette& Palette::operator=(const Palette& other) {
 		set_colors(other.get_colors(), other.get_size());
-		this->delete_colors_on_destruction_ = other.get_delete_colors_on_destruction();
+		this->delete_colors_on_destruction_ = other.delete_colors_on_destruction_;
 		return *this;
 	}
 
@@ -58,14 +58,6 @@ namespace PixelMaestro {
 	 */
 	Colors::RGB* Palette::get_colors() const {
 		return colors_;
-	}
-
-	/**
-	 * Returns whether the Palette deletes its color array on destruction.
-	 * @return If true, color array gets deleted.
-	 */
-	bool Palette::get_delete_colors_on_destruction() const {
-		return delete_colors_on_destruction_;
 	}
 
 	/**

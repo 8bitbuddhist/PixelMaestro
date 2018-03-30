@@ -8,7 +8,7 @@ namespace PixelMaestro {
 
 	void MandelbrotAnimation::map() {
 		// Initialize Mandelbrot calculation variables
-		Point center = get_center();	// Used to place the Mandelbrot on the grid.
+		Point center = get_center();	// Used to center the Mandelbrot on the grid.
 
 		// Calculate the size/scale of the pattern
 		double image_width_ = 4.0 / section_->get_dimensions()->x;

@@ -2,7 +2,7 @@
 #include "plasmaanimation.h"
 
 namespace PixelMaestro {
-	PlasmaAnimation::PlasmaAnimation(Section* section) : Animation(section) {
+	PlasmaAnimation::PlasmaAnimation(Section* section) : MappedAnimation(section) {
 		type_ = AnimationType::Plasma;
 	}
 
@@ -23,11 +23,24 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Updates the plasma map.
+	 * This should only happen on first run or if we change the grid size, plasma size, or plasma resolution.
+	 */
+	void PlasmaAnimation::map() {
+		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+				map_[y][x] = ((resolution_ + (resolution_ * sin(x / size_))) + (resolution_ + (resolution_ * sin(y / size_)))) / 2;
+			}
+		}
+	}
+
+	/**
 	 * Sets the resolution (sharpness) of each plasma.
 	 * @param resolution Plasma resolution.
 	 */
 	void PlasmaAnimation::set_resolution(float resolution) {
 		this->resolution_ = resolution;
+		map();
 	}
 
 	/**
@@ -36,15 +49,20 @@ namespace PixelMaestro {
 	 */
 	void PlasmaAnimation::set_size(float size) {
 		this->size_ = size;
+		map();
 	}
 
 	void PlasmaAnimation::update() {
-		int color_index;
+		// Update map
+		if (dimensions_ != *section_->get_dimensions()) {
+			rebuild_map();
+			map();
+			dimensions_	= *section_->get_dimensions();
+		}
 
 		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-				color_index = ((resolution_ + (resolution_ * sin(x / size_))) + (resolution_ + (resolution_ * sin(y / size_)))) / 2;
-				section_->set_one(x, y, palette_->get_color_at_index(color_index + cycle_index_));
+				section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_));
 			}
 		}
 
