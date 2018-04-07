@@ -7,7 +7,7 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 - Arduino
-	- Added EEPROM sketch that downloads, stores, and reads Cuefiles to and from an Arduino's EEPROM.
+	- Added EEPROM sketch that downloads, stores, and reads Cuefiles to and from persistent memory.
 	
 ### Changed
 - Animations
@@ -15,6 +15,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 - CueController
 	- Replaced `enable_handler()` with separate methods to reduce Arduino sketch sizes.
 	- Fixed crash when reading a Cue whose CueHandler isn't enabled.
+	
+### Removed
+- Section: Removed `set_one(uint32_t index...)`
 
 ## [v0.20] - 2018-03-17
 WARNING: This update breaks backwards compatability with Cuefiles from v0.12 and earlier.

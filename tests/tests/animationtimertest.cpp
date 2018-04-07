@@ -20,10 +20,12 @@ class AnimationTimerTest {
 
 using namespace PixelMaestro;
 
-// FIXME: Sigarbt on first section
-/*
 TEST_CASE("Create and manipulate an Animation Timer.", "[Animation Timer]") {
-	Maestro maestro = Maestro(10, 10);
+	Section sections[] {
+		Section(10, 10)
+	};
+
+	Maestro maestro = Maestro(sections, 1);
 	Section* section = maestro.get_section(0);
 	BlinkAnimation* animation = static_cast<BlinkAnimation*>(section->set_animation(AnimationType::Blink));
 
@@ -51,4 +53,3 @@ TEST_CASE("Create and manipulate an Animation Timer.", "[Animation Timer]") {
 		REQUIRE(timer.get_step_count() == interval / (float)maestro.get_timer()->get_interval());
 	}
 }
-*/

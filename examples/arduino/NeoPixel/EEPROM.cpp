@@ -70,6 +70,9 @@ void loop() {
       header[header_index] = in;
       header_index++;
 
+      // Read the byte into the Maestro
+      maestro.get_cue_controller()->read(in);
+
       // If we're in EEPROM read mode, write the current byte to EEPROM.
       if (eeprom_read) {
         EEPROM.write(eeprom_index, in);

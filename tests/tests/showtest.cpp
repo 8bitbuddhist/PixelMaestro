@@ -5,7 +5,11 @@
 using namespace PixelMaestro;
 
 TEST_CASE("Create and manipulate a Show.", "[Show]") {
-	Maestro maestro(10, 10);
+	Section sections[] = {
+		Section(10, 10)
+	};
+
+	Maestro maestro(sections, 1);
 	Show* show = maestro.set_show(nullptr, 0);
 
 	SECTION("Verify Show is initialized.") {
