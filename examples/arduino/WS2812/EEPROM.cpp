@@ -1,12 +1,12 @@
 /*
- * EEPROM.cpp - Saves Cues sent from PixelMaestro Studio to EEPROM.
- * Cues stored in EEPROM are executed on next boot.
+ * NeoPixel.cpp - Creates an 8 LED NeoPixel strip that listens for Cues.
+ * You can control the strip by connecting the Arduino to PixelMaestro Studio over USB.
  */
 
 #include <Arduino.h>
 #include <EEPROM.h>
 #include <PixelMaestro/core/maestro.h>
-#include <Adafruit_NeoPixel.h>
+#include <WS2812.h>
 
 using namespace PixelMaestro;
 
@@ -15,11 +15,12 @@ uint8_t header_index = 0;
 uint16_t eeprom_index = 0;
 bool eeprom_read = false;
 
-// Create a Maestro with a single 8x1 Section
+// Creates a Maestro with a single 8x1 Section
 Maestro maestro(8, 1);
 
-// Initialize the NeoPixel strip on pin 10
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(maestro.get_section(0)->get_dimensions()->x, 10, NEO_GRB + NEO_KHZ800);
+// Initialize WS2812 components
+const uint8_t LED_PIN = 10;
+WS2812 ws = WS2812(maestro.get_section(0)->get_dimensions()->x);
 
 // Runs Cues stored in EEPROM
 void run_eeprom_cue() {
@@ -29,15 +30,14 @@ void run_eeprom_cue() {
 }
 
 void setup () {
-    strip.begin();
+    ws.setOutput(LED_PIN);
 
 		// Sets the global brightness to 10%
 		maestro.set_brightness(25);
 
 		/*
 		 * Initializes the Cue Controller and CueHandlers.
-     *
-     * WARNING: To reduce sketch size, disable one or more CueHandlers.
+		 * To reduce the program size, only enable the CueHandlers you need.
 		 */
 		CueController* controller = maestro.set_cue_controller();
     controller->enable_animation_cue_handler();
@@ -56,8 +56,7 @@ void setup () {
 
 void loop() {
 		// Listens for incoming Cues
-		if (Serial.available() > 0) {
-
+		if (Serial.available()) {
       uint8_t in = Serial.read();
 
       // Reset the header read index on detecting an EEPROM start/stop command.
@@ -84,26 +83,26 @@ void loop() {
         run_eeprom_cue();
       }
 
-      // Reset the EEPROM and header counters.
-      if (header_index >= 6) {
-        header_index = 0;
-      }
+      // Reset the EEPROM counter.
       if (eeprom_index >= EEPROM.length()) {
         eeprom_index = 0;
         eeprom_read = false;
       }
+      // Reset the header index.
+      if (header_index >= 6) {
+        header_index = 0;
+      }
 		}
 
-    // Update the Maestro
     if (maestro.update(millis())) {
-  		// Copy each Pixel's color to the NeoPixel strip
+  		// Copies each Pixel's color to the NeoPixel strip
   		for (unsigned char y = 0; y < maestro.get_section(0)->get_dimensions()->y; y++) {
   			for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
   				Colors::RGB color = maestro.get_pixel_color(0, x, y);
-  				strip.setPixelColor(x, color.r, color.g, color.b);
+  				ws.set_crgb_at(x, color.r, color.g, color.b);
   			}
   		}
 
-  		strip.show();
+      ws.sync();
     }
 }

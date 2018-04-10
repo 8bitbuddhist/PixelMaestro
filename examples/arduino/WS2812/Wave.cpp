@@ -15,31 +15,25 @@ Maestro maestro(8, 1);
 
 // WS1812 stuff
 const unsigned char LED_PIN = 10;
-WS2812 ws = WS2812(maestro.get_section(0)->get_dimensions()->size());
-cRGB RGBtoCRGB(Colors::RGB rgbColor) {
-  cRGB cRGBColor;
-  cRGBColor.r = rgbColor.r;
-  cRGBColor.g = rgbColor.g;
-  cRGBColor.b = rgbColor.b;
-  return cRGBColor;
-}
+WS2812 ws = WS2812(maestro.get_section(0)->get_dimensions()->x);
 
 void setup () {
     ws.setOutput(LED_PIN);
-    ws.setColorOrderGRB();
 
 		// Set global brightness to 10%
 		maestro.set_brightness(25);
 
 		// Create a new wave animation, change the palette to ColorWheel, then set the speed to 500ms.
-		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Wave, new Palette(ColorPresets::Colorwheel, 12));
+		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Wave);
+    animation->set_palette(&ColorPresets::Colorwheel_Palette);
 		animation->set_timer(500);
 }
 
 void loop() {
     if (maestro.update(millis())) {
   		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-  			ws.set_crgb_at(x, RGBtoCRGB(maestro.get_pixel_color(0, x, 0)));
+        Colors::RGB color = maestro.get_pixel_color(0, x, 0);
+  			ws.set_crgb_at(x, color.r, color.g, color.b);
   		}
 
       ws.sync();
