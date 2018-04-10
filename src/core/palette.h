@@ -11,24 +11,21 @@
 namespace PixelMaestro {
 	class Palette {
 		public:
-			Palette(Colors::RGB* colors, uint8_t size, bool delete_colors_on_destruction = false);
+			Palette(Colors::RGB* colors, uint8_t size);
 			Palette(const Palette& other);
 			Palette& operator=(const Palette& other);
 			~Palette();
 			Colors::RGB* get_color_at_index(uint8_t index) const;
 			Colors::RGB* get_colors() const;
-			uint8_t get_size() const;
+			uint8_t get_num_colors() const;
 			void set_colors(Colors::RGB* colors, uint8_t size);
 
 		private:
 			/// The colors in the Palette.
 			Colors::RGB* colors_ = nullptr;
 
-			/// If true, deletes the colors array when the Palette is destructed.
-			bool delete_colors_on_destruction_ = false;
-
 			/// The number of colors in the Palette.
-			uint8_t size_ = 0;
+			uint8_t num_colors_ = 0;
 	};
 }
 

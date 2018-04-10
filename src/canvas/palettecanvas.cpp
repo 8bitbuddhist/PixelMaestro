@@ -66,7 +66,7 @@ namespace PixelMaestro {
 		if (in_bounds(x, y)) {
 			uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
 
-			if (index < palette_->get_size()) {
+			if (index < palette_->get_num_colors()) {
 				return *palette_->get_color_at_index(index);
 			}
 		}

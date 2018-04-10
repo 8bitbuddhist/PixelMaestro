@@ -17,7 +17,7 @@ namespace PixelMaestro {
 	void FireAnimation::map() {
 		// Randomize the bottom row
 		for (uint16_t x = 0; x < dimensions_.x; x++) {
-			map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_size();
+			map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_num_colors();
 		}
 
 		// Calculate the remaining Pixels based on the bottom row
@@ -49,7 +49,7 @@ namespace PixelMaestro {
 		// Apply the buffer to the Pixel grid
 		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				section_->set_one(x, y, &palette_->get_colors()[map_[y][x] % palette_->get_size()]);
+				section_->set_one(x, y, &palette_->get_colors()[map_[y][x] % palette_->get_num_colors()]);
 			}
 		}
 	}

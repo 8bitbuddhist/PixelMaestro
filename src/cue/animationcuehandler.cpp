@@ -118,10 +118,10 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetPalette;
 		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = palette->get_size();
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = palette->get_num_colors();
 
 		uint16_t colors_index = (uint8_t)Byte::OptionsByte + 1;
-		for (uint8_t i = 0; i < palette->get_size(); i++) {
+		for (uint8_t i = 0; i < palette->get_num_colors(); i++) {
 			Colors::RGB* color = palette->get_color_at_index(i);
 			controller_->get_buffer()[colors_index] = color->r;
 			colors_index++;
@@ -214,7 +214,8 @@ namespace PixelMaestro {
 				{
 					uint8_t num_colors = cue[(uint8_t)Byte::OptionsByte];
 					uint16_t current_color_index = 1;
-					Colors::RGB* colors = new Colors::RGB[num_colors];
+
+					Colors::RGB colors[num_colors];
 					for (uint8_t i = 0; i < num_colors; i++) {
 						colors[i].r = cue[(uint8_t)Byte::OptionsByte + current_color_index];
 						current_color_index++;
@@ -230,7 +231,7 @@ namespace PixelMaestro {
 					 * This throws off the timer, but only for a single frame.
 					 */
 					Palette* old_palette = animation->get_palette();
-					Palette* new_palette = new Palette(colors, num_colors, true);
+					Palette* new_palette = new Palette(colors, num_colors);
 
 					animation->set_palette(new_palette);
 					animation->update(0);

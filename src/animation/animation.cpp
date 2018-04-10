@@ -95,8 +95,8 @@ namespace PixelMaestro {
 	 * @param index New cycle index.
 	 */
 	void Animation::set_cycle_index(uint8_t index) {
-		if (palette_ != nullptr && index > palette_->get_size()) {
-			index %= palette_->get_size();
+		if (palette_ != nullptr && index > palette_->get_num_colors()) {
+			index %= palette_->get_num_colors();
 		}
 
 		cycle_index_ = index;
@@ -160,7 +160,7 @@ namespace PixelMaestro {
 	 */
 	bool Animation::update(const uint32_t &current_time) {
 		// If the color palette is not set, exit.
-		if (palette_ == nullptr || palette_->get_size() == 0) {
+		if (palette_ == nullptr || palette_->get_num_colors() == 0) {
 			return false;
 		}
 

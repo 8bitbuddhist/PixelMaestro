@@ -363,11 +363,12 @@ namespace PixelMaestro {
 	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB* color) {
 		// Only continue if the Pixel is within the bounds of the array.
 		if (x < dimensions_.x && y < dimensions_.y) {
+			uint32_t index = dimensions_.get_inline_index(x, y);
 			if (animation_ != nullptr) {
-				pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, animation_->get_timer()->get_step_count());
+				pixels_[index].set_next_color(color, animation_->get_timer()->get_step_count());
 			}
 			else {
-				pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, 1);
+				pixels_[index].set_next_color(color, 1);
 			}
 		}
 	}

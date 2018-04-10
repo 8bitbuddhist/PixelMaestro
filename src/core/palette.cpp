@@ -2,14 +2,12 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. Sets the Palette's source colors.
+	 * Constructor. Sets the Palette's colors.
 	 * @param colors Source color array.
 	 * @param size Number of colors in the array.
-	 * @param delete_colors_on_destruction If true, delete the array when the Palette is no longer used.
 	 */
-	Palette::Palette(Colors::RGB *colors, uint8_t size, bool delete_colors_on_destruction) {
+	Palette::Palette(Colors::RGB *colors, uint8_t size) {
 		set_colors(colors, size);
-		this->delete_colors_on_destruction_ = delete_colors_on_destruction;
 	}
 
 	/**
@@ -17,8 +15,7 @@ namespace PixelMaestro {
 	 * @param other Other Palette to copy.
 	 */
 	Palette::Palette(const Palette &other) {
-		set_colors(other.get_colors(), other.get_size());
-		this->delete_colors_on_destruction_ = other.delete_colors_on_destruction_;
+		set_colors(other.get_colors(), other.get_num_colors());
 	}
 
 	/**
@@ -27,8 +24,7 @@ namespace PixelMaestro {
 	 * @return New Palette.
 	 */
 	Palette& Palette::operator=(const Palette& other) {
-		set_colors(other.get_colors(), other.get_size());
-		this->delete_colors_on_destruction_ = other.delete_colors_on_destruction_;
+		set_colors(other.get_colors(), other.get_num_colors());
 		return *this;
 	}
 
@@ -44,8 +40,8 @@ namespace PixelMaestro {
 	Colors::RGB* Palette::get_color_at_index(uint8_t index) const {
 		if (colors_ == nullptr) return nullptr;
 
-		if (index >= size_) {
-			return &colors_[index % size_];
+		if (index >= num_colors_) {
+			return &colors_[index % num_colors_];
 		}
 		else {
 			return &colors_[index];
@@ -64,8 +60,8 @@ namespace PixelMaestro {
 	 * Returns the number of colors in the Palette.
 	 * @return Palette size.
 	 */
-	uint8_t Palette::get_size() const {
-		return size_;
+	uint8_t Palette::get_num_colors() const {
+		return num_colors_;
 	}
 
 	/**
@@ -73,14 +69,17 @@ namespace PixelMaestro {
 	 * @param colors New colors.
 	 * @param size New size.
 	 */
-	void Palette::set_colors(Colors::RGB *colors, uint8_t size) {
-		this->colors_ = colors;
-		this->size_ = size;
+	void Palette::set_colors(Colors::RGB *colors, uint8_t num_colors) {
+		delete [] this->colors_;
+
+		this->num_colors_ = num_colors;
+		this->colors_ = new Colors::RGB[num_colors];
+		for (uint8_t i = 0; i < num_colors; i++) {
+			this->colors_[i] = colors[i];
+		}
 	}
 
 	Palette::~Palette() {
-		if (delete_colors_on_destruction_) {
-			delete [] colors_;
-		}
+		delete [] colors_;
 	}
 }

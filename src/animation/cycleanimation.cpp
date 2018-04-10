@@ -11,7 +11,7 @@ namespace PixelMaestro {
 				section_->set_one(x, y, palette_->get_color_at_index(cycle_index_));
 			}
 		}
-		update_cycle(0, palette_->get_size());
+		update_cycle(0, palette_->get_num_colors());
 	}
 
 	CycleAnimation::~CycleAnimation() {}
