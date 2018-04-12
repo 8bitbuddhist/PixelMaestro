@@ -1,26 +1,9 @@
-#include "../canvas/palettecanvas.h"
+#include "../canvas/canvas.h"
 #include "../canvas/fonts/font5x8.h"
 #include "canvascuehandler.h"
 #include "cuecontroller.h"
 
 namespace PixelMaestro {
-
-	uint8_t* CanvasCueHandler::activate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
-		IntByteConvert x_byte(x);
-		IntByteConvert y_byte(y);
-
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Activate;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
-
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
-	}
-
 	uint8_t* CanvasCueHandler::clear(uint8_t section_num, uint8_t layer_num) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Clear;
@@ -28,22 +11,6 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 
 		return controller_->assemble((uint8_t)Byte::OptionsByte);
-	}
-
-	uint8_t* CanvasCueHandler::deactivate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
-		IntByteConvert x_byte(x);
-		IntByteConvert y_byte(y);
-
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Deactivate;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
-
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
 	}
 
 	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
@@ -211,6 +178,22 @@ namespace PixelMaestro {
 		return controller_->assemble(text_index);
 	}
 
+	uint8_t* CanvasCueHandler::erase_point(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
+		IntByteConvert x_byte(x);
+		IntByteConvert y_byte(y);
+
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasCueHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::ErasePoint;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
+	}
+
 	uint8_t* CanvasCueHandler::next_frame(uint8_t section_num, uint8_t layer_num) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::NextFrame;
@@ -294,7 +277,6 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = palette->get_num_colors();
 
-		// TODO: Move to separate class. Maybe CueHandler?
 		uint16_t colors_index = (uint8_t)Byte::OptionsByte + 1;
 		for (uint8_t i = 0; i < palette->get_num_colors(); i++) {
 			Colors::RGB* color = palette->get_color_at_index(i);
@@ -340,66 +322,17 @@ namespace PixelMaestro {
 	void CanvasCueHandler::run(uint8_t *cue) {
 		Section* section = get_section(cue[(uint8_t)Byte::SectionByte], cue[(uint8_t)Byte::LayerByte]);
 
-		if (section == nullptr)
-			return;
+		if (section == nullptr) return;
 
-		// Check generic actions
-		// TODO: Consolidate into a single switch
-		Canvas* plain_canvas = section->get_canvas();
-		if (plain_canvas == nullptr) return;
+		Canvas* canvas = section->get_canvas();
+		if (canvas == nullptr) return;
+
 		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
-			case Action::Activate:
-				plain_canvas->activate(
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
-				);
-				break;
 			case Action::Clear:
-				plain_canvas->clear();
+				canvas->clear();
 				break;
-			case Action::Deactivate:
-				plain_canvas->deactivate(
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
-				);
-				break;
-			case Action::NextFrame:
-				plain_canvas->next_frame();
-				break;
-			case Action::PreviousFrame:
-				plain_canvas->previous_frame();
-				break;
-			case Action::RemoveFrameTimer:
-				plain_canvas->remove_frame_timer();
-				break;
-			case Action::SetCurrentFrameIndex:
-				plain_canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
-				break;
-			case Action::SetFrameTimer:
-				plain_canvas->set_frame_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
-				break;
-			case Action::SetNumFrames:
-				plain_canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
-				break;
-			case Action::StartFrameTimer:
-				if (plain_canvas->get_frame_timer()) {
-					plain_canvas->get_frame_timer()->start();
-				}
-				break;
-			case Action::StopFrameTimer:
-				if (plain_canvas->get_frame_timer()) {
-					plain_canvas->get_frame_timer()->stop();
-				}
-				break;
-			default:
-				break;
-		}
-
-		// Check Canvas-specific actions
-		PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(plain_canvas);
-		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
 			case Action::DrawCircle:
-				palette_canvas->draw_circle(
+				canvas->draw_circle(
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -411,13 +344,13 @@ namespace PixelMaestro {
 					Point frame_bounds(cue[(uint8_t)Byte::OptionsByte], cue[(uint8_t)Byte::OptionsByte + 1]);
 					for (uint16_t y = 0; y < frame_bounds.y; y++) {
 						for (uint16_t x = 0; x < frame_bounds.x; x++) {
-							palette_canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 2 + frame_bounds.get_inline_index(x, y)], x, y);
+							canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 2 + frame_bounds.get_inline_index(x, y)], x, y);
 						}
 					}
 				}
 				break;
 			case Action::DrawLine:
-				palette_canvas->draw_line(
+				canvas->draw_line(
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -425,13 +358,13 @@ namespace PixelMaestro {
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 7]));
 				break;
 			case Action::DrawPoint:
-				palette_canvas->draw_point(
+				canvas->draw_point(
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]));
 				break;
 			case Action::DrawRect:
-				palette_canvas->draw_rect(
+				canvas->draw_rect(
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -443,7 +376,7 @@ namespace PixelMaestro {
 				{
 					Font* font = get_font((Font::Type)cue[(uint8_t)Byte::OptionsByte + 5]);
 
-					palette_canvas->draw_text(
+					canvas->draw_text(
 						cue[(uint8_t)Byte::OptionsByte],
 						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -456,7 +389,7 @@ namespace PixelMaestro {
 				}
 				break;
 			case Action::DrawTriangle:
-				palette_canvas->draw_triangle(
+				canvas->draw_triangle(
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -466,8 +399,29 @@ namespace PixelMaestro {
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 11]),
 					(bool)cue[(uint8_t)Byte::OptionsByte + 13]);
 				break;
-			case Action::SetDrawingColor:
-				palette_canvas->set_drawing_color(cue[(uint8_t)Byte::OptionsByte]);
+			case Action::ErasePoint:
+				canvas->erase_point(
+					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
+				);
+				break;
+			case Action::NextFrame:
+				canvas->next_frame();
+				break;
+			case Action::PreviousFrame:
+				canvas->previous_frame();
+				break;
+			case Action::RemoveFrameTimer:
+				canvas->remove_frame_timer();
+				break;
+			case Action::SetCurrentFrameIndex:
+				canvas->set_current_frame_index(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
+				break;
+			case Action::SetFrameTimer:
+				canvas->set_frame_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
+				break;
+			case Action::SetNumFrames:
+				canvas->set_num_frames(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
 				break;
 			case Action::SetPalette:
 				{
@@ -484,12 +438,22 @@ namespace PixelMaestro {
 					}
 
 					// Delete the old Palette after setting the new one.
-					Palette* old_palette = palette_canvas->get_palette();
+					Palette* old_palette = canvas->get_palette();
 					Palette* new_palette = new Palette(colors, num_colors);
 
-					palette_canvas->set_palette(new_palette);
+					canvas->set_palette(new_palette);
 
 					delete old_palette;
+				}
+				break;
+			case Action::StartFrameTimer:
+				if (canvas->get_frame_timer()) {
+					canvas->get_frame_timer()->start();
+				}
+				break;
+			case Action::StopFrameTimer:
+				if (canvas->get_frame_timer()) {
+					canvas->get_frame_timer()->stop();
 				}
 				break;
 			default:

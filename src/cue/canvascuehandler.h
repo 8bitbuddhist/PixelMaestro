@@ -7,9 +7,7 @@ namespace PixelMaestro {
 	class CanvasCueHandler : public CueHandler {
 		public:
 			enum class Action : uint8_t {
-				Activate,
 				Clear,
-				Deactivate,
 				DrawCircle,
 				DrawFrame,
 				DrawLine,
@@ -17,6 +15,7 @@ namespace PixelMaestro {
 				DrawRect,
 				DrawText,
 				DrawTriangle,
+				ErasePoint,
 				NextFrame,
 				PreviousFrame,
 				RemoveFrameTimer,
@@ -39,9 +38,7 @@ namespace PixelMaestro {
 
 			explicit CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
 			~CanvasCueHandler();
-			uint8_t* activate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
 			uint8_t* clear(uint8_t section_num, uint8_t layer_num);
-			uint8_t* deactivate(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
 			uint8_t* draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			uint8_t* draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, uint8_t* frame);
 			uint8_t* draw_line(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
@@ -49,6 +46,7 @@ namespace PixelMaestro {
 			uint8_t* draw_rect(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
 			uint8_t* draw_text(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars);
 			uint8_t* draw_triangle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
+			uint8_t* erase_point(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
 			uint8_t* next_frame(uint8_t section_num, uint8_t layer_num);
 			uint8_t* previous_frame(uint8_t section_num, uint8_t layer_num);
 			uint8_t* remove_frame_timer(uint8_t section_num, uint8_t layer_num);

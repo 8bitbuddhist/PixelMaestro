@@ -14,7 +14,7 @@
 #include "../animation/solidanimation.h"
 #include "../animation/sparkleanimation.h"
 #include "../animation/waveanimation.h"
-#include "../canvas/palettecanvas.h"
+#include "../canvas/canvas.h"
 #include "../utility.h"
 #include "colors.h"
 #include "pixel.h"
@@ -100,7 +100,6 @@ namespace PixelMaestro {
 
 	/**
 	 * Returns the Pixel at the specified index.
-	 * Used by PaletteCanvases to get underlying color values.
 	 *
 	 * @param x Pixel x coordinate.
 	 * @param y Pixel y coordinate.
@@ -273,7 +272,7 @@ namespace PixelMaestro {
 	 */
 	Canvas* Section::set_canvas(uint16_t num_frames) {
 		remove_canvas();
-		canvas_ = new PaletteCanvas(this, num_frames);
+		canvas_ = new Canvas(this, num_frames);
 		return canvas_;
 	}
 

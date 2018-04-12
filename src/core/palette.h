@@ -18,7 +18,7 @@ namespace PixelMaestro {
 			Colors::RGB* get_color_at_index(uint8_t index) const;
 			Colors::RGB* get_colors() const;
 			uint8_t get_num_colors() const;
-			void set_colors(Colors::RGB* colors, uint8_t size);
+			void set_colors(Colors::RGB* colors, uint8_t num_colors);
 
 		private:
 			/// The colors in the Palette.

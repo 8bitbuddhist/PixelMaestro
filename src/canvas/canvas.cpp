@@ -8,12 +8,6 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. This sets the parent Section and initializes a single frame.
-	 * @param section The Canvas' parent Section.
-	 */
-	Canvas::Canvas(Section* section) : Canvas(section, 1) { }
-
-	/**
 	 * Constructor. This sets the parent Section and the specified number of frames.
 	 * @param section The Canvas' parent Section.
 	 * @param num_frames The number of frames to draw.
@@ -21,6 +15,7 @@ namespace PixelMaestro {
 	Canvas::Canvas(Section* section, uint16_t num_frames) {
 		this->section_ = section;
 		this->num_frames_ = num_frames;
+		initialize();
 	}
 
 	/**
@@ -31,10 +26,23 @@ namespace PixelMaestro {
 			set_current_frame_index(frame);
 			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
-					deactivate(x, y);
+					erase_point(x, y);
 				}
 			}
 		}
+	}
+
+	/**
+	 * Deletes the current frame set.
+	 */
+	void Canvas::delete_frames() {
+		if (frames_ != nullptr) {
+			for (uint16_t i = 0; i < num_frames_; i++) {
+				delete[] frames_[i];
+			}
+		}
+		delete[] frames_;
+		frames_ = nullptr;
 	}
 
 	/**
@@ -44,7 +52,7 @@ namespace PixelMaestro {
 	 * @param radius The circle's radius.
 	 * @param fill Whether to fill the circle or leave it empty.
 	 */
-	void Canvas::draw_circle(uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
+	void Canvas::draw_circle(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
 		// (x – h)^2 + (y – k)^2 = r^2
 		// r = radius, h = origin_x, k = origin_y
 
@@ -69,8 +77,26 @@ namespace PixelMaestro {
 					 */
 					if ((test_point >= radius_squared - radius && test_point <= radius_squared + radius) ||
 						(fill && test_point < pow(radius, 2))) {
-						activate(cursor.x, cursor.y);
+						draw_point(color_index, cursor.x, cursor.y);
 					}
+				}
+			}
+		}
+	}
+
+	/**
+	 * Draws an existing frame over the current frame.
+	 * @param frame Frame to draw.
+	 * @param size_x Frame width.
+	 * @param size_y Frame height.
+	 */
+	void Canvas::draw_frame(uint8_t* frame, uint16_t size_x, uint16_t size_y) {
+		clear();
+		Point frame_bounds = Point(size_x, size_y);
+		for (uint16_t y = 0; y < size_y; y++) {
+			for (uint16_t x = 0; x < size_x; x++) {
+				if (in_bounds(x, y)) {
+					draw_point(frame[frame_bounds.get_inline_index(x, y)], x, y);
 				}
 			}
 		}
@@ -83,7 +109,7 @@ namespace PixelMaestro {
 	 * @param target_x Ending point x coordinate.
 	 * @param target_y Ending point y coordinate.
 	 */
-	void Canvas::draw_line(uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
+	void Canvas::draw_line(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
 		// Calculate slope
 		float slope;
 		if (target_x == origin_x) {
@@ -102,7 +128,7 @@ namespace PixelMaestro {
 		if (target_x == origin_x) {
 			while (cursor.y != target_y) {
 				if (in_bounds(cursor.x, cursor.y)) {
-					activate(cursor.x, cursor.y);
+					draw_point(color_index, cursor.x, cursor.y);
 				}
 
 				if (target_y >= cursor.y) {
@@ -121,7 +147,7 @@ namespace PixelMaestro {
 			 */
 			while (cursor.x != target_x) {
 				if (in_bounds(cursor.x, cursor.y)) {
-					activate(cursor.x, cursor.y);
+					draw_point(color_index, cursor.x, cursor.y);
 				}
 
 				if (target_x >= origin_x) {
@@ -140,9 +166,9 @@ namespace PixelMaestro {
 	 * @param cursor_x Starting point x coordinate.
 	 * @param cursor_y Starting point y coordinate.
 	 */
-	void Canvas::draw_point(uint16_t x, uint16_t y) {
+	void Canvas::draw_point(uint8_t color_index, uint16_t x, uint16_t y) {
 		if (in_bounds(x, y)) {
-			activate(x, y);
+			frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] = color_index;
 		}
 	}
 
@@ -154,7 +180,7 @@ namespace PixelMaestro {
 	 * @param size_y Height of the rectangle.
 	 * @param fill Whether to fill the rectangle or leave it empty.
 	 */
-	void Canvas::draw_rect(uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
+	void Canvas::draw_rect(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
 		Point cursor = { origin_x, origin_y };
 		for (uint16_t column = 0; column < size_x; column++) {
 			// (Re-)Initialize cursor coordinates.
@@ -165,7 +191,7 @@ namespace PixelMaestro {
 				if (in_bounds(cursor.x, cursor.y)) {
 					// Check whether to fill
 					if (fill) {
-						activate(cursor.x, cursor.y);
+						draw_point(color_index, cursor.x, cursor.y);
 					}
 					else {
 						/*
@@ -174,7 +200,7 @@ namespace PixelMaestro {
 						 */
 						if ((cursor.x == origin_x || cursor.y == origin_y) ||
 							(column == size_x - 1 || row == size_y - 1)) {
-							activate(cursor.x, cursor.y);
+							draw_point(color_index, cursor.x, cursor.y);
 						}
 					}
 				}
@@ -189,7 +215,7 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void Canvas::draw_text(uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars) {
+	void Canvas::draw_text(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars) {
 		Point cursor = {origin_x, origin_y};
 
 		for (uint16_t letter = 0; letter < num_chars; letter++) {
@@ -204,12 +230,11 @@ namespace PixelMaestro {
 				for (uint16_t row = 0; row < font->size.y; row++) {
 					if (in_bounds(cursor.x, cursor.y)) {
 						if ((current_char[column] >> row) & 1) {
-							activate(cursor.x + column, cursor.y + row);
+							draw_point(color_index, cursor.x + column, cursor.y + row);
 						}
 					}
 				}
 			}
-
 
 			// Move cursor to the location of the next letter based on the font size.
 			cursor.x += font->size.x;
@@ -226,10 +251,10 @@ namespace PixelMaestro {
 	 * @param point_c_y Third point y-coordinate.
 	 * @param fill Whether to fill the triangle or leave it empty.
 	 */
-	void Canvas::draw_triangle(uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
-		this->draw_line(point_a_x, point_a_y, point_b_x, point_b_y);
-		this->draw_line(point_b_x, point_b_y, point_c_x, point_c_y);
-		this->draw_line(point_c_x, point_c_y, point_a_x, point_a_y);
+	void Canvas::draw_triangle(uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
+		this->draw_line(color_index, point_a_x, point_a_y, point_b_x, point_b_y);
+		this->draw_line(color_index, point_b_x, point_b_y, point_c_x, point_c_y);
+		this->draw_line(color_index, point_c_x, point_c_y, point_a_x, point_a_y);
 
 		if (fill) {
 			/*
@@ -262,20 +287,21 @@ namespace PixelMaestro {
 					t = 1 / (2 * area) * (point_a_x * point_b_y - point_a_y * point_b_x + (point_a_y - point_b_y) * cursor.x + (point_b_x - point_a_x) * cursor.y);
 
 					if (s > 0 && t > 0 && 1 - s - t > 0) {
-						activate(cursor.x, cursor.y);
+						draw_point(color_index, cursor.x, cursor.y);
 					}
 				}
 			}
 		}
 	}
 
+
 	/**
-	 * Disables the pixel at the specified coordinate.
-	 * @param cursor_x The pixel's x-coordinate.
-	 * @param cursor_y The pixel's y-coordinate.
+	 * Sets the color of the pixel at the specified index to transparent.
+	 * @param x X coordinate.
+	 * @param y Y coordinate.
 	 */
-	void Canvas::erase(uint16_t x, uint16_t y) {
-		deactivate(x, y);
+	void Canvas::erase_point(uint16_t x, uint16_t y) {
+		frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] = 255;
 	}
 
 	/**
@@ -284,6 +310,15 @@ namespace PixelMaestro {
 	 */
 	uint16_t Canvas::get_current_frame_index() const {
 		return current_frame_index_;
+	}
+
+	/**
+	 * Returns the frame at the specified index.
+	 * @param frame Index of the frame.
+	 * @return Frame at index.
+	 */
+	uint8_t* Canvas::get_frame(uint16_t frame) const {
+		return frames_[frame];
 	}
 
 	/**
@@ -304,6 +339,42 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the color palette.
+	 *
+	 * @return Color palette.
+	 */
+	Palette* Canvas::get_palette() const {
+		return palette_;
+	}
+
+	/**
+	 * Returns the color of the Pixel at the specified coordinate.
+	 * If the Pixel is activated, return the corresponding palette color.
+	 * If the palette index of the Pixel is 255, return black.
+	 * @param x X-coordinate.
+	 * @param y Y-coordinate.
+	 * @return Pixel color.
+	 */
+	Colors::RGB Canvas::get_pixel_color(uint16_t x, uint16_t y) {
+		if (in_bounds(x, y)) {
+			uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
+
+			/*
+			 * If the index is in-bounds, return the palette's color.
+			 * Otherwise, treat the pixel as if it's transparent.
+			 */
+			if (palette_ != nullptr && index < palette_->get_num_colors()) {
+				return *palette_->get_color_at_index(index);
+			}
+			else {
+				return *section_->get_pixel(x, y)->get_color();
+			}
+		}
+
+		return {0, 0, 0};
+	}
+
+	/**
 	 * Returns the Canvas' parent Section.
 	 * @return Parent Section.
 	 */
@@ -319,6 +390,18 @@ namespace PixelMaestro {
 	 */
 	bool Canvas::in_bounds(uint16_t x, uint16_t y) const {
 		return (x < section_->get_dimensions()->x) && (y < section_->get_dimensions()->y);
+	}
+
+	/// Builds the Canvas.
+	void Canvas::initialize() {
+		delete_frames();
+		frames_ = new uint8_t*[num_frames_];
+		for (uint16_t frame = 0; frame < num_frames_; frame++) {
+			frames_[frame] = new uint8_t[section_->get_dimensions()->size()];
+			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
+				frames_[frame][pixel] = 255;
+			}
+		}
 	}
 
 	/**
@@ -396,6 +479,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the Canvas' Palette.
+	 * @param palette New Palette.
+	 */
+	void Canvas::set_palette(Palette* palette) {
+		this->palette_ = palette;
+	}
+
+	/**
 	 * Update the Canvas. If the Canvas is animated, switch to the next frame.
 	 * @param current_time The program's current runtime.
 	 */
@@ -406,6 +497,7 @@ namespace PixelMaestro {
 	}
 
 	Canvas::~Canvas() {
+		delete_frames();
 		remove_frame_timer();
 	}
 }
