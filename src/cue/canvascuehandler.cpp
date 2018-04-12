@@ -277,18 +277,7 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = palette->get_num_colors();
 
-		uint16_t colors_index = (uint8_t)Byte::OptionsByte + 1;
-		for (uint8_t i = 0; i < palette->get_num_colors(); i++) {
-			Colors::RGB* color = palette->get_color_at_index(i);
-			controller_->get_buffer()[colors_index] = color->r;
-			colors_index++;
-			controller_->get_buffer()[colors_index] = color->g;
-			colors_index++;
-			controller_->get_buffer()[colors_index] = color->b;
-			colors_index++;
-		}
-
-		return controller_->assemble(colors_index);
+		return controller_->assemble(serialize_palette(&controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1], palette));
 	}
 
 	uint8_t* CanvasCueHandler::start_frame_timer(uint8_t section_num, uint8_t layer_num) {
@@ -426,23 +415,10 @@ namespace PixelMaestro {
 			case Action::SetPalette:
 				{
 					uint8_t num_colors = cue[(uint8_t)Byte::OptionsByte];
-					uint16_t current_color_index = 1;
-					Colors::RGB colors[num_colors];
-					for (uint8_t i = 0; i < num_colors; i++) {
-						colors[i].r = cue[(uint8_t)Byte::OptionsByte + current_color_index];
-						current_color_index++;
-						colors[i].g = cue[(uint8_t)Byte::OptionsByte + current_color_index];
-						current_color_index++;
-						colors[i].b = cue[(uint8_t)Byte::OptionsByte + current_color_index];
-						current_color_index++;
-					}
 
 					// Delete the old Palette after setting the new one.
 					Palette* old_palette = canvas->get_palette();
-					Palette* new_palette = new Palette(colors, num_colors);
-
-					canvas->set_palette(new_palette);
-
+					canvas->set_palette(deserialize_palette(&cue[(uint8_t)Byte::OptionsByte + 1], num_colors));
 					delete old_palette;
 				}
 				break;

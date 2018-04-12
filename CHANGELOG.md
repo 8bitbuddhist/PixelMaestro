@@ -3,15 +3,19 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.21] - In Progress
+## [v0.30] - In Progress
+WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
 
 ### Added
 - Arduino
 	- Added EEPROM sketch that downloads, stores, and reads Cuefiles to and from persistent memory.
+	- Added modified [light_WS2812](https://github.com/cpldcpu/light_ws2812) library to reduce sketch sizes.
 	
 ### Changed
 - Animations
 	- Converted Plasma animation to a `MappedAnimation`.
+- Canvas
+	- Consolidated all three Canvas types. This "new" Canvas class is structured like a PaletteCanvas with minor changes in behavior, such as having a transparent background by default.
 - CueController
 	- Replaced `enable_handler()` with separate methods to reduce Arduino sketch sizes.
 	- Fixed crash when reading a Cue whose CueHandler isn't enabled.
