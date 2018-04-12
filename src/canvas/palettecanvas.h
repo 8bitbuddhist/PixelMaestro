@@ -27,7 +27,6 @@ namespace PixelMaestro {
 			void draw_triangle(uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
 			uint8_t* get_frame(uint16_t frame) const;
 			Palette* get_palette() const;
-			CanvasType get_type() const;
 			void initialize();
 			void set_drawing_color(uint8_t color_index);
 			void set_palette(Palette* palette);

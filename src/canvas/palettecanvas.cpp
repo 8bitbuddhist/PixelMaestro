@@ -185,14 +185,6 @@ namespace PixelMaestro {
 		return palette_;
 	}
 
-	/**
-	 * Returns the Canvas type.
-	 * @return Canvas type.
-	 */
-	CanvasType PaletteCanvas::get_type() const {
-		return CanvasType::PaletteCanvas;
-	}
-
 	/// Builds the Canvas.
 	void PaletteCanvas::initialize() {
 		delete_frames();

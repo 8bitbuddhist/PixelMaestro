@@ -2,7 +2,6 @@
 #include "../../src/animation/animation.h"
 #include "../../src/animation/solidanimation.h"
 #include "../../src/canvas/palettecanvas.h"
-#include "../../src/canvas/colorcanvas.h"
 #include "../../src/colorpresets.h"
 #include "../../src/core/colors.h"
 #include "../../src/core/maestro.h"
@@ -47,7 +46,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		animation->set_fade(false);
 
 		// Draw a filled in animation rectangle
-		PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(section->set_canvas(CanvasType::PaletteCanvas));
+		PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(section->set_canvas());
 		palette_canvas->set_palette(&palette);
 		palette_canvas->draw_rect(0, 0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
 
@@ -57,12 +56,6 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		// Delete the Canvas
 		section->remove_canvas();
 		REQUIRE(section->get_canvas() == nullptr);
-
-		// Draw a color rectangle
-		ColorCanvas* color_canvas = static_cast<ColorCanvas*>(section->set_canvas(CanvasType::ColorCanvas));
-		color_canvas->draw_rect(ColorPresets::Chartreuse, 0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
-
-		REQUIRE(section->get_pixel_color(test_pixel, 0) == ColorPresets::Chartreuse);
 	}
 
 	SECTION("Verify that Layers work.") {

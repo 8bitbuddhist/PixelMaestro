@@ -14,7 +14,6 @@
 #include "../animation/solidanimation.h"
 #include "../animation/sparkleanimation.h"
 #include "../animation/waveanimation.h"
-#include "../canvas/colorcanvas.h"
 #include "../canvas/palettecanvas.h"
 #include "../utility.h"
 #include "colors.h"
@@ -269,22 +268,12 @@ namespace PixelMaestro {
 	/**
 	 * Sets a new Canvas of the specified type.
 	 * This will overwrite the existing Canvas.
-	 * @param type The type of Canvas to create.
 	 * @param num_frames The number of frames in the Canvas.
 	 * @return The new Canvas.
 	 */
-	Canvas* Section::set_canvas(CanvasType type, uint16_t num_frames) {
+	Canvas* Section::set_canvas(uint16_t num_frames) {
 		remove_canvas();
-
-		switch (type) {
-			case CanvasType::ColorCanvas:
-				canvas_ = new ColorCanvas(this, num_frames);
-				break;
-			case CanvasType::PaletteCanvas:
-				canvas_ = new PaletteCanvas(this, num_frames);
-				break;
-		}
-
+		canvas_ = new PaletteCanvas(this, num_frames);
 		return canvas_;
 	}
 

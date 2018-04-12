@@ -41,15 +41,14 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
-	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t layer_num, CanvasType canvas_type, uint16_t num_frames) {
+	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t layer_num, uint16_t num_frames) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetCanvas;
 		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)canvas_type;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = num_frames;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = num_frames;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
 	}
 
 	uint8_t* SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
@@ -133,7 +132,7 @@ namespace PixelMaestro {
 						(bool)cue[(uint8_t)Byte::OptionsByte + 1]);
 				break;
 			case Action::SetCanvas:
-				section->set_canvas(CanvasType(cue[(uint8_t)Byte::OptionsByte]), cue[(uint8_t)Byte::OptionsByte + 1]);
+				section->set_canvas(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetDimensions:
 				section->set_dimensions(

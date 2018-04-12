@@ -11,7 +11,6 @@
 #include "../core/section.h"
 #include "../core/timer/timer.h"
 #include "fonts/font.h"
-#include "canvastype.h"
 
 namespace PixelMaestro {
 	class Section;
@@ -24,7 +23,6 @@ namespace PixelMaestro {
 			virtual void activate(uint16_t x, uint16_t y) = 0;
 			virtual void deactivate(uint16_t x, uint16_t y) = 0;
 			virtual Colors::RGB get_pixel_color(uint16_t x, uint16_t y) = 0;
-			virtual CanvasType get_type() const = 0;
 			virtual void initialize() = 0;
 
 			explicit Canvas(Section* section);
