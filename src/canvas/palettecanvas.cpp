@@ -66,8 +66,12 @@ namespace PixelMaestro {
 		if (in_bounds(x, y)) {
 			uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
 
-			if (index < palette_->get_num_colors()) {
+			// TODO: Verify this. If the index is in-bounds, return the palette's color, otherwise treat it as an AnimationCanvas
+			if (palette_ != nullptr && index < palette_->get_num_colors()) {
 				return *palette_->get_color_at_index(index);
+			}
+			else {
+				return *section_->get_pixel(x, y)->get_color();
 			}
 		}
 

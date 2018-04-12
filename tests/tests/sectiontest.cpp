@@ -1,7 +1,7 @@
 #include "../catch/single_include/catch.hpp"
 #include "../../src/animation/animation.h"
 #include "../../src/animation/solidanimation.h"
-#include "../../src/canvas/animationcanvas.h"
+#include "../../src/canvas/palettecanvas.h"
 #include "../../src/canvas/colorcanvas.h"
 #include "../../src/colorpresets.h"
 #include "../../src/core/colors.h"
@@ -47,8 +47,9 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		animation->set_fade(false);
 
 		// Draw a filled in animation rectangle
-		AnimationCanvas* animation_canvas = static_cast<AnimationCanvas*>(section->set_canvas(CanvasType::AnimationCanvas));
-		animation_canvas->draw_rect(0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
+		PaletteCanvas* palette_canvas = static_cast<PaletteCanvas*>(section->set_canvas(CanvasType::PaletteCanvas));
+		palette_canvas->set_palette(&palette);
+		palette_canvas->draw_rect(0, 0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
 
 		maestro.update(100);
 		REQUIRE(section->get_pixel_color(0, 0) == *palette.get_color_at_index(0));
