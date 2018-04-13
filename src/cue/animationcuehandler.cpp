@@ -120,7 +120,9 @@ namespace PixelMaestro {
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
 		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = palette->get_num_colors();
 
-		return controller_->assemble(serialize_palette(&controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1], palette));
+		uint16_t final_index = serialize_palette(&controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1], palette);
+
+		return controller_->assemble(final_index + (uint8_t)Byte::OptionsByte + 1);
 	}
 
 	uint8_t* AnimationCueHandler::set_reverse(uint8_t section_num, uint8_t layer_num, bool reverse) {

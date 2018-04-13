@@ -13,7 +13,7 @@ namespace PixelMaestro {
 	 * @return The New Palette.
 	 */
 	Palette* CueHandler::deserialize_palette(uint8_t *cue, uint8_t num_colors) {
-		uint8_t current_color_index = 0;
+		uint16_t current_color_index = 0;
 		Colors::RGB colors[num_colors];
 		for (uint8_t i = 0; i < num_colors; i++) {
 			colors[i].r = cue[current_color_index];
