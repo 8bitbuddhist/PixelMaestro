@@ -1,5 +1,6 @@
 /*
- * WS2812.cpp - Creates an 8 LED strip using the Light WS2812 library and displays a Wave animation.
+ * Wave.cpp - Creates an 8 LED strip and displays a Wave animation.
+ * Change LED_PIN to the pin that your strip is attached to.
  */
 
 #include <Arduino.h>
@@ -13,7 +14,7 @@ using namespace PixelMaestro;
 // Create a Maestro with a Section 8 pixels wide and 1 pixel high
 Maestro maestro(8, 1);
 
-// WS1812 stuff
+// Initialize WS1812 components
 const unsigned char LED_PIN = 10;
 WS2812 ws = WS2812(maestro.get_section(0)->get_dimensions()->x);
 
