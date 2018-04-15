@@ -169,6 +169,12 @@ namespace PixelMaestro {
 	void Section::remove_animation() {
 		delete animation_;
 		animation_ = nullptr;
+
+		// Reset Pixel colors
+
+		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+			pixels_[pixel].clear();
+		}
 	}
 
 	/**

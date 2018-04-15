@@ -9,6 +9,15 @@
 
 namespace PixelMaestro {
 	/**
+	 * Clears the Pixel's color values.
+	 */
+	void Pixel::clear() {
+		current_color_ = {0, 0, 0};
+		next_color_ = nullptr;
+		step_count_ = 0;
+	}
+
+	/**
 		Returns the current color.
 
 		@return The current color.

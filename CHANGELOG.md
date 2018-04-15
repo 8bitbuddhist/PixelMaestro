@@ -7,21 +7,25 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
 
 ### Added
+- Animations
+	- Added ability to unset Animations.
 - Arduino
-	- Added EEPROM sketch that downloads, stores, and reads Cuefiles to and from persistent memory.
+	- Added `USB` sketch for use in conjunction with PixelMaestro Studio. The sketch lets you store Maestros in persistent memory (EEPROM) and run commands in real-time.
 	- Added modified [light_WS2812](https://github.com/cpldcpu/light_ws2812) library to reduce sketch sizes.
 	
 ### Changed
 - Animations
 	- Converted Plasma animation to a `MappedAnimation`.
 - Canvas
-	- Consolidated all three Canvas types. This "new" Canvas class is structured like a PaletteCanvas with minor changes in behavior, such as having a transparent background by default.
+	- Consolidated all three Canvas types into the base Canvas class. This "new" Canvas class is structured like a PaletteCanvas with the ability to use transparent colors, as well as a transparent background by default.
 - CueController
-	- Replaced `enable_handler()` with separate methods to reduce Arduino sketch sizes.
+	- Replaced `enable_handler()` with separate methods to further reduce Arduino sketch sizes.
 	- Fixed crash when reading a Cue whose CueHandler isn't enabled.
+- CueHandler: Added `serialize_palette()` and `deserialize_palette()` methods.
 	
 ### Removed
 - Section: Removed `set_one(uint32_t index...)`
+- Canvas: Removed `AnimationCanvases` and `ColorCanvases`. `PaletteCanvas` was consolidated down into the main `Canvas` class.
 
 ## [v0.20] - 2018-03-17
 WARNING: This update breaks backwards compatability with Cuefiles from v0.12 and earlier.
