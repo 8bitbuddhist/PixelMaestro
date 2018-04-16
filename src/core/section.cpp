@@ -165,15 +165,18 @@ namespace PixelMaestro {
 
 	/**
 	 * Deletes the current Animation.
+	 *
+	 * @param clear_pixels If true, Pixels are cleared.
 	 */
-	void Section::remove_animation() {
+	void Section::remove_animation(bool clear_pixels) {
 		delete animation_;
 		animation_ = nullptr;
 
 		// Reset Pixel colors
-
-		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-			pixels_[pixel].clear();
+		if (clear_pixels) {
+			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+				pixels_[pixel].clear();
+			}
 		}
 	}
 
@@ -263,7 +266,7 @@ namespace PixelMaestro {
 					new_animation->set_timer(this->animation_->get_timer()->get_interval(), this->animation_->get_timer()->get_delay());
 				}
 			}
-			remove_animation();
+			remove_animation(false);
 		}
 
 		this->animation_ = new_animation;
@@ -508,7 +511,7 @@ namespace PixelMaestro {
 	}
 
 	Section::~Section() {
-		remove_animation();
+		remove_animation(false);
 		remove_canvas();
 		remove_layer();
 		remove_scroll();

@@ -191,7 +191,7 @@ namespace PixelMaestro {
 			Pixel* get_pixel(uint16_t x, uint16_t y) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);
 			Scroll* get_scroll() const;
-			void remove_animation();
+			void remove_animation(bool clear_pixels);
 			void remove_canvas();
 			void remove_layer();
 			void remove_scroll();
