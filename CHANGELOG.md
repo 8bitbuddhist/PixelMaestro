@@ -3,29 +3,29 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.30] - In Progress
+## [v0.30] - 2018-04-18
 WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
 
 ### Added
-- Animations
-	- Added ability to unset Animations.
 - Arduino
-	- Added `USB` sketch for use in conjunction with PixelMaestro Studio. The sketch lets you store Maestros in persistent memory (EEPROM) and run commands in real-time.
+	- Added `USB` Arduino sketch for use with PixelMaestro Studio. This sketch lets you store Maestros in persistent memory (EEPROM) and run commands in real-time.
 	- Added modified [light_WS2812](https://github.com/cpldcpu/light_ws2812) library to reduce sketch sizes.
 	
 ### Changed
 - Animations
 	- Converted Plasma animation to a `MappedAnimation`.
 - Canvas
-	- Consolidated all three Canvas types into the base Canvas class. This "new" Canvas class is structured like a PaletteCanvas with the ability to use transparent colors, as well as a transparent background by default.
+	- Consolidated all three Canvas types into the base Canvas class. This "new" Canvas class is structured like a PaletteCanvas with transparency support.
 - CueController
-	- Replaced `enable_handler()` with separate methods to further reduce Arduino sketch sizes.
+	- Replaced `enable_handler()` with separate methods to reduce Arduino sketch sizes.
 	- Fixed crash when reading a Cue whose CueHandler isn't enabled.
 - CueHandler: Added `serialize_palette()` and `deserialize_palette()` methods.
+- Section
+	- Pixels now reset their values after calling `Section::remove_animation()`.
 	
 ### Removed
 - Section: Removed `set_one(uint32_t index...)`
-- Canvas: Removed `AnimationCanvases` and `ColorCanvases`. `PaletteCanvas` was consolidated down into the main `Canvas` class.
+- Canvas: Removed different Canvas types.
 
 ## [v0.20] - 2018-03-17
 WARNING: This update breaks backwards compatability with Cuefiles from v0.12 and earlier.
