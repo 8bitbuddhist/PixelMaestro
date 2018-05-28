@@ -4,9 +4,9 @@
  */
 
 #include <Arduino.h>
-#include <PixelMaestro/core/maestro.h>
-#include <PixelMaestro/core/palette.h>
-#include <PixelMaestro/colorpresets.h>
+#include <colorpresets.h>
+#include <core/maestro.h>
+#include <core/palette.h>
 #include <Adafruit_NeoPixel.h>
 
 using namespace PixelMaestro;

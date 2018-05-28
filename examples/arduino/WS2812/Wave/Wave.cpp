@@ -4,9 +4,10 @@
  */
 
 #include <Arduino.h>
-#include <PixelMaestro/core/maestro.h>
-#include <PixelMaestro/core/palette.h>
-#include <PixelMaestro/colorpresets.h>
+#include <PixelMaestro.h>
+#include <core/maestro.h>
+#include <core/palette.h>
+#include <colorpresets.h>
 #include <WS2812.h>
 
 using namespace PixelMaestro;
