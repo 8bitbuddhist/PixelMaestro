@@ -3,6 +3,11 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.30 r2] - 2018-06-24
+
+### Changed
+- Merged Arduino IDE-compatible changes provided by [per1234](https://github.com/per1234/)
+
 ## [v0.30] - 2018-04-18
 WARNING: This update breaks backwards compatability with v0.20.1 and earlier Cuefiles.
 

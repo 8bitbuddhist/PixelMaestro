@@ -8,7 +8,7 @@ PixelMaestro is a graphics library for LED displays. It lets you create dynamic,
 <!-- TOC START min:2 max:5 link:true update:false -->
 - [Getting Started](#getting-started)
   - [Installation](#installation)
-  - [Example](#example)
+  - [Using PixelMaestro](#using-pixelmaestro)
 - [Running Tests](#running-tests)
 - [Companion App](#companion-app)
 - [Donate](#donate)
@@ -18,15 +18,9 @@ PixelMaestro is a graphics library for LED displays. It lets you create dynamic,
 
 These instructions will walk you through downloading PixelMaestro, adding it to your project, and including it in your code.
 
-This repository includes examples for running PixelMaestro on an Arduino. To run these examples, download and install [PlatformIO](https://platformio.org/) or the [Arduino IDE](https://www.arduino.cc/en/Main/Software). You can find detailed instructions on setting up PixelMaestro in the [examples folder](examples/arduino).
+This repository also includes example sketches for running PixelMaestro on an Arduino. You can run these on either the [Arduino IDE](https://www.arduino.cc/en/Main/Software) or [PlatformIO](https://platformio.org/). For detailed instructions, look in the [examples folder](examples/arduino).
 
-### Installation
-
-Clone this repository to your local machine and copy or link the `src` folder to your project.
-
-### Tutorial
-
-[Click here](https://github.com/8bitbuddhist/PixelMaestro/wiki/Tutorial) for a brief introductory walkthrough.
+To learn how to use PixelMaestro, [click here](https://github.com/8bitbuddhist/PixelMaestro/wiki/Tutorial) for an introductory tutorial or refer to the [documentation](https://github.com/8bitbuddhist/PixelMaestro/wiki).
 
 ## Running Tests
 
