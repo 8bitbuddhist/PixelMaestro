@@ -6,7 +6,6 @@
 #include <Arduino.h>
 #include <PixelMaestro.h>
 #include <core/maestro.h>
-#include <core/palette.h>
 #include <colorpresets.h>
 #include <WS2812.h>
 
@@ -20,24 +19,24 @@ const unsigned char LED_PIN = 10;
 WS2812 ws = WS2812(maestro.get_section(0)->get_dimensions()->x);
 
 void setup () {
-    ws.setOutput(LED_PIN);
+	ws.setOutput(LED_PIN);
 
-		// Set global brightness to 10%
-		maestro.set_brightness(25);
+	// Set global brightness to 10%
+	maestro.set_brightness(25);
 
-		// Create a new wave animation, change the palette to ColorWheel, then set the speed to 500ms.
-		Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Wave);
-    animation->set_palette(&ColorPresets::Colorwheel_Palette);
-		animation->set_timer(500);
+	// Create a new wave animation, change the palette to ColorWheel, then set the speed to 500ms.
+	Animation* animation = maestro.get_section(0)->set_animation(AnimationType::Wave);
+	animation->set_palette(&ColorPresets::Colorwheel_Palette);
+	animation->set_timer(500);
 }
 
 void loop() {
-    if (maestro.update(millis())) {
-  		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-        Colors::RGB color = maestro.get_pixel_color(0, x, 0);
-  			ws.set_crgb_at(x, color.r, color.g, color.b);
-  		}
+	if (maestro.update(millis())) {
+		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
+			Colors::RGB color = maestro.get_pixel_color(0, x, 0);
+			ws.set_crgb_at(x, color.r, color.g, color.b);
+		}
 
-      ws.sync();
-    }
+		ws.sync();
+	}
 }
