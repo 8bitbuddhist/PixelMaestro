@@ -9,7 +9,8 @@
 
 #include <Arduino.h>
 #include <EEPROM.h>
-#include <PixelMaestro/core/maestro.h>
+#include <PixelMaestro.h>
+#include <core/maestro.h>
 #include <WS2812.h>
 
 using namespace PixelMaestro;
