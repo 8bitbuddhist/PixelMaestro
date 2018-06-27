@@ -1,0 +1,1 @@
+When using PlatformIO, place the .cpp file containing your sketch in this folder.

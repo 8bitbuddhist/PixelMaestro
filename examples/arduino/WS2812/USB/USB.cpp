@@ -12,6 +12,7 @@
 #include <PixelMaestro.h>
 #include <core/maestro.h>
 #include <WS2812.h>
+#include <cRGB.h>
 
 using namespace PixelMaestro;
 
@@ -35,6 +36,15 @@ void run_eeprom_cue() {
 	for (uint16_t index = 2; index < size; index++) {
 		maestro.get_cue_controller()->read(EEPROM[index]);
 	}
+}
+
+// Translate PixelMaestro RGB to LightWS2812 cRGB
+cRGB RGBtoCRGB(Colors::RGB rgb) {
+	return cRGB {
+		rgb.r,
+		rgb.g,
+		rgb.b
+	};
 }
 
 void setup () {
@@ -108,8 +118,7 @@ void loop() {
 	if (maestro.update(millis())) {
 		// Copy each Pixel's color to the WS2812 strip
 		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-			Colors::RGB color = maestro.get_pixel_color(0, x, 0);
-			ws.set_crgb_at(x, color.r, color.g, color.b);
+			ws.set_crgb_at(x, RGBtoCRGB(maestro.get_pixel_color(0, x, 0)));
 		}
 
 		ws.sync();

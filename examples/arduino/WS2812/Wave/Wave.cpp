@@ -8,6 +8,7 @@
 #include <core/maestro.h>
 #include <colorpresets.h>
 #include <WS2812.h>
+#include <cRGB.h>
 
 using namespace PixelMaestro;
 
@@ -17,6 +18,15 @@ Maestro maestro(8, 1);
 // Initialize WS1812 components
 const unsigned char LED_PIN = 10;
 WS2812 ws = WS2812(maestro.get_section(0)->get_dimensions()->x);
+
+// Translate PixelMaestro RGB to LightWS2812 cRGB
+cRGB RGBtoCRGB(Colors::RGB rgb) {
+	return cRGB {
+		rgb.r,
+		rgb.g,
+		rgb.b
+	};
+}
 
 void setup () {
 	ws.setOutput(LED_PIN);
@@ -33,8 +43,7 @@ void setup () {
 void loop() {
 	if (maestro.update(millis())) {
 		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
-			Colors::RGB color = maestro.get_pixel_color(0, x, 0);
-			ws.set_crgb_at(x, color.r, color.g, color.b);
+			ws.set_crgb_at(x, RGBtoCRGB(maestro.get_pixel_color(0, x, 0)));
 		}
 
 		ws.sync();

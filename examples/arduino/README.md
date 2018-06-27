@@ -24,14 +24,10 @@ The examples in the **NeoPixel** folder require the [Adafruit NeoPixel](https://
 3. Select **Adafruit NeoPixel** and click **Install**.
 4. After the installation is finished, click **Close**.
 
-The examples in the **WS2812** folder require the [light_ws2812](https://github.com/cpldcpu/light_ws2812) library.
-
-1. Download the library ZIP file from [GitHub](https://github.com/8bitbuddhist/light_ws2812/raw/pixelmaestro/light_ws2812_Arduino/light_WS2812.zip).
-2. In the Arduino IDE, click **Sketch > Include Library > Add .ZIP Library...** and select the downloaded ZIP file.
-3. Click **OK**.
+The examples in the **WS2812** folder require the [light_ws2812](https://github.com/cpldcpu/light_ws2812) library. Repeat steps 1-4 above, but search for **light_ws2812** instead.
 
 ## PlatformIO Installation
 
 1. In PlatformIO, click **File > Open Folder...** and select this folder.
 2. Copy the sketch that you want to upload to the **src/** folder.
-3. Build and upload the project to your board.
+3. Build and upload the project to your board. PlatformIO will automatically download dependencies during the build.
