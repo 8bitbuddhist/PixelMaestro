@@ -30,9 +30,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(maestro.get_section(0)->get_dimensio
 
 // Run the Cuefile stored in EEPROM
 void run_eeprom_cue() {
-	uint8_t cuefile_size[] = {EEPROM[0], EEPROM[1]};
-	uint16_t size = IntByteConvert::byte_to_int(cuefile_size);
-	for (uint16_t index = 2; index < size; index++) {
+	for (uint16_t index = 0; index < EEPROM.length(); index++) {
 		maestro.get_cue_controller()->read(EEPROM[index]);
 	}
 }
@@ -55,7 +53,7 @@ void setup () {
 	controller->enable_show_cue_handler();
 
 	// If we have Cue data stored in EEPROM, read it in.
-	if (EEPROM.read(2) == 'P' && EEPROM.read(3) == 'M' && EEPROM.read(4) == 'C') {
+	if (EEPROM.read(0) == 'P' && EEPROM.read(1) == 'M' && EEPROM.read(2) == 'C') {
 		run_eeprom_cue();
 	}
 
