@@ -3,6 +3,11 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v0.30.3] - 2018-06-30
+
+### Changed
+- Follow [Semantic Versioning](https://semver.org/) specifications.
+
 ## [v0.30 r2] - 2018-06-24
 
 ### Changed
