@@ -24,11 +24,11 @@ namespace PixelMaestro {
 
 	/**
 	 * Updates the plasma map.
-	 * This should only happen on first run or if we change the grid size, plasma size, or plasma resolution.
+	 * This occurs whenever we change the grid size, plasma size, or plasma resolution.
 	 */
 	void PlasmaAnimation::map() {
-		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
+			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				map_[y][x] = ((resolution_ + (resolution_ * sin(x / size_))) + (resolution_ + (resolution_ * sin(y / size_)))) / 2;
 			}
 		}
@@ -53,15 +53,10 @@ namespace PixelMaestro {
 	}
 
 	void PlasmaAnimation::update() {
-		// Update map
-		if (dimensions_ != *section_->get_dimensions()) {
-			rebuild_map();
-			map();
-			dimensions_	= *section_->get_dimensions();
-		}
+		MappedAnimation::update();
 
-		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
+			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_));
 			}
 		}

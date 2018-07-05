@@ -14,10 +14,20 @@ namespace PixelMaestro {
 		return this->multiplier_;
 	}
 
+	/**
+	 * Update the map.
+	 * This occurs on each frame.
+	 */
 	void FireAnimation::map() {
 		// Randomize the bottom row
 		for (uint16_t x = 0; x < dimensions_.x; x++) {
-			map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_num_colors();
+			// If a Palette has not been set, use a default value
+			if (palette_ != nullptr) {
+				map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % palette_->get_num_colors();
+			}
+			else {
+				map_[dimensions_.y - 1][x] = Utility::abs_int(32768 + Utility::rand()) % 10;
+			}
 		}
 
 		// Calculate the remaining Pixels based on the bottom row
@@ -44,6 +54,7 @@ namespace PixelMaestro {
 
 	void FireAnimation::update() {
 		MappedAnimation::update();
+		// Rebuild the map on each frame
 		map();
 
 		// Apply the buffer to the Pixel grid

@@ -8,9 +8,7 @@
 #include "mappedanimation.h"
 
 namespace PixelMaestro {
-	MappedAnimation::MappedAnimation(Section* section) : Animation(section) {
-		rebuild_map();
-	}
+	MappedAnimation::MappedAnimation(Section* section) : Animation(section) { }
 
 	/**
 	 * Regenerates the color-to-pixel map.
@@ -23,21 +21,23 @@ namespace PixelMaestro {
 		}
 		delete [] map_;
 
-		map_ = new uint8_t*[section_->get_dimensions()->y];
-		for (uint8_t y = 0; y < section_->get_dimensions()->y; y++) {
-			map_[y]	= new uint8_t[section_->get_dimensions()->x] {0};
+		dimensions_ = *section_->get_dimensions();
+
+		map_ = new uint8_t*[dimensions_.y];
+		for (uint8_t y = 0; y < dimensions_.y; y++) {
+			map_[y]	= new uint8_t[dimensions_.x] {0};
 		}
+
+		map();
 	}
 
 	/**
 	 * Updates the Animation.
-	 * On each update, check to see if the grid size has changed. If so, remap the colors.
+	 * On each update, check to see if the grid size has changed. If so, rebuild the color-to-pixel map.
 	 */
 	void MappedAnimation::update() {
-		// Rebuild if the grid size has changed
 		if (dimensions_ != *section_->get_dimensions()) {
 			rebuild_map();
-			dimensions_	= *section_->get_dimensions();
 		}
 	}
 

@@ -11,11 +11,11 @@ namespace PixelMaestro {
 		Point center = get_center();	// Used to center the Mandelbrot on the grid.
 
 		// Calculate the size/scale of the pattern
-		double image_width_ = 4.0 / section_->get_dimensions()->x;
+		double image_width_ = 4.0 / dimensions_.x;
 
-		for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			double c_imaginary = (y - center.y) * image_width_;
-			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				double c_real = (x - center.x) * image_width_;
 
 				double temp_x = 0;
@@ -51,12 +51,7 @@ namespace PixelMaestro {
 	}
 
 	void MandelbrotAnimation::update() {
-		// Override MappedAnimation::update() so we can call map() on section resize.
-		if (dimensions_ != *section_->get_dimensions()) {
-			rebuild_map();
-			map();
-			dimensions_	= *section_->get_dimensions();
-		}
+		MappedAnimation::update();
 
 		for (uint8_t x = 0; x < dimensions_.x; x++) {
 			for (uint8_t y = 0; y < dimensions_.y; y++) {

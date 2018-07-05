@@ -3,6 +3,7 @@
 
 namespace PixelMaestro {
 	RadialAnimation::RadialAnimation(Section* section) : MappedAnimation(section) {
+		map();
 		type_ = AnimationType::Radial;
 	}
 
@@ -14,12 +15,16 @@ namespace PixelMaestro {
 		return resolution_;
 	}
 
+	/**
+	 * Updates the map.
+	 * This only occurs when the grid size or orientation changes.
+	 */
 	void RadialAnimation::map() {
 		Point center = get_center();
 		if (orientation_ == Orientation::Vertical) {
 			// For each Pixel, calculate the slope from the center.
-			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < dimensions_.y; y++) {
+				for (uint16_t x = 0; x < dimensions_.x; x++) {
 					if (x == center.x || y == center.y) {
 						map_[y][x] = 0;
 					}
@@ -31,9 +36,9 @@ namespace PixelMaestro {
 		}
 		else {	// Horizontal
 			// For each Pixel, calculate its distance from the center of the grid, then use the distance to choose the index of the correct color.
-			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
+			for (uint16_t y = 0; y < dimensions_.y; y++) {
 				uint16_t y_squared_ = pow(y - center.y, 2);
-				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+				for (uint16_t x = 0; x < dimensions_.x; x++) {
 					map_[y][x] = sqrt(pow(x - center.x, 2) + y_squared_);
 				}
 			}
@@ -49,14 +54,8 @@ namespace PixelMaestro {
 	}
 
 	void RadialAnimation::update() {
-		// Override MappedAnimation::update() so we can call map() on section resize.
-		if (dimensions_ != *section_->get_dimensions()) {
-			rebuild_map();
-			map();
-			dimensions_	= *section_->get_dimensions();
-		}
-
-		// Remap if the orientation changes.
+		MappedAnimation::update();
+		// Rebuild map if the orientation changes.
 		if (orientation_ != last_orientation_) {
 			map();
 			last_orientation_ = orientation_;
