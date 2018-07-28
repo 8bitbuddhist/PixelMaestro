@@ -32,4 +32,26 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 			REQUIRE(cue[index] == event.get_cue()[index]);
 		}
 	}
+
+	SECTION("Verify Events can be assigned to a Show.") {
+		Event events[] = {
+			Event(1000, section_handler->set_animation(0, 0, AnimationType::Solid))
+		};
+		show->set_events(events, 1);
+
+		REQUIRE(show->get_events() == events);
+		REQUIRE(show->get_num_events() == 1);
+	}
+
+	SECTION("Verify Event processing works.") {
+		Event events[] = {
+			Event(0, section_handler->set_animation(0, 0, AnimationType::Solid)),
+			Event(2, section_handler->set_animation(0, 0, AnimationType::Solid))
+		};
+		show->set_events(events, 2);
+		maestro.update(0);
+
+		REQUIRE(show->get_current_index() == 1);
+		REQUIRE(show->get_last_time() == 1);
+	}
 }
