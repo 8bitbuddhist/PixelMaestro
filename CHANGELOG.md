@@ -3,8 +3,7 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v0.30.4] - In Progress
-
+## [v1.0.0] - 2018-07-29
 ### Changed
 - Fixed memory leak when building `MappedAnimations` maps.
 

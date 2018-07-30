@@ -9,16 +9,20 @@ PixelMaestro is a graphics library for LED displays. It lets you create dynamic,
 - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Using PixelMaestro](#using-pixelmaestro)
-- [Running Tests](#running-tests)
 - [Companion App](#companion-app)
+- [Running Tests](#running-tests)
 - [Donate](#donate)
 <!-- TOC END -->
 
 ## Getting Started
 
-To get started with PixelMaestro, [click here](https://github.com/8bitbuddhist/PixelMaestro/wiki/Tutorial) for an introductory tutorial or refer to the [documentation](https://github.com/8bitbuddhist/PixelMaestro/wiki).
+[Click here](https://github.com/8bitbuddhist/PixelMaestro/wiki/Tutorial) for a tutorial on using PixelMaestro, or read the [documentation](https://github.com/8bitbuddhist/PixelMaestro/wiki).
 
 If you want to run PixelMaestro on an Arduino, you can do so via the [Arduino IDE](https://www.arduino.cc/en/Main/Software) or [PlatformIO](https://platformio.org/). For detailed instructions, see the [examples folder](examples/arduino).
+
+## Companion App
+
+PixelMaestro has a companion desktop application called PixelMaestro Studio. PixelMaestro Studio lets you create custom animations, save and share configurations, control devices over USB, and more. [Click here](https://github.com/8bitbuddhist/PixelMaestro-Studio) to learn more about PixelMaestro Studio.
 
 ## Running Tests
 
@@ -28,10 +32,6 @@ PixelMaestro uses the [Catch](https://github.com/catchorg/Catch2) framework to r
 2. Run `cmake .`
 3. Navigate to the `bin` folder and run `PixelMaestro_Test`.
 
-## Companion App
-
-PixelMaestro has a companion desktop application called PixelMaestro Studio. PixelMaestro Studio lets you mix animations in real-time, save and share configurations, control devices over USB, and more. [Click here](https://github.com/8bitbuddhist/PixelMaestro-Studio) to learn more about PixelMaestro Studio.
-
 ## Donate
 
-If you find this project useful, cool, or just plain interesting, consider [making a donation](https://www.patreon.com/bePatron?c=1348704).
+If you like this project, please consider [making a donation](https://www.patreon.com/bePatron?c=1348704).

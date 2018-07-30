@@ -49,9 +49,9 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 			Event(2, section_handler->set_animation(0, 0, AnimationType::Solid))
 		};
 		show->set_events(events, 2);
-		maestro.update(0);
+		show->update(0);
 
 		REQUIRE(show->get_current_index() == 1);
-		REQUIRE(show->get_last_time() == 1);
+		REQUIRE(show->get_last_time() == 0);
 	}
 }
