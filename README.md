@@ -31,7 +31,3 @@ PixelMaestro uses the [Catch](https://github.com/catchorg/Catch2) framework to r
 1. Navigate to the `tests` folder.
 2. Run `cmake .`
 3. Navigate to the `bin` folder and run `PixelMaestro_Test`.
-
-## Donate
-
-If you like this project, please consider [making a donation](https://www.patreon.com/bePatron?c=1348704).

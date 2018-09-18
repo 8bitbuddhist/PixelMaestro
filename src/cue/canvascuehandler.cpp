@@ -416,7 +416,6 @@ namespace PixelMaestro {
 				break;
 			case Action::SetPalette:
 				{
-					// TODO: Consider making Palettes a Maestro-level object to reduce memory demands for shared Palettes (e.g. same Palette used in both an Animation and a Canvas)
 					uint8_t num_colors = cue[(uint8_t)Byte::OptionsByte];
 
 					// Delete the old Palette after setting the new one.
