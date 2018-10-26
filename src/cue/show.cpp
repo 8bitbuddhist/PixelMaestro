@@ -100,6 +100,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Changes the Show's last refresh time.
+	 * @param new_time The new refresh time.
+	 */
+	void Show::sync(const uint32_t &new_time) {
+		this->last_time_ = new_time;
+	}
+
+	/**
 		Main update routine.
 
 		@param current_time Program runtime.

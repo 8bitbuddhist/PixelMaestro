@@ -163,6 +163,10 @@ namespace PixelMaestro {
 		for (uint8_t section = 0; section < num_sections_; section++) {
 			sections_[section].sync(new_time);
 		}
+
+		if (show_ != nullptr) {
+			show_->sync(new_time);
+		}
 	}
 
 	/**

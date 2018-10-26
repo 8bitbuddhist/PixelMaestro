@@ -3,6 +3,10 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v1.0.1] - In Progress
+### Added
+- Added `Show::sync()`
+
 ## [v1.0.0] - 2018-07-29
 ### Changed
 - Fixed memory leak when building `MappedAnimations` maps.

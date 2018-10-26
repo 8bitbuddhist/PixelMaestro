@@ -35,6 +35,7 @@ namespace PixelMaestro {
 			void set_events(Event* events, uint16_t num_events, bool preserve_current_index = true);
 			void set_looping(bool loop);
 			void set_timing_mode(TimingMode timing_mode);
+			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);
 
 		private:
