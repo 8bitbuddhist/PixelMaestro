@@ -209,5 +209,15 @@ namespace PixelMaestro {
 		this->drift_ = drift;
 	}
 
+	/**
+	 * TODO: Add color modes enum and width integer.
+	 * ColorModes enum
+	 *	Single:		Uses the first color for all bolts.
+	 *	PerBolt:	Colors change for each bolt. Options specifies the width of the bolt.
+	 *	PerFrame:	Colors change for each frame, but are the same for all bolts in one frame. Options specifies the width of the bolt.
+	 *
+	 * Width integer changes the width of each bolt by extending it to either side by the size of the int, with each duplicate bolt being drawn in a different Palette color (e.g. bolts to the left and right are index 1, the ones after are index 2, etc.)
+	 */
+
 	LightningAnimation::~LightningAnimation() {}
 }

@@ -30,6 +30,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns whether the Timer is currently running.
+	 * @return true if running.
+	 */
+	bool Timer::get_running() const {
+		return running_;
+	}
+
+	/**
 	 * Sets the amount of time between events.
 	 *
 	 * @param interval Amount of time (in milliseconds) between events.

@@ -13,6 +13,7 @@ namespace PixelMaestro {
 			explicit Timer(uint16_t interval = 1000);
 			uint16_t get_interval() const;
 			uint32_t get_last_time() const;
+			bool get_running() const;
 			void set_interval(uint16_t interval);
 			void set_last_time(uint32_t last_time = 0);
 			void start();
