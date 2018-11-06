@@ -28,6 +28,7 @@ namespace PixelMaestro {
 			Section* get_section(uint8_t section) const;
 			Show* get_show() const;
 			Timer* get_timer() const;
+			void remove_show();
 			void set_brightness(uint8_t brightness);
 			CueController* set_cue_controller(uint16_t buffer_size = UINT8_MAX);
 			void set_sections(Section* sections, uint8_t num_sections);

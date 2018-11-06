@@ -1,6 +1,7 @@
 #include "waveanimation.h"
 
 namespace PixelMaestro {
+	// FIXME: Skewed waves look janky. Might want to convert to MappedAnimation
 	WaveAnimation::WaveAnimation(Section* section) : Animation(section) {
 		type_ = AnimationType::Wave;
 	}

@@ -89,6 +89,11 @@ namespace PixelMaestro {
 		return const_cast<Timer*>(&timer_);
 	}
 
+	void Maestro::remove_show() {
+		delete show_;
+		show_ = nullptr;
+	}
+
 	/**
 	 * Sets the Maestro's global brightness level.
 	 * @param brightness Brightness level from 0 (off) to 255 (full).
@@ -197,7 +202,7 @@ namespace PixelMaestro {
 
 	Maestro::~Maestro() {
 		delete cue_controller_;
-		delete show_;
+		remove_show();
 
 		if (dynamically_allocated_sections_) {
 			for (uint8_t section = 0; section < num_sections_; section++) {

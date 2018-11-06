@@ -4,6 +4,13 @@
 
 namespace PixelMaestro {
 
+	uint8_t* MaestroCueHandler::remove_show() {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveShow;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte);
+	}
+
 	uint8_t* MaestroCueHandler::set_brightness(uint8_t brightness) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetBrightness;
@@ -58,6 +65,9 @@ namespace PixelMaestro {
 	void MaestroCueHandler::run(uint8_t *cue) {
 		Maestro* maestro = controller_->get_maestro();
 		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
+			case Action::RemoveShow:
+				maestro->remove_show();
+				break;
 			case Action::SetBrightness:
 				maestro->set_brightness(cue[(uint8_t)Byte::OptionsByte]);
 				break;

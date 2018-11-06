@@ -28,4 +28,12 @@ namespace PixelMaestro {
 			return (int32_t)seed_ % max;
 		}
 	}
+
+	/**
+	 * Sets the initial seed for the RNG.
+	 * @param seed Intiial value used to generate random numbers.
+	 */
+	void Utility::srand(int32_t seed) {
+		seed_ = seed;
+	}
 }

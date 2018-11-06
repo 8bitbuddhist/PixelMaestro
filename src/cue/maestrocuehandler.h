@@ -13,7 +13,8 @@ namespace PixelMaestro {
 				SetTimer,
 				Start,
 				Stop,
-				Sync
+				Sync,
+				RemoveShow
 			};
 
 			enum class Byte : uint8_t {
@@ -24,6 +25,7 @@ namespace PixelMaestro {
 
 			explicit MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
 			~MaestroCueHandler();
+			uint8_t* remove_show();
 			uint8_t* set_brightness(uint8_t brightness);
 			uint8_t* set_show();
 			uint8_t* set_timer(uint16_t interval);

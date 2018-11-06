@@ -5,7 +5,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v1.0.1] - In Progress
 ### Added
-- Added `Show::sync()`
+- Added `Show::sync()` for synchronizing Show timer with Maestro timer.
+- Added `Maestro::remove_show()` to allow Shows to be deleted.
+- Added `Utility::srand()` for setting the initial RNG seed.
 
 ## [v1.0.0] - 2018-07-29
 ### Changed
