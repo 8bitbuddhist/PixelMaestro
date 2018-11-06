@@ -1,10 +1,10 @@
 #ifndef WAVEANIMATION_H
 #define WAVEANIMATION_H
 
-#include "animation.h"
+#include "mappedanimation.h"
 
 namespace PixelMaestro {
-	class WaveAnimation : public Animation {
+	class WaveAnimation : public MappedAnimation {
 		public:
 			explicit WaveAnimation(Section* section);
 			~WaveAnimation();
@@ -15,11 +15,16 @@ namespace PixelMaestro {
 			void update();
 
 		private:
+			/// Tracks whether the orientation has changed.
+			Animation::Orientation last_orientation_ = Orientation::Horizontal;
+
 			/// Whether to mirror the wave across the x or y axis.
 			bool mirror_ = false;
 
 			/// The amount to offset each row (or column).
 			int8_t skew_ = 0;
+
+			void map();
 	};
 }
 

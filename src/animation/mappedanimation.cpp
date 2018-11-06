@@ -8,7 +8,10 @@
 #include "mappedanimation.h"
 
 namespace PixelMaestro {
-	MappedAnimation::MappedAnimation(Section* section) : Animation(section) { }
+	MappedAnimation::MappedAnimation(Section* section) : Animation(section) {
+		// Initial map build
+		rebuild_map();
+	}
 
 	/**
 	 * Regenerates the color-to-pixel map.
@@ -27,8 +30,6 @@ namespace PixelMaestro {
 		for (uint8_t y = 0; y < dimensions_.y; y++) {
 			map_[y]	= new uint8_t[dimensions_.x] {0};
 		}
-
-		map();
 	}
 
 	/**
@@ -38,6 +39,7 @@ namespace PixelMaestro {
 	void MappedAnimation::update() {
 		if (dimensions_ != *section_->get_dimensions()) {
 			rebuild_map();
+			map();
 		}
 	}
 

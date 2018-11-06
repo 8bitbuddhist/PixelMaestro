@@ -4,6 +4,7 @@
 namespace PixelMaestro {
 	MandelbrotAnimation::MandelbrotAnimation(Section* section) : MappedAnimation(section) {
 		type_ = AnimationType::Mandelbrot;
+		map();
 	}
 
 	void MandelbrotAnimation::map() {
