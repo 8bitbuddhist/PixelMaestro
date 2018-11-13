@@ -4,6 +4,7 @@
 namespace PixelMaestro {
 	PlasmaAnimation::PlasmaAnimation(Section* section) : MappedAnimation(section) {
 		type_ = AnimationType::Plasma;
+		map();
 	}
 
 	/**
