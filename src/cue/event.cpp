@@ -60,6 +60,23 @@ namespace PixelMaestro {
 		return time_;
 	}
 
+	bool Event::operator ==(const Event& other) {
+		bool match = false;
+
+		if (other.get_time() == this->time_) {
+			uint16_t size = IntByteConvert::byte_to_int(&other.get_cue()[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)CueController::Byte::PayloadByte;
+			for (uint16_t i = 0; i < size; i++) {
+				if (other.get_cue()[i] != cue_[i]) {
+					return match;
+				}
+			}
+
+			match = true;
+		}
+
+		return match;
+	}
+
 	/**
 	 * Sets the Event's Cue.
 	 * @param cue Cue to run when the Event is triggered.
