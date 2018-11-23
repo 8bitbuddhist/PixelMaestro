@@ -88,6 +88,4 @@ namespace PixelMaestro {
 				break;
 		}
 	}
-
-	ShowCueHandler::~ShowCueHandler() { }
 }

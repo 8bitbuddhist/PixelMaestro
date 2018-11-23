@@ -19,7 +19,7 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 	}
 
 	CueController* controller = maestro.get_cue_controller();
-	SectionCueHandler* section_handler = static_cast<SectionCueHandler*>(controller->enable_section_cue_handler());
+	SectionCueHandler* section_handler = dynamic_cast<SectionCueHandler*>(controller->enable_section_cue_handler());
 
 	SECTION("Verify Events can be created.") {
 		int time = 1000;

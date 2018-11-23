@@ -37,10 +37,10 @@ namespace PixelMaestro {
 			};
 
 			explicit CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
-			~CanvasCueHandler();
+			~CanvasCueHandler() = default;
 			uint8_t* clear(uint8_t section_num, uint8_t layer_num);
 			uint8_t* draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
-			uint8_t* draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, uint8_t* frame);
+			uint8_t* draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, const uint8_t* frame);
 			uint8_t* draw_line(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
 			uint8_t* draw_point(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t x, uint16_t y);
 			uint8_t* draw_rect(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);

@@ -34,7 +34,7 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte + 8);
 	}
 
-	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, uint8_t* frame) {
+	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, const uint8_t* frame) {
 		// Check the size of the buffer. If it's not big enough to store the frame, exit.
 		if ((size_x * size_y) > controller_->get_buffer_size()) {
 			return nullptr;
@@ -438,6 +438,4 @@ namespace PixelMaestro {
 				break;
 		}
 	}
-
-	CanvasCueHandler::~CanvasCueHandler() { }
 }

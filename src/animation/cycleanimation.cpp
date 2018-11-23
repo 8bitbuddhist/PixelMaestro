@@ -13,6 +13,4 @@ namespace PixelMaestro {
 		}
 		update_cycle(0, palette_->get_num_colors());
 	}
-
-	CycleAnimation::~CycleAnimation() {}
 }

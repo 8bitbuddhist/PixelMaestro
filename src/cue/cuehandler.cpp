@@ -12,7 +12,7 @@ namespace PixelMaestro {
 	 * @param num_colors The number of colors in the Palette.
 	 * @return The New Palette.
 	 */
-	Palette* CueHandler::deserialize_palette(uint8_t *cue, uint8_t num_colors) {
+	Palette* CueHandler::deserialize_palette(const uint8_t* cue, uint8_t num_colors) {
 		uint16_t current_color_index = 0;
 		Colors::RGB colors[num_colors];
 		for (uint8_t i = 0; i < num_colors; i++) {
@@ -60,7 +60,7 @@ namespace PixelMaestro {
 	 * @param palette The Palette to store.
 	 * @return Index in the Cue immediately after the Palette.
 	 */
-	uint16_t CueHandler::serialize_palette(uint8_t *cue, Palette *palette) {
+	uint16_t CueHandler::serialize_palette(uint8_t* cue, Palette *palette) {
 		uint16_t colors_index = 0;
 		for (uint8_t i = 0; i < palette->get_num_colors(); i++) {
 			Colors::RGB* color = palette->get_color_at_index(i);

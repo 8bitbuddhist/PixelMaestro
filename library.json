@@ -1,0 +1,11 @@
+{
+	"name": "PixelMaestro",
+	"keywords": "led, animation, graphics",
+	"description": "Graphics and animation library for LED displays.",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/8bitbuddhist/PixelMaestro.git"
+	},
+	"frameworks": "arduino",
+	"platforms": "*"
+}

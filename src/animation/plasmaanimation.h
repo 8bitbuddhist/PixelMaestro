@@ -7,7 +7,7 @@ namespace  PixelMaestro {
 	class PlasmaAnimation : public MappedAnimation {
 		public:
 			explicit PlasmaAnimation(Section* section);
-			~PlasmaAnimation();
+			~PlasmaAnimation() = default;
 			float get_resolution() const;
 			float get_size() const;
 			void map();

@@ -27,7 +27,7 @@ TEST_CASE("Create and manipulate an Animation Timer.", "[Animation Timer]") {
 
 	Maestro maestro = Maestro(sections, 1);
 	Section* section = maestro.get_section(0);
-	BlinkAnimation* animation = static_cast<BlinkAnimation*>(section->set_animation(AnimationType::Blink));
+	BlinkAnimation* animation = dynamic_cast<BlinkAnimation*>(section->set_animation(AnimationType::Blink));
 
 	AnimationTimer timer = AnimationTimer(animation);
 	int interval = 4000;

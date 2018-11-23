@@ -24,7 +24,7 @@ namespace PixelMaestro {
 			};
 
 			explicit MaestroCueHandler(CueController* controller) : CueHandler(controller) { }
-			~MaestroCueHandler();
+			~MaestroCueHandler() = default;
 			uint8_t* remove_show();
 			uint8_t* set_brightness(uint8_t brightness);
 			uint8_t* set_show();

@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	class WaveAnimation : public MappedAnimation {
 		public:
 			explicit WaveAnimation(Section* section);
-			~WaveAnimation();
+			~WaveAnimation() = default;
 			bool get_mirror() const;
 			int8_t get_skew() const;
 			void set_mirror(bool mirror);

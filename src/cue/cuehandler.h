@@ -25,7 +25,7 @@ namespace PixelMaestro {
 			CueController* controller_ = nullptr;
 
 			Section* get_section(uint8_t section_id, uint8_t layer_id) const;
-			Palette* deserialize_palette(uint8_t* cue, uint8_t num_colors);
+			Palette* deserialize_palette(const uint8_t* cue, uint8_t num_colors);
 			uint16_t serialize_palette(uint8_t* cue, Palette* palette);
 	};
 }

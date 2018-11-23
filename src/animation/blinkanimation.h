@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	class BlinkAnimation : public Animation {
 		public:
 			explicit BlinkAnimation(Section* section);
-			~BlinkAnimation();
+			~BlinkAnimation() = default;
 			void update();
 
 		private:

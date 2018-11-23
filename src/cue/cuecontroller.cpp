@@ -57,7 +57,7 @@ namespace PixelMaestro {
 	 * @param cue_size The size of the Cue.
 	 * @return New checksum.
 	 */
-	uint8_t CueController::checksum(uint8_t *cue, uint16_t cue_size) {
+	uint8_t CueController::checksum(const uint8_t* cue, uint16_t cue_size) {
 		uint32_t sum = 0;
 		for (uint16_t i = 0; i < cue_size; i++) {
 
@@ -258,11 +258,7 @@ namespace PixelMaestro {
 
 		// Validate the Checksum
 		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte;
-		if (cue[(uint8_t)Byte::ChecksumByte] != checksum(cue, size)) {
-			return false;
-		}
-
-		return true;
+		return (cue[(uint8_t)Byte::ChecksumByte] == checksum(cue, size));
 	}
 
 	CueController::~CueController() {

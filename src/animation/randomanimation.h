@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	class RandomAnimation : public Animation {
 		public:
 			explicit RandomAnimation(Section* section);
-			~RandomAnimation();
+			~RandomAnimation() = default;
 			void update();
 	};
 }

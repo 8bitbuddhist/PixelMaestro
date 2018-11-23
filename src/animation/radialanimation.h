@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	class RadialAnimation : public MappedAnimation {
 		public:
 			explicit RadialAnimation(Section* section);
-			~RadialAnimation();
+			~RadialAnimation() = default;
 			uint8_t get_resolution() const;
 			void set_resolution(uint8_t resolution);
 			void update();

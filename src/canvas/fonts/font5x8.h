@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	class Font5x8 : public Font {
 		public:
 			Font5x8();
-			~Font5x8();
+			~Font5x8() = default;
 			uint8_t* get_char(uint8_t character);
 
 		private:

@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	class FireAnimation : public MappedAnimation {
 		public:
 			explicit FireAnimation(Section* section);
-			~FireAnimation();
+			~FireAnimation() = default;
 			uint8_t get_multiplier() const;
 			void map();
 			void set_multiplier(uint8_t multiplier);

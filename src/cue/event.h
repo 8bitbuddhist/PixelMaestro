@@ -11,7 +11,7 @@ namespace PixelMaestro {
 	class Event {
 
 		public:
-			Event();
+			Event() = default;
 			Event(uint32_t time, uint8_t* cue);
 			Event(const Event& other);
 			Event& operator=(const Event& other);

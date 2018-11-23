@@ -64,6 +64,4 @@ namespace PixelMaestro {
 			}
 		}
 	}
-
-	FireAnimation::~FireAnimation() {}
 }

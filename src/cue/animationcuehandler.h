@@ -35,7 +35,7 @@ namespace PixelMaestro {
 			};
 
 			explicit AnimationCueHandler(CueController* controller) : CueHandler(controller) { }
-			~AnimationCueHandler();
+			~AnimationCueHandler() = default;
 
 			// Animation-specific calls
 			uint8_t* set_fire_options(uint8_t section_num, uint8_t layer_num, uint8_t multiplier);

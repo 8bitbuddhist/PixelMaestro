@@ -7,7 +7,7 @@ namespace PixelMaestro {
 	class SparkleAnimation : public Animation {
 		public:
 			explicit SparkleAnimation(Section* section);
-			~SparkleAnimation();
+			~SparkleAnimation() = default;
 			uint8_t get_threshold() const;
 			void set_threshold(uint8_t threshold);
 			void update();

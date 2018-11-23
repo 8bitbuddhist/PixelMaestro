@@ -58,7 +58,7 @@ namespace PixelMaestro {
 			bool loop_ = false;
 
 			/// The number of Events in the Show.
-			uint16_t num_events_;
+			uint16_t num_events_ = 0;
 
 			/// Method for measuring a Event's start time. Defaults to Absolute.
 			TimingMode timing_mode_ = TimingMode::Absolute;

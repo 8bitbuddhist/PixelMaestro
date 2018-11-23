@@ -21,7 +21,7 @@ namespace PixelMaestro {
 			};
 
 			explicit ShowCueHandler(CueController* controller) : CueHandler(controller) { }
-			~ShowCueHandler();
+			~ShowCueHandler() = default;
 
 			uint8_t* set_events(Event* events, uint16_t num_events, bool preserve_current_index = true);
 			uint8_t* set_looping(bool loop);

@@ -8,9 +8,6 @@
 using namespace PixelMaestro;
 
 namespace PixelMaestro {
-
-	Event::Event() { }
-
 	/**
 	 * Constructor. Copies the provided Cue into the Event.
 	 * @param time Event's start time.
@@ -82,9 +79,7 @@ namespace PixelMaestro {
 	 * @param cue Cue to run when the Event is triggered.
 	 */
 	void Event::set_cue(uint8_t* cue) {
-		if (this->cue_ != nullptr) {
-			delete [] this->cue_;
-		}
+		delete [] this->cue_;
 
 		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)CueController::Byte::PayloadByte;
 		this->cue_ = new uint8_t[size];

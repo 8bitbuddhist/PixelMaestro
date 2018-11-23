@@ -13,6 +13,4 @@ namespace PixelMaestro {
 			}
 		}
 	}
-
-	RandomAnimation::~RandomAnimation() {}
 }

@@ -161,6 +161,4 @@ namespace PixelMaestro {
 				break;
 		}
 	}
-
-	SectionCueHandler::~SectionCueHandler() { }
 }

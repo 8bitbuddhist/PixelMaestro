@@ -21,6 +21,4 @@ namespace PixelMaestro {
 			}
 		}
 	}
-
-	SolidAnimation::~SolidAnimation() {}
 }
