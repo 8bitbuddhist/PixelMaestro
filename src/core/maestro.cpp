@@ -32,6 +32,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Maestro's brightness.
+	 * @return Brightness.
+	 */
+	uint8_t Maestro::get_brightness() const {
+		return brightness_;
+	}
+
+	/**
 	 * Returns the active Cue controller.
 	 * @return Cue controller.
 	 */

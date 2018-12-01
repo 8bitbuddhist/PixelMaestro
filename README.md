@@ -2,17 +2,16 @@
 
 ![latest tag](https://img.shields.io/github/tag/8bitbuddhist/pixelmaestro.svg) ![license](https://img.shields.io/github/license/8bitbuddhist/pixelmaestro.svg)
 
-PixelMaestro is a graphics library for LED displays. It lets you create dynamic, colorful 2D animations and patterns on any size display. Originally designed for Arduinos, PixelMaestro can be used to drive any kind of LEDs on any device.
+PixelMaestro is a graphics library for LED displays. It lets you create dynamic, colorful 2D animations and patterns on any size display. Originally designed for Arduinos, PixelMaestro can be used to drive any kind of LED on any device.
 
-## Contents
-<!-- TOC START min:2 max:5 link:true update:false -->
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-  - [Using PixelMaestro](#using-pixelmaestro)
-- [Companion App](#companion-app)
-- [Running Tests](#running-tests)
-- [Donate](#donate)
-<!-- TOC END -->
+## Features
+
+- True (24-bit) color depth
+- Support for up to 256 independent, multi-layered drawing surfaces
+- Over 10 uniquely customizable animations with support for various orientations, speeds, and color schemes
+- Powerful raster image editing tools with support for still or animated images
+- Lightweight and flexible communications protocol for controlling devices over USB, Bluetooth, or other serial channel
+- Runs in under 2KB of RAM and uses under 32KB of storage
 
 ## Getting Started
 
@@ -22,7 +21,7 @@ If you want to run PixelMaestro on an Arduino, you can do so via the [Arduino ID
 
 ## Companion App
 
-PixelMaestro has a companion desktop application called PixelMaestro Studio. PixelMaestro Studio lets you create custom animations, save and share configurations, control devices over USB, and more. [Click here](https://github.com/8bitbuddhist/PixelMaestro-Studio) to learn more about PixelMaestro Studio.
+PixelMaestro has a companion desktop application called PixelMaestro Studio. PixelMaestro Studio lets you design custom animations, save and share configurations, control devices over USB, and more. [Click here](https://github.com/8bitbuddhist/PixelMaestro-Studio) to learn more about PixelMaestro Studio.
 
 ## Running Tests
 
