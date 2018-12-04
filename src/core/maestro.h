@@ -22,7 +22,6 @@ namespace PixelMaestro {
 			Maestro(uint16_t rows, uint16_t columns);
 			Maestro(Section* sections, uint8_t num_sections);
 			~Maestro();
-			uint8_t get_brightness() const;
 			CueController* get_cue_controller() const;
 			Colors::RGB get_pixel_color(uint8_t section, uint16_t x, uint16_t y) const;
 			uint8_t get_num_sections() const;
@@ -39,9 +38,6 @@ namespace PixelMaestro {
 			bool update(const uint32_t& current_time, bool force = false);
 
 		private:
-			/// Sets the global brightness level from 0 - 255. Defaults to 255, or 100% brightness.
-			uint8_t brightness_ = 255;
-
 			/// Controller object for reading and executing Cues.
 			CueController* cue_controller_ = nullptr;
 

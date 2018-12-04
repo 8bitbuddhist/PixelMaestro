@@ -3,6 +3,10 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v1.0.2] - 2018-12-03
+### Added
+- Added per-Section brightness controls.
+
 ## [v1.0.1] - 2018-11-23
 ### Added
 - Added `Show::sync()` for synchronizing Show timer with Maestro timer.

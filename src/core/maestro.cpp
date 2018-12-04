@@ -32,14 +32,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the Maestro's brightness.
-	 * @return Brightness.
-	 */
-	uint8_t Maestro::get_brightness() const {
-		return brightness_;
-	}
-
-	/**
 	 * Returns the active Cue controller.
 	 * @return Cue controller.
 	 */
@@ -64,7 +56,7 @@ namespace PixelMaestro {
 	 * @return Pixel color after adjusting for Layers and brightness.
 	 */
 	Colors::RGB Maestro::get_pixel_color(uint8_t section, uint16_t x, uint16_t y) const {
-		return sections_[section].get_pixel_color(x, y) * (float)(brightness_ / (float)255);
+		return sections_[section].get_pixel_color(x, y);
 	}
 
 	/**
@@ -103,11 +95,13 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the Maestro's global brightness level.
+	 * Sets the global brightness level for all Sections simultaneously.
 	 * @param brightness Brightness level from 0 (off) to 255 (full).
 	 */
 	void Maestro::set_brightness(uint8_t brightness) {
-		brightness_ = brightness;
+		for (uint8_t section = 0; section < num_sections_; section++) {
+			sections_[section].set_brightness(brightness);
+		}
 	}
 
 	/**

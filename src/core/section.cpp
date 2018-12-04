@@ -49,6 +49,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Section's brightness level.
+	 * @return Brightness level.
+	 */
+	uint8_t Section::get_brightness() const {
+		return brightness_;
+	}
+
+	/**
 	 * Returns the Section's Canvas.
 	 * @return Section's Canvas.
 	 */
@@ -152,7 +160,8 @@ namespace PixelMaestro {
 			final_color = layer_->section->get_pixel_color(x, y, &final_color);
 		}
 
-		return final_color;
+		// Return color with brightness calculated
+		return final_color * static_cast<float>(brightness_ / static_cast<float>(255));
 	}
 
 	/**
@@ -271,6 +280,15 @@ namespace PixelMaestro {
 
 		this->animation_ = new_animation;
 		return animation_;
+	}
+
+	/**
+	 * Sets the overall brightness of the Section.
+	 * 255 is full brightness, and 0 is completely dark.
+	 * @param brightness Brightness level (0 - 255).
+	 */
+	void Section::set_brightness(uint8_t brightness) {
+		this->brightness_ = brightness;
 	}
 
 	/**

@@ -42,6 +42,16 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
+	uint8_t* SectionCueHandler::set_brightness(uint8_t section_num, uint8_t layer_num, uint8_t brightness) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetBrightness;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = brightness;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
+	}
+
 	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t layer_num, uint16_t num_frames) {
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetCanvas;
@@ -131,6 +141,9 @@ namespace PixelMaestro {
 			case Action::SetAnimation:
 				section->set_animation((AnimationType)cue[(uint8_t)Byte::OptionsByte],
 						(bool)cue[(uint8_t)Byte::OptionsByte + 1]);
+				break;
+			case Action::SetBrightness:
+				section->set_brightness(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetCanvas:
 				section->set_canvas(cue[(uint8_t)Byte::OptionsByte]);

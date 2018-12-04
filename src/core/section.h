@@ -182,6 +182,7 @@ namespace PixelMaestro {
 			Section(uint16_t x, uint16_t y, Section* parent = nullptr);
 			~Section();
 			Animation* get_animation() const;
+			uint8_t get_brightness() const;
 			Canvas* get_canvas() const;
 			Point* get_dimensions();
 			Maestro* get_maestro() const;
@@ -196,6 +197,7 @@ namespace PixelMaestro {
 			void remove_layer();
 			void remove_scroll();
 			Animation* set_animation(AnimationType animation_type, bool preserve_settings = true);
+			void set_brightness(uint8_t brightness);
 			Canvas* set_canvas(uint16_t num_frames = 1);
 			void set_dimensions(uint16_t x, uint16_t y);
 			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
@@ -210,6 +212,9 @@ namespace PixelMaestro {
 		private:
 			/// The animation displayed in this Section.
 			Animation* animation_ = nullptr;
+
+			/// The total brightness of the Section. Defaults to full brightness.
+			uint8_t brightness_ = 255;
 
 			/// The Canvas to display (if applicable).
 			Canvas* canvas_ = nullptr;
