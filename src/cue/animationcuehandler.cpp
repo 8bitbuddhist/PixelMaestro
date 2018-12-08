@@ -186,13 +186,13 @@ namespace PixelMaestro {
 				break;
 			case Action::SetFireOptions:
 				{
-					FireAnimation* fa = dynamic_cast<FireAnimation*>(animation);
+					FireAnimation* fa = static_cast<FireAnimation*>(animation);
 					fa->set_multiplier(cue[(uint8_t)Byte::OptionsByte]);
 				}
 				break;
 			case Action::SetLightningOptions:
 				{
-					LightningAnimation* la = dynamic_cast<LightningAnimation*>(animation);
+					LightningAnimation* la = static_cast<LightningAnimation*>(animation);
 					la->set_bolt_count(cue[(uint8_t)Byte::OptionsByte]);
 					la->set_drift((int8_t)cue[(uint8_t)Byte::OptionsByte + 1]);
 					la->set_fork_chance(cue[(uint8_t)Byte::OptionsByte + 2]);
@@ -218,19 +218,19 @@ namespace PixelMaestro {
 				break;
 			case Action::SetPlasmaOptions:
 				{
-					PlasmaAnimation* pa = dynamic_cast<PlasmaAnimation*>(animation);
+					PlasmaAnimation* pa = static_cast<PlasmaAnimation*>(animation);
 					pa->set_size(FloatByteConvert::byte_to_float(&cue[(uint8_t)Byte::OptionsByte]));
 					pa->set_resolution(FloatByteConvert::byte_to_float(&cue[(uint8_t)Byte::OptionsByte + 4]));
 				}
 				break;
 			case Action::SetRadialOptions:
-				dynamic_cast<RadialAnimation*>(animation)->set_resolution(cue[(uint8_t)Byte::OptionsByte]);
+				static_cast<RadialAnimation*>(animation)->set_resolution(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetReverse:
 				animation->set_reverse(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetSparkleOptions:
-				dynamic_cast<SparkleAnimation*>(animation)->set_threshold(cue[(uint8_t)Byte::OptionsByte]);
+				static_cast<SparkleAnimation*>(animation)->set_threshold(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetTimer:
 				animation->set_timer(
@@ -239,7 +239,7 @@ namespace PixelMaestro {
 				break;
 			case Action::SetWaveOptions:
 				{
-					WaveAnimation* wa = dynamic_cast<WaveAnimation*>(animation);
+					WaveAnimation* wa = static_cast<WaveAnimation*>(animation);
 					wa->set_mirror((bool)cue[(uint8_t)Byte::OptionsByte]);
 					wa->set_skew((int8_t)cue[(uint8_t)Byte::OptionsByte + 1]);
 				}
