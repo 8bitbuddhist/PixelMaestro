@@ -89,6 +89,17 @@ namespace PixelMaestro {
 		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
 	}
 
+	uint8_t* SectionCueHandler::set_mirror(uint8_t section_num, uint8_t layer_num, bool x, bool y) {
+		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
+		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetMirror;
+		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
+		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = y;
+
+		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
+	}
+
 	uint8_t* SectionCueHandler::set_offset(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
@@ -155,6 +166,9 @@ namespace PixelMaestro {
 				break;
 			case Action::SetLayer:
 				section->set_layer(Colors::MixMode(cue[(uint8_t)Byte::OptionsByte]), cue[(uint8_t)Byte::OptionsByte + 1]);
+				break;
+			case Action::SetMirror:
+				section->set_mirror(cue[(uint8_t)Byte::OptionsByte], cue[(uint8_t)Byte::OptionsByte + 1]);
 				break;
 			case Action::SetOffset:
 				section->set_offset(

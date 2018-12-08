@@ -51,6 +51,7 @@ namespace PixelMaestro {
 	 */
 	void RadialAnimation::set_resolution(uint8_t resolution) {
 		this->resolution_ = resolution;
+		map();
 	}
 
 	void RadialAnimation::update() {

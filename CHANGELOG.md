@@ -3,6 +3,18 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v1.0.3] - In Progress
+WARNING: This update removes the mirror option for Wave animations!
+
+### Added
+- Section mirroring.
+
+### Changed
+- Radial animation now updates when changing resolution.
+
+### Removed
+- Wave animation mirror option.
+
 ## [v1.0.2] - 2018-12-03
 ### Added
 - Added per-Section brightness controls.

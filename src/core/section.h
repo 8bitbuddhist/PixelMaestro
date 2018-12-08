@@ -185,8 +185,10 @@ namespace PixelMaestro {
 			uint8_t get_brightness() const;
 			Canvas* get_canvas() const;
 			Point* get_dimensions();
-			Maestro* get_maestro() const;
 			Section::Layer* get_layer() const;
+			Maestro* get_maestro() const;
+			bool get_mirror_x() const;
+			bool get_mirror_y() const;
 			Point* get_offset();
 			Section* get_parent_section() const;
 			Pixel* get_pixel(uint16_t x, uint16_t y) const;
@@ -202,6 +204,7 @@ namespace PixelMaestro {
 			void set_dimensions(uint16_t x, uint16_t y);
 			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			void set_maestro(Maestro* maestro);
+			void set_mirror(bool x, bool y);
 			Point* set_offset(uint16_t x, uint16_t y);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
 			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
@@ -224,6 +227,12 @@ namespace PixelMaestro {
 
 			/// The Section's parent Maestro.
 			Maestro* maestro_ = nullptr;
+
+			/// Mirrors the Section across the x axis.
+			bool mirror_x_ = false;
+
+			/// Mirrors the Section across the y axis.
+			bool mirror_y_ = false;
 
 			/// The Section layering the current section (if applicable).
 			Layer* layer_ = nullptr;
