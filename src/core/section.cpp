@@ -91,19 +91,11 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns whether mirroring is enabled for the x axis.
-	 * @return If true, mirror across the x axis.
+	 * Returns whether mirroring is enabled across each axis.
+	 * @return Mirror configuration.
 	 */
-	bool Section::get_mirror_x() const {
-		return mirror_x_;
-	}
-
-	/**
-	 * Returns whether mirroring is enabled for the y axis.
-	 * @return If true, mirror across the y axis.
-	 */
-	bool Section::get_mirror_y() const {
-		return mirror_y_;
+	Section::Mirror* Section::get_mirror() {
+		return &mirror_;
 	}
 
 	/**
@@ -149,18 +141,17 @@ namespace PixelMaestro {
 		uint16_t offset_y = (y + offset_.y) % dimensions_.y;
 
 		// If mirroring is enabled, mirror across the axes.
-		// NOTE: To scale, divide offset by integer
-		if (mirror_x_) {
-			uint16_t half_x = (dimensions_.x / (float)2);
-			if (offset_x > half_x) {
-				offset_x = half_x - (offset_x - half_x);
-			}
-		}
-
-		if (mirror_y_) {
+		if (mirror_.x) {
 			uint16_t half_y = (dimensions_.y / (float)2);
 			if (offset_y > half_y) {
 				offset_y = half_y - (offset_y - half_y);
+			}
+		}
+
+		if (mirror_.y) {
+			uint16_t half_x = (dimensions_.x / (float)2);
+			if (offset_x > half_x) {
+				offset_x = half_x - (offset_x - half_x);
 			}
 		}
 
@@ -392,8 +383,8 @@ namespace PixelMaestro {
 	 * @param y Mirror the y axis.
 	 */
 	void Section::set_mirror(bool x, bool y) {
-		this->mirror_x_ = x;
-		this->mirror_y_ = y;
+		this->mirror_.x = x;
+		this->mirror_.y = y;
 	}
 
 	/**

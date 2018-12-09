@@ -178,6 +178,11 @@ namespace PixelMaestro {
 				}
 			};
 
+			struct Mirror {
+				bool x = false;
+				bool y = false;
+			};
+
 			Section();
 			Section(uint16_t x, uint16_t y, Section* parent = nullptr);
 			~Section();
@@ -187,8 +192,7 @@ namespace PixelMaestro {
 			Point* get_dimensions();
 			Section::Layer* get_layer() const;
 			Maestro* get_maestro() const;
-			bool get_mirror_x() const;
-			bool get_mirror_y() const;
+			Mirror* get_mirror();
 			Point* get_offset();
 			Section* get_parent_section() const;
 			Pixel* get_pixel(uint16_t x, uint16_t y) const;
@@ -225,17 +229,14 @@ namespace PixelMaestro {
 			/// The logical layout of the Pixels.
 			Point dimensions_;
 
+			/// The Section layering the current section (if applicable).
+			Layer* layer_ = nullptr;
+
 			/// The Section's parent Maestro.
 			Maestro* maestro_ = nullptr;
 
-			/// Mirrors the Section across the x axis.
-			bool mirror_x_ = false;
-
-			/// Mirrors the Section across the y axis.
-			bool mirror_y_ = false;
-
-			/// The Section layering the current section (if applicable).
-			Layer* layer_ = nullptr;
+			/// Mirrors the Section across the x and y axes.
+			Mirror mirror_;
 
 			/// How far the Section is offset from the grid origin.
 			Point offset_ = Point(0, 0);
