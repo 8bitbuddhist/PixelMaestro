@@ -3,14 +3,18 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v1.0.3] - In Progress
-WARNING: This update removes the mirror option for Wave animations!
+## [v1.1] - In Progress
+WARNING: The following Cues have been removed/changed. You will need to regenerate any Cuefiles using these Cues.
+	- `AnimationCueHandler::set_wave_options`: removed mirror option
+	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 
 ### Added
 - Section mirroring.
 
 ### Changed
 - Radial animation now updates when changing resolution.
+- Fixed `CanvasCueHandler::draw_frame()` not supporting Canvases larger than 255x255.
+- Fixed Show crash when enabling relative time and looping after the Show has already ended.
 
 ### Removed
 - Wave animation mirror option.

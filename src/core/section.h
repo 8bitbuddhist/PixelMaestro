@@ -178,9 +178,23 @@ namespace PixelMaestro {
 				}
 			};
 
+			/**
+			 * Controls mirroring across the x and y axes.
+			 */
 			struct Mirror {
 				bool x = false;
 				bool y = false;
+
+				uint16_t mid_x = 0;
+				uint16_t mid_y = 0;
+
+				void set(bool x, bool y, const Point& dimensions) {
+					this->x = x;
+					this->y = y;
+
+					this->mid_x = dimensions.x / static_cast<float>(2);
+					this->mid_y = dimensions.y / static_cast<float>(2);
+				}
 			};
 
 			Section();
@@ -208,7 +222,7 @@ namespace PixelMaestro {
 			void set_dimensions(uint16_t x, uint16_t y);
 			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			void set_maestro(Maestro* maestro);
-			void set_mirror(bool x, bool y);
+			Mirror* set_mirror(bool x, bool y);
 			Point* set_offset(uint16_t x, uint16_t y);
 			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
 			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
@@ -236,7 +250,7 @@ namespace PixelMaestro {
 			Maestro* maestro_ = nullptr;
 
 			/// Mirrors the Section across the x and y axes.
-			Mirror mirror_;
+			Mirror* mirror_ = nullptr;
 
 			/// How far the Section is offset from the grid origin.
 			Point offset_ = Point(0, 0);

@@ -40,14 +40,19 @@ namespace PixelMaestro {
 			return nullptr;
 		}
 
+		IntByteConvert size_x_byte(size_x);
+		IntByteConvert size_y_byte(size_y);
+
 		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::CanvasCueHandler;
 		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::DrawFrame;
 		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
 		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = size_x;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = size_y;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = size_x_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = size_x_byte.converted_1;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = size_y_byte.converted_0;
+		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = size_y_byte.converted_1;
 
-		uint16_t current_index = (uint8_t)Byte::OptionsByte + 2;
+		uint16_t current_index = (uint8_t)Byte::OptionsByte + 4;
 		Point grid(size_x, size_y);
 		for (uint16_t y = 0; y < size_y; y++) {
 			for (uint16_t x = 0; x < size_x; x++) {
@@ -322,10 +327,14 @@ namespace PixelMaestro {
 				break;
 			case Action::DrawFrame:
 				{
-					Point frame_bounds(cue[(uint8_t)Byte::OptionsByte], cue[(uint8_t)Byte::OptionsByte + 1]);
+					Point frame_bounds(
+						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
+						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
+					);
+
 					for (uint16_t y = 0; y < frame_bounds.y; y++) {
 						for (uint16_t x = 0; x < frame_bounds.x; x++) {
-							canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 2 + frame_bounds.get_inline_index(x, y)], x, y);
+							canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 4 + frame_bounds.get_inline_index(x, y)], x, y);
 						}
 					}
 				}

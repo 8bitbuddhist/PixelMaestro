@@ -118,6 +118,10 @@ namespace PixelMaestro {
 			return;
 		}
 
+		if (loop_ && current_index_ >= num_events_) {
+			current_index_ = 0;
+		}
+
 		// Only run if we're looping, or if we haven't reached the end of the Event list yet.
 		if (loop_ || current_index_ < num_events_) {
 			check_next_event(current_time);
