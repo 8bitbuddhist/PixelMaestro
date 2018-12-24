@@ -38,7 +38,6 @@ namespace PixelMaestro {
 			uint16_t get_num_frames() const;
 			Palette* get_palette() const;
 			Section* get_section() const;
-			bool in_bounds(uint16_t x, uint16_t y) const;
 			void next_frame();
 			void previous_frame();
 			void remove_frame_timer();

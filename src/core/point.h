@@ -33,6 +33,7 @@ namespace PixelMaestro {
 			Point(uint16_t x = 0, uint16_t y = 0);
 			Point(const Point& other);
 			uint32_t get_inline_index(uint16_t x, uint16_t y) const;
+			bool in_bounds(uint16_t x, uint16_t y) const;
 			void set(uint16_t x, uint16_t y);
 			uint32_t size() const;
 	};

@@ -67,7 +67,7 @@ namespace PixelMaestro {
 		uint32_t radius_squared = pow(radius, 2);
 		for (cursor.x = origin_x - radius; cursor.x <= origin_x + radius; cursor.x++) {
 			for (cursor.y = origin_y - radius; cursor.y <= origin_y + radius; cursor.y++) {
-				if (in_bounds(cursor.x, cursor.y)) {
+				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					// Check that cursor_x and cursor_y satisfy the equation
 					test_point = pow(cursor.x - origin_x, 2) + pow(cursor.y - origin_y, 2);
 					/*
@@ -95,7 +95,7 @@ namespace PixelMaestro {
 		Point frame_bounds = Point(size_x, size_y);
 		for (uint16_t y = 0; y < size_y; y++) {
 			for (uint16_t x = 0; x < size_x; x++) {
-				if (in_bounds(x, y)) {
+				if (section_->get_dimensions()->in_bounds(x, y)) {
 					draw_point(frame[frame_bounds.get_inline_index(x, y)], x, y);
 				}
 			}
@@ -127,7 +127,7 @@ namespace PixelMaestro {
 		// Handle vertical lines
 		if (target_x == origin_x) {
 			while (cursor.y != target_y) {
-				if (in_bounds(cursor.x, cursor.y)) {
+				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					draw_point(color_index, cursor.x, cursor.y);
 				}
 
@@ -146,7 +146,7 @@ namespace PixelMaestro {
 			 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
 			 */
 			while (cursor.x != target_x) {
-				if (in_bounds(cursor.x, cursor.y)) {
+				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					draw_point(color_index, cursor.x, cursor.y);
 				}
 
@@ -167,7 +167,7 @@ namespace PixelMaestro {
 	 * @param cursor_y Starting point y coordinate.
 	 */
 	void Canvas::draw_point(uint8_t color_index, uint16_t x, uint16_t y) {
-		if (in_bounds(x, y)) {
+		if (section_->get_dimensions()->in_bounds(x, y)) {
 			frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] = color_index;
 		}
 	}
@@ -188,7 +188,7 @@ namespace PixelMaestro {
 			cursor.y = origin_y;
 			for (uint16_t row = 0; row < size_y; row++) {
 				cursor.y = origin_y + row;
-				if (in_bounds(cursor.x, cursor.y)) {
+				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					// Check whether to fill
 					if (fill) {
 						draw_point(color_index, cursor.x, cursor.y);
@@ -228,7 +228,7 @@ namespace PixelMaestro {
 			uint8_t* current_char = font->get_char(text[letter]);
 			for (uint16_t column = 0; column < font->size.x; column++) {
 				for (uint16_t row = 0; row < font->size.y; row++) {
-					if (in_bounds(cursor.x, cursor.y)) {
+					if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 						if ((current_char[column] >> row) & 1) {
 							draw_point(color_index, cursor.x + column, cursor.y + row);
 						}
@@ -356,7 +356,7 @@ namespace PixelMaestro {
 	 * @return Pixel color.
 	 */
 	Colors::RGB Canvas::get_pixel_color(uint16_t x, uint16_t y) {
-		if (in_bounds(x, y)) {
+		if (section_->get_dimensions()->in_bounds(x, y)) {
 			uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
 
 			/*
@@ -380,16 +380,6 @@ namespace PixelMaestro {
 	 */
 	Section* Canvas::get_section() const {
 		return section_;
-	}
-
-	/**
-	 * Returns whether the given Point is in the bounds of the Canvas.
-	 * @param x The x-coordinate to check.
-	 * @param y The y-coordinate to check.
-	 * @return Whether the Point is in bounds.
-	 */
-	bool Canvas::in_bounds(uint16_t x, uint16_t y) const {
-		return (x < section_->get_dimensions()->x) && (y < section_->get_dimensions()->y);
 	}
 
 	/// Builds the Canvas.

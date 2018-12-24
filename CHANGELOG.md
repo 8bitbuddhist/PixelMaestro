@@ -10,14 +10,17 @@ WARNING: The following Cues have been removed/changed. You will need to regenera
 
 ### Added
 - Section mirroring.
+- `Point::in_bounds()`, which checks whether the coordinates provided are within the boundaries of the Point.
 
 ### Changed
 - Radial animation now updates when changing resolution.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting Canvases larger than 255x255.
+- Added buffer overflow check to CanvasCueHandler DrawFrame method.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
 
 ### Removed
 - Wave animation mirror option.
+- Removed `Canvas::in_bounds()` (see `Point::in_bounds()`).
 
 ## [v1.0.2] - 2018-12-03
 ### Added

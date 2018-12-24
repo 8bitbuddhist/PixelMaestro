@@ -334,7 +334,9 @@ namespace PixelMaestro {
 
 					for (uint16_t y = 0; y < frame_bounds.y; y++) {
 						for (uint16_t x = 0; x < frame_bounds.x; x++) {
-							canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 4 + frame_bounds.get_inline_index(x, y)], x, y);
+							if (canvas->get_section()->get_dimensions()->in_bounds(x, y)) {
+								canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 4 + frame_bounds.get_inline_index(x, y)], x, y);
+							}
 						}
 					}
 				}
