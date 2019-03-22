@@ -27,10 +27,10 @@ namespace PixelMaestro {
 			for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 				for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 					if (Utility::rand(255) <= threshold_) {
-						section_->set_one(x, y, palette_->get_color_at_index(y));
+						section_->set_one(x, y, palette_->get_color_at_index(y), timer_->get_step_count());
 					}
 					else {
-						section_->set_one(x, y, &black_);
+						section_->set_one(x, y, &black_, timer_->get_step_count());
 					}
 				}
 			}
@@ -39,10 +39,10 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
 				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 					if (Utility::rand(255) <= threshold_) {
-						section_->set_one(x, y, palette_->get_color_at_index(x));
+						section_->set_one(x, y, palette_->get_color_at_index(x), timer_->get_step_count());
 					}
 					else {
-						section_->set_one(x, y, &black_);
+						section_->set_one(x, y, &black_, timer_->get_step_count());
 					}
 				}
 			}

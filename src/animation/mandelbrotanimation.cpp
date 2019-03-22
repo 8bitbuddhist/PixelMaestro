@@ -57,10 +57,10 @@ namespace PixelMaestro {
 		for (uint8_t x = 0; x < dimensions_.x; x++) {
 			for (uint8_t y = 0; y < dimensions_.y; y++) {
 				if (map_[y][x] != 255) {
-					section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_));
+					section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
 				}
 				else {
-					section_->set_one(x, y, &black_);
+					section_->set_one(x, y, &black_, timer_->get_step_count());
 				}
 			}
 		}

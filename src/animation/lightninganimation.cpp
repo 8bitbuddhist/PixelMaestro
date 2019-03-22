@@ -10,7 +10,7 @@ namespace PixelMaestro {
 		// Clear the grid
 		for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
 			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-				section_->set_one(x, y, &black_);
+				section_->set_one(x, y, &black_, timer_->get_step_count());
 			}
 		}
 
@@ -80,7 +80,7 @@ namespace PixelMaestro {
 			}
 			cursor.x++;
 
-			section_->set_one(x, cursor.y, palette_->get_color_at_index(cycle_index_ + bolt_num));
+			section_->set_one(x, cursor.y, palette_->get_color_at_index(cycle_index_ + bolt_num), timer_->get_step_count());
 
 			// Check to see if we should fork the bolt.
 			if (x < (uint16_t)section_->get_dimensions()->x) {
@@ -143,7 +143,7 @@ namespace PixelMaestro {
 			}
 			cursor.y++;
 
-			section_->set_one(cursor.x, y, palette_->get_color_at_index(cycle_index_ + bolt_num));
+			section_->set_one(cursor.x, y, palette_->get_color_at_index(cycle_index_ + bolt_num), timer_->get_step_count());
 
 			if (y < (uint16_t)section_->get_dimensions()->y) {
 				uint8_t fork_roll = Utility::rand(UINT8_MAX);

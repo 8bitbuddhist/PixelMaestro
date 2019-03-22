@@ -5,6 +5,7 @@
 #include <math.h>
 #include "../utility.h"
 #include "canvas.h"
+#include "colorpresets.h"
 
 namespace PixelMaestro {
 	/**
@@ -350,28 +351,21 @@ namespace PixelMaestro {
 	/**
 	 * Returns the color of the Pixel at the specified coordinate.
 	 * If the Pixel is activated, return the corresponding palette color.
-	 * If the palette index of the Pixel is 255, return black.
+	 * Nullptr indicates that the Pixel is not activated (i.e. transparent).
 	 * @param x X-coordinate.
 	 * @param y Y-coordinate.
 	 * @return Pixel color.
 	 */
-	Colors::RGB Canvas::get_pixel_color(uint16_t x, uint16_t y) {
+	Colors::RGB* Canvas::get_pixel_color(uint16_t x, uint16_t y) {
 		if (section_->get_dimensions()->in_bounds(x, y)) {
 			uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
 
-			/*
-			 * If the index is in-bounds, return the palette's color.
-			 * Otherwise, treat the pixel as if it's transparent.
-			 */
 			if (palette_ != nullptr && index < palette_->get_num_colors()) {
-				return *palette_->get_color_at_index(index);
-			}
-			else {
-				return *section_->get_pixel(x, y)->get_color();
+				return palette_->get_color_at_index(index);
 			}
 		}
 
-		return {0, 0, 0};
+		return nullptr;
 	}
 
 	/**
@@ -481,6 +475,16 @@ namespace PixelMaestro {
 	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const uint32_t& current_time) {
+		// Only set Pixels that are drawn on the Canvas.
+		for (uint8_t y = 0; y < section_->get_dimensions()->y; y++) {
+			for (uint8_t x = 0; x < section_->get_dimensions()->x; x++) {
+				Colors::RGB* color = get_pixel_color(x, y);
+				if (color != nullptr) {
+					section_->set_one(x, y, color, 1);
+				}
+			}
+		}
+
 		if (frame_timer_ && frame_timer_->update(current_time)) {
 			next_frame();
 		}

@@ -207,7 +207,7 @@ namespace PixelMaestro {
 			Section::Layer* get_layer() const;
 			Maestro* get_maestro() const;
 			Mirror* get_mirror() const;
-			Point* get_offset() const;
+			Point* get_offset();
 			Section* get_parent_section() const;
 			Pixel* get_pixel(uint16_t x, uint16_t y) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);
@@ -224,7 +224,7 @@ namespace PixelMaestro {
 			void set_maestro(Maestro* maestro);
 			Mirror* set_mirror(bool x, bool y);
 			Point* set_offset(uint16_t x, uint16_t y);
-			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
+			void set_one(uint16_t x, uint16_t y, Colors::RGB* color, uint8_t step_count);
 			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);
