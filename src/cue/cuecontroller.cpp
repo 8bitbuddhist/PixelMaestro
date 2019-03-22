@@ -263,7 +263,7 @@ namespace PixelMaestro {
 
 	CueController::~CueController() {
 		delete [] buffer_;
-		for (uint8_t i = 0; i < 4; i++) {
+		for (uint8_t i = 0; i < 5; i++) {
 			delete handlers_[i];
 		}
 	}

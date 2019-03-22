@@ -206,8 +206,8 @@ namespace PixelMaestro {
 			Point* get_dimensions();
 			Section::Layer* get_layer() const;
 			Maestro* get_maestro() const;
-			Mirror* get_mirror();
-			Point* get_offset();
+			Mirror* get_mirror() const;
+			Point* get_offset() const;
 			Section* get_parent_section() const;
 			Pixel* get_pixel(uint16_t x, uint16_t y) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);

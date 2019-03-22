@@ -94,7 +94,7 @@ namespace PixelMaestro {
 	 * Returns whether mirroring is enabled across each axis.
 	 * @return Mirror configuration.
 	 */
-	Section::Mirror* Section::get_mirror() {
+	Section::Mirror* Section::get_mirror() const {
 		return mirror_;
 	}
 
@@ -102,7 +102,7 @@ namespace PixelMaestro {
 	 * Returns the Section's offset.
 	 * @return Offset.
 	 */
-	Point* Section::get_offset() {
+	Point* Section::get_offset() const {
 		return &offset_;
 	}
 
