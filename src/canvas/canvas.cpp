@@ -349,26 +349,6 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the color of the Pixel at the specified coordinate.
-	 * If the Pixel is activated, return the corresponding palette color.
-	 * Nullptr indicates that the Pixel is not activated (i.e. transparent).
-	 * @param x X-coordinate.
-	 * @param y Y-coordinate.
-	 * @return Pixel color.
-	 */
-	Colors::RGB* Canvas::get_pixel_color(uint16_t x, uint16_t y) {
-		if (section_->get_dimensions()->in_bounds(x, y)) {
-			uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
-
-			if (palette_ != nullptr && index < palette_->get_num_colors()) {
-				return palette_->get_color_at_index(index);
-			}
-		}
-
-		return nullptr;
-	}
-
-	/**
 	 * Returns the Canvas' parent Section.
 	 * @return Parent Section.
 	 */
@@ -475,12 +455,18 @@ namespace PixelMaestro {
 	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const uint32_t& current_time) {
-		// Only set Pixels that are drawn on the Canvas.
-		for (uint8_t y = 0; y < section_->get_dimensions()->y; y++) {
-			for (uint8_t x = 0; x < section_->get_dimensions()->x; x++) {
-				Colors::RGB* color = get_pixel_color(x, y);
-				if (color != nullptr) {
-					section_->set_one(x, y, color, 1);
+		/*
+		 * Get the Pixel's color from the framebuffer.
+		 * If no color is set, don't draw the Pixel.
+		 * If no Palette is set, don't do anything at all.
+		 */
+		if (palette_ != nullptr) {
+			for (uint8_t y = 0; y < section_->get_dimensions()->y; y++) {
+				for (uint8_t x = 0; x < section_->get_dimensions()->x; x++) {
+					uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
+					if (index < palette_->get_num_colors()) {
+						section_->set_one(x, y, palette_->get_color_at_index(index), 1);
+					}
 				}
 			}
 		}

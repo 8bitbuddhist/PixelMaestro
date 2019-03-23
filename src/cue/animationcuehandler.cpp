@@ -10,162 +10,190 @@ namespace PixelMaestro {
 
 	// Animation-specific Cues
 	uint8_t* AnimationCueHandler::set_fire_options(uint8_t section_num, uint8_t layer_num, uint8_t multiplier) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetFireOptions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = multiplier;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetFireOptions,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = multiplier;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_lightning_options(uint8_t section_num, uint8_t layer_num, uint8_t num_bolts, int8_t drift, uint8_t fork_chance) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetLightningOptions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = num_bolts;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = (uint8_t)drift;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = fork_chance;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetLightningOptions,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = num_bolts;
+		controller_->get_buffer()[++index] = (uint8_t)drift;
+		controller_->get_buffer()[++index] = fork_chance;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 3));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_plasma_options(uint8_t section_num, uint8_t layer_num, float size, float resolution) {
 		FloatByteConvert size_byte(size);
 		FloatByteConvert resolution_byte(resolution);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetPlasmaOptions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = size_byte.converted.byte[0];
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = size_byte.converted.byte[1];
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = size_byte.converted.byte[2];
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = size_byte.converted.byte[3];
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 4] = resolution_byte.converted.byte[0];
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 5] = resolution_byte.converted.byte[1];
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 6] = resolution_byte.converted.byte[2];
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 7] = resolution_byte.converted.byte[3];
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetPlasmaOptions,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = size_byte.converted.byte[0];
+		controller_->get_buffer()[++index] = size_byte.converted.byte[1];
+		controller_->get_buffer()[++index] = size_byte.converted.byte[2];
+		controller_->get_buffer()[++index] = size_byte.converted.byte[3];
+		controller_->get_buffer()[++index] = resolution_byte.converted.byte[0];
+		controller_->get_buffer()[++index] = resolution_byte.converted.byte[1];
+		controller_->get_buffer()[++index] = resolution_byte.converted.byte[2];
+		controller_->get_buffer()[++index] = resolution_byte.converted.byte[3];
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 7));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_radial_options(uint8_t section_num, uint8_t layer_num, uint8_t resolution) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetRadialOptions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = resolution;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetRadialOptions,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = resolution;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_sparkle_options(uint8_t section_num, uint8_t layer_num, uint8_t threshold) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetSparkleOptions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = threshold;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetSparkleOptions,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = threshold;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, int8_t skew) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetWaveOptions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)skew;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetWaveOptions,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = (uint8_t)skew;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	// General-purpose Cues
 	uint8_t* AnimationCueHandler::set_cycle_index(uint8_t section_num, uint8_t layer_num, uint8_t cycle_index) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetCycleIndex;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = cycle_index;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetCycleIndex,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = cycle_index;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_fade(uint8_t section_num, uint8_t layer_num, bool fade) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetFade;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)fade;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetFade,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = (uint8_t)fade;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_orientation(uint8_t section_num, uint8_t layer_num, Animation::Orientation orientation) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetOrientation;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)orientation;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetOrientation,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = (uint8_t)orientation;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_palette(uint8_t section_num, uint8_t layer_num, Palette* palette) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetPalette;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = palette->get_num_colors();
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetPalette,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = palette->get_num_colors();
 
-		uint16_t final_index = serialize_palette(&controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1], palette);
+		uint16_t palette_size= serialize_palette(&controller_->get_buffer()[++index], palette);
 
-		return controller_->assemble(final_index + (uint8_t)Byte::OptionsByte + 1);
+		return controller_->assemble(index + palette_size);
 	}
 
 	uint8_t* AnimationCueHandler::set_reverse(uint8_t section_num, uint8_t layer_num, bool reverse) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetReverse;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)reverse;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetReverse,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = (uint8_t)reverse;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t delay) {
 		IntByteConvert interval_byte(interval);
 		IntByteConvert delay_byte(delay);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetTimer;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = interval_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = interval_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = delay_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = delay_byte.converted_1;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetTimer,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = interval_byte.converted_0;
+		controller_->get_buffer()[++index] = interval_byte.converted_1;
+		controller_->get_buffer()[++index] = delay_byte.converted_0;
+		controller_->get_buffer()[++index] = delay_byte.converted_1;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 4));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::start(uint8_t section_num, uint8_t layer_num) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Start;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::Start,
+			section_num,
+			layer_num
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::stop(uint8_t section_num, uint8_t layer_num) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::AnimationCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Stop;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::Stop,
+			section_num,
+			layer_num
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	void AnimationCueHandler::run(uint8_t *cue) {

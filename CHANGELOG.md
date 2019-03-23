@@ -11,8 +11,13 @@ WARNING: The following Cues have been removed/changed. You will need to regenera
 ### Added
 - Section mirroring.
 - `Point::in_bounds()`, which checks whether the coordinates provided are within the boundaries of the Point.
+- Added CueHandler helper functions for generating Cues.
 
 ### Changed
+- Revised Section rendering logic.
+	- Canvases now write color changes directly to Pixels.
+	- Canvases are no longer rendered in `Section::get_pixel_color()`
+- Rewrote CueHandlers to reduce program size.
 - Radial animation now updates when changing resolution.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting Canvases larger than 255x255.
 - Added buffer overflow check to CanvasCueHandler DrawFrame method.
@@ -21,6 +26,7 @@ WARNING: The following Cues have been removed/changed. You will need to regenera
 ### Removed
 - Wave animation mirror option.
 - Removed `Canvas::in_bounds()` (see `Point::in_bounds()`).
+- Removed `Canvas::get_pixel_color()`.
 
 ## [v1.0.2] - 2018-12-03
 ### Added

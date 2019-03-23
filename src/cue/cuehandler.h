@@ -27,6 +27,8 @@ namespace PixelMaestro {
 			Section* get_section(uint8_t section_id, uint8_t layer_id) const;
 			Palette* deserialize_palette(const uint8_t* cue, uint8_t num_colors);
 			uint16_t serialize_palette(uint8_t* cue, Palette* palette);
+			uint8_t start_cue(uint8_t handler_byte, uint8_t action_byte);
+			uint8_t start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num);
 	};
 }
 

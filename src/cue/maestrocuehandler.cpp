@@ -5,61 +5,75 @@
 namespace PixelMaestro {
 
 	uint8_t* MaestroCueHandler::remove_show() {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveShow;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::MaestroCueHandler,
+			(uint8_t)Action::RemoveShow
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* MaestroCueHandler::set_brightness(uint8_t brightness) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetBrightness;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = brightness;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::MaestroCueHandler,
+			(uint8_t)Action::SetBrightness
+		);
+		controller_->get_buffer()[++index] = brightness;
 
 		return controller_->assemble(((uint8_t)Byte::OptionsByte + 1));
 	}
 
 	uint8_t* MaestroCueHandler::set_show() {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetShow;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::MaestroCueHandler,
+			(uint8_t)Action::SetShow
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* MaestroCueHandler::set_timer(uint16_t interval) {
 		IntByteConvert interval_byte = IntByteConvert(interval);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetTimer;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = interval_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = interval_byte.converted_1;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::MaestroCueHandler,
+			(uint8_t)Action::SetTimer
+		);
+		controller_->get_buffer()[++index] = interval_byte.converted_0;
+		controller_->get_buffer()[++index] = interval_byte.converted_1;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 2));
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* MaestroCueHandler::start() {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Start;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::MaestroCueHandler,
+			(uint8_t)Action::Start
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* MaestroCueHandler::stop() {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Stop;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::MaestroCueHandler,
+			(uint8_t)Action::Stop
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* MaestroCueHandler::sync(const uint32_t new_time) {
 		IntByteConvert last_time_byte(new_time);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::MaestroCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::Sync;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = last_time_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = last_time_byte.converted_1;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::MaestroCueHandler,
+			(uint8_t)Action::Sync
+		);
+		controller_->get_buffer()[++index] = last_time_byte.converted_0;
+		controller_->get_buffer()[++index] = last_time_byte.converted_1;
 
-		return controller_->assemble(((uint8_t)Byte::OptionsByte + 2));
+		return controller_->assemble(++index);
 	}
 
 	void MaestroCueHandler::run(uint8_t *cue) {

@@ -3,135 +3,157 @@
 
 namespace PixelMaestro {
 	uint8_t* SectionCueHandler::remove_animation(uint8_t section_num, uint8_t layer_num, bool clear_pixels) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveAnimation;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)clear_pixels;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::RemoveAnimation,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = (uint8_t)clear_pixels;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::remove_canvas(uint8_t section_num, uint8_t layer_num) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveCanvas;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::RemoveCanvas,
+			section_num,
+			layer_num
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::remove_layer(uint8_t section_num, uint8_t layer_num) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::RemoveLayer;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::RemoveLayer,
+			section_num,
+			layer_num
+		);
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_animation(uint8_t section_num, uint8_t layer_num, AnimationType animation_type, bool preserve_settings) {
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetAnimation;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)animation_type;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = (uint8_t)preserve_settings;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetAnimation,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = (uint8_t)animation_type;
+		controller_->get_buffer()[++index] = (uint8_t)preserve_settings;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_brightness(uint8_t section_num, uint8_t layer_num, uint8_t brightness) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetBrightness;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = brightness;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetBrightness,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = brightness;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t layer_num, uint16_t num_frames) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetCanvas;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = num_frames;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetCanvas,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = num_frames;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 1);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
 		IntByteConvert x_byte = IntByteConvert(x);
 		IntByteConvert y_byte = IntByteConvert(y);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetDimensions;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetDimensions,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = x_byte.converted_0;
+		controller_->get_buffer()[++index] = x_byte.converted_1;
+		controller_->get_buffer()[++index] = y_byte.converted_0;
+		controller_->get_buffer()[++index] = y_byte.converted_1;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_layer(uint8_t section_num, uint8_t layer_num, Colors::MixMode mix_mode, uint8_t alpha) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetLayer;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = (uint8_t)mix_mode;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = alpha;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetLayer,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = (uint8_t)mix_mode;
+		controller_->get_buffer()[++index] = alpha;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_mirror(uint8_t section_num, uint8_t layer_num, bool x, bool y) {
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetMirror;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = y;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetMirror,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = x;
+		controller_->get_buffer()[++index] = y;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 2);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_offset(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetOffset;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetOffset,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = x_byte.converted_0;
+		controller_->get_buffer()[++index] = x_byte.converted_1;
+		controller_->get_buffer()[++index] = y_byte.converted_0;
+		controller_->get_buffer()[++index] = y_byte.converted_1;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 4);
+		return controller_->assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_scroll(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		controller_->get_buffer()[(uint8_t)Byte::HandlerByte] = (uint8_t)CueController::Handler::SectionCueHandler;
-		controller_->get_buffer()[(uint8_t)Byte::ActionByte] = (uint8_t)Action::SetScroll;
-		controller_->get_buffer()[(uint8_t)Byte::SectionByte] = section_num;
-		controller_->get_buffer()[(uint8_t)Byte::LayerByte] = layer_num;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte] = x_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 1] = x_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 2] = y_byte.converted_0;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 3] = y_byte.converted_1;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 4] = (uint8_t)reverse_x;
-		controller_->get_buffer()[(uint8_t)Byte::OptionsByte + 5] = (uint8_t)reverse_y;
+		uint8_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetScroll,
+			section_num,
+			layer_num
+		);
+		controller_->get_buffer()[++index] = x_byte.converted_0;
+		controller_->get_buffer()[++index] = x_byte.converted_1;
+		controller_->get_buffer()[++index] = y_byte.converted_0;
+		controller_->get_buffer()[++index] = y_byte.converted_1;
+		controller_->get_buffer()[++index] = (uint8_t)reverse_x;
+		controller_->get_buffer()[++index] = (uint8_t)reverse_y;
 
-		return controller_->assemble((uint8_t)Byte::OptionsByte + 6);
+		return controller_->assemble(++index);
 	}
 
 	void SectionCueHandler::run(uint8_t *cue) {

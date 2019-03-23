@@ -20,7 +20,6 @@ namespace PixelMaestro {
 		public:
 			explicit Canvas(Section *section, uint16_t num_frames = 1);
 			~Canvas();
-			Colors::RGB* get_pixel_color(uint16_t x, uint16_t y);
 			void initialize();
 
 			void clear();
