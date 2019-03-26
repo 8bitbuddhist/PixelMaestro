@@ -26,6 +26,19 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Returns the Event at the specified index, or nullptr if it doesn't exist.
+	 * @param index Index of desired Event.
+	 * @return Event.
+	 */
+	Event* Show::get_event_at_index(uint16_t index) const {
+		if (index < num_events_) {
+			return &events_[index];
+		}
+
+		return nullptr;
+	}
+
+	/**
 	 * Returns the current Event set.
 	 * @return Events.
 	 */

@@ -137,13 +137,6 @@ namespace PixelMaestro {
 		Colors::RGB final_color;
 
 		// Adjust coordinates based on offset
-		/* TODO: Idea to enable/disable the repeat effect by toggling the modulus.
-		 * Enabled, the Section wraps across either edge like normal.
-		 * Disable, it doesn't display anything beyond the drawn boundary.
-		 *
-		 * Since disabling this might result in weirdness, we should start by making Animations and Canvases offset-aware so they can render the correct color to each Pixel.
-		 * From there, we can add a wrap_ flag to enable/disable repeat.
-		 */
 		uint16_t offset_x = (x + offset_.x) % dimensions_.x;
 		uint16_t offset_y = (y + offset_.y) % dimensions_.y;
 
