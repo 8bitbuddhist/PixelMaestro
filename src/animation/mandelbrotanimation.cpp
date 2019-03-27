@@ -2,7 +2,7 @@
 #include "mandelbrotanimation.h"
 
 namespace PixelMaestro {
-	MandelbrotAnimation::MandelbrotAnimation(Section* section) : MappedAnimation(section) {
+	MandelbrotAnimation::MandelbrotAnimation(Section& section) : MappedAnimation(section) {
 		type_ = AnimationType::Mandelbrot;
 		map();
 	}
@@ -46,7 +46,7 @@ namespace PixelMaestro {
 	 * @param colors
 	 * @param num_colors
 	 */
-	void MandelbrotAnimation::set_palette(Colors::RGB *colors, uint8_t num_colors) {
+	void MandelbrotAnimation::set_palette(const Colors::RGB colors[], uint8_t num_colors) {
 		palette_->set_colors(colors, num_colors);
 		max_iterations_ = num_colors;
 	}
@@ -57,10 +57,10 @@ namespace PixelMaestro {
 		for (uint8_t x = 0; x < dimensions_.x; x++) {
 			for (uint8_t y = 0; y < dimensions_.y; y++) {
 				if (map_[y][x] != 255) {
-					section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
+					section_.set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
 				}
 				else {
-					section_->set_one(x, y, &black_, timer_->get_step_count());
+					section_.set_one(x, y, black_, timer_->get_step_count());
 				}
 			}
 		}

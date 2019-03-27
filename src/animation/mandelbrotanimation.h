@@ -11,9 +11,9 @@
 namespace PixelMaestro {
 	class MandelbrotAnimation : public MappedAnimation {
 		public:
-			explicit MandelbrotAnimation(Section* section);
+			explicit MandelbrotAnimation(Section& section);
 			~MandelbrotAnimation() = default;
-			void set_palette(Colors::RGB *colors, uint8_t num_colors);
+			void set_palette(const Colors::RGB colors[], uint8_t num_colors);
 			void update();
 
 		private:

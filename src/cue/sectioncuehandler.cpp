@@ -3,7 +3,7 @@
 
 namespace PixelMaestro {
 	uint8_t* SectionCueHandler::remove_animation(uint8_t section_num, uint8_t layer_num, bool clear_pixels) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::RemoveAnimation,
 			section_num,
@@ -15,7 +15,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::remove_canvas(uint8_t section_num, uint8_t layer_num) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::RemoveCanvas,
 			section_num,
@@ -26,7 +26,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::remove_layer(uint8_t section_num, uint8_t layer_num) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::RemoveLayer,
 			section_num,
@@ -38,7 +38,7 @@ namespace PixelMaestro {
 
 	uint8_t* SectionCueHandler::set_animation(uint8_t section_num, uint8_t layer_num, AnimationType animation_type, bool preserve_settings) {
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetAnimation,
 			section_num,
@@ -51,7 +51,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::set_brightness(uint8_t section_num, uint8_t layer_num, uint8_t brightness) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetBrightness,
 			section_num,
@@ -63,7 +63,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::set_canvas(uint8_t section_num, uint8_t layer_num, uint16_t num_frames) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetCanvas,
 			section_num,
@@ -78,7 +78,7 @@ namespace PixelMaestro {
 		IntByteConvert x_byte = IntByteConvert(x);
 		IntByteConvert y_byte = IntByteConvert(y);
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetDimensions,
 			section_num,
@@ -93,7 +93,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::set_layer(uint8_t section_num, uint8_t layer_num, Colors::MixMode mix_mode, uint8_t alpha) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetLayer,
 			section_num,
@@ -106,7 +106,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::set_mirror(uint8_t section_num, uint8_t layer_num, bool x, bool y) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetMirror,
 			section_num,
@@ -122,7 +122,7 @@ namespace PixelMaestro {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetOffset,
 			section_num,
@@ -140,7 +140,7 @@ namespace PixelMaestro {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetScroll,
 			section_num,

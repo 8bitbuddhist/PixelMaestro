@@ -13,7 +13,7 @@ namespace PixelMaestro {
 	 */
 	void Pixel::clear() {
 		current_color_ = {0, 0, 0};
-		next_color_ = nullptr;
+		next_color_ = {0, 0, 0};
 		step_count_ = 0;
 	}
 
@@ -22,8 +22,8 @@ namespace PixelMaestro {
 
 		@return The current color.
 	*/
-	Colors::RGB* Pixel::get_color() {
-		return &current_color_;
+	const Colors::RGB& Pixel::get_color() {
+		return current_color_;
 	}
 
 	/**
@@ -32,15 +32,12 @@ namespace PixelMaestro {
 		@param next_color Target color.
 		@param step_count The number of steps to the target color.
 	*/
-	void Pixel::set_next_color(Colors::RGB* next_color, uint8_t step_count) {
-		// Only trigger an update if the next color is valid.
-		if (next_color != nullptr) {
-			this->next_color_ = next_color;
-			step_[0] = (next_color->r - current_color_.r) / (float)step_count;
-			step_[1] = (next_color->g - current_color_.g) / (float)step_count;
-			step_[2] = (next_color->b - current_color_.b) / (float)step_count;
-			step_count_ = step_count;
-		}
+	void Pixel::set_next_color(const Colors::RGB& next_color, uint8_t step_count) {
+		this->next_color_ = next_color;
+		step_[0] = (next_color.r - current_color_.r) / (float)step_count;
+		step_[1] = (next_color.g - current_color_.g) / (float)step_count;
+		step_[2] = (next_color.b - current_color_.b) / (float)step_count;
+		step_count_ = step_count;
 	}
 
 	/**
@@ -56,9 +53,7 @@ namespace PixelMaestro {
 			step_count_--;
 		}
 		else {
-			if (next_color_ != nullptr) {
-				current_color_ = *next_color_;
-			}
+			current_color_ = next_color_;
 		}
 	}
 }

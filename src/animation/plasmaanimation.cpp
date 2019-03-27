@@ -2,7 +2,7 @@
 #include "plasmaanimation.h"
 
 namespace PixelMaestro {
-	PlasmaAnimation::PlasmaAnimation(Section* section) : MappedAnimation(section) {
+	PlasmaAnimation::PlasmaAnimation(Section& section) : MappedAnimation(section) {
 		type_ = AnimationType::Plasma;
 		map();
 	}
@@ -58,7 +58,7 @@ namespace PixelMaestro {
 
 		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				section_->set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
+				section_.set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
 			}
 		}
 

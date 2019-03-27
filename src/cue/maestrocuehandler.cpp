@@ -5,7 +5,7 @@
 namespace PixelMaestro {
 
 	uint8_t* MaestroCueHandler::remove_show() {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::RemoveShow
 		);
@@ -14,7 +14,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* MaestroCueHandler::set_brightness(uint8_t brightness) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::SetBrightness
 		);
@@ -24,7 +24,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* MaestroCueHandler::set_show() {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::SetShow
 		);
@@ -35,7 +35,7 @@ namespace PixelMaestro {
 	uint8_t* MaestroCueHandler::set_timer(uint16_t interval) {
 		IntByteConvert interval_byte = IntByteConvert(interval);
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::SetTimer
 		);
@@ -46,7 +46,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* MaestroCueHandler::start() {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::Start
 		);
@@ -55,7 +55,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* MaestroCueHandler::stop() {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::Stop
 		);
@@ -66,7 +66,7 @@ namespace PixelMaestro {
 	uint8_t* MaestroCueHandler::sync(const uint32_t new_time) {
 		IntByteConvert last_time_byte(new_time);
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::Sync
 		);

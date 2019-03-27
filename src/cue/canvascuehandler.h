@@ -53,7 +53,7 @@ namespace PixelMaestro {
 			uint8_t* set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t frame_index);
 			uint8_t* set_frame_timer(uint8_t section_num, uint8_t layer_num, uint16_t speed);
 			uint8_t* set_num_frames(uint8_t section_num, uint8_t layer_num, uint16_t num_frames);
-			uint8_t* set_palette(uint8_t section_num, uint8_t layer_num, Palette* palette);
+			uint8_t* set_palette(uint8_t section_num, uint8_t layer_num, const Palette& palette);
 			uint8_t* start_frame_timer(uint8_t section_num, uint8_t layer_num);
 			uint8_t* stop_frame_timer(uint8_t section_num, uint8_t layer_num);
 

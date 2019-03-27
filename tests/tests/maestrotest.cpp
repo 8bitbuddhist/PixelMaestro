@@ -36,7 +36,7 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 
 	SECTION("Verify update works.") {
 		Section* s1 = maestro.get_section(0);
-		s1->set_one(0, 0, &ColorPresets::White, 1);
+		s1->set_one(0, 0, ColorPresets::White, 1);
 
 		// Try without forcing a refresh
 		REQUIRE(maestro.update(0, false) == false);

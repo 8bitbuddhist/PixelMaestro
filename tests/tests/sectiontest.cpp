@@ -35,7 +35,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 
 		maestro.update(101);
 
-		REQUIRE(*section->get_pixel(test_pixel, 0)->get_color() == ColorPresets::Colorwheel[test_pixel]);
+		REQUIRE(section->get_pixel(test_pixel, 0)->get_color() == ColorPresets::Colorwheel[test_pixel]);
 	}
 
 	SECTION("Verify that different Canvas types can be added.") {
@@ -50,7 +50,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		canvas->draw_rect(0, 0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
 
 		maestro.update(100);
-		REQUIRE(section->get_pixel_color(0, 0) == *palette.get_color_at_index(0));
+		REQUIRE(section->get_pixel_color(0, 0) == palette.get_color_at_index(0));
 
 		// Delete the Canvas
 		section->remove_canvas();

@@ -6,12 +6,10 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor. Sets the speed and pause intervals.
+	 * Constructor.
 	 * @param animation the timer's parent Animation.
 	 */
-	AnimationTimer::AnimationTimer(Animation* animation) {
-		this->animation_ = animation;
-	}
+	AnimationTimer::AnimationTimer(const Animation& animation) : animation_(animation) { }
 
 	/**
 	 * Returns the amount of time (in milliseconds) to wait before starting an animation cycle.
@@ -37,8 +35,8 @@ namespace PixelMaestro {
 		 * If fading, calculate the distance in steps between the current cycle and the next cycle.
 		 * Otherwise, just jump to the next cycle.
 		 */
-		if (animation_->get_fade()) {
-			step_count_ = interval_ / (float)animation_->get_section()->get_maestro()->get_timer()->get_interval();
+		if (animation_.get_fade()) {
+			step_count_ = interval_ / (float)animation_.get_section().get_maestro()->get_timer()->get_interval();
 		}
 		else {
 			step_count_ = 0;

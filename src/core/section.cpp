@@ -69,8 +69,8 @@ namespace PixelMaestro {
 
 		@return Size of the Pixel grid.
 	*/
-	Point* Section::get_dimensions() {
-		return &dimensions_;
+	Point* Section::get_dimensions() const {
+		return const_cast<Point*>(&dimensions_);
 	}
 
 	/**
@@ -156,7 +156,7 @@ namespace PixelMaestro {
 		}
 
 		// Get the Pixel's color
-		final_color = *pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+		final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
 
 		/*
 		 * If this Section *is* a Layer, combine this Pixel's color with its parent Pixel's color.
@@ -240,37 +240,37 @@ namespace PixelMaestro {
 		Animation* new_animation = nullptr;
 		switch(animation_type) {
 			case AnimationType::Blink:
-				new_animation = new BlinkAnimation(this);
+				new_animation = new BlinkAnimation(*this);
 				break;
 			case AnimationType::Cycle:
-				new_animation = new CycleAnimation(this);
+				new_animation = new CycleAnimation(*this);
 				break;
 			case AnimationType::Fire:
-				new_animation = new FireAnimation(this);
+				new_animation = new FireAnimation(*this);
 				break;
 			case AnimationType::Lightning:
-				new_animation = new LightningAnimation(this);
+				new_animation = new LightningAnimation(*this);
 				break;
 			case AnimationType::Mandelbrot:
-				new_animation = new MandelbrotAnimation(this);
+				new_animation = new MandelbrotAnimation(*this);
 				break;
 			case AnimationType::Plasma:
-				new_animation = new PlasmaAnimation(this);
+				new_animation = new PlasmaAnimation(*this);
 				break;
 			case AnimationType::Radial:
-				new_animation = new RadialAnimation(this);
+				new_animation = new RadialAnimation(*this);
 				break;
 			case AnimationType::Random:
-				new_animation = new RandomAnimation(this);
+				new_animation = new RandomAnimation(*this);
 				break;
 			case AnimationType::Solid:
-				new_animation = new SolidAnimation(this);
+				new_animation = new SolidAnimation(*this);
 				break;
 			case AnimationType::Sparkle:
-				new_animation = new SparkleAnimation(this);
+				new_animation = new SparkleAnimation(*this);
 				break;
 			case AnimationType::Wave:
-				new_animation = new WaveAnimation(this);
+				new_animation = new WaveAnimation(*this);
 				break;
 		}
 
@@ -370,7 +370,7 @@ namespace PixelMaestro {
 	 * Sets the Section's parent Maestro.
 	 * @param maestro Parent Maestro.
 	 */
-	void Section::set_maestro(Maestro *maestro) {
+	void Section::set_maestro(Maestro* maestro) {
 		this->maestro_ = maestro;
 	}
 
@@ -415,7 +415,7 @@ namespace PixelMaestro {
 		@param color New color.
 		@param step_count Number of intermediate steps until the new color is reached.
 	*/
-	void Section::set_one(uint16_t x, uint16_t y, Colors::RGB* color, uint8_t step_count) {
+	void Section::set_one(uint16_t x, uint16_t y, const Colors::RGB& color, uint8_t step_count) {
 		// Only continue if the Pixel is within the bounds of the array.
 		if (dimensions_.in_bounds(x, y)) {
 			uint32_t index = dimensions_.get_inline_index(x, y);

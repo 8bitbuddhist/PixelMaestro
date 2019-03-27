@@ -17,16 +17,20 @@ WARNING: The following Cues have been removed/changed. You will need to regenera
 - Revised Section rendering logic.
 	- Canvases now write color changes directly to Pixels.
 	- Canvases are no longer rendered in `Section::get_pixel_color()`
+- Rewrote Pixel rendering logic
+	- Replaced `next_color_` pointer with struct.
+	- Removed nullptr checks.
 - Rewrote CueHandlers to reduce program size.
 - Radial animation now updates when changing resolution.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting Canvases larger than 255x255.
-- Added buffer overflow check to CanvasCueHandler DrawFrame method.
+- Added buffer overflow check to `CanvasCueHandler::draw_frame()`.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
+- Changed a lot of internal pointers to references.
 
 ### Removed
 - Wave animation mirror option.
-- Removed `Canvas::in_bounds()` (see `Point::in_bounds()`).
-- Removed `Canvas::get_pixel_color()`.
+- Removed `Canvas::in_bounds()` (see `Point::in_bounds()` instead).
+- Removed `Canvas::get_pixel_color()` (see `Section::get_pixel_color()` instead).
 
 ## [v1.0.2] - 2018-12-03
 ### Added

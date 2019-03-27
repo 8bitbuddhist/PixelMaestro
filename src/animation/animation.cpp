@@ -9,9 +9,8 @@ namespace PixelMaestro {
 	 * Constructor.
 	 * @param section The Section that this animation will render in.
 	 */
-	Animation::Animation(Section* section) {
-		this->section_ = section;
-		this->timer_ = new AnimationTimer(this);
+	Animation::Animation(Section& section) : section_(section) {
+		this->timer_ = new AnimationTimer(*this);
 	}
 
 	/**
@@ -19,8 +18,8 @@ namespace PixelMaestro {
 	 * @return Animation's center.
 	 */
 	Point Animation::get_center() const {
-		return Point(section_->get_dimensions()->x / 2,
-					 section_->get_dimensions()->y / 2);
+		return Point(section_.get_dimensions()->x / 2,
+					 section_.get_dimensions()->y / 2);
 	}
 
 	/**
@@ -69,7 +68,7 @@ namespace PixelMaestro {
 	 * Returns the Animation's parent Section.
 	 * @return Parent Section.
 	 */
-	Section* Animation::get_section() const {
+	Section& Animation::get_section() const {
 		return section_;
 	}
 

@@ -15,16 +15,16 @@ namespace PixelMaestro {
 		public:
 			Pixel() {}
 			void clear();
-			Colors::RGB* get_color();
-			void set_next_color(Colors::RGB* next_color, uint8_t step_count);
+			const Colors::RGB& get_color();
+			void set_next_color(const Colors::RGB& next_color, uint8_t step_count);
 			void update();
 
 		private:
 			/// The Pixel's current color.
-			Colors::RGB current_color_;
+			Colors::RGB current_color_ = {0, 0, 0};
 
 			/// The Pixel's target color.
-			Colors::RGB* next_color_ = nullptr;
+			Colors::RGB next_color_ = {0, 0, 0};
 
 			/// The size of each step from the Pixel's current color to its next color.
 			int8_t step_[3] = {0, 0, 0};

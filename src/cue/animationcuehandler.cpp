@@ -10,7 +10,7 @@ namespace PixelMaestro {
 
 	// Animation-specific Cues
 	uint8_t* AnimationCueHandler::set_fire_options(uint8_t section_num, uint8_t layer_num, uint8_t multiplier) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetFireOptions,
 			section_num,
@@ -22,7 +22,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_lightning_options(uint8_t section_num, uint8_t layer_num, uint8_t num_bolts, int8_t drift, uint8_t fork_chance) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetLightningOptions,
 			section_num,
@@ -39,7 +39,7 @@ namespace PixelMaestro {
 		FloatByteConvert size_byte(size);
 		FloatByteConvert resolution_byte(resolution);
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetPlasmaOptions,
 			section_num,
@@ -58,7 +58,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_radial_options(uint8_t section_num, uint8_t layer_num, uint8_t resolution) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetRadialOptions,
 			section_num,
@@ -70,7 +70,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_sparkle_options(uint8_t section_num, uint8_t layer_num, uint8_t threshold) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetSparkleOptions,
 			section_num,
@@ -82,7 +82,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, int8_t skew) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetWaveOptions,
 			section_num,
@@ -95,7 +95,7 @@ namespace PixelMaestro {
 
 	// General-purpose Cues
 	uint8_t* AnimationCueHandler::set_cycle_index(uint8_t section_num, uint8_t layer_num, uint8_t cycle_index) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetCycleIndex,
 			section_num,
@@ -107,7 +107,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_fade(uint8_t section_num, uint8_t layer_num, bool fade) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetFade,
 			section_num,
@@ -119,7 +119,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_orientation(uint8_t section_num, uint8_t layer_num, Animation::Orientation orientation) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetOrientation,
 			section_num,
@@ -130,14 +130,14 @@ namespace PixelMaestro {
 		return controller_->assemble(++index);
 	}
 
-	uint8_t* AnimationCueHandler::set_palette(uint8_t section_num, uint8_t layer_num, Palette* palette) {
-		uint8_t index = start_cue(
+	uint8_t* AnimationCueHandler::set_palette(uint8_t section_num, uint8_t layer_num, const Palette& palette) {
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetPalette,
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = palette->get_num_colors();
+		controller_->get_buffer()[++index] = palette.get_num_colors();
 
 		uint16_t palette_size= serialize_palette(&controller_->get_buffer()[++index], palette);
 
@@ -145,7 +145,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_reverse(uint8_t section_num, uint8_t layer_num, bool reverse) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetReverse,
 			section_num,
@@ -160,7 +160,7 @@ namespace PixelMaestro {
 		IntByteConvert interval_byte(interval);
 		IntByteConvert delay_byte(delay);
 
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetTimer,
 			section_num,
@@ -175,7 +175,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::start(uint8_t section_num, uint8_t layer_num) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::Start,
 			section_num,
@@ -186,7 +186,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::stop(uint8_t section_num, uint8_t layer_num) {
-		uint8_t index = start_cue(
+		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::Stop,
 			section_num,

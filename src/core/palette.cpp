@@ -6,7 +6,7 @@ namespace PixelMaestro {
 	 * @param colors Source color array.
 	 * @param size Number of colors in the array.
 	 */
-	Palette::Palette(Colors::RGB *colors, uint8_t size) {
+	Palette::Palette(const Colors::RGB colors[], uint8_t size) {
 		set_colors(colors, size);
 	}
 
@@ -37,14 +37,12 @@ namespace PixelMaestro {
 		@param index Desired index.
 		@return Color at the specified index.
 	*/
-	Colors::RGB* Palette::get_color_at_index(uint8_t index) const {
-		if (colors_ == nullptr) return nullptr;
-
+	Colors::RGB& Palette::get_color_at_index(uint8_t index) const {
 		if (index >= num_colors_) {
-			return &colors_[index % num_colors_];
+			return colors_[index % num_colors_];
 		}
 		else {
-			return &colors_[index];
+			return colors_[index];
 		}
 	}
 
@@ -69,7 +67,7 @@ namespace PixelMaestro {
 	 * @param colors New colors.
 	 * @param size New size.
 	 */
-	void Palette::set_colors(Colors::RGB *colors, uint8_t num_colors) {
+	void Palette::set_colors(const Colors::RGB colors[], uint8_t num_colors) {
 		delete [] this->colors_;
 
 		this->num_colors_ = num_colors;

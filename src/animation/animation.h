@@ -25,7 +25,7 @@ namespace PixelMaestro {
 				Vertical
 			};
 
-			explicit Animation(Section* section);
+			explicit Animation(Section& section);
 			virtual ~Animation();
 			Point get_center() const;
 			uint8_t get_cycle_index() const;
@@ -33,7 +33,7 @@ namespace PixelMaestro {
 			Orientation get_orientation() const;
 			Palette* get_palette() const;
 			bool get_reverse() const;
-			Section* get_section() const;
+			Section& get_section() const;
 			AnimationTimer* get_timer() const;
 			AnimationType get_type() const;
 			void set_cycle_index(uint8_t index);
@@ -65,7 +65,7 @@ namespace PixelMaestro {
 			bool reverse_ = false;
 
 			/// The Animation's parent Section.
-			Section* section_ = nullptr;
+			Section& section_;
 
 			/// The Animation's timer.
 			AnimationTimer* timer_ = nullptr;
