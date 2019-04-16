@@ -7,6 +7,7 @@
 #include "maestro.h"
 #include "section.h"
 
+// FIXME: Convert all (relevant) pointer arguments to references
 namespace PixelMaestro {
 
 	/**

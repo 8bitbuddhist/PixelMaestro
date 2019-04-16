@@ -13,7 +13,6 @@ namespace PixelMaestro {
 	 */
 	void Pixel::clear() {
 		current_color_ = {0, 0, 0};
-		next_color_ = {0, 0, 0};
 		step_count_ = 0;
 	}
 
@@ -33,7 +32,6 @@ namespace PixelMaestro {
 		@param step_count The number of steps to the target color.
 	*/
 	void Pixel::set_next_color(const Colors::RGB& next_color, uint8_t step_count) {
-		this->next_color_ = next_color;
 		step_[0] = (next_color.r - current_color_.r) / (float)step_count;
 		step_[1] = (next_color.g - current_color_.g) / (float)step_count;
 		step_[2] = (next_color.b - current_color_.b) / (float)step_count;
@@ -51,9 +49,6 @@ namespace PixelMaestro {
 			current_color_.b += step_[2];
 
 			step_count_--;
-		}
-		else {
-			current_color_ = next_color_;
 		}
 	}
 }

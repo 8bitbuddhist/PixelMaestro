@@ -27,9 +27,6 @@ namespace PixelMaestro {
 			/// The Pixel's current color.
 			Colors::RGB current_color_ = {0, 0, 0};
 
-			/// The Pixel's target color.
-			Colors::RGB next_color_ = {0, 0, 0};
-
 			/// The size of each step from the Pixel's current color to its next color.
 			int8_t step_[3] = {0, 0, 0};
 
