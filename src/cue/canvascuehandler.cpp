@@ -407,7 +407,7 @@ namespace PixelMaestro {
 						cue[(uint8_t)Byte::OptionsByte],
 						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
-						font,
+						*font,
 						(char*)&cue[(uint8_t)Byte::OptionsByte + 7],
 						cue[(uint8_t)Byte::OptionsByte + 6]
 					);

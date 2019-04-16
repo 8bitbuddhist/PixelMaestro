@@ -30,10 +30,10 @@ namespace PixelMaestro {
 			Timer* get_timer() const;
 			void remove_show();
 			void set_brightness(uint8_t brightness);
-			CueController* set_cue_controller(uint16_t buffer_size = UINT8_MAX);
+			CueController& set_cue_controller(uint16_t buffer_size = UINT8_MAX);
 			void set_sections(Section* sections, uint8_t num_sections);
-			Timer* set_timer(uint16_t interval);
-			Show* set_show(Event* events, uint16_t num_events);
+			Timer& set_timer(uint16_t interval);
+			Show& set_show(Event* events, uint16_t num_events);
 			void sync(const uint32_t& new_time = 0);
 			bool update(const uint32_t& current_time, bool force = false);
 

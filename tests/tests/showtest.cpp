@@ -10,11 +10,9 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 	};
 
 	Maestro maestro(sections, 1);
-	Show* show = maestro.set_show(nullptr, 0);
+	Show& show = maestro.set_show(nullptr, 0);
 
-	SECTION("Verify Show is initialized.") {
-		REQUIRE(show != nullptr);
-		REQUIRE(maestro.get_show() == show);
+	SECTION("Verify CueController gets initialized.") {
 		REQUIRE(maestro.get_cue_controller() != nullptr);
 	}
 
@@ -37,10 +35,10 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 		Event events[] = {
 			Event(1000, section_handler->set_animation(0, 0, AnimationType::Solid))
 		};
-		show->set_events(events, 1);
+		show.set_events(events, 1);
 
-		REQUIRE(show->get_events() == events);
-		REQUIRE(show->get_num_events() == 1);
+		REQUIRE(show.get_events() == events);
+		REQUIRE(show.get_num_events() == 1);
 	}
 
 	SECTION("Verify Event processing works.") {
@@ -48,10 +46,10 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 			Event(0, section_handler->set_animation(0, 0, AnimationType::Solid)),
 			Event(2, section_handler->set_animation(0, 0, AnimationType::Solid))
 		};
-		show->set_events(events, 2);
-		show->update(0);
+		show.set_events(events, 2);
+		show.update(0);
 
-		REQUIRE(show->get_current_index() == 1);
-		REQUIRE(show->get_last_time() == 0);
+		REQUIRE(show.get_current_index() == 1);
+		REQUIRE(show.get_last_time() == 0);
 	}
 }

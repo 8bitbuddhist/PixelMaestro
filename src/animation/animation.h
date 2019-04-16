@@ -41,7 +41,7 @@ namespace PixelMaestro {
 			void set_orientation(Orientation orientation);
 			void set_palette(Palette* palette);
 			void set_reverse(bool reverse);
-			AnimationTimer* set_timer(uint16_t speed, uint16_t delay = 0);
+			AnimationTimer& set_timer(uint16_t speed, uint16_t delay = 0);
 			bool update(const uint32_t& current_time);
 			virtual void update() = 0;
 
@@ -67,7 +67,7 @@ namespace PixelMaestro {
 			/// The Animation's parent Section.
 			Section& section_;
 
-			/// The Animation's timer.
+			/// The Animation's timer. This is a pointer instead of a local object because we must initialize it after the Animation.
 			AnimationTimer* timer_ = nullptr;
 
 			/// The type of Animation. Gets set in the derived class' constructor.

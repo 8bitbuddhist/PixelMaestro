@@ -144,11 +144,11 @@ namespace PixelMaestro {
 	 * @param speed Amount of time (in milliseconds) between animation cycles.
 	 * @param delay Amount of time (in milliseconds) to wait before starting an animation cycle.
 	 */
-	AnimationTimer* Animation::set_timer(uint16_t speed, uint16_t delay) {
+	AnimationTimer& Animation::set_timer(uint16_t speed, uint16_t delay) {
 		timer_->set_interval(speed, delay);
 		timer_->recalculate_step_count();
 
-		return timer_;
+		return *timer_;
 	}
 
 	/**

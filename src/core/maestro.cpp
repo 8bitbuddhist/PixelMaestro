@@ -109,12 +109,12 @@ namespace PixelMaestro {
 	 * @param buffer_size The size of the CueController buffer (defaults to 256).
 	 * @return New Cue controller.
 	 */
-	CueController* Maestro::set_cue_controller(uint16_t buffer_size) {
+	CueController& Maestro::set_cue_controller(uint16_t buffer_size) {
 		if (cue_controller_ == nullptr) {
 			cue_controller_ = new CueController(this, buffer_size);
 		}
 
-		return cue_controller_;
+		return *cue_controller_;
 	}
 
 	/**
@@ -140,7 +140,7 @@ namespace PixelMaestro {
 	 * @param num_events The number of Events.
 	 * @return New Show.
 	 */
-	Show* Maestro::set_show(Event* events, uint16_t num_events) {
+	Show& Maestro::set_show(Event* events, uint16_t num_events) {
 		if (show_ == nullptr) {
 			show_ = new Show(set_cue_controller(), events, num_events);
 		}
@@ -148,7 +148,7 @@ namespace PixelMaestro {
 			show_->set_events(events, num_events);
 		}
 
-		return show_;
+		return *show_;
 	}
 
 	/**
@@ -156,9 +156,9 @@ namespace PixelMaestro {
 	 * @param interval Update interval.
 	 * @return Maestro timer.
 	 */
-	Timer* Maestro::set_timer(uint16_t interval) {
+	Timer& Maestro::set_timer(uint16_t interval) {
 		timer_.set_interval(interval);
-		return &timer_;
+		return timer_;
 	}
 
 	/**

@@ -18,7 +18,7 @@ namespace PixelMaestro {
 
 	class Canvas {
 		public:
-			explicit Canvas(Section *section, uint16_t num_frames = 1);
+			explicit Canvas(Section& section, uint16_t num_frames = 1);
 			~Canvas();
 			void initialize();
 
@@ -28,7 +28,7 @@ namespace PixelMaestro {
 			void draw_line(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
 			void draw_point(uint8_t color_index, uint16_t x, uint16_t y);
 			void draw_rect(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
-			void draw_text(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars);
+			void draw_text(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font& font, const char* text, uint8_t num_chars);
 			void draw_triangle(uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
 			void erase_point(uint16_t x, uint16_t y);
 			uint16_t get_current_frame_index() const;
@@ -65,11 +65,8 @@ namespace PixelMaestro {
 			/// Color palette used in the Canvas.
 			Palette* palette_ = nullptr;
 
-			/**
-			 * The Canvas' parent Section.
-			 * This is automatically set after using Section::set_canvas().
-			 */
-			Section* section_ = nullptr;
+			/// The Canvas' parent Section.
+			Section& section_;
 
 			void delete_frames();
 	};

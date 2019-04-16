@@ -12,8 +12,7 @@ namespace PixelMaestro {
 	 * @param events Array of Events to queue.
 	 * @param num_events The number of Events in the queue.
 	 */
-	Show::Show(CueController* controller, Event* events, uint16_t num_events) {
-		cue_controller_ = controller;
+	Show::Show(CueController& controller, Event* events, uint16_t num_events) : cue_controller_(controller) {
 		set_events(events, num_events);
 	}
 
@@ -156,7 +155,7 @@ namespace PixelMaestro {
 		uint32_t event_time = events_[current_index_].get_time();
 		if ((timing_mode_ == TimingMode::Absolute && (current_time >= event_time)) ||
 			(timing_mode_ == TimingMode::Relative && ((current_time - last_time_) >= event_time))) {
-			cue_controller_->run(events_[current_index_].get_cue());
+			cue_controller_.run(events_[current_index_].get_cue());
 			last_time_ = current_time;
 			update_event_index();
 

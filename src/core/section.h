@@ -222,10 +222,10 @@ namespace PixelMaestro {
 			void set_dimensions(uint16_t x, uint16_t y);
 			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			void set_maestro(Maestro* maestro);
-			Mirror* set_mirror(bool x, bool y);
-			Point* set_offset(uint16_t x, uint16_t y);
+			Mirror& set_mirror(bool x, bool y);
+			Point& set_offset(uint16_t x, uint16_t y);
 			void set_one(uint16_t x, uint16_t y, const Colors::RGB& color, uint8_t step_count);
-			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
+			Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);
 			void update_scroll(const uint32_t& current_time);

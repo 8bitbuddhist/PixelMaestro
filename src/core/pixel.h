@@ -9,6 +9,10 @@
 #include <stdint.h>
 #include "colors.h"
 
+/*
+ * FIXME: There has to be a way to use less RAM per Pixel. Right now we're at 10 bytes.
+ * What if we don't store next_color_ and just calculate step_ instead?
+ */
 namespace PixelMaestro {
 	class Pixel {
 

@@ -72,8 +72,7 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 	}
 
 	SECTION("Verify Show initialization works.") {
-		Show* show = maestro.set_show(nullptr, 0);
-		REQUIRE(show != nullptr);
+		Show& show = maestro.set_show(nullptr, 0);
 		REQUIRE(maestro.get_cue_controller() != nullptr);
 	}
 }

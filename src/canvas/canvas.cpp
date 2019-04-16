@@ -13,8 +13,7 @@ namespace PixelMaestro {
 	 * @param section The Canvas' parent Section.
 	 * @param num_frames The number of frames to draw.
 	 */
-	Canvas::Canvas(Section* section, uint16_t num_frames) {
-		this->section_ = section;
+	Canvas::Canvas(Section& section, uint16_t num_frames) : section_(section) {
 		this->num_frames_ = num_frames;
 		initialize();
 	}
@@ -25,8 +24,8 @@ namespace PixelMaestro {
 	void Canvas::clear() {
 		for (uint16_t frame = 0; frame < num_frames_; frame++) {
 			set_current_frame_index(frame);
-			for (uint16_t y = 0; y < section_->get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < section_->get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
+				for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 					erase_point(x, y);
 				}
 			}
@@ -68,7 +67,7 @@ namespace PixelMaestro {
 		uint32_t radius_squared = pow(radius, 2);
 		for (cursor.x = origin_x - radius; cursor.x <= origin_x + radius; cursor.x++) {
 			for (cursor.y = origin_y - radius; cursor.y <= origin_y + radius; cursor.y++) {
-				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
+				if (section_.get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					// Check that cursor_x and cursor_y satisfy the equation
 					test_point = pow(cursor.x - origin_x, 2) + pow(cursor.y - origin_y, 2);
 					/*
@@ -96,7 +95,7 @@ namespace PixelMaestro {
 		Point frame_bounds = Point(size_x, size_y);
 		for (uint16_t y = 0; y < size_y; y++) {
 			for (uint16_t x = 0; x < size_x; x++) {
-				if (section_->get_dimensions()->in_bounds(x, y)) {
+				if (section_.get_dimensions()->in_bounds(x, y)) {
 					draw_point(frame[frame_bounds.get_inline_index(x, y)], x, y);
 				}
 			}
@@ -128,7 +127,7 @@ namespace PixelMaestro {
 		// Handle vertical lines
 		if (target_x == origin_x) {
 			while (cursor.y != target_y) {
-				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
+				if (section_.get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					draw_point(color_index, cursor.x, cursor.y);
 				}
 
@@ -147,7 +146,7 @@ namespace PixelMaestro {
 			 * For each x-coordinate, apply the slope and round the y-value to the nearest integer.
 			 */
 			while (cursor.x != target_x) {
-				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
+				if (section_.get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					draw_point(color_index, cursor.x, cursor.y);
 				}
 
@@ -168,8 +167,8 @@ namespace PixelMaestro {
 	 * @param cursor_y Starting point y coordinate.
 	 */
 	void Canvas::draw_point(uint8_t color_index, uint16_t x, uint16_t y) {
-		if (section_->get_dimensions()->in_bounds(x, y)) {
-			frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] = color_index;
+		if (section_.get_dimensions()->in_bounds(x, y)) {
+			frames_[current_frame_index_][section_.get_dimensions()->get_inline_index(x, y)] = color_index;
 		}
 	}
 
@@ -189,7 +188,7 @@ namespace PixelMaestro {
 			cursor.y = origin_y;
 			for (uint16_t row = 0; row < size_y; row++) {
 				cursor.y = origin_y + row;
-				if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
+				if (section_.get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 					// Check whether to fill
 					if (fill) {
 						draw_point(color_index, cursor.x, cursor.y);
@@ -216,7 +215,7 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void Canvas::draw_text(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font* font, const char* text, uint8_t num_chars) {
+	void Canvas::draw_text(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font& font, const char* text, uint8_t num_chars) {
 		Point cursor = {origin_x, origin_y};
 
 		for (uint16_t letter = 0; letter < num_chars; letter++) {
@@ -226,10 +225,10 @@ namespace PixelMaestro {
 			 * Each bit in the char corresponds to an individual pixel.
 			 * We use bitmasking to get the bit value, then enable the pixel based on that bit.
 			 */
-			uint8_t* current_char = font->get_char(text[letter]);
-			for (uint16_t column = 0; column < font->size.x; column++) {
-				for (uint16_t row = 0; row < font->size.y; row++) {
-					if (section_->get_dimensions()->in_bounds(cursor.x, cursor.y)) {
+			const uint8_t* current_char = font.get_char(text[letter]);
+			for (uint16_t column = 0; column < font.size.x; column++) {
+				for (uint16_t row = 0; row < font.size.y; row++) {
+					if (section_.get_dimensions()->in_bounds(cursor.x, cursor.y)) {
 						if ((current_char[column] >> row) & 1) {
 							draw_point(color_index, cursor.x + column, cursor.y + row);
 						}
@@ -238,7 +237,7 @@ namespace PixelMaestro {
 			}
 
 			// Move cursor to the location of the next letter based on the font size.
-			cursor.x += font->size.x;
+			cursor.x += font.size.x;
 		}
 	}
 
@@ -302,7 +301,7 @@ namespace PixelMaestro {
 	 * @param y Y coordinate.
 	 */
 	void Canvas::erase_point(uint16_t x, uint16_t y) {
-		frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)] = 255;
+		frames_[current_frame_index_][section_.get_dimensions()->get_inline_index(x, y)] = 255;
 	}
 
 	/**
@@ -353,7 +352,7 @@ namespace PixelMaestro {
 	 * @return Parent Section.
 	 */
 	Section* Canvas::get_section() const {
-		return section_;
+		return &section_;
 	}
 
 	/// Builds the Canvas.
@@ -361,8 +360,8 @@ namespace PixelMaestro {
 		delete_frames();
 		frames_ = new uint8_t*[num_frames_];
 		for (uint16_t frame = 0; frame < num_frames_; frame++) {
-			frames_[frame] = new uint8_t[section_->get_dimensions()->size()];
-			for (uint32_t pixel = 0; pixel < section_->get_dimensions()->size(); pixel++) {
+			frames_[frame] = new uint8_t[section_.get_dimensions()->size()];
+			for (uint32_t pixel = 0; pixel < section_.get_dimensions()->size(); pixel++) {
 				frames_[frame][pixel] = 255;
 			}
 		}
@@ -461,11 +460,11 @@ namespace PixelMaestro {
 		 * If no Palette is set, don't do anything at all.
 		 */
 		if (palette_ != nullptr) {
-			for (uint8_t y = 0; y < section_->get_dimensions()->y; y++) {
-				for (uint8_t x = 0; x < section_->get_dimensions()->x; x++) {
-					uint8_t index = frames_[current_frame_index_][section_->get_dimensions()->get_inline_index(x, y)];
+			for (uint8_t y = 0; y < section_.get_dimensions()->y; y++) {
+				for (uint8_t x = 0; x < section_.get_dimensions()->x; x++) {
+					uint8_t index = frames_[current_frame_index_][section_.get_dimensions()->get_inline_index(x, y)];
 					if (index < palette_->get_num_colors()) {
-						section_->set_one(x, y, palette_->get_color_at_index(index), 1);
+						section_.set_one(x, y, palette_->get_color_at_index(index), 1);
 					}
 				}
 			}

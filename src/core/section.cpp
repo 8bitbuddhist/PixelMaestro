@@ -314,7 +314,7 @@ namespace PixelMaestro {
 	 */
 	Canvas* Section::set_canvas(uint16_t num_frames) {
 		remove_canvas();
-		canvas_ = new Canvas(this, num_frames);
+		canvas_ = new Canvas(*this, num_frames);
 		return canvas_;
 	}
 
@@ -380,7 +380,7 @@ namespace PixelMaestro {
 	 * @param x Mirror the x axis.
 	 * @param y Mirror the y axis.
 	 */
-	Section::Mirror* Section::set_mirror(bool x, bool y) {
+	Section::Mirror& Section::set_mirror(bool x, bool y) {
 		if (x == false && y == false) {
 			delete mirror_;
 			mirror_ = nullptr;
@@ -393,7 +393,7 @@ namespace PixelMaestro {
 			mirror_->set(x, y, this->dimensions_);
 		}
 
-		return mirror_;
+		return *mirror_;
 	}
 
 	/**
@@ -402,9 +402,9 @@ namespace PixelMaestro {
 	 * @param y Offset along the y axis.
 	 * @return Offset.
 	 */
-	Point* Section::set_offset(uint16_t x, uint16_t y) {
+	Point& Section::set_offset(uint16_t x, uint16_t y) {
 		offset_.set(x, y);
-		return &offset_;
+		return offset_;
 	}
 
 	/**
@@ -434,14 +434,14 @@ namespace PixelMaestro {
 	 * @param reverse_x If true, reverses the scrolling direction along the x axis.
 	 * @param reverse_y If true, reverses the scrolling direction along the y axis.
 	 */
-	Section::Scroll* Section::set_scroll(uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
+	Section::Scroll& Section::set_scroll(uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
 		if (scroll_ == nullptr) {
 			scroll_ = new Scroll();
 		}
 
 		scroll_->set(maestro_->get_timer()->get_interval(), &dimensions_, x, y, reverse_x, reverse_y);
 
-		return scroll_;
+		return *scroll_;
 	}
 
 	/**
