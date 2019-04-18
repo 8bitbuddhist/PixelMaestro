@@ -1,17 +1,15 @@
 #ifndef BLINKANIMATION_H
 #define BLINKANIMATION_H
 
-#include "animation.h"
+#include "mappedanimation.h"
 
 namespace PixelMaestro {
-	class BlinkAnimation : public Animation {
+	class BlinkAnimation : public MappedAnimation {
 		public:
 			explicit BlinkAnimation(Section& section);
 			~BlinkAnimation() = default;
+			void map();
 			void update();
-
-		private:
-			Colors::RGB black_ = {0,0,0};
 	};
 }
 

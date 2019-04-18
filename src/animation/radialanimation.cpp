@@ -4,8 +4,8 @@
 // TODO: Offset to create spiral pattern ("golden spiral")
 namespace PixelMaestro {
 	RadialAnimation::RadialAnimation(Section& section) : MappedAnimation(section) {
-		map();
 		type_ = AnimationType::Radial;
+		map();
 	}
 
 	/**
@@ -30,7 +30,7 @@ namespace PixelMaestro {
 						map_[y][x] = 0;
 					}
 					else {
-						map_[y][x] = ((y - center.y) / (float)(x - center.x)) * resolution_;
+						map_[y][x] = static_cast<uint16_t>(((y - center.y) / (float)(x - center.x)) * resolution_) % 255;
 					}
 				}
 			}
@@ -61,12 +61,6 @@ namespace PixelMaestro {
 		if (orientation_ != last_orientation_) {
 			map();
 			last_orientation_ = orientation_;
-		}
-
-		for (uint8_t x = 0; x < dimensions_.x; x++) {
-			for (uint8_t y = 0; y < dimensions_.y; y++) {
-				section_.set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
-			}
 		}
 
 		update_cycle(0, palette_->get_num_colors());

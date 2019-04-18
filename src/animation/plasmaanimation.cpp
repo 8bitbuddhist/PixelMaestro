@@ -56,12 +56,6 @@ namespace PixelMaestro {
 	void PlasmaAnimation::update() {
 		MappedAnimation::update();
 
-		for (uint16_t y = 0; y < dimensions_.y; y++) {
-			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				section_.set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
-			}
-		}
-
 		update_cycle(0, palette_->get_num_colors());
 	}
 }

@@ -1,13 +1,14 @@
 #ifndef SOLIDANIMATION_H
 #define SOLIDANIMATION_H
 
-#include "animation.h"
+#include "mappedanimation.h"
 
 namespace PixelMaestro {
-	class SolidAnimation : public Animation {
+	class SolidAnimation : public MappedAnimation {
 		public:
 			explicit SolidAnimation(Section& section);
 			~SolidAnimation() = default;
+			void map();
 			void update();
 	};
 }

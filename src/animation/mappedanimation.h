@@ -29,6 +29,7 @@ namespace PixelMaestro {
 
 			virtual void map() = 0;
 			void rebuild_map();
+			void set_pixel_map(uint8_t x, uint8_t y, uint8_t color_index);
 			void update();
 	};
 }

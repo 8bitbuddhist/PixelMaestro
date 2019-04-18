@@ -2,8 +2,9 @@
 #include "sparkleanimation.h"
 
 namespace PixelMaestro {
-	SparkleAnimation::SparkleAnimation(Section& section) : Animation(section) {
+	SparkleAnimation::SparkleAnimation(Section& section) : MappedAnimation(section) {
 		type_ = AnimationType::Sparkle;
+		map();
 	}
 
 	/**
@@ -22,15 +23,15 @@ namespace PixelMaestro {
 		this->threshold_ = threshold;
 	}
 
-	void SparkleAnimation::update() {
+	void SparkleAnimation::map() {
 		if (orientation_ == Orientation::Vertical) {
 			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 					if (Utility::rand(255) <= threshold_) {
-						section_.set_one(x, y, palette_->get_color_at_index(y), timer_->get_step_count());
+						set_pixel_map(x, y, y);
 					}
 					else {
-						section_.set_one(x, y, black_, timer_->get_step_count());
+						set_pixel_map(x, y, 255);
 					}
 				}
 			}
@@ -39,14 +40,19 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 				for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 					if (Utility::rand(255) <= threshold_) {
-						section_.set_one(x, y, palette_->get_color_at_index(x), timer_->get_step_count());
+						set_pixel_map(x, y, x);
 					}
 					else {
-						section_.set_one(x, y, black_, timer_->get_step_count());
+						set_pixel_map(x, y, 255);
 					}
 				}
 			}
 		}
+	}
+
+	void SparkleAnimation::update() {
+		MappedAnimation::update();
+		map();
 	}
 }
 

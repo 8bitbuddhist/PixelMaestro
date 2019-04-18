@@ -15,6 +15,7 @@ namespace PixelMaestro {
 		map();
 	}
 
+	// FIXME: Streak of black Pixels when skew_ is negative
 	void WaveAnimation::map() {
 		for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
@@ -30,18 +31,6 @@ namespace PixelMaestro {
 
 	void WaveAnimation::update() {
 		MappedAnimation::update();
-
-		// Rebuild map if the orientation changes.
-		if (orientation_ != last_orientation_) {
-			map();
-			last_orientation_ = orientation_;
-		}
-
-		for (uint8_t x = 0; x < dimensions_.x; x++) {
-			for (uint8_t y = 0; y < dimensions_.y; y++) {
-				section_.set_one(x, y, palette_->get_color_at_index(map_[y][x] + cycle_index_), timer_->get_step_count());
-			}
-		}
 
 		update_cycle(0, palette_->get_num_colors());
 	}

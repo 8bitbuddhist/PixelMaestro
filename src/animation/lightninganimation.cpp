@@ -2,15 +2,16 @@
 #include "lightninganimation.h"
 
 namespace PixelMaestro {
-	LightningAnimation::LightningAnimation(Section& section) : Animation(section) {
+	LightningAnimation::LightningAnimation(Section& section) : MappedAnimation(section) {
 		type_ = AnimationType::Lightning;
+		map();
 	}
 
-	void LightningAnimation::update() {
+	void LightningAnimation::map() {
 		// Clear the grid
 		for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
-				section_.set_one(x, y, black_, timer_->get_step_count());
+				set_pixel_map(x, y, 255);
 			}
 		}
 
@@ -29,7 +30,11 @@ namespace PixelMaestro {
 				draw_bolt_horizontal(bolt, &start, drift_, fork_chance_, 102);
 			}
 		}
+	}
 
+	void LightningAnimation::update() {
+		MappedAnimation::update();
+		map();
 		update_cycle(0, palette_->get_num_colors());
 	}
 
@@ -80,7 +85,7 @@ namespace PixelMaestro {
 			}
 			cursor.x++;
 
-			section_.set_one(x, cursor.y, palette_->get_color_at_index(cycle_index_ + bolt_num), timer_->get_step_count());
+			set_pixel_map(x, cursor.y, cycle_index_ + bolt_num);
 
 			// Check to see if we should fork the bolt.
 			if (x < (uint16_t)section_.get_dimensions()->x) {
@@ -143,7 +148,7 @@ namespace PixelMaestro {
 			}
 			cursor.y++;
 
-			section_.set_one(cursor.x, y, palette_->get_color_at_index(cycle_index_ + bolt_num), timer_->get_step_count());
+			set_pixel_map(cursor.x, y, cycle_index_ + bolt_num);
 
 			if (y < (uint16_t)section_.get_dimensions()->y) {
 				uint8_t fork_roll = Utility::rand(UINT8_MAX);

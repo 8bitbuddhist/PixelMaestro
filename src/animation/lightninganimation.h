@@ -1,24 +1,23 @@
 #ifndef LIGHTNINGANIMATION_H
 #define LIGHTNINGANIMATION_H
 
-#include "animation.h"
+#include "mappedanimation.h"
 
 namespace PixelMaestro {
-	class LightningAnimation : public Animation {
+	class LightningAnimation : public MappedAnimation {
 		public:
 			explicit LightningAnimation(Section& section);
 			~LightningAnimation() = default;
 			uint8_t get_bolt_count() const;
 			uint8_t get_fork_chance() const;
 			int8_t get_drift() const;
+			void map();
 			void set_bolt_count(uint8_t bolt_count);
 			void set_drift(int8_t drift);
 			void set_fork_chance(uint8_t fork_chance);
 			void update();
 
 		private:
-			Colors::RGB black_ = {0, 0, 0};
-
 			/**
 			 * The rate that a bolt will drift.
 			 * Negative values determine the rate of drift to the left (or down if in vertical mode).
