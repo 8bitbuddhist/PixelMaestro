@@ -1,10 +1,10 @@
 #ifndef WAVEANIMATION_H
 #define WAVEANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class WaveAnimation : public MappedAnimation {
+	class WaveAnimation : public Animation {
 		public:
 			explicit WaveAnimation(Section& section);
 			~WaveAnimation() = default;

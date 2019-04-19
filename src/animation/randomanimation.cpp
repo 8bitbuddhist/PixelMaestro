@@ -2,7 +2,7 @@
 #include "../utility.h"
 
 namespace PixelMaestro {
-	RandomAnimation::RandomAnimation(Section& section) : MappedAnimation(section) {
+	RandomAnimation::RandomAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Random;
 		map();
 	}
@@ -15,10 +15,5 @@ namespace PixelMaestro {
 				set_pixel_map(x, y, Utility::rand(palette_->get_num_colors()));
 			}
 		}
-	}
-
-	void RandomAnimation::update() {
-		MappedAnimation::update();
-		map();
 	}
 }

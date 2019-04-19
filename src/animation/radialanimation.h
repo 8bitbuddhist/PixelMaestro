@@ -1,10 +1,10 @@
 #ifndef RADIALANIMATION_H
 #define RADIALANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class RadialAnimation : public MappedAnimation {
+	class RadialAnimation : public Animation {
 		public:
 			explicit RadialAnimation(Section& section);
 			~RadialAnimation() = default;

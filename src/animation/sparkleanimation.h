@@ -1,17 +1,17 @@
 #ifndef SPARKLEANIMATION_H
 #define SPARKLEANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class SparkleAnimation : public MappedAnimation {
+	class SparkleAnimation : public Animation {
 		public:
 			explicit SparkleAnimation(Section& section);
 			~SparkleAnimation() = default;
 			uint8_t get_threshold() const;
 			void set_threshold(uint8_t threshold);
 			void map();
-			void update();
+			void update() {}
 
 		private:
 			/**

@@ -331,12 +331,17 @@ namespace PixelMaestro {
 		delete [] pixels_;
 		pixels_ = new Pixel[dimensions_.size()];
 
-		// Reinitialize the Canvas
+		// Resize the Animation
+		if (animation_ != nullptr) {
+			animation_->rebuild_map();
+		}
+
+		// Resize the Canvas
 		if (canvas_ != nullptr) {
 			canvas_->initialize();
 		}
 
-		// Reinitialize the Layer
+		// Resize the Layer
 		if (layer_ != nullptr) {
 			layer_->section->set_dimensions(dimensions_.x, dimensions_.y);
 		}

@@ -1,10 +1,10 @@
 #ifndef LIGHTNINGANIMATION_H
 #define LIGHTNINGANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class LightningAnimation : public MappedAnimation {
+	class LightningAnimation : public Animation {
 		public:
 			explicit LightningAnimation(Section& section);
 			~LightningAnimation() = default;

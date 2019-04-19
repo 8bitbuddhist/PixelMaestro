@@ -1,7 +1,7 @@
 #include "blinkanimation.h"
 
 namespace PixelMaestro {
-	BlinkAnimation::BlinkAnimation(Section& section) : MappedAnimation(section) {
+	BlinkAnimation::BlinkAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Blink;
 		map();
 	}
@@ -12,14 +12,14 @@ namespace PixelMaestro {
 			if (orientation_ == Orientation::Vertical) {
 				for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 					for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
-						map_[y][x] = y;
+						set_pixel_map(x, y, y);
 					}
 				}
 			}
 			else {	// Horizontal
 				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 					for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
-						map_[y][x] = x;
+						set_pixel_map(x, y, x);
 					}
 				}
 			}
@@ -27,15 +27,13 @@ namespace PixelMaestro {
 		else {
 			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
-					map_[y][x] = 255;
+					set_pixel_map(x, y, 255);
 				}
 			}
 		}
 	}
 
 	void BlinkAnimation::update() {
-		MappedAnimation::update();
-		map();
 		update_cycle(0, 2);
 	}
 }

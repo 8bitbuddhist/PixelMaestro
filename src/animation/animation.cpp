@@ -6,11 +6,12 @@
 
 namespace PixelMaestro {
 	/**
-	 * Constructor.
+	 * Constructor. Initializes the timer and map.
 	 * @param section The Section that this animation will render in.
 	 */
 	Animation::Animation(Section& section) : section_(section) {
 		this->timer_ = new AnimationTimer(*this);
+		rebuild_map();
 	}
 
 	/**
@@ -89,6 +90,24 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Regenerates the color-to-pixel map.
+	 */
+	void Animation::rebuild_map() {
+		// Regenerate the color-to-pixel mapping.
+		for (uint8_t y = 0; y < dimensions_.y; y++) {
+			delete [] map_[y];
+		}
+		delete [] map_;
+
+		dimensions_ = *section_.get_dimensions();
+
+		map_ = new uint8_t*[dimensions_.y];
+		for (uint8_t y = 0; y < dimensions_.y; y++) {
+			map_[y]	= new uint8_t[dimensions_.x] {0};
+		}
+	}
+
+	/**
 	 * Sets the cycle index to the specified index.
 	 *
 	 * @param index New cycle index.
@@ -118,6 +137,7 @@ namespace PixelMaestro {
 	 */
 	void Animation::set_orientation(Orientation orientation) {
 		this->orientation_ = orientation;
+		map();
 	}
 
 	/**
@@ -127,6 +147,18 @@ namespace PixelMaestro {
 	 */
 	void Animation::set_palette(Palette* palette) {
 		this->palette_ = palette;
+	}
+
+	/**
+	 * Assigns the specified Pixel to the specified color.
+	 * @param x Pixel's x coordinate.
+	 * @param y Pixel's y coordinate.
+	 * @param color_index Index of the color to set.
+	 */
+	void Animation::set_pixel_map(uint8_t x, uint8_t y, uint8_t color_index) {
+		map_[y][x] = color_index;
+
+		// TODO: Generate fade map
 	}
 
 	/**
@@ -159,16 +191,35 @@ namespace PixelMaestro {
 	 */
 	bool Animation::update(const uint32_t &current_time) {
 		// If the color palette is not set, exit.
-		if (palette_ == nullptr || palette_->get_num_colors() == 0) {
-			return false;
-		}
+		if (palette_ == nullptr || palette_->get_num_colors() == 0) return false;
+
+		/*
+		 * TODO: If fading is enabled, adjust each Pixel's output.
+		 *	If the timer expires, regenerate the map and apply the color to each Pixel.
+		 */
 
 		if (timer_->update(current_time)) {
-			// Run the derived Animation's update function.
+			map();
 			update();
+			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
+				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
+					// Color index 255 reserved for black
+					if (map_[y][x] == 255) {
+						section_.set_one(x, y, Colors::RGB(0, 0, 0), timer_->get_step_count());
+					}
+					else {
+						section_.set_one(x,
+							y,
+							palette_->get_color_at_index(map_[y][x] + cycle_index_),
+							timer_->get_step_count()
+						);
+					}
+				}
+			}
 
 			return true;
 		}
+
 		return false;
 	}
 
@@ -201,5 +252,11 @@ namespace PixelMaestro {
 
 	Animation::~Animation() {
 		delete timer_;
+
+		// Destroy the map
+		for (uint8_t y = 0; y < dimensions_.y; y++) {
+			delete [] map_[y];
+		}
+		delete [] map_;
 	}
 }

@@ -6,10 +6,10 @@
 #ifndef MANDELBROTANIMATION_H
 #define MANDELBROTANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class MandelbrotAnimation : public MappedAnimation {
+	class MandelbrotAnimation : public Animation {
 		public:
 			explicit MandelbrotAnimation(Section& section);
 			~MandelbrotAnimation() = default;

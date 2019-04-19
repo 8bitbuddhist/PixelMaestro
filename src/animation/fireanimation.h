@@ -1,10 +1,10 @@
 #ifndef FIREANIMATION_H
 #define FIREANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class FireAnimation : public MappedAnimation {
+	class FireAnimation : public Animation {
 		public:
 			explicit FireAnimation(Section& section);
 			~FireAnimation() = default;

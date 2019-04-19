@@ -1,7 +1,7 @@
 #include "waveanimation.h"
 
 namespace PixelMaestro {
-	WaveAnimation::WaveAnimation(Section& section) : MappedAnimation(section) {
+	WaveAnimation::WaveAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Wave;
 		map();
 	}
@@ -20,18 +20,16 @@ namespace PixelMaestro {
 		for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 				if (orientation_ == Orientation::Vertical) {
-					map_[y][x] = y + (x * skew_);
+					set_pixel_map(x, y, y + (x * skew_));
 				}
 				else {	// Horizontal
-					map_[y][x] = x + (y * skew_);
+					set_pixel_map(x, y, x + (y * skew_));
 				}
 			}
 		}
 	}
 
 	void WaveAnimation::update() {
-		MappedAnimation::update();
-
 		update_cycle(0, palette_->get_num_colors());
 	}
 }

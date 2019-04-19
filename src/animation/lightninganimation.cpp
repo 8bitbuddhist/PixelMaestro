@@ -2,7 +2,7 @@
 #include "lightninganimation.h"
 
 namespace PixelMaestro {
-	LightningAnimation::LightningAnimation(Section& section) : MappedAnimation(section) {
+	LightningAnimation::LightningAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Lightning;
 		map();
 	}
@@ -33,8 +33,6 @@ namespace PixelMaestro {
 	}
 
 	void LightningAnimation::update() {
-		MappedAnimation::update();
-		map();
 		update_cycle(0, palette_->get_num_colors());
 	}
 

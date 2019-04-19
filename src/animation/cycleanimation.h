@@ -1,10 +1,10 @@
 #ifndef CYCLEANIMATION_H
 #define CYCLEANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class CycleAnimation : public MappedAnimation {
+	class CycleAnimation : public Animation {
 		public:
 			explicit CycleAnimation(Section& section);
 			~CycleAnimation() = default;

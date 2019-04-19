@@ -2,7 +2,7 @@
 #include "fireanimation.h"
 
 namespace PixelMaestro {
-	FireAnimation::FireAnimation(Section& section) : MappedAnimation(section)	{
+	FireAnimation::FireAnimation(Section& section) : Animation(section)	{
 		type_ = AnimationType::Fire;
 		map();
 	}
@@ -35,12 +35,12 @@ namespace PixelMaestro {
 		for (uint16_t y = 0; y < dimensions_.y - 1; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				// http://lodev.org/cgtutor/fire.html
-				map_[y][x] =
+				set_pixel_map(x, y,
 					(map_[(y + 1) % dimensions_.y][(x - 1 + dimensions_.x) % dimensions_.x] +
 					map_[(y + 1) % dimensions_.y][x % dimensions_.x] +
 					map_[(y + 1) % dimensions_.y][(x + 1) % dimensions_.x] +
 					map_[(y + 2) % dimensions_.y][x % dimensions_.x]) *
-					(float)((this->multiplier_ + 200) / (float)1000);	// 200 is a magic number added to the multiplier to get a decently sized flame effect without hitting the limits of uint8_t.
+					(float)((this->multiplier_ + 200) / (float)1000));	// 200 is a magic number added to the multiplier to get a decently sized flame effect without hitting the limits of uint8_t.
 			}
 		}
 	}
@@ -54,8 +54,6 @@ namespace PixelMaestro {
 	}
 
 	void FireAnimation::update() {
-		MappedAnimation::update();
-		// Rebuild the map on each frame
 		map();
 	}
 }

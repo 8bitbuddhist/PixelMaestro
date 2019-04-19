@@ -1,15 +1,15 @@
 #ifndef RANDOMANIMATION_H
 #define RANDOMANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace PixelMaestro {
-	class RandomAnimation : public MappedAnimation {
+	class RandomAnimation : public Animation {
 		public:
 			explicit RandomAnimation(Section& section);
 			~RandomAnimation() = default;
 			void map();
-			void update();
+			void update() {}
 	};
 }
 

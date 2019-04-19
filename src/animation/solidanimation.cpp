@@ -1,7 +1,7 @@
 #include "solidanimation.h"
 
 namespace PixelMaestro {
-	SolidAnimation::SolidAnimation(Section& section) : MappedAnimation(section) {
+	SolidAnimation::SolidAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Solid;
 		map();
 	}
@@ -21,9 +21,5 @@ namespace PixelMaestro {
 				}
 			}
 		}
-	}
-
-	void SolidAnimation::update() {
-		MappedAnimation::update();
 	}
 }

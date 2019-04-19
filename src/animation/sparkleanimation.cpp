@@ -2,7 +2,7 @@
 #include "sparkleanimation.h"
 
 namespace PixelMaestro {
-	SparkleAnimation::SparkleAnimation(Section& section) : MappedAnimation(section) {
+	SparkleAnimation::SparkleAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Sparkle;
 		map();
 	}
@@ -48,11 +48,6 @@ namespace PixelMaestro {
 				}
 			}
 		}
-	}
-
-	void SparkleAnimation::update() {
-		MappedAnimation::update();
-		map();
 	}
 }
 

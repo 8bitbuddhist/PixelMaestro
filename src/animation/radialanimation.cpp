@@ -3,7 +3,7 @@
 
 // TODO: Offset to create spiral pattern ("golden spiral")
 namespace PixelMaestro {
-	RadialAnimation::RadialAnimation(Section& section) : MappedAnimation(section) {
+	RadialAnimation::RadialAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Radial;
 		map();
 	}
@@ -27,10 +27,10 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
 				for (uint16_t x = 0; x < dimensions_.x; x++) {
 					if (x == center.x || y == center.y) {
-						map_[y][x] = 0;
+						set_pixel_map(x, y, 0);
 					}
 					else {
-						map_[y][x] = static_cast<uint16_t>(((y - center.y) / (float)(x - center.x)) * resolution_) % 255;
+						set_pixel_map(x, y, static_cast<uint16_t>(((y - center.y) / (float)(x - center.x)) * resolution_) % 255);
 					}
 				}
 			}
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
 				uint16_t y_squared_ = pow(y - center.y, 2);
 				for (uint16_t x = 0; x < dimensions_.x; x++) {
-					map_[y][x] = sqrt(pow(x - center.x, 2) + y_squared_);
+					set_pixel_map(x, y, sqrt(pow(x - center.x, 2) + y_squared_));
 				}
 			}
 		}
@@ -56,13 +56,6 @@ namespace PixelMaestro {
 	}
 
 	void RadialAnimation::update() {
-		MappedAnimation::update();
-		// Rebuild map if the orientation changes.
-		if (orientation_ != last_orientation_) {
-			map();
-			last_orientation_ = orientation_;
-		}
-
 		update_cycle(0, palette_->get_num_colors());
 	}
 }
