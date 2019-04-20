@@ -31,10 +31,10 @@ namespace PixelMaestro {
 				}
 
 				if (iterations_ < max_iterations_) {
-					set_pixel_map(x, y, iterations_);
+					set_map_color_index(x, y, iterations_);
 				}
 				else {
-					set_pixel_map(x, y, 255);
+					set_map_color_index(x, y, 255);
 				}
 			}
 		}

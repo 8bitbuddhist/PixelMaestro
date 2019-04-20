@@ -51,7 +51,7 @@ namespace PixelMaestro {
 
 			/**
 			 * The time that the last Event ran.
-			 * We don't use Timing.h because we don't need to track an interval.
+			 * We don't use Timers because we don't need to track an interval.
 			 */
 			uint32_t last_time_ = 0;
 

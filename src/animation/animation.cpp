@@ -131,6 +131,16 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Assigns the specified Pixel to the specified color.
+	 * @param x Pixel's x coordinate.
+	 * @param y Pixel's y coordinate.
+	 * @param color_index Index of the color to set.
+	 */
+	void Animation::set_map_color_index(uint8_t x, uint8_t y, uint8_t color_index) {
+		map_[y][x] = color_index;
+	}
+
+	/**
 	 * Sets the animation's orientation.
 	 *
 	 * @param orientation New orientation.
@@ -147,18 +157,6 @@ namespace PixelMaestro {
 	 */
 	void Animation::set_palette(Palette* palette) {
 		this->palette_ = palette;
-	}
-
-	/**
-	 * Assigns the specified Pixel to the specified color.
-	 * @param x Pixel's x coordinate.
-	 * @param y Pixel's y coordinate.
-	 * @param color_index Index of the color to set.
-	 */
-	void Animation::set_pixel_map(uint8_t x, uint8_t y, uint8_t color_index) {
-		map_[y][x] = color_index;
-
-		// TODO: Generate fade map
 	}
 
 	/**
@@ -186,6 +184,7 @@ namespace PixelMaestro {
 	/**
 	 * Updates the animation.
 	 * This checks to see if the animation should update, then calls the derived class's update method.
+	 * Finally, it renders the mapped color to each Pixel.
 	 * @param current_time The current runtime.
 	 * @return True if the update was processed.
 	 */
@@ -193,13 +192,9 @@ namespace PixelMaestro {
 		// If the color palette is not set, exit.
 		if (palette_ == nullptr || palette_->get_num_colors() == 0) return false;
 
-		/*
-		 * TODO: If fading is enabled, adjust each Pixel's output.
-		 *	If the timer expires, regenerate the map and apply the color to each Pixel.
-		 */
-
+		// FIXME: Pause in PixelMaestro Studio not working
 		if (timer_->update(current_time)) {
-			map();
+			// Call the derived Animation's update routine
 			update();
 			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {

@@ -28,10 +28,10 @@ namespace PixelMaestro {
 			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 					if (Utility::rand(255) <= threshold_) {
-						set_pixel_map(x, y, y);
+						set_map_color_index(x, y, y);
 					}
 					else {
-						set_pixel_map(x, y, 255);
+						set_map_color_index(x, y, 255);
 					}
 				}
 			}
@@ -40,14 +40,18 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 				for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 					if (Utility::rand(255) <= threshold_) {
-						set_pixel_map(x, y, x);
+						set_map_color_index(x, y, x);
 					}
 					else {
-						set_pixel_map(x, y, 255);
+						set_map_color_index(x, y, 255);
 					}
 				}
 			}
 		}
+	}
+
+	void SparkleAnimation::update() {
+		map();
 	}
 }
 

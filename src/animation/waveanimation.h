@@ -13,9 +13,6 @@ namespace PixelMaestro {
 			void update();
 
 		private:
-			/// Tracks whether the orientation has changed.
-			Animation::Orientation last_orientation_ = Orientation::Horizontal;
-
 			/// The amount to offset each row (or column).
 			int8_t skew_ = 0;
 

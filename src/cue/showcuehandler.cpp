@@ -50,7 +50,7 @@ namespace PixelMaestro {
 	}
 
 	void ShowCueHandler::run(uint8_t *cue) {
-		Show* show = controller_->get_maestro()->get_show();
+		Show* show = controller_->get_maestro().get_show();
 
 		if (show == nullptr) return;
 

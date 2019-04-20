@@ -9,29 +9,29 @@
 #include <stdint.h>
 #include "colors.h"
 
-/*
- * FIXME: There has to be a way to use less RAM per Pixel. Right now we're at 10 bytes.
- * What if we don't store next_color_ and just calculate step_ instead?
- */
 namespace PixelMaestro {
 	class Pixel {
 
 		public:
 			Pixel() {}
 			void clear();
-			const Colors::RGB& get_color();
+			Colors::RGB& get_color();
 			void set_next_color(const Colors::RGB& next_color, uint8_t step_count);
-			void update();
+			Colors::RGB update();
 
 		private:
+			struct Step {
+				int8_t r = 0;
+				int8_t g = 0;
+				int8_t b = 0;
+				uint8_t count = 0;
+			};
+
 			/// The Pixel's current color.
 			Colors::RGB current_color_ = {0, 0, 0};
 
-			/// The size of each step from the Pixel's current color to its next color.
-			int8_t step_[3] = {0, 0, 0};
-
-			/// The number of steps from the current color to the next color.
-			uint8_t step_count_ = 0;
+			/// Tracks the step from the Pixel's current color to its next color.
+			Pixel::Step step_;
 
 	};
 }

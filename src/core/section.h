@@ -27,7 +27,7 @@ namespace PixelMaestro {
 		public:
 			/// Sets the Section's scrolling behavior.
 			struct Scroll {
-				/// The original x interval. This is a hacky workaround for dealing with Cues.
+				/// The original x interval. This is really just storage for use in Cues.
 				uint16_t interval_x = 0;
 				/// The original y interval.
 				uint16_t interval_y = 0;

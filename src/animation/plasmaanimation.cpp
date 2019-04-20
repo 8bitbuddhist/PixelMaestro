@@ -30,7 +30,7 @@ namespace PixelMaestro {
 	void PlasmaAnimation::map() {
 		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				set_pixel_map(x, y, ((resolution_ + (resolution_ * sin(x / size_))) + (resolution_ + (resolution_ * sin(y / size_)))) / 2);
+				set_map_color_index(x, y, ((resolution_ + (resolution_ * sin(x / size_))) + (resolution_ + (resolution_ * sin(y / size_)))) / 2);
 			}
 		}
 	}

@@ -27,10 +27,10 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
 				for (uint16_t x = 0; x < dimensions_.x; x++) {
 					if (x == center.x || y == center.y) {
-						set_pixel_map(x, y, 0);
+						set_map_color_index(x, y, 0);
 					}
 					else {
-						set_pixel_map(x, y, static_cast<uint16_t>(((y - center.y) / (float)(x - center.x)) * resolution_) % 255);
+						set_map_color_index(x, y, static_cast<uint16_t>(((y - center.y) / (float)(x - center.x)) * resolution_) % 255);
 					}
 				}
 			}
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
 				uint16_t y_squared_ = pow(y - center.y, 2);
 				for (uint16_t x = 0; x < dimensions_.x; x++) {
-					set_pixel_map(x, y, sqrt(pow(x - center.x, 2) + y_squared_));
+					set_map_color_index(x, y, sqrt(pow(x - center.x, 2) + y_squared_));
 				}
 			}
 		}

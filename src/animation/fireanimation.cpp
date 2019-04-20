@@ -35,7 +35,7 @@ namespace PixelMaestro {
 		for (uint16_t y = 0; y < dimensions_.y - 1; y++) {
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
 				// http://lodev.org/cgtutor/fire.html
-				set_pixel_map(x, y,
+				set_map_color_index(x, y,
 					(map_[(y + 1) % dimensions_.y][(x - 1 + dimensions_.x) % dimensions_.x] +
 					map_[(y + 1) % dimensions_.y][x % dimensions_.x] +
 					map_[(y + 1) % dimensions_.y][(x + 1) % dimensions_.x] +

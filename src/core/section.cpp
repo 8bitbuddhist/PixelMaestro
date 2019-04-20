@@ -134,7 +134,6 @@ namespace PixelMaestro {
 		@return RGB value of the Pixel's final color.
 	*/
 	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color) {
-		Colors::RGB final_color;
 
 		// Adjust coordinates based on offset
 		uint16_t offset_x = (x + offset_.x) % dimensions_.x;
@@ -155,8 +154,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		// Get the Pixel's color
-		final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+		Colors::RGB final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].update();
 
 		/*
 		 * If this Section *is* a Layer, combine this Pixel's color with its parent Pixel's color.
@@ -423,8 +421,7 @@ namespace PixelMaestro {
 	void Section::set_one(uint16_t x, uint16_t y, const Colors::RGB& color, uint8_t step_count) {
 		// Only continue if the Pixel is within the bounds of the array.
 		if (dimensions_.in_bounds(x, y)) {
-			uint32_t index = dimensions_.get_inline_index(x, y);
-			pixels_[index].set_next_color(color, step_count);
+			pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, step_count);
 		}
 	}
 
@@ -477,10 +474,9 @@ namespace PixelMaestro {
 	void Section::update(const uint32_t& current_time) {
 
 		/*
-		 * First, update the Animation. This sets next_color_ for each Pixel.
-		 * Second, update the Canvas, which overwrites each Pixel's next_color_ where necessary.
-		 * Now that next_color_ is set, update each Pixel. This generates each Pixel's "true" color.
-		 * Finally, run update_scroll() to recalculate the offset to use when rendering Pixels, then update the layer.
+		 * First, update the Animation and Canvas. These set each Pixel's color output directly.
+		 * Next, update any post-processing effects. For now this is just Scroll.
+		 * Finally, update the Layer.
 		 */
 		if (animation_ != nullptr) {
 			animation_->update(current_time);
@@ -488,10 +484,6 @@ namespace PixelMaestro {
 
 		if (canvas_ != nullptr) {
 			canvas_->update(current_time);
-		}
-
-		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-			pixels_[pixel].update();
 		}
 
 		if (scroll_ != nullptr) {

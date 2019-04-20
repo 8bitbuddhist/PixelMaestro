@@ -3,7 +3,7 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v1.1] - In Progress
+## [v1.2] - In Progress
 WARNING: The following Cues have been removed/changed. You will need to regenerate any Cuefiles using these Cues.
 	- `AnimationCueHandler::set_wave_options`: removed mirror option
 	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
@@ -14,18 +14,21 @@ WARNING: The following Cues have been removed/changed. You will need to regenera
 - Added CueHandler helper functions for generating Cues.
 
 ### Changed
-- Revised Section rendering logic.
+- Revised Section rendering logic:
 	- Canvases now write color changes directly to Pixels.
 	- Canvases are no longer rendered in `Section::get_pixel_color()`
-- Rewrote Pixel rendering logic
-	- Replaced `next_color_` pointer with struct.
-	- Removed nullptr checks.
+	- Pixels update in `get_pixel_color()` instead of `update()`.
+- Revised Pixel rendering logic:
+	- Replaced `next_color_` with `step_`, which stores the amount to change the Pixel's current color on each update.
+	- Immediately return `current_color_` after `Pixel::update()`.
+- Revised Animation rendering logic:
+	- Merged `Animations` with `MappedAnimations`. All Animations now generate a color map.
+	- Added remapping on size and orientation change for all Animations.
 - Rewrote CueHandlers to reduce program size.
-- Radial animation now updates when changing resolution.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting Canvases larger than 255x255.
 - Added buffer overflow check to `CanvasCueHandler::draw_frame()`.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
-- Changed a lot of internal pointers to references.
+- Changed internal pointers to references.
 
 ### Removed
 - Wave animation mirror option.

@@ -16,8 +16,7 @@ namespace PixelMaestro {
 	 * @param maestro Maestro that processed Cues will run on.
 	 * @param buffer_size The size of the Cue buffer (defaults to 256).
 	 */
-	CueController::CueController(Maestro* maestro, uint16_t buffer_size) {
-		this->maestro_ = maestro;
+	CueController::CueController(Maestro& maestro, uint16_t buffer_size) : maestro_(maestro) {
 		this->buffer_size_ = buffer_size;
 		this->buffer_ = new uint8_t[buffer_size] {0};
 	}
@@ -176,7 +175,7 @@ namespace PixelMaestro {
 	 * Returns the controller's Maestro.
 	 * @return Maestro controlling this CueController.
 	 */
-	Maestro* CueController::get_maestro() const {
+	Maestro& CueController::get_maestro() const {
 		return maestro_;
 	}
 

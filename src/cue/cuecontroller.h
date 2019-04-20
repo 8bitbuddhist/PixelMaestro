@@ -76,7 +76,8 @@ namespace PixelMaestro {
 				ShowCueHandler
 			};
 
-			CueController(Maestro* maestro, uint16_t buffer_size = UINT8_MAX);
+			// TODO: Convert to references (if possible)
+			CueController(Maestro& maestro, uint16_t buffer_size = UINT8_MAX);
 			~CueController();
 			uint8_t* assemble(uint16_t payload_size);
 			uint8_t checksum(const uint8_t* cue, uint16_t cue_size);
@@ -90,7 +91,7 @@ namespace PixelMaestro {
 			uint16_t get_cue_size() const;
 			uint16_t get_cue_size(uint8_t* cue) const;
 			CueHandler* get_handler(Handler handler) const;
-			Maestro* get_maestro() const;
+			Maestro& get_maestro() const;
 			bool read(uint8_t byte);
 			void run();
 			void run(uint8_t* cue);
@@ -110,7 +111,7 @@ namespace PixelMaestro {
 			const uint8_t id_[3] = {'P', 'M', 'C'};
 
 			/// Maestro that Cues will run on.
-			Maestro* maestro_ = nullptr;
+			Maestro& maestro_;
 
 			/// Index for tracking buffer reads while loading a Cue by byte.
 			uint16_t read_index_ = 0;

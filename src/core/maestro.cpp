@@ -112,7 +112,7 @@ namespace PixelMaestro {
 	 */
 	CueController& Maestro::set_cue_controller(uint16_t buffer_size) {
 		if (cue_controller_ == nullptr) {
-			cue_controller_ = new CueController(this, buffer_size);
+			cue_controller_ = new CueController(*this, buffer_size);
 		}
 
 		return *cue_controller_;

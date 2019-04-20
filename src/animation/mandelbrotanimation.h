@@ -17,8 +17,6 @@ namespace PixelMaestro {
 			void update();
 
 		private:
-			Colors::RGB black_ = {0, 0, 0};
-
 			/// Tracks the number of runs through the Mandelbrot function for each Pixel.
 			uint8_t iterations_ = 0;
 

@@ -77,28 +77,28 @@ namespace PixelMaestro {
 	}
 
 	void MaestroCueHandler::run(uint8_t *cue) {
-		Maestro* maestro = controller_->get_maestro();
+		Maestro& maestro = controller_->get_maestro();
 		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
 			case Action::RemoveShow:
-				maestro->remove_show();
+				maestro.remove_show();
 				break;
 			case Action::SetBrightness:
-				maestro->set_brightness(cue[(uint8_t)Byte::OptionsByte]);
+				maestro.set_brightness(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetShow:
-				maestro->set_show(nullptr, 0);
+				maestro.set_show(nullptr, 0);
 				break;
 			case Action::SetTimer:
-				maestro->set_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
+				maestro.set_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
 				break;
 			case Action::Start:
-				maestro->get_timer()->start();
+				maestro.get_timer()->start();
 				break;
 			case Action::Stop:
-				maestro->get_timer()->stop();
+				maestro.get_timer()->stop();
 				break;
 			case Action::Sync:
-				maestro->sync(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
+				maestro.sync(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
 				break;
 		}
 	}

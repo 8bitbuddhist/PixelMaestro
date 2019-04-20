@@ -20,10 +20,10 @@ namespace PixelMaestro {
 		for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
 			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 				if (orientation_ == Orientation::Vertical) {
-					set_pixel_map(x, y, y + (x * skew_));
+					set_map_color_index(x, y, y + (x * skew_));
 				}
 				else {	// Horizontal
-					set_pixel_map(x, y, x + (y * skew_));
+					set_map_color_index(x, y, x + (y * skew_));
 				}
 			}
 		}

@@ -9,7 +9,7 @@ namespace PixelMaestro {
 			explicit RandomAnimation(Section& section);
 			~RandomAnimation() = default;
 			void map();
-			void update() {}
+			void update();
 	};
 }
 

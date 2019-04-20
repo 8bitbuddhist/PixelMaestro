@@ -14,7 +14,7 @@
 #include "../core/timer/animationtimer.h"
 
 /*
- * FIXME: Ideas for using Animations to control Pixel next color and fade:
+ * TOOD: Ideas for using Animations to control Pixel next color and fade:
  *	Goal: Remove all color changing logic from Pixels without affecting functionality.
  *	Problem: Fading complicates matters, requiring Pixels to store:
  *		- The amount of steps from current color to next color
@@ -50,12 +50,12 @@ namespace PixelMaestro {
 			AnimationTimer* get_timer() const;
 			AnimationType get_type() const;
 			virtual void map() = 0;
-			void rebuild_map();	// TODO: Rename to "initialize()"
+			void rebuild_map();
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
+			void set_map_color_index(uint8_t x, uint8_t y, uint8_t color_index);
 			void set_orientation(Orientation orientation);
 			void set_palette(Palette* palette);
-			void set_pixel_map(uint8_t x, uint8_t y, uint8_t color_index);
 			void set_reverse(bool reverse);
 			AnimationTimer& set_timer(uint16_t speed, uint16_t delay = 0);
 			bool update(const uint32_t& current_time);

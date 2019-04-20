@@ -16,9 +16,6 @@ namespace PixelMaestro {
 			/// In vertical mode, this defines the wideness of each spoke coming from the center.
 			uint8_t resolution_ = 10;
 
-			/// Tracks whether the orientation has changed.
-			Animation::Orientation last_orientation_ = Orientation::Horizontal;
-
 			void map();
 	};
 }

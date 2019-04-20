@@ -9,9 +9,10 @@ PixelMaestro is a graphics library for LED displays. It lets you create dynamic,
 - True (24-bit) color depth
 - Support for up to 256 independent, layered drawing surfaces
 - Over 10 unique, customizable animations with support for different orientations, speeds, and color schemes
-- Powerful raster graphics editing tools with support for still or animated bitmap images
-- Lightweight and flexible communications protocol for controlling devices over USB, Bluetooth, or other serial channel
-- Microcontroller and mini-PC friendly: Use with Arduino, Raspberry Pi, ESP32, and others. Runs in under 2KB of RAM and 30KB of ROM
+- Powerful raster graphics editing tools with support for still or animated images
+- Intuitive scheduling system for creating time-based animations and transitions
+- Lightweight communications protocol for controlling devices over USB, Bluetooth, or other serial channel
+- Microcontroller friendly: Use with Arduino, Raspberry Pi, ESP32, and other devices
 
 ## Getting Started
 

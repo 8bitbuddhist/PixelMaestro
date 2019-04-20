@@ -9,12 +9,13 @@ namespace PixelMaestro {
 	void CycleAnimation::map() {
 		for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
 			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
-				set_pixel_map(x, y, cycle_index_);
+				set_map_color_index(x, y, cycle_index_);
 			}
 		}
 	}
 
 	void CycleAnimation::update() {
+		map();
 		update_cycle(0, palette_->get_num_colors());
 	}
 }
