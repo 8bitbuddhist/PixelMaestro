@@ -26,10 +26,10 @@ TEST_CASE("Create and manipulate an Animation Timer.", "[Animation Timer]") {
 	};
 
 	Maestro maestro = Maestro(sections, 1);
-	Section* section = maestro.get_section(0);
-	BlinkAnimation* animation = dynamic_cast<BlinkAnimation*>(section->set_animation(AnimationType::Blink));
+	Section& section = maestro.get_section(0);
+	BlinkAnimation& animation = dynamic_cast<BlinkAnimation&>(section.set_animation(AnimationType::Blink));
 
-	AnimationTimer timer = AnimationTimer(*animation);
+	AnimationTimer timer = AnimationTimer(animation);
 	int interval = 4000;
 	int delay = 1000;
 
@@ -47,9 +47,9 @@ TEST_CASE("Create and manipulate an Animation Timer.", "[Animation Timer]") {
 	}
 
 	SECTION("Verify step count recalculation.") {
-		animation->set_fade(true);
+		animation.set_fade(true);
 
 		timer.recalculate_step_count();
-		REQUIRE(timer.get_step_count() == interval / (float)maestro.get_timer()->get_interval());
+		REQUIRE(timer.get_step_count() == interval / (float)maestro.get_timer().get_interval());
 	}
 }

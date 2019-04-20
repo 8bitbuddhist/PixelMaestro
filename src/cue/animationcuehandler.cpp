@@ -238,7 +238,7 @@ namespace PixelMaestro {
 					 * This throws off the timer, but only for a single frame.
 					 */
 					Palette* old_palette = animation->get_palette();
-					animation->set_palette(deserialize_palette(&cue[(uint8_t)Byte::OptionsByte + 1], num_colors));
+					animation->set_palette(*deserialize_palette(&cue[(uint8_t)Byte::OptionsByte + 1], num_colors));
 					animation->update(0);
 					delete old_palette;
 				}

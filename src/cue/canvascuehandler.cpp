@@ -311,7 +311,7 @@ namespace PixelMaestro {
 	uint8_t* CanvasCueHandler::start_frame_timer(uint8_t section_num, uint8_t layer_num) {
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
-			(uint8_t)Action::SetFrameTimer,
+			(uint8_t)Action::StartFrameTimer,
 			section_num,
 			layer_num
 		);
@@ -369,7 +369,7 @@ namespace PixelMaestro {
 
 					for (uint16_t y = 0; y < frame_bounds.y; y++) {
 						for (uint16_t x = 0; x < frame_bounds.x; x++) {
-							if (canvas->get_section()->get_dimensions()->in_bounds(x, y)) {
+							if (canvas->get_section()->get_dimensions().in_bounds(x, y)) {
 								canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 4 + frame_bounds.get_inline_index(x, y)], x, y);
 							}
 						}

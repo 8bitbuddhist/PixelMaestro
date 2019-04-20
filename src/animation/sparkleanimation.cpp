@@ -25,8 +25,8 @@ namespace PixelMaestro {
 
 	void SparkleAnimation::map() {
 		if (orientation_ == Orientation::Vertical) {
-			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
-				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+				for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 					if (Utility::rand(255) <= threshold_) {
 						set_map_color_index(x, y, y);
 					}
@@ -37,8 +37,8 @@ namespace PixelMaestro {
 			}
 		}
 		else {	// Horizontal
-			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
-				for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
+			for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+				for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
 					if (Utility::rand(255) <= threshold_) {
 						set_map_color_index(x, y, x);
 					}

@@ -17,8 +17,8 @@ namespace PixelMaestro {
 
 	// FIXME: Streak of black Pixels when skew_ is negative
 	void WaveAnimation::map() {
-		for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
-			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
+		for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+			for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
 				if (orientation_ == Orientation::Vertical) {
 					set_map_color_index(x, y, y + (x * skew_));
 				}

@@ -10,8 +10,8 @@ namespace PixelMaestro {
 	void RandomAnimation::map() {
 		if (palette_ == nullptr) return;
 
-		for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
-			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
+		for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+			for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 				set_map_color_index(x, y, Utility::rand(palette_->get_num_colors()));
 			}
 		}

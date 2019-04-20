@@ -69,16 +69,16 @@ namespace PixelMaestro {
 
 		@return Size of the Pixel grid.
 	*/
-	Point* Section::get_dimensions() const {
-		return const_cast<Point*>(&dimensions_);
+	Point& Section::get_dimensions() const {
+		return const_cast<Point&>(dimensions_);
 	}
 
 	/**
 	 * Returns the Section's parent Maestro.
 	 * @return Parent Maestro.
 	 */
-	Maestro* Section::get_maestro() const {
-		return maestro_;
+	Maestro& Section::get_maestro() const {
+		return *maestro_;
 	}
 
 	/**
@@ -121,8 +121,8 @@ namespace PixelMaestro {
 	 * @param y Pixel y coordinate.
 	 * @return Pixel.
 	 */
-	Pixel* Section::get_pixel(uint16_t x, uint16_t y) const {
-		return &pixels_[dimensions_.get_inline_index(x, y)];
+	Pixel& Section::get_pixel(uint16_t x, uint16_t y) const {
+		return pixels_[dimensions_.get_inline_index(x, y)];
 	}
 
 	/**
@@ -154,7 +154,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		Colors::RGB final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].update();
+		Colors::RGB final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
 
 		/*
 		 * If this Section *is* a Layer, combine this Pixel's color with its parent Pixel's color.
@@ -234,7 +234,7 @@ namespace PixelMaestro {
 	 * @param preserve_settings If true, the generic configurations in the old Animation (Palette, cycle index, orientation, fade, reverse, speed, and pause) are copied to the new Animation.
 	 * @return New Animation.
 	 */
-	Animation* Section::set_animation(AnimationType animation_type, bool preserve_settings) {
+	Animation& Section::set_animation(AnimationType animation_type, bool preserve_settings) {
 		Animation* new_animation = nullptr;
 		switch(animation_type) {
 			case AnimationType::Blink:
@@ -278,7 +278,7 @@ namespace PixelMaestro {
 		 */
 		if (this->animation_ != nullptr) {
 			if (preserve_settings) {
-				new_animation->set_palette(this->animation_->get_palette());
+				new_animation->set_palette(*this->animation_->get_palette());
 				new_animation->set_cycle_index(this->animation_->get_cycle_index());
 				new_animation->set_fade(this->animation_->get_fade());
 				new_animation->set_orientation(this->animation_->get_orientation());
@@ -292,7 +292,7 @@ namespace PixelMaestro {
 		}
 
 		this->animation_ = new_animation;
-		return animation_;
+		return *animation_;
 	}
 
 	/**
@@ -310,10 +310,10 @@ namespace PixelMaestro {
 	 * @param num_frames The number of frames in the Canvas.
 	 * @return The new Canvas.
 	 */
-	Canvas* Section::set_canvas(uint16_t num_frames) {
+	Canvas& Section::set_canvas(uint16_t num_frames) {
 		remove_canvas();
 		canvas_ = new Canvas(*this, num_frames);
-		return canvas_;
+		return *canvas_;
 	}
 
 	/**
@@ -332,6 +332,7 @@ namespace PixelMaestro {
 		// Resize the Animation
 		if (animation_ != nullptr) {
 			animation_->rebuild_map();
+			animation_->map();
 		}
 
 		// Resize the Canvas
@@ -357,24 +358,24 @@ namespace PixelMaestro {
 	 * @param alpha The Layer's transparency (0 - 255.
 	 * @return New Layer.
 	 */
-	Section::Layer* Section::set_layer(Colors::MixMode mix_mode, uint8_t alpha) {
+	Section::Layer& Section::set_layer(Colors::MixMode mix_mode, uint8_t alpha) {
 		if (layer_ == nullptr) {
-			layer_ = new Layer(this, mix_mode, alpha);
+			layer_ = new Layer(*this, mix_mode, alpha);
 		}
 		else {
 			layer_->mix_mode = mix_mode;
 			layer_->alpha = alpha;
 		}
 
-		return layer_;
+		return *layer_;
 	}
 
 	/**
 	 * Sets the Section's parent Maestro.
 	 * @param maestro Parent Maestro.
 	 */
-	void Section::set_maestro(Maestro* maestro) {
-		this->maestro_ = maestro;
+	void Section::set_maestro(Maestro& maestro) {
+		this->maestro_ = &maestro;
 	}
 
 	/**
@@ -441,7 +442,7 @@ namespace PixelMaestro {
 			scroll_ = new Scroll();
 		}
 
-		scroll_->set(maestro_->get_timer()->get_interval(), &dimensions_, x, y, reverse_x, reverse_y);
+		scroll_->set(maestro_->get_timer().get_interval(), &dimensions_, x, y, reverse_x, reverse_y);
 
 		return *scroll_;
 	}
@@ -484,6 +485,10 @@ namespace PixelMaestro {
 
 		if (canvas_ != nullptr) {
 			canvas_->update(current_time);
+		}
+
+		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+			pixels_[pixel].update();
 		}
 
 		if (scroll_ != nullptr) {

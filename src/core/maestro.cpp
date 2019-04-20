@@ -36,8 +36,8 @@ namespace PixelMaestro {
 	 * Returns the active Cue controller.
 	 * @return Cue controller.
 	 */
-	CueController* Maestro::get_cue_controller() const {
-		return cue_controller_;
+	CueController& Maestro::get_cue_controller() const {
+		return *cue_controller_;
 	}
 
 	/**
@@ -66,12 +66,8 @@ namespace PixelMaestro {
 		@param section Index of the Section to return.
 		@return Section at the specified index.
 	*/
-	Section* Maestro::get_section(uint8_t section) const {
-		if (section >= num_sections_) {
-			return nullptr;
-		}
-
-		return &sections_[section];
+	Section& Maestro::get_section(uint8_t section) const {
+		return sections_[section];
 	}
 
 	/**
@@ -86,8 +82,8 @@ namespace PixelMaestro {
 	 * Gets the Maestro's update timer.
 	 * @return Maestro timer.
 	 */
-	Timer* Maestro::get_timer() const {
-		return const_cast<Timer*>(&timer_);
+	Timer& Maestro::get_timer() const {
+		return const_cast<Timer&>(timer_);
 	}
 
 	void Maestro::remove_show() {
@@ -129,7 +125,7 @@ namespace PixelMaestro {
 		num_sections_ = num_sections;
 
 		for (uint16_t section = 0; section < num_sections; section++) {
-			sections_[section].set_maestro(this);
+			sections_[section].set_maestro(*this);
 		}
 	}
 
@@ -167,7 +163,7 @@ namespace PixelMaestro {
 	 * @param new_time The new refresh time. Leave blank to set to 0.
 	 */
 	void Maestro::sync(const uint32_t& new_time) {
-		this->get_timer()->set_last_time(new_time);
+		this->get_timer().set_last_time(new_time);
 		for (uint8_t section = 0; section < num_sections_; section++) {
 			sections_[section].sync(new_time);
 		}

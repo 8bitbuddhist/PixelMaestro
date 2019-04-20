@@ -92,10 +92,10 @@ namespace PixelMaestro {
 				maestro.set_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
 				break;
 			case Action::Start:
-				maestro.get_timer()->start();
+				maestro.get_timer().start();
 				break;
 			case Action::Stop:
-				maestro.get_timer()->stop();
+				maestro.get_timer().stop();
 				break;
 			case Action::Sync:
 				maestro.sync(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));

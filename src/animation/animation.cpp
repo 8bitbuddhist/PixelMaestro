@@ -19,8 +19,8 @@ namespace PixelMaestro {
 	 * @return Animation's center.
 	 */
 	Point Animation::get_center() const {
-		return Point(section_.get_dimensions()->x / 2,
-					 section_.get_dimensions()->y / 2);
+		return Point(section_.get_dimensions().x / 2,
+					 section_.get_dimensions().y / 2);
 	}
 
 	/**
@@ -99,7 +99,7 @@ namespace PixelMaestro {
 		}
 		delete [] map_;
 
-		dimensions_ = *section_.get_dimensions();
+		dimensions_ = section_.get_dimensions();
 
 		map_ = new uint8_t*[dimensions_.y];
 		for (uint8_t y = 0; y < dimensions_.y; y++) {
@@ -155,8 +155,8 @@ namespace PixelMaestro {
 	 *
 	 * @param palette New Palette.
 	 */
-	void Animation::set_palette(Palette* palette) {
-		this->palette_ = palette;
+	void Animation::set_palette(Palette& palette) {
+		this->palette_ = &palette;
 	}
 
 	/**
@@ -192,12 +192,11 @@ namespace PixelMaestro {
 		// If the color palette is not set, exit.
 		if (palette_ == nullptr || palette_->get_num_colors() == 0) return false;
 
-		// FIXME: Pause in PixelMaestro Studio not working
 		if (timer_->update(current_time)) {
 			// Call the derived Animation's update routine
 			update();
-			for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
-				for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
+			for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+				for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 					// Color index 255 reserved for black
 					if (map_[y][x] == 255) {
 						section_.set_one(x, y, Colors::RGB(0, 0, 0), timer_->get_step_count());

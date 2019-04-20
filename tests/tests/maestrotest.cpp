@@ -22,21 +22,21 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 
 	SECTION("Verify Maestro Sections.") {
 		REQUIRE(maestro.get_num_sections() == 2);
-		REQUIRE(maestro.get_section(0) == &sections[0]);
-		REQUIRE(maestro.get_section(1) == &sections[1]);
+		REQUIRE(&maestro.get_section(0) == &sections[0]);
+		REQUIRE(&maestro.get_section(1) == &sections[1]);
 	}
 
 	SECTION("Verify Section dimensions.") {
-		Section* s1 = maestro.get_section(0);
-		REQUIRE(*s1->get_dimensions() == s1_point);
+		Section& s1 = maestro.get_section(0);
+		REQUIRE(s1.get_dimensions() == s1_point);
 
-		Section* s2 = maestro.get_section(1);
-		REQUIRE(*s2->get_dimensions() == s2_point);
+		Section& s2 = maestro.get_section(1);
+		REQUIRE(s2.get_dimensions() == s2_point);
 	}
 
 	SECTION("Verify update works.") {
-		Section* s1 = maestro.get_section(0);
-		s1->set_one(0, 0, ColorPresets::White, 1);
+		Section& s1 = maestro.get_section(0);
+		s1.set_one(0, 0, ColorPresets::White, 1);
 
 		// Try without forcing a refresh
 		REQUIRE(maestro.update(0, false) == false);
@@ -57,9 +57,8 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 		int interval = 2500;
 		maestro.set_timer(interval);
 
-		Timer* timer = maestro.get_timer();
-		REQUIRE(timer != nullptr);
-		REQUIRE(timer->get_interval() == interval);
+		Timer& timer = maestro.get_timer();
+		REQUIRE(timer.get_interval() == interval);
 		REQUIRE(maestro.update(interval + 1) == true);
 	}
 
@@ -67,12 +66,10 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 		int buffer_size = 12345;
 		maestro.set_cue_controller(buffer_size);
 
-		REQUIRE (maestro.get_cue_controller() != nullptr);
-		REQUIRE(maestro.get_cue_controller()->get_buffer_size() == buffer_size);
+		REQUIRE(maestro.get_cue_controller().get_buffer_size() == buffer_size);
 	}
 
 	SECTION("Verify Show initialization works.") {
 		Show& show = maestro.set_show(nullptr, 0);
-		REQUIRE(maestro.get_cue_controller() != nullptr);
 	}
 }

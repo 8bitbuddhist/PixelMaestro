@@ -166,9 +166,9 @@ namespace PixelMaestro {
 				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For The amount of transparency that the Layer will have (0 - 255).
 				 */
-				Layer(Section* parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
-					this->section = new Section(parent->get_dimensions()->x, parent->get_dimensions()->y, parent);
-					this->section->set_maestro(parent->get_maestro());
+				Layer(Section& parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
+					this->section = new Section(parent.get_dimensions().x, parent.get_dimensions().y, &parent);
+					this->section->set_maestro(parent.get_maestro());
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
 				}
@@ -203,25 +203,25 @@ namespace PixelMaestro {
 			Animation* get_animation() const;
 			uint8_t get_brightness() const;
 			Canvas* get_canvas() const;
-			Point* get_dimensions() const;
+			Point& get_dimensions() const;
 			Section::Layer* get_layer() const;
-			Maestro* get_maestro() const;
+			Maestro& get_maestro() const;
 			Mirror* get_mirror() const;
 			Point* get_offset();
 			Section* get_parent_section() const;
-			Pixel* get_pixel(uint16_t x, uint16_t y) const;
+			Pixel& get_pixel(uint16_t x, uint16_t y) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);
 			Scroll* get_scroll() const;
 			void remove_animation(bool clear_pixels);
 			void remove_canvas();
 			void remove_layer();
 			void remove_scroll();
-			Animation* set_animation(AnimationType animation_type, bool preserve_settings = true);
+			Animation& set_animation(AnimationType animation_type, bool preserve_settings = true);
 			void set_brightness(uint8_t brightness);
-			Canvas* set_canvas(uint16_t num_frames = 1);
+			Canvas& set_canvas(uint16_t num_frames = 1);
 			void set_dimensions(uint16_t x, uint16_t y);
-			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
-			void set_maestro(Maestro* maestro);
+			Layer& set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
+			void set_maestro(Maestro& maestro);
 			Mirror& set_mirror(bool x, bool y);
 			Point& set_offset(uint16_t x, uint16_t y);
 			void set_one(uint16_t x, uint16_t y, const Colors::RGB& color, uint8_t step_count);

@@ -7,8 +7,8 @@ namespace PixelMaestro {
 	}
 
 	void CycleAnimation::map() {
-		for (uint16_t x = 0; x < section_.get_dimensions()->x; x++) {
-			for (uint16_t y = 0; y < section_.get_dimensions()->y; y++) {
+		for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+			for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 				set_map_color_index(x, y, cycle_index_);
 			}
 		}

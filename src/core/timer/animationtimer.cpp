@@ -36,7 +36,7 @@ namespace PixelMaestro {
 		 * Otherwise, just jump to the next cycle.
 		 */
 		if (animation_.get_fade()) {
-			step_count_ = interval_ / (float)animation_.get_section().get_maestro()->get_timer()->get_interval();
+			step_count_ = interval_ / (float)animation_.get_section().get_maestro().get_timer().get_interval();
 		}
 		else {
 			step_count_ = 1;

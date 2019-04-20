@@ -55,7 +55,7 @@ namespace PixelMaestro {
 			void set_fade(bool fade);
 			void set_map_color_index(uint8_t x, uint8_t y, uint8_t color_index);
 			void set_orientation(Orientation orientation);
-			void set_palette(Palette* palette);
+			void set_palette(Palette& palette);
 			void set_reverse(bool reverse);
 			AnimationTimer& set_timer(uint16_t speed, uint16_t delay = 0);
 			bool update(const uint32_t& current_time);

@@ -12,16 +12,12 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 	Maestro maestro(sections, 1);
 	Show& show = maestro.set_show(nullptr, 0);
 
-	SECTION("Verify CueController gets initialized.") {
-		REQUIRE(maestro.get_cue_controller() != nullptr);
-	}
-
-	CueController* controller = maestro.get_cue_controller();
-	SectionCueHandler* section_handler = dynamic_cast<SectionCueHandler*>(controller->enable_section_cue_handler());
+	CueController* controller = &maestro.get_cue_controller();
+	SectionCueHandler& section_handler = dynamic_cast<SectionCueHandler&>(controller->enable_section_cue_handler());
 
 	SECTION("Verify Events can be created.") {
 		int time = 1000;
-		uint8_t* cue = section_handler->set_animation(0, 0, AnimationType::Solid);
+		uint8_t* cue = section_handler.set_animation(0, 0, AnimationType::Solid);
 		Event event = Event(time, cue);
 
 		REQUIRE(event.get_time() == time);
@@ -33,7 +29,7 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 
 	SECTION("Verify Events can be assigned to a Show.") {
 		Event events[] = {
-			Event(1000, section_handler->set_animation(0, 0, AnimationType::Solid))
+			Event(1000, section_handler.set_animation(0, 0, AnimationType::Solid))
 		};
 		show.set_events(events, 1);
 
@@ -43,8 +39,8 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 
 	SECTION("Verify Event processing works.") {
 		Event events[] = {
-			Event(0, section_handler->set_animation(0, 0, AnimationType::Solid)),
-			Event(2, section_handler->set_animation(0, 0, AnimationType::Solid))
+			Event(0, section_handler.set_animation(0, 0, AnimationType::Solid)),
+			Event(2, section_handler.set_animation(0, 0, AnimationType::Solid))
 		};
 		show.set_events(events, 2);
 		show.update(0);
