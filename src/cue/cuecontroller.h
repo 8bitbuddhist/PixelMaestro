@@ -76,7 +76,6 @@ namespace PixelMaestro {
 				ShowCueHandler
 			};
 
-			// TODO: Convert to references (if possible)
 			CueController(Maestro& maestro, uint16_t buffer_size = UINT8_MAX);
 			~CueController();
 			uint8_t* assemble(uint16_t payload_size);

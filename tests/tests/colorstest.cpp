@@ -52,7 +52,7 @@ TEST_CASE("Can generate scaling color array.", "[Array]") {
 	unsigned char threshold = 255 / num_colors;
 	Colors::RGB new_array[num_colors];
 
-	Colors::generate_scaling_color_array(new_array, &ColorPresets::Black, &ColorPresets::White, num_colors, false);
+	Colors::generate_scaling_color_array(new_array, ColorPresets::Black, ColorPresets::White, num_colors, false);
 
 	unsigned char expected = 0;
 	for (unsigned char index = 0; index < num_colors; index++) {

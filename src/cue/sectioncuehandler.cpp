@@ -163,17 +163,32 @@ namespace PixelMaestro {
 
 		switch ((Action)cue[(uint8_t)Byte::ActionByte]) {
 			case Action::RemoveAnimation:
+				// Delete the Animation's Palette to avoid memory leak
+				if (section->get_animation() != nullptr) {
+					delete section->get_animation()->get_palette();
+				}
 				section->remove_animation((bool)cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::RemoveCanvas:
+				// Delete the Canvas's Palette to avoid memory leak
+				if (section->get_canvas() != nullptr) {
+					delete section->get_canvas()->get_palette();
+				}
 				section->remove_canvas();
 				break;
 			case Action::RemoveLayer:
 				section->remove_layer();
 				break;
 			case Action::SetAnimation:
-				section->set_animation((AnimationType)cue[(uint8_t)Byte::OptionsByte],
-						(bool)cue[(uint8_t)Byte::OptionsByte + 1]);
+				{
+					// If an Animation is set and we're not preserving settings, delete its Palette to avoid a memory leak.
+					bool preserve_animation = (bool)cue[(uint8_t)Byte::OptionsByte + 1];
+					if (!preserve_animation && section->get_animation() != nullptr) {
+						delete section->get_animation()->get_palette();
+					}
+
+					section->set_animation((AnimationType)cue[(uint8_t)Byte::OptionsByte], preserve_animation);
+				}
 				break;
 			case Action::SetBrightness:
 				section->set_brightness(cue[(uint8_t)Byte::OptionsByte]);

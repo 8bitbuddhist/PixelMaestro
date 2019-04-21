@@ -14,7 +14,7 @@ TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
 	bool fade = true;
 
 	SECTION("Set a new color.") {
-		pixel.set_next_color(red, 0);
+		pixel.set_next_color(red, 1);
 		pixel.update();
 		REQUIRE(pixel.get_color() == ColorPresets::Red);
 	}

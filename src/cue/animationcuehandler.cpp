@@ -232,14 +232,9 @@ namespace PixelMaestro {
 				{
 					uint8_t num_colors = cue[(uint8_t)Byte::OptionsByte];
 
-					/*
-					 * Delete the old palette after setting the new one.
-					 * We force an update so that the Animation no longer references the old palette.
-					 * This throws off the timer, but only for a single frame.
-					 */
+					// Delete the old palette after setting the new one.
 					Palette* old_palette = animation->get_palette();
 					animation->set_palette(*deserialize_palette(&cue[(uint8_t)Byte::OptionsByte + 1], num_colors));
-					animation->update(0);
 					delete old_palette;
 				}
 				break;
