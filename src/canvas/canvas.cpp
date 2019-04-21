@@ -351,8 +351,8 @@ namespace PixelMaestro {
 	 * Returns the Canvas' parent Section.
 	 * @return Parent Section.
 	 */
-	Section* Canvas::get_section() const {
-		return &section_;
+	Section& Canvas::get_section() const {
+		return section_;
 	}
 
 	/// Builds the Canvas.
@@ -445,8 +445,8 @@ namespace PixelMaestro {
 	 * Sets the Canvas' Palette.
 	 * @param palette New Palette.
 	 */
-	void Canvas::set_palette(Palette* palette) {
-		this->palette_ = palette;
+	void Canvas::set_palette(Palette& palette) {
+		this->palette_ = &palette;
 	}
 
 	/**
@@ -455,15 +455,14 @@ namespace PixelMaestro {
 	 */
 	void Canvas::update(const uint32_t& current_time) {
 		/*
-		 * Get the Pixel's color from the framebuffer.
-		 * If no color is set, don't draw the Pixel.
+		 * Set each Pixel's color according to the current frame.
 		 * If no Palette is set, don't do anything at all.
 		 */
 		if (palette_ != nullptr) {
 			for (uint8_t y = 0; y < section_.get_dimensions().y; y++) {
 				for (uint8_t x = 0; x < section_.get_dimensions().x; x++) {
 					uint8_t index = frames_[current_frame_index_][section_.get_dimensions().get_inline_index(x, y)];
-					if (index < palette_->get_num_colors()) {
+					if (index != 255) {
 						section_.set_one(x, y, palette_->get_color_at_index(index), 1);
 					}
 				}

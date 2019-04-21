@@ -23,6 +23,7 @@ namespace PixelMaestro {
 			colors[i].b = cue[current_color_index];
 			current_color_index++;
 		}
+		// WARNING: Memory leak - deserialized Palette doesn't get deleted until new Palette is set
 		return new Palette(colors, num_colors);
 	}
 

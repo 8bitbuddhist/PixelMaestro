@@ -36,14 +36,14 @@ namespace PixelMaestro {
 			uint8_t* get_frame(uint16_t frame) const;
 			uint16_t get_num_frames() const;
 			Palette* get_palette() const;
-			Section* get_section() const;
+			Section& get_section() const;
 			void next_frame();
 			void previous_frame();
 			void remove_frame_timer();
 			void set_current_frame_index(uint16_t index);
 			void set_frame_timer(uint16_t speed);
 			void set_num_frames(uint16_t num_frames);
-			void set_palette(Palette* palette);
+			void set_palette(Palette& palette);
 			void update(const uint32_t& current_time);
 
 		private:

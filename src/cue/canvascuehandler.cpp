@@ -15,6 +15,7 @@ namespace PixelMaestro {
 		return controller_->assemble(++index);
 	}
 
+	// TODO: For draw methods, add parameter to choose which frame number to draw on. Leave omitted to draw to current frame (is that even possible?)
 	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
@@ -369,7 +370,7 @@ namespace PixelMaestro {
 
 					for (uint16_t y = 0; y < frame_bounds.y; y++) {
 						for (uint16_t x = 0; x < frame_bounds.x; x++) {
-							if (canvas->get_section()->get_dimensions().in_bounds(x, y)) {
+							if (canvas->get_section().get_dimensions().in_bounds(x, y)) {
 								canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 4 + frame_bounds.get_inline_index(x, y)], x, y);
 							}
 						}
@@ -456,7 +457,7 @@ namespace PixelMaestro {
 
 					// Delete the old Palette after setting the new one.
 					Palette* old_palette = canvas->get_palette();
-					canvas->set_palette(deserialize_palette(&cue[(uint8_t)Byte::OptionsByte + 1], num_colors));
+					canvas->set_palette(*deserialize_palette(&cue[(uint8_t)Byte::OptionsByte + 1], num_colors));
 					delete old_palette;
 				}
 				break;
