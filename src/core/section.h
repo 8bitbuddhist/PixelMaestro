@@ -151,6 +151,8 @@ namespace PixelMaestro {
 				/**
 				 * The Section to use as the layer.
 				 * This is different from the Section containing the Layer object.
+				 *
+				 * TODO: Convert to reference
 				 */
 				Section* section = nullptr;
 

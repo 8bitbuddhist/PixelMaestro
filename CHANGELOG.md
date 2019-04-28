@@ -3,34 +3,43 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v1.2] - In Progress
-WARNING: The following Cues have been removed/changed. You will need to regenerate any Cuefiles using these Cues.
-	- `AnimationCueHandler::set_wave_options`: removed mirror option
-	- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
+## [v2.0] - In Progress
+IMPORTANT: This version changes the API for many objects. For example, adding an Animation has changed from this:
+
+```c++
+Section* section = maestro.get_section(0);
+section->set_animation(AnimationType::Blink);
+```
+
+to this:
+
+```c++
+Section& section = maestro.get_section(0);
+section.set_animation(AnimationType::Blink);
+```
+
+The following Cues have been modified. Any Cuefiles containing these Cues will need to be regenerated:
+- `AnimationCueHandler::set_wave_options`: removed mirror option
+- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
 
 ### Added
-- Section mirroring.
-- `Point::in_bounds()`, which checks whether the coordinates provided are within the boundaries of the Point.
+- Added ability to mirror Sections across the x and/or y axes.
+- Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point.
 - Added CueHandler helper functions for generating Cues.
 
 ### Changed
-- Revised Section rendering logic:
-	- Canvases now write color changes directly to Pixels.
-	- Canvases are no longer rendered in `Section::get_pixel_color()`
-	- Pixels update in `get_pixel_color()` instead of `update()`.
-- Revised Pixel rendering logic:
-	- Replaced `next_color_` with `step_`, which stores the amount to change the Pixel's current color on each update.
-	- Immediately return `current_color_` after `Pixel::update()`.
-- Revised Animation rendering logic:
-	- Merged `Animations` with `MappedAnimations`. All Animations now generate a color map.
-	- Added remapping on size and orientation change for all Animations.
+- Changed many pointers to references. This will require you to change your sketches.
+- Revised rendering logic to improve performance:
+	- Sections now draw Canvas output directly to Pixels, instead of layering them in `Section::get_pixel_color()`.
+	- The `MappedAnimation` class was merged into the base `Animation` class. All Animations now use maps to store color data.
+	- Pixels now use the new `Step` struct to determine how to change their color on each update.
 - Rewrote CueHandlers to reduce program size.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting Canvases larger than 255x255.
 - Added buffer overflow check to `CanvasCueHandler::draw_frame()`.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
-- Changed internal pointers to references.
 
 ### Removed
+- Removed `Pixel::next_step_` to reduce memory usage.
 - Wave animation mirror option.
 - Removed `Canvas::in_bounds()` (see `Point::in_bounds()` instead).
 - Removed `Canvas::get_pixel_color()` (see `Section::get_pixel_color()` instead).

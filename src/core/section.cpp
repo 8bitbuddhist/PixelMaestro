@@ -384,6 +384,7 @@ namespace PixelMaestro {
 	 * @param x Mirror the x axis.
 	 * @param y Mirror the y axis.
 	 */
+	// FIXME: Convert back to pointer (could include nullptr)
 	Section::Mirror& Section::set_mirror(bool x, bool y) {
 		if (x == false && y == false) {
 			delete mirror_;
