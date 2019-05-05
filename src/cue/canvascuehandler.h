@@ -36,8 +36,9 @@ namespace PixelMaestro {
 				OptionsByte
 			};
 
-			explicit CanvasCueHandler(CueController* controller) : CueHandler(controller) { }
+			explicit CanvasCueHandler(CueController& controller) : CueHandler(controller) { }
 			~CanvasCueHandler() = default;
+			// TODO: Rewrite Cues to also require a frame number (default to frame 0 if not supplied)
 			uint8_t* clear(uint8_t section_num, uint8_t layer_num);
 			uint8_t* draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
 			uint8_t* draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, const uint8_t* frame);

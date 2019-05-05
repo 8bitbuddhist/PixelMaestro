@@ -30,7 +30,7 @@ namespace PixelMaestro {
 				OptionsByte
 			};
 
-			explicit SectionCueHandler(CueController* controller) : CueHandler(controller) { }
+			explicit SectionCueHandler(CueController& controller) : CueHandler(controller) { }
 			~SectionCueHandler() = default;
 			uint8_t* remove_animation(uint8_t section_num, uint8_t layer_num, bool clear_pixels);
 			uint8_t* remove_canvas(uint8_t section_num, uint8_t layer_num);

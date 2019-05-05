@@ -148,12 +148,7 @@ namespace PixelMaestro {
 				When getting color output, use get_pixel_color(). This returns RGB values after blending the two Sections together.
 			*/
 			struct Layer {
-				/**
-				 * The Section to use as the layer.
-				 * This is different from the Section containing the Layer object.
-				 *
-				 * TODO: Convert to reference
-				 */
+				/// The Section to use as the layer.
 				Section* section = nullptr;
 
 				/// Method of blending the output from the Layer with the base Section.
@@ -224,7 +219,7 @@ namespace PixelMaestro {
 			void set_dimensions(uint16_t x, uint16_t y);
 			Layer& set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
 			void set_maestro(Maestro& maestro);
-			Mirror& set_mirror(bool x, bool y);
+			Mirror* set_mirror(bool x, bool y);
 			Point& set_offset(uint16_t x, uint16_t y);
 			void set_one(uint16_t x, uint16_t y, const Colors::RGB& color, uint8_t step_count);
 			Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);

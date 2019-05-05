@@ -7,6 +7,12 @@
 namespace PixelMaestro {
 
 	/**
+	 * @brief Constructor.
+	 * @param controller CueController to assign to this CueHandler.
+	 */
+	CueHandler::CueHandler(CueController &controller) : controller_(controller) { }
+
+	/**
 	 * Extracts a Palette from a Cue.
 	 * @param cue The Cue starting at the Palette's address.
 	 * @param num_colors The number of colors in the Palette.
@@ -33,7 +39,7 @@ namespace PixelMaestro {
 	 * @return Matching Section/Layer or nullptr if not found.
 	 */
 	Section* CueHandler::get_section(uint8_t section_id, uint8_t layer_id) const {
-		Section* section = &controller_->get_maestro().get_section(section_id);
+		Section* section = &controller_.get_maestro().get_section(section_id);
 
 		/*
 		 * Iterate until we hit the desired Layer level.
@@ -46,7 +52,7 @@ namespace PixelMaestro {
 					section = section->get_layer()->section;
 				}
 				else {
-					section = section->set_layer().section;
+					section = nullptr;
 				}
 			}
 		}
@@ -83,8 +89,8 @@ namespace PixelMaestro {
 	 */
 	uint16_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte) {
 		uint16_t index = (uint8_t)CueController::Byte::PayloadByte;
-		controller_->get_buffer()[index] = handler_byte;
-		controller_->get_buffer()[++index] = action_byte;
+		controller_.get_buffer()[index] = handler_byte;
+		controller_.get_buffer()[++index] = action_byte;
 
 		return index;
 	}
@@ -99,8 +105,8 @@ namespace PixelMaestro {
 	 */
 	uint16_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num) {
 		uint16_t index = start_cue(handler_byte, action_byte);
-		controller_->get_buffer()[++index] = section_num;
-		controller_->get_buffer()[++index] = layer_num;
+		controller_.get_buffer()[++index] = section_num;
+		controller_.get_buffer()[++index] = layer_num;
 
 		return index;
 	}

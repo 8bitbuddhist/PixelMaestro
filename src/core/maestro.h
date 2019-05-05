@@ -1,7 +1,6 @@
 /*
 	Maestro.cpp - Master class for coordinating Sections.
 */
-
 #ifndef MAESTRO_H
 #define MAESTRO_H
 

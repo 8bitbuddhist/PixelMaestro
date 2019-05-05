@@ -76,7 +76,7 @@ namespace PixelMaestro {
 	CueHandler& CueController::enable_animation_cue_handler() {
 		uint8_t handler	= (uint8_t)Handler::AnimationCueHandler;
 		if (handlers_[handler] == nullptr) {
-			handlers_[handler] = new AnimationCueHandler(this);
+			handlers_[handler] = new AnimationCueHandler(*this);
 		}
 		return *handlers_[handler];
 	}
@@ -88,7 +88,7 @@ namespace PixelMaestro {
 	CueHandler& CueController::enable_canvas_cue_handler() {
 		uint8_t handler	= (uint8_t)Handler::CanvasCueHandler;
 		if (handlers_[handler] == nullptr) {
-			handlers_[handler] = new CanvasCueHandler(this);
+			handlers_[handler] = new CanvasCueHandler(*this);
 		}
 		return *handlers_[handler];
 	}
@@ -100,7 +100,7 @@ namespace PixelMaestro {
 	CueHandler& CueController::enable_maestro_cue_handler() {
 		uint8_t handler	= (uint8_t)Handler::MaestroCueHandler;
 		if (handlers_[handler] == nullptr) {
-			handlers_[handler] = new MaestroCueHandler(this);
+			handlers_[handler] = new MaestroCueHandler(*this);
 		}
 		return *handlers_[handler];
 	}
@@ -112,7 +112,7 @@ namespace PixelMaestro {
 	CueHandler& CueController::enable_section_cue_handler() {
 		uint8_t handler	= (uint8_t)Handler::SectionCueHandler;
 		if (handlers_[handler] == nullptr) {
-			handlers_[handler] = new SectionCueHandler(this);
+			handlers_[handler] = new SectionCueHandler(*this);
 		}
 		return *handlers_[handler];
 	}
@@ -124,7 +124,7 @@ namespace PixelMaestro {
 	CueHandler& CueController::enable_show_cue_handler() {
 		uint8_t handler	= (uint8_t)Handler::ShowCueHandler;
 		if (handlers_[handler] == nullptr) {
-			handlers_[handler] = new ShowCueHandler(this);
+			handlers_[handler] = new ShowCueHandler(*this);
 		}
 		return *handlers_[handler];
 	}

@@ -9,24 +9,24 @@ namespace PixelMaestro {
 			(uint8_t)CueController::Handler::ShowCueHandler,
 			(uint8_t)Action::SetEvents
 		);
-		controller_->get_buffer()[++index] = num_events_byte.converted_0;
-		controller_->get_buffer()[++index] = num_events_byte.converted_1;
-		controller_->get_buffer()[++index] = (uint8_t)preserve_current_index;
+		controller_.get_buffer()[++index] = num_events_byte.converted_0;
+		controller_.get_buffer()[++index] = num_events_byte.converted_1;
+		controller_.get_buffer()[++index] = (uint8_t)preserve_current_index;
 
 		for (uint16_t event_index = 0; event_index < num_events; event_index++) {
 			// Save time
 			IntByteConvert event_time(events[event_index].get_time());
-			controller_->get_buffer()[++index] = event_time.converted_0;
-			controller_->get_buffer()[++index] = event_time.converted_1;
+			controller_.get_buffer()[++index] = event_time.converted_0;
+			controller_.get_buffer()[++index] = event_time.converted_1;
 
 			// Save Cue
 			uint8_t* event_cue = events[event_index].get_cue();
-			for (uint16_t cue_index = 0; cue_index < controller_->get_cue_size(event_cue); cue_index++) {
-				controller_->get_buffer()[++index] = event_cue[cue_index];
+			for (uint16_t cue_index = 0; cue_index < controller_.get_cue_size(event_cue); cue_index++) {
+				controller_.get_buffer()[++index] = event_cue[cue_index];
 			}
 		}
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* ShowCueHandler::set_looping(bool loop) {
@@ -34,9 +34,9 @@ namespace PixelMaestro {
 			(uint8_t)CueController::Handler::ShowCueHandler,
 			(uint8_t)Action::SetLooping
 		);
-		controller_->get_buffer()[++index] = (uint8_t)loop;
+		controller_.get_buffer()[++index] = (uint8_t)loop;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* ShowCueHandler::set_timing_mode(Show::TimingMode timing) {
@@ -44,13 +44,13 @@ namespace PixelMaestro {
 			(uint8_t)CueController::Handler::ShowCueHandler,
 			(uint8_t)Action::SetTimingMode
 		);
-		controller_->get_buffer()[++index] = (uint8_t)timing;
+		controller_.get_buffer()[++index] = (uint8_t)timing;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	void ShowCueHandler::run(uint8_t *cue) {
-		Show* show = controller_->get_maestro().get_show();
+		Show* show = controller_.get_maestro().get_show();
 
 		if (show == nullptr) return;
 
@@ -74,7 +74,7 @@ namespace PixelMaestro {
 						options_index += 2;
 
 						// Set Cues
-						uint16_t event_cue_size = controller_->get_cue_size(&cue[options_index]);
+						uint16_t event_cue_size = controller_.get_cue_size(&cue[options_index]);
 						events[event].set_cue(&cue[options_index]);
 						options_index += event_cue_size;
 					}

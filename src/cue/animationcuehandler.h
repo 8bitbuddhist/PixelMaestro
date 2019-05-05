@@ -34,7 +34,7 @@ namespace PixelMaestro {
 				OptionsByte
 			};
 
-			explicit AnimationCueHandler(CueController* controller) : CueHandler(controller) { }
+			explicit AnimationCueHandler(CueController& controller) : CueHandler(controller) { }
 			~AnimationCueHandler() = default;
 
 			// Animation-specific calls

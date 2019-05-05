@@ -20,7 +20,7 @@ namespace PixelMaestro {
 				OptionsByte
 			};
 
-			explicit ShowCueHandler(CueController* controller) : CueHandler(controller) { }
+			explicit ShowCueHandler(CueController& controller) : CueHandler(controller) { }
 			~ShowCueHandler() = default;
 
 			uint8_t* set_events(Event* events, uint16_t num_events, bool preserve_current_index = true);

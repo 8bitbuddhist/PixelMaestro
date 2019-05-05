@@ -16,9 +16,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = multiplier;
+		controller_.get_buffer()[++index] = multiplier;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_lightning_options(uint8_t section_num, uint8_t layer_num, uint8_t num_bolts, int8_t drift, uint8_t fork_chance) {
@@ -28,11 +28,11 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = num_bolts;
-		controller_->get_buffer()[++index] = (uint8_t)drift;
-		controller_->get_buffer()[++index] = fork_chance;
+		controller_.get_buffer()[++index] = num_bolts;
+		controller_.get_buffer()[++index] = (uint8_t)drift;
+		controller_.get_buffer()[++index] = fork_chance;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_plasma_options(uint8_t section_num, uint8_t layer_num, float size, float resolution) {
@@ -45,16 +45,16 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = size_byte.converted.byte[0];
-		controller_->get_buffer()[++index] = size_byte.converted.byte[1];
-		controller_->get_buffer()[++index] = size_byte.converted.byte[2];
-		controller_->get_buffer()[++index] = size_byte.converted.byte[3];
-		controller_->get_buffer()[++index] = resolution_byte.converted.byte[0];
-		controller_->get_buffer()[++index] = resolution_byte.converted.byte[1];
-		controller_->get_buffer()[++index] = resolution_byte.converted.byte[2];
-		controller_->get_buffer()[++index] = resolution_byte.converted.byte[3];
+		controller_.get_buffer()[++index] = size_byte.converted.byte[0];
+		controller_.get_buffer()[++index] = size_byte.converted.byte[1];
+		controller_.get_buffer()[++index] = size_byte.converted.byte[2];
+		controller_.get_buffer()[++index] = size_byte.converted.byte[3];
+		controller_.get_buffer()[++index] = resolution_byte.converted.byte[0];
+		controller_.get_buffer()[++index] = resolution_byte.converted.byte[1];
+		controller_.get_buffer()[++index] = resolution_byte.converted.byte[2];
+		controller_.get_buffer()[++index] = resolution_byte.converted.byte[3];
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_radial_options(uint8_t section_num, uint8_t layer_num, uint8_t resolution) {
@@ -64,9 +64,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = resolution;
+		controller_.get_buffer()[++index] = resolution;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_sparkle_options(uint8_t section_num, uint8_t layer_num, uint8_t threshold) {
@@ -76,9 +76,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = threshold;
+		controller_.get_buffer()[++index] = threshold;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_wave_options(uint8_t section_num, uint8_t layer_num, int8_t skew) {
@@ -88,9 +88,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = (uint8_t)skew;
+		controller_.get_buffer()[++index] = (uint8_t)skew;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	// General-purpose Cues
@@ -101,9 +101,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = cycle_index;
+		controller_.get_buffer()[++index] = cycle_index;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_fade(uint8_t section_num, uint8_t layer_num, bool fade) {
@@ -113,9 +113,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = (uint8_t)fade;
+		controller_.get_buffer()[++index] = (uint8_t)fade;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_orientation(uint8_t section_num, uint8_t layer_num, Animation::Orientation orientation) {
@@ -125,9 +125,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = (uint8_t)orientation;
+		controller_.get_buffer()[++index] = (uint8_t)orientation;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_palette(uint8_t section_num, uint8_t layer_num, const Palette& palette) {
@@ -137,11 +137,11 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = palette.get_num_colors();
+		controller_.get_buffer()[++index] = palette.get_num_colors();
 
-		uint16_t palette_size= serialize_palette(&controller_->get_buffer()[++index], palette);
+		uint16_t palette_size= serialize_palette(&controller_.get_buffer()[++index], palette);
 
-		return controller_->assemble(index + palette_size);
+		return controller_.assemble(index + palette_size);
 	}
 
 	uint8_t* AnimationCueHandler::set_reverse(uint8_t section_num, uint8_t layer_num, bool reverse) {
@@ -151,9 +151,9 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = (uint8_t)reverse;
+		controller_.get_buffer()[++index] = (uint8_t)reverse;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t delay) {
@@ -166,12 +166,12 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = interval_byte.converted_0;
-		controller_->get_buffer()[++index] = interval_byte.converted_1;
-		controller_->get_buffer()[++index] = delay_byte.converted_0;
-		controller_->get_buffer()[++index] = delay_byte.converted_1;
+		controller_.get_buffer()[++index] = interval_byte.converted_0;
+		controller_.get_buffer()[++index] = interval_byte.converted_1;
+		controller_.get_buffer()[++index] = delay_byte.converted_0;
+		controller_.get_buffer()[++index] = delay_byte.converted_1;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::start(uint8_t section_num, uint8_t layer_num) {
@@ -182,7 +182,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* AnimationCueHandler::stop(uint8_t section_num, uint8_t layer_num) {
@@ -193,7 +193,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	void AnimationCueHandler::run(uint8_t *cue) {

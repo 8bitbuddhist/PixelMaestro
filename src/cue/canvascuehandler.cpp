@@ -12,7 +12,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	// TODO: For draw methods, add parameter to choose which frame number to draw on. Leave omitted to draw to current frame (is that even possible?)
@@ -28,21 +28,21 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		controller_->get_buffer()[++index] = color_index;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_1;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_1;
-		controller_->get_buffer()[++index] = radius_byte.converted_0;
-		controller_->get_buffer()[++index] = radius_byte.converted_1;
-		controller_->get_buffer()[++index] = (uint8_t)fill;
+		controller_.get_buffer()[++index] = color_index;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_1;
+		controller_.get_buffer()[++index] = radius_byte.converted_0;
+		controller_.get_buffer()[++index] = radius_byte.converted_1;
+		controller_.get_buffer()[++index] = (uint8_t)fill;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, const uint8_t* frame) {
 		// Check the size of the buffer. If it's not big enough to store the frame, exit.
-		if ((size_x * size_y) > controller_->get_buffer_size()) {
+		if ((size_x * size_y) > controller_.get_buffer_size()) {
 			return nullptr;
 		}
 
@@ -56,19 +56,19 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		controller_->get_buffer()[++index] = size_x_byte.converted_0;
-		controller_->get_buffer()[++index] = size_x_byte.converted_1;
-		controller_->get_buffer()[++index] = size_y_byte.converted_0;
-		controller_->get_buffer()[++index] = size_y_byte.converted_1;
+		controller_.get_buffer()[++index] = size_x_byte.converted_0;
+		controller_.get_buffer()[++index] = size_x_byte.converted_1;
+		controller_.get_buffer()[++index] = size_y_byte.converted_0;
+		controller_.get_buffer()[++index] = size_y_byte.converted_1;
 
 		Point grid(size_x, size_y);
 		for (uint16_t y = 0; y < size_y; y++) {
 			for (uint16_t x = 0; x < size_x; x++) {
-				controller_->get_buffer()[++index] = frame[grid.get_inline_index(x, y)];
+				controller_.get_buffer()[++index] = frame[grid.get_inline_index(x, y)];
 			}
 		}
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_line(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
@@ -84,17 +84,17 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		controller_->get_buffer()[++index] = color_index;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_1;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_1;
-		controller_->get_buffer()[++index] = target_x_byte.converted_0;
-		controller_->get_buffer()[++index] = target_x_byte.converted_1;
-		controller_->get_buffer()[++index] = target_y_byte.converted_0;
-		controller_->get_buffer()[++index] = target_y_byte.converted_1;
+		controller_.get_buffer()[++index] = color_index;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_1;
+		controller_.get_buffer()[++index] = target_x_byte.converted_0;
+		controller_.get_buffer()[++index] = target_x_byte.converted_1;
+		controller_.get_buffer()[++index] = target_y_byte.converted_0;
+		controller_.get_buffer()[++index] = target_y_byte.converted_1;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_point(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t x, uint16_t y) {
@@ -107,13 +107,13 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = color_index;
-		controller_->get_buffer()[++index] = x_byte.converted_0;
-		controller_->get_buffer()[++index] = x_byte.converted_1;
-		controller_->get_buffer()[++index] = y_byte.converted_0;
-		controller_->get_buffer()[++index] = y_byte.converted_1;
+		controller_.get_buffer()[++index] = color_index;
+		controller_.get_buffer()[++index] = x_byte.converted_0;
+		controller_.get_buffer()[++index] = x_byte.converted_1;
+		controller_.get_buffer()[++index] = y_byte.converted_0;
+		controller_.get_buffer()[++index] = y_byte.converted_1;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_rect(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
@@ -128,18 +128,18 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = color_index;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_1;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_1;
-		controller_->get_buffer()[++index] = size_x_byte.converted_0;
-		controller_->get_buffer()[++index] = size_x_byte.converted_1;
-		controller_->get_buffer()[++index] = size_y_byte.converted_0;
-		controller_->get_buffer()[++index] = size_y_byte.converted_1;
-		controller_->get_buffer()[++index] = (uint8_t)fill;
+		controller_.get_buffer()[++index] = color_index;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_1;
+		controller_.get_buffer()[++index] = size_x_byte.converted_0;
+		controller_.get_buffer()[++index] = size_x_byte.converted_1;
+		controller_.get_buffer()[++index] = size_y_byte.converted_0;
+		controller_.get_buffer()[++index] = size_y_byte.converted_1;
+		controller_.get_buffer()[++index] = (uint8_t)fill;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_triangle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
@@ -156,22 +156,22 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = color_index;
-		controller_->get_buffer()[++index] = point_a_x_byte.converted_0;
-		controller_->get_buffer()[++index] = point_a_x_byte.converted_1;
-		controller_->get_buffer()[++index] = point_a_y_byte.converted_0;
-		controller_->get_buffer()[++index] = point_a_y_byte.converted_1;
-		controller_->get_buffer()[++index] = point_b_x_byte.converted_0;
-		controller_->get_buffer()[++index] = point_b_x_byte.converted_1;
-		controller_->get_buffer()[++index] = point_b_y_byte.converted_0;
-		controller_->get_buffer()[++index] = point_b_y_byte.converted_1;
-		controller_->get_buffer()[++index] = point_c_x_byte.converted_0;
-		controller_->get_buffer()[++index] = point_c_x_byte.converted_1;
-		controller_->get_buffer()[++index] = point_c_y_byte.converted_0;
-		controller_->get_buffer()[++index] = point_c_y_byte.converted_1;
-		controller_->get_buffer()[++index] = (uint8_t)fill;
+		controller_.get_buffer()[++index] = color_index;
+		controller_.get_buffer()[++index] = point_a_x_byte.converted_0;
+		controller_.get_buffer()[++index] = point_a_x_byte.converted_1;
+		controller_.get_buffer()[++index] = point_a_y_byte.converted_0;
+		controller_.get_buffer()[++index] = point_a_y_byte.converted_1;
+		controller_.get_buffer()[++index] = point_b_x_byte.converted_0;
+		controller_.get_buffer()[++index] = point_b_x_byte.converted_1;
+		controller_.get_buffer()[++index] = point_b_y_byte.converted_0;
+		controller_.get_buffer()[++index] = point_b_y_byte.converted_1;
+		controller_.get_buffer()[++index] = point_c_x_byte.converted_0;
+		controller_.get_buffer()[++index] = point_c_x_byte.converted_1;
+		controller_.get_buffer()[++index] = point_c_y_byte.converted_0;
+		controller_.get_buffer()[++index] = point_c_y_byte.converted_1;
+		controller_.get_buffer()[++index] = (uint8_t)fill;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::draw_text(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars) {
@@ -184,19 +184,19 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = color_index;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_x_byte.converted_1;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_0;
-		controller_->get_buffer()[++index] = origin_y_byte.converted_1;
-		controller_->get_buffer()[++index] = (uint8_t)font;
-		controller_->get_buffer()[++index] = num_chars;
+		controller_.get_buffer()[++index] = color_index;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_0;
+		controller_.get_buffer()[++index] = origin_y_byte.converted_1;
+		controller_.get_buffer()[++index] = (uint8_t)font;
+		controller_.get_buffer()[++index] = num_chars;
 
 		for (uint8_t i = 0; i < num_chars; i++) {
-			controller_->get_buffer()[++index] = text[i];
+			controller_.get_buffer()[++index] = text[i];
 		}
 
-		return controller_->assemble(index);
+		return controller_.assemble(index);
 	}
 
 	uint8_t* CanvasCueHandler::erase_point(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
@@ -209,12 +209,12 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = x_byte.converted_0;
-		controller_->get_buffer()[++index] = x_byte.converted_1;
-		controller_->get_buffer()[++index] = y_byte.converted_0;
-		controller_->get_buffer()[++index] = y_byte.converted_1;
+		controller_.get_buffer()[++index] = x_byte.converted_0;
+		controller_.get_buffer()[++index] = x_byte.converted_1;
+		controller_.get_buffer()[++index] = y_byte.converted_0;
+		controller_.get_buffer()[++index] = y_byte.converted_1;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::next_frame(uint8_t section_num, uint8_t layer_num) {
@@ -225,7 +225,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::previous_frame(uint8_t section_num, uint8_t layer_num) {
@@ -236,7 +236,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::remove_frame_timer(uint8_t section_num, uint8_t layer_num) {
@@ -247,7 +247,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t frame_index) {
@@ -259,10 +259,10 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = index_byte.converted_0;
-		controller_->get_buffer()[++index] = index_byte.converted_1;
+		controller_.get_buffer()[++index] = index_byte.converted_0;
+		controller_.get_buffer()[++index] = index_byte.converted_1;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::set_frame_timer(uint8_t section_num, uint8_t layer_num, uint16_t speed) {
@@ -274,10 +274,10 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = speed_byte.converted_0;
-		controller_->get_buffer()[++index] = speed_byte.converted_1;
+		controller_.get_buffer()[++index] = speed_byte.converted_0;
+		controller_.get_buffer()[++index] = speed_byte.converted_1;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::set_num_frames(uint8_t section_num, uint8_t layer_num, uint16_t num_frames) {
@@ -289,10 +289,10 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = num_frames_byte.converted_0;
-		controller_->get_buffer()[++index] = num_frames_byte.converted_1;
+		controller_.get_buffer()[++index] = num_frames_byte.converted_0;
+		controller_.get_buffer()[++index] = num_frames_byte.converted_1;
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::set_palette(uint8_t section_num, uint8_t layer_num, const Palette& palette) {
@@ -302,11 +302,11 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
-		controller_->get_buffer()[++index] = palette.get_num_colors();
+		controller_.get_buffer()[++index] = palette.get_num_colors();
 
-		uint16_t palette_size = serialize_palette(&controller_->get_buffer()[++index], palette);
+		uint16_t palette_size = serialize_palette(&controller_.get_buffer()[++index], palette);
 
-		return controller_->assemble(index + palette_size);
+		return controller_.assemble(index + palette_size);
 	}
 
 	uint8_t* CanvasCueHandler::start_frame_timer(uint8_t section_num, uint8_t layer_num) {
@@ -317,7 +317,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::stop_frame_timer(uint8_t section_num, uint8_t layer_num) {
@@ -328,7 +328,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
-		return controller_->assemble(++index);
+		return controller_.assemble(++index);
 	}
 
 	Font* CanvasCueHandler::get_font(Font::Type font_type) {
