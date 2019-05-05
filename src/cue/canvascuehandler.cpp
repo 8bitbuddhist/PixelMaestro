@@ -15,8 +15,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	// TODO: For draw methods, add parameter to choose which frame number to draw on. Leave omitted to draw to current frame (is that even possible?)
-	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
+	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t layer_num, uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert radius_byte(radius);
@@ -28,6 +27,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = color_index;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t size_x, uint16_t size_y, const uint8_t* frame) {
+	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t layer_num, uint8_t frame_index,  uint16_t size_x, uint16_t size_y, const uint8_t* frame) {
 		// Check the size of the buffer. If it's not big enough to store the frame, exit.
 		if ((size_x * size_y) > controller_.get_buffer_size()) {
 			return nullptr;
@@ -56,6 +56,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = size_x_byte.converted_0;
 		controller_.get_buffer()[++index] = size_x_byte.converted_1;
 		controller_.get_buffer()[++index] = size_y_byte.converted_0;
@@ -71,7 +72,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* CanvasCueHandler::draw_line(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
+	uint8_t* CanvasCueHandler::draw_line(uint8_t section_num, uint8_t layer_num, uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert target_x_byte(target_x);
@@ -84,6 +85,7 @@ namespace PixelMaestro {
 			layer_num
 		);
 
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = color_index;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
@@ -97,7 +99,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* CanvasCueHandler::draw_point(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t x, uint16_t y) {
+	uint8_t* CanvasCueHandler::draw_point(uint8_t section_num, uint8_t layer_num, uint8_t frame_index, uint8_t color_index, uint16_t x, uint16_t y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
@@ -107,6 +109,8 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
+
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = color_index;
 		controller_.get_buffer()[++index] = x_byte.converted_0;
 		controller_.get_buffer()[++index] = x_byte.converted_1;
@@ -116,7 +120,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* CanvasCueHandler::draw_rect(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
+	uint8_t* CanvasCueHandler::draw_rect(uint8_t section_num, uint8_t layer_num, uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 		IntByteConvert size_x_byte(size_x);
@@ -128,6 +132,8 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
+
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = color_index;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
@@ -142,7 +148,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* CanvasCueHandler::draw_triangle(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
+	uint8_t* CanvasCueHandler::draw_triangle(uint8_t section_num, uint8_t layer_num, uint8_t frame_index, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
 		IntByteConvert point_a_x_byte(point_a_x);
 		IntByteConvert point_a_y_byte(point_a_y);
 		IntByteConvert point_b_x_byte(point_b_x);
@@ -156,6 +162,8 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
+
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = color_index;
 		controller_.get_buffer()[++index] = point_a_x_byte.converted_0;
 		controller_.get_buffer()[++index] = point_a_x_byte.converted_1;
@@ -174,7 +182,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* CanvasCueHandler::draw_text(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars) {
+	uint8_t* CanvasCueHandler::draw_text(uint8_t section_num, uint8_t layer_num, uint8_t color_index, uint8_t frame_index, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars) {
 		IntByteConvert origin_x_byte(origin_x);
 		IntByteConvert origin_y_byte(origin_y);
 
@@ -184,6 +192,8 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
+
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = color_index;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_0;
 		controller_.get_buffer()[++index] = origin_x_byte.converted_1;
@@ -199,7 +209,7 @@ namespace PixelMaestro {
 		return controller_.assemble(index);
 	}
 
-	uint8_t* CanvasCueHandler::erase_point(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
+	uint8_t* CanvasCueHandler::erase_point(uint8_t section_num, uint8_t layer_num, uint8_t frame_index, uint16_t x, uint16_t y) {
 		IntByteConvert x_byte(x);
 		IntByteConvert y_byte(y);
 
@@ -209,6 +219,8 @@ namespace PixelMaestro {
 			section_num,
 			layer_num
 		);
+
+		controller_.get_buffer()[++index] = frame_index;
 		controller_.get_buffer()[++index] = x_byte.converted_0;
 		controller_.get_buffer()[++index] = x_byte.converted_1;
 		controller_.get_buffer()[++index] = y_byte.converted_0;
@@ -355,6 +367,7 @@ namespace PixelMaestro {
 				break;
 			case Action::DrawCircle:
 				canvas->draw_circle(
+					cue[(uint8_t)Byte::FrameByte],
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -371,7 +384,9 @@ namespace PixelMaestro {
 					for (uint16_t y = 0; y < frame_bounds.y; y++) {
 						for (uint16_t x = 0; x < frame_bounds.x; x++) {
 							if (canvas->get_section().get_dimensions().in_bounds(x, y)) {
-								canvas->draw_point(cue[(uint8_t)Byte::OptionsByte + 4 + frame_bounds.get_inline_index(x, y)], x, y);
+								canvas->draw_point(
+									cue[(uint8_t)Byte::FrameByte],
+									cue[(uint8_t)Byte::OptionsByte + 4 + frame_bounds.get_inline_index(x, y)], x, y);
 							}
 						}
 					}
@@ -379,6 +394,7 @@ namespace PixelMaestro {
 				break;
 			case Action::DrawLine:
 				canvas->draw_line(
+					cue[(uint8_t)Byte::FrameByte],
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -387,12 +403,14 @@ namespace PixelMaestro {
 				break;
 			case Action::DrawPoint:
 				canvas->draw_point(
+					cue[(uint8_t)Byte::FrameByte],
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]));
 				break;
 			case Action::DrawRect:
 				canvas->draw_rect(
+					cue[(uint8_t)Byte::FrameByte],
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -405,6 +423,7 @@ namespace PixelMaestro {
 					Font* font = get_font((Font::Type)cue[(uint8_t)Byte::OptionsByte + 5]);
 
 					canvas->draw_text(
+						cue[(uint8_t)Byte::FrameByte],
 						cue[(uint8_t)Byte::OptionsByte],
 						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 						IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -418,6 +437,7 @@ namespace PixelMaestro {
 				break;
 			case Action::DrawTriangle:
 				canvas->draw_triangle(
+					cue[(uint8_t)Byte::FrameByte],
 					cue[(uint8_t)Byte::OptionsByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 1]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 3]),
@@ -429,6 +449,7 @@ namespace PixelMaestro {
 				break;
 			case Action::ErasePoint:
 				canvas->erase_point(
+					cue[(uint8_t)Byte::FrameByte],
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
 					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
 				);

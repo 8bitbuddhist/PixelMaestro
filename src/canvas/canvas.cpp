@@ -23,10 +23,9 @@ namespace PixelMaestro {
 	 */
 	void Canvas::clear() {
 		for (uint16_t frame = 0; frame < num_frames_; frame++) {
-			set_current_frame_index(frame);
 			for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 				for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
-					erase_point(x, y);
+					erase_point(frame, x, y);
 				}
 			}
 		}
@@ -52,7 +51,7 @@ namespace PixelMaestro {
 	 * @param radius The circle's radius.
 	 * @param fill Whether to fill the circle or leave it empty.
 	 */
-	void Canvas::draw_circle(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
+	void Canvas::draw_circle(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
 		// (x – h)^2 + (y – k)^2 = r^2
 		// r = radius, h = origin_x, k = origin_y
 
@@ -77,7 +76,7 @@ namespace PixelMaestro {
 					 */
 					if ((test_point >= radius_squared - radius && test_point <= radius_squared + radius) ||
 						(fill && test_point < pow(radius, 2))) {
-						draw_point(color_index, cursor.x, cursor.y);
+						draw_point(frame_index, color_index, cursor.x, cursor.y);
 					}
 				}
 			}
@@ -90,13 +89,13 @@ namespace PixelMaestro {
 	 * @param size_x Frame width.
 	 * @param size_y Frame height.
 	 */
-	void Canvas::draw_frame(uint8_t* frame, uint16_t size_x, uint16_t size_y) {
+	void Canvas::draw_frame(uint8_t frame_index, uint8_t* frame, uint16_t size_x, uint16_t size_y) {
 		clear();
 		Point frame_bounds = Point(size_x, size_y);
 		for (uint16_t y = 0; y < size_y; y++) {
 			for (uint16_t x = 0; x < size_x; x++) {
 				if (section_.get_dimensions().in_bounds(x, y)) {
-					draw_point(frame[frame_bounds.get_inline_index(x, y)], x, y);
+					draw_point(frame_index, frame[frame_bounds.get_inline_index(x, y)], x, y);
 				}
 			}
 		}
@@ -109,7 +108,7 @@ namespace PixelMaestro {
 	 * @param target_x Ending point x coordinate.
 	 * @param target_y Ending point y coordinate.
 	 */
-	void Canvas::draw_line(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
+	void Canvas::draw_line(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
 		// Calculate slope
 		float slope;
 		if (target_x == origin_x) {
@@ -128,7 +127,7 @@ namespace PixelMaestro {
 		if (target_x == origin_x) {
 			while (cursor.y != target_y) {
 				if (section_.get_dimensions().in_bounds(cursor.x, cursor.y)) {
-					draw_point(color_index, cursor.x, cursor.y);
+					draw_point(frame_index, color_index, cursor.x, cursor.y);
 				}
 
 				if (target_y >= cursor.y) {
@@ -147,7 +146,7 @@ namespace PixelMaestro {
 			 */
 			while (cursor.x != target_x) {
 				if (section_.get_dimensions().in_bounds(cursor.x, cursor.y)) {
-					draw_point(color_index, cursor.x, cursor.y);
+					draw_point(frame_index, color_index, cursor.x, cursor.y);
 				}
 
 				if (target_x >= origin_x) {
@@ -166,9 +165,9 @@ namespace PixelMaestro {
 	 * @param cursor_x Starting point x coordinate.
 	 * @param cursor_y Starting point y coordinate.
 	 */
-	void Canvas::draw_point(uint8_t color_index, uint16_t x, uint16_t y) {
+	void Canvas::draw_point(uint8_t frame_index, uint8_t color_index, uint16_t x, uint16_t y) {
 		if (section_.get_dimensions().in_bounds(x, y)) {
-			frames_[current_frame_index_][section_.get_dimensions().get_inline_index(x, y)] = color_index;
+			frames_[frame_index][section_.get_dimensions().get_inline_index(x, y)] = color_index;
 		}
 	}
 
@@ -180,7 +179,7 @@ namespace PixelMaestro {
 	 * @param size_y Height of the rectangle.
 	 * @param fill Whether to fill the rectangle or leave it empty.
 	 */
-	void Canvas::draw_rect(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
+	void Canvas::draw_rect(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
 		Point cursor = { origin_x, origin_y };
 		for (uint16_t column = 0; column < size_x; column++) {
 			// (Re-)Initialize cursor coordinates.
@@ -191,7 +190,7 @@ namespace PixelMaestro {
 				if (section_.get_dimensions().in_bounds(cursor.x, cursor.y)) {
 					// Check whether to fill
 					if (fill) {
-						draw_point(color_index, cursor.x, cursor.y);
+						draw_point(frame_index, color_index, cursor.x, cursor.y);
 					}
 					else {
 						/*
@@ -200,7 +199,7 @@ namespace PixelMaestro {
 						 */
 						if ((cursor.x == origin_x || cursor.y == origin_y) ||
 							(column == size_x - 1 || row == size_y - 1)) {
-							draw_point(color_index, cursor.x, cursor.y);
+							draw_point(frame_index, color_index, cursor.x, cursor.y);
 						}
 					}
 				}
@@ -215,7 +214,7 @@ namespace PixelMaestro {
 	 * @param font The Font to draw the text in.
 	 * @param text The string to draw.
 	 */
-	void Canvas::draw_text(uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font& font, const char* text, uint8_t num_chars) {
+	void Canvas::draw_text(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font& font, const char* text, uint8_t num_chars) {
 		Point cursor = {origin_x, origin_y};
 
 		for (uint16_t letter = 0; letter < num_chars; letter++) {
@@ -230,7 +229,7 @@ namespace PixelMaestro {
 				for (uint16_t row = 0; row < font.size.y; row++) {
 					if (section_.get_dimensions().in_bounds(cursor.x, cursor.y)) {
 						if ((current_char[column] >> row) & 1) {
-							draw_point(color_index, cursor.x + column, cursor.y + row);
+							draw_point(frame_index, color_index, cursor.x + column, cursor.y + row);
 						}
 					}
 				}
@@ -251,10 +250,10 @@ namespace PixelMaestro {
 	 * @param point_c_y Third point y-coordinate.
 	 * @param fill Whether to fill the triangle or leave it empty.
 	 */
-	void Canvas::draw_triangle(uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
-		this->draw_line(color_index, point_a_x, point_a_y, point_b_x, point_b_y);
-		this->draw_line(color_index, point_b_x, point_b_y, point_c_x, point_c_y);
-		this->draw_line(color_index, point_c_x, point_c_y, point_a_x, point_a_y);
+	void Canvas::draw_triangle(uint8_t frame_index, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
+		this->draw_line(frame_index, color_index, point_a_x, point_a_y, point_b_x, point_b_y);
+		this->draw_line(frame_index, color_index, point_b_x, point_b_y, point_c_x, point_c_y);
+		this->draw_line(frame_index, color_index, point_c_x, point_c_y, point_a_x, point_a_y);
 
 		if (fill) {
 			/*
@@ -287,7 +286,7 @@ namespace PixelMaestro {
 					t = 1 / (2 * area) * (point_a_x * point_b_y - point_a_y * point_b_x + (point_a_y - point_b_y) * cursor.x + (point_b_x - point_a_x) * cursor.y);
 
 					if (s > 0 && t > 0 && 1 - s - t > 0) {
-						draw_point(color_index, cursor.x, cursor.y);
+						draw_point(frame_index, color_index, cursor.x, cursor.y);
 					}
 				}
 			}
@@ -300,8 +299,8 @@ namespace PixelMaestro {
 	 * @param x X coordinate.
 	 * @param y Y coordinate.
 	 */
-	void Canvas::erase_point(uint16_t x, uint16_t y) {
-		frames_[current_frame_index_][section_.get_dimensions().get_inline_index(x, y)] = 255;
+	void Canvas::erase_point(uint8_t frame_index, uint16_t x, uint16_t y) {
+		frames_[frame_index][section_.get_dimensions().get_inline_index(x, y)] = 255;
 	}
 
 	/**

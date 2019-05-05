@@ -47,7 +47,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		// Draw a filled in animation rectangle
 		Canvas& canvas = section.set_canvas();
 		canvas.set_palette(palette);
-		canvas.draw_rect(0, 0, 0, section.get_dimensions().x, section.get_dimensions().y, true);
+		canvas.draw_rect(0, 0, 0, 0, section.get_dimensions().x, section.get_dimensions().y, true);
 
 		maestro.update(100);
 		REQUIRE(section.get_pixel_color(0, 0) == palette.get_color_at_index(0));
