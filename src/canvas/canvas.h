@@ -23,14 +23,14 @@ namespace PixelMaestro {
 			void initialize();
 
 			void clear();
-			void draw_circle(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
-			void draw_frame(uint8_t frame_index, uint8_t* frame, uint16_t size_x, uint16_t size_y);
-			void draw_line(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
-			void draw_point(uint8_t frame_index, uint8_t color_index, uint16_t x, uint16_t y);
-			void draw_rect(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
-			void draw_text(uint8_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font& font, const char* text, uint8_t num_chars);
-			void draw_triangle(uint8_t frame_index, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
-			void erase_point(uint8_t frame_index, uint16_t x, uint16_t y);
+			void draw_circle(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
+			void draw_frame(uint16_t frame_index, uint8_t* frame, uint16_t size_x, uint16_t size_y);
+			void draw_line(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
+			void draw_point(uint16_t frame_index, uint8_t color_index, uint16_t x, uint16_t y);
+			void draw_rect(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
+			void draw_text(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font& font, const char* text, uint8_t num_chars);
+			void draw_triangle(uint16_t frame_index, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
+			void erase_point(uint16_t frame_index, uint16_t x, uint16_t y);
 			uint16_t get_current_frame_index() const;
 			Timer* get_frame_timer() const;
 			uint8_t* get_frame(uint16_t frame) const;
