@@ -67,7 +67,7 @@ TEST_CASE("Can generate scaling color array.", "[Array]") {
 TEST_CASE("Can mix colors.", "[Colors::RGB]") {
 
 	SECTION("Alpha blend reduces color 2 by specified amount.") {
-		Colors::RGB mixed = Colors::mix_colors(&ColorPresets::Black, &ColorPresets::White, Colors::MixMode::Alpha, 51);
+		Colors::RGB mixed = Colors::mix_colors(ColorPresets::Black, ColorPresets::White, Colors::MixMode::Alpha, 51);
 		Colors::RGB target = {51, 51, 51};
 		REQUIRE(mixed == target);
 	}
@@ -75,7 +75,7 @@ TEST_CASE("Can mix colors.", "[Colors::RGB]") {
 	SECTION("Multiply mix mode multiplies color by half.") {
 		Colors::RGB color = {254, 128, 76};
 		Colors::RGB half_white = {128, 128, 128};
-		Colors::RGB mixed = Colors::mix_colors(&color, &half_white, Colors::MixMode::Multiply);
+		Colors::RGB mixed = Colors::mix_colors(color, half_white, Colors::MixMode::Multiply);
 
 		Colors::RGB half_color = color * 0.5;
 		REQUIRE((unsigned int)mixed.r == (unsigned int)half_color.r);
@@ -84,11 +84,11 @@ TEST_CASE("Can mix colors.", "[Colors::RGB]") {
 	}
 
 	SECTION("Overlay mix mode shows color 2 unless color 2 is black.") {
-		REQUIRE(Colors::mix_colors(&ColorPresets::Red, &ColorPresets::Blue, Colors::MixMode::Overlay) == ColorPresets::Blue);
-		REQUIRE(Colors::mix_colors(&ColorPresets::Red, &ColorPresets::Black, Colors::MixMode::Overlay) == ColorPresets::Red);
+		REQUIRE(Colors::mix_colors(ColorPresets::Red, ColorPresets::Blue, Colors::MixMode::Overlay) == ColorPresets::Blue);
+		REQUIRE(Colors::mix_colors(ColorPresets::Red, ColorPresets::Black, Colors::MixMode::Overlay) == ColorPresets::Red);
 	}
 
 	SECTION("No mix mode returns color 1.") {
-		REQUIRE(Colors::mix_colors(&ColorPresets::Red, &ColorPresets::Black, Colors::MixMode::None) == ColorPresets::Red);
+		REQUIRE(Colors::mix_colors(ColorPresets::Red, ColorPresets::Black, Colors::MixMode::None) == ColorPresets::Red);
 	}
 }

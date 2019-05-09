@@ -27,12 +27,12 @@ Maestro maestro(8, 1);
 
 // Initialize WS2812 components
 const uint8_t LED_PIN = 10;
-WS2812 ws = WS2812(maestro.get_section(0)->get_dimensions()->x);
+WS2812 ws = WS2812(maestro.get_section(0).get_dimensions().x);
 
 // Run the Cuefile stored in EEPROM
 void run_eeprom_cue() {
 	for (uint16_t index = 0; index < EEPROM.length(); index++) {
-		maestro.get_cue_controller()->read(EEPROM[index]);
+		maestro.get_cue_controller().read(EEPROM[index]);
 	}
 }
 
@@ -55,12 +55,12 @@ void setup () {
 	 * Initialize the CueController and CueHandlers.
 	 * To reduce the sketch size, disable any unused CueHandlers.
 	 */
-	CueController* controller = maestro.set_cue_controller();
-	controller->enable_animation_cue_handler();
-	controller->enable_canvas_cue_handler();
-	controller->enable_maestro_cue_handler();
-	controller->enable_section_cue_handler();
-	controller->enable_show_cue_handler();
+	CueController& controller = maestro.set_cue_controller();
+	controller.enable_animation_cue_handler();
+	controller.enable_canvas_cue_handler();
+	controller.enable_maestro_cue_handler();
+	controller.enable_section_cue_handler();
+	controller.enable_show_cue_handler();
 
 	// If we have Cue data stored in EEPROM, read it in.
 	if (EEPROM.read(0) == 'P' && EEPROM.read(1) == 'M' && EEPROM.read(2) == 'C') {
@@ -76,7 +76,7 @@ void loop() {
 		uint8_t in = Serial.read();
 
 		// Read in the current byte to the CueController
-		maestro.get_cue_controller()->read(in);
+		maestro.get_cue_controller().read(in);
 
 		// If the current byte might indicate an EEPROM start/stop command, reset the header read index
 		if (in == 'R') {
@@ -115,7 +115,7 @@ void loop() {
 	// Update the Maestro
 	if (maestro.update(millis())) {
 		// Copy each Pixel's color to the WS2812 strip
-		for (unsigned char x = 0; x < maestro.get_section(0)->get_dimensions()->x; x++) {
+		for (unsigned char x = 0; x < maestro.get_section(0).get_dimensions().x; x++) {
 			ws.set_crgb_at(x, RGBtoCRGB(maestro.get_pixel_color(0, x, 0)));
 		}
 

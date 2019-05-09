@@ -266,6 +266,9 @@ namespace PixelMaestro {
 			area = 0.5 *(-point_b_y*point_c_x + point_a_y*(-point_b_x + point_c_x) + point_a_x*(point_b_y - point_c_y) + point_b_x*point_c_y);
 
 			/*
+			 * Instead of checking every single point in the frame, check only the area containing the triangle.
+			 * We calculate a small rectangle based on the triangle's vertices and check each Pixel in that area.
+			 *
 			 * Is point a < point b?
 			 *	Yes: Is point a < point c?
 			 *		Yes: Return point a
@@ -279,7 +282,7 @@ namespace PixelMaestro {
 			uint16_t min_y = (point_a_y < point_b_y ? (point_c_y < point_a_y ? point_c_y : point_a_y) : (point_b_y < point_c_y ? point_b_y : point_c_y));
 			uint16_t max_y = (point_a_y > point_b_y ? (point_c_y > point_a_y ? point_c_y : point_a_y) : (point_b_y > point_c_y ? point_b_y : point_c_y));
 
-			// For each point in the "rectangle", determine whether it lies inside the triangle. If so, fill it in.
+			// For each Pixel in the rectangle, determine whether it lies inside the triangle. If so, fill it in.
 			for (cursor.x = min_x; cursor.x < max_x; cursor.x++) {
 				for (cursor.y = min_y; cursor.y < max_y; cursor.y++) {
 					s = 1 / (2 * area) * (point_a_y * point_c_x - point_a_x * point_c_y + (point_c_y - point_a_y) * cursor.x + (point_a_x - point_c_x) * cursor.y);
@@ -344,6 +347,23 @@ namespace PixelMaestro {
 	 */
 	Palette* Canvas::get_palette() const {
 		return palette_;
+	}
+
+	/**
+	 * Returns the color at the specified Pixel.
+	 *
+	 * @param x Pixel X coordinate.
+	 * @param y Pixel Y coordinate.
+	 * @return Color if found. If the Pixel is transparent, return nullptr.
+	 */
+	Colors::RGB* Canvas::get_pixel_color(uint16_t x, uint16_t y) {
+		uint8_t index = frames_[current_frame_index_][section_.get_dimensions().get_inline_index(x, y)];
+		if (index != 255) {
+			return &palette_->get_color_at_index(index);
+		}
+		else {
+			return nullptr;
+		}
 	}
 
 	/**
@@ -453,21 +473,6 @@ namespace PixelMaestro {
 	 * @param current_time The program's current runtime.
 	 */
 	void Canvas::update(const uint32_t& current_time) {
-		/*
-		 * Set each Pixel's color according to the current frame.
-		 * If no Palette is set, don't do anything at all.
-		 */
-		if (palette_ != nullptr) {
-			for (uint8_t y = 0; y < section_.get_dimensions().y; y++) {
-				for (uint8_t x = 0; x < section_.get_dimensions().x; x++) {
-					uint8_t index = frames_[current_frame_index_][section_.get_dimensions().get_inline_index(x, y)];
-					if (index != 255) {
-						section_.set_one(x, y, palette_->get_color_at_index(index), 1);
-					}
-				}
-			}
-		}
-
 		if (frame_timer_ && frame_timer_->update(current_time)) {
 			next_frame();
 		}

@@ -53,7 +53,7 @@ namespace PixelMaestro {
 	 * @return Brightness level.
 	 */
 	uint8_t Section::get_brightness() const {
-		return brightness_;
+		return brightness_ * 255;
 	}
 
 	/**
@@ -154,27 +154,47 @@ namespace PixelMaestro {
 			}
 		}
 
-		Colors::RGB final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+		Colors::RGB final_color;
+
+		// If we have a Canvas and it returns a color, use that color instead of the Pixel's actual color.
+		if (canvas_ != nullptr) {
+			Colors::RGB* canvas_color = canvas_->get_pixel_color(x, y);
+			if (canvas_color != nullptr) {
+				final_color = *canvas_color;
+			}
+			else {
+				final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+			}
+		}
+		else {
+			final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+		}
 
 		/*
-		 * If this Section *is* a Layer, combine this Pixel's color with its parent Pixel's color.
+		 * If this Section a Layer, combine this Pixel's color with its parent Pixel's color.
 		 * This is done recursively, with each Layer building on top of its parent Section.
+		 * We check both the parent Section and Layer to ensure colors are layered correctly.
 		 */
-		if (parent_section_ != nullptr) {
+		if (parent_section_ != nullptr && base_color != nullptr) {
 			final_color = Colors::mix_colors(
-							 base_color,
-							 &final_color,
+							 *base_color,
+							 final_color,
 							 parent_section_->get_layer()->mix_mode,
 							 parent_section_->get_layer()->alpha);
 		}
 
-		// If this Section *has* a Layer, merge in the Layer's color output.
+		// If this Section has a Layer, merge in the Layer's color output.
 		if (layer_ != nullptr) {
 			final_color = layer_->section->get_pixel_color(x, y, &final_color);
 		}
 
-		// Return color with brightness calculated
-		return final_color * static_cast<float>(brightness_ / static_cast<float>(255));
+		// Return the final color after applying brightness
+		if (brightness_ == 255) {
+			return final_color;
+		}
+		else {
+			return final_color * brightness_;
+		}
 	}
 
 	/**
@@ -301,7 +321,7 @@ namespace PixelMaestro {
 	 * @param brightness Brightness level (0 - 255).
 	 */
 	void Section::set_brightness(uint8_t brightness) {
-		this->brightness_ = brightness;
+		this->brightness_ = static_cast<float>(brightness / static_cast<float>(255));
 	}
 
 	/**

@@ -36,6 +36,7 @@ namespace PixelMaestro {
 			uint8_t* get_frame(uint16_t frame) const;
 			uint16_t get_num_frames() const;
 			Palette* get_palette() const;
+			Colors::RGB* get_pixel_color(uint16_t x, uint16_t y);
 			Section& get_section() const;
 			void next_frame();
 			void previous_frame();

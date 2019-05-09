@@ -3,46 +3,63 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v2.0] - In Progress
-IMPORTANT: This version changes the API for many objects. For example, adding an Animation has changed from this:
+## [v2.0.0] - In Progress
+
+### Important Changes
+
+#### API Changes
+
+This version introduces significant API changes and changes many pointers to references. For example, adding an Animation has changed from:
 
 ```c++
 Section* section = maestro.get_section(0);
 section->set_animation(AnimationType::Blink);
 ```
 
-to this:
+to:
 
 ```c++
 Section& section = maestro.get_section(0);
 section.set_animation(AnimationType::Blink);
 ```
 
-The following Cues have been modified. Any Cuefiles containing these Cues will need to be regenerated:
-- `AnimationCueHandler::set_wave_options`: removed mirror option
-- `CanvasCueHandler::draw_frame`: converted grid size from uint8_t to uint16_t
+#### Canvas-related Changes
+
+Canvas drawing methods and Cues now require you to specify which frame to draw on. This means you can draw on a frame without having to switch to it first. For example, drawing a point has changed from this:
+
+```c++
+canvas.set_current_frame_index(5);
+canvas.draw_point(x, y);
+```
+
+to this:
+
+```c++
+canvas.draw_point(5, x, y);
+```
 
 ### Added
 - Added ability to mirror Sections across the x and/or y axes.
-- Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point.
+- Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point (when used as a dimension).
 - Added CueHandler helper functions for generating Cues.
+- Added the `#define DISABLE_COLOR_BUFFER` preprocessor directive to disable the color fade buffer in Pixels.h. This enables devices with limited memory to support more Pixels at the cost of no color fading.
 
 ### Changed
-- Changed many pointers to references. This will require you to change your sketches.
+- Changed several internal pointers to references. This may require code changes, e.g. to Arduino sketches.
 - Revised rendering logic to improve performance:
-	- Sections now draw Canvas output directly to Pixels, instead of layering them in `Section::get_pixel_color()`.
-	- The `MappedAnimation` class was merged into the base `Animation` class. All Animations now use maps to store color data.
-	- Pixels now use the new `Step` struct to determine how to change their color on each update.
+	- Merged the `MappedAnimation` into the base `Animation` class. All Animations now use maps to store color data per frame.
+	- Pixels now use a new `Step` struct to store color change amounts on each update. This can be disabled by uncommenting `#define DISABLE_COLOR_BUFFER` in Pixel.h.
 - Rewrote CueHandlers to reduce program size.
-- Fixed `CanvasCueHandler::draw_frame()` not supporting Canvases larger than 255x255.
+- Fixed `CanvasCueHandler::draw_frame()` not supporting frames larger than 255x255.
 - Added buffer overflow check to `CanvasCueHandler::draw_frame()`.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
 
 ### Removed
 - Removed `Pixel::next_step_` to reduce memory usage.
-- Wave animation mirror option.
+- Removed `WaveAnimation` mirror option.
 - Removed `Canvas::in_bounds()` (see `Point::in_bounds()` instead).
 - Removed `Canvas::get_pixel_color()` (see `Section::get_pixel_color()` instead).
+- Removed mirror option in `AnimationCueHandler::set_wave_options`.
 
 ## [v1.0.2] - 2018-12-03
 ### Added

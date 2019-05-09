@@ -54,7 +54,7 @@ namespace PixelMaestro {
 	*/
 	void Pixel::update() {
 #ifndef DISABLE_COLOR_BUFFER
-		// WARNING: This may be imprecise, especially with small/more gradual color changes.
+		// WARNING: This can be imprecise, especially with small or gradual color changes.
 		if (step_.count > 0) {
 			current_color_.r += step_.r;
 			current_color_.g += step_.g;

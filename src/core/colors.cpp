@@ -91,7 +91,7 @@ namespace PixelMaestro {
 		@param alpha Color two alpha factor (0 - 255).
 		@return The mixed color.
 	*/
-	Colors::RGB Colors::mix_colors(RGB* color_one, RGB* color_two, MixMode mode, uint8_t alpha) {
+	Colors::RGB Colors::mix_colors(const RGB& color_one, const RGB& color_two, MixMode mode, uint8_t alpha) {
 		RGB mixed_color;
 
 		switch (mode) {
@@ -99,30 +99,30 @@ namespace PixelMaestro {
 			{
 				float alpha_pct = alpha / (float)255;
 				float alpha_pct_inv = 1 - alpha_pct;
-				mixed_color.r = (alpha_pct * color_two->r) + (alpha_pct_inv * color_one->r);
-				mixed_color.g = (alpha_pct * color_two->g) + (alpha_pct_inv * color_one->g);
-				mixed_color.b = (alpha_pct * color_two->b) + (alpha_pct_inv * color_one->b);
+				mixed_color.r = (alpha_pct * color_two.r) + (alpha_pct_inv * color_one.r);
+				mixed_color.g = (alpha_pct * color_two.g) + (alpha_pct_inv * color_one.g);
+				mixed_color.b = (alpha_pct * color_two.b) + (alpha_pct_inv * color_one.b);
 				break;
 			}
 			case MixMode::Multiply:
 			{
-				mixed_color.r = color_one->r * (float)(color_two->r / (float)255);
-				mixed_color.g = color_one->g * (float)(color_two->g / (float)255);
-				mixed_color.b = color_one->b * (float)(color_two->b / (float)255);
+				mixed_color.r = color_one.r * (float)(color_two.r / (float)255);
+				mixed_color.g = color_one.g * (float)(color_two.g / (float)255);
+				mixed_color.b = color_one.b * (float)(color_two.b / (float)255);
 				break;
 			}
 			case MixMode::Overlay:
 			{
-				if (*color_two != Colors::RGB {0, 0, 0}) {
-					mixed_color = *color_two;
+				if (color_two != Colors::RGB {0, 0, 0}) {
+					mixed_color = color_two;
 				}
 				else {
-					mixed_color = *color_one;
+					mixed_color = color_one;
 				}
 				break;
 			}
 			default:	// Return color_one
-				mixed_color = *color_one;
+				mixed_color = color_one;
 				break;
 		};
 

@@ -89,7 +89,7 @@ namespace PixelMaestro {
 			static RGB generate_random_color();
 			static void generate_random_color_array(RGB* array, uint8_t num_colors);
 			static void generate_scaling_color_array(RGB* array, RGB& base_color, RGB& target_color, uint8_t num_colors, bool reverse = false);
-			static RGB mix_colors(RGB* color_one, RGB* color_two, MixMode mode, uint8_t alpha = 0);
+			static RGB mix_colors(const RGB& color_one, const RGB& color_two, MixMode mode, uint8_t alpha = 0);
 	};
 }
 

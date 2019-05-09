@@ -3,7 +3,6 @@
 	Inspired by RGBMood (http://forum.arduino.cc/index.php?topic=90160.0)
 */
 
-// FIXME: How to make this available in a sketch?
 //#define DISABLE_COLOR_BUFFER // Disable per-Pixel fading and color buffering.
 
 #ifndef PIXEL_H

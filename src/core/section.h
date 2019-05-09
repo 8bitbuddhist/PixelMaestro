@@ -232,7 +232,7 @@ namespace PixelMaestro {
 			Animation* animation_ = nullptr;
 
 			/// The total brightness of the Section. Defaults to full brightness.
-			uint8_t brightness_ = 255;
+			float brightness_ = 1.0;
 
 			/// The Canvas to display (if applicable).
 			Canvas* canvas_ = nullptr;
