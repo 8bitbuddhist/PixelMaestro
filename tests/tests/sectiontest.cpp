@@ -11,7 +11,7 @@
 using namespace PixelMaestro;
 
 TEST_CASE("Create and manipulate a section.", "[Section]") {
-	Point dimensions = Point(1, 10);
+	Point dimensions = Point(10, 10);
 	Section sections[] = {
 		Section(dimensions.x, dimensions.y)
 	};
@@ -95,5 +95,20 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		 */
 		layer.mix_mode = Colors::MixMode::Overlay;
 		REQUIRE(section.get_pixel_color(0, 0) == section_colors[0]);
+	}
+
+	SECTION("Verify that mirroring works.") {
+		Animation& animation = section.set_animation(AnimationType::Solid);
+		animation.set_palette(palette);
+		animation.set_timer(100);
+		animation.set_fade(false);
+
+		maestro.update(101);
+
+		REQUIRE(section.get_pixel(test_pixel, 0).get_color() == ColorPresets::Colorwheel[test_pixel]);
+
+		section.set_mirror(true, false);
+
+		REQUIRE(section.get_pixel(9, 0).get_color() == ColorPresets::Colorwheel_Palette.get_color_at_index(0));
 	}
 }

@@ -10,15 +10,17 @@
 namespace PixelMaestro {
 
 	/**
-	 * Constructor. Fast-tracks creating a Maestro with a single Section.
-	 * @param rows Number of rows in the new Section.
-	 * @param columns Number of columns in the new Section.
+	 * Constructor. Creates a Maestro with the designated dimensions and Section count.
+	 *
+	 * @param rows Number of rows in the new Sections.
+	 * @param columns Number of columns in the new Sections.
+	 * @param num_sections Number of Sections to create.
 	 */
-	Maestro::Maestro(uint16_t rows, uint16_t columns) {
-		Section* sections = new Section[1] {
+	Maestro::Maestro(uint16_t rows, uint16_t columns, uint8_t num_sections) {
+		Section* sections = new Section[num_sections] {
 			Section(rows, columns)
 		};
-		set_sections(sections, 1);
+		set_sections(sections, num_sections);
 		dynamically_allocated_sections_ = true;
 	}
 
@@ -85,6 +87,22 @@ namespace PixelMaestro {
 		return const_cast<Timer&>(timer_);
 	}
 
+	/**
+	 * Deletes the Sections array, if they were dynamically allocated.
+	 */
+	void Maestro::remove_sections() {
+		if (dynamically_allocated_sections_) {
+			for (uint8_t section = 0; section < num_sections_; section++) {
+				delete &sections_[section];
+			}
+
+			delete [] sections_;
+		}
+	}
+
+	/**
+	 * Deletes the active Show.
+	 */
 	void Maestro::remove_show() {
 		delete show_;
 		show_ = nullptr;
@@ -115,11 +133,14 @@ namespace PixelMaestro {
 
 	/**
 		Sets the Sections used in the Maestro.
+		If there are dynamically allocated Sections, they will be deleted.
 
 		@param sections Array of Sections.
 		@param num_sections Number of Sections in the array.
 	*/
 	void Maestro::set_sections(Section* sections, uint8_t num_sections) {
+		remove_sections();
+
 		sections_ = sections;
 		num_sections_ = num_sections;
 
@@ -202,12 +223,6 @@ namespace PixelMaestro {
 		delete cue_controller_;
 		remove_show();
 
-		if (dynamically_allocated_sections_) {
-			for (uint8_t section = 0; section < num_sections_; section++) {
-				delete &sections_[section];
-			}
-
-			delete [] sections_;
-		}
+		remove_sections();
 	}
 }

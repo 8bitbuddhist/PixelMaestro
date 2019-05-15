@@ -39,7 +39,7 @@ namespace PixelMaestro {
 			step_count_ = interval_ / (float)animation_.get_section().get_maestro().get_timer().get_interval();
 		}
 		else {
-			step_count_ = 1;
+			step_count_ = 0;
 		}
 	}
 

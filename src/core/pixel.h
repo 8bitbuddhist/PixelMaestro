@@ -18,7 +18,8 @@ namespace PixelMaestro {
 			Pixel() {}
 			void clear();
 			Colors::RGB& get_color();
-			void set_next_color(const Colors::RGB& next_color, uint8_t step_count);
+			void set_next_color(const Colors::RGB& next_color);
+			static void set_step_count(uint8_t step_count);
 			void update();
 
 		private:
@@ -27,17 +28,11 @@ namespace PixelMaestro {
 			Colors::RGB current_color_ = {0, 0, 0};
 
 			#ifndef DISABLE_COLOR_BUFFER
+				/// The number of steps to fade colors during change.
+				static uint8_t step_count_;
 
-				struct Step {
-					int8_t r = 0;
-					int8_t g = 0;
-					int8_t b = 0;
-					uint8_t count = 0;
-				};
-
-				/// Tracks the step from the Pixel's current color to its next color.
-				Pixel::Step step_;
-
+				/// The amount to increment current_color_ for each step when fading.
+				Colors::RGB step_ = {0, 0, 0};
 			#endif // DISABLE_COLOR_BUFFER
 
 	};

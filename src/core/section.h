@@ -221,7 +221,7 @@ namespace PixelMaestro {
 			void set_maestro(Maestro& maestro);
 			Mirror* set_mirror(bool x, bool y);
 			Point& set_offset(uint16_t x, uint16_t y);
-			void set_one(uint16_t x, uint16_t y, const Colors::RGB& color, uint8_t step_count);
+			void set_one(uint16_t x, uint16_t y, const Colors::RGB& color);
 			Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);

@@ -23,11 +23,11 @@ void setup () {
 	maestro.set_brightness(25);
 
 	// Create a new blinking animation and set the color palette to the ColorWheel preset
-	Animation* animation = maestro.get_section(0).set_animation(AnimationType::Blink);
-	animation->set_palette(ColorPresets::Colorwheel_Palette);
+	Animation& animation = maestro.get_section(0).set_animation(AnimationType::Blink);
+	animation.set_palette(ColorPresets::Colorwheel_Palette);
 
 	// Set the amount of time between animation cycles to 500ms
-	animation->set_timer(500);
+	animation.set_timer(500);
 }
 
 void loop() {

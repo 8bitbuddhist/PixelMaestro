@@ -8,18 +8,18 @@
 #include "pixel.h"
 
 namespace PixelMaestro {
+
+	uint8_t Pixel::step_count_ = 0;
+
 	/**
 	 * Clears the Pixel's color values.
 	 */
 	void Pixel::clear() {
 		current_color_ = {0, 0, 0};
 
-#ifndef DISABLE_COLOR_BUFFER
-		step_.r = 0;
-		step_.g = 0;
-		step_.b = 0;
-		step_.count = 0;
-#endif
+		#ifndef DISABLE_COLOR_BUFFER
+			step_ = {0, 0, 0};
+		#endif
 	}
 
 	/**
@@ -37,15 +37,29 @@ namespace PixelMaestro {
 		@param next_color Target color.
 		@param step_count The number of steps to the target color.
 	*/
-	void Pixel::set_next_color(const Colors::RGB& next_color, uint8_t step_count) {
-#ifndef DISABLE_COLOR_BUFFER
-		step_.r = (next_color.r - current_color_.r) / (float)step_count;
-		step_.g = (next_color.g - current_color_.g) / (float)step_count;
-		step_.b = (next_color.b - current_color_.b) / (float)step_count;
-		step_.count = step_count;
-#else
-		current_color_ = next_color;
-#endif
+	void Pixel::set_next_color(const Colors::RGB& next_color) {
+	#ifndef DISABLE_COLOR_BUFFER
+		if (Pixel::step_count_ > 0) {
+			step_.r = (next_color.r - current_color_.r) / (float)Pixel::step_count_;
+			step_.g = (next_color.g - current_color_.g) / (float)Pixel::step_count_;
+			step_.b = (next_color.b - current_color_.b) / (float)Pixel::step_count_;
+		}
+		else {
+			current_color_ = next_color;
+		}
+	#else
+			current_color_ = next_color;
+	#endif
+	}
+
+	/**
+	 * Sets the number of steps between color changes. Only applies if fading is enabled.
+	 * @param step_count Number of steps to fade colors during transitions.
+	 */
+	void Pixel::set_step_count(uint8_t step_count) {
+		#ifndef DISABLE_COLOR_BUFFER
+			Pixel::step_count_ = step_count;
+		#endif
 	}
 
 	/**
@@ -53,15 +67,13 @@ namespace PixelMaestro {
 		Checks for and applies color changes.
 	*/
 	void Pixel::update() {
-#ifndef DISABLE_COLOR_BUFFER
+		#ifndef DISABLE_COLOR_BUFFER
 		// WARNING: This can be imprecise, especially with small or gradual color changes.
-		if (step_.count > 0) {
+		if (Pixel::step_count_ > 0) {
 			current_color_.r += step_.r;
 			current_color_.g += step_.g;
 			current_color_.b += step_.b;
-
-			step_.count--;
 		}
-#endif
+		#endif
 	}
 }

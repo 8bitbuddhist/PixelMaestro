@@ -1,7 +1,7 @@
 #include <math.h>
 #include "radialanimation.h"
 
-// TODO: Offset to create spiral pattern ("golden spiral")
+// FIXME: Does not work on Arduino
 namespace PixelMaestro {
 	RadialAnimation::RadialAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Radial;

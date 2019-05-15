@@ -18,7 +18,7 @@ namespace PixelMaestro {
 	class Maestro {
 
 		public:
-			Maestro(uint16_t rows, uint16_t columns);
+			Maestro(uint16_t rows, uint16_t columns, uint8_t num_sections = 1);
 			Maestro(Section* sections, uint8_t num_sections);
 			~Maestro();
 			CueController& get_cue_controller() const;
@@ -27,6 +27,7 @@ namespace PixelMaestro {
 			Section& get_section(uint8_t section) const;
 			Show* get_show() const;
 			Timer& get_timer() const;
+			void remove_sections();
 			void remove_show();
 			void set_brightness(uint8_t brightness);
 			CueController& set_cue_controller(uint16_t buffer_size = UINT8_MAX);
