@@ -36,7 +36,7 @@ namespace PixelMaestro {
 		 * Otherwise, just jump to the next cycle.
 		 */
 		if (animation_.get_fade()) {
-			step_count_ = interval_ / (float)animation_.get_section().get_maestro().get_timer().get_interval();
+			step_count_ = (interval_ - delay_) / (float)animation_.get_section().get_maestro().get_timer().get_interval();
 		}
 		else {
 			step_count_ = 1;
@@ -61,7 +61,7 @@ namespace PixelMaestro {
 	 * @return If the runtime exceeds the interval, return true.
 	 */
 	bool AnimationTimer::update(const uint32_t& current_time) {
-		if (running_ && ((current_time - last_time_) >= (interval_ + delay_))) {
+		if (running_ && ((current_time - last_time_) >= (interval_))) {
 			last_time_ = current_time;
 			return true;
 		}
