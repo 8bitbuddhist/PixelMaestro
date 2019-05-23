@@ -203,7 +203,7 @@ namespace PixelMaestro {
 						section_.set_one(x, y, Colors::RGB(0, 0, 0));
 					}
 					else {
-						section_.set_one(x,
+						section_.set_pixel_color(x,
 							y,
 							palette_->get_color_at_index(map_[y][x] + cycle_index_)
 						);

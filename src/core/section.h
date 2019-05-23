@@ -223,6 +223,7 @@ namespace PixelMaestro {
 			Point& set_offset(uint16_t x, uint16_t y);
 			void set_one(uint16_t x, uint16_t y, const Colors::RGB& color);
 			Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
+			void set_step_count(uint8_t step_count);
 			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);
 			void update_scroll(const uint32_t& current_time);
@@ -260,6 +261,9 @@ namespace PixelMaestro {
 
 			/// The Section's scrolling behavior.
 			Scroll* scroll_ = nullptr;
+
+			/// The number of steps for fading Pixels. Set by Animations. Defaults to 1.
+			uint8_t step_count_ = 1;
 	};
 }
 

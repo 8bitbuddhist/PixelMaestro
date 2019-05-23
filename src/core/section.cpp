@@ -468,6 +468,14 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets the number of steps for fading Pixels.
+	 * @param step_count When > 0, gradually fades Pixels from their current color to their next color.
+	 */
+	void Section::set_step_count(uint8_t step_count) {
+		this->step_count_ = step_count;
+	}
+
+	/**
 	 * Sets the last update time of each component's timer.
 	 * @param new_time New last refresh time.
 	 */
@@ -507,8 +515,12 @@ namespace PixelMaestro {
 			canvas_->update(current_time);
 		}
 
-		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-			pixels_[pixel].update();
+		if (step_count_ > 0) {
+			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+				pixels_[pixel].update();
+			}
+
+			step_count_--;
 		}
 
 		if (scroll_ != nullptr) {
