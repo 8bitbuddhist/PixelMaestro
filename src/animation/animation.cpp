@@ -195,12 +195,12 @@ namespace PixelMaestro {
 		if (timer_->update(current_time)) {
 			// Call the derived Animation's update routine
 			update();
-			Pixel::set_step_count(timer_->get_step_count());
+			section_.set_step_count(timer_->get_step_count());
 			for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
 				for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 					// Color index 255 reserved for black
 					if (map_[y][x] == 255) {
-						section_.set_one(x, y, Colors::RGB(0, 0, 0));
+						section_.set_pixel_color(x, y, Colors::RGB(0, 0, 0));
 					}
 					else {
 						section_.set_pixel_color(x,

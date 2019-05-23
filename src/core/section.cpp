@@ -439,10 +439,10 @@ namespace PixelMaestro {
 		@param color New color.
 		@param step_count Number of intermediate steps until the new color is reached.
 	*/
-	void Section::set_one(uint16_t x, uint16_t y, const Colors::RGB& color) {
+	void Section::set_pixel_color(uint16_t x, uint16_t y, const Colors::RGB& color) {
 		// Only continue if the Pixel is within the bounds of the array.
 		if (dimensions_.in_bounds(x, y)) {
-			pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color);
+			pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, step_count_);
 		}
 	}
 

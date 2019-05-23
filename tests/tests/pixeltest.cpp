@@ -14,7 +14,7 @@ TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
 	bool fade = true;
 
 	SECTION("Set a new color.") {
-		pixel.set_next_color(red);
+		pixel.set_next_color(red, 1);
 		pixel.update();
 		REQUIRE(pixel.get_color() == ColorPresets::Red);
 	}
@@ -22,9 +22,8 @@ TEST_CASE("Create and manipulate a Pixel.", "[Pixel]") {
 	// Calculate the step_count between the refresh and cycle rates
 	unsigned short step_count = (unsigned short)(interval / (float)refresh_rate);
 
-	Pixel::set_step_count(step_count);
 	// Change to red, allow fading, finish a transition every 10 ms
-	pixel.set_next_color(red);
+	pixel.set_next_color(red, step_count);
 
 	// Update the Pixel
 	pixel.update();
