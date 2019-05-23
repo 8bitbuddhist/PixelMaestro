@@ -439,10 +439,10 @@ namespace PixelMaestro {
 		@param color New color.
 		@param step_count Number of intermediate steps until the new color is reached.
 	*/
-	void Section::set_one(uint16_t x, uint16_t y, const Colors::RGB& color, uint8_t step_count) {
+	void Section::set_pixel_color(uint16_t x, uint16_t y, const Colors::RGB& color) {
 		// Only continue if the Pixel is within the bounds of the array.
 		if (dimensions_.in_bounds(x, y)) {
-			pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, step_count);
+			pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, step_count_);
 		}
 	}
 
@@ -465,6 +465,14 @@ namespace PixelMaestro {
 		scroll_->set(maestro_->get_timer().get_interval(), &dimensions_, x, y, reverse_x, reverse_y);
 
 		return *scroll_;
+	}
+
+	/**
+	 * Sets the number of steps for fading Pixels.
+	 * @param step_count When > 0, gradually fades Pixels from their current color to their next color.
+	 */
+	void Section::set_step_count(uint8_t step_count) {
+		this->step_count_ = step_count;
 	}
 
 	/**
@@ -507,8 +515,12 @@ namespace PixelMaestro {
 			canvas_->update(current_time);
 		}
 
-		for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-			pixels_[pixel].update();
+		if (step_count_ > 0) {
+			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+				pixels_[pixel].update();
+			}
+
+			step_count_--;
 		}
 
 		if (scroll_ != nullptr) {

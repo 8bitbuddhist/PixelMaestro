@@ -48,11 +48,12 @@ canvas.draw_point(5, x, y);
 - Changed several internal pointers to references. This may require code changes, e.g. to Arduino sketches.
 - Revised rendering logic to improve performance:
 	- Merged the `MappedAnimation` into the base `Animation` class. All Animations now use maps to store color data per frame.
-	- Pixels now use a new `Step` struct to store color change amounts on each update. This can be disabled by uncommenting `#define DISABLE_COLOR_BUFFER` in Pixel.h.
+	- Reduced Pixel memory usage to 6 bytes (3 bytes when enabling `#define DISABLE_COLOR_BUFFER` in Pixel.h).
 - Rewrote CueHandlers to reduce program size.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting frames larger than 255x255.
 - Added buffer overflow check to `CanvasCueHandler::draw_frame()`.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
+- Renamed `Section::set_one()` to `Section::set_pixel_color()`.
 
 ### Removed
 - Removed `Pixel::next_step_` to reduce memory usage.

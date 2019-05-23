@@ -3,7 +3,7 @@
 	Inspired by RGBMood (http://forum.arduino.cc/index.php?topic=90160.0)
 */
 
-//#define DISABLE_COLOR_BUFFER // Disable per-Pixel fading and color buffering.
+// #define DISABLE_COLOR_BUFFER // Disable per-Pixel fading and color buffering.
 
 #ifndef PIXEL_H
 #define PIXEL_H
@@ -28,15 +28,8 @@ namespace PixelMaestro {
 
 			#ifndef DISABLE_COLOR_BUFFER
 
-				struct Step {
-					int8_t r = 0;
-					int8_t g = 0;
-					int8_t b = 0;
-					uint8_t count = 0;
-				};
-
-				/// Tracks the step from the Pixel's current color to its next color.
-				Pixel::Step step_;
+				/// Tracks the number of intermediate steps from the Pixel's current color to its next color.
+				int8_t step_[3];
 
 			#endif // DISABLE_COLOR_BUFFER
 
