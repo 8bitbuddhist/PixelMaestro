@@ -102,8 +102,8 @@ namespace PixelMaestro {
 	 * Returns the Section's offset.
 	 * @return Offset.
 	 */
-	Point* Section::get_offset() {
-		return &offset_;
+	Point& Section::get_offset() {
+		return offset_;
 	}
 
 	/**

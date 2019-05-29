@@ -44,7 +44,7 @@ namespace PixelMaestro {
 		buffer_[(uint8_t)Byte::SizeByte1] = size.converted_0;
 		buffer_[(uint8_t)Byte::SizeByte2] = size.converted_1;
 
-		buffer_[(uint8_t)Byte::ChecksumByte] = checksum(buffer_, (uint8_t)Byte::PayloadByte + payload_size);
+		buffer_[(uint8_t)Byte::ChecksumByte] = checksum(buffer_, payload_size);
 
 		return buffer_;
 	}
@@ -150,7 +150,7 @@ namespace PixelMaestro {
 	 * @return Cue size.
 	 */
 	uint16_t CueController::get_cue_size() const {
-		return (IntByteConvert::byte_to_int(&buffer_[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte);
+		return IntByteConvert::byte_to_int(&buffer_[(uint8_t)CueController::Byte::SizeByte1]);
 	}
 
 	/**
@@ -256,7 +256,7 @@ namespace PixelMaestro {
 		}
 
 		// Validate the Checksum
-		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte;
+		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::SizeByte1]);
 		return (cue[(uint8_t)Byte::ChecksumByte] == checksum(cue, size));
 	}
 

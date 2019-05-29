@@ -19,15 +19,12 @@ namespace PixelMaestro {
 	 * @return The New Palette.
 	 */
 	Palette* CueHandler::deserialize_palette(const uint8_t* cue, uint8_t num_colors) {
-		uint16_t current_color_index = 0;
+		int index = -1;
 		Colors::RGB colors[num_colors];
 		for (uint8_t i = 0; i < num_colors; i++) {
-			colors[i].r = cue[current_color_index];
-			current_color_index++;
-			colors[i].g = cue[current_color_index];
-			current_color_index++;
-			colors[i].b = cue[current_color_index];
-			current_color_index++;
+			colors[i].r = cue[++index];
+			colors[i].g = cue[++index];
+			colors[i].b = cue[++index];
 		}
 		return new Palette(colors, num_colors);
 	}
@@ -67,15 +64,12 @@ namespace PixelMaestro {
 	 * @return Index in the Cue immediately after the Palette.
 	 */
 	uint16_t CueHandler::serialize_palette(uint8_t cue[], const Palette& palette) {
-		uint16_t index = 0;
+		int index = -1;
 		for (uint8_t i = 0; i < palette.get_num_colors(); i++) {
 			Colors::RGB color = palette.get_color_at_index(i);
-			cue[index] = color.r;
-			index++;
-			cue[index] = color.g;
-			index++;
-			cue[index] = color.b;
-			index++;
+			cue[++index] = color.r;
+			cue[++index] = color.g;
+			cue[++index] = color.b;
 		}
 
 		return index;
