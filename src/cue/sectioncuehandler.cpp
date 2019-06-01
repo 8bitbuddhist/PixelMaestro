@@ -75,19 +75,15 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::set_dimensions(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
-		IntByteConvert x_byte = IntByteConvert(x);
-		IntByteConvert y_byte = IntByteConvert(y);
-
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetDimensions,
 			section_num,
 			layer_num
 		);
-		controller_.get_buffer()[++index] = x_byte.converted_0;
-		controller_.get_buffer()[++index] = x_byte.converted_1;
-		controller_.get_buffer()[++index] = y_byte.converted_0;
-		controller_.get_buffer()[++index] = y_byte.converted_1;
+
+		add_uint16_to_cue(index, x);
+		add_uint16_to_cue(index, y);
 
 		return controller_.assemble(++index);
 	}
@@ -119,37 +115,30 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* SectionCueHandler::set_offset(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
-		IntByteConvert x_byte(x);
-		IntByteConvert y_byte(y);
-
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetOffset,
 			section_num,
 			layer_num
 		);
-		controller_.get_buffer()[++index] = x_byte.converted_0;
-		controller_.get_buffer()[++index] = x_byte.converted_1;
-		controller_.get_buffer()[++index] = y_byte.converted_0;
-		controller_.get_buffer()[++index] = y_byte.converted_1;
+
+		add_uint16_to_cue(index, x);
+		add_uint16_to_cue(index, y);
 
 		return controller_.assemble(++index);
 	}
 
 	uint8_t* SectionCueHandler::set_scroll(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
-		IntByteConvert x_byte(x);
-		IntByteConvert y_byte(y);
-
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetScroll,
 			section_num,
 			layer_num
 		);
-		controller_.get_buffer()[++index] = x_byte.converted_0;
-		controller_.get_buffer()[++index] = x_byte.converted_1;
-		controller_.get_buffer()[++index] = y_byte.converted_0;
-		controller_.get_buffer()[++index] = y_byte.converted_1;
+
+		add_uint16_to_cue(index, x);
+		add_uint16_to_cue(index, y);
+
 		controller_.get_buffer()[++index] = (uint8_t)reverse_x;
 		controller_.get_buffer()[++index] = (uint8_t)reverse_y;
 
@@ -198,8 +187,8 @@ namespace PixelMaestro {
 				break;
 			case Action::SetDimensions:
 				section->set_dimensions(
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2]));
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 2]));
 				break;
 			case Action::SetLayer:
 				section->set_layer(Colors::MixMode(cue[(uint8_t)Byte::OptionsByte]), cue[(uint8_t)Byte::OptionsByte + 1]);
@@ -209,14 +198,14 @@ namespace PixelMaestro {
 				break;
 			case Action::SetOffset:
 				section->set_offset(
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2])
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 2])
 				);
 				break;
 			case Action::SetScroll:
 				section->set_scroll(
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 2]),
 					(bool)cue[(uint8_t)Byte::OptionsByte + 4],
 					(bool)cue[(uint8_t)Byte::OptionsByte + 5]
 				);

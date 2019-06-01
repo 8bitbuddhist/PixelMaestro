@@ -158,7 +158,7 @@ namespace PixelMaestro {
 
 		// If we have a Canvas and it returns a color, use that color instead of the Pixel's actual color.
 		if (canvas_ != nullptr) {
-			Colors::RGB* canvas_color = canvas_->get_pixel_color(x, y);
+			Colors::RGB* canvas_color = canvas_->get_pixel_color(offset_x, offset_y);
 			if (canvas_color != nullptr) {
 				final_color = *canvas_color;
 			}

@@ -36,23 +36,15 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_plasma_options(uint8_t section_num, uint8_t layer_num, float size, float resolution) {
-		FloatByteConvert size_byte(size);
-		FloatByteConvert resolution_byte(resolution);
-
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetPlasmaOptions,
 			section_num,
 			layer_num
 		);
-		controller_.get_buffer()[++index] = size_byte.converted.byte[0];
-		controller_.get_buffer()[++index] = size_byte.converted.byte[1];
-		controller_.get_buffer()[++index] = size_byte.converted.byte[2];
-		controller_.get_buffer()[++index] = size_byte.converted.byte[3];
-		controller_.get_buffer()[++index] = resolution_byte.converted.byte[0];
-		controller_.get_buffer()[++index] = resolution_byte.converted.byte[1];
-		controller_.get_buffer()[++index] = resolution_byte.converted.byte[2];
-		controller_.get_buffer()[++index] = resolution_byte.converted.byte[3];
+
+		add_float_to_cue(index, size);
+		add_float_to_cue(index, resolution);
 
 		return controller_.assemble(++index);
 	}
@@ -157,19 +149,15 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* AnimationCueHandler::set_timer(uint8_t section_num, uint8_t layer_num, uint16_t interval, uint16_t delay) {
-		IntByteConvert interval_byte(interval);
-		IntByteConvert delay_byte(delay);
-
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
 			(uint8_t)Action::SetTimer,
 			section_num,
 			layer_num
 		);
-		controller_.get_buffer()[++index] = interval_byte.converted_0;
-		controller_.get_buffer()[++index] = interval_byte.converted_1;
-		controller_.get_buffer()[++index] = delay_byte.converted_0;
-		controller_.get_buffer()[++index] = delay_byte.converted_1;
+
+		add_uint16_to_cue(index, interval);
+		add_uint16_to_cue(index, delay);
 
 		return controller_.assemble(++index);
 	}
@@ -256,8 +244,8 @@ namespace PixelMaestro {
 				break;
 			case Action::SetTimer:
 				animation->set_timer(
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]),
-					IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte + 2]));
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 2]));
 				break;
 			case Action::SetWaveOptions:
 				static_cast<WaveAnimation*>(animation)->set_skew((int8_t)cue[(uint8_t)Byte::OptionsByte]);

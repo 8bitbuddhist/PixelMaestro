@@ -61,7 +61,7 @@ namespace PixelMaestro {
 		bool match = false;
 
 		if (other.get_time() == this->time_) {
-			uint16_t size = IntByteConvert::byte_to_int(&other.get_cue()[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)CueController::Byte::PayloadByte;
+			uint16_t size = IntByteConvert::byte_to_uint16(&other.get_cue()[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)CueController::Byte::PayloadByte;
 			for (uint16_t i = 0; i < size; i++) {
 				if (other.get_cue()[i] != cue_[i]) {
 					return match;
@@ -81,7 +81,7 @@ namespace PixelMaestro {
 	void Event::set_cue(uint8_t* cue) {
 		delete [] this->cue_;
 
-		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)CueController::Byte::PayloadByte;
+		uint16_t size = IntByteConvert::byte_to_uint16(&cue[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)CueController::Byte::PayloadByte;
 		this->cue_ = new uint8_t[size];
 		for (uint16_t i = 0; i < size; i++) {
 			this->cue_[i] = cue[i];

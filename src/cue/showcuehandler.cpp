@@ -3,21 +3,17 @@
 namespace PixelMaestro {
 
 	uint8_t* ShowCueHandler::set_events(Event *events, uint16_t num_events, bool preserve_current_index) {
-		IntByteConvert num_events_byte(num_events);
 
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::ShowCueHandler,
 			(uint8_t)Action::SetEvents
 		);
-		controller_.get_buffer()[++index] = num_events_byte.converted_0;
-		controller_.get_buffer()[++index] = num_events_byte.converted_1;
+		add_uint16_to_cue(index, num_events);
 		controller_.get_buffer()[++index] = (uint8_t)preserve_current_index;
 
 		for (uint16_t event_index = 0; event_index < num_events; event_index++) {
 			// Save time
-			IntByteConvert event_time(events[event_index].get_time());
-			controller_.get_buffer()[++index] = event_time.converted_0;
-			controller_.get_buffer()[++index] = event_time.converted_1;
+			add_uint32_to_cue(index, events[event_index].get_time());
 
 			// Save Cue
 			uint8_t* event_cue = events[event_index].get_cue();
@@ -59,7 +55,7 @@ namespace PixelMaestro {
 				{
 					// Delete existing Events
 					delete [] show->get_events();
-					uint16_t num_events = IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]);
+					uint16_t num_events = IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]);
 					bool preserve_cycle_index = cue[(uint8_t)Byte::OptionsByte + 2];
 
 					// Rebuild Event list
@@ -67,7 +63,7 @@ namespace PixelMaestro {
 					int options_index = (uint8_t)Byte::OptionsByte + 3;
 					for (uint16_t event = 0; event < num_events; event++) {
 						// Set time
-						uint32_t time = IntByteConvert::byte_to_int(&cue[options_index]);
+						uint32_t time = IntByteConvert::byte_to_uint32(&cue[options_index]);
 						events[event].set_time(time);
 
 						// Skip past the cue time to get the cue itself

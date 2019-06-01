@@ -13,6 +13,43 @@ namespace PixelMaestro {
 	CueHandler::CueHandler(CueController &controller) : controller_(controller) { }
 
 	/**
+	 * Inserts a float into a Cue.
+	 * @param index Last position in the Cue.
+	 * @param value Float to insert.
+	 */
+	void CueHandler::add_float_to_cue(uint16_t &index, float value) {
+		FloatByteConvert converted(value);
+		controller_.get_buffer()[++index] = converted.converted.byte[0];
+		controller_.get_buffer()[++index] = converted.converted.byte[1];
+		controller_.get_buffer()[++index] = converted.converted.byte[2];
+		controller_.get_buffer()[++index] = converted.converted.byte[3];
+	}
+
+	/**
+	 * Inserts a 16-bit integer into a Cue.
+	 * @param index Last position in the Cue.
+	 * @param value 16-bit integer to insert.
+	 */
+	void CueHandler::add_uint16_to_cue(uint16_t& index, uint16_t value) {
+		IntByteConvert converted(value);
+		controller_.get_buffer()[++index] = converted.converted_0;
+		controller_.get_buffer()[++index] = converted.converted_1;
+	}
+
+	/**
+	 * Inserts a 32-bit integer into a Cue.
+	 * @param index Last position in the Cue.
+	 * @param value 32-bit integer to insert.
+	 */
+	void CueHandler::add_uint32_to_cue(uint16_t &index, uint32_t value) {
+		IntByteConvert converted(value);
+		controller_.get_buffer()[++index] = converted.converted_0;
+		controller_.get_buffer()[++index] = converted.converted_1;
+		controller_.get_buffer()[++index] = converted.converted_2;
+		controller_.get_buffer()[++index] = converted.converted_3;
+	}
+
+	/**
 	 * Extracts a Palette from a Cue.
 	 * @param cue The Cue starting at the Palette's address.
 	 * @param num_colors The number of colors in the Palette.

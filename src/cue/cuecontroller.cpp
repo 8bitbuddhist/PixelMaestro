@@ -150,7 +150,7 @@ namespace PixelMaestro {
 	 * @return Cue size.
 	 */
 	uint16_t CueController::get_cue_size() const {
-		return IntByteConvert::byte_to_int(&buffer_[(uint8_t)CueController::Byte::SizeByte1]);
+		return IntByteConvert::byte_to_uint16(&buffer_[(uint8_t)CueController::Byte::SizeByte1]);
 	}
 
 	/**
@@ -159,7 +159,7 @@ namespace PixelMaestro {
 	 * @return Cue size.
 	 */
 	uint16_t CueController::get_cue_size(uint8_t *cue) const {
-		return (IntByteConvert::byte_to_int(&cue[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte);
+		return (IntByteConvert::byte_to_uint16(&cue[(uint8_t)CueController::Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte);
 	}
 
 	/**
@@ -198,7 +198,7 @@ namespace PixelMaestro {
 		 *	2) If the last bytes read match the Cue ID string but are not part of `ShowCueHandler::set_events`, move the ID and read index to the start of the buffer. This lets the Cue use the entire buffer. The SetEvents check is important, since Events are formatted as normal Cues and would otherwise pass the check.
 		 *	3) If we've reached the buffer size limit, set the index to 0 (indicates a read error or an invalid Cue).
 		 */
-		if (read_index_ >= IntByteConvert::byte_to_int(&buffer_[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte) {
+		if (read_index_ >= IntByteConvert::byte_to_uint16(&buffer_[(uint8_t)Byte::SizeByte1]) + (uint8_t)Byte::PayloadByte) {
 			run(buffer_);
 			read_index_ = 0;
 			return true;
@@ -256,7 +256,7 @@ namespace PixelMaestro {
 		}
 
 		// Validate the Checksum
-		uint16_t size = IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::SizeByte1]);
+		uint16_t size = IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::SizeByte1]);
 		return (cue[(uint8_t)Byte::ChecksumByte] == checksum(cue, size));
 	}
 

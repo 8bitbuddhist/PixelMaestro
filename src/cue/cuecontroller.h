@@ -41,16 +41,21 @@ namespace PixelMaestro {
 	/// Converts an integer value to and from a byte array.
 	class IntByteConvert {
 		public:
-			uint8_t converted_0 = 0;
-			uint8_t converted_1 = 0;
+			uint8_t converted_0 = 0, converted_1 = 0, converted_2 = 0, converted_3 = 0;
 
 			explicit IntByteConvert(uint32_t val) {
-				converted_0 = val / 256;
-				converted_1 = val % 256;
+				converted_0 = val;
+				converted_1 = val >> 8;
+				converted_2 = val >> 16;
+				converted_3 = val >> 24;
 			}
 
-			static uint32_t byte_to_int(uint8_t* byte_start) {
-				return (byte_start[0] * 256) + byte_start[1];
+			static uint16_t byte_to_uint16(uint8_t* byte_start) {
+				return byte_start[0] | (byte_start[1] << 8);
+			}
+
+			static uint32_t byte_to_uint32(uint8_t* byte_start) {
+				return byte_start[0] | (byte_start[1] << 8) | (byte_start[2] << 16) | (byte_start[3] << 24);
 			}
 	};
 

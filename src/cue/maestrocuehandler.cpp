@@ -33,14 +33,11 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* MaestroCueHandler::set_timer(uint16_t interval) {
-		IntByteConvert interval_byte = IntByteConvert(interval);
-
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::SetTimer
 		);
-		controller_.get_buffer()[++index] = interval_byte.converted_0;
-		controller_.get_buffer()[++index] = interval_byte.converted_1;
+		add_uint16_to_cue(index, interval);
 
 		return controller_.assemble(++index);
 	}
@@ -64,14 +61,12 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* MaestroCueHandler::sync(const uint32_t new_time) {
-		IntByteConvert last_time_byte(new_time);
-
 		uint16_t index = start_cue(
 			(uint8_t)CueController::Handler::MaestroCueHandler,
 			(uint8_t)Action::Sync
 		);
-		controller_.get_buffer()[++index] = last_time_byte.converted_0;
-		controller_.get_buffer()[++index] = last_time_byte.converted_1;
+
+		add_uint32_to_cue(index, new_time);
 
 		return controller_.assemble(++index);
 	}
@@ -89,7 +84,7 @@ namespace PixelMaestro {
 				maestro.set_show(nullptr, 0);
 				break;
 			case Action::SetTimer:
-				maestro.set_timer(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
+				maestro.set_timer(IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]));
 				break;
 			case Action::Start:
 				maestro.get_timer().start();
@@ -98,7 +93,7 @@ namespace PixelMaestro {
 				maestro.get_timer().stop();
 				break;
 			case Action::Sync:
-				maestro.sync(IntByteConvert::byte_to_int(&cue[(uint8_t)Byte::OptionsByte]));
+				maestro.sync(IntByteConvert::byte_to_uint32(&cue[(uint8_t)Byte::OptionsByte]));
 				break;
 		}
 	}
