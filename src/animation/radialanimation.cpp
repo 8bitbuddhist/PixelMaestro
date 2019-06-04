@@ -1,7 +1,6 @@
 #include <math.h>
 #include "radialanimation.h"
 
-// FIXME: Does not work on Arduino
 namespace PixelMaestro {
 	RadialAnimation::RadialAnimation(Section& section) : Animation(section) {
 		type_ = AnimationType::Radial;

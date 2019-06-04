@@ -22,14 +22,14 @@ namespace PixelMaestro {
 			/// The controller managing this Handler.
 			CueController& controller_;
 
-			void add_float_to_cue(uint16_t& index, float value);
-			void add_uint16_to_cue(uint16_t& index, uint16_t value);
-			void add_uint32_to_cue(uint16_t& index, uint32_t value);
+			void add_float_to_cue(uint32_t& index, float value);
+			void add_uint16_to_cue(uint32_t& index, uint16_t value);
+			void add_uint32_to_cue(uint32_t& index, uint32_t value);
 			Section* get_section(uint8_t section_id, uint8_t layer_id) const;
 			Palette* deserialize_palette(const uint8_t* cue, uint8_t num_colors);
 			uint16_t serialize_palette(uint8_t cue[], const Palette& palette);
-			uint16_t start_cue(uint8_t handler_byte, uint8_t action_byte);
-			uint16_t start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num);
+			uint32_t start_cue(uint8_t handler_byte, uint8_t action_byte);
+			uint32_t start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num);
 	};
 }
 

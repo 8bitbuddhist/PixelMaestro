@@ -7,6 +7,10 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Important Changes
 
+#### Cue Changes
+
+Due to changes in how Cues are assembled, Cues created in version 1.x are incompatible with this version.
+
 #### API Changes
 
 This version introduces significant API changes and changes many pointers to references. For example, adding an Animation has changed from:
@@ -51,6 +55,7 @@ canvas.draw_point(5, x, y);
 	- Reduced Pixel memory usage to 6 bytes (3 bytes when enabling `#define DISABLE_COLOR_BUFFER` in Pixel.h).
 - Rewrote CueHandlers to reduce program size.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting frames larger than 255x255.
+- Increased maximum Cue buffer size from 16-bit integer to 32-bit integer.
 - Added buffer overflow check to `CanvasCueHandler::draw_frame()`.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
 - Renamed `Section::set_one()` to `Section::set_pixel_color()`.

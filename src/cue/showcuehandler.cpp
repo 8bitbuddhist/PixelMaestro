@@ -4,7 +4,7 @@ namespace PixelMaestro {
 
 	uint8_t* ShowCueHandler::set_events(Event *events, uint16_t num_events, bool preserve_current_index) {
 
-		uint16_t index = start_cue(
+		uint32_t index = start_cue(
 			(uint8_t)CueController::Handler::ShowCueHandler,
 			(uint8_t)Action::SetEvents
 		);
@@ -17,7 +17,8 @@ namespace PixelMaestro {
 
 			// Save Cue
 			uint8_t* event_cue = events[event_index].get_cue();
-			for (uint16_t cue_index = 0; cue_index < controller_.get_cue_size(event_cue); cue_index++) {
+			uint32_t cue_size = controller_.get_cue_size(event_cue);
+			for (uint32_t cue_index = 0; cue_index < cue_size; cue_index++) {
 				controller_.get_buffer()[++index] = event_cue[cue_index];
 			}
 		}
@@ -26,7 +27,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* ShowCueHandler::set_looping(bool loop) {
-		uint16_t index = start_cue(
+		uint32_t index = start_cue(
 			(uint8_t)CueController::Handler::ShowCueHandler,
 			(uint8_t)Action::SetLooping
 		);
@@ -36,7 +37,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* ShowCueHandler::set_timing_mode(Show::TimingMode timing) {
-		uint16_t index = start_cue(
+		uint32_t index = start_cue(
 			(uint8_t)CueController::Handler::ShowCueHandler,
 			(uint8_t)Action::SetTimingMode
 		);
@@ -60,14 +61,14 @@ namespace PixelMaestro {
 
 					// Rebuild Event list
 					Event* events = new Event[num_events];
-					int options_index = (uint8_t)Byte::OptionsByte + 3;
+					uint32_t options_index = (uint8_t)Byte::OptionsByte + 3;
 					for (uint16_t event = 0; event < num_events; event++) {
 						// Set time
 						uint32_t time = IntByteConvert::byte_to_uint32(&cue[options_index]);
 						events[event].set_time(time);
 
 						// Skip past the cue time to get the cue itself
-						options_index += 2;
+						options_index += 4;
 
 						// Set Cues
 						uint16_t event_cue_size = controller_.get_cue_size(&cue[options_index]);

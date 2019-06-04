@@ -22,7 +22,7 @@ TEST_CASE("Create and manipulate a Show.", "[Show]") {
 
 		REQUIRE(event.get_time() == time);
 
-		for (int index = 0; index < controller->get_cue_size(cue); index++) {
+		for (uint32_t index = 0; index < controller->get_cue_size(cue); index++) {
 			REQUIRE(cue[index] == event.get_cue()[index]);
 		}
 	}

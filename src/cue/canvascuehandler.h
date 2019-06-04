@@ -60,7 +60,7 @@ namespace PixelMaestro {
 			uint8_t* stop_frame_timer(uint8_t section_num, uint8_t layer_num);
 
 			void run(uint8_t* cue);
-			uint16_t start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num, uint16_t frame_num = 0);
+			uint32_t start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num, uint16_t frame_num = 0);
 
 		private:
 			Font* get_font(Font::Type font_type);

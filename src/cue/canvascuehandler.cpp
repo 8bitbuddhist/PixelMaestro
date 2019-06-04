@@ -5,7 +5,7 @@
 
 namespace PixelMaestro {
 	uint8_t* CanvasCueHandler::clear(uint8_t section_num, uint8_t layer_num) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::Clear,
 			section_num,
@@ -16,7 +16,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_circle(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::DrawCircle,
 			section_num,
@@ -34,13 +34,8 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_frame(uint8_t section_num, uint8_t layer_num, uint16_t frame_index,  uint16_t size_x, uint16_t size_y, const uint8_t* frame) {
-		// Check the size of the buffer. If it's not big enough to store the frame, exit.
-		// TODO: Remove after changing Cue capacity
-		if ((size_x * size_y) > controller_.get_buffer_size()) {
-			return nullptr;
-		}
 
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::DrawFrame,
 			section_num,
@@ -62,7 +57,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_line(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::DrawLine,
 			section_num,
@@ -80,7 +75,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_point(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint8_t color_index, uint16_t x, uint16_t y) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::DrawPoint,
 			section_num,
@@ -96,7 +91,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_rect(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::DrawRect,
 			section_num,
@@ -115,7 +110,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_triangle(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::DrawTriangle,
 			section_num,
@@ -136,7 +131,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::draw_text(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font::Type font, const char* text, uint8_t num_chars) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::DrawText,
 			section_num,
@@ -158,7 +153,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::erase_point(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint16_t x, uint16_t y) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::ErasePoint,
 			section_num,
@@ -173,7 +168,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::next_frame(uint8_t section_num, uint8_t layer_num) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::NextFrame,
 			section_num,
@@ -184,7 +179,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::previous_frame(uint8_t section_num, uint8_t layer_num) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::PreviousFrame,
 			section_num,
@@ -195,7 +190,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::remove_frame_timer(uint8_t section_num, uint8_t layer_num) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::RemoveFrameTimer,
 			section_num,
@@ -206,7 +201,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::set_current_frame_index(uint8_t section_num, uint8_t layer_num, uint16_t frame_index) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::SetCurrentFrameIndex,
 			section_num,
@@ -219,7 +214,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::set_frame_timer(uint8_t section_num, uint8_t layer_num, uint16_t speed) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::SetFrameTimer,
 			section_num,
@@ -232,7 +227,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::set_num_frames(uint8_t section_num, uint8_t layer_num, uint16_t num_frames) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::SetNumFrames,
 			section_num,
@@ -245,7 +240,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::set_palette(uint8_t section_num, uint8_t layer_num, const Palette& palette) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::SetPalette,
 			section_num,
@@ -259,8 +254,8 @@ namespace PixelMaestro {
 		return controller_.assemble(index + palette_size);
 	}
 
-	uint16_t CanvasCueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num, uint16_t frame_num) {
-		uint16_t index = CueHandler::start_cue(handler_byte, action_byte, section_num, layer_num);
+	uint32_t CanvasCueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num, uint16_t frame_num) {
+		uint32_t index = CueHandler::start_cue(handler_byte, action_byte, section_num, layer_num);
 
 		add_uint16_to_cue(index, frame_num);
 
@@ -268,7 +263,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::start_frame_timer(uint8_t section_num, uint8_t layer_num) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::StartFrameTimer,
 			section_num,
@@ -279,7 +274,7 @@ namespace PixelMaestro {
 	}
 
 	uint8_t* CanvasCueHandler::stop_frame_timer(uint8_t section_num, uint8_t layer_num) {
-		uint16_t index = CanvasCueHandler::start_cue(
+		uint32_t index = CanvasCueHandler::start_cue(
 			(uint8_t)CueController::Handler::CanvasCueHandler,
 			(uint8_t)Action::StopFrameTimer,
 			section_num,

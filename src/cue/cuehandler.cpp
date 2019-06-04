@@ -17,7 +17,7 @@ namespace PixelMaestro {
 	 * @param index Last position in the Cue.
 	 * @param value Float to insert.
 	 */
-	void CueHandler::add_float_to_cue(uint16_t &index, float value) {
+	void CueHandler::add_float_to_cue(uint32_t& index, float value) {
 		FloatByteConvert converted(value);
 		controller_.get_buffer()[++index] = converted.converted.byte[0];
 		controller_.get_buffer()[++index] = converted.converted.byte[1];
@@ -30,7 +30,7 @@ namespace PixelMaestro {
 	 * @param index Last position in the Cue.
 	 * @param value 16-bit integer to insert.
 	 */
-	void CueHandler::add_uint16_to_cue(uint16_t& index, uint16_t value) {
+	void CueHandler::add_uint16_to_cue(uint32_t& index, uint16_t value) {
 		IntByteConvert converted(value);
 		controller_.get_buffer()[++index] = converted.converted_0;
 		controller_.get_buffer()[++index] = converted.converted_1;
@@ -41,7 +41,7 @@ namespace PixelMaestro {
 	 * @param index Last position in the Cue.
 	 * @param value 32-bit integer to insert.
 	 */
-	void CueHandler::add_uint32_to_cue(uint16_t &index, uint32_t value) {
+	void CueHandler::add_uint32_to_cue(uint32_t &index, uint32_t value) {
 		IntByteConvert converted(value);
 		controller_.get_buffer()[++index] = converted.converted_0;
 		controller_.get_buffer()[++index] = converted.converted_1;
@@ -118,7 +118,7 @@ namespace PixelMaestro {
 	 * @param action_byte The action being performed.
 	 * @return The current index in the Cue.
 	 */
-	uint16_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte) {
+	uint32_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte) {
 		uint16_t index = (uint8_t)CueController::Byte::PayloadByte;
 		controller_.get_buffer()[index] = handler_byte;
 		controller_.get_buffer()[++index] = action_byte;
@@ -134,8 +134,8 @@ namespace PixelMaestro {
 	 * @param layer_num The ID of the affected Layer.
 	 * @return The current index in the Cue.
 	 */
-	uint16_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num) {
-		uint16_t index = start_cue(handler_byte, action_byte);
+	uint32_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num) {
+		uint32_t index = start_cue(handler_byte, action_byte);
 		controller_.get_buffer()[++index] = section_num;
 		controller_.get_buffer()[++index] = layer_num;
 
