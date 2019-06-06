@@ -138,8 +138,8 @@ namespace PixelMaestro {
 				}
 
 				~Scroll() {
-					delete timer_x;
-					delete timer_y;
+					remove_timer_x();
+					remove_timer_y();
 				}
 			};
 

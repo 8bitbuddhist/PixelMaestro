@@ -135,6 +135,8 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color) {
 
+		if (!dimensions_.in_bounds(x, y)) return Colors::RGB(0, 0, 0);
+
 		// Adjust coordinates based on offset
 		uint16_t offset_x = (x + offset_.x) % dimensions_.x;
 		uint16_t offset_y = (y + offset_.y) % dimensions_.y;
@@ -473,6 +475,12 @@ namespace PixelMaestro {
 	 */
 	void Section::set_step_count(uint8_t step_count) {
 		this->step_count_ = step_count;
+
+		#ifdef PIXEL_ENABLE_ACCURATE_FADING
+			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+				pixels_[pixel].apply_next_color();
+			}
+		#endif
 	}
 
 	/**
@@ -515,13 +523,15 @@ namespace PixelMaestro {
 			canvas_->update(current_time);
 		}
 
-		if (step_count_ > 0) {
-			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-				pixels_[pixel].update();
-			}
+		#ifdef PIXEL_ENABLE_FADING
+			if (step_count_ > 0) {
+				for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+					pixels_[pixel].update();
+				}
 
-			step_count_--;
-		}
+				step_count_--;
+			}
+		#endif
 
 		if (scroll_ != nullptr) {
 			update_scroll(current_time);

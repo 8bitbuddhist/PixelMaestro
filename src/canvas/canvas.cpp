@@ -94,9 +94,7 @@ namespace PixelMaestro {
 		Point frame_bounds = Point(size_x, size_y);
 		for (uint16_t y = 0; y < size_y; y++) {
 			for (uint16_t x = 0; x < size_x; x++) {
-				if (section_.get_dimensions().in_bounds(x, y)) {
-					draw_point(frame_index, frame[frame_bounds.get_inline_index(x, y)], x, y);
-				}
+				draw_point(frame_index, frame[frame_bounds.get_inline_index(x, y)], x, y);
 			}
 		}
 	}
@@ -303,7 +301,9 @@ namespace PixelMaestro {
 	 * @param y Y coordinate.
 	 */
 	void Canvas::erase_point(uint16_t frame_index, uint16_t x, uint16_t y) {
-		frames_[frame_index][section_.get_dimensions().get_inline_index(x, y)] = 255;
+		if (section_.get_dimensions().in_bounds(x, y)) {
+			frames_[frame_index][section_.get_dimensions().get_inline_index(x, y)] = 255;
+		}
 	}
 
 	/**
@@ -357,6 +357,8 @@ namespace PixelMaestro {
 	 * @return Color if found. If the Pixel is transparent, return nullptr.
 	 */
 	Colors::RGB* Canvas::get_pixel_color(uint16_t x, uint16_t y) {
+		if (!section_.get_dimensions().in_bounds(x, y)) return nullptr;
+
 		uint8_t index = frames_[current_frame_index_][section_.get_dimensions().get_inline_index(x, y)];
 		if (index != 255) {
 			return &palette_->get_color_at_index(index);

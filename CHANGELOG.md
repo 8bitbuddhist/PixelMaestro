@@ -9,11 +9,11 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 #### Cue Changes
 
-Due to changes in how Cues are assembled, Cues created in version 1.x are incompatible with this version.
+Due to changes in how Cues are formatted, Cues created in version 1.x are incompatible with this version.
 
 #### API Changes
 
-This version introduces significant API changes and changes many pointers to references. For example, adding an Animation has changed from:
+Many pointers have been converted to references, requiring changes to your code. For example, adding an Animation has changed from:
 
 ```c++
 Section* section = maestro.get_section(0);
@@ -27,26 +27,31 @@ Section& section = maestro.get_section(0);
 section.set_animation(AnimationType::Blink);
 ```
 
-#### Canvas-related Changes
+#### Canvas Changes
 
-Canvas drawing methods and Cues now require you to specify which frame to draw on. This means you can draw on a frame without having to switch to it first. For example, drawing a point has changed from this:
+Canvas drawing methods and Cues now require you to specify which frame to draw on. This lets you draw on a specific frame without having to switch to it first.
+
+For example, if you wanted to draw a point on frame 5, you would normally have to do this:
 
 ```c++
 canvas.set_current_frame_index(5);
 canvas.draw_point(x, y);
 ```
 
-to this:
+Now, you can use:
 
 ```c++
 canvas.draw_point(5, x, y);
 ```
 
 ### Added
-- Added ability to mirror Sections across the x and/or y axes.
+- Added ability to dynamically allocate more than one Section when declaring a Maestro.
+- Added ability to mirror Sections across the x and y axes.
 - Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point (when used as a dimension).
-- Added CueHandler helper functions for generating Cues.
-- Added the `#define DISABLE_COLOR_BUFFER` preprocessor directive to disable the color fade buffer in Pixels.h. This enables devices with limited memory to support more Pixels at the cost of no color fading.
+- Added helper functions for generating CueHandler Cues.
+- Added performance related preprocessor directives to pixel.h.
+	- `#define PIXEL_ENABLE_FADING` specifies whether to enable fading. Disabling this saves 3 bytes of RAM per Pixel at the cost of fading between colors.
+	- `#define PIXEL_ENABLE_ACCURATE_FADING` enables accurate fading between colors when `PIXEL_ENABLE_FADING` is also enabled. Disabling this saves 3 bytes of RAM per Pixel at the cost of less accurate color reproduction.
 
 ### Changed
 - Changed several internal pointers to references. This may require code changes, e.g. to Arduino sketches.
@@ -55,16 +60,19 @@ canvas.draw_point(5, x, y);
 	- Reduced Pixel memory usage to 6 bytes (3 bytes when enabling `#define DISABLE_COLOR_BUFFER` in Pixel.h).
 - Rewrote CueHandlers to reduce program size.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting frames larger than 255x255.
-- Increased maximum Cue buffer size from 16-bit integer to 32-bit integer.
-- Added buffer overflow check to `CanvasCueHandler::draw_frame()`.
+- Increased Canvas frame count from an 8-bit integer to a 16-bit integer.
+- Fixed bug where `Section::set_offset()` wasn't affecting Canvases.
+- Fixed bug where `AnimationTimer::delay_` wasn't being properly calculated or applied.
+- Increased maximum Cue buffer size from 16-bit integer to 32-bit integer. This breaks backwards compatibility with earlier Cues.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
 - Renamed `Section::set_one()` to `Section::set_pixel_color()`.
+- Modified `CueController::read()` to check the read index against the buffered Cue's size before trying to run the buffered Cue.
+- Fixed memory leak when removing a Canvas or Animation without first removing its Palette.
 
 ### Removed
 - Removed `Pixel::next_step_` to reduce memory usage.
 - Removed `WaveAnimation` mirror option.
 - Removed `Canvas::in_bounds()` (see `Point::in_bounds()` instead).
-- Removed `Canvas::get_pixel_color()` (see `Section::get_pixel_color()` instead).
 - Removed mirror option in `AnimationCueHandler::set_wave_options`.
 
 ## [v1.0.2] - 2018-12-03
