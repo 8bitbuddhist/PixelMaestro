@@ -523,7 +523,7 @@ namespace PixelMaestro {
 			canvas_->update(current_time);
 		}
 
-		#ifdef PIXEL_ENABLE_FADING
+		#ifndef PIXEL_DISABLE_FADING
 			if (step_count_ > 0) {
 				for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
 					pixels_[pixel].update();

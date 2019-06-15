@@ -2,8 +2,8 @@
 	Pixel.h - Class for controlling a single RGB LED.
 */
 
-#define PIXEL_ENABLE_FADING				// Enables per-Pixel fading. Uses 3 bytes per Pixel.
-// #define PIXEL_ENABLE_ACCURATE_FADING	// Enables tracking of the Pixel's next color. Only available when fading is enabled. Uses 3 bytes per Pixel.
+// #define PIXEL_DISABLE_FADING			// Disables per-Pixel fading. Restores 3 bytes per Pixel.
+// #define PIXEL_ENABLE_ACCURATE_FADING	// Enables tracking of the Pixel's next color. Only available when PIXEL_DISABLE_FADING is not enabled. Uses 3 bytes per Pixel.
 
 #ifndef PIXEL_H
 #define PIXEL_H
@@ -27,7 +27,7 @@ namespace PixelMaestro {
 			/// The Pixel's current color.
 			Colors::RGB current_color_ = {0, 0, 0};
 
-			#ifdef PIXEL_ENABLE_FADING
+			#ifndef PIXEL_DISABLE_FADING
 				/// The amount to increment current_color_ for each step when fading.
 				Colors::RGB step_ = {0, 0, 0};
 
