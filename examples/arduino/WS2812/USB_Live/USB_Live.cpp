@@ -12,6 +12,7 @@
 #include <core/maestro.h>
 #include <core/section.h>
 #include <colorpresets.h>
+#include <cue/sectioncuehandler.h>
 #include <animation/waveanimation.h>
 #include <WS2812.h>
 #include <cRGB.h>
@@ -51,6 +52,15 @@ void setup () {
 	controller.enable_maestro_cue_handler();
 	controller.enable_section_cue_handler();
 	controller.enable_show_cue_handler();
+
+	// Block certain Cues from firing.
+	const uint8_t num_blocks = 2;
+	CueController::BlockedCue* blocks = new CueController::BlockedCue[num_blocks] {
+		CueController::BlockedCue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetDimensions),
+		CueController::BlockedCue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetBrightness)
+	};
+
+	controller.set_blocked_cues(blocks, num_blocks);
 
 	Serial.begin(9600);
 }

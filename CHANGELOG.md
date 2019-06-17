@@ -11,6 +11,12 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 Due to changes in how Cues are formatted, Cues created in version 1.x are incompatible with this version.
 
+#### Pixel Changes
+
+Pixels were changed to use a faster, but less accurate, fading method. You can enable accurate fading by adding the `PIXEL_ENABLE_ACCURATE_FADING` preprocessor directive to your project, but note that this uses an additional 3 bytes of RAM per Pixel.
+
+If you want to disable fading altogether and gain 3 bytes of RAM per Pixel, use the `PIXEL_DISABLE_FADING` preprocessor directive.
+
 #### API Changes
 
 Many pointers have been converted to references, requiring changes to your code. For example, adding an Animation has changed from:
@@ -45,32 +51,32 @@ canvas.draw_point(5, x, y);
 ```
 
 ### Added
-- Added ability to dynamically allocate more than one Section when declaring a Maestro.
+- Added constructor to dynamically allocate more than one Section when declaring a Maestro.
 - Added ability to mirror Sections across the x and y axes.
 - Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point (when used as a dimension).
+- Added ability to block specific Cues from executing.
 - Added helper functions for generating CueHandler Cues.
-- Added performance related preprocessor directives to pixel.h.
-	- `#define PIXEL_ENABLE_FADING` specifies whether to enable fading. Disabling this saves 3 bytes of RAM per Pixel at the cost of fading between colors.
-	- `#define PIXEL_ENABLE_ACCURATE_FADING` enables accurate fading between colors when `PIXEL_ENABLE_FADING` is also enabled. Disabling this saves 3 bytes of RAM per Pixel at the cost of less accurate color reproduction.
+- Added Handler nullptr checks to `CueController::run()` methods.
+- Added performance-related preprocessor directives:
+    - `PIXEL_DISABLE_FADING` disables fading, which saves 3 bytes of RAM per Pixel.
+	- `PIXEL_ENABLE_ACCURATE_FADING` enables more accurate color reproduction when fading is enabled. Requires an additional 3 bytes of RAM.
 
 ### Changed
 - Changed several internal pointers to references. This may require code changes, e.g. to Arduino sketches.
-- Revised rendering logic to improve performance:
-	- Merged the `MappedAnimation` into the base `Animation` class. All Animations now use maps to store color data per frame.
-	- Reduced Pixel memory usage to 6 bytes (3 bytes when enabling `#define DISABLE_COLOR_BUFFER` in Pixel.h).
+- Revised Pixel rendering logic to improve performance.
+- Merged the `MappedAnimation` class into the base `Animation` class. All Animations now use maps to store color data per frame.
 - Rewrote CueHandlers to reduce program size.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting frames larger than 255x255.
 - Increased Canvas frame count from an 8-bit integer to a 16-bit integer.
 - Fixed bug where `Section::set_offset()` wasn't affecting Canvases.
 - Fixed bug where `AnimationTimer::delay_` wasn't being properly calculated or applied.
-- Increased maximum Cue buffer size from 16-bit integer to 32-bit integer. This breaks backwards compatibility with earlier Cues.
+- Increased maximum Cue buffer size from a 16-bit integer to a 32-bit integer.
 - Fixed Show crash when enabling relative time and looping after the Show has already ended.
 - Renamed `Section::set_one()` to `Section::set_pixel_color()`.
 - Modified `CueController::read()` to check the read index against the buffered Cue's size before trying to run the buffered Cue.
 - Fixed memory leak when removing a Canvas or Animation without first removing its Palette.
 
 ### Removed
-- Removed `Pixel::next_step_` to reduce memory usage.
 - Removed `WaveAnimation` mirror option.
 - Removed `Canvas::in_bounds()` (see `Point::in_bounds()` instead).
 - Removed mirror option in `AnimationCueHandler::set_wave_options`.

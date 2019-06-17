@@ -83,6 +83,21 @@ namespace PixelMaestro {
 				ShowCueHandler
 			};
 
+			/**
+			 * Defines a Cue that should be blocked from serialization.
+			 */
+			struct BlockedCue {
+				/// The Handler that this Cue belongs to.
+				Handler handler;
+				/// The action being performed.
+				uint8_t action;
+
+				BlockedCue(Handler handler, uint8_t action) {
+					this->handler = handler;
+					this->action = action;
+				}
+			};
+
 			CueController(Maestro& maestro, uint32_t buffer_size = UINT8_MAX);
 			~CueController();
 			uint8_t* assemble(uint32_t payload_size);
@@ -98,12 +113,20 @@ namespace PixelMaestro {
 			uint32_t get_cue_size(uint8_t* cue) const;
 			CueHandler* get_handler(Handler handler) const;
 			Maestro& get_maestro() const;
+			bool is_blocked(const uint8_t* cue) const;
 			bool read(uint8_t byte);
 			void run();
 			void run(uint8_t* cue);
+			void set_blocked_cues(BlockedCue* blocks, uint8_t num_blocks);
 			bool validate_header(uint8_t* cue);
 
 		private:
+			/// Array of Cues to block from executing.
+			BlockedCue* blocked_cues_ = nullptr;
+
+			/// The number of blocked Cues.
+			uint8_t num_blocked_cues_ = 0;
+
 			/// Size of the buffer for caching Cues.
 			uint32_t buffer_size_;
 

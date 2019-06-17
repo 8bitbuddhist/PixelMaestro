@@ -180,6 +180,22 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Checks whether the Cue is blocked according to the block list.
+	 * @param cue Cue to check.
+	 * @return True if blocked.
+	 */
+	bool CueController::is_blocked(const uint8_t *cue) const {
+		for (uint8_t i = 0; i < num_blocked_cues_; i++) {
+			BlockedCue& block = blocked_cues_[i];
+			if ((cue[(uint8_t)Byte::PayloadByte] == (uint8_t)block.handler) &&
+				(cue[(uint8_t)Byte::PayloadByte + 1] == block.action)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Reads a Cue byte-by-byte into the buffer.
 	 * Once the end of the Cue has been reached, the Cue runs and the reader resets for the next Cue.
 	 * @param byte Byte to read into the buffer.
@@ -228,7 +244,9 @@ namespace PixelMaestro {
 	 * Runs the currently loaded Cue.
 	 */
 	void CueController::run() {
-		handlers_[buffer_[(uint8_t)Byte::PayloadByte]]->run(buffer_);
+		if (!is_blocked(buffer_) && handlers_[buffer_[(uint8_t)Byte::PayloadByte]] != nullptr) {
+			handlers_[buffer_[(uint8_t)Byte::PayloadByte]]->run(buffer_);
+		}
 	}
 
 	/**
@@ -237,10 +255,22 @@ namespace PixelMaestro {
 	 */
 	void CueController::run(uint8_t *cue) {
 		if (validate_header(cue)) {
-			if (handlers_[cue[(uint8_t)Byte::PayloadByte]] != nullptr) {
-				handlers_[cue[(uint8_t)Byte::PayloadByte]]->run(cue);
+			if (!is_blocked(cue)) {
+				if (handlers_[cue[(uint8_t)Byte::PayloadByte]] != nullptr) {
+					handlers_[cue[(uint8_t)Byte::PayloadByte]]->run(cue);
+				}
 			}
 		}
+	}
+
+	/**
+	 * Sets the Cue block list.
+	 * @param blocks Block list as an array of BlockedCues.
+	 * @param num_blocks Number of items in the array.
+	 */
+	void CueController::set_blocked_cues(BlockedCue *blocks, uint8_t num_blocks) {
+		this->blocked_cues_ = blocks;
+		this->num_blocked_cues_ = num_blocks;
 	}
 
 	/**
