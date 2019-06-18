@@ -137,7 +137,12 @@ namespace PixelMaestro {
 	 * @param color_index Index of the color to set.
 	 */
 	void Animation::set_map_color_index(uint8_t x, uint8_t y, uint8_t color_index) {
-		map_[y][x] = color_index;
+		if (orientation_ == Orientation::HorizontalFlipped || orientation_ == Orientation::VerticalFlipped) {
+			map_[(dimensions_.y - 1) - y][(dimensions_.x - 1) - x] = color_index;
+		}
+		else {
+			map_[y][x] = color_index;
+		}
 	}
 
 	/**

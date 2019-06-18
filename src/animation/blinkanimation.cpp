@@ -9,7 +9,7 @@ namespace PixelMaestro {
 	void BlinkAnimation::map() {
 		// Alternate the Pixel between its normal color and off.
 		if (cycle_index_ == 0) {
-			if (orientation_ == Orientation::Vertical) {
+			if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
 				for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
 					for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 						set_map_color_index(x, y, y);

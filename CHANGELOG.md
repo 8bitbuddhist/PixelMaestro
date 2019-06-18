@@ -51,19 +51,18 @@ canvas.draw_point(5, x, y);
 ```
 
 ### Added
-- Added constructor to dynamically allocate more than one Section when declaring a Maestro.
+- Added ability to allocate more than one Section when declaring a Maestro.
 - Added ability to mirror Sections across the x and y axes.
-- Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point (when used as a dimension).
-- Added ability to block specific Cues from executing.
-- Added helper functions for generating CueHandler Cues.
-- Added Handler nullptr checks to `CueController::run()` methods.
+- Added two new Animation orientations: `HorizontalFlipped` and `VerticalFlipped`
+- Added `CueController:BlockedCues`, which let you block specific Cues from executing.
 - Added performance-related preprocessor directives:
     - `PIXEL_DISABLE_FADING` disables fading, which saves 3 bytes of RAM per Pixel.
 	- `PIXEL_ENABLE_ACCURATE_FADING` enables more accurate color reproduction when fading is enabled. Requires an additional 3 bytes of RAM.
+- Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point (when used as a dimension).
 
 ### Changed
-- Changed several internal pointers to references. This may require code changes, e.g. to Arduino sketches.
-- Revised Pixel rendering logic to improve performance.
+- Changed several internal pointers to references. This will require code changes to your Arduino sketches.
+- Rewrote Pixel rendering logic to improve performance.
 - Merged the `MappedAnimation` class into the base `Animation` class. All Animations now use maps to store color data per frame.
 - Rewrote CueHandlers to reduce program size.
 - Fixed `CanvasCueHandler::draw_frame()` not supporting frames larger than 255x255.
@@ -75,6 +74,7 @@ canvas.draw_point(5, x, y);
 - Renamed `Section::set_one()` to `Section::set_pixel_color()`.
 - Modified `CueController::read()` to check the read index against the buffered Cue's size before trying to run the buffered Cue.
 - Fixed memory leak when removing a Canvas or Animation without first removing its Palette.
+- Added Handler nullptr checks to `CueController::run()` methods.
 
 ### Removed
 - Removed `WaveAnimation` mirror option.

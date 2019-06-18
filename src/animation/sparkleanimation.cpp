@@ -24,7 +24,7 @@ namespace PixelMaestro {
 	}
 
 	void SparkleAnimation::map() {
-		if (orientation_ == Orientation::Vertical) {
+		if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
 			for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
 				for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 					if (Utility::rand(255) <= threshold_) {

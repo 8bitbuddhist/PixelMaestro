@@ -19,7 +19,7 @@ namespace PixelMaestro {
 		for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
 			for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
 				uint8_t color_index;
-				if (orientation_ == Orientation::Vertical) {
+				if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
 					color_index = y + (x * skew_);
 				}
 				else {	// Horizontal

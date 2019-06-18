@@ -21,7 +21,7 @@ namespace PixelMaestro {
 		 */
 		Point start = {0, 0};
 		for (uint8_t bolt = 0; bolt < num_bolts_; bolt++) {
-			if (orientation_ == Orientation::Vertical) {
+			if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
 				start.set((uint16_t)Utility::rand(section_.get_dimensions().x), 0);
 				draw_bolt_vertical(bolt, &start, drift_, fork_chance_, 102);
 			}

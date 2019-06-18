@@ -114,7 +114,7 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* SectionCueHandler::set_offset(uint8_t section_num, uint8_t layer_num, int16_t x, int16_t y) {
+	uint8_t* SectionCueHandler::set_offset(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
 		uint32_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
 			(uint8_t)Action::SetOffset,

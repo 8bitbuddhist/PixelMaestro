@@ -21,7 +21,7 @@ namespace PixelMaestro {
 	 */
 	void RadialAnimation::map() {
 		Point center = get_center();
-		if (orientation_ == Orientation::Vertical) {
+		if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
 			// For each Pixel, calculate the slope from the center.
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
 				for (uint16_t x = 0; x < dimensions_.x; x++) {

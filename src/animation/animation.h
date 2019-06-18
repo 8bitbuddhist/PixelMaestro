@@ -22,7 +22,9 @@ namespace PixelMaestro {
 			/// The orientation of the animation. Does not affect animations that don't have a specific direction (e.g. CycleAnimation).
 			enum class Orientation : uint8_t {
 				Horizontal,
-				Vertical
+				Vertical,
+				HorizontalFlipped,
+				VerticalFlipped
 			};
 
 			explicit Animation(Section& section);
