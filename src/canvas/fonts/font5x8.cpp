@@ -9,7 +9,7 @@ namespace PixelMaestro {
 		size.set(5, 8);
 	}
 
-	uint8_t* Font5x8::get_char(uint8_t character) {
+	const uint8_t* Font5x8::get_char(uint8_t character) {
 		return font[character - 32];
 	}
 }

@@ -12,10 +12,10 @@ namespace PixelMaestro {
 		public:
 			Font5x8();
 			~Font5x8() = default;
-			uint8_t* get_char(uint8_t character);
+			const uint8_t* get_char(uint8_t character);
 
 		private:
-			uint8_t font[96][5] = {
+			const uint8_t font[96][5] = {
 				 {0x00, 0x00, 0x00, 0x00, 0x00} // 20
 				,{0x00, 0x00, 0x5f, 0x00, 0x00} // 21 !
 				,{0x00, 0x07, 0x00, 0x07, 0x00} // 22 "

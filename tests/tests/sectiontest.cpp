@@ -11,50 +11,50 @@
 using namespace PixelMaestro;
 
 TEST_CASE("Create and manipulate a section.", "[Section]") {
-	Point dimensions = Point(1, 10);
+	Point dimensions = Point(10, 10);
 	Section sections[] = {
 		Section(dimensions.x, dimensions.y)
 	};
 	Maestro maestro(sections, 1);
 
-	Section* section = maestro.get_section(0);
+	Section& section = *maestro.get_section(0);
 
 	Palette palette = ColorPresets::Colorwheel_Palette;
 
 	int test_pixel = 0;
 
 	SECTION("Verify that Section dimensions are set correctly.") {
-		REQUIRE(*section->get_dimensions() == dimensions);
+		REQUIRE(section.get_dimensions() == dimensions);
 	}
 
 	SECTION("Verify that Animations and Colors are set correctly.") {
-		Animation* animation = section->set_animation(AnimationType::Solid);
-		animation->set_palette(&palette);
-		animation->set_timer(100);
-		animation->set_fade(false);
+		Animation& animation = section.set_animation(AnimationType::Solid);
+		animation.set_palette(palette);
+		animation.set_timer(100);
+		animation.set_fade(false);
 
 		maestro.update(101);
 
-		REQUIRE(*section->get_pixel(test_pixel, 0)->get_color() == ColorPresets::Colorwheel[test_pixel]);
+		REQUIRE(section.get_pixel(test_pixel, 0).get_color() == ColorPresets::Colorwheel[test_pixel]);
 	}
 
 	SECTION("Verify that different Canvas types can be added.") {
-		Animation* animation = section->set_animation(AnimationType::Solid);
-		animation->set_palette(&palette);
-		animation->set_timer(100);
-		animation->set_fade(false);
+		Animation& animation = section.set_animation(AnimationType::Solid);
+		animation.set_palette(palette);
+		animation.set_timer(100);
+		animation.set_fade(false);
 
 		// Draw a filled in animation rectangle
-		Canvas* canvas = section->set_canvas();
-		canvas->set_palette(&palette);
-		canvas->draw_rect(0, 0, 0, section->get_dimensions()->x, section->get_dimensions()->y, true);
+		Canvas& canvas = section.set_canvas();
+		canvas.set_palette(palette);
+		canvas.draw_rect(0, 0, 0, 0, section.get_dimensions().x, section.get_dimensions().y, true);
 
 		maestro.update(100);
-		REQUIRE(section->get_pixel_color(0, 0) == *palette.get_color_at_index(0));
+		REQUIRE(section.get_pixel_color(0, 0) == palette.get_color_at_index(0));
 
 		// Delete the Canvas
-		section->remove_canvas();
-		REQUIRE(section->get_canvas() == nullptr);
+		section.remove_canvas();
+		REQUIRE(section.get_canvas() == nullptr);
 	}
 
 	SECTION("Verify that Layers work.") {
@@ -64,36 +64,51 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 		Palette section_palette = Palette(section_colors, 1);
 		Palette layer_palette = Palette(layer_colors, 2);
 
-		Animation* section_animation = section->set_animation(AnimationType::Solid);
-		section_animation->set_palette(&section_palette);
-		section_animation->set_timer(100);
-		section_animation->set_fade(false);
+		Animation& section_animation = section.set_animation(AnimationType::Solid);
+		section_animation.set_palette(section_palette);
+		section_animation.set_timer(100);
+		section_animation.set_fade(false);
 
-		Section::Layer* layer = section->set_layer(Colors::MixMode::None);
-		Animation* layer_animation = layer->section->set_animation(AnimationType::Solid);
-		layer_animation->set_palette(&layer_palette);
-		layer_animation->set_timer(100);
-		layer_animation->set_fade(false);
+		Section::Layer& layer = section.set_layer(Colors::MixMode::None);
+		Animation& layer_animation = layer.section->set_animation(AnimationType::Solid);
+		layer_animation.set_palette(layer_palette);
+		layer_animation.set_timer(100);
+		layer_animation.set_fade(false);
 
 		maestro.update(100);
 
 		// Test no mix mode
-		REQUIRE(section->get_pixel_color(0, 0) == section_colors[0]);
+		REQUIRE(section.get_pixel_color(0, 0) == section_colors[0]);
 
 		// Test Alpha mix mode
-		layer->mix_mode = Colors::MixMode::Alpha;
-		layer->alpha = 127;
-		REQUIRE(section->get_pixel_color(0, 0) == (section_colors[0] * 0.5));
+		layer.mix_mode = Colors::MixMode::Alpha;
+		layer.alpha = 127;
+		REQUIRE(section.get_pixel_color(0, 0) == (section_colors[0] * 0.5));
 
 		// Test Multiply mix mode
-		layer->mix_mode = Colors::MixMode::Multiply;
-		REQUIRE(section->get_pixel_color(0, 0) == layer_colors[0]);
+		layer.mix_mode = Colors::MixMode::Multiply;
+		REQUIRE(section.get_pixel_color(0, 0) == layer_colors[0]);
 
 		/*
 		 * Test Overlay mix mode
 		 * Since the Overlay is black, it registers as transparent, so we expect the Section color.
 		 */
-		layer->mix_mode = Colors::MixMode::Overlay;
-		REQUIRE(section->get_pixel_color(0, 0) == section_colors[0]);
+		layer.mix_mode = Colors::MixMode::Overlay;
+		REQUIRE(section.get_pixel_color(0, 0) == section_colors[0]);
+	}
+
+	SECTION("Verify that mirroring works.") {
+		Animation& animation = section.set_animation(AnimationType::Solid);
+		animation.set_palette(palette);
+		animation.set_timer(100);
+		animation.set_fade(false);
+
+		maestro.update(101);
+
+		REQUIRE(section.get_pixel(test_pixel, 0).get_color() == ColorPresets::Colorwheel[test_pixel]);
+
+		section.set_mirror(true, false);
+
+		REQUIRE(section.get_pixel(9, 0).get_color() == ColorPresets::Colorwheel_Palette.get_color_at_index(9));
 	}
 }

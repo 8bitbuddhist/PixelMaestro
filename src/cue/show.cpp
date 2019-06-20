@@ -12,8 +12,7 @@ namespace PixelMaestro {
 	 * @param events Array of Events to queue.
 	 * @param num_events The number of Events in the queue.
 	 */
-	Show::Show(CueController* controller, Event* events, uint16_t num_events) {
-		cue_controller_ = controller;
+	Show::Show(CueController& controller, Event* events, uint16_t num_events) : cue_controller_(controller) {
 		set_events(events, num_events);
 	}
 
@@ -23,6 +22,19 @@ namespace PixelMaestro {
 	 */
 	uint16_t Show::get_current_index() const {
 		return current_index_;
+	}
+
+	/**
+	 * Returns the Event at the specified index, or nullptr if it doesn't exist.
+	 * @param index Index of desired Event.
+	 * @return Event.
+	 */
+	Event* Show::get_event_at_index(uint16_t index) const {
+		if (index < num_events_) {
+			return &events_[index];
+		}
+
+		return nullptr;
 	}
 
 	/**
@@ -118,6 +130,10 @@ namespace PixelMaestro {
 			return;
 		}
 
+		if (loop_ && current_index_ >= num_events_) {
+			current_index_ = 0;
+		}
+
 		// Only run if we're looping, or if we haven't reached the end of the Event list yet.
 		if (loop_ || current_index_ < num_events_) {
 			check_next_event(current_time);
@@ -139,7 +155,7 @@ namespace PixelMaestro {
 		uint32_t event_time = events_[current_index_].get_time();
 		if ((timing_mode_ == TimingMode::Absolute && (current_time >= event_time)) ||
 			(timing_mode_ == TimingMode::Relative && ((current_time - last_time_) >= event_time))) {
-			cue_controller_->run(events_[current_index_].get_cue());
+			cue_controller_.run(events_[current_index_].get_cue());
 			last_time_ = current_time;
 			update_event_index();
 

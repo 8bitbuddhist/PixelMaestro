@@ -10,15 +10,17 @@
 namespace PixelMaestro {
 
 	/**
-	 * Constructor. Fast-tracks creating a Maestro with a single Section.
-	 * @param rows Number of rows in the new Section.
-	 * @param columns Number of columns in the new Section.
+	 * Constructor. Creates a Maestro with the designated dimensions and Section count.
+	 *
+	 * @param rows Number of rows in the new Sections.
+	 * @param columns Number of columns in the new Sections.
+	 * @param num_sections Number of Sections to create.
 	 */
-	Maestro::Maestro(uint16_t rows, uint16_t columns) {
-		Section* sections = new Section[1] {
+	Maestro::Maestro(uint16_t rows, uint16_t columns, uint8_t num_sections) {
+		Section* sections = new Section[num_sections] {
 			Section(rows, columns)
 		};
-		set_sections(sections, 1);
+		set_sections(sections, num_sections);
 		dynamically_allocated_sections_ = true;
 	}
 
@@ -35,8 +37,8 @@ namespace PixelMaestro {
 	 * Returns the active Cue controller.
 	 * @return Cue controller.
 	 */
-	CueController* Maestro::get_cue_controller() const {
-		return cue_controller_;
+	CueController& Maestro::get_cue_controller() const {
+		return *cue_controller_;
 	}
 
 	/**
@@ -69,8 +71,9 @@ namespace PixelMaestro {
 		if (section >= num_sections_) {
 			return nullptr;
 		}
-
-		return &sections_[section];
+		else {
+			return &sections_[section];
+		}
 	}
 
 	/**
@@ -85,10 +88,22 @@ namespace PixelMaestro {
 	 * Gets the Maestro's update timer.
 	 * @return Maestro timer.
 	 */
-	Timer* Maestro::get_timer() const {
-		return const_cast<Timer*>(&timer_);
+	Timer& Maestro::get_timer() const {
+		return const_cast<Timer&>(timer_);
 	}
 
+	/**
+	 * Deletes the Sections array, if they were dynamically allocated.
+	 */
+	void Maestro::remove_sections() {
+		if (dynamically_allocated_sections_) {
+			delete [] sections_;
+		}
+	}
+
+	/**
+	 * Deletes the active Show.
+	 */
 	void Maestro::remove_show() {
 		delete show_;
 		show_ = nullptr;
@@ -109,26 +124,29 @@ namespace PixelMaestro {
 	 * @param buffer_size The size of the CueController buffer (defaults to 256).
 	 * @return New Cue controller.
 	 */
-	CueController* Maestro::set_cue_controller(uint16_t buffer_size) {
+	CueController& Maestro::set_cue_controller(uint16_t buffer_size) {
 		if (cue_controller_ == nullptr) {
-			cue_controller_ = new CueController(this, buffer_size);
+			cue_controller_ = new CueController(*this, buffer_size);
 		}
 
-		return cue_controller_;
+		return *cue_controller_;
 	}
 
 	/**
 		Sets the Sections used in the Maestro.
+		If there are dynamically allocated Sections, they will be deleted.
 
 		@param sections Array of Sections.
 		@param num_sections Number of Sections in the array.
 	*/
 	void Maestro::set_sections(Section* sections, uint8_t num_sections) {
+		remove_sections();
+
 		sections_ = sections;
 		num_sections_ = num_sections;
 
 		for (uint16_t section = 0; section < num_sections; section++) {
-			sections_[section].set_maestro(this);
+			sections_[section].set_maestro(*this);
 		}
 	}
 
@@ -140,7 +158,7 @@ namespace PixelMaestro {
 	 * @param num_events The number of Events.
 	 * @return New Show.
 	 */
-	Show* Maestro::set_show(Event* events, uint16_t num_events) {
+	Show& Maestro::set_show(Event* events, uint16_t num_events) {
 		if (show_ == nullptr) {
 			show_ = new Show(set_cue_controller(), events, num_events);
 		}
@@ -148,7 +166,7 @@ namespace PixelMaestro {
 			show_->set_events(events, num_events);
 		}
 
-		return show_;
+		return *show_;
 	}
 
 	/**
@@ -156,9 +174,9 @@ namespace PixelMaestro {
 	 * @param interval Update interval.
 	 * @return Maestro timer.
 	 */
-	Timer* Maestro::set_timer(uint16_t interval) {
+	Timer& Maestro::set_timer(uint16_t interval) {
 		timer_.set_interval(interval);
-		return &timer_;
+		return timer_;
 	}
 
 	/**
@@ -166,7 +184,7 @@ namespace PixelMaestro {
 	 * @param new_time The new refresh time. Leave blank to set to 0.
 	 */
 	void Maestro::sync(const uint32_t& new_time) {
-		this->get_timer()->set_last_time(new_time);
+		this->get_timer().set_last_time(new_time);
 		for (uint8_t section = 0; section < num_sections_; section++) {
 			sections_[section].sync(new_time);
 		}
@@ -206,12 +224,6 @@ namespace PixelMaestro {
 		delete cue_controller_;
 		remove_show();
 
-		if (dynamically_allocated_sections_) {
-			for (uint8_t section = 0; section < num_sections_; section++) {
-				delete &sections_[section];
-			}
-
-			delete [] sections_;
-		}
+		remove_sections();
 	}
 }

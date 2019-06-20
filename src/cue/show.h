@@ -25,8 +25,9 @@ namespace PixelMaestro {
 				Relative
 			};
 
-			Show(CueController* controller, Event *events, uint16_t num_events);
+			Show(CueController& controller, Event *events, uint16_t num_events);
 			uint16_t get_current_index() const;
+			Event* get_event_at_index(uint16_t index) const;
 			Event* get_events() const;
 			uint32_t get_last_time() const;
 			bool get_looping() const;
@@ -40,7 +41,7 @@ namespace PixelMaestro {
 
 		private:
 			/// The controller for running Cues.
-			CueController* cue_controller_ = nullptr;
+			CueController& cue_controller_;
 
 			/// The index of the current Event.
 			uint16_t current_index_ = 0;
@@ -50,7 +51,7 @@ namespace PixelMaestro {
 
 			/**
 			 * The time that the last Event ran.
-			 * We don't use Timing.h because we don't need to track an interval.
+			 * We don't use Timers because we don't need to track an interval.
 			 */
 			uint32_t last_time_ = 0;
 

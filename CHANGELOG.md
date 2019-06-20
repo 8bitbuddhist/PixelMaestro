@@ -3,6 +3,72 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v2.0.0] - 2019-06-19
+
+### Important Changes
+
+#### Cue Changes
+
+Due to changes in how Cues are formatted, Cues created in version 1.x are incompatible with this version.
+
+#### Pixel Changes
+
+Pixels now use a faster - but slightly less accurate - method of fading colors. You can enable accurate fading by adding the `PIXEL_ENABLE_ACCURATE_FADING` preprocessor directive to your project, but note that this uses an additional 3 bytes of RAM per Pixel.
+
+If you don't need fading and want to disable it altogether, use the `PIXEL_DISABLE_FADING` preprocessor directive. This frees 3 bytes of RAM per Pixel and results in faster refresh times. If you want to toggle fading during runtime, don't use this directive but instead use `Animation::set_fade(bool toggle)`.
+
+#### API Changes
+
+Many pointers have been converted to references, requiring changes to your code. The Arduino code samples have been updated to reflect this.
+
+#### Canvas Changes
+
+Canvas drawing methods and Cues now require you to specify which frame to draw on. This lets you draw on a specific frame without having to switch to it first.
+
+For example, if you wanted to draw a point on frame 5, you would normally have to do this:
+
+```c++
+canvas.set_current_frame_index(5);
+canvas.draw_point(x, y);
+```
+
+Now, you can use:
+
+```c++
+canvas.draw_point(5, x, y);
+```
+
+### Added
+- Added ability to allocate more than one Section when declaring a Maestro.
+- Added ability to mirror Sections across the x and y axes.
+- Added two new Animation orientations: `HorizontalFlipped` and `VerticalFlipped`
+- Added `CueController:BlockedCues`, which let you block specific Cues from executing.
+- Added performance-related preprocessor directives:
+    - `PIXEL_DISABLE_FADING` disables fading, which saves 3 bytes of RAM per Pixel.
+	- `PIXEL_ENABLE_ACCURATE_FADING` enables more accurate color reproduction when fading is enabled. Requires an additional 3 bytes of RAM.
+- Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point (when used as a dimension).
+
+### Changed
+- Changed several internal pointers to references. This may require code changes to your Arduino sketches.
+- Rewrote Pixel rendering logic to improve performance.
+- Merged the `MappedAnimation` class into the base `Animation` class. All Animations now use maps to store color data per frame.
+- Rewrote CueHandlers to reduce program size.
+- Fixed `CanvasCueHandler::draw_frame()` not supporting frames larger than 255x255.
+- Increased Canvas frame count from an 8-bit integer to a 16-bit integer.
+- Fixed bug where `Section::set_offset()` wasn't affecting Canvases.
+- Fixed bug where `AnimationTimer::delay_` wasn't being properly calculated or applied.
+- Increased maximum Cue buffer size from a 16-bit integer to a 32-bit integer.
+- Fixed Show crash when enabling relative time and looping after the Show has already ended.
+- Renamed `Section::set_one()` to `Section::set_pixel_color()`.
+- Modified `CueController::read()` to check the read index against the buffered Cue's size before trying to run the buffered Cue.
+- Fixed memory leak when removing a Canvas or Animation without first removing its Palette.
+- Added Handler nullptr checks to `CueController::run()` methods.
+
+### Removed
+- Removed `WaveAnimation` mirror option.
+- Removed `Canvas::in_bounds()` (see `Point::in_bounds()` instead).
+- Removed mirror option in `AnimationCueHandler::set_wave_options`.
+
 ## [v1.0.2] - 2018-12-03
 ### Added
 - Added per-Section brightness controls.

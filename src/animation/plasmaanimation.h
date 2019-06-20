@@ -1,12 +1,12 @@
 #ifndef PLASMAANIMATION_H
 #define PLASMAANIMATION_H
 
-#include "mappedanimation.h"
+#include "animation.h"
 
 namespace  PixelMaestro {
-	class PlasmaAnimation : public MappedAnimation {
+	class PlasmaAnimation : public Animation {
 		public:
-			explicit PlasmaAnimation(Section* section);
+			explicit PlasmaAnimation(Section& section);
 			~PlasmaAnimation() = default;
 			float get_resolution() const;
 			float get_size() const;

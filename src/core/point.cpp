@@ -34,6 +34,16 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * When used as a dimension, checks whether a point falls within the dimensions.
+	 * @param x X coordinate to check.
+	 * @param y Y coordinate to check.
+	 * @return True if in bounds.
+	 */
+	bool Point::in_bounds(uint16_t x, uint16_t y) const {
+		return (x < this->x && y < this->y);
+	}
+
+	/**
 	 * Shortcut for setting the x and y coordinates.
 	 * @param x X-axis coordinate.
 	 * @param y Y-axis coordinate.

@@ -6,12 +6,10 @@
 namespace PixelMaestro {
 	class BlinkAnimation : public Animation {
 		public:
-			explicit BlinkAnimation(Section* section);
+			explicit BlinkAnimation(Section& section);
 			~BlinkAnimation() = default;
+			void map();
 			void update();
-
-		private:
-			Colors::RGB black_ = {0,0,0};
 	};
 }
 

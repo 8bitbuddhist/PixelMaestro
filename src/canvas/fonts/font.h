@@ -17,7 +17,7 @@ namespace PixelMaestro {
 
 			/// The size of the font (e.g. a 5x8 font means 5 columns and 8 rows).
 			Point size = {0, 0};
-			virtual uint8_t* get_char(uint8_t character) = 0;
+			virtual const uint8_t* get_char(uint8_t character) = 0;
 
 			virtual ~Font() {}
 	};

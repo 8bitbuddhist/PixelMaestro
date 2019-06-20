@@ -27,7 +27,7 @@ namespace PixelMaestro {
 		public:
 			/// Sets the Section's scrolling behavior.
 			struct Scroll {
-				/// The original x interval. This is a hacky workaround for dealing with Cues.
+				/// The original x interval. This is really just storage for use in Cues.
 				uint16_t interval_x = 0;
 				/// The original y interval.
 				uint16_t interval_y = 0;
@@ -138,8 +138,8 @@ namespace PixelMaestro {
 				}
 
 				~Scroll() {
-					delete timer_x;
-					delete timer_y;
+					remove_timer_x();
+					remove_timer_y();
 				}
 			};
 
@@ -148,10 +148,7 @@ namespace PixelMaestro {
 				When getting color output, use get_pixel_color(). This returns RGB values after blending the two Sections together.
 			*/
 			struct Layer {
-				/**
-				 * The Section to use as the layer.
-				 * This is different from the Section containing the Layer object.
-				 */
+				/// The Section to use as the layer.
 				Section* section = nullptr;
 
 				/// Method of blending the output from the Layer with the base Section.
@@ -166,9 +163,9 @@ namespace PixelMaestro {
 				 * @param mix_mode Color mixing method to use.
 				 * @param alpha For The amount of transparency that the Layer will have (0 - 255).
 				 */
-				Layer(Section* parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
-					this->section = new Section(parent->get_dimensions()->x, parent->get_dimensions()->y, parent);
-					this->section->set_maestro(parent->get_maestro());
+				Layer(Section& parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
+					this->section = new Section(parent.get_dimensions().x, parent.get_dimensions().y, &parent);
+					this->section->set_maestro(parent.get_maestro());
 					this->mix_mode = mix_mode;
 					this->alpha = alpha;
 				}
@@ -178,33 +175,55 @@ namespace PixelMaestro {
 				}
 			};
 
+			/**
+			 * Controls mirroring across the x and y axes.
+			 */
+			struct Mirror {
+				bool x = false;
+				bool y = false;
+
+				uint16_t mid_x = 0;
+				uint16_t mid_y = 0;
+
+				void set(bool x, bool y, const Point& dimensions) {
+					this->x = x;
+					this->y = y;
+
+					this->mid_x = dimensions.x / static_cast<float>(2);
+					this->mid_y = dimensions.y / static_cast<float>(2);
+				}
+			};
+
 			Section();
 			Section(uint16_t x, uint16_t y, Section* parent = nullptr);
 			~Section();
 			Animation* get_animation() const;
 			uint8_t get_brightness() const;
 			Canvas* get_canvas() const;
-			Point* get_dimensions();
-			Maestro* get_maestro() const;
+			Point& get_dimensions() const;
 			Section::Layer* get_layer() const;
-			Point* get_offset();
+			Maestro& get_maestro() const;
+			Mirror* get_mirror() const;
+			Point& get_offset();
 			Section* get_parent_section() const;
-			Pixel* get_pixel(uint16_t x, uint16_t y) const;
+			Pixel& get_pixel(uint16_t x, uint16_t y) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);
 			Scroll* get_scroll() const;
 			void remove_animation(bool clear_pixels);
 			void remove_canvas();
 			void remove_layer();
 			void remove_scroll();
-			Animation* set_animation(AnimationType animation_type, bool preserve_settings = true);
+			Animation& set_animation(AnimationType animation_type, bool preserve_settings = true);
 			void set_brightness(uint8_t brightness);
-			Canvas* set_canvas(uint16_t num_frames = 1);
+			Canvas& set_canvas(uint16_t num_frames = 1);
 			void set_dimensions(uint16_t x, uint16_t y);
-			Section::Layer* set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
-			void set_maestro(Maestro* maestro);
-			Point* set_offset(uint16_t x, uint16_t y);
-			void set_one(uint16_t x, uint16_t y, Colors::RGB* color);
-			Scroll* set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
+			Layer& set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
+			void set_maestro(Maestro& maestro);
+			Mirror* set_mirror(bool x, bool y);
+			Point& set_offset(uint16_t x, uint16_t y);
+			void set_pixel_color(uint16_t x, uint16_t y, const Colors::RGB& color);
+			Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
+			void set_step_count(uint8_t step_count);
 			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);
 			void update_scroll(const uint32_t& current_time);
@@ -214,7 +233,7 @@ namespace PixelMaestro {
 			Animation* animation_ = nullptr;
 
 			/// The total brightness of the Section. Defaults to full brightness.
-			uint8_t brightness_ = 255;
+			float brightness_ = 1.0;
 
 			/// The Canvas to display (if applicable).
 			Canvas* canvas_ = nullptr;
@@ -222,11 +241,14 @@ namespace PixelMaestro {
 			/// The logical layout of the Pixels.
 			Point dimensions_;
 
+			/// The Section layering the current section (if applicable).
+			Layer* layer_ = nullptr;
+
 			/// The Section's parent Maestro.
 			Maestro* maestro_ = nullptr;
 
-			/// The Section layering the current section (if applicable).
-			Layer* layer_ = nullptr;
+			/// Mirrors the Section across the x and y axes.
+			Mirror* mirror_ = nullptr;
 
 			/// How far the Section is offset from the grid origin.
 			Point offset_ = Point(0, 0);
@@ -239,6 +261,9 @@ namespace PixelMaestro {
 
 			/// The Section's scrolling behavior.
 			Scroll* scroll_ = nullptr;
+
+			/// The number of steps for fading Pixels. Set by Animations. Defaults to 1.
+			uint8_t step_count_ = 1;
 	};
 }
 

@@ -1,6 +1,5 @@
 /*
-	Pixel.cpp - Library for controlling a single RGB.
-	Inspired by RGBMood (http://forum.arduino.cc/index.php?topic=90160.0)
+	Pixel.cpp - Class for controlling a single RGB LED.
 */
 
 #include "../utility.h"
@@ -8,13 +7,31 @@
 #include "pixel.h"
 
 namespace PixelMaestro {
+
+	/**
+	 * Sets the Pixel's current color to its next color.
+	 * Only applies when PIXEL_ENABLE_ACCURATE_FADING is enabled.
+	 */
+	void Pixel::apply_next_color() {
+
+#if !defined(PIXEL_DISABLE_FADING) && defined(PIXEL_ENABLE_ACCURATE_FADING)
+		current_color_ = next_color_;
+#endif
+	}
+
 	/**
 	 * Clears the Pixel's color values.
 	 */
 	void Pixel::clear() {
 		current_color_ = {0, 0, 0};
-		next_color_ = nullptr;
-		step_count_ = 0;
+
+#ifndef PIXEL_DISABLE_FADING
+		step_ = {0, 0, 0};
+
+#ifdef PIXEL_ENABLE_ACCURATE_FADING
+		next_color_ = {0, 0, 0};
+#endif // PIXEL_ENABLE_ACCURATE_FADING
+#endif // PIXEL_DISABLE_FADING
 	}
 
 	/**
@@ -22,8 +39,8 @@ namespace PixelMaestro {
 
 		@return The current color.
 	*/
-	Colors::RGB* Pixel::get_color() {
-		return &current_color_;
+	Colors::RGB& Pixel::get_color() {
+		return this->current_color_;
 	}
 
 	/**
@@ -32,15 +49,18 @@ namespace PixelMaestro {
 		@param next_color Target color.
 		@param step_count The number of steps to the target color.
 	*/
-	void Pixel::set_next_color(Colors::RGB* next_color, uint8_t step_count) {
-		// Only trigger an update if the next color is valid and the colors don't match.
-		if (next_color != nullptr && *next_color != current_color_) {
-			this->next_color_ = next_color;
-			step_[0] = (next_color->r - current_color_.r) / (float)step_count;
-			step_[1] = (next_color->g - current_color_.g) / (float)step_count;
-			step_[2] = (next_color->b - current_color_.b) / (float)step_count;
-			step_count_ = step_count;
-		}
+	void Pixel::set_next_color(const Colors::RGB& next_color, uint8_t step_count) {
+#ifndef PIXEL_DISABLE_FADING
+		step_.r = (next_color.r - current_color_.r) / (float)step_count;
+		step_.g = (next_color.g - current_color_.g) / (float)step_count;
+		step_.b = (next_color.b - current_color_.b) / (float)step_count;
+
+#ifdef PIXEL_ENABLE_ACCURATE_FADING
+			next_color_ = next_color;
+#endif // PIXEL_ENABLE_ACCURATE_FADING
+#else
+		current_color_ = next_color;
+#endif // PIXEL_DISABLE_FADING
 	}
 
 	/**
@@ -48,17 +68,10 @@ namespace PixelMaestro {
 		Checks for and applies color changes.
 	*/
 	void Pixel::update() {
-		if (step_count_ > 0) {
-			current_color_.r += step_[0];
-			current_color_.g += step_[1];
-			current_color_.b += step_[2];
-
-			step_count_--;
-		}
-		else {
-			if (next_color_ != nullptr) {
-				current_color_ = *next_color_;
-			}
-		}
+#ifndef PIXEL_DISABLE_FADING
+		current_color_.r += step_.r;
+		current_color_.g += step_.g;
+		current_color_.b += step_.b;
+#endif
 	}
 }
