@@ -73,7 +73,7 @@ namespace PixelMaestro {
 	 * @return Matching Section/Layer or nullptr if not found.
 	 */
 	Section* CueHandler::get_section(uint8_t section_id, uint8_t layer_id) const {
-		Section* section = &controller_.get_maestro().get_section(section_id);
+		Section* section = controller_.get_maestro().get_section(section_id);
 
 		/*
 		 * Iterate until we hit the desired Layer level.

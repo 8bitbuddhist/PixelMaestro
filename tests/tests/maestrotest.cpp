@@ -22,20 +22,20 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 
 	SECTION("Verify Maestro Sections.") {
 		REQUIRE(maestro.get_num_sections() == 2);
-		REQUIRE(&maestro.get_section(0) == &sections[0]);
-		REQUIRE(&maestro.get_section(1) == &sections[1]);
+		REQUIRE(maestro.get_section(0) == &sections[0]);
+		REQUIRE(maestro.get_section(1) == &sections[1]);
 	}
 
 	SECTION("Verify Section dimensions.") {
-		Section& s1 = maestro.get_section(0);
+		Section& s1 = *maestro.get_section(0);
 		REQUIRE(s1.get_dimensions() == s1_point);
 
-		Section& s2 = maestro.get_section(1);
+		Section& s2 = *maestro.get_section(1);
 		REQUIRE(s2.get_dimensions() == s2_point);
 	}
 
 	SECTION("Verify update works.") {
-		Section& s1 = maestro.get_section(0);
+		Section& s1 = *maestro.get_section(0);
 		s1.set_pixel_color(0, 0, ColorPresets::White);
 
 		// Try without forcing a refresh

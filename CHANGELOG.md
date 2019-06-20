@@ -3,7 +3,7 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v2.0.0] - In Progress
+## [v2.0.0] - 2019-06-19
 
 ### Important Changes
 
@@ -13,25 +13,13 @@ Due to changes in how Cues are formatted, Cues created in version 1.x are incomp
 
 #### Pixel Changes
 
-Pixels were changed to use a faster, but less accurate, fading method. You can enable accurate fading by adding the `PIXEL_ENABLE_ACCURATE_FADING` preprocessor directive to your project, but note that this uses an additional 3 bytes of RAM per Pixel.
+Pixels now use a faster - but slightly less accurate - method of fading colors. You can enable accurate fading by adding the `PIXEL_ENABLE_ACCURATE_FADING` preprocessor directive to your project, but note that this uses an additional 3 bytes of RAM per Pixel.
 
-If you want to disable fading altogether and gain 3 bytes of RAM per Pixel, use the `PIXEL_DISABLE_FADING` preprocessor directive.
+If you don't need fading and want to disable it altogether, use the `PIXEL_DISABLE_FADING` preprocessor directive. This frees 3 bytes of RAM per Pixel and results in faster refresh times. If you want to toggle fading during runtime, don't use this directive but instead use `Animation::set_fade(bool toggle)`.
 
 #### API Changes
 
-Many pointers have been converted to references, requiring changes to your code. For example, adding an Animation has changed from:
-
-```c++
-Section* section = maestro.get_section(0);
-section->set_animation(AnimationType::Blink);
-```
-
-to:
-
-```c++
-Section& section = maestro.get_section(0);
-section.set_animation(AnimationType::Blink);
-```
+Many pointers have been converted to references, requiring changes to your code. The Arduino code samples have been updated to reflect this.
 
 #### Canvas Changes
 
@@ -61,7 +49,7 @@ canvas.draw_point(5, x, y);
 - Added `Point::in_bounds(x, y)`, which checks whether the coordinates provided are within the boundaries of the Point (when used as a dimension).
 
 ### Changed
-- Changed several internal pointers to references. This will require code changes to your Arduino sketches.
+- Changed several internal pointers to references. This may require code changes to your Arduino sketches.
 - Rewrote Pixel rendering logic to improve performance.
 - Merged the `MappedAnimation` class into the base `Animation` class. All Animations now use maps to store color data per frame.
 - Rewrote CueHandlers to reduce program size.

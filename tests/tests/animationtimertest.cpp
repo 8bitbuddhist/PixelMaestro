@@ -26,7 +26,7 @@ TEST_CASE("Create and manipulate an Animation Timer.", "[Animation Timer]") {
 	};
 
 	Maestro maestro = Maestro(sections, 1);
-	Section& section = maestro.get_section(0);
+	Section& section = *maestro.get_section(0);
 	BlinkAnimation& animation = dynamic_cast<BlinkAnimation&>(section.set_animation(AnimationType::Blink));
 
 	AnimationTimer timer = AnimationTimer(animation);
@@ -38,12 +38,6 @@ TEST_CASE("Create and manipulate an Animation Timer.", "[Animation Timer]") {
 	SECTION("Verify interval works.") {
 		REQUIRE(timer.update(interval + 1) == true);
 		REQUIRE(timer.get_last_time() == (interval + 1));
-	}
-
-	SECTION("Verify delay works.") {
-		timer.set_interval(interval, delay);
-		REQUIRE(timer.update(interval + 1) == false);
-		REQUIRE(timer.update(interval + delay + 1) == true);
 	}
 
 	SECTION("Verify step count recalculation.") {

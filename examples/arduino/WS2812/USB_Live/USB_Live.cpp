@@ -12,6 +12,7 @@
 #include <core/maestro.h>
 #include <core/section.h>
 #include <colorpresets.h>
+#include <cue/maestrocuehandler.h>
 #include <cue/sectioncuehandler.h>
 #include <animation/waveanimation.h>
 #include <WS2812.h>
@@ -21,11 +22,11 @@ using namespace PixelMaestro;
 
 // Create a Maestro with a single 8x1 Section
 Maestro maestro(8, 1, 1);
-Section& section = maestro.get_section(0);
+Section* section = maestro.get_section(0);
 
 // Initialize WS2812 components
 const uint8_t LED_PIN = 10;
-WS2812 ws = WS2812(section.get_dimensions().size());
+WS2812 ws = WS2812(section->get_dimensions().size());
 
 // Translate PixelMaestro RGB to LightWS2812 cRGB
 cRGB RGBtoCRGB(Colors::RGB rgb) {
@@ -48,14 +49,15 @@ void setup () {
 	 */
 	CueController& controller = maestro.set_cue_controller();
 	controller.enable_animation_cue_handler();
-	controller.enable_canvas_cue_handler();
 	controller.enable_maestro_cue_handler();
 	controller.enable_section_cue_handler();
-	controller.enable_show_cue_handler();
+	// controller.enable_canvas_cue_handler();
+	// controller.enable_show_cue_handler();
 
 	// Block certain Cues from firing.
-	const uint8_t num_blocks = 2;
+	const uint8_t num_blocks = 3;
 	CueController::BlockedCue* blocks = new CueController::BlockedCue[num_blocks] {
+		CueController::BlockedCue(CueController::Handler::MaestroCueHandler, (uint8_t)MaestroCueHandler::Action::SetShow),
 		CueController::BlockedCue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetDimensions),
 		CueController::BlockedCue(CueController::Handler::SectionCueHandler, (uint8_t)SectionCueHandler::Action::SetBrightness)
 	};
@@ -76,9 +78,9 @@ void loop() {
 	if (maestro.update(millis())) {
 		// Copy each Pixel's color to the WS2812 strip
 		uint32_t led = 0;
-		for (uint16_t y = 0; y < section.get_dimensions().y; y++) {
-			for (uint16_t x = 0; x < section.get_dimensions().x; x++) {
-				ws.set_crgb_at(led, RGBtoCRGB(section.get_pixel_color(x, y)));
+		for (uint16_t y = 0; y < section->get_dimensions().y; y++) {
+			for (uint16_t x = 0; x < section->get_dimensions().x; x++) {
+				ws.set_crgb_at(led, RGBtoCRGB(section->get_pixel_color(x, y)));
 				led++;
 			}
 		}

@@ -17,7 +17,7 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 	};
 	Maestro maestro(sections, 1);
 
-	Section& section = maestro.get_section(0);
+	Section& section = *maestro.get_section(0);
 
 	Palette palette = ColorPresets::Colorwheel_Palette;
 
@@ -109,6 +109,6 @@ TEST_CASE("Create and manipulate a section.", "[Section]") {
 
 		section.set_mirror(true, false);
 
-		REQUIRE(section.get_pixel(9, 0).get_color() == ColorPresets::Colorwheel_Palette.get_color_at_index(0));
+		REQUIRE(section.get_pixel(9, 0).get_color() == ColorPresets::Colorwheel_Palette.get_color_at_index(9));
 	}
 }

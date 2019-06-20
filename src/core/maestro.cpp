@@ -67,8 +67,13 @@ namespace PixelMaestro {
 		@param section Index of the Section to return.
 		@return Section at the specified index.
 	*/
-	Section& Maestro::get_section(uint8_t section) const {
-		return sections_[section];
+	Section* Maestro::get_section(uint8_t section) const {
+		if (section >= num_sections_) {
+			return nullptr;
+		}
+		else {
+			return &sections_[section];
+		}
 	}
 
 	/**

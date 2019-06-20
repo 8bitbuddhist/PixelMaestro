@@ -24,7 +24,7 @@ namespace PixelMaestro {
 			CueController& get_cue_controller() const;
 			Colors::RGB get_pixel_color(uint8_t section, uint16_t x, uint16_t y) const;
 			uint8_t get_num_sections() const;
-			Section& get_section(uint8_t section) const;
+			Section* get_section(uint8_t section) const;
 			Show* get_show() const;
 			Timer& get_timer() const;
 			void remove_sections();
