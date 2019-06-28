@@ -42,7 +42,7 @@ namespace PixelMaestro {
 			void rebuild_map();
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
-			void set_map_color_index(uint8_t x, uint8_t y, uint8_t color_index);
+			void set_map_color_index(uint16_t x, uint16_t y, uint8_t color_index);
 			void set_orientation(Orientation orientation);
 			void set_palette(Palette& palette);
 			void set_reverse(bool reverse);

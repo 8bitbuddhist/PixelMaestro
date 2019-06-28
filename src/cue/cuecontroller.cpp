@@ -206,37 +206,38 @@ namespace PixelMaestro {
 		read_index_++;
 
 		/*
-		 * Check the current read index.
-		 *
-		 * If we've reached the end of the payload, run the Cue then reset the read index.
-		 * If we haven't reached the end, we want to check to see if this is an actual Cue being read.
-		 * We do this by looking for the ID bytes, and if we see them, we clear the buffer and reset the read index so the Cue has room to load.
-		 * We do the following checks:
-		 *	1) Is the read index past the last ID byte? If so, move to the next check.
-		 *	2) Is this a `ShowCueHandler::set_events()` Cue? If so, don't reset the buffer. Otherwise, we'd try to load each Event Cue as its own.
-		 *	3) Do the last 3 bytes match the ID characters? If so, clear the buffer and reset the read index.
-		 *
+		 * Check for the ID bytes.
+		 * If it is, we know this is a new Cue.
+		 * Move the read index back to the start of the buffer so the Cue has plenty of room to buffer.
 		 */
-		uint32_t buffered_cue_size = IntByteConvert::byte_to_uint32(&buffer_[(uint8_t)Byte::SizeByte1]);
-		if (buffered_cue_size > 0 && read_index_ >= buffered_cue_size) {
-			run(buffer_);
-			read_index_ = 0;
-			return true;
-		}
-		else {
-			if (read_index_ > (uint8_t)Byte::IDByte3 &&
-					(buffer_[(uint8_t)Byte::PayloadByte] == (uint8_t)Handler::ShowCueHandler &&
-						buffer_[(uint8_t)ShowCueHandler::Byte::ActionByte] != (uint8_t)ShowCueHandler::Action::SetEvents) &&
-					(buffer_[read_index_ - (uint8_t)Byte::IDByte3] == id_[(uint8_t)Byte::IDByte1] &&
-						buffer_[read_index_ - (uint8_t)Byte::IDByte2] == id_[(uint8_t)Byte::IDByte2] &&
-						buffer_[read_index_] == id_[(uint8_t)Byte::IDByte3])) {
+		if (read_index_ >= (uint8_t)Byte::IDByte3 &&
+			(buffer_[(uint8_t)Byte::PayloadByte] == (uint8_t)Handler::ShowCueHandler &&
+			 buffer_[(uint8_t)ShowCueHandler::Byte::ActionByte] != (uint8_t)ShowCueHandler::Action::SetEvents) &&
+			(buffer_[read_index_ - (uint8_t)Byte::IDByte3] == id_[(uint8_t)Byte::IDByte1] &&
+			 buffer_[read_index_ - (uint8_t)Byte::IDByte2] == id_[(uint8_t)Byte::IDByte2] &&
+			 buffer_[read_index_] == id_[(uint8_t)Byte::IDByte3])) {
 
-				buffer_[(uint8_t)Byte::IDByte1] = id_[(uint8_t)Byte::IDByte1];
-				buffer_[(uint8_t)Byte::IDByte2] = id_[(uint8_t)Byte::IDByte2];
-				buffer_[(uint8_t)Byte::IDByte3] = id_[(uint8_t)Byte::IDByte3];
-				read_index_ = (uint8_t)Byte::IDByte3;
+			buffer_[(uint8_t)Byte::IDByte1] = id_[(uint8_t)Byte::IDByte1];
+			buffer_[(uint8_t)Byte::IDByte2] = id_[(uint8_t)Byte::IDByte2];
+			buffer_[(uint8_t)Byte::IDByte3] = id_[(uint8_t)Byte::IDByte3];
+			read_index_ = (uint8_t)Byte::IDByte3 + 1;
+			return false;
+		}
+
+		/*
+		 * Check the size of the buffered Cue.
+		 * If it's valid, we know how far to read the Cue.
+		 * After reaching the end, run the Cue.
+		 */
+		if (read_index_ >= (uint8_t)Byte::SizeByte4) {
+			uint32_t buffered_cue_size = IntByteConvert::byte_to_uint32(&buffer_[(uint8_t)Byte::SizeByte1]);
+			if (buffered_cue_size > 0 && read_index_ >= buffered_cue_size) {
+				run(buffer_);
+				read_index_ = 0;
+				return true;
 			}
 		}
+
 		return false;
 	}
 
