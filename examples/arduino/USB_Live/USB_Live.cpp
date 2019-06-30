@@ -3,20 +3,17 @@
  *    1) Attach your strip to pin 10 on the Arduino (or change LED_PIN).
  *    2) Connect your Arduino to your computer via USB.
  *    3) Run PixelMaestro Studio and select the Device tab.
- *    4) Select the port that your Arduino is connected to, click "Connect", then check "Live updates".
+ *    4) Add your device (make sure "Live updates" is checked) and click "Connect".
  *    5) Have fun!
  */
 
+#include <Adafruit_NeoPixel.h>
 #include <Arduino.h>
 #include <PixelMaestro.h>
 #include <core/maestro.h>
 #include <core/section.h>
-#include <colorpresets.h>
 #include <cue/maestrocuehandler.h>
 #include <cue/sectioncuehandler.h>
-#include <animation/waveanimation.h>
-#include <WS2812.h>
-#include <cRGB.h>
 
 using namespace PixelMaestro;
 
@@ -24,24 +21,14 @@ using namespace PixelMaestro;
 Maestro maestro(8, 1, 1);
 Section* section = maestro.get_section(0);
 
-// Initialize WS2812 components
-const uint8_t LED_PIN = 10;
-WS2812 ws = WS2812(section->get_dimensions().size());
-
-// Translate PixelMaestro RGB to LightWS2812 cRGB
-cRGB RGBtoCRGB(Colors::RGB rgb) {
-	return cRGB {
-		rgb.r,
-		rgb.g,
-		rgb.b
-	};
-}
+// Initialize the NeoPixel strip on pin 10
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(maestro.get_section(0)->get_dimensions().x, 10, NEO_GRB + NEO_KHZ800);
 
 void setup () {
-	ws.setOutput(LED_PIN);
+	strip.begin();
 
 	// Set the global brightness to 10%
-	maestro.set_brightness(15);
+	maestro.set_brightness(25);
 
 	/*
 	 * Initialize the CueController and CueHandlers.
@@ -51,8 +38,8 @@ void setup () {
 	controller.enable_animation_cue_handler();
 	controller.enable_maestro_cue_handler();
 	controller.enable_section_cue_handler();
-	// controller.enable_canvas_cue_handler();
-	// controller.enable_show_cue_handler();
+	controller.enable_canvas_cue_handler();
+	controller.enable_show_cue_handler();
 
 	// Block certain Cues from firing.
 	const uint8_t num_blocks = 3;
@@ -80,11 +67,12 @@ void loop() {
 		uint32_t led = 0;
 		for (uint16_t y = 0; y < section->get_dimensions().y; y++) {
 			for (uint16_t x = 0; x < section->get_dimensions().x; x++) {
-				ws.set_crgb_at(led, RGBtoCRGB(section->get_pixel_color(x, y)));
+				Colors::RGB color = maestro.get_pixel_color(0, x, 0);
+			strip.setPixelColor(led, color.r, color.g, color.b);
 				led++;
 			}
 		}
 
-		ws.sync();
+		strip.show();
 	}
 }
