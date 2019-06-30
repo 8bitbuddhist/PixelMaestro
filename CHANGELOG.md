@@ -3,6 +3,19 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v2.0.1] - 2019-06-30
+
+### Added
+- Readded EEPROM Arduino examples.
+
+### Changed
+- Fixed bugs where Animations didn't support maps larger than 255 x 255.
+- Revised CueController logic to avoid executing Cues too early.
+
+### Removed
+- Removed LightWS2812 Arduino examples.
+
+
 ## [v2.0.0] - 2019-06-19
 
 ### Important Changes
