@@ -94,7 +94,7 @@ namespace PixelMaestro {
 	 */
 	void Animation::rebuild_map() {
 		// Regenerate the color-to-pixel mapping.
-		for (uint8_t y = 0; y < dimensions_.y; y++) {
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			delete [] map_[y];
 		}
 		delete [] map_;
@@ -102,7 +102,7 @@ namespace PixelMaestro {
 		dimensions_ = section_.get_dimensions();
 
 		map_ = new uint8_t*[dimensions_.y];
-		for (uint8_t y = 0; y < dimensions_.y; y++) {
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			map_[y]	= new uint8_t[dimensions_.x] {0};
 		}
 	}
@@ -136,7 +136,7 @@ namespace PixelMaestro {
 	 * @param y Pixel's y coordinate.
 	 * @param color_index Index of the color to set.
 	 */
-	void Animation::set_map_color_index(uint8_t x, uint8_t y, uint8_t color_index) {
+	void Animation::set_map_color_index(uint16_t x, uint16_t y, uint8_t color_index) {
 		if (orientation_ == Orientation::HorizontalFlipped || orientation_ == Orientation::VerticalFlipped) {
 			map_[(dimensions_.y - 1) - y][(dimensions_.x - 1) - x] = color_index;
 		}
@@ -253,7 +253,7 @@ namespace PixelMaestro {
 		delete timer_;
 
 		// Destroy the map
-		for (uint8_t y = 0; y < dimensions_.y; y++) {
+		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			delete [] map_[y];
 		}
 		delete [] map_;
