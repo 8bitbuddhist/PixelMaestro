@@ -1,5 +1,7 @@
 #include "../canvas/canvas.h"
+#ifdef CANVAS_ENABLE_FONTS
 #include "../canvas/fonts/font5x8.h"
+#endif // CANVAS_ENABLE_FONTS
 #include "canvascuehandler.h"
 #include "cuecontroller.h"
 
@@ -284,8 +286,10 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
+#ifdef CANVAS_ENABLE_FONTS
 	Font* CanvasCueHandler::get_font(Font::Type font_type) {
 		Font* font = nullptr;
+
 		switch (font_type) {
 			case Font::Type::Font5x8:
 				font = new Font5x8();
@@ -293,6 +297,7 @@ namespace PixelMaestro {
 		}
 		return font;
 	}
+#endif // #ifdef CANVAS_ENABLE_FONTS
 
 	void CanvasCueHandler::run(uint8_t *cue) {
 		Section* section = get_section(cue[(uint8_t)Byte::SectionByte], cue[(uint8_t)Byte::LayerByte]);
@@ -362,6 +367,7 @@ namespace PixelMaestro {
 					(bool)cue[(uint8_t)Byte::OptionsByte + 9]);
 				break;
 			case Action::DrawText:
+				#ifdef CANVAS_ENABLE_FONTS
 				{
 					Font* font = get_font((Font::Type)cue[(uint8_t)Byte::OptionsByte + 5]);
 
@@ -377,6 +383,7 @@ namespace PixelMaestro {
 
 					delete font;
 				}
+#endif //#ifdef CANVAS_ENABLE_FONTS
 				break;
 			case Action::DrawTriangle:
 				canvas->draw_triangle(

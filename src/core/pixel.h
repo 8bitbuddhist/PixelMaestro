@@ -16,11 +16,10 @@ namespace PixelMaestro {
 
 		public:
 			Pixel() {}
-			void apply_next_color();
 			void clear();
 			Colors::RGB& get_color();
 			void set_next_color(const Colors::RGB& next_color, uint8_t step_count);
-			void update();
+			void update(bool apply_next_color = false);
 
 		private:
 

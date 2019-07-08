@@ -12,15 +12,15 @@ namespace PixelMaestro {
 	Animation::Animation(Section& section) : section_(section) {
 		this->timer_ = new AnimationTimer(*this);
 		rebuild_map();
+		initialized_ = true;
 	}
 
 	/**
 	 * Returns the Animation's center.
 	 * @return Animation's center.
 	 */
-	Point Animation::get_center() const {
-		return Point(section_.get_dimensions().x / 2,
-					 section_.get_dimensions().y / 2);
+	Point& Animation::get_center() const {
+		return const_cast<Point&>(center_);
 	}
 
 	/**
@@ -105,6 +105,18 @@ namespace PixelMaestro {
 		for (uint16_t y = 0; y < dimensions_.y; y++) {
 			map_[y]	= new uint8_t[dimensions_.x] {0};
 		}
+
+		set_center(dimensions_.x / 2, dimensions_.y / 2);
+	}
+
+	/**
+	 * Sets the center of the Animation. Only applies to certain Animations.
+	 * @param x Center along the x axis.
+	 * @param y Center along the y axis.
+	 */
+	void Animation::set_center(uint16_t x, uint16_t y) {
+		center_.set(x, y);
+		if (initialized_) map();
 	}
 
 	/**

@@ -86,6 +86,20 @@ namespace PixelMaestro {
 	}
 
 	// General-purpose Cues
+	uint8_t* AnimationCueHandler::set_center(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y) {
+		uint32_t index = start_cue(
+			(uint8_t)CueController::Handler::AnimationCueHandler,
+			(uint8_t)Action::SetCenter,
+			section_num,
+			layer_num
+		);
+
+		add_uint16_to_cue(index, x);
+		add_uint16_to_cue(index, y);
+
+		return controller_.assemble(++index);
+	}
+
 	uint8_t* AnimationCueHandler::set_cycle_index(uint8_t section_num, uint8_t layer_num, uint8_t cycle_index) {
 		uint32_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
@@ -193,6 +207,10 @@ namespace PixelMaestro {
 		if (animation == nullptr) return;
 
 		switch((Action)cue[(uint8_t)Byte::ActionByte]) {
+			case Action::SetCenter:
+				animation->set_center(IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
+						IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 2]));
+				break;
 			case Action::SetCycleIndex:
 				animation->set_cycle_index(cue[(uint8_t)Byte::OptionsByte]);
 				break;

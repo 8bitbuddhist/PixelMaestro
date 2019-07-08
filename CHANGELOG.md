@@ -3,6 +3,18 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v2.0.2] - 2019-07-09
+
+### Added
+- Added ability to change where Animations are centered using `Animation::set_center()`.
+
+### Changed
+- Disabled Canvas Fonts by default. This means `Canvas::draw_text()` will not work unless you add the `CANVAS_ENABLE_FONTS` preprocessor directive to your sketch.
+- Fixed interval calculation bug when scrolling a Section along the Y axis.
+- Fixed bug when calculating Section brightness.
+- Fixed bug when calculating the size of a Cue.
+- Minor Pixel rendering optimiations.
+
 ## [v2.0.1] - 2019-06-30
 
 ### Added

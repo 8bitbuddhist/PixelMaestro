@@ -108,7 +108,6 @@ namespace PixelMaestro {
 			CueHandler& enable_section_cue_handler();
 			CueHandler& enable_show_cue_handler();
 			uint8_t* get_buffer() const;
-			uint32_t get_buffer_size() const;
 			uint32_t get_cue_size() const;
 			uint32_t get_cue_size(uint8_t* cue) const;
 			CueHandler* get_handler(Handler handler) const;

@@ -23,7 +23,8 @@ namespace PixelMaestro {
 				SetTimer,
 				SetWaveOptions,
 				Start,
-				Stop
+				Stop,
+				SetCenter
 			};
 
 			enum class Byte : uint8_t {
@@ -46,6 +47,7 @@ namespace PixelMaestro {
 			uint8_t* set_wave_options(uint8_t section_num, uint8_t layer_num, int8_t skew);
 
 			// General Animation calls
+			uint8_t* set_center(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
 			uint8_t* set_cycle_index(uint8_t section_num, uint8_t layer_num, uint8_t cycle_index);
 			uint8_t* set_fade(uint8_t section_num, uint8_t layer_num, bool fade);
 			uint8_t* set_orientation(uint8_t section_num, uint8_t layer_num, Animation::Orientation orientation);

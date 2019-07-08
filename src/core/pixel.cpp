@@ -9,17 +9,6 @@
 namespace PixelMaestro {
 
 	/**
-	 * Sets the Pixel's current color to its next color.
-	 * Only applies when PIXEL_ENABLE_ACCURATE_FADING is enabled.
-	 */
-	void Pixel::apply_next_color() {
-
-#if !defined(PIXEL_DISABLE_FADING) && defined(PIXEL_ENABLE_ACCURATE_FADING)
-		current_color_ = next_color_;
-#endif
-	}
-
-	/**
 	 * Clears the Pixel's color values.
 	 */
 	void Pixel::clear() {
@@ -67,11 +56,17 @@ namespace PixelMaestro {
 		Main update routine.
 		Checks for and applies color changes.
 	*/
-	void Pixel::update() {
+	void Pixel::update(bool apply_next_color) {
 #ifndef PIXEL_DISABLE_FADING
 		current_color_.r += step_.r;
 		current_color_.g += step_.g;
 		current_color_.b += step_.b;
-#endif
+
+#ifdef PIXEL_ENABLE_ACCURATE_FADING
+		if (apply_next_color) {
+			current_color_ = next_color_;
+		}
+#endif // PIXEL_ENABLE_ACCURATE_FADING
+#endif // PIXEL_DISABLE_FADING
 	}
 }

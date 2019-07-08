@@ -29,7 +29,7 @@ namespace PixelMaestro {
 
 			explicit Animation(Section& section);
 			virtual ~Animation();
-			Point get_center() const;
+			Point& get_center() const;
 			uint8_t get_cycle_index() const;
 			bool get_fade() const;
 			Orientation get_orientation() const;
@@ -43,6 +43,7 @@ namespace PixelMaestro {
 			void set_cycle_index(uint8_t index);
 			void set_fade(bool fade);
 			void set_map_color_index(uint16_t x, uint16_t y, uint8_t color_index);
+			void set_center(uint16_t x, uint16_t y);
 			void set_orientation(Orientation orientation);
 			void set_palette(Palette& palette);
 			void set_reverse(bool reverse);
@@ -50,6 +51,9 @@ namespace PixelMaestro {
 			bool update(const uint32_t& current_time);
 
 		protected:
+			/// The center of the Animation.
+			Point center_;
+
 			///	The current stage in the animation cycle. Defaults to 0.
 			uint8_t cycle_index_ = 0;
 
@@ -58,6 +62,9 @@ namespace PixelMaestro {
 
 			/// Whether to fade between cycles. Defaults to true.
 			bool fade_ = true;
+
+			/// False until the Animation has been fully allocated and mapped. Created for set_center().
+			bool initialized_ = false;
 
 			/**
 			 * Mapping of color palette indices to Pixels.
