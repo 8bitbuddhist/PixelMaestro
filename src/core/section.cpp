@@ -179,10 +179,10 @@ namespace PixelMaestro {
 		 */
 		if (parent_section_ != nullptr && base_color != nullptr) {
 			final_color = Colors::mix_colors(
-							 *base_color,
-							 final_color,
-							 parent_section_->get_layer()->mix_mode,
-							 parent_section_->get_layer()->alpha);
+			*base_color,
+			final_color,
+			parent_section_->get_layer()->mix_mode,
+			parent_section_->get_layer()->alpha);
 		}
 
 		// If this Section has a Layer, merge in the Layer's color output.
@@ -191,7 +191,7 @@ namespace PixelMaestro {
 		}
 
 		// Return the final color after applying brightness
-		if (brightness_ == 255) {
+		if (brightness_ == 1.0F) {
 			return final_color;
 		}
 		else {
@@ -300,6 +300,7 @@ namespace PixelMaestro {
 		 */
 		if (this->animation_ != nullptr) {
 			if (preserve_settings) {
+				new_animation->set_center(this->animation_->get_center().x, this->animation_->get_center().y);
 				new_animation->set_palette(*this->animation_->get_palette());
 				new_animation->set_cycle_index(this->animation_->get_cycle_index());
 				new_animation->set_fade(this->animation_->get_fade());
@@ -354,7 +355,6 @@ namespace PixelMaestro {
 		// Resize the Animation
 		if (animation_ != nullptr) {
 			animation_->rebuild_map();
-			animation_->map();
 		}
 
 		// Resize the Canvas
@@ -475,12 +475,6 @@ namespace PixelMaestro {
 	 */
 	void Section::set_step_count(uint8_t step_count) {
 		this->step_count_ = step_count;
-
-		#ifdef PIXEL_ENABLE_ACCURATE_FADING
-			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-				pixels_[pixel].apply_next_color();
-			}
-		#endif
 	}
 
 	/**
@@ -523,15 +517,15 @@ namespace PixelMaestro {
 			canvas_->update(current_time);
 		}
 
-		#ifndef PIXEL_DISABLE_FADING
-			if (step_count_ > 0) {
-				for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
-					pixels_[pixel].update();
-				}
-
-				step_count_--;
+#ifndef PIXEL_DISABLE_FADING
+		if (step_count_ > 0) {
+			for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+				pixels_[pixel].update(step_count_ == 1);
 			}
-		#endif
+
+			step_count_--;
+		}
+#endif
 
 		if (scroll_ != nullptr) {
 			update_scroll(current_time);

@@ -25,7 +25,7 @@ Maestro maestro(8, 1);
 Section* section = maestro.get_section(0);
 
 // Initialize the NeoPixel strip on pin 10
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(maestro.get_section(0)->get_dimensions().x, 10, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(maestro.get_section(0)->get_dimensions().size(), 10, NEO_GRB + NEO_KHZ800);
 
 // Variables to track current position in EEPROM
 const uint8_t EEPROM_START = 4;
@@ -110,8 +110,8 @@ void loop() {
 		uint32_t led = 0;
 		for (uint16_t y = 0; y < section->get_dimensions().y; y++) {
 			for (uint16_t x = 0; x < section->get_dimensions().x; x++) {
-				Colors::RGB color = maestro.get_pixel_color(0, x, 0);
-			strip.setPixelColor(led, color.r, color.g, color.b);
+				Colors::RGB color = section->get_pixel_color(x, y);
+				strip.setPixelColor(led, color.r, color.g, color.b);
 				led++;
 			}
 		}

@@ -66,7 +66,7 @@ TEST_CASE("Create and manipulate a Mastro.", "[Maestro]") {
 		int buffer_size = 12345;
 		maestro.set_cue_controller(buffer_size);
 
-		REQUIRE(maestro.get_cue_controller().get_buffer_size() == buffer_size);
+		REQUIRE(maestro.get_cue_controller().get_buffer() != nullptr);
 	}
 
 	SECTION("Verify Show initialization works.") {
