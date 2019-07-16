@@ -7,24 +7,22 @@ namespace PixelMaestro {
 		map();
 	}
 
+	// FIXME: Fix Animations on Arduinos, likely caused by rounding errors.
 	void MandelbrotAnimation::map() {
-		// Initialize Mandelbrot calculation variables
-		Point center = get_center();	// Used to center the Mandelbrot on the grid.
-
 		if (orientation_ == Orientation::Horizontal || orientation_ == Orientation::HorizontalFlipped) {
 			// Calculate the size/scale of the pattern
-			double image_width = 4.0 / dimensions_.x;
+			double image_width = 4.0 / static_cast<double>(dimensions_.x);
 
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
-				double c_imaginary = (y - center.y) * image_width;
+				double c_imaginary = (y - center_.y) * image_width;
 				for (uint16_t x = 0; x < dimensions_.x; x++) {
-					double c_real = (x - center.x) * image_width;
+					double c_real = (x - center_.x) * image_width;
 
 					double temp_x = 0;
 					double temp_y = 0;
 					iterations_ = 0;
 
-					while ((temp_x * temp_x) + (temp_y * temp_y) < 4 && iterations_ < max_iterations_) {
+					while ((temp_x * temp_x) + (temp_y * temp_y) < 4.0 && iterations_ < max_iterations_) {
 						double temp_x_2 = (temp_x * temp_x) - (temp_y * temp_y) + c_real;
 						temp_y = (2.0 * temp_x * temp_y) + c_imaginary;
 						temp_x = temp_x_2;
@@ -44,9 +42,9 @@ namespace PixelMaestro {
 			double image_width = 4.0 / dimensions_.y;
 
 			for (uint16_t x = 0; x < dimensions_.x; x++) {
-				double c_imaginary = (x - center.x) * image_width;
+				double c_imaginary = (x - center_.x) * image_width;
 				for (uint16_t y = 0; y < dimensions_.y; y++) {
-					double c_real = (y - center.y) * image_width;
+					double c_real = (y - center_.y) * image_width;
 
 					double temp_x = 0;
 					double temp_y = 0;

@@ -18,9 +18,7 @@ You can find example sketches demonstrating the use of PixelMaestro in the **Fil
 
 ### Installing Library Dependencies
 
-The examples in the **NeoPixel** folder require the [Adafruit NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) library. Repeat steps 1-4 above, but search for **adafruit neopixel single-wire** instead.
-
-The examples in the **WS2812** folder require the [light_ws2812](https://github.com/cpldcpu/light_ws2812) library. Repeat the same steps as with the NeoPixel library, but search for **light_ws2812**.
+These examples use the [Adafruit NeoPixel](https://github.com/adafruit/Adafruit_NeoPixel) library. Repeat steps 1-4 above, but search for **adafruit neopixel single-wire** instead.
 
 ## PlatformIO Installation
 

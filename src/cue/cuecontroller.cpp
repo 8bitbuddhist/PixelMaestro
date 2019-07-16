@@ -239,7 +239,7 @@ namespace PixelMaestro {
 	 * Runs the currently loaded Cue.
 	 */
 	void CueController::run() {
-		if (!is_blocked(buffer_) && handlers_[buffer_[(uint8_t)Byte::PayloadByte]] != nullptr) {
+		if (handlers_[buffer_[(uint8_t)Byte::PayloadByte]] != nullptr && !is_blocked(buffer_)) {
 			handlers_[buffer_[(uint8_t)Byte::PayloadByte]]->run(buffer_);
 		}
 	}
@@ -249,12 +249,8 @@ namespace PixelMaestro {
 	 * @param cue Cue to load.
 	 */
 	void CueController::run(uint8_t *cue) {
-		if (validate_header(cue)) {
-			if (!is_blocked(cue)) {
-				if (handlers_[cue[(uint8_t)Byte::PayloadByte]] != nullptr) {
-					handlers_[cue[(uint8_t)Byte::PayloadByte]]->run(cue);
-				}
-			}
+		if (handlers_[cue[(uint8_t)Byte::PayloadByte]] != nullptr && !is_blocked(cue) && validate_header(cue)) {
+			handlers_[cue[(uint8_t)Byte::PayloadByte]]->run(cue);
 		}
 	}
 

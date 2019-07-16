@@ -20,16 +20,21 @@ namespace PixelMaestro {
 	 * This only occurs when the grid size or orientation changes.
 	 */
 	void RadialAnimation::map() {
-		Point center = get_center();
 		if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
 			// For each Pixel, calculate the slope from the center.
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
+				int16_t y_distance = y - center_.y;
 				for (uint16_t x = 0; x < dimensions_.x; x++) {
-					if (x == center.x || y == center.y) {
+					if (x == center_.x || y == center_.y) {
 						set_map_color_index(x, y, 0);
 					}
 					else {
-						set_map_color_index(x, y, static_cast<uint16_t>(((y - center.y) / (float)(x - center.x)) * resolution_) % 255);
+						int16_t x_distance	= x - center_.x;
+						double slope = (y_distance / (float)x_distance);
+						set_map_color_index(x, y, static_cast<uint16_t>(slope * resolution_) % 255);
+						// set_map_color_index(x, y, static_cast<uint16_t>(((y - center.y) / (float)(x - center.x)) * resolution_) % 255);
+
+
 					}
 				}
 			}
@@ -37,9 +42,11 @@ namespace PixelMaestro {
 		else {	// Horizontal
 			// For each Pixel, calculate its distance from the center of the grid, then use the distance to choose the index of the correct color.
 			for (uint16_t y = 0; y < dimensions_.y; y++) {
-				uint16_t y_squared_ = pow(y - center.y, 2);
+				double y_squared_ = pow(y - (float)center_.y, 2);
 				for (uint16_t x = 0; x < dimensions_.x; x++) {
-					set_map_color_index(x, y, sqrt(pow(x - center.x, 2) + y_squared_));
+					double x_squared = pow(x - (float)center_.x, 2);
+					double distance = sqrt(x_squared + y_squared_);
+					set_map_color_index(x, y, static_cast<uint8_t>(distance) % 255);
 				}
 			}
 		}
