@@ -3,6 +3,11 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v2.0.2-docs] - In Progress
+
+### Changed
+- Migrated docs to Sphinx.
+
 ## [v2.0.2] - 2019-07-09
 
 ### Added
