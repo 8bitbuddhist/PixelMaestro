@@ -9,6 +9,7 @@ namespace PixelMaestro {
 
 	// FIXME: Fix Animations on Arduinos, likely caused by rounding errors.
 	void MandelbrotAnimation::map() {
+		uint8_t max_iterations = palette_->get_num_colors();
 		if (orientation_ == Orientation::Horizontal || orientation_ == Orientation::HorizontalFlipped) {
 			// Calculate the size/scale of the pattern
 			double image_width = 4.0 / static_cast<double>(dimensions_.x);
@@ -22,14 +23,14 @@ namespace PixelMaestro {
 					double temp_y = 0;
 					iterations_ = 0;
 
-					while ((temp_x * temp_x) + (temp_y * temp_y) < 4.0 && iterations_ < max_iterations_) {
+					while ((temp_x * temp_x) + (temp_y * temp_y) < 4.0 && iterations_ < max_iterations) {
 						double temp_x_2 = (temp_x * temp_x) - (temp_y * temp_y) + c_real;
 						temp_y = (2.0 * temp_x * temp_y) + c_imaginary;
 						temp_x = temp_x_2;
 						iterations_++;
 					}
 
-					if (iterations_ < max_iterations_) {
+					if (iterations_ < max_iterations) {
 						set_map_color_index(x, y, iterations_);
 					}
 					else {
@@ -50,14 +51,14 @@ namespace PixelMaestro {
 					double temp_y = 0;
 					iterations_ = 0;
 
-					while ((temp_y * temp_y) + (temp_x * temp_x) < 4 && iterations_ < max_iterations_) {
+					while ((temp_y * temp_y) + (temp_x * temp_x) < 4 && iterations_ < max_iterations) {
 						double temp_y_2	= (temp_y * temp_y) - (temp_x * temp_x) + c_real;
 						temp_x = (2.0 * temp_x * temp_y) + c_imaginary;
 						temp_y = temp_y_2;
 						iterations_++;
 					}
 
-					if (iterations_ < max_iterations_) {
+					if (iterations_ < max_iterations) {
 						set_map_color_index(x, y, iterations_);
 					}
 					else {
@@ -66,17 +67,6 @@ namespace PixelMaestro {
 				}
 			}
 		}
-	}
-
-	/**
-	 * Overrides Animation::SetColors.
-	 * Sets the number of iterations equal to the number of colors
-	 * @param colors
-	 * @param num_colors
-	 */
-	void MandelbrotAnimation::set_palette(const Colors::RGB colors[], uint8_t num_colors) {
-		palette_->set_colors(colors, num_colors);
-		max_iterations_ = num_colors;
 	}
 
 	void MandelbrotAnimation::update() {
