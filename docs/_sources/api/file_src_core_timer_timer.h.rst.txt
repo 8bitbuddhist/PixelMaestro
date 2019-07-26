@@ -1,0 +1,63 @@
+
+.. _file_src_core_timer_timer.h:
+
+File timer.h
+============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core_timer>` (``src/core/timer``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/core/timer/timer.h``)
+---------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_core_timer_timer.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``stdint.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_canvas_canvas.h`
+
+- :ref:`file_src_core_maestro.h`
+
+- :ref:`file_src_core_timer_animationtimer.h`
+
+- :ref:`file_src_core_timer_timer.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestro_1_1Timer`
+

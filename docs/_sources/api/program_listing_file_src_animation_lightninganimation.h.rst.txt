@@ -1,0 +1,44 @@
+
+.. _program_listing_file_src_animation_lightninganimation.h:
+
+Program Listing for File lightninganimation.h
+=============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_lightninganimation.h>` (``src/animation/lightninganimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef LIGHTNINGANIMATION_H
+   #define LIGHTNINGANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace PixelMaestro {
+       class LightningAnimation : public Animation {
+           public:
+               explicit LightningAnimation(Section& section);
+               ~LightningAnimation() = default;
+               uint8_t get_bolt_count() const;
+               uint8_t get_fork_chance() const;
+               int8_t get_drift() const;
+               void map();
+               void set_bolt_count(uint8_t bolt_count);
+               void set_drift(int8_t drift);
+               void set_fork_chance(uint8_t fork_chance);
+               void update();
+   
+           private:
+               int8_t drift_ = 0;
+   
+               uint8_t fork_chance_ = 4;
+   
+               uint8_t num_bolts_ = 1;
+   
+               void draw_bolt_horizontal(uint8_t bolt_num, Point* start, int8_t drift, uint8_t fork_chance, uint8_t max_fork_length);
+               void draw_bolt_vertical(uint8_t bolt_num, Point* start, int8_t drift, uint8_t fork_chance, uint8_t max_fork_length);
+       };
+   }
+   
+   #endif // LIGHTNINGANIMATION_H

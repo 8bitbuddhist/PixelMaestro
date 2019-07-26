@@ -1,0 +1,1590 @@
+
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Index &mdash; PixelMaestro 2.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PixelMaestro
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Home.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Home.html#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Home.html#faq">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial.html#core-concepts">Core Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial.html#what-s-a-section">What’s a Section?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial.html#what-s-a-maestro">What’s a Maestro?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial.html#using-pixelmaestro">Using PixelMaestro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial.html#sample-sketch">Sample Sketch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#primary-components">Primary Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#secondary-components">Secondary Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Maestros.html">Maestros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#creating-a-maestro">Creating a Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#updating-the-maestro">Updating the Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#changing-the-refresh-interval">Changing the Refresh Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#interacting-with-sections">Interacting with Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#setting-a-global-brightness-level">Setting a Global Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#synchronizing-components">Synchronizing Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Sections.html">Sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#creating-a-section">Creating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#updating-a-section">Updating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#interacting-with-the-pixel-grid">Interacting With the Pixel Grid</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Sections.html#setting-a-pixel-s-color">Setting a Pixel’s Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Sections.html#retrieving-a-pixel-s-color">Retrieving a Pixel’s Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#animating-a-section">Animating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#displaying-custom-shapes-and-patterns">Displaying Custom Shapes and Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#setting-a-brightness-level">Setting a Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#using-layers">Using Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#scrolling">Scrolling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Sections.html#offsetting">Offsetting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Sections.html#mirroring">Mirroring</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Points.html">Points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Points.html#creating-a-point">Creating a Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Points.html#coordinates-versus-dimensions">Coordinates Versus Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Points.html#other-methods">Other Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Pixels.html">Pixels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Pixels.html#creating-pixels">Creating Pixels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Pixels.html#how-pixels-work">How Pixels Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Pixels.html#performance-options">Performance Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Pixels.html#disabling-fading">Disabling Fading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Pixels.html#enabling-accurate-fading">Enabling Accurate Fading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Colors.html#creating-colors">Creating Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Colors.html#mixing-colors">Mixing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Colors.html#sample-colors">Sample Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Palettes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#creating-a-palette">Creating a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#using-a-palette">Using a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#changing-colors">Changing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#retrieving-colors">Retrieving Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Animations.html">Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#animation-types">Animation Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#creating-an-animation">Creating an Animation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Animations.html#animation-cycles">Animation Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Animations.html#setting-the-color-palette">Setting the Color Palette</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Animations.html#setting-additional-options">Setting Additional Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#setting-the-orientation">Setting the Orientation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#changing-the-animation-timing">Changing the Animation Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#toggling-fading">Toggling Fading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#changing-the-center">Changing the Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#how-animations-work">How Animations Work</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Canvases.html">Canvases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#creating-a-canvas">Creating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#setting-the-palette">Setting the Palette</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#animating-a-canvas">Animating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#frames">Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#switching-frames">Switching Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#drawing-shapes">Drawing Shapes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#selecting-a-color">Selecting a Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#lines">Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#points">Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#rectangles">Rectangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#text">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#triangles">Triangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#clearing-the-canvas">Clearing the Canvas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Cues.html">Cues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#initializing-the-cuecontroller">Initializing the CueController</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cues.html#setting-the-buffer-size">Setting the Buffer Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cues.html#enabling-cuehandlers">Enabling CueHandlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#creating-cues">Creating Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#running-cues">Running Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#blocking-cues">Blocking Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#structure">Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Shows.html">Shows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#adding-events">Adding Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#timing-modes">Timing Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#looping">Looping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Timers.html">Timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#creating-a-timer">Creating a Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#changing-the-interval">Changing the Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#starting-and-stopping-a-timer">Starting and Stopping a Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/root.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/root.html#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/namespace_PixelMaestro.html">Namespace PixelMaestro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Colors_1_1RGB.html">Struct Colors::RGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1CueController_1_1BlockedCue.html">Struct CueController::BlockedCue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Section_1_1Layer.html">Struct Section::Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Section_1_1Mirror.html">Struct Section::Mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Section_1_1Scroll.html">Struct Section::Scroll</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Animation.html">Class Animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1AnimationCueHandler.html">Class AnimationCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1AnimationTimer.html">Class AnimationTimer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1BlinkAnimation.html">Class BlinkAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Canvas.html">Class Canvas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CanvasCueHandler.html">Class CanvasCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1ColorPresets.html">Class ColorPresets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Colors.html">Class Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CueController.html">Class CueController</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CueHandler.html">Class CueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CycleAnimation.html">Class CycleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Event.html">Class Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1FireAnimation.html">Class FireAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1FloatByteConvert.html">Class FloatByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Font.html">Class Font</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Font5x8.html">Class Font5x8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1IntByteConvert.html">Class IntByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1LightningAnimation.html">Class LightningAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Maestro.html">Class Maestro</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1MaestroCueHandler.html">Class MaestroCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1MandelbrotAnimation.html">Class MandelbrotAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Palette.html">Class Palette</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Pixel.html">Class Pixel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1PlasmaAnimation.html">Class PlasmaAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Point.html">Class Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1RadialAnimation.html">Class RadialAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1RandomAnimation.html">Class RandomAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Section.html">Class Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SectionCueHandler.html">Class SectionCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Show.html">Class Show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1ShowCueHandler.html">Class ShowCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SolidAnimation.html">Class SolidAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Timer.html">Class Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html">Enum AnimationType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#unions">Unions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html">Union FloatByteConvert::Converter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PixelMaestro</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Index</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#P"><strong>P</strong></a>
+ 
+</div>
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9AnimationE">PixelMaestro::Animation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation9AnimationER7Section">PixelMaestro::Animation::Animation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation7center_E">PixelMaestro::Animation::center_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation12cycle_index_E">PixelMaestro::Animation::cycle_index_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation11dimensions_E">PixelMaestro::Animation::dimensions_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation5fade_E">PixelMaestro::Animation::fade_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation10get_centerEv">PixelMaestro::Animation::get_center (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation15get_cycle_indexEv">PixelMaestro::Animation::get_cycle_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation8get_fadeEv">PixelMaestro::Animation::get_fade (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation15get_orientationEv">PixelMaestro::Animation::get_orientation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation11get_paletteEv">PixelMaestro::Animation::get_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation11get_reverseEv">PixelMaestro::Animation::get_reverse (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation11get_sectionEv">PixelMaestro::Animation::get_section (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation9get_timerEv">PixelMaestro::Animation::get_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4NK12PixelMaestro9Animation8get_typeEv">PixelMaestro::Animation::get_type (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation10HorizontalE">PixelMaestro::Animation::Horizontal (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation17HorizontalFlippedE">PixelMaestro::Animation::HorizontalFlipped (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation12initialized_E">PixelMaestro::Animation::initialized_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation3mapEv">PixelMaestro::Animation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation4map_E">PixelMaestro::Animation::map_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation11OrientationE">PixelMaestro::Animation::Orientation (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation12orientation_E">PixelMaestro::Animation::orientation_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation8palette_E">PixelMaestro::Animation::palette_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation11rebuild_mapEv">PixelMaestro::Animation::rebuild_map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation8reverse_E">PixelMaestro::Animation::reverse_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation8section_E">PixelMaestro::Animation::section_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation10set_centerE8uint16_t8uint16_t">PixelMaestro::Animation::set_center (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation15set_cycle_indexE7uint8_t">PixelMaestro::Animation::set_cycle_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation8set_fadeEb">PixelMaestro::Animation::set_fade (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation19set_map_color_indexE8uint16_t8uint16_t7uint8_t">PixelMaestro::Animation::set_map_color_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation15set_orientationE11Orientation">PixelMaestro::Animation::set_orientation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation11set_paletteER7Palette">PixelMaestro::Animation::set_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation11set_reverseEb">PixelMaestro::Animation::set_reverse (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation9set_timerE8uint16_t8uint16_t">PixelMaestro::Animation::set_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation6timer_E">PixelMaestro::Animation::timer_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation5type_E">PixelMaestro::Animation::type_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation6updateERK8uint32_t">PixelMaestro::Animation::update (C++ function)</a>, <a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation6updateEv">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation12update_cycleE7uint8_t7uint8_t">PixelMaestro::Animation::update_cycle (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation8VerticalE">PixelMaestro::Animation::Vertical (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9Animation15VerticalFlippedE">PixelMaestro::Animation::VerticalFlipped (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Animation.html#_CPPv4N12PixelMaestro9AnimationD0Ev">PixelMaestro::Animation::~Animation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandlerE">PixelMaestro::AnimationCueHandler (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler6ActionE">PixelMaestro::AnimationCueHandler::Action (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler10ActionByteE">PixelMaestro::AnimationCueHandler::ActionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler19AnimationCueHandlerER13CueController">PixelMaestro::AnimationCueHandler::AnimationCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler4ByteE">PixelMaestro::AnimationCueHandler::Byte (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler11HandlerByteE">PixelMaestro::AnimationCueHandler::HandlerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler9LayerByteE">PixelMaestro::AnimationCueHandler::LayerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler11OptionsByteE">PixelMaestro::AnimationCueHandler::OptionsByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler3runEP7uint8_t">PixelMaestro::AnimationCueHandler::run (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler11SectionByteE">PixelMaestro::AnimationCueHandler::SectionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler10set_centerE7uint8_t7uint8_t8uint16_t8uint16_t">PixelMaestro::AnimationCueHandler::set_center (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler15set_cycle_indexE7uint8_t7uint8_t7uint8_t">PixelMaestro::AnimationCueHandler::set_cycle_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler8set_fadeE7uint8_t7uint8_tb">PixelMaestro::AnimationCueHandler::set_fade (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler16set_fire_optionsE7uint8_t7uint8_t7uint8_t">PixelMaestro::AnimationCueHandler::set_fire_options (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler21set_lightning_optionsE7uint8_t7uint8_t7uint8_t6int8_t7uint8_t">PixelMaestro::AnimationCueHandler::set_lightning_options (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler15set_orientationE7uint8_t7uint8_tN9Animation11OrientationE">PixelMaestro::AnimationCueHandler::set_orientation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler11set_paletteE7uint8_t7uint8_tRK7Palette">PixelMaestro::AnimationCueHandler::set_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler18set_plasma_optionsE7uint8_t7uint8_tff">PixelMaestro::AnimationCueHandler::set_plasma_options (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler18set_radial_optionsE7uint8_t7uint8_t7uint8_t">PixelMaestro::AnimationCueHandler::set_radial_options (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler11set_reverseE7uint8_t7uint8_tb">PixelMaestro::AnimationCueHandler::set_reverse (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler19set_sparkle_optionsE7uint8_t7uint8_t7uint8_t">PixelMaestro::AnimationCueHandler::set_sparkle_options (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler9set_timerE7uint8_t7uint8_t8uint16_t8uint16_t">PixelMaestro::AnimationCueHandler::set_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler16set_wave_optionsE7uint8_t7uint8_t6int8_t">PixelMaestro::AnimationCueHandler::set_wave_options (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler9SetCenterE">PixelMaestro::AnimationCueHandler::SetCenter (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler13SetCycleIndexE">PixelMaestro::AnimationCueHandler::SetCycleIndex (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler7SetFadeE">PixelMaestro::AnimationCueHandler::SetFade (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler14SetFireOptionsE">PixelMaestro::AnimationCueHandler::SetFireOptions (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler19SetLightningOptionsE">PixelMaestro::AnimationCueHandler::SetLightningOptions (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler14SetOrientationE">PixelMaestro::AnimationCueHandler::SetOrientation (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler10SetPaletteE">PixelMaestro::AnimationCueHandler::SetPalette (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler16SetPlasmaOptionsE">PixelMaestro::AnimationCueHandler::SetPlasmaOptions (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler16SetRadialOptionsE">PixelMaestro::AnimationCueHandler::SetRadialOptions (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler10SetReverseE">PixelMaestro::AnimationCueHandler::SetReverse (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler17SetSparkleOptionsE">PixelMaestro::AnimationCueHandler::SetSparkleOptions (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler8SetTimerE">PixelMaestro::AnimationCueHandler::SetTimer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler14SetWaveOptionsE">PixelMaestro::AnimationCueHandler::SetWaveOptions (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler5StartE">PixelMaestro::AnimationCueHandler::Start (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler5startE7uint8_t7uint8_t">PixelMaestro::AnimationCueHandler::start (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler4StopE">PixelMaestro::AnimationCueHandler::Stop (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandler4stopE7uint8_t7uint8_t">PixelMaestro::AnimationCueHandler::stop (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationCueHandler.html#_CPPv4N12PixelMaestro19AnimationCueHandlerD0Ev">PixelMaestro::AnimationCueHandler::~AnimationCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimerE">PixelMaestro::AnimationTimer (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimer14AnimationTimerERK9Animation">PixelMaestro::AnimationTimer::AnimationTimer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationTimer.html#_CPPv4NK12PixelMaestro14AnimationTimer9get_delayEv">PixelMaestro::AnimationTimer::get_delay (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationTimer.html#_CPPv4NK12PixelMaestro14AnimationTimer14get_step_countEv">PixelMaestro::AnimationTimer::get_step_count (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimer22recalculate_step_countEv">PixelMaestro::AnimationTimer::recalculate_step_count (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimer12set_intervalE8uint16_t8uint16_t">PixelMaestro::AnimationTimer::set_interval (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimer6updateERK8uint32_t">PixelMaestro::AnimationTimer::update (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro13AnimationTypeE">PixelMaestro::AnimationType (C++ enum)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro5BlinkE">PixelMaestro::Blink (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1BlinkAnimation.html#_CPPv4N12PixelMaestro14BlinkAnimationE">PixelMaestro::BlinkAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1BlinkAnimation.html#_CPPv4N12PixelMaestro14BlinkAnimation14BlinkAnimationER7Section">PixelMaestro::BlinkAnimation::BlinkAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1BlinkAnimation.html#_CPPv4N12PixelMaestro14BlinkAnimation3mapEv">PixelMaestro::BlinkAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1BlinkAnimation.html#_CPPv4N12PixelMaestro14BlinkAnimation6updateEv">PixelMaestro::BlinkAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1BlinkAnimation.html#_CPPv4N12PixelMaestro14BlinkAnimationD0Ev">PixelMaestro::BlinkAnimation::~BlinkAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6CanvasE">PixelMaestro::Canvas (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas6CanvasER7Section8uint16_t">PixelMaestro::Canvas::Canvas (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas5clearEv">PixelMaestro::Canvas::clear (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas11draw_circleE8uint16_t7uint8_t8uint16_t8uint16_t8uint16_tb">PixelMaestro::Canvas::draw_circle (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas10draw_frameE8uint16_tP7uint8_t8uint16_t8uint16_t">PixelMaestro::Canvas::draw_frame (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas9draw_lineE8uint16_t7uint8_t8uint16_t8uint16_t8uint16_t8uint16_t">PixelMaestro::Canvas::draw_line (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas10draw_pointE8uint16_t7uint8_t8uint16_t8uint16_t">PixelMaestro::Canvas::draw_point (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas9draw_rectE8uint16_t7uint8_t8uint16_t8uint16_t8uint16_t8uint16_tb">PixelMaestro::Canvas::draw_rect (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas9draw_textE8uint16_t7uint8_t8uint16_t8uint16_tR4FontPKc7uint8_t">PixelMaestro::Canvas::draw_text (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas13draw_triangleE8uint16_t7uint8_t8uint16_t8uint16_t8uint16_t8uint16_t8uint16_t8uint16_tb">PixelMaestro::Canvas::draw_triangle (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas11erase_pointE8uint16_t8uint16_t8uint16_t">PixelMaestro::Canvas::erase_point (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4NK12PixelMaestro6Canvas23get_current_frame_indexEv">PixelMaestro::Canvas::get_current_frame_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4NK12PixelMaestro6Canvas9get_frameE8uint16_t">PixelMaestro::Canvas::get_frame (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4NK12PixelMaestro6Canvas15get_frame_timerEv">PixelMaestro::Canvas::get_frame_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4NK12PixelMaestro6Canvas14get_num_framesEv">PixelMaestro::Canvas::get_num_frames (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4NK12PixelMaestro6Canvas11get_paletteEv">PixelMaestro::Canvas::get_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas15get_pixel_colorE8uint16_t8uint16_t">PixelMaestro::Canvas::get_pixel_color (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4NK12PixelMaestro6Canvas11get_sectionEv">PixelMaestro::Canvas::get_section (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas10initializeEv">PixelMaestro::Canvas::initialize (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas10next_frameEv">PixelMaestro::Canvas::next_frame (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas14previous_frameEv">PixelMaestro::Canvas::previous_frame (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas18remove_frame_timerEv">PixelMaestro::Canvas::remove_frame_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas23set_current_frame_indexE8uint16_t">PixelMaestro::Canvas::set_current_frame_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas15set_frame_timerE8uint16_t">PixelMaestro::Canvas::set_frame_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas14set_num_framesE8uint16_t">PixelMaestro::Canvas::set_num_frames (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas11set_paletteER7Palette">PixelMaestro::Canvas::set_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6Canvas6updateERK8uint32_t">PixelMaestro::Canvas::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Canvas.html#_CPPv4N12PixelMaestro6CanvasD0Ev">PixelMaestro::Canvas::~Canvas (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandlerE">PixelMaestro::CanvasCueHandler (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler6ActionE">PixelMaestro::CanvasCueHandler::Action (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10ActionByteE">PixelMaestro::CanvasCueHandler::ActionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler4ByteE">PixelMaestro::CanvasCueHandler::Byte (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler16CanvasCueHandlerER13CueController">PixelMaestro::CanvasCueHandler::CanvasCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler5ClearE">PixelMaestro::CanvasCueHandler::Clear (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler5clearE7uint8_t7uint8_t">PixelMaestro::CanvasCueHandler::clear (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler11draw_circleE7uint8_t7uint8_t8uint16_t7uint8_t8uint16_t8uint16_t8uint16_tb">PixelMaestro::CanvasCueHandler::draw_circle (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10draw_frameE7uint8_t7uint8_t8uint16_t8uint16_t8uint16_tPK7uint8_t">PixelMaestro::CanvasCueHandler::draw_frame (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9draw_lineE7uint8_t7uint8_t8uint16_t7uint8_t8uint16_t8uint16_t8uint16_t8uint16_t">PixelMaestro::CanvasCueHandler::draw_line (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10draw_pointE7uint8_t7uint8_t8uint16_t7uint8_t8uint16_t8uint16_t">PixelMaestro::CanvasCueHandler::draw_point (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9draw_rectE7uint8_t7uint8_t8uint16_t7uint8_t8uint16_t8uint16_t8uint16_t8uint16_tb">PixelMaestro::CanvasCueHandler::draw_rect (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9draw_textE7uint8_t7uint8_t8uint16_t7uint8_t8uint16_t8uint16_tN4Font4TypeEPKc7uint8_t">PixelMaestro::CanvasCueHandler::draw_text (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler13draw_triangleE7uint8_t7uint8_t8uint16_t7uint8_t8uint16_t8uint16_t8uint16_t8uint16_t8uint16_t8uint16_tb">PixelMaestro::CanvasCueHandler::draw_triangle (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10DrawCircleE">PixelMaestro::CanvasCueHandler::DrawCircle (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9DrawFrameE">PixelMaestro::CanvasCueHandler::DrawFrame (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler8DrawLineE">PixelMaestro::CanvasCueHandler::DrawLine (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9DrawPointE">PixelMaestro::CanvasCueHandler::DrawPoint (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler8DrawRectE">PixelMaestro::CanvasCueHandler::DrawRect (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler8DrawTextE">PixelMaestro::CanvasCueHandler::DrawText (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler12DrawTriangleE">PixelMaestro::CanvasCueHandler::DrawTriangle (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler11erase_pointE7uint8_t7uint8_t8uint16_t8uint16_t8uint16_t">PixelMaestro::CanvasCueHandler::erase_point (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10ErasePointE">PixelMaestro::CanvasCueHandler::ErasePoint (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10FrameByte1E">PixelMaestro::CanvasCueHandler::FrameByte1 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10FrameByte2E">PixelMaestro::CanvasCueHandler::FrameByte2 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler11HandlerByteE">PixelMaestro::CanvasCueHandler::HandlerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9LayerByteE">PixelMaestro::CanvasCueHandler::LayerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10next_frameE7uint8_t7uint8_t">PixelMaestro::CanvasCueHandler::next_frame (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9NextFrameE">PixelMaestro::CanvasCueHandler::NextFrame (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler24OBSOLETE_SetDrawingColorE">PixelMaestro::CanvasCueHandler::OBSOLETE_SetDrawingColor (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler11OptionsByteE">PixelMaestro::CanvasCueHandler::OptionsByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler14previous_frameE7uint8_t7uint8_t">PixelMaestro::CanvasCueHandler::previous_frame (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler13PreviousFrameE">PixelMaestro::CanvasCueHandler::PreviousFrame (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler18remove_frame_timerE7uint8_t7uint8_t">PixelMaestro::CanvasCueHandler::remove_frame_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler16RemoveFrameTimerE">PixelMaestro::CanvasCueHandler::RemoveFrameTimer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler3runEP7uint8_t">PixelMaestro::CanvasCueHandler::run (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler11SectionByteE">PixelMaestro::CanvasCueHandler::SectionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler23set_current_frame_indexE7uint8_t7uint8_t8uint16_t">PixelMaestro::CanvasCueHandler::set_current_frame_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler15set_frame_timerE7uint8_t7uint8_t8uint16_t">PixelMaestro::CanvasCueHandler::set_frame_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler14set_num_framesE7uint8_t7uint8_t8uint16_t">PixelMaestro::CanvasCueHandler::set_num_frames (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler11set_paletteE7uint8_t7uint8_tRK7Palette">PixelMaestro::CanvasCueHandler::set_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler20SetCurrentFrameIndexE">PixelMaestro::CanvasCueHandler::SetCurrentFrameIndex (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler13SetFrameTimerE">PixelMaestro::CanvasCueHandler::SetFrameTimer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler12SetNumFramesE">PixelMaestro::CanvasCueHandler::SetNumFrames (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler10SetPaletteE">PixelMaestro::CanvasCueHandler::SetPalette (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler9start_cueE7uint8_t7uint8_t7uint8_t7uint8_t8uint16_t">PixelMaestro::CanvasCueHandler::start_cue (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler17start_frame_timerE7uint8_t7uint8_t">PixelMaestro::CanvasCueHandler::start_frame_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler15StartFrameTimerE">PixelMaestro::CanvasCueHandler::StartFrameTimer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler16stop_frame_timerE7uint8_t7uint8_t">PixelMaestro::CanvasCueHandler::stop_frame_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandler14StopFrameTimerE">PixelMaestro::CanvasCueHandler::StopFrameTimer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CanvasCueHandler.html#_CPPv4N12PixelMaestro16CanvasCueHandlerD0Ev">PixelMaestro::CanvasCueHandler::~CanvasCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresetsE">PixelMaestro::ColorPresets (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets5AzureE">PixelMaestro::ColorPresets::Azure (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets5BlackE">PixelMaestro::ColorPresets::Black (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets4BlueE">PixelMaestro::ColorPresets::Blue (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets10ChartreuseE">PixelMaestro::ColorPresets::Chartreuse (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets10ColorwheelE">PixelMaestro::ColorPresets::Colorwheel (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets18Colorwheel_PaletteE">PixelMaestro::ColorPresets::Colorwheel_Palette (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets4CyanE">PixelMaestro::ColorPresets::Cyan (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets5GreenE">PixelMaestro::ColorPresets::Green (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets6IndigoE">PixelMaestro::ColorPresets::Indigo (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets7MagentaE">PixelMaestro::ColorPresets::Magenta (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets6OrangeE">PixelMaestro::ColorPresets::Orange (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets7RainbowE">PixelMaestro::ColorPresets::Rainbow (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets15Rainbow_PaletteE">PixelMaestro::ColorPresets::Rainbow_Palette (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets3RedE">PixelMaestro::ColorPresets::Red (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets4RoseE">PixelMaestro::ColorPresets::Rose (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets6SpringE">PixelMaestro::ColorPresets::Spring (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets6VioletE">PixelMaestro::ColorPresets::Violet (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets5WhiteE">PixelMaestro::ColorPresets::White (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ColorPresets.html#_CPPv4N12PixelMaestro12ColorPresets6YellowE">PixelMaestro::ColorPresets::Yellow (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6ColorsE">PixelMaestro::Colors (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors5AlphaE">PixelMaestro::Colors::Alpha (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors14generate_cometEP3RGB7uint8_tR3RGBR3RGB7uint8_t7uint8_t">PixelMaestro::Colors::generate_comet (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors21generate_random_colorEv">PixelMaestro::Colors::generate_random_color (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors27generate_random_color_arrayEP3RGB7uint8_t">PixelMaestro::Colors::generate_random_color_array (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors28generate_scaling_color_arrayEP3RGBR3RGBR3RGB7uint8_tb">PixelMaestro::Colors::generate_scaling_color_array (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors10mix_colorsERK3RGBRK3RGB7MixMode7uint8_t">PixelMaestro::Colors::mix_colors (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors7MixModeE">PixelMaestro::Colors::MixMode (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors8MultiplyE">PixelMaestro::Colors::Multiply (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors4NoneE">PixelMaestro::Colors::None (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors7OverlayE">PixelMaestro::Colors::Overlay (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGBE">PixelMaestro::Colors::RGB (C++ class)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4N12PixelMaestro6Colors3RGBE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGB1bE">PixelMaestro::Colors::RGB::b (C++ member)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4N12PixelMaestro6Colors3RGB1bE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGB1gE">PixelMaestro::Colors::RGB::g (C++ member)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4N12PixelMaestro6Colors3RGB1gE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4NK12PixelMaestro6Colors3RGBneE3RGB">PixelMaestro::Colors::RGB::operator!= (C++ function)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4NK12PixelMaestro6Colors3RGBneE3RGB">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4NK12PixelMaestro6Colors3RGBmlEf">PixelMaestro::Colors::RGB::operator* (C++ function)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4NK12PixelMaestro6Colors3RGBmlEf">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGBaSE3RGB">PixelMaestro::Colors::RGB::operator= (C++ function)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4N12PixelMaestro6Colors3RGBaSE3RGB">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4NK12PixelMaestro6Colors3RGBeqE3RGB">PixelMaestro::Colors::RGB::operator== (C++ function)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4NK12PixelMaestro6Colors3RGBeqE3RGB">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGB1rE">PixelMaestro::Colors::RGB::r (C++ member)</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4N12PixelMaestro6Colors3RGB1rE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGB3RGBE7uint8_t7uint8_t7uint8_t">PixelMaestro::Colors::RGB::RGB (C++ function)</a>, <a href="api/classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGB3RGBERK3RGB">[1]</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4N12PixelMaestro6Colors3RGB3RGBE7uint8_t7uint8_t7uint8_t">[2]</a>, <a href="api/structPixelMaestro_1_1Colors_1_1RGB.html#_CPPv4N12PixelMaestro6Colors3RGB3RGBERK3RGB">[3]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueControllerE">PixelMaestro::CueController (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController19AnimationCueHandlerE">PixelMaestro::CueController::AnimationCueHandler (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController8assembleE8uint32_t">PixelMaestro::CueController::assemble (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController10BlockedCueE">PixelMaestro::CueController::BlockedCue (C++ class)</a>, <a href="api/structPixelMaestro_1_1CueController_1_1BlockedCue.html#_CPPv4N12PixelMaestro13CueController10BlockedCueE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController10BlockedCue6actionE">PixelMaestro::CueController::BlockedCue::action (C++ member)</a>, <a href="api/structPixelMaestro_1_1CueController_1_1BlockedCue.html#_CPPv4N12PixelMaestro13CueController10BlockedCue6actionE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController10BlockedCue10BlockedCueE7Handler7uint8_t">PixelMaestro::CueController::BlockedCue::BlockedCue (C++ function)</a>, <a href="api/structPixelMaestro_1_1CueController_1_1BlockedCue.html#_CPPv4N12PixelMaestro13CueController10BlockedCue10BlockedCueE7Handler7uint8_t">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController10BlockedCue7handlerE">PixelMaestro::CueController::BlockedCue::handler (C++ member)</a>, <a href="api/structPixelMaestro_1_1CueController_1_1BlockedCue.html#_CPPv4N12PixelMaestro13CueController10BlockedCue7handlerE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController4ByteE">PixelMaestro::CueController::Byte (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController16CanvasCueHandlerE">PixelMaestro::CueController::CanvasCueHandler (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController8checksumEPK7uint8_t8uint32_t">PixelMaestro::CueController::checksum (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController12ChecksumByteE">PixelMaestro::CueController::ChecksumByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController13CueControllerER7Maestro8uint32_t">PixelMaestro::CueController::CueController (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController28enable_animation_cue_handlerEv">PixelMaestro::CueController::enable_animation_cue_handler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController25enable_canvas_cue_handlerEv">PixelMaestro::CueController::enable_canvas_cue_handler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController26enable_maestro_cue_handlerEv">PixelMaestro::CueController::enable_maestro_cue_handler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController26enable_section_cue_handlerEv">PixelMaestro::CueController::enable_section_cue_handler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController23enable_show_cue_handlerEv">PixelMaestro::CueController::enable_show_cue_handler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4NK12PixelMaestro13CueController10get_bufferEv">PixelMaestro::CueController::get_buffer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4NK12PixelMaestro13CueController12get_cue_sizeEP7uint8_t">PixelMaestro::CueController::get_cue_size (C++ function)</a>, <a href="api/classPixelMaestro_1_1CueController.html#_CPPv4NK12PixelMaestro13CueController12get_cue_sizeEv">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4NK12PixelMaestro13CueController11get_handlerE7Handler">PixelMaestro::CueController::get_handler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4NK12PixelMaestro13CueController11get_maestroEv">PixelMaestro::CueController::get_maestro (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController7HandlerE">PixelMaestro::CueController::Handler (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController7IDByte1E">PixelMaestro::CueController::IDByte1 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController7IDByte2E">PixelMaestro::CueController::IDByte2 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController7IDByte3E">PixelMaestro::CueController::IDByte3 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4NK12PixelMaestro13CueController10is_blockedEPK7uint8_t">PixelMaestro::CueController::is_blocked (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController17MaestroCueHandlerE">PixelMaestro::CueController::MaestroCueHandler (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController11PayloadByteE">PixelMaestro::CueController::PayloadByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController4readE7uint8_t">PixelMaestro::CueController::read (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController3runEP7uint8_t">PixelMaestro::CueController::run (C++ function)</a>, <a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController3runEv">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController17SectionCueHandlerE">PixelMaestro::CueController::SectionCueHandler (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController16set_blocked_cuesEP10BlockedCue7uint8_t">PixelMaestro::CueController::set_blocked_cues (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController14ShowCueHandlerE">PixelMaestro::CueController::ShowCueHandler (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController9SizeByte1E">PixelMaestro::CueController::SizeByte1 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController9SizeByte2E">PixelMaestro::CueController::SizeByte2 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController9SizeByte3E">PixelMaestro::CueController::SizeByte3 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController9SizeByte4E">PixelMaestro::CueController::SizeByte4 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueController15validate_headerEP7uint8_t">PixelMaestro::CueController::validate_header (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueController.html#_CPPv4N12PixelMaestro13CueControllerD0Ev">PixelMaestro::CueController::~CueController (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerE">PixelMaestro::CueHandler (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler16add_float_to_cueER8uint32_tf">PixelMaestro::CueHandler::add_float_to_cue (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler17add_uint16_to_cueER8uint32_t8uint16_t">PixelMaestro::CueHandler::add_uint16_to_cue (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler17add_uint32_to_cueER8uint32_t8uint32_t">PixelMaestro::CueHandler::add_uint32_to_cue (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler11controller_E">PixelMaestro::CueHandler::controller_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler10CueHandlerER13CueController">PixelMaestro::CueHandler::CueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler19deserialize_paletteEPK7uint8_t7uint8_t">PixelMaestro::CueHandler::deserialize_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4NK12PixelMaestro10CueHandler11get_sectionE7uint8_t7uint8_t">PixelMaestro::CueHandler::get_section (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler3runEP7uint8_t">PixelMaestro::CueHandler::run (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler17serialize_paletteEA_7uint8_tRK7Palette">PixelMaestro::CueHandler::serialize_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler9start_cueE7uint8_t7uint8_t">PixelMaestro::CueHandler::start_cue (C++ function)</a>, <a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandler9start_cueE7uint8_t7uint8_t7uint8_t7uint8_t">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerD0Ev">PixelMaestro::CueHandler::~CueHandler (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro5CycleE">PixelMaestro::Cycle (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CycleAnimation.html#_CPPv4N12PixelMaestro14CycleAnimationE">PixelMaestro::CycleAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CycleAnimation.html#_CPPv4N12PixelMaestro14CycleAnimation14CycleAnimationER7Section">PixelMaestro::CycleAnimation::CycleAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CycleAnimation.html#_CPPv4N12PixelMaestro14CycleAnimation3mapEv">PixelMaestro::CycleAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CycleAnimation.html#_CPPv4N12PixelMaestro14CycleAnimation6updateEv">PixelMaestro::CycleAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1CycleAnimation.html#_CPPv4N12PixelMaestro14CycleAnimationD0Ev">PixelMaestro::CycleAnimation::~CycleAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5EventE">PixelMaestro::Event (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5Event4cue_E">PixelMaestro::Event::cue_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5Event5EventE8uint32_tP7uint8_t">PixelMaestro::Event::Event (C++ function)</a>, <a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5Event5EventERK5Event">[1]</a>, <a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5Event5EventEv">[2]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4NK12PixelMaestro5Event7get_cueEv">PixelMaestro::Event::get_cue (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4NK12PixelMaestro5Event8get_timeEv">PixelMaestro::Event::get_time (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5EventaSERK5Event">PixelMaestro::Event::operator= (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5EventeqERK5Event">PixelMaestro::Event::operator== (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5Event7set_cueEP7uint8_t">PixelMaestro::Event::set_cue (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5Event8set_timeE8uint32_t">PixelMaestro::Event::set_time (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5Event5time_E">PixelMaestro::Event::time_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Event.html#_CPPv4N12PixelMaestro5EventD0Ev">PixelMaestro::Event::~Event (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro4FireE">PixelMaestro::Fire (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FireAnimation.html#_CPPv4N12PixelMaestro13FireAnimationE">PixelMaestro::FireAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FireAnimation.html#_CPPv4N12PixelMaestro13FireAnimation13FireAnimationER7Section">PixelMaestro::FireAnimation::FireAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FireAnimation.html#_CPPv4NK12PixelMaestro13FireAnimation14get_multiplierEv">PixelMaestro::FireAnimation::get_multiplier (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FireAnimation.html#_CPPv4N12PixelMaestro13FireAnimation3mapEv">PixelMaestro::FireAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FireAnimation.html#_CPPv4N12PixelMaestro13FireAnimation14set_multiplierE7uint8_t">PixelMaestro::FireAnimation::set_multiplier (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FireAnimation.html#_CPPv4N12PixelMaestro13FireAnimation6updateEv">PixelMaestro::FireAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FireAnimation.html#_CPPv4N12PixelMaestro13FireAnimationD0Ev">PixelMaestro::FireAnimation::~FireAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvertE">PixelMaestro::FloatByteConvert (C++ class)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert13byte_to_floatEP7uint8_t">PixelMaestro::FloatByteConvert::byte_to_float (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert9convertedE">PixelMaestro::FloatByteConvert::converted (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert9ConverterE">PixelMaestro::FloatByteConvert::Converter (C++ union)</a>, <a href="api/unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html#_CPPv4N12PixelMaestro16FloatByteConvert9ConverterE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert9Converter4byteE">PixelMaestro::FloatByteConvert::Converter::byte (C++ member)</a>, <a href="api/unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html#_CPPv4N12PixelMaestro16FloatByteConvert9Converter4byteE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert9Converter3valE">PixelMaestro::FloatByteConvert::Converter::val (C++ member)</a>, <a href="api/unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html#_CPPv4N12PixelMaestro16FloatByteConvert9Converter3valE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert16FloatByteConvertEf">PixelMaestro::FloatByteConvert::FloatByteConvert (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font.html#_CPPv4N12PixelMaestro4FontE">PixelMaestro::Font (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font5x8.html#_CPPv4N12PixelMaestro7Font5x8E">PixelMaestro::Font5x8 (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font5x8.html#_CPPv4N12PixelMaestro7Font5x87Font5x8Ev">PixelMaestro::Font5x8::Font5x8 (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font5x8.html#_CPPv4N12PixelMaestro7Font5x88get_charE7uint8_t">PixelMaestro::Font5x8::get_char (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font5x8.html#_CPPv4N12PixelMaestro7Font5x8D0Ev">PixelMaestro::Font5x8::~Font5x8 (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font.html#_CPPv4N12PixelMaestro4Font7Font5x8E">PixelMaestro::Font::Font5x8 (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font.html#_CPPv4N12PixelMaestro4Font8get_charE7uint8_t">PixelMaestro::Font::get_char (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font.html#_CPPv4N12PixelMaestro4Font4sizeE">PixelMaestro::Font::size (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font.html#_CPPv4N12PixelMaestro4Font4TypeE">PixelMaestro::Font::Type (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Font.html#_CPPv4N12PixelMaestro4FontD0Ev">PixelMaestro::Font::~Font (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvertE">PixelMaestro::IntByteConvert (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvert14byte_to_uint16EP7uint8_t">PixelMaestro::IntByteConvert::byte_to_uint16 (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvert14byte_to_uint32EP7uint8_t">PixelMaestro::IntByteConvert::byte_to_uint32 (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvert11converted_0E">PixelMaestro::IntByteConvert::converted_0 (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvert11converted_1E">PixelMaestro::IntByteConvert::converted_1 (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvert11converted_2E">PixelMaestro::IntByteConvert::converted_2 (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvert11converted_3E">PixelMaestro::IntByteConvert::converted_3 (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1IntByteConvert.html#_CPPv4N12PixelMaestro14IntByteConvert14IntByteConvertE8uint32_t">PixelMaestro::IntByteConvert::IntByteConvert (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro9LightningE">PixelMaestro::Lightning (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimationE">PixelMaestro::LightningAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4NK12PixelMaestro18LightningAnimation14get_bolt_countEv">PixelMaestro::LightningAnimation::get_bolt_count (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4NK12PixelMaestro18LightningAnimation9get_driftEv">PixelMaestro::LightningAnimation::get_drift (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4NK12PixelMaestro18LightningAnimation15get_fork_chanceEv">PixelMaestro::LightningAnimation::get_fork_chance (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimation18LightningAnimationER7Section">PixelMaestro::LightningAnimation::LightningAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimation3mapEv">PixelMaestro::LightningAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimation14set_bolt_countE7uint8_t">PixelMaestro::LightningAnimation::set_bolt_count (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimation9set_driftE6int8_t">PixelMaestro::LightningAnimation::set_drift (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimation15set_fork_chanceE7uint8_t">PixelMaestro::LightningAnimation::set_fork_chance (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimation6updateEv">PixelMaestro::LightningAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1LightningAnimation.html#_CPPv4N12PixelMaestro18LightningAnimationD0Ev">PixelMaestro::LightningAnimation::~LightningAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7MaestroE">PixelMaestro::Maestro (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4NK12PixelMaestro7Maestro18get_cue_controllerEv">PixelMaestro::Maestro::get_cue_controller (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4NK12PixelMaestro7Maestro16get_num_sectionsEv">PixelMaestro::Maestro::get_num_sections (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4NK12PixelMaestro7Maestro15get_pixel_colorE7uint8_t8uint16_t8uint16_t">PixelMaestro::Maestro::get_pixel_color (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4NK12PixelMaestro7Maestro11get_sectionE7uint8_t">PixelMaestro::Maestro::get_section (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4NK12PixelMaestro7Maestro8get_showEv">PixelMaestro::Maestro::get_show (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4NK12PixelMaestro7Maestro9get_timerEv">PixelMaestro::Maestro::get_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro7MaestroE8uint16_t8uint16_t7uint8_t">PixelMaestro::Maestro::Maestro (C++ function)</a>, <a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro7MaestroEP7Section7uint8_t">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro15remove_sectionsEv">PixelMaestro::Maestro::remove_sections (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro11remove_showEv">PixelMaestro::Maestro::remove_show (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro14set_brightnessE7uint8_t">PixelMaestro::Maestro::set_brightness (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro18set_cue_controllerE8uint16_t">PixelMaestro::Maestro::set_cue_controller (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro12set_sectionsEP7Section7uint8_t">PixelMaestro::Maestro::set_sections (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro8set_showEP5Event8uint16_t">PixelMaestro::Maestro::set_show (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro9set_timerE8uint16_t">PixelMaestro::Maestro::set_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro4syncERK8uint32_t">PixelMaestro::Maestro::sync (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7Maestro6updateERK8uint32_tb">PixelMaestro::Maestro::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7MaestroD0Ev">PixelMaestro::Maestro::~Maestro (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandlerE">PixelMaestro::MaestroCueHandler (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler6ActionE">PixelMaestro::MaestroCueHandler::Action (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler10ActionByteE">PixelMaestro::MaestroCueHandler::ActionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler4ByteE">PixelMaestro::MaestroCueHandler::Byte (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler11HandlerByteE">PixelMaestro::MaestroCueHandler::HandlerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler17MaestroCueHandlerER13CueController">PixelMaestro::MaestroCueHandler::MaestroCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler11OptionsByteE">PixelMaestro::MaestroCueHandler::OptionsByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler11remove_showEv">PixelMaestro::MaestroCueHandler::remove_show (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler10RemoveShowE">PixelMaestro::MaestroCueHandler::RemoveShow (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler3runEP7uint8_t">PixelMaestro::MaestroCueHandler::run (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler14set_brightnessE7uint8_t">PixelMaestro::MaestroCueHandler::set_brightness (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler8set_showEv">PixelMaestro::MaestroCueHandler::set_show (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler9set_timerE8uint16_t">PixelMaestro::MaestroCueHandler::set_timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler13SetBrightnessE">PixelMaestro::MaestroCueHandler::SetBrightness (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler7SetShowE">PixelMaestro::MaestroCueHandler::SetShow (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler8SetTimerE">PixelMaestro::MaestroCueHandler::SetTimer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler5StartE">PixelMaestro::MaestroCueHandler::Start (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler5startEv">PixelMaestro::MaestroCueHandler::start (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler4StopE">PixelMaestro::MaestroCueHandler::Stop (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler4stopEv">PixelMaestro::MaestroCueHandler::stop (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler4SyncE">PixelMaestro::MaestroCueHandler::Sync (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandler4syncEK8uint32_t">PixelMaestro::MaestroCueHandler::sync (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MaestroCueHandler.html#_CPPv4N12PixelMaestro17MaestroCueHandlerD0Ev">PixelMaestro::MaestroCueHandler::~MaestroCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro10MandelbrotE">PixelMaestro::Mandelbrot (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MandelbrotAnimation.html#_CPPv4N12PixelMaestro19MandelbrotAnimationE">PixelMaestro::MandelbrotAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MandelbrotAnimation.html#_CPPv4N12PixelMaestro19MandelbrotAnimation19MandelbrotAnimationER7Section">PixelMaestro::MandelbrotAnimation::MandelbrotAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MandelbrotAnimation.html#_CPPv4N12PixelMaestro19MandelbrotAnimation11set_paletteEA_KN6Colors3RGBE7uint8_t">PixelMaestro::MandelbrotAnimation::set_palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MandelbrotAnimation.html#_CPPv4N12PixelMaestro19MandelbrotAnimation6updateEv">PixelMaestro::MandelbrotAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1MandelbrotAnimation.html#_CPPv4N12PixelMaestro19MandelbrotAnimationD0Ev">PixelMaestro::MandelbrotAnimation::~MandelbrotAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7PaletteE">PixelMaestro::Palette (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4NK12PixelMaestro7Palette18get_color_at_indexE7uint8_t">PixelMaestro::Palette::get_color_at_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4NK12PixelMaestro7Palette10get_colorsEv">PixelMaestro::Palette::get_colors (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4NK12PixelMaestro7Palette14get_num_colorsEv">PixelMaestro::Palette::get_num_colors (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7PaletteaSERK7Palette">PixelMaestro::Palette::operator= (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7Palette7PaletteEA_KN6Colors3RGBE7uint8_t">PixelMaestro::Palette::Palette (C++ function)</a>, <a href="api/classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7Palette7PaletteERK7Palette">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7Palette10set_colorsEA_KN6Colors3RGBE7uint8_t">PixelMaestro::Palette::set_colors (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7PaletteD0Ev">PixelMaestro::Palette::~Palette (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5PixelE">PixelMaestro::Pixel (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel5clearEv">PixelMaestro::Pixel::clear (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel9get_colorEv">PixelMaestro::Pixel::get_color (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel5PixelEv">PixelMaestro::Pixel::Pixel (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel14set_next_colorERKN6Colors3RGBE7uint8_t">PixelMaestro::Pixel::set_next_color (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel6updateEb">PixelMaestro::Pixel::update (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro6PlasmaE">PixelMaestro::Plasma (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4N12PixelMaestro15PlasmaAnimationE">PixelMaestro::PlasmaAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4NK12PixelMaestro15PlasmaAnimation14get_resolutionEv">PixelMaestro::PlasmaAnimation::get_resolution (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4NK12PixelMaestro15PlasmaAnimation8get_sizeEv">PixelMaestro::PlasmaAnimation::get_size (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4N12PixelMaestro15PlasmaAnimation3mapEv">PixelMaestro::PlasmaAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4N12PixelMaestro15PlasmaAnimation15PlasmaAnimationER7Section">PixelMaestro::PlasmaAnimation::PlasmaAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4N12PixelMaestro15PlasmaAnimation14set_resolutionEf">PixelMaestro::PlasmaAnimation::set_resolution (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4N12PixelMaestro15PlasmaAnimation8set_sizeEf">PixelMaestro::PlasmaAnimation::set_size (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4N12PixelMaestro15PlasmaAnimation6updateEv">PixelMaestro::PlasmaAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1PlasmaAnimation.html#_CPPv4N12PixelMaestro15PlasmaAnimationD0Ev">PixelMaestro::PlasmaAnimation::~PlasmaAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5PointE">PixelMaestro::Point (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4NK12PixelMaestro5Point16get_inline_indexE8uint16_t8uint16_t">PixelMaestro::Point::get_inline_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4NK12PixelMaestro5Point9in_boundsE8uint16_t8uint16_t">PixelMaestro::Point::in_bounds (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4NK12PixelMaestro5PointneE5Point">PixelMaestro::Point::operator!= (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5PointaSE5Point">PixelMaestro::Point::operator= (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4NK12PixelMaestro5PointeqE5Point">PixelMaestro::Point::operator== (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5Point5PointE8uint16_t8uint16_t">PixelMaestro::Point::Point (C++ function)</a>, <a href="api/classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5Point5PointERK5Point">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5Point3setE8uint16_t8uint16_t">PixelMaestro::Point::set (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4NK12PixelMaestro5Point4sizeEv">PixelMaestro::Point::size (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5Point1xE">PixelMaestro::Point::x (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5Point1yE">PixelMaestro::Point::y (C++ member)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro6RadialE">PixelMaestro::Radial (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RadialAnimation.html#_CPPv4N12PixelMaestro15RadialAnimationE">PixelMaestro::RadialAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RadialAnimation.html#_CPPv4NK12PixelMaestro15RadialAnimation14get_resolutionEv">PixelMaestro::RadialAnimation::get_resolution (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RadialAnimation.html#_CPPv4N12PixelMaestro15RadialAnimation15RadialAnimationER7Section">PixelMaestro::RadialAnimation::RadialAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RadialAnimation.html#_CPPv4N12PixelMaestro15RadialAnimation14set_resolutionE7uint8_t">PixelMaestro::RadialAnimation::set_resolution (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RadialAnimation.html#_CPPv4N12PixelMaestro15RadialAnimation6updateEv">PixelMaestro::RadialAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RadialAnimation.html#_CPPv4N12PixelMaestro15RadialAnimationD0Ev">PixelMaestro::RadialAnimation::~RadialAnimation (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro6RandomE">PixelMaestro::Random (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RandomAnimation.html#_CPPv4N12PixelMaestro15RandomAnimationE">PixelMaestro::RandomAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RandomAnimation.html#_CPPv4N12PixelMaestro15RandomAnimation3mapEv">PixelMaestro::RandomAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RandomAnimation.html#_CPPv4N12PixelMaestro15RandomAnimation15RandomAnimationER7Section">PixelMaestro::RandomAnimation::RandomAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RandomAnimation.html#_CPPv4N12PixelMaestro15RandomAnimation6updateEv">PixelMaestro::RandomAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1RandomAnimation.html#_CPPv4N12PixelMaestro15RandomAnimationD0Ev">PixelMaestro::RandomAnimation::~RandomAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7SectionE">PixelMaestro::Section (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section13get_animationEv">PixelMaestro::Section::get_animation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section14get_brightnessEv">PixelMaestro::Section::get_brightness (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section10get_canvasEv">PixelMaestro::Section::get_canvas (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section14get_dimensionsEv">PixelMaestro::Section::get_dimensions (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section9get_layerEv">PixelMaestro::Section::get_layer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section11get_maestroEv">PixelMaestro::Section::get_maestro (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section10get_mirrorEv">PixelMaestro::Section::get_mirror (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section10get_offsetEv">PixelMaestro::Section::get_offset (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section18get_parent_sectionEv">PixelMaestro::Section::get_parent_section (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section9get_pixelE8uint16_t8uint16_t">PixelMaestro::Section::get_pixel (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section15get_pixel_colorE8uint16_t8uint16_tPN6Colors3RGBE">PixelMaestro::Section::get_pixel_color (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section10get_scrollEv">PixelMaestro::Section::get_scroll (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5LayerE">PixelMaestro::Section::Layer (C++ class)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5LayerE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5Layer5alphaE">PixelMaestro::Section::Layer::alpha (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5Layer5alphaE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5Layer5LayerER7SectionN6Colors7MixModeE7uint8_t">PixelMaestro::Section::Layer::Layer (C++ function)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5Layer5LayerER7SectionN6Colors7MixModeE7uint8_t">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5Layer8mix_modeE">PixelMaestro::Section::Layer::mix_mode (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5Layer8mix_modeE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5Layer7sectionE">PixelMaestro::Section::Layer::section (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5Layer7sectionE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5LayerD0Ev">PixelMaestro::Section::Layer::~Layer (C++ function)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5LayerD0Ev">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6MirrorE">PixelMaestro::Section::Mirror (C++ class)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Mirror.html#_CPPv4N12PixelMaestro7Section6MirrorE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Mirror5mid_xE">PixelMaestro::Section::Mirror::mid_x (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Mirror.html#_CPPv4N12PixelMaestro7Section6Mirror5mid_xE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Mirror5mid_yE">PixelMaestro::Section::Mirror::mid_y (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Mirror.html#_CPPv4N12PixelMaestro7Section6Mirror5mid_yE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Mirror3setEbbRK5Point">PixelMaestro::Section::Mirror::set (C++ function)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Mirror.html#_CPPv4N12PixelMaestro7Section6Mirror3setEbbRK5Point">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Mirror1xE">PixelMaestro::Section::Mirror::x (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Mirror.html#_CPPv4N12PixelMaestro7Section6Mirror1xE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Mirror1yE">PixelMaestro::Section::Mirror::y (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Mirror.html#_CPPv4N12PixelMaestro7Section6Mirror1yE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section16remove_animationEb">PixelMaestro::Section::remove_animation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section13remove_canvasEv">PixelMaestro::Section::remove_canvas (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section12remove_layerEv">PixelMaestro::Section::remove_layer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section13remove_scrollEv">PixelMaestro::Section::remove_scroll (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6ScrollE">PixelMaestro::Section::Scroll (C++ class)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6ScrollE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll10interval_xE">PixelMaestro::Section::Scroll::interval_x (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll10interval_xE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll10interval_yE">PixelMaestro::Section::Scroll::interval_y (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll10interval_yE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll14remove_timer_xEv">PixelMaestro::Section::Scroll::remove_timer_x (C++ function)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll14remove_timer_xEv">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll14remove_timer_yEv">PixelMaestro::Section::Scroll::remove_timer_y (C++ function)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll14remove_timer_yEv">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll9reverse_xE">PixelMaestro::Section::Scroll::reverse_x (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll9reverse_xE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll9reverse_yE">PixelMaestro::Section::Scroll::reverse_y (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll9reverse_yE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll3setE8uint16_tP5Point8uint16_t8uint16_tbb">PixelMaestro::Section::Scroll::set (C++ function)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll3setE8uint16_tP5Point8uint16_t8uint16_tbb">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll6step_xE">PixelMaestro::Section::Scroll::step_x (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll6step_xE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll6step_yE">PixelMaestro::Section::Scroll::step_y (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll6step_yE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll7timer_xE">PixelMaestro::Section::Scroll::timer_x (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll7timer_xE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6Scroll7timer_yE">PixelMaestro::Section::Scroll::timer_y (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6Scroll7timer_yE">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6ScrollD0Ev">PixelMaestro::Section::Scroll::~Scroll (C++ function)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Scroll.html#_CPPv4N12PixelMaestro7Section6ScrollD0Ev">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section7SectionE8uint16_t8uint16_tP7Section">PixelMaestro::Section::Section (C++ function)</a>, <a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section7SectionEv">[1]</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section13set_animationE13AnimationTypeb">PixelMaestro::Section::set_animation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section14set_brightnessE7uint8_t">PixelMaestro::Section::set_brightness (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section10set_canvasE8uint16_t">PixelMaestro::Section::set_canvas (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section14set_dimensionsE8uint16_t8uint16_t">PixelMaestro::Section::set_dimensions (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section9set_layerEN6Colors7MixModeE7uint8_t">PixelMaestro::Section::set_layer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section11set_maestroER7Maestro">PixelMaestro::Section::set_maestro (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section10set_mirrorEbb">PixelMaestro::Section::set_mirror (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section10set_offsetE8uint16_t8uint16_t">PixelMaestro::Section::set_offset (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section15set_pixel_colorE8uint16_t8uint16_tRKN6Colors3RGBE">PixelMaestro::Section::set_pixel_color (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section10set_scrollE8uint16_t8uint16_tbb">PixelMaestro::Section::set_scroll (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section14set_step_countE7uint8_t">PixelMaestro::Section::set_step_count (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section4syncERK8uint32_t">PixelMaestro::Section::sync (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6updateERK8uint32_t">PixelMaestro::Section::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section13update_scrollERK8uint32_t">PixelMaestro::Section::update_scroll (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7SectionD0Ev">PixelMaestro::Section::~Section (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandlerE">PixelMaestro::SectionCueHandler (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler6ActionE">PixelMaestro::SectionCueHandler::Action (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler10ActionByteE">PixelMaestro::SectionCueHandler::ActionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler4ByteE">PixelMaestro::SectionCueHandler::Byte (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler11HandlerByteE">PixelMaestro::SectionCueHandler::HandlerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9LayerByteE">PixelMaestro::SectionCueHandler::LayerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler11OptionsByteE">PixelMaestro::SectionCueHandler::OptionsByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler16remove_animationE7uint8_t7uint8_tb">PixelMaestro::SectionCueHandler::remove_animation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler13remove_canvasE7uint8_t7uint8_t">PixelMaestro::SectionCueHandler::remove_canvas (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler12remove_layerE7uint8_t7uint8_t">PixelMaestro::SectionCueHandler::remove_layer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler15RemoveAnimationE">PixelMaestro::SectionCueHandler::RemoveAnimation (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler12RemoveCanvasE">PixelMaestro::SectionCueHandler::RemoveCanvas (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler11RemoveLayerE">PixelMaestro::SectionCueHandler::RemoveLayer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler3runEP7uint8_t">PixelMaestro::SectionCueHandler::run (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler11SectionByteE">PixelMaestro::SectionCueHandler::SectionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler17SectionCueHandlerER13CueController">PixelMaestro::SectionCueHandler::SectionCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler13set_animationE7uint8_t7uint8_t13AnimationTypeb">PixelMaestro::SectionCueHandler::set_animation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler14set_brightnessE7uint8_t7uint8_t7uint8_t">PixelMaestro::SectionCueHandler::set_brightness (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler10set_canvasE7uint8_t7uint8_t8uint16_t">PixelMaestro::SectionCueHandler::set_canvas (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler14set_dimensionsE7uint8_t7uint8_t8uint16_t8uint16_t">PixelMaestro::SectionCueHandler::set_dimensions (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9set_layerE7uint8_t7uint8_tN6Colors7MixModeE7uint8_t">PixelMaestro::SectionCueHandler::set_layer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler10set_mirrorE7uint8_t7uint8_tbb">PixelMaestro::SectionCueHandler::set_mirror (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler10set_offsetE7uint8_t7uint8_t8uint16_t8uint16_t">PixelMaestro::SectionCueHandler::set_offset (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler10set_scrollE7uint8_t7uint8_t8uint16_t8uint16_tbb">PixelMaestro::SectionCueHandler::set_scroll (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler12SetAnimationE">PixelMaestro::SectionCueHandler::SetAnimation (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler13SetBrightnessE">PixelMaestro::SectionCueHandler::SetBrightness (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9SetCanvasE">PixelMaestro::SectionCueHandler::SetCanvas (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler13SetDimensionsE">PixelMaestro::SectionCueHandler::SetDimensions (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler8SetLayerE">PixelMaestro::SectionCueHandler::SetLayer (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9SetMirrorE">PixelMaestro::SectionCueHandler::SetMirror (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9SetOffsetE">PixelMaestro::SectionCueHandler::SetOffset (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9SetScrollE">PixelMaestro::SectionCueHandler::SetScroll (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandlerD0Ev">PixelMaestro::SectionCueHandler::~SectionCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4ShowE">PixelMaestro::Show (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show8AbsoluteE">PixelMaestro::Show::Absolute (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4NK12PixelMaestro4Show17get_current_indexEv">PixelMaestro::Show::get_current_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4NK12PixelMaestro4Show18get_event_at_indexE8uint16_t">PixelMaestro::Show::get_event_at_index (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4NK12PixelMaestro4Show10get_eventsEv">PixelMaestro::Show::get_events (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4NK12PixelMaestro4Show13get_last_timeEv">PixelMaestro::Show::get_last_time (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4NK12PixelMaestro4Show11get_loopingEv">PixelMaestro::Show::get_looping (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4NK12PixelMaestro4Show14get_num_eventsEv">PixelMaestro::Show::get_num_events (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4NK12PixelMaestro4Show10get_timingEv">PixelMaestro::Show::get_timing (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show8RelativeE">PixelMaestro::Show::Relative (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show10set_eventsEP5Event8uint16_tb">PixelMaestro::Show::set_events (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show11set_loopingEb">PixelMaestro::Show::set_looping (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show15set_timing_modeE10TimingMode">PixelMaestro::Show::set_timing_mode (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show4ShowER13CueControllerP5Event8uint16_t">PixelMaestro::Show::Show (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show4syncERK8uint32_t">PixelMaestro::Show::sync (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show10TimingModeE">PixelMaestro::Show::TimingMode (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Show.html#_CPPv4N12PixelMaestro4Show6updateERK8uint32_t">PixelMaestro::Show::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandlerE">PixelMaestro::ShowCueHandler (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler6ActionE">PixelMaestro::ShowCueHandler::Action (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler10ActionByteE">PixelMaestro::ShowCueHandler::ActionByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler4ByteE">PixelMaestro::ShowCueHandler::Byte (C++ enum)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler11HandlerByteE">PixelMaestro::ShowCueHandler::HandlerByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler11OptionsByteE">PixelMaestro::ShowCueHandler::OptionsByte (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler3runEP7uint8_t">PixelMaestro::ShowCueHandler::run (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler10set_eventsEP5Event8uint16_tb">PixelMaestro::ShowCueHandler::set_events (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler11set_loopingEb">PixelMaestro::ShowCueHandler::set_looping (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler15set_timing_modeEN4Show10TimingModeE">PixelMaestro::ShowCueHandler::set_timing_mode (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler9SetEventsE">PixelMaestro::ShowCueHandler::SetEvents (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler10SetLoopingE">PixelMaestro::ShowCueHandler::SetLooping (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler13SetTimingModeE">PixelMaestro::ShowCueHandler::SetTimingMode (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandler14ShowCueHandlerER13CueController">PixelMaestro::ShowCueHandler::ShowCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1ShowCueHandler.html#_CPPv4N12PixelMaestro14ShowCueHandlerD0Ev">PixelMaestro::ShowCueHandler::~ShowCueHandler (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro5SolidE">PixelMaestro::Solid (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SolidAnimation.html#_CPPv4N12PixelMaestro14SolidAnimationE">PixelMaestro::SolidAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SolidAnimation.html#_CPPv4N12PixelMaestro14SolidAnimation3mapEv">PixelMaestro::SolidAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SolidAnimation.html#_CPPv4N12PixelMaestro14SolidAnimation14SolidAnimationER7Section">PixelMaestro::SolidAnimation::SolidAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SolidAnimation.html#_CPPv4N12PixelMaestro14SolidAnimation6updateEv">PixelMaestro::SolidAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SolidAnimation.html#_CPPv4N12PixelMaestro14SolidAnimationD0Ev">PixelMaestro::SolidAnimation::~SolidAnimation (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro7SparkleE">PixelMaestro::Sparkle (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SparkleAnimation.html#_CPPv4N12PixelMaestro16SparkleAnimationE">PixelMaestro::SparkleAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SparkleAnimation.html#_CPPv4NK12PixelMaestro16SparkleAnimation13get_thresholdEv">PixelMaestro::SparkleAnimation::get_threshold (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SparkleAnimation.html#_CPPv4N12PixelMaestro16SparkleAnimation3mapEv">PixelMaestro::SparkleAnimation::map (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SparkleAnimation.html#_CPPv4N12PixelMaestro16SparkleAnimation13set_thresholdE7uint8_t">PixelMaestro::SparkleAnimation::set_threshold (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SparkleAnimation.html#_CPPv4N12PixelMaestro16SparkleAnimation16SparkleAnimationER7Section">PixelMaestro::SparkleAnimation::SparkleAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SparkleAnimation.html#_CPPv4N12PixelMaestro16SparkleAnimation6updateEv">PixelMaestro::SparkleAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SparkleAnimation.html#_CPPv4N12PixelMaestro16SparkleAnimationD0Ev">PixelMaestro::SparkleAnimation::~SparkleAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5TimerE">PixelMaestro::Timer (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4NK12PixelMaestro5Timer12get_intervalEv">PixelMaestro::Timer::get_interval (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4NK12PixelMaestro5Timer13get_last_timeEv">PixelMaestro::Timer::get_last_time (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4NK12PixelMaestro5Timer11get_runningEv">PixelMaestro::Timer::get_running (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer9interval_E">PixelMaestro::Timer::interval_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer10last_time_E">PixelMaestro::Timer::last_time_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer8running_E">PixelMaestro::Timer::running_ (C++ member)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer12set_intervalE8uint16_t">PixelMaestro::Timer::set_interval (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer13set_last_timeE8uint32_t">PixelMaestro::Timer::set_last_time (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer5startEv">PixelMaestro::Timer::start (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer4stopEv">PixelMaestro::Timer::stop (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer5TimerE8uint16_t">PixelMaestro::Timer::Timer (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Timer.html#_CPPv4N12PixelMaestro5Timer6updateERK8uint32_t">PixelMaestro::Timer::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Utility.html#_CPPv4N12PixelMaestro7UtilityE">PixelMaestro::Utility (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Utility.html#_CPPv4N12PixelMaestro7Utility7abs_intE7int32_t">PixelMaestro::Utility::abs_int (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Utility.html#_CPPv4N12PixelMaestro7Utility4randE7int32_t">PixelMaestro::Utility::rand (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1Utility.html#_CPPv4N12PixelMaestro7Utility5srandE7int32_t">PixelMaestro::Utility::srand (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro4WaveE">PixelMaestro::Wave (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1WaveAnimation.html#_CPPv4N12PixelMaestro13WaveAnimationE">PixelMaestro::WaveAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1WaveAnimation.html#_CPPv4NK12PixelMaestro13WaveAnimation8get_skewEv">PixelMaestro::WaveAnimation::get_skew (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1WaveAnimation.html#_CPPv4N12PixelMaestro13WaveAnimation8set_skewE6int8_t">PixelMaestro::WaveAnimation::set_skew (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1WaveAnimation.html#_CPPv4N12PixelMaestro13WaveAnimation6updateEv">PixelMaestro::WaveAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1WaveAnimation.html#_CPPv4N12PixelMaestro13WaveAnimation13WaveAnimationER7Section">PixelMaestro::WaveAnimation::WaveAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1WaveAnimation.html#_CPPv4N12PixelMaestro13WaveAnimationD0Ev">PixelMaestro::WaveAnimation::~WaveAnimation (C++ function)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

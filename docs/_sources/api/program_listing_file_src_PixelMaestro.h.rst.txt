@@ -1,0 +1,14 @@
+
+.. _program_listing_file_src_PixelMaestro.h:
+
+Program Listing for File PixelMaestro.h
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_PixelMaestro.h>` (``src/PixelMaestro.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   // This file intentionally left empty.
+   // This is a dummy file used to provide dependency resolution for the Arduino IDE.

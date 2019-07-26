@@ -1,0 +1,45 @@
+
+.. _program_listing_file_src_core_point.cpp:
+
+Program Listing for File point.cpp
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_point.cpp>` (``src/core/point.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * Point.cpp - Defines a point on a grid.
+    * Also used to define the size of a grid.
+    */
+   
+   #include "point.h"
+   
+   namespace PixelMaestro {
+       Point::Point(uint16_t x, uint16_t y) {
+           set(x, y);
+       }
+   
+       Point::Point(const Point &other) {
+           set(other.x, other.y);
+       }
+   
+       uint32_t Point::get_inline_index(uint16_t x, uint16_t y) const {
+           return (y * this->x) + x;
+       }
+   
+       bool Point::in_bounds(uint16_t x, uint16_t y) const {
+           return (x < this->x && y < this->y);
+       }
+   
+       void Point::set(uint16_t x, uint16_t y) {
+           this->x = x;
+           this->y = y;
+       }
+   
+       uint32_t Point::size() const {
+           return x * y;
+       }
+   }

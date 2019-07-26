@@ -1,0 +1,57 @@
+
+.. _program_listing_file_src_core_timer_animationtimer.cpp:
+
+Program Listing for File animationtimer.cpp
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_timer_animationtimer.cpp>` (``src/core/timer/animationtimer.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * AnimationTimer - Class for managing time-sensitive actions for Animations.
+    */
+   
+   #include "animationtimer.h"
+   
+   namespace PixelMaestro {
+       AnimationTimer::AnimationTimer(const Animation& animation) : animation_(animation) { }
+   
+       uint16_t AnimationTimer::get_delay() const {
+           return delay_;
+       }
+   
+       uint8_t AnimationTimer::get_step_count() const {
+           return step_count_;
+       }
+   
+       void AnimationTimer::recalculate_step_count() {
+           /*
+            * If fading, calculate the distance in steps between the current cycle and the next cycle.
+            * Otherwise, just jump to the next cycle.
+            */
+           if (animation_.get_fade()) {
+               step_count_ = (interval_ - delay_) / (float)animation_.get_section().get_maestro().get_timer().get_interval();
+           }
+           else {
+               step_count_ = 1;
+           }
+       }
+   
+       void AnimationTimer::set_interval(uint16_t interval, uint16_t delay) {
+           this->interval_ = interval;
+           this->delay_ = delay;
+           this->recalculate_step_count();
+       }
+   
+       bool AnimationTimer::update(const uint32_t& current_time) {
+           if (running_ && ((current_time - last_time_) >= (interval_))) {
+               last_time_ = current_time;
+               return true;
+           }
+   
+           return false;
+       }
+   }

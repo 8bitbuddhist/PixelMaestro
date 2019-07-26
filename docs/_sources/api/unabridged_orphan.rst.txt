@@ -1,0 +1,393 @@
+:orphan:
+
+
+Full API
+========
+
+Directories
+***********
+
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_src.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_src_animation.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_src_canvas.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_src_canvas_fonts.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_src_core.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_src_core_timer.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   dir_src_cue.rst
+
+Files
+*****
+
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_animation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_animation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_animationcuehandler.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_animationcuehandler.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_timer_animationtimer.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_timer_animationtimer.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_animationtype.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_blinkanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_blinkanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_canvas_canvas.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_canvas_canvas.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_canvascuehandler.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_canvascuehandler.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_colorpresets.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_colorpresets.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_colors.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_colors.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_cuecontroller.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_cuecontroller.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_cuehandler.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_cuehandler.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_cycleanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_cycleanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_event.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_event.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_fireanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_fireanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_canvas_fonts_font.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_canvas_fonts_font5x8.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_canvas_fonts_font5x8.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_lightninganimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_lightninganimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_maestro.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_maestro.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_maestrocuehandler.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_maestrocuehandler.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_mandelbrotanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_mandelbrotanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_palette.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_palette.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_pixel.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_pixel.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_PixelMaestro.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_plasmaanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_plasmaanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_point.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_point.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_radialanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_radialanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_randomanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_randomanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_section.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_section.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_sectioncuehandler.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_sectioncuehandler.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_show.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_show.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_showcuehandler.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_cue_showcuehandler.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_solidanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_solidanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_sparkleanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_sparkleanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_timer_timer.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_core_timer_timer.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_utility.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_utility.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_waveanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_waveanimation.h.rst

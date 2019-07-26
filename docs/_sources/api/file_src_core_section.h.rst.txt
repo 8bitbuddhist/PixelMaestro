@@ -1,0 +1,89 @@
+
+.. _file_src_core_section.h:
+
+File section.h
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core>` (``src/core``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/core/section.h``)
+-----------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_core_section.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../animation/animation.h``
+
+- ``../animation/animationtype.h``
+
+- ``../canvas/canvas.h``
+
+- ``../utility.h``
+
+- ``colors.h`` (:ref:`file_src_core_colors.h`)
+
+- ``maestro.h`` (:ref:`file_src_core_maestro.h`)
+
+- ``pixel.h`` (:ref:`file_src_core_pixel.h`)
+
+- ``point.h`` (:ref:`file_src_core_point.h`)
+
+- ``stdint.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_animation_animation.h`
+
+- :ref:`file_src_canvas_canvas.h`
+
+- :ref:`file_src_cue_cuehandler.h`
+
+- :ref:`file_src_core_maestro.h`
+
+- :ref:`file_src_core_maestro.cpp`
+
+- :ref:`file_src_core_section.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Layer`
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Mirror`
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Scroll`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Section`
+

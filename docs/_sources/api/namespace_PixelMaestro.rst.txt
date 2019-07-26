@@ -1,0 +1,114 @@
+
+.. _namespace_PixelMaestro:
+
+Namespace PixelMaestro
+======================
+
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+
+
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Colors_1_1RGB`
+
+- :ref:`exhale_struct_structPixelMaestro_1_1CueController_1_1BlockedCue`
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Layer`
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Mirror`
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Scroll`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Animation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1AnimationCueHandler`
+
+- :ref:`exhale_class_classPixelMaestro_1_1AnimationTimer`
+
+- :ref:`exhale_class_classPixelMaestro_1_1BlinkAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Canvas`
+
+- :ref:`exhale_class_classPixelMaestro_1_1CanvasCueHandler`
+
+- :ref:`exhale_class_classPixelMaestro_1_1ColorPresets`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Colors`
+
+- :ref:`exhale_class_classPixelMaestro_1_1CueController`
+
+- :ref:`exhale_class_classPixelMaestro_1_1CueHandler`
+
+- :ref:`exhale_class_classPixelMaestro_1_1CycleAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Event`
+
+- :ref:`exhale_class_classPixelMaestro_1_1FireAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1FloatByteConvert`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Font`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Font5x8`
+
+- :ref:`exhale_class_classPixelMaestro_1_1IntByteConvert`
+
+- :ref:`exhale_class_classPixelMaestro_1_1LightningAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Maestro`
+
+- :ref:`exhale_class_classPixelMaestro_1_1MaestroCueHandler`
+
+- :ref:`exhale_class_classPixelMaestro_1_1MandelbrotAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Palette`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Pixel`
+
+- :ref:`exhale_class_classPixelMaestro_1_1PlasmaAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Point`
+
+- :ref:`exhale_class_classPixelMaestro_1_1RadialAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1RandomAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Section`
+
+- :ref:`exhale_class_classPixelMaestro_1_1SectionCueHandler`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Show`
+
+- :ref:`exhale_class_classPixelMaestro_1_1ShowCueHandler`
+
+- :ref:`exhale_class_classPixelMaestro_1_1SolidAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1SparkleAnimation`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Timer`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Utility`
+
+- :ref:`exhale_class_classPixelMaestro_1_1WaveAnimation`
+
+
+Enums
+-----
+
+
+- :ref:`exhale_enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993`
+
+
+Unions
+------
+
+
+- :ref:`exhale_union_unionPixelMaestro_1_1FloatByteConvert_1_1Converter`

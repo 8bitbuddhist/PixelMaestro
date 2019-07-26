@@ -1,0 +1,33 @@
+
+.. _program_listing_file_src_animation_cycleanimation.cpp:
+
+Program Listing for File cycleanimation.cpp
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_cycleanimation.cpp>` (``src/animation/cycleanimation.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "cycleanimation.h"
+   
+   namespace PixelMaestro {
+       CycleAnimation::CycleAnimation(Section& section) : Animation(section) {
+           type_ = AnimationType::Cycle;
+           map();
+       }
+   
+       void CycleAnimation::map() {
+           for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+               for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+                   set_map_color_index(x, y, cycle_index_);
+               }
+           }
+       }
+   
+       void CycleAnimation::update() {
+           map();
+           update_cycle(0, palette_->get_num_colors());
+       }
+   }

@@ -1,0 +1,37 @@
+
+.. _program_listing_file_src_animation_solidanimation.cpp:
+
+Program Listing for File solidanimation.cpp
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_solidanimation.cpp>` (``src/animation/solidanimation.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "solidanimation.h"
+   
+   namespace PixelMaestro {
+       SolidAnimation::SolidAnimation(Section& section) : Animation(section) {
+           type_ = AnimationType::Solid;
+           map();
+       }
+   
+       void SolidAnimation::map() {
+           if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
+               for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+                   for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+                       set_map_color_index(x, y, y);
+                   }
+               }
+           }
+           else {  // Horizontal
+               for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+                   for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+                       set_map_color_index(x, y, x);
+                   }
+               }
+           }
+       }
+   }

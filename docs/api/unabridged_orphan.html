@@ -1,0 +1,1441 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Full API &mdash; PixelMaestro 2.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#faq">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#core-concepts">Core Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-section">What’s a Section?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-maestro">What’s a Maestro?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#using-pixelmaestro">Using PixelMaestro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#sample-sketch">Sample Sketch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#primary-components">Primary Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#secondary-components">Secondary Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Maestros.html">Maestros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-maestro">Creating a Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#updating-the-maestro">Updating the Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#changing-the-refresh-interval">Changing the Refresh Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#interacting-with-sections">Interacting with Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#setting-a-global-brightness-level">Setting a Global Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#synchronizing-components">Synchronizing Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Sections.html">Sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#creating-a-section">Creating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#updating-a-section">Updating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#interacting-with-the-pixel-grid">Interacting With the Pixel Grid</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#setting-a-pixel-s-color">Setting a Pixel’s Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#retrieving-a-pixel-s-color">Retrieving a Pixel’s Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#animating-a-section">Animating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#displaying-custom-shapes-and-patterns">Displaying Custom Shapes and Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#setting-a-brightness-level">Setting a Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Points.html">Points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#creating-a-point">Creating a Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Points.html#coordinates-versus-dimensions">Coordinates Versus Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#other-methods">Other Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Pixels.html">Pixels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#creating-pixels">Creating Pixels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#how-pixels-work">How Pixels Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#performance-options">Performance Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#disabling-fading">Disabling Fading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#enabling-accurate-fading">Enabling Accurate Fading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Colors.html">Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#creating-colors">Creating Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#mixing-colors">Mixing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#sample-colors">Sample Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Palettes.html">Palettes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#creating-a-palette">Creating a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#using-a-palette">Using a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#changing-colors">Changing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#retrieving-colors">Retrieving Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Animations.html">Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#animation-types">Animation Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#creating-an-animation">Creating an Animation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#animation-cycles">Animation Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-the-color-palette">Setting the Color Palette</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-additional-options">Setting Additional Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#setting-the-orientation">Setting the Orientation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-animation-timing">Changing the Animation Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#toggling-fading">Toggling Fading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-center">Changing the Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#how-animations-work">How Animations Work</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvases.html">Canvases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#creating-a-canvas">Creating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#setting-the-palette">Setting the Palette</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#animating-a-canvas">Animating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#frames">Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#switching-frames">Switching Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#drawing-shapes">Drawing Shapes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#selecting-a-color">Selecting a Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#lines">Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#points">Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#rectangles">Rectangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#text">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#triangles">Triangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#clearing-the-canvas">Clearing the Canvas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Cues.html">Cues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#initializing-the-cuecontroller">Initializing the CueController</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#setting-the-buffer-size">Setting the Buffer Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#enabling-cuehandlers">Enabling CueHandlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#creating-cues">Creating Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#running-cues">Running Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#blocking-cues">Blocking Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#structure">Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Shows.html">Shows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#adding-events">Adding Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#timing-modes">Timing Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#looping">Looping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Timers.html">Timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#creating-a-timer">Creating a Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#changing-the-interval">Changing the Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#starting-and-stopping-a-timer">Starting and Stopping a Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="root.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="root.html#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespace_PixelMaestro.html">Namespace PixelMaestro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Colors_1_1RGB.html">Struct Colors::RGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1CueController_1_1BlockedCue.html">Struct CueController::BlockedCue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Layer.html">Struct Section::Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Mirror.html">Struct Section::Mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Scroll.html">Struct Section::Scroll</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Animation.html">Class Animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationCueHandler.html">Class AnimationCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationTimer.html">Class AnimationTimer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1BlinkAnimation.html">Class BlinkAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Canvas.html">Class Canvas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CanvasCueHandler.html">Class CanvasCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ColorPresets.html">Class ColorPresets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Colors.html">Class Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CueController.html">Class CueController</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html">Class CueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CycleAnimation.html">Class CycleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Event.html">Class Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FireAnimation.html">Class FireAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FloatByteConvert.html">Class FloatByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font.html">Class Font</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font5x8.html">Class Font5x8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1IntByteConvert.html">Class IntByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1LightningAnimation.html">Class LightningAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Maestro.html">Class Maestro</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MaestroCueHandler.html">Class MaestroCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MandelbrotAnimation.html">Class MandelbrotAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Palette.html">Class Palette</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Pixel.html">Class Pixel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1PlasmaAnimation.html">Class PlasmaAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Point.html">Class Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RadialAnimation.html">Class RadialAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RandomAnimation.html">Class RandomAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Section.html">Class Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SectionCueHandler.html">Class SectionCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Show.html">Class Show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ShowCueHandler.html">Class ShowCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SolidAnimation.html">Class SolidAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html">Enum AnimationType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#unions">Unions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html">Union FloatByteConvert::Converter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Full API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/unabridged_orphan.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="full-api">
+<h1>Full API<a class="headerlink" href="#full-api" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="directories">
+<h2>Directories<a class="headerlink" href="#directories" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src.html">Directory src</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src.html#subdirectories">Subdirectories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dir_src.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_animation.html">Directory animation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_animation.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_canvas.html">Directory canvas</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_canvas.html#subdirectories">Subdirectories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_canvas.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_canvas_fonts.html">Directory fonts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_canvas_fonts.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_core.html">Directory core</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_core.html#subdirectories">Subdirectories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_core.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_core_timer.html">Directory timer</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_core_timer.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="dir_src_cue.html">Directory cue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dir_src_cue.html#files">Files</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="files">
+<h2>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_animation.cpp.html">File animation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.cpp.html#definition-src-animation-animation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/animation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_animation.cpp.html">Program Listing for File animation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_animation.h.html">File animation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.h.html#definition-src-animation-animation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/animation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_animation.h.html">Program Listing for File animation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_animationcuehandler.cpp.html">File animationcuehandler.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.cpp.html#definition-src-cue-animationcuehandler-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/animationcuehandler.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_animationcuehandler.cpp.html">Program Listing for File animationcuehandler.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_animationcuehandler.h.html">File animationcuehandler.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.h.html#definition-src-cue-animationcuehandler-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/animationcuehandler.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_animationcuehandler.h.html">Program Listing for File animationcuehandler.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_animationcuehandler.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_timer_animationtimer.cpp.html">File animationtimer.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.cpp.html#definition-src-core-timer-animationtimer-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/timer/animationtimer.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_timer_animationtimer.cpp.html">Program Listing for File animationtimer.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_timer_animationtimer.h.html">File animationtimer.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.h.html#definition-src-core-timer-animationtimer-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/timer/animationtimer.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_timer_animationtimer.h.html">Program Listing for File animationtimer.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_animationtimer.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_animationtype.h.html">File animationtype.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animationtype.h.html#definition-src-animation-animationtype-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/animationtype.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_animationtype.h.html">Program Listing for File animationtype.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animationtype.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animationtype.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_animationtype.h.html#enums">Enums</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_blinkanimation.cpp.html">File blinkanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.cpp.html#definition-src-animation-blinkanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/blinkanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_blinkanimation.cpp.html">Program Listing for File blinkanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_blinkanimation.h.html">File blinkanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.h.html#definition-src-animation-blinkanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/blinkanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_blinkanimation.h.html">Program Listing for File blinkanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_blinkanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_canvas_canvas.cpp.html">File canvas.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.cpp.html#definition-src-canvas-canvas-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/canvas/canvas.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_canvas_canvas.cpp.html">Program Listing for File canvas.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_canvas_canvas.h.html">File canvas.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.h.html#definition-src-canvas-canvas-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/canvas/canvas.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_canvas_canvas.h.html">Program Listing for File canvas.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_canvas.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_canvascuehandler.cpp.html">File canvascuehandler.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.cpp.html#definition-src-cue-canvascuehandler-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/canvascuehandler.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_canvascuehandler.cpp.html">Program Listing for File canvascuehandler.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_canvascuehandler.h.html">File canvascuehandler.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.h.html#definition-src-cue-canvascuehandler-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/canvascuehandler.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_canvascuehandler.h.html">Program Listing for File canvascuehandler.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_canvascuehandler.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_colorpresets.cpp.html">File colorpresets.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.cpp.html#definition-src-colorpresets-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/colorpresets.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_colorpresets.cpp.html">Program Listing for File colorpresets.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_colorpresets.h.html">File colorpresets.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.h.html#definition-src-colorpresets-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/colorpresets.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_colorpresets.h.html">Program Listing for File colorpresets.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_colorpresets.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_colors.cpp.html">File colors.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.cpp.html#definition-src-core-colors-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/colors.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_colors.cpp.html">Program Listing for File colors.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_colors.h.html">File colors.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.h.html#definition-src-core-colors-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/colors.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_colors.h.html">Program Listing for File colors.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_colors.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_cuecontroller.cpp.html">File cuecontroller.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.cpp.html#definition-src-cue-cuecontroller-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/cuecontroller.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_cuecontroller.cpp.html">Program Listing for File cuecontroller.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_cuecontroller.h.html">File cuecontroller.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.h.html#definition-src-cue-cuecontroller-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/cuecontroller.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_cuecontroller.h.html">Program Listing for File cuecontroller.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.h.html#classes">Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuecontroller.h.html#unions">Unions</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_cuehandler.cpp.html">File cuehandler.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.cpp.html#definition-src-cue-cuehandler-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/cuehandler.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_cuehandler.cpp.html">Program Listing for File cuehandler.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_cuehandler.h.html">File cuehandler.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.h.html#definition-src-cue-cuehandler-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/cuehandler.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_cuehandler.h.html">Program Listing for File cuehandler.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_cuehandler.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_cycleanimation.cpp.html">File cycleanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.cpp.html#definition-src-animation-cycleanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/cycleanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_cycleanimation.cpp.html">Program Listing for File cycleanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_cycleanimation.h.html">File cycleanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.h.html#definition-src-animation-cycleanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/cycleanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_cycleanimation.h.html">Program Listing for File cycleanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_cycleanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_event.cpp.html">File event.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.cpp.html#definition-src-cue-event-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/event.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_event.cpp.html">Program Listing for File event.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_event.h.html">File event.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.h.html#definition-src-cue-event-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/event.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_event.h.html">Program Listing for File event.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_event.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_fireanimation.cpp.html">File fireanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.cpp.html#definition-src-animation-fireanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/fireanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_fireanimation.cpp.html">Program Listing for File fireanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_fireanimation.h.html">File fireanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.h.html#definition-src-animation-fireanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/fireanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_fireanimation.h.html">Program Listing for File fireanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_fireanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_canvas_fonts_font.h.html">File font.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font.h.html#definition-src-canvas-fonts-font-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/canvas/fonts/font.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_canvas_fonts_font.h.html">Program Listing for File font.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_canvas_fonts_font5x8.cpp.html">File font5x8.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.cpp.html#definition-src-canvas-fonts-font5x8-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/canvas/fonts/font5x8.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_canvas_fonts_font5x8.cpp.html">Program Listing for File font5x8.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_canvas_fonts_font5x8.h.html">File font5x8.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.h.html#definition-src-canvas-fonts-font5x8-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/canvas/fonts/font5x8.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_canvas_fonts_font5x8.h.html">Program Listing for File font5x8.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_canvas_fonts_font5x8.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_lightninganimation.cpp.html">File lightninganimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.cpp.html#definition-src-animation-lightninganimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/lightninganimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_lightninganimation.cpp.html">Program Listing for File lightninganimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_lightninganimation.h.html">File lightninganimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.h.html#definition-src-animation-lightninganimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/lightninganimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_lightninganimation.h.html">Program Listing for File lightninganimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_lightninganimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_maestro.cpp.html">File maestro.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.cpp.html#definition-src-core-maestro-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/maestro.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_maestro.cpp.html">Program Listing for File maestro.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_maestro.h.html">File maestro.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.h.html#definition-src-core-maestro-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/maestro.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_maestro.h.html">Program Listing for File maestro.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_maestro.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_maestrocuehandler.cpp.html">File maestrocuehandler.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.cpp.html#definition-src-cue-maestrocuehandler-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/maestrocuehandler.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_maestrocuehandler.cpp.html">Program Listing for File maestrocuehandler.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_maestrocuehandler.h.html">File maestrocuehandler.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.h.html#definition-src-cue-maestrocuehandler-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/maestrocuehandler.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_maestrocuehandler.h.html">Program Listing for File maestrocuehandler.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_maestrocuehandler.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_mandelbrotanimation.cpp.html">File mandelbrotanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.cpp.html#definition-src-animation-mandelbrotanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/mandelbrotanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_mandelbrotanimation.cpp.html">Program Listing for File mandelbrotanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_mandelbrotanimation.h.html">File mandelbrotanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.h.html#definition-src-animation-mandelbrotanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/mandelbrotanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_mandelbrotanimation.h.html">Program Listing for File mandelbrotanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_mandelbrotanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_palette.cpp.html">File palette.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.cpp.html#definition-src-core-palette-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/palette.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_palette.cpp.html">Program Listing for File palette.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_palette.h.html">File palette.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.h.html#definition-src-core-palette-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/palette.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_palette.h.html">Program Listing for File palette.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_palette.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_pixel.cpp.html">File pixel.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.cpp.html#definition-src-core-pixel-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/pixel.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_pixel.cpp.html">Program Listing for File pixel.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_pixel.h.html">File pixel.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.h.html#definition-src-core-pixel-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/pixel.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_pixel.h.html">Program Listing for File pixel.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_pixel.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_PixelMaestro.h.html">File PixelMaestro.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_PixelMaestro.h.html#definition-src-pixelmaestro-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/PixelMaestro.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_PixelMaestro.h.html">Program Listing for File PixelMaestro.h</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_plasmaanimation.cpp.html">File plasmaanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.cpp.html#definition-src-animation-plasmaanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/plasmaanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_plasmaanimation.cpp.html">Program Listing for File plasmaanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_plasmaanimation.h.html">File plasmaanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.h.html#definition-src-animation-plasmaanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/plasmaanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_plasmaanimation.h.html">Program Listing for File plasmaanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_plasmaanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_point.cpp.html">File point.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.cpp.html#definition-src-core-point-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/point.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_point.cpp.html">Program Listing for File point.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_point.h.html">File point.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.h.html#definition-src-core-point-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/point.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_point.h.html">Program Listing for File point.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_point.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_radialanimation.cpp.html">File radialanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.cpp.html#definition-src-animation-radialanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/radialanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_radialanimation.cpp.html">Program Listing for File radialanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_radialanimation.h.html">File radialanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.h.html#definition-src-animation-radialanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/radialanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_radialanimation.h.html">Program Listing for File radialanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_radialanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_randomanimation.cpp.html">File randomanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.cpp.html#definition-src-animation-randomanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/randomanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_randomanimation.cpp.html">Program Listing for File randomanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_randomanimation.h.html">File randomanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.h.html#definition-src-animation-randomanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/randomanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_randomanimation.h.html">Program Listing for File randomanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_randomanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_section.cpp.html">File section.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.cpp.html#definition-src-core-section-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/section.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_section.cpp.html">Program Listing for File section.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_section.h.html">File section.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.h.html#definition-src-core-section-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/section.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_section.h.html">Program Listing for File section.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_section.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_sectioncuehandler.cpp.html">File sectioncuehandler.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.cpp.html#definition-src-cue-sectioncuehandler-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/sectioncuehandler.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_sectioncuehandler.cpp.html">Program Listing for File sectioncuehandler.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_sectioncuehandler.h.html">File sectioncuehandler.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.h.html#definition-src-cue-sectioncuehandler-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/sectioncuehandler.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_sectioncuehandler.h.html">Program Listing for File sectioncuehandler.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_sectioncuehandler.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_show.cpp.html">File show.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.cpp.html#definition-src-cue-show-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/show.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_show.cpp.html">Program Listing for File show.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_show.h.html">File show.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.h.html#definition-src-cue-show-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/show.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_show.h.html">Program Listing for File show.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_show.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_showcuehandler.cpp.html">File showcuehandler.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.cpp.html#definition-src-cue-showcuehandler-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/showcuehandler.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_showcuehandler.cpp.html">Program Listing for File showcuehandler.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_cue_showcuehandler.h.html">File showcuehandler.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.h.html#definition-src-cue-showcuehandler-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/cue/showcuehandler.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_cue_showcuehandler.h.html">Program Listing for File showcuehandler.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_cue_showcuehandler.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_solidanimation.cpp.html">File solidanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.cpp.html#definition-src-animation-solidanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/solidanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_solidanimation.cpp.html">Program Listing for File solidanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_solidanimation.h.html">File solidanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.h.html#definition-src-animation-solidanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/solidanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_solidanimation.h.html">Program Listing for File solidanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_solidanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_sparkleanimation.cpp.html">File sparkleanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.cpp.html#definition-src-animation-sparkleanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/sparkleanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_sparkleanimation.cpp.html">Program Listing for File sparkleanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_sparkleanimation.h.html">File sparkleanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.h.html#definition-src-animation-sparkleanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/sparkleanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_sparkleanimation.h.html">Program Listing for File sparkleanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_sparkleanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_timer_timer.cpp.html">File timer.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.cpp.html#definition-src-core-timer-timer-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/timer/timer.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_timer_timer.cpp.html">Program Listing for File timer.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_core_timer_timer.h.html">File timer.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.h.html#definition-src-core-timer-timer-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/core/timer/timer.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_core_timer_timer.h.html">Program Listing for File timer.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_core_timer_timer.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_utility.cpp.html">File utility.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.cpp.html#definition-src-utility-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/utility.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_utility.cpp.html">Program Listing for File utility.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_utility.h.html">File utility.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.h.html#definition-src-utility-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/utility.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_utility.h.html">Program Listing for File utility.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_utility.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_waveanimation.cpp.html">File waveanimation.cpp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.cpp.html#definition-src-animation-waveanimation-cpp">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/waveanimation.cpp</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_waveanimation.cpp.html">Program Listing for File waveanimation.cpp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.cpp.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.cpp.html#namespaces">Namespaces</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="file_src_animation_waveanimation.h.html">File waveanimation.h</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.h.html#definition-src-animation-waveanimation-h">Definition (<code class="docutils literal notranslate"><span class="pre">src/animation/waveanimation.h</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="program_listing_file_src_animation_waveanimation.h.html">Program Listing for File waveanimation.h</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.h.html#includes">Includes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.h.html#included-by">Included By</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.h.html#namespaces">Namespaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="file_src_animation_waveanimation.h.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

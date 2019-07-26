@@ -1,0 +1,28 @@
+.. _exhale_class_classPixelMaestro_1_1Section:
+
+Class Section
+=============
+
+- Defined in :ref:`file_src_core_section.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Layer`
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Mirror`
+- :ref:`exhale_struct_structPixelMaestro_1_1Section_1_1Scroll`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Section
+   :members:
+   :protected-members:
+   :undoc-members:

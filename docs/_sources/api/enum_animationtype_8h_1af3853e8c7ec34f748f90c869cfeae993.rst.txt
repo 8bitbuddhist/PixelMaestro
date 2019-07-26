@@ -1,0 +1,13 @@
+.. _exhale_enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993:
+
+Enum AnimationType
+==================
+
+- Defined in :ref:`file_src_animation_animationtype.h`
+
+
+Enum Documentation
+------------------
+
+
+.. doxygenenum:: PixelMaestro::AnimationType

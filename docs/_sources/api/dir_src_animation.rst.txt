@@ -1,0 +1,44 @@
+.. _dir_src_animation:
+
+
+Directory animation
+===================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/animation``
+
+
+Files
+-----
+
+- :ref:`file_src_animation_animation.cpp`
+- :ref:`file_src_animation_animation.h`
+- :ref:`file_src_animation_animationtype.h`
+- :ref:`file_src_animation_blinkanimation.cpp`
+- :ref:`file_src_animation_blinkanimation.h`
+- :ref:`file_src_animation_cycleanimation.cpp`
+- :ref:`file_src_animation_cycleanimation.h`
+- :ref:`file_src_animation_fireanimation.cpp`
+- :ref:`file_src_animation_fireanimation.h`
+- :ref:`file_src_animation_lightninganimation.cpp`
+- :ref:`file_src_animation_lightninganimation.h`
+- :ref:`file_src_animation_mandelbrotanimation.cpp`
+- :ref:`file_src_animation_mandelbrotanimation.h`
+- :ref:`file_src_animation_plasmaanimation.cpp`
+- :ref:`file_src_animation_plasmaanimation.h`
+- :ref:`file_src_animation_radialanimation.cpp`
+- :ref:`file_src_animation_radialanimation.h`
+- :ref:`file_src_animation_randomanimation.cpp`
+- :ref:`file_src_animation_randomanimation.h`
+- :ref:`file_src_animation_solidanimation.cpp`
+- :ref:`file_src_animation_solidanimation.h`
+- :ref:`file_src_animation_sparkleanimation.cpp`
+- :ref:`file_src_animation_sparkleanimation.h`
+- :ref:`file_src_animation_waveanimation.cpp`
+- :ref:`file_src_animation_waveanimation.h`
+
+

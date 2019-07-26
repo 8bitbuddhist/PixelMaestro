@@ -1,0 +1,33 @@
+
+.. _program_listing_file_src_animation_sparkleanimation.h:
+
+Program Listing for File sparkleanimation.h
+===========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_sparkleanimation.h>` (``src/animation/sparkleanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef SPARKLEANIMATION_H
+   #define SPARKLEANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace PixelMaestro {
+       class SparkleAnimation : public Animation {
+           public:
+               explicit SparkleAnimation(Section& section);
+               ~SparkleAnimation() = default;
+               uint8_t get_threshold() const;
+               void set_threshold(uint8_t threshold);
+               void map();
+               void update();
+   
+           private:
+               uint8_t threshold_ = 25;
+       };
+   }
+   
+   #endif // SPARKLEANIMATION_H

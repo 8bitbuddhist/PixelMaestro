@@ -1,0 +1,23 @@
+.. _dir_src_core_timer:
+
+
+Directory timer
+===============
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core>` (``src/core``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/core/timer``
+
+
+Files
+-----
+
+- :ref:`file_src_core_timer_animationtimer.cpp`
+- :ref:`file_src_core_timer_animationtimer.h`
+- :ref:`file_src_core_timer_timer.cpp`
+- :ref:`file_src_core_timer_timer.h`
+
+

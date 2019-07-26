@@ -1,0 +1,94 @@
+
+.. _program_listing_file_src_animation_animation.h:
+
+Program Listing for File animation.h
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_animation.h>` (``src/animation/animation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * Animation - Base class for rendering Animations on a Section.
+    */
+   
+   #ifndef ANIMATION_H
+   #define ANIMATION_H
+   
+   #include <stdint.h>
+   #include "animationtype.h"
+   #include "../core/colors.h"
+   #include "../core/palette.h"
+   #include "../core/point.h"
+   #include "../core/section.h"
+   #include "../core/timer/animationtimer.h"
+   
+   namespace PixelMaestro {
+       class AnimationTimer;
+       class Section;
+       class Animation {
+           public:
+   
+               enum class Orientation : uint8_t {
+                   Horizontal,
+                   Vertical,
+                   HorizontalFlipped,
+                   VerticalFlipped
+               };
+   
+               explicit Animation(Section& section);
+               virtual ~Animation();
+               Point& get_center() const;
+               uint8_t get_cycle_index() const;
+               bool get_fade() const;
+               Orientation get_orientation() const;
+               Palette* get_palette() const;
+               bool get_reverse() const;
+               Section& get_section() const;
+               AnimationTimer* get_timer() const;
+               AnimationType get_type() const;
+               virtual void map() = 0;
+               void rebuild_map();
+               void set_cycle_index(uint8_t index);
+               void set_fade(bool fade);
+               void set_map_color_index(uint16_t x, uint16_t y, uint8_t color_index);
+               void set_center(uint16_t x, uint16_t y);
+               void set_orientation(Orientation orientation);
+               void set_palette(Palette& palette);
+               void set_reverse(bool reverse);
+               AnimationTimer& set_timer(uint16_t speed, uint16_t delay = 0);
+               bool update(const uint32_t& current_time);
+   
+           protected:
+               Point center_;
+   
+               uint8_t cycle_index_ = 0;
+   
+               Point dimensions_;
+   
+               bool fade_ = true;
+   
+               bool initialized_ = false;
+   
+               uint8_t** map_ = nullptr;
+   
+               Orientation orientation_ = Orientation::Horizontal;
+   
+               Palette* palette_ = nullptr;
+   
+               bool reverse_ = false;
+   
+               Section& section_;
+   
+               AnimationTimer* timer_ = nullptr;
+   
+               AnimationType type_ = AnimationType::Solid;
+   
+               virtual void update() = 0;
+               void update_cycle(uint8_t min, uint8_t max);
+       };
+   }
+   
+   #endif // ANIMATION_H

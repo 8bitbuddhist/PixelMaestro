@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestro_1_1Canvas:
+
+Class Canvas
+============
+
+- Defined in :ref:`file_src_canvas_canvas.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Canvas
+   :members:
+   :protected-members:
+   :undoc-members:

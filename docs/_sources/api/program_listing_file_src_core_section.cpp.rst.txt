@@ -1,0 +1,463 @@
+
+.. _program_listing_file_src_core_section.cpp:
+
+Program Listing for File section.cpp
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_section.cpp>` (``src/core/section.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+       Section.cpp - Class for controlling multiple Pixels.
+       Requires Pixel and Colors classes.
+   */
+   
+   #include "../animation/blinkanimation.h"
+   #include "../animation/cycleanimation.h"
+   #include "../animation/fireanimation.h"
+   #include "../animation/lightninganimation.h"
+   #include "../animation/mandelbrotanimation.h"
+   #include "../animation/plasmaanimation.h"
+   #include "../animation/radialanimation.h"
+   #include "../animation/randomanimation.h"
+   #include "../animation/solidanimation.h"
+   #include "../animation/sparkleanimation.h"
+   #include "../animation/waveanimation.h"
+   #include "../canvas/canvas.h"
+   #include "../utility.h"
+   #include "colors.h"
+   #include "pixel.h"
+   #include "section.h"
+   
+   namespace PixelMaestro {
+   
+       Section::Section() : Section(0, 0) { }
+   
+       Section::Section(uint16_t x, uint16_t y, Section* parent) {
+           set_dimensions(x, y);
+           parent_section_ = parent;
+       }
+   
+       Animation* Section::get_animation() const {
+           return animation_;
+       }
+   
+       uint8_t Section::get_brightness() const {
+           return brightness_ * 255;
+       }
+   
+       Canvas* Section::get_canvas() const {
+           return canvas_;
+       }
+   
+       Point& Section::get_dimensions() const {
+           return const_cast<Point&>(dimensions_);
+       }
+   
+       Maestro& Section::get_maestro() const {
+           return *maestro_;
+       }
+   
+       Section::Layer* Section::get_layer() const {
+           return layer_;
+       }
+   
+       Section::Mirror* Section::get_mirror() const {
+           return mirror_;
+       }
+   
+       Point& Section::get_offset() {
+           return offset_;
+       }
+   
+       Section* Section::get_parent_section() const {
+           return parent_section_;
+       }
+   
+       Pixel& Section::get_pixel(uint16_t x, uint16_t y) const {
+           return pixels_[dimensions_.get_inline_index(x, y)];
+       }
+   
+       Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color) {
+   
+           if (!dimensions_.in_bounds(x, y)) return Colors::RGB(0, 0, 0);
+   
+           // Adjust coordinates based on offset
+           uint16_t offset_x = (x + offset_.x) % dimensions_.x;
+           uint16_t offset_y = (y + offset_.y) % dimensions_.y;
+   
+           // If mirroring is enabled, mirror across the axes.
+           if (mirror_ != nullptr) {
+               if (mirror_->x) {
+                   if (offset_y > mirror_->mid_y) {
+                       offset_y = mirror_->mid_y - (offset_y - mirror_->mid_y);
+                   }
+               }
+   
+               if (mirror_->y) {
+                   if (offset_x > mirror_->mid_x) {
+                       offset_x = mirror_->mid_x - (offset_x - mirror_->mid_x);
+                   }
+               }
+           }
+   
+           Colors::RGB final_color;
+   
+           // If we have a Canvas and it returns a color, use that color instead of the Pixel's actual color.
+           if (canvas_ != nullptr) {
+               Colors::RGB* canvas_color = canvas_->get_pixel_color(offset_x, offset_y);
+               if (canvas_color != nullptr) {
+                   final_color = *canvas_color;
+               }
+               else {
+                   final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+               }
+           }
+           else {
+               final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+           }
+   
+           /*
+            * If this Section a Layer, combine this Pixel's color with its parent Pixel's color.
+            * This is done recursively, with each Layer building on top of its parent Section.
+            * We check both the parent Section and Layer to ensure colors are layered correctly.
+            */
+           if (parent_section_ != nullptr && base_color != nullptr) {
+               final_color = Colors::mix_colors(
+               *base_color,
+               final_color,
+               parent_section_->get_layer()->mix_mode,
+               parent_section_->get_layer()->alpha);
+           }
+   
+           // If this Section has a Layer, merge in the Layer's color output.
+           if (layer_ != nullptr) {
+               final_color = layer_->section->get_pixel_color(x, y, &final_color);
+           }
+   
+           // Return the final color after applying brightness
+           if (brightness_ == 1.0F) {
+               return final_color;
+           }
+           else {
+               return final_color * brightness_;
+           }
+       }
+   
+       Section::Scroll* Section::get_scroll() const {
+           return scroll_;
+       }
+   
+       void Section::remove_animation(bool clear_pixels) {
+           delete animation_;
+           animation_ = nullptr;
+   
+           // Reset Pixel colors
+           if (clear_pixels) {
+               for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+                   pixels_[pixel].clear();
+               }
+           }
+       }
+   
+       void Section::remove_canvas() {
+           delete canvas_;
+           canvas_ = nullptr;
+       }
+   
+       void Section::remove_layer() {
+           delete layer_;
+           layer_ = nullptr;
+       }
+   
+       void Section::remove_scroll() {
+           delete scroll_;
+           scroll_ = nullptr;
+       }
+   
+       Animation& Section::set_animation(AnimationType animation_type, bool preserve_settings) {
+           Animation* new_animation = nullptr;
+           switch(animation_type) {
+               case AnimationType::Blink:
+                   new_animation = new BlinkAnimation(*this);
+                   break;
+               case AnimationType::Cycle:
+                   new_animation = new CycleAnimation(*this);
+                   break;
+               case AnimationType::Fire:
+                   new_animation = new FireAnimation(*this);
+                   break;
+               case AnimationType::Lightning:
+                   new_animation = new LightningAnimation(*this);
+                   break;
+               case AnimationType::Mandelbrot:
+                   new_animation = new MandelbrotAnimation(*this);
+                   break;
+               case AnimationType::Plasma:
+                   new_animation = new PlasmaAnimation(*this);
+                   break;
+               case AnimationType::Radial:
+                   new_animation = new RadialAnimation(*this);
+                   break;
+               case AnimationType::Random:
+                   new_animation = new RandomAnimation(*this);
+                   break;
+               case AnimationType::Solid:
+                   new_animation = new SolidAnimation(*this);
+                   break;
+               case AnimationType::Sparkle:
+                   new_animation = new SparkleAnimation(*this);
+                   break;
+               case AnimationType::Wave:
+                   new_animation = new WaveAnimation(*this);
+                   break;
+           }
+   
+           /*
+            * Check for an existing Animation.
+            * If one exists and preserve_settings is true, copy the old Animation's settings to the new Animation.
+            */
+           if (this->animation_ != nullptr) {
+               if (preserve_settings) {
+                   new_animation->set_center(this->animation_->get_center().x, this->animation_->get_center().y);
+                   new_animation->set_palette(*this->animation_->get_palette());
+                   new_animation->set_cycle_index(this->animation_->get_cycle_index());
+                   new_animation->set_fade(this->animation_->get_fade());
+                   new_animation->set_orientation(this->animation_->get_orientation());
+                   new_animation->set_reverse(this->animation_->get_reverse());
+   
+                   if (this->animation_->get_timer() != nullptr) {
+                       new_animation->set_timer(this->animation_->get_timer()->get_interval(), this->animation_->get_timer()->get_delay());
+                   }
+               }
+               remove_animation(false);
+           }
+   
+           this->animation_ = new_animation;
+           return *animation_;
+       }
+   
+       void Section::set_brightness(uint8_t brightness) {
+           this->brightness_ = static_cast<float>(brightness / static_cast<float>(255));
+       }
+   
+       Canvas& Section::set_canvas(uint16_t num_frames) {
+           remove_canvas();
+           canvas_ = new Canvas(*this, num_frames);
+           return *canvas_;
+       }
+   
+       void Section::set_dimensions(uint16_t x, uint16_t y) {
+           dimensions_.x = x;
+           dimensions_.y = y;
+   
+           // Resize the Pixel grid
+           delete [] pixels_;
+           pixels_ = new Pixel[dimensions_.size()];
+   
+           // Resize the Animation
+           if (animation_ != nullptr) {
+               animation_->rebuild_map();
+           }
+   
+           // Resize the Canvas
+           if (canvas_ != nullptr) {
+               canvas_->initialize();
+           }
+   
+           // Resize the Layer
+           if (layer_ != nullptr) {
+               layer_->section->set_dimensions(dimensions_.x, dimensions_.y);
+           }
+   
+           // If mirroring is enabled, recalculate the midway points
+           if (mirror_ != nullptr) {
+               mirror_->set(mirror_->x, mirror_->y, this->dimensions_);
+           }
+       }
+   
+       Section::Layer& Section::set_layer(Colors::MixMode mix_mode, uint8_t alpha) {
+           if (layer_ == nullptr) {
+               layer_ = new Layer(*this, mix_mode, alpha);
+           }
+           else {
+               layer_->mix_mode = mix_mode;
+               layer_->alpha = alpha;
+           }
+   
+           return *layer_;
+       }
+   
+       void Section::set_maestro(Maestro& maestro) {
+           this->maestro_ = &maestro;
+       }
+   
+       Section::Mirror* Section::set_mirror(bool x, bool y) {
+           if (x == false && y == false) {
+               delete mirror_;
+               mirror_ = nullptr;
+           }
+           else {
+               if (mirror_ == nullptr) {
+                   mirror_ = new Mirror();
+               }
+   
+               mirror_->set(x, y, this->dimensions_);
+           }
+   
+           return mirror_;
+       }
+   
+       Point& Section::set_offset(uint16_t x, uint16_t y) {
+           offset_.set(x, y);
+           return offset_;
+       }
+   
+       void Section::set_pixel_color(uint16_t x, uint16_t y, const Colors::RGB& color) {
+           // Only continue if the Pixel is within the bounds of the array.
+           if (dimensions_.in_bounds(x, y)) {
+               pixels_[dimensions_.get_inline_index(x, y)].set_next_color(color, step_count_);
+           }
+       }
+   
+       Section::Scroll& Section::set_scroll(uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
+           if (scroll_ == nullptr) {
+               scroll_ = new Scroll();
+           }
+   
+           scroll_->set(maestro_->get_timer().get_interval(), &dimensions_, x, y, reverse_x, reverse_y);
+   
+           return *scroll_;
+       }
+   
+       void Section::set_step_count(uint8_t step_count) {
+           this->step_count_ = step_count;
+       }
+   
+       void Section::sync(const uint32_t &new_time) {
+           if (layer_ != nullptr) {
+               layer_->section->sync(new_time);
+           }
+           if (animation_ != nullptr) {
+               animation_->get_timer()->set_last_time(new_time);
+           }
+           if (canvas_ != nullptr && canvas_->get_frame_timer() != nullptr) {
+               canvas_->get_frame_timer()->set_last_time(new_time);
+           }
+           if (scroll_ != nullptr) {
+               if (scroll_->timer_x != nullptr) scroll_->timer_x->set_last_time(new_time);
+               if (scroll_->timer_y != nullptr) scroll_->timer_y->set_last_time(new_time);
+           }
+       }
+   
+       void Section::update(const uint32_t& current_time) {
+   
+           /*
+            * First, update the Animation and Canvas. These set each Pixel's color output directly.
+            * Next, update any post-processing effects. For now this is just Scroll.
+            * Finally, update the Layer.
+            */
+           if (animation_ != nullptr) {
+               animation_->update(current_time);
+           }
+   
+           if (canvas_ != nullptr) {
+               canvas_->update(current_time);
+           }
+   
+   #ifndef PIXEL_DISABLE_FADING
+           if (step_count_ > 0) {
+               for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+                   pixels_[pixel].update(step_count_ == 1);
+               }
+   
+               step_count_--;
+           }
+   #endif
+   
+           if (scroll_ != nullptr) {
+               update_scroll(current_time);
+           }
+   
+           if (layer_ != nullptr) {
+               layer_->section->update(current_time);
+           }
+       }
+   
+       void Section::update_scroll(const uint32_t &current_time) {
+   
+           // Scroll x axis
+           if (scroll_->timer_x != nullptr || scroll_->step_x != 0) {
+               uint16_t x_step = 0;
+               // If a timer is used (scrolling < 1 pixel per update), determine whether it's time to scroll.
+               if (scroll_->timer_x != nullptr) {
+                   if (scroll_->timer_x->update(current_time)) {
+                       x_step = 1;
+                   }
+               }
+               // If a timer is not used (scrolling > 1 pixel per update), apply the scroll amount directly to the offset.
+               else if (scroll_->step_x > 0) {
+                   x_step = scroll_->step_x;
+               }
+   
+               // Check to see if we need to reset the offset
+               if (!scroll_->reverse_x && offset_.x >= dimensions_.x) {
+                   offset_.x = 0;
+               }
+               else if (scroll_->reverse_x && offset_.x == 0) {
+                   offset_.x = dimensions_.x;
+               }
+   
+               // Finally, apply the movement
+               if (!scroll_->reverse_x) {
+                   offset_.x += x_step;
+               }
+               else {
+                   offset_.x -= x_step;
+               }
+           }
+   
+   
+           // Repeat for y axis
+           if (scroll_->timer_y != nullptr || scroll_->step_y != 0) {
+               uint16_t y_step = 0;
+               if (scroll_->timer_y != nullptr) {
+                   if (scroll_->timer_y->update(current_time)) {
+                       y_step = 1;
+                   }
+               }
+               else if (scroll_->step_y > 0) {
+                   y_step = scroll_->step_y;
+               }
+   
+               // Check to see if we need to reset the offset
+               if (!scroll_->reverse_y && offset_.y >= dimensions_.y) {
+                   offset_.y = 0;
+               }
+               else if (scroll_->reverse_y && offset_.y == 0) {
+                   offset_.y = dimensions_.y;
+               }
+   
+               // Finally, apply the movement
+               if (!scroll_->reverse_y) {
+                   offset_.y += y_step;
+               }
+               else {
+                   offset_.y -= y_step;
+               }
+           }
+       }
+   
+       Section::~Section() {
+           remove_animation(false);
+           remove_canvas();
+           remove_layer();
+           remove_scroll();
+   
+           delete mirror_;
+           delete [] pixels_;
+       }
+   }

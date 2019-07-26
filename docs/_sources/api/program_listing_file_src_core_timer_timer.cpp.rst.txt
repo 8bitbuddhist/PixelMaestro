@@ -1,0 +1,60 @@
+
+.. _program_listing_file_src_core_timer_timer.cpp:
+
+Program Listing for File timer.cpp
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_timer_timer.cpp>` (``src/core/timer/timer.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * Timer - Class for managing time-sensitive actions.
+    */
+   
+   #include "timer.h"
+   
+   namespace PixelMaestro {
+       Timer::Timer(uint16_t interval) {
+           set_interval(interval);
+       }
+   
+       uint16_t Timer::get_interval() const {
+           return interval_;
+       }
+   
+       uint32_t Timer::get_last_time() const {
+           return last_time_;
+       }
+   
+       bool Timer::get_running() const {
+           return running_;
+       }
+   
+       void Timer::set_interval(uint16_t interval) {
+           this->interval_ = interval;
+       }
+   
+       void Timer::set_last_time(uint32_t last_time) {
+           this->last_time_ = last_time;
+       }
+   
+       void Timer::start() {
+           running_ = true;
+       }
+   
+       void Timer::stop() {
+           running_ = false;
+       }
+   
+       bool Timer::update(const uint32_t& current_time) {
+           if (running_ && ((current_time - last_time_) >= interval_)) {
+               last_time_ = current_time;
+               return true;
+           }
+   
+           return false;
+       }
+   }

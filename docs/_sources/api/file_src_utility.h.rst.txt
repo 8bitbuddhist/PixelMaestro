@@ -1,0 +1,79 @@
+
+.. _file_src_utility.h:
+
+File utility.h
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/utility.h``)
+------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_utility.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``stdint.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_core_section.h`
+
+- :ref:`file_src_animation_fireanimation.cpp`
+
+- :ref:`file_src_animation_lightninganimation.cpp`
+
+- :ref:`file_src_animation_mandelbrotanimation.cpp`
+
+- :ref:`file_src_animation_randomanimation.cpp`
+
+- :ref:`file_src_animation_sparkleanimation.cpp`
+
+- :ref:`file_src_canvas_canvas.cpp`
+
+- :ref:`file_src_core_colors.cpp`
+
+- :ref:`file_src_core_maestro.cpp`
+
+- :ref:`file_src_core_pixel.cpp`
+
+- :ref:`file_src_core_section.cpp`
+
+- :ref:`file_src_utility.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestro_1_1Utility`
+

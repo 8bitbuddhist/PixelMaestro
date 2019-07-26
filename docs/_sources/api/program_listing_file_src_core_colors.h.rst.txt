@@ -1,0 +1,90 @@
+
+.. _program_listing_file_src_core_colors.h:
+
+Program Listing for File colors.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_colors.h>` (``src/core/colors.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+       Colors.cpp - Color handling utilities.
+   */
+   
+   #ifndef COLORS_H
+   #define COLORS_H
+   
+   // When compiling for Windows, Colors::RGB conflicts with the Win32 RGB macro
+   #if defined(_WIN32) && defined(RGB)
+       #undef RGB
+   #endif
+   
+   #include <stdint.h>
+   
+   namespace PixelMaestro {
+       class Colors {
+           public:
+               struct RGB {
+                   uint8_t r;
+   
+                   uint8_t g;
+   
+                   uint8_t b;
+   
+                   RGB(uint8_t red = 0, uint8_t green = 0, uint8_t blue = 0) {
+                       this->r = red;
+                       this->g = green;
+                       this->b = blue;
+                   }
+   
+                   RGB(const RGB& other) {
+                       this->r = other.r;
+                       this->g = other.g;
+                       this->b = other.b;
+                   }
+   
+                   void operator=(RGB color_two) {
+                       r = color_two.r;
+                       g = color_two.g;
+                       b = color_two.b;
+                   }
+   
+                   bool operator==(RGB color_two) const {
+                       return r == color_two.r && g == color_two.g && b == color_two.b;
+                   }
+   
+                   bool operator!=(RGB color_two) const {
+                       return !operator==(color_two);
+                   }
+   
+                   RGB operator*(float multiplier) const {
+                       return {
+                           (uint8_t)(r * multiplier),
+                           (uint8_t)(g * multiplier),
+                           (uint8_t)(b * multiplier)
+                       };
+                   }
+               };
+   
+               enum class MixMode : uint8_t {
+                   None,
+   
+                   Alpha,
+   
+                   Multiply,
+   
+                   Overlay
+               };
+   
+               static void generate_comet(RGB* array, uint8_t array_size, RGB& start_color, RGB& end_color, uint8_t comet_start, uint8_t comet_length);
+               static RGB generate_random_color();
+               static void generate_random_color_array(RGB* array, uint8_t num_colors);
+               static void generate_scaling_color_array(RGB* array, RGB& base_color, RGB& target_color, uint8_t num_colors, bool mirror = false);
+               static RGB mix_colors(const RGB& color_one, const RGB& color_two, MixMode mode, uint8_t alpha = 0);
+       };
+   }
+   
+   #endif // COLORS_H

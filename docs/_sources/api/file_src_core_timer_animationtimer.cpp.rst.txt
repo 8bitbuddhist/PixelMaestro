@@ -1,0 +1,44 @@
+
+.. _file_src_core_timer_animationtimer.cpp:
+
+File animationtimer.cpp
+=======================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core_timer>` (``src/core/timer``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/core/timer/animationtimer.cpp``)
+--------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_core_timer_animationtimer.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``animationtimer.h`` (:ref:`file_src_core_timer_animationtimer.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

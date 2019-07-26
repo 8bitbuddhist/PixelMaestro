@@ -1,0 +1,825 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class Animation &mdash; PixelMaestro 2.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class AnimationCueHandler" href="classPixelMaestro_1_1AnimationCueHandler.html" />
+    <link rel="prev" title="Struct Section::Scroll" href="structPixelMaestro_1_1Section_1_1Scroll.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#faq">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#core-concepts">Core Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-section">What’s a Section?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-maestro">What’s a Maestro?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#using-pixelmaestro">Using PixelMaestro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#sample-sketch">Sample Sketch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#primary-components">Primary Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#secondary-components">Secondary Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Maestros.html">Maestros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-maestro">Creating a Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#updating-the-maestro">Updating the Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#changing-the-refresh-interval">Changing the Refresh Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#interacting-with-sections">Interacting with Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#setting-a-global-brightness-level">Setting a Global Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#synchronizing-components">Synchronizing Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Sections.html">Sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#creating-a-section">Creating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#updating-a-section">Updating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#interacting-with-the-pixel-grid">Interacting With the Pixel Grid</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#setting-a-pixel-s-color">Setting a Pixel’s Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#retrieving-a-pixel-s-color">Retrieving a Pixel’s Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#animating-a-section">Animating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#displaying-custom-shapes-and-patterns">Displaying Custom Shapes and Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#setting-a-brightness-level">Setting a Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Points.html">Points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#creating-a-point">Creating a Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Points.html#coordinates-versus-dimensions">Coordinates Versus Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#other-methods">Other Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Pixels.html">Pixels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#creating-pixels">Creating Pixels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#how-pixels-work">How Pixels Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#performance-options">Performance Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#disabling-fading">Disabling Fading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#enabling-accurate-fading">Enabling Accurate Fading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Colors.html">Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#creating-colors">Creating Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#mixing-colors">Mixing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#sample-colors">Sample Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Palettes.html">Palettes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#creating-a-palette">Creating a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#using-a-palette">Using a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#changing-colors">Changing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#retrieving-colors">Retrieving Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Animations.html">Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#animation-types">Animation Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#creating-an-animation">Creating an Animation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#animation-cycles">Animation Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-the-color-palette">Setting the Color Palette</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-additional-options">Setting Additional Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#setting-the-orientation">Setting the Orientation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-animation-timing">Changing the Animation Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#toggling-fading">Toggling Fading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-center">Changing the Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#how-animations-work">How Animations Work</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvases.html">Canvases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#creating-a-canvas">Creating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#setting-the-palette">Setting the Palette</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#animating-a-canvas">Animating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#frames">Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#switching-frames">Switching Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#drawing-shapes">Drawing Shapes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#selecting-a-color">Selecting a Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#lines">Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#points">Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#rectangles">Rectangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#text">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#triangles">Triangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#clearing-the-canvas">Clearing the Canvas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Cues.html">Cues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#initializing-the-cuecontroller">Initializing the CueController</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#setting-the-buffer-size">Setting the Buffer Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#enabling-cuehandlers">Enabling CueHandlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#creating-cues">Creating Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#running-cues">Running Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#blocking-cues">Blocking Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#structure">Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Shows.html">Shows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#adding-events">Adding Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#timing-modes">Timing Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#looping">Looping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Timers.html">Timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#creating-a-timer">Creating a Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#changing-the-interval">Changing the Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#starting-and-stopping-a-timer">Starting and Stopping a Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="root.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="root.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespace_PixelMaestro.html">Namespace PixelMaestro</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="root.html#classes-and-structs">Classes and Structs</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Colors_1_1RGB.html">Struct Colors::RGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1CueController_1_1BlockedCue.html">Struct CueController::BlockedCue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Layer.html">Struct Section::Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Mirror.html">Struct Section::Mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Scroll.html">Struct Section::Scroll</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Class Animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationCueHandler.html">Class AnimationCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationTimer.html">Class AnimationTimer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1BlinkAnimation.html">Class BlinkAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Canvas.html">Class Canvas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CanvasCueHandler.html">Class CanvasCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ColorPresets.html">Class ColorPresets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Colors.html">Class Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CueController.html">Class CueController</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html">Class CueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CycleAnimation.html">Class CycleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Event.html">Class Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FireAnimation.html">Class FireAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FloatByteConvert.html">Class FloatByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font.html">Class Font</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font5x8.html">Class Font5x8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1IntByteConvert.html">Class IntByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1LightningAnimation.html">Class LightningAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Maestro.html">Class Maestro</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MaestroCueHandler.html">Class MaestroCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MandelbrotAnimation.html">Class MandelbrotAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Palette.html">Class Palette</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Pixel.html">Class Pixel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1PlasmaAnimation.html">Class PlasmaAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Point.html">Class Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RadialAnimation.html">Class RadialAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RandomAnimation.html">Class RandomAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Section.html">Class Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SectionCueHandler.html">Class SectionCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Show.html">Class Show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ShowCueHandler.html">Class ShowCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SolidAnimation.html">Class SolidAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html">Enum AnimationType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#unions">Unions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html">Union FloatByteConvert::Converter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="root.html">API Reference</a> &raquo;</li>
+        
+      <li>Class Animation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/classPixelMaestro_1_1Animation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-animation">
+<span id="exhale-class-classpixelmaestro-1-1animation"></span><h1>Class Animation<a class="headerlink" href="#class-animation" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_src_animation_animation.h.html#file-src-animation-animation-h"><span class="std std-ref">File animation.h</span></a></p></li>
+</ul>
+<div class="section" id="inheritance-relationships">
+<h2>Inheritance Relationships<a class="headerlink" href="#inheritance-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="derived-types">
+<h3>Derived Types<a class="headerlink" href="#derived-types" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::BlinkAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1BlinkAnimation.html#exhale-class-classpixelmaestro-1-1blinkanimation"><span class="std std-ref">Class BlinkAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::CycleAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1CycleAnimation.html#exhale-class-classpixelmaestro-1-1cycleanimation"><span class="std std-ref">Class CycleAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::FireAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1FireAnimation.html#exhale-class-classpixelmaestro-1-1fireanimation"><span class="std std-ref">Class FireAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::LightningAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1LightningAnimation.html#exhale-class-classpixelmaestro-1-1lightninganimation"><span class="std std-ref">Class LightningAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::MandelbrotAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1MandelbrotAnimation.html#exhale-class-classpixelmaestro-1-1mandelbrotanimation"><span class="std std-ref">Class MandelbrotAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::PlasmaAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1PlasmaAnimation.html#exhale-class-classpixelmaestro-1-1plasmaanimation"><span class="std std-ref">Class PlasmaAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::RadialAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1RadialAnimation.html#exhale-class-classpixelmaestro-1-1radialanimation"><span class="std std-ref">Class RadialAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::RandomAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1RandomAnimation.html#exhale-class-classpixelmaestro-1-1randomanimation"><span class="std std-ref">Class RandomAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::SolidAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1SolidAnimation.html#exhale-class-classpixelmaestro-1-1solidanimation"><span class="std std-ref">Class SolidAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::SparkleAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html#exhale-class-classpixelmaestro-1-1sparkleanimation"><span class="std std-ref">Class SparkleAnimation</span></a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">public</span> <span class="pre">PixelMaestro::WaveAnimation</span></code> (<a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html#exhale-class-classpixelmaestro-1-1waveanimation"><span class="std std-ref">Class WaveAnimation</span></a>)</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N12PixelMaestro9AnimationE">
+<span id="_CPPv3N12PixelMaestro9AnimationE"></span><span id="_CPPv2N12PixelMaestro9AnimationE"></span><span id="PixelMaestro::Animation"></span><span class="target" id="classPixelMaestro_1_1Animation"></span><em class="property">class </em><code class="sig-name descname">Animation</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9AnimationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Subclassed by <a class="reference internal" href="classPixelMaestro_1_1BlinkAnimation.html#classPixelMaestro_1_1BlinkAnimation"><span class="std std-ref">PixelMaestro::BlinkAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1CycleAnimation.html#classPixelMaestro_1_1CycleAnimation"><span class="std std-ref">PixelMaestro::CycleAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1FireAnimation.html#classPixelMaestro_1_1FireAnimation"><span class="std std-ref">PixelMaestro::FireAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1LightningAnimation.html#classPixelMaestro_1_1LightningAnimation"><span class="std std-ref">PixelMaestro::LightningAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1MandelbrotAnimation.html#classPixelMaestro_1_1MandelbrotAnimation"><span class="std std-ref">PixelMaestro::MandelbrotAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1PlasmaAnimation.html#classPixelMaestro_1_1PlasmaAnimation"><span class="std std-ref">PixelMaestro::PlasmaAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1RadialAnimation.html#classPixelMaestro_1_1RadialAnimation"><span class="std std-ref">PixelMaestro::RadialAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1RandomAnimation.html#classPixelMaestro_1_1RandomAnimation"><span class="std std-ref">PixelMaestro::RandomAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1SolidAnimation.html#classPixelMaestro_1_1SolidAnimation"><span class="std std-ref">PixelMaestro::SolidAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html#classPixelMaestro_1_1SparkleAnimation"><span class="std std-ref">PixelMaestro::SparkleAnimation</span></a>, <a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html#classPixelMaestro_1_1WaveAnimation"><span class="std std-ref">PixelMaestro::WaveAnimation</span></a></p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="enum">
+<dt id="_CPPv4N12PixelMaestro9Animation11OrientationE">
+<span id="_CPPv3N12PixelMaestro9Animation11OrientationE"></span><span id="_CPPv2N12PixelMaestro9Animation11OrientationE"></span><span class="target" id="classPixelMaestro_1_1Animation_1a3c36faf9d6fb236a454c6e36420c5942"></span><em class="property">enum </em><code class="sig-name descname">Orientation</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation11OrientationE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The orientation of the animation. Does not affect animations that don’t have a specific direction (e.g. <a class="reference internal" href="classPixelMaestro_1_1CycleAnimation.html#classPixelMaestro_1_1CycleAnimation"><span class="std std-ref">CycleAnimation</span></a>). </p>
+<p><em>Values:</em></p>
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro9Animation10HorizontalE">
+<span id="_CPPv3N12PixelMaestro9Animation10HorizontalE"></span><span id="_CPPv2N12PixelMaestro9Animation10HorizontalE"></span><span class="target" id="classPixelMaestro_1_1Animation_1a3c36faf9d6fb236a454c6e36420c5942ac1b5fa03ecdb95d4a45dd1c40b02527f"></span><code class="sig-name descname">Horizontal</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation10HorizontalE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro9Animation8VerticalE">
+<span id="_CPPv3N12PixelMaestro9Animation8VerticalE"></span><span id="_CPPv2N12PixelMaestro9Animation8VerticalE"></span><span class="target" id="classPixelMaestro_1_1Animation_1a3c36faf9d6fb236a454c6e36420c5942a06ce2a25e5d12c166a36f654dbea6012"></span><code class="sig-name descname">Vertical</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation8VerticalE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro9Animation17HorizontalFlippedE">
+<span id="_CPPv3N12PixelMaestro9Animation17HorizontalFlippedE"></span><span id="_CPPv2N12PixelMaestro9Animation17HorizontalFlippedE"></span><span class="target" id="classPixelMaestro_1_1Animation_1a3c36faf9d6fb236a454c6e36420c5942a5f734b708dbe685f8e671be325165797"></span><code class="sig-name descname">HorizontalFlipped</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation17HorizontalFlippedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro9Animation15VerticalFlippedE">
+<span id="_CPPv3N12PixelMaestro9Animation15VerticalFlippedE"></span><span id="_CPPv2N12PixelMaestro9Animation15VerticalFlippedE"></span><span class="target" id="classPixelMaestro_1_1Animation_1a3c36faf9d6fb236a454c6e36420c5942a735cece8b9c72c8d5ebb5b6c92b3714d"></span><code class="sig-name descname">VerticalFlipped</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation15VerticalFlippedE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation9AnimationER7Section">
+<span id="_CPPv3N12PixelMaestro9Animation9AnimationER7Section"></span><span id="_CPPv2N12PixelMaestro9Animation9AnimationER7Section"></span><span id="PixelMaestro::Animation::Animation__SectionR"></span><span class="target" id="classPixelMaestro_1_1Animation_1a5ff6de6334e70f7b867e0a9b3eb822da"></span><code class="sig-name descname">Animation</code><span class="sig-paren">(</span><a class="reference internal" href="classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7SectionE" title="PixelMaestro::Section">Section</a> &amp;<em>section</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation9AnimationER7Section" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructor. Initializes the timer and map. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">section</span></code>: The <a class="reference internal" href="classPixelMaestro_1_1Section.html#classPixelMaestro_1_1Section"><span class="std std-ref">Section</span></a> that this animation will render in. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9AnimationD0Ev">
+<span id="_CPPv3N12PixelMaestro9AnimationD0Ev"></span><span id="_CPPv2N12PixelMaestro9AnimationD0Ev"></span><span id="PixelMaestro::Animation::~Animation"></span><span class="target" id="classPixelMaestro_1_1Animation_1a853a831d4776695f1331530f1008c43b"></span><code class="sig-name descname">~Animation</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9AnimationD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation10get_centerEv">
+<span id="_CPPv3NK12PixelMaestro9Animation10get_centerEv"></span><span id="_CPPv2NK12PixelMaestro9Animation10get_centerEv"></span><span id="PixelMaestro::Animation::get_centerC"></span><span class="target" id="classPixelMaestro_1_1Animation_1a45e6afe20603f2e026b6c402fa65b16d"></span><a class="reference internal" href="classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5PointE" title="PixelMaestro::Point">Point</a> &amp;<code class="sig-name descname">get_center</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation10get_centerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>’s center. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p><a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>’s center. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation15get_cycle_indexEv">
+<span id="_CPPv3NK12PixelMaestro9Animation15get_cycle_indexEv"></span><span id="_CPPv2NK12PixelMaestro9Animation15get_cycle_indexEv"></span><span id="PixelMaestro::Animation::get_cycle_indexC"></span><span class="target" id="classPixelMaestro_1_1Animation_1a7fe415dc64505da8d440d31ffd80fa12"></span>uint8_t <code class="sig-name descname">get_cycle_index</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation15get_cycle_indexEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the current cycle index.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Cycle index. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation8get_fadeEv">
+<span id="_CPPv3NK12PixelMaestro9Animation8get_fadeEv"></span><span id="_CPPv2NK12PixelMaestro9Animation8get_fadeEv"></span><span id="PixelMaestro::Animation::get_fadeC"></span><span class="target" id="classPixelMaestro_1_1Animation_1af622dc1966c45bea3435a5532e249ef2"></span>bool <code class="sig-name descname">get_fade</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation8get_fadeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns whether the animation is fading. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if fading. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation15get_orientationEv">
+<span id="_CPPv3NK12PixelMaestro9Animation15get_orientationEv"></span><span id="_CPPv2NK12PixelMaestro9Animation15get_orientationEv"></span><span id="PixelMaestro::Animation::get_orientationC"></span><span class="target" id="classPixelMaestro_1_1Animation_1a6606ce276707a45f570e108926e77fbf"></span><a class="reference internal" href="#_CPPv4N12PixelMaestro9AnimationE" title="PixelMaestro::Animation">Animation</a>::<a class="reference internal" href="#_CPPv4N12PixelMaestro9Animation11OrientationE" title="PixelMaestro::Animation::Orientation">Orientation</a> <code class="sig-name descname">get_orientation</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation15get_orientationEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the animation’s orientation. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p><a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>’s orientation </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation11get_paletteEv">
+<span id="_CPPv3NK12PixelMaestro9Animation11get_paletteEv"></span><span id="_CPPv2NK12PixelMaestro9Animation11get_paletteEv"></span><span id="PixelMaestro::Animation::get_paletteC"></span><span class="target" id="classPixelMaestro_1_1Animation_1ace76772fb88bedec3cb6f1ca103eb794"></span><a class="reference internal" href="classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7PaletteE" title="PixelMaestro::Palette">Palette</a> *<code class="sig-name descname">get_palette</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation11get_paletteEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the color palette. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Color palette. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation11get_reverseEv">
+<span id="_CPPv3NK12PixelMaestro9Animation11get_reverseEv"></span><span id="_CPPv2NK12PixelMaestro9Animation11get_reverseEv"></span><span id="PixelMaestro::Animation::get_reverseC"></span><span class="target" id="classPixelMaestro_1_1Animation_1a05109bbd1eba5cbec89ba5d98e784388"></span>bool <code class="sig-name descname">get_reverse</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation11get_reverseEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns whether the animation is running in reverse.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if running in reverse. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation11get_sectionEv">
+<span id="_CPPv3NK12PixelMaestro9Animation11get_sectionEv"></span><span id="_CPPv2NK12PixelMaestro9Animation11get_sectionEv"></span><span id="PixelMaestro::Animation::get_sectionC"></span><span class="target" id="classPixelMaestro_1_1Animation_1ad2c1a0b87c4608363edea0049e9d37be"></span><a class="reference internal" href="classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7SectionE" title="PixelMaestro::Section">Section</a> &amp;<code class="sig-name descname">get_section</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation11get_sectionEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>’s parent <a class="reference internal" href="classPixelMaestro_1_1Section.html#classPixelMaestro_1_1Section"><span class="std std-ref">Section</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Parent <a class="reference internal" href="classPixelMaestro_1_1Section.html#classPixelMaestro_1_1Section"><span class="std std-ref">Section</span></a>. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation9get_timerEv">
+<span id="_CPPv3NK12PixelMaestro9Animation9get_timerEv"></span><span id="_CPPv2NK12PixelMaestro9Animation9get_timerEv"></span><span id="PixelMaestro::Animation::get_timerC"></span><span class="target" id="classPixelMaestro_1_1Animation_1a5cddf288a1617f807cb99f7c100fe532"></span><a class="reference internal" href="classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimerE" title="PixelMaestro::AnimationTimer">AnimationTimer</a> *<code class="sig-name descname">get_timer</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation9get_timerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the animation’s timer. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p><a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a> timer. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro9Animation8get_typeEv">
+<span id="_CPPv3NK12PixelMaestro9Animation8get_typeEv"></span><span id="_CPPv2NK12PixelMaestro9Animation8get_typeEv"></span><span id="PixelMaestro::Animation::get_typeC"></span><span class="target" id="classPixelMaestro_1_1Animation_1a8ccd062195ed355dc5b987e5f9b6adb3"></span><a class="reference internal" href="enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro13AnimationTypeE" title="PixelMaestro::AnimationType">AnimationType</a> <code class="sig-name descname">get_type</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro9Animation8get_typeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the type of <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p><a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a> type. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation3mapEv">
+<span id="_CPPv3N12PixelMaestro9Animation3mapEv"></span><span id="_CPPv2N12PixelMaestro9Animation3mapEv"></span><span id="PixelMaestro::Animation::map"></span><span class="target" id="classPixelMaestro_1_1Animation_1aeebd0499997782fa9e053766e2575a5b"></span><em class="property">virtual</em> void <code class="sig-name descname">map</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation3mapEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation11rebuild_mapEv">
+<span id="_CPPv3N12PixelMaestro9Animation11rebuild_mapEv"></span><span id="_CPPv2N12PixelMaestro9Animation11rebuild_mapEv"></span><span id="PixelMaestro::Animation::rebuild_map"></span><span class="target" id="classPixelMaestro_1_1Animation_1a93b16fbf16e050219763d70136f92aa5"></span>void <code class="sig-name descname">rebuild_map</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation11rebuild_mapEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Regenerates the color-to-pixel map. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation15set_cycle_indexE7uint8_t">
+<span id="_CPPv3N12PixelMaestro9Animation15set_cycle_indexE7uint8_t"></span><span id="_CPPv2N12PixelMaestro9Animation15set_cycle_indexE7uint8_t"></span><span id="PixelMaestro::Animation::set_cycle_index__uint8_t"></span><span class="target" id="classPixelMaestro_1_1Animation_1a1f43057dbe4853e09d481bfa32be7e4b"></span>void <code class="sig-name descname">set_cycle_index</code><span class="sig-paren">(</span>uint8_t <em>index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation15set_cycle_indexE7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the cycle index to the specified index.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">index</span></code>: New cycle index. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation8set_fadeEb">
+<span id="_CPPv3N12PixelMaestro9Animation8set_fadeEb"></span><span id="_CPPv2N12PixelMaestro9Animation8set_fadeEb"></span><span id="PixelMaestro::Animation::set_fade__b"></span><span class="target" id="classPixelMaestro_1_1Animation_1a29024e0607526e49f526c21fcc402ef5"></span>void <code class="sig-name descname">set_fade</code><span class="sig-paren">(</span>bool <em>fade</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation8set_fadeEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Toggles fading the animation.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">fade</span></code>: If true, fade between cycles. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation19set_map_color_indexE8uint16_t8uint16_t7uint8_t">
+<span id="_CPPv3N12PixelMaestro9Animation19set_map_color_indexE8uint16_t8uint16_t7uint8_t"></span><span id="_CPPv2N12PixelMaestro9Animation19set_map_color_indexE8uint16_t8uint16_t7uint8_t"></span><span id="PixelMaestro::Animation::set_map_color_index__uint16_t.uint16_t.uint8_t"></span><span class="target" id="classPixelMaestro_1_1Animation_1aca08664734413a9f3672741f78e762e4"></span>void <code class="sig-name descname">set_map_color_index</code><span class="sig-paren">(</span>uint16_t <em>x</em>, uint16_t <em>y</em>, uint8_t <em>color_index</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation19set_map_color_indexE8uint16_t8uint16_t7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Assigns the specified <a class="reference internal" href="classPixelMaestro_1_1Pixel.html#classPixelMaestro_1_1Pixel"><span class="std std-ref">Pixel</span></a> to the specified color. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: <a class="reference internal" href="classPixelMaestro_1_1Pixel.html#classPixelMaestro_1_1Pixel"><span class="std std-ref">Pixel</span></a>’s x coordinate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: <a class="reference internal" href="classPixelMaestro_1_1Pixel.html#classPixelMaestro_1_1Pixel"><span class="std std-ref">Pixel</span></a>’s y coordinate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color_index</span></code>: Index of the color to set. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation10set_centerE8uint16_t8uint16_t">
+<span id="_CPPv3N12PixelMaestro9Animation10set_centerE8uint16_t8uint16_t"></span><span id="_CPPv2N12PixelMaestro9Animation10set_centerE8uint16_t8uint16_t"></span><span id="PixelMaestro::Animation::set_center__uint16_t.uint16_t"></span><span class="target" id="classPixelMaestro_1_1Animation_1ad794f60cbfc9a74e5a5d65a776d54dfd"></span>void <code class="sig-name descname">set_center</code><span class="sig-paren">(</span>uint16_t <em>x</em>, uint16_t <em>y</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation10set_centerE8uint16_t8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the center of the <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>. Only applies to certain Animations. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code>: Center along the x axis. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y</span></code>: Center along the y axis. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation15set_orientationE11Orientation">
+<span id="_CPPv3N12PixelMaestro9Animation15set_orientationE11Orientation"></span><span id="_CPPv2N12PixelMaestro9Animation15set_orientationE11Orientation"></span><span id="PixelMaestro::Animation::set_orientation__Orientation"></span><span class="target" id="classPixelMaestro_1_1Animation_1a2e8222e97b3e2be9395b641a0f18be4c"></span>void <code class="sig-name descname">set_orientation</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro9Animation11OrientationE" title="PixelMaestro::Animation::Orientation">Orientation</a> <em>orientation</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation15set_orientationE11Orientation" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the animation’s orientation.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">orientation</span></code>: New orientation. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation11set_paletteER7Palette">
+<span id="_CPPv3N12PixelMaestro9Animation11set_paletteER7Palette"></span><span id="_CPPv2N12PixelMaestro9Animation11set_paletteER7Palette"></span><span id="PixelMaestro::Animation::set_palette__PaletteR"></span><span class="target" id="classPixelMaestro_1_1Animation_1a9b37755b165c28fa7a928328414e15f6"></span>void <code class="sig-name descname">set_palette</code><span class="sig-paren">(</span><a class="reference internal" href="classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7PaletteE" title="PixelMaestro::Palette">Palette</a> &amp;<em>palette</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation11set_paletteER7Palette" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets a new color palette.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">palette</span></code>: New <a class="reference internal" href="classPixelMaestro_1_1Palette.html#classPixelMaestro_1_1Palette"><span class="std std-ref">Palette</span></a>. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation11set_reverseEb">
+<span id="_CPPv3N12PixelMaestro9Animation11set_reverseEb"></span><span id="_CPPv2N12PixelMaestro9Animation11set_reverseEb"></span><span id="PixelMaestro::Animation::set_reverse__b"></span><span class="target" id="classPixelMaestro_1_1Animation_1aee548cc6628123b8f2ed667f778fd520"></span>void <code class="sig-name descname">set_reverse</code><span class="sig-paren">(</span>bool <em>reverse</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation11set_reverseEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets whether to run the animation in reverse.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">reverse</span></code>: If true, run in reverse. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation9set_timerE8uint16_t8uint16_t">
+<span id="_CPPv3N12PixelMaestro9Animation9set_timerE8uint16_t8uint16_t"></span><span id="_CPPv2N12PixelMaestro9Animation9set_timerE8uint16_t8uint16_t"></span><span id="PixelMaestro::Animation::set_timer__uint16_t.uint16_t"></span><span class="target" id="classPixelMaestro_1_1Animation_1a81606152135fe911a5b62ab7cb0bc63e"></span><a class="reference internal" href="classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimerE" title="PixelMaestro::AnimationTimer">AnimationTimer</a> &amp;<code class="sig-name descname">set_timer</code><span class="sig-paren">(</span>uint16_t <em>speed</em>, uint16_t <em>delay</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation9set_timerE8uint16_t8uint16_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the amount of time between animation updates.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">speed</span></code>: Amount of time (in milliseconds) between animation cycles. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">delay</span></code>: Amount of time (in milliseconds) to wait before starting an animation cycle. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation6updateERK8uint32_t">
+<span id="_CPPv3N12PixelMaestro9Animation6updateERK8uint32_t"></span><span id="_CPPv2N12PixelMaestro9Animation6updateERK8uint32_t"></span><span id="PixelMaestro::Animation::update__uint32_tCR"></span><span class="target" id="classPixelMaestro_1_1Animation_1ac4a837b6a06119f0a789e5fdd4ed30bb"></span>bool <code class="sig-name descname">update</code><span class="sig-paren">(</span><em class="property">const</em> uint32_t &amp;<em>current_time</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation6updateERK8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Updates the animation. This checks to see if the animation should update, then calls the derived class’s update method. Finally, it renders the mapped color to each <a class="reference internal" href="classPixelMaestro_1_1Pixel.html#classPixelMaestro_1_1Pixel"><span class="std std-ref">Pixel</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if the update was processed. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">current_time</span></code>: The current runtime. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Functions</p>
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation6updateEv">
+<span id="_CPPv3N12PixelMaestro9Animation6updateEv"></span><span id="_CPPv2N12PixelMaestro9Animation6updateEv"></span><span id="PixelMaestro::Animation::update"></span><span class="target" id="classPixelMaestro_1_1Animation_1a2fb4dac4ebda69669f8a4c333a2edc33"></span><em class="property">virtual</em> void <code class="sig-name descname">update</code><span class="sig-paren">(</span><span class="sig-paren">)</span> = 0<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation6updateEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro9Animation12update_cycleE7uint8_t7uint8_t">
+<span id="_CPPv3N12PixelMaestro9Animation12update_cycleE7uint8_t7uint8_t"></span><span id="_CPPv2N12PixelMaestro9Animation12update_cycleE7uint8_t7uint8_t"></span><span id="PixelMaestro::Animation::update_cycle__uint8_t.uint8_t"></span><span class="target" id="classPixelMaestro_1_1Animation_1aabe116a310e830c1958a1b554d1f732f"></span>void <code class="sig-name descname">update_cycle</code><span class="sig-paren">(</span>uint8_t <em>min</em>, uint8_t <em>max</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation12update_cycleE7uint8_t7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Incremnets the current animation cycle. If reverse_animation_ is true, this decrements the cycle, moving the animation backwards. If the animation reaches the end of its cycle, it will jump back (or forward) to the start (or end).</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">min</span></code>: The minimum possible value of cycle_index_. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">max</span></code>: The maximum possible value of cycle_index_. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Protected Attributes</p>
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation7center_E">
+<span id="_CPPv3N12PixelMaestro9Animation7center_E"></span><span id="_CPPv2N12PixelMaestro9Animation7center_E"></span><span id="PixelMaestro::Animation::center___Point"></span><span class="target" id="classPixelMaestro_1_1Animation_1a4d5d92f7d030ae92d1ed79dab03586cf"></span><a class="reference internal" href="classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5PointE" title="PixelMaestro::Point">Point</a> <code class="sig-name descname">center_</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation7center_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The center of the <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation12cycle_index_E">
+<span id="_CPPv3N12PixelMaestro9Animation12cycle_index_E"></span><span id="_CPPv2N12PixelMaestro9Animation12cycle_index_E"></span><span id="PixelMaestro::Animation::cycle_index___uint8_t"></span><span class="target" id="classPixelMaestro_1_1Animation_1add828e84905e2a6e9841a22124b7511c"></span>uint8_t <code class="sig-name descname">cycle_index_</code> = 0<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation12cycle_index_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The current stage in the animation cycle. Defaults to 0. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation11dimensions_E">
+<span id="_CPPv3N12PixelMaestro9Animation11dimensions_E"></span><span id="_CPPv2N12PixelMaestro9Animation11dimensions_E"></span><span id="PixelMaestro::Animation::dimensions___Point"></span><span class="target" id="classPixelMaestro_1_1Animation_1a5dc49e6170f0998e8f83eb0ee9e5a165"></span><a class="reference internal" href="classPixelMaestro_1_1Point.html#_CPPv4N12PixelMaestro5PointE" title="PixelMaestro::Point">Point</a> <code class="sig-name descname">dimensions_</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation11dimensions_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Stores the current grid size. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation5fade_E">
+<span id="_CPPv3N12PixelMaestro9Animation5fade_E"></span><span id="_CPPv2N12PixelMaestro9Animation5fade_E"></span><span id="PixelMaestro::Animation::fade___b"></span><span class="target" id="classPixelMaestro_1_1Animation_1ae2c231425eb5a3b4f9032e861cf58ae1"></span>bool <code class="sig-name descname">fade_</code> = true<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation5fade_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether to fade between cycles. Defaults to true. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation12initialized_E">
+<span id="_CPPv3N12PixelMaestro9Animation12initialized_E"></span><span id="_CPPv2N12PixelMaestro9Animation12initialized_E"></span><span id="PixelMaestro::Animation::initialized___b"></span><span class="target" id="classPixelMaestro_1_1Animation_1a72e3f5688777c420034bc6cae682349c"></span>bool <code class="sig-name descname">initialized_</code> = false<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation12initialized_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>False until the <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a> has been fully allocated and mapped. Created for <a class="reference internal" href="#classPixelMaestro_1_1Animation_1ad794f60cbfc9a74e5a5d65a776d54dfd"><span class="std std-ref">set_center()</span></a>. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation4map_E">
+<span id="_CPPv3N12PixelMaestro9Animation4map_E"></span><span id="_CPPv2N12PixelMaestro9Animation4map_E"></span><span id="PixelMaestro::Animation::map___uint8_tPP"></span><span class="target" id="classPixelMaestro_1_1Animation_1a50b1cc67dba7ab73c595cf07be8f597e"></span>uint8_t **<code class="sig-name descname">map_</code> = nullptr<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation4map_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Mapping of color palette indices to Pixels. Note: 255 is reserved for the color black. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation12orientation_E">
+<span id="_CPPv3N12PixelMaestro9Animation12orientation_E"></span><span id="_CPPv2N12PixelMaestro9Animation12orientation_E"></span><span id="PixelMaestro::Animation::orientation___Orientation"></span><span class="target" id="classPixelMaestro_1_1Animation_1afb2f9f20005d626dd6f81215741825ea"></span><a class="reference internal" href="#_CPPv4N12PixelMaestro9Animation11OrientationE" title="PixelMaestro::Animation::Orientation">Orientation</a> <code class="sig-name descname">orientation_</code> = <a class="reference internal" href="#_CPPv4N12PixelMaestro9Animation11OrientationE" title="PixelMaestro::Animation::Orientation">Orientation</a>::Horizontal<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation12orientation_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The orientation of the animation. Defaults to HORIZONTAL. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation8palette_E">
+<span id="_CPPv3N12PixelMaestro9Animation8palette_E"></span><span id="_CPPv2N12PixelMaestro9Animation8palette_E"></span><span id="PixelMaestro::Animation::palette___PaletteP"></span><span class="target" id="classPixelMaestro_1_1Animation_1a32e79a8762b4c072bb61b747221bfb48"></span><a class="reference internal" href="classPixelMaestro_1_1Palette.html#_CPPv4N12PixelMaestro7PaletteE" title="PixelMaestro::Palette">Palette</a> *<code class="sig-name descname">palette_</code> = nullptr<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation8palette_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Color palette used in the animation. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation8reverse_E">
+<span id="_CPPv3N12PixelMaestro9Animation8reverse_E"></span><span id="_CPPv2N12PixelMaestro9Animation8reverse_E"></span><span id="PixelMaestro::Animation::reverse___b"></span><span class="target" id="classPixelMaestro_1_1Animation_1a6bd2cec5a70ae1d5795a759a19312bfd"></span>bool <code class="sig-name descname">reverse_</code> = false<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation8reverse_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Whether to animate in reverse. Defaults to false. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation8section_E">
+<span id="_CPPv3N12PixelMaestro9Animation8section_E"></span><span id="_CPPv2N12PixelMaestro9Animation8section_E"></span><span id="PixelMaestro::Animation::section___SectionR"></span><span class="target" id="classPixelMaestro_1_1Animation_1a7796c34eea72ec3344210a5f1691db65"></span><a class="reference internal" href="classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7SectionE" title="PixelMaestro::Section">Section</a> &amp;<code class="sig-name descname">section_</code><a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation8section_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>’s parent <a class="reference internal" href="classPixelMaestro_1_1Section.html#classPixelMaestro_1_1Section"><span class="std std-ref">Section</span></a>. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation6timer_E">
+<span id="_CPPv3N12PixelMaestro9Animation6timer_E"></span><span id="_CPPv2N12PixelMaestro9Animation6timer_E"></span><span id="PixelMaestro::Animation::timer___AnimationTimerP"></span><span class="target" id="classPixelMaestro_1_1Animation_1ab9107134c8bd043ab7ad08c36f169116"></span><a class="reference internal" href="classPixelMaestro_1_1AnimationTimer.html#_CPPv4N12PixelMaestro14AnimationTimerE" title="PixelMaestro::AnimationTimer">AnimationTimer</a> *<code class="sig-name descname">timer_</code> = nullptr<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation6timer_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>’s timer. This is a pointer instead of a local object because we must initialize it after the <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro9Animation5type_E">
+<span id="_CPPv3N12PixelMaestro9Animation5type_E"></span><span id="_CPPv2N12PixelMaestro9Animation5type_E"></span><span id="PixelMaestro::Animation::type___AnimationType"></span><span class="target" id="classPixelMaestro_1_1Animation_1ac38069e7b7741afc76cff69251a44e5c"></span><a class="reference internal" href="enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro13AnimationTypeE" title="PixelMaestro::AnimationType">AnimationType</a> <code class="sig-name descname">type_</code> = <a class="reference internal" href="enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro13AnimationTypeE" title="PixelMaestro::AnimationType">AnimationType</a>::Solid<a class="headerlink" href="#_CPPv4N12PixelMaestro9Animation5type_E" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The type of <a class="reference internal" href="#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>. Gets set in the derived class’ constructor. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classPixelMaestro_1_1AnimationCueHandler.html" class="btn btn-neutral float-right" title="Class AnimationCueHandler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="structPixelMaestro_1_1Section_1_1Scroll.html" class="btn btn-neutral float-left" title="Struct Section::Scroll" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+.. _exhale_struct_structPixelMaestro_1_1CueController_1_1BlockedCue:
+
+Struct CueController::BlockedCue
+================================
+
+- Defined in :ref:`file_src_cue_cuecontroller.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_class_classPixelMaestro_1_1CueController`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: PixelMaestro::CueController::BlockedCue
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,28 @@
+
+.. _program_listing_file_src_animation_randomanimation.h:
+
+Program Listing for File randomanimation.h
+==========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_randomanimation.h>` (``src/animation/randomanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef RANDOMANIMATION_H
+   #define RANDOMANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace PixelMaestro {
+       class RandomAnimation : public Animation {
+           public:
+               explicit RandomAnimation(Section& section);
+               ~RandomAnimation() = default;
+               void map();
+               void update();
+       };
+   }
+   
+   #endif // RANDOMANIMATION_H

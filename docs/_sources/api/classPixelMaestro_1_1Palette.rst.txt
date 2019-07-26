@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestro_1_1Palette:
+
+Class Palette
+=============
+
+- Defined in :ref:`file_src_core_palette.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Palette
+   :members:
+   :protected-members:
+   :undoc-members:

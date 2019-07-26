@@ -1,0 +1,37 @@
+
+.. _program_listing_file_src_animation_plasmaanimation.h:
+
+Program Listing for File plasmaanimation.h
+==========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_plasmaanimation.h>` (``src/animation/plasmaanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef PLASMAANIMATION_H
+   #define PLASMAANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace  PixelMaestro {
+       class PlasmaAnimation : public Animation {
+           public:
+               explicit PlasmaAnimation(Section& section);
+               ~PlasmaAnimation() = default;
+               float get_resolution() const;
+               float get_size() const;
+               void map();
+               void set_resolution(float resolution);
+               void set_size(float size);
+               void update();
+   
+           private:
+               float resolution_ = 32.0;
+   
+               float size_ = 4.0;
+       };
+   }
+   
+   #endif // PLASMAANIMATION_H

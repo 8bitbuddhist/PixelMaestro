@@ -1,0 +1,71 @@
+
+.. _program_listing_file_src_cue_show.h:
+
+Program Listing for File show.h
+===============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_cue_show.h>` (``src/cue/show.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+       Show.cpp - Library for scheduling PixelMaestro Events.
+   */
+   
+   #ifndef SHOW_H
+   #define SHOW_H
+   
+   #include <stdint.h>
+   #include "cuecontroller.h"
+   #include "event.h"
+   
+   using namespace PixelMaestro;
+   
+   namespace PixelMaestro {
+       class CueController;
+       class Show {
+           public:
+               enum class TimingMode : uint8_t {
+   
+                   Absolute,
+   
+                   Relative
+               };
+   
+               Show(CueController& controller, Event *events, uint16_t num_events);
+               uint16_t get_current_index() const;
+               Event* get_event_at_index(uint16_t index) const;
+               Event* get_events() const;
+               uint32_t get_last_time() const;
+               bool get_looping() const;
+               uint16_t get_num_events() const;
+               TimingMode get_timing() const;
+               void set_events(Event* events, uint16_t num_events, bool preserve_current_index = true);
+               void set_looping(bool loop);
+               void set_timing_mode(TimingMode timing_mode);
+               void sync(const uint32_t& new_time);
+               void update(const uint32_t& current_time);
+   
+           private:
+               CueController& cue_controller_;
+   
+               uint16_t current_index_ = 0;
+   
+               Event* events_ = nullptr;
+   
+               uint32_t last_time_ = 0;
+   
+               bool loop_ = false;
+   
+               uint16_t num_events_ = 0;
+   
+               TimingMode timing_mode_ = TimingMode::Absolute;
+   
+               void check_next_event(const uint32_t& current_time);
+               void update_event_index();
+       };
+   }
+   
+   #endif // SHOW_H

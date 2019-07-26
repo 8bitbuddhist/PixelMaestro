@@ -1,0 +1,48 @@
+
+.. _file_src_core_pixel.cpp:
+
+File pixel.cpp
+==============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core>` (``src/core``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/core/pixel.cpp``)
+-----------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_core_pixel.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../utility.h``
+
+- ``colors.h`` (:ref:`file_src_core_colors.h`)
+
+- ``pixel.h`` (:ref:`file_src_core_pixel.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

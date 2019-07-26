@@ -1,0 +1,29 @@
+.. _exhale_class_classPixelMaestro_1_1CueHandler:
+
+Class CueHandler
+================
+
+- Defined in :ref:`file_src_cue_cuehandler.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public PixelMaestro::AnimationCueHandler`` (:ref:`exhale_class_classPixelMaestro_1_1AnimationCueHandler`)
+- ``public PixelMaestro::CanvasCueHandler`` (:ref:`exhale_class_classPixelMaestro_1_1CanvasCueHandler`)
+- ``public PixelMaestro::MaestroCueHandler`` (:ref:`exhale_class_classPixelMaestro_1_1MaestroCueHandler`)
+- ``public PixelMaestro::SectionCueHandler`` (:ref:`exhale_class_classPixelMaestro_1_1SectionCueHandler`)
+- ``public PixelMaestro::ShowCueHandler`` (:ref:`exhale_class_classPixelMaestro_1_1ShowCueHandler`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::CueHandler
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,19 @@
+.. _exhale_union_unionPixelMaestro_1_1FloatByteConvert_1_1Converter:
+
+Union FloatByteConvert::Converter
+=================================
+
+- Defined in :ref:`file_src_cue_cuecontroller.h`
+
+
+Nested Relationships
+--------------------
+
+This union is a nested type of :ref:`exhale_class_classPixelMaestro_1_1FloatByteConvert`.
+
+
+Union Documentation
+-------------------
+
+
+.. doxygenunion:: PixelMaestro::FloatByteConvert::Converter

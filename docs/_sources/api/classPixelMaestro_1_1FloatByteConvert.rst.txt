@@ -1,0 +1,26 @@
+.. _exhale_class_classPixelMaestro_1_1FloatByteConvert:
+
+Class FloatByteConvert
+======================
+
+- Defined in :ref:`file_src_cue_cuecontroller.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_union_unionPixelMaestro_1_1FloatByteConvert_1_1Converter`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::FloatByteConvert
+   :members:
+   :protected-members:
+   :undoc-members:

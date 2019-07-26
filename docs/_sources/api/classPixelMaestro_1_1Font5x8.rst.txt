@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestro_1_1Font5x8:
+
+Class Font5x8
+=============
+
+- Defined in :ref:`file_src_canvas_fonts_font5x8.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public PixelMaestro::Font`` (:ref:`exhale_class_classPixelMaestro_1_1Font`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Font5x8
+   :members:
+   :protected-members:
+   :undoc-members:

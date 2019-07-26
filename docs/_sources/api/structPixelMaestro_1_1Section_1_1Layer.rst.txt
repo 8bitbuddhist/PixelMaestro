@@ -1,0 +1,22 @@
+.. _exhale_struct_structPixelMaestro_1_1Section_1_1Layer:
+
+Struct Section::Layer
+=====================
+
+- Defined in :ref:`file_src_core_section.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_class_classPixelMaestro_1_1Section`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: PixelMaestro::Section::Layer
+   :members:
+   :protected-members:
+   :undoc-members:

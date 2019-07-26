@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestro_1_1LightningAnimation:
+
+Class LightningAnimation
+========================
+
+- Defined in :ref:`file_src_animation_lightninganimation.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public PixelMaestro::Animation`` (:ref:`exhale_class_classPixelMaestro_1_1Animation`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::LightningAnimation
+   :members:
+   :protected-members:
+   :undoc-members:

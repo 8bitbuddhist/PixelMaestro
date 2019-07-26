@@ -1,0 +1,37 @@
+
+.. _program_listing_file_src_utility.cpp:
+
+Program Listing for File utility.cpp
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_utility.cpp>` (``src/utility.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "utility.h"
+   
+   namespace PixelMaestro {
+   
+       // Must initialize static char value in source file.
+       int32_t Utility::seed_ = 1;
+   
+       uint32_t Utility::abs_int(int32_t val) {
+           return val > 0 ? val : -val;
+       }
+   
+       int32_t Utility::rand(int32_t max) {
+           seed_ = (seed_ * 1103515245U + 12345U) & 0x7fffffffU;
+           if (max == 0) {
+               return (int32_t)seed_;
+           }
+           else {
+               return (int32_t)seed_ % max;
+           }
+       }
+   
+       void Utility::srand(int32_t seed) {
+           seed_ = seed;
+       }
+   }

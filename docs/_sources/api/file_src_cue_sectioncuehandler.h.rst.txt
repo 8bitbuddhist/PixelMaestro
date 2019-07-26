@@ -1,0 +1,63 @@
+
+.. _file_src_cue_sectioncuehandler.h:
+
+File sectioncuehandler.h
+========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_cue>` (``src/cue``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/cue/sectioncuehandler.h``)
+--------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_cue_sectioncuehandler.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../animation/animationtype.h``
+
+- ``../core/colors.h``
+
+- ``cuecontroller.h`` (:ref:`file_src_cue_cuecontroller.h`)
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_cue_cuecontroller.cpp`
+
+- :ref:`file_src_cue_sectioncuehandler.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestro_1_1SectionCueHandler`
+

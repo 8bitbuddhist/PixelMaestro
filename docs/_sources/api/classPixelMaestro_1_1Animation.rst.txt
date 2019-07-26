@@ -1,0 +1,35 @@
+.. _exhale_class_classPixelMaestro_1_1Animation:
+
+Class Animation
+===============
+
+- Defined in :ref:`file_src_animation_animation.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Types
+*************
+
+- ``public PixelMaestro::BlinkAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1BlinkAnimation`)
+- ``public PixelMaestro::CycleAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1CycleAnimation`)
+- ``public PixelMaestro::FireAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1FireAnimation`)
+- ``public PixelMaestro::LightningAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1LightningAnimation`)
+- ``public PixelMaestro::MandelbrotAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1MandelbrotAnimation`)
+- ``public PixelMaestro::PlasmaAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1PlasmaAnimation`)
+- ``public PixelMaestro::RadialAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1RadialAnimation`)
+- ``public PixelMaestro::RandomAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1RandomAnimation`)
+- ``public PixelMaestro::SolidAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1SolidAnimation`)
+- ``public PixelMaestro::SparkleAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1SparkleAnimation`)
+- ``public PixelMaestro::WaveAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1WaveAnimation`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Animation
+   :members:
+   :protected-members:
+   :undoc-members:

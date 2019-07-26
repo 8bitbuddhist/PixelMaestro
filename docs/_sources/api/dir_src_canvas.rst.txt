@@ -1,0 +1,26 @@
+.. _dir_src_canvas:
+
+
+Directory canvas
+================
+
+
+|exhale_lsh| :ref:`Parent directory <dir_src>` (``src``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+*Directory path:* ``src/canvas``
+
+Subdirectories
+--------------
+
+- :ref:`dir_src_canvas_fonts`
+
+
+Files
+-----
+
+- :ref:`file_src_canvas_canvas.cpp`
+- :ref:`file_src_canvas_canvas.h`
+
+

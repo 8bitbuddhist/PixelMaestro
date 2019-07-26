@@ -1,0 +1,66 @@
+
+.. _program_listing_file_src_core_pixel.cpp:
+
+Program Listing for File pixel.cpp
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_pixel.cpp>` (``src/core/pixel.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+       Pixel.cpp - Class for controlling a single RGB LED.
+   */
+   
+   #include "../utility.h"
+   #include "colors.h"
+   #include "pixel.h"
+   
+   namespace PixelMaestro {
+   
+       void Pixel::clear() {
+           current_color_ = {0, 0, 0};
+   
+   #ifndef PIXEL_DISABLE_FADING
+           step_ = {0, 0, 0};
+   
+   #ifdef PIXEL_ENABLE_ACCURATE_FADING
+           next_color_ = {0, 0, 0};
+   #endif // PIXEL_ENABLE_ACCURATE_FADING
+   #endif // PIXEL_DISABLE_FADING
+       }
+   
+       Colors::RGB& Pixel::get_color() {
+           return this->current_color_;
+       }
+   
+       void Pixel::set_next_color(const Colors::RGB& next_color, uint8_t step_count) {
+   #ifndef PIXEL_DISABLE_FADING
+           step_.r = (next_color.r - current_color_.r) / (float)step_count;
+           step_.g = (next_color.g - current_color_.g) / (float)step_count;
+           step_.b = (next_color.b - current_color_.b) / (float)step_count;
+   
+   #ifdef PIXEL_ENABLE_ACCURATE_FADING
+               next_color_ = next_color;
+   #endif // PIXEL_ENABLE_ACCURATE_FADING
+   #else
+           current_color_ = next_color;
+   #endif // PIXEL_DISABLE_FADING
+       }
+   
+       void Pixel::update(bool apply_next_color) {
+   #ifndef PIXEL_DISABLE_FADING
+           current_color_.r += step_.r;
+           current_color_.g += step_.g;
+           current_color_.b += step_.b;
+   
+   #ifdef PIXEL_ENABLE_ACCURATE_FADING
+           if (apply_next_color) {
+               current_color_ = next_color_;
+           }
+   #endif // PIXEL_ENABLE_ACCURATE_FADING
+   #endif // PIXEL_DISABLE_FADING
+       }
+   }

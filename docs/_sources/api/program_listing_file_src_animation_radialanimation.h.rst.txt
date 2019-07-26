@@ -1,0 +1,34 @@
+
+.. _program_listing_file_src_animation_radialanimation.h:
+
+Program Listing for File radialanimation.h
+==========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_radialanimation.h>` (``src/animation/radialanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef RADIALANIMATION_H
+   #define RADIALANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace PixelMaestro {
+       class RadialAnimation : public Animation {
+           public:
+               explicit RadialAnimation(Section& section);
+               ~RadialAnimation() = default;
+               uint8_t get_resolution() const;
+               void set_resolution(uint8_t resolution);
+               void update();
+   
+           private:
+               uint8_t resolution_ = 10;
+   
+               void map();
+       };
+   }
+   
+   #endif // RADIALANIMATION_H

@@ -1,0 +1,61 @@
+
+.. _file_src_cue_event.h:
+
+File event.h
+============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_cue>` (``src/cue``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/cue/event.h``)
+--------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_cue_event.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``stdint.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_core_maestro.h`
+
+- :ref:`file_src_cue_show.h`
+
+- :ref:`file_src_cue_event.cpp`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestro_1_1Event`
+

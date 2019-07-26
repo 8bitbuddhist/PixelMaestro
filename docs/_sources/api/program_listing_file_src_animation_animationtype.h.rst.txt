@@ -1,0 +1,36 @@
+
+.. _program_listing_file_src_animation_animationtype.h:
+
+Program Listing for File animationtype.h
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_animationtype.h>` (``src/animation/animationtype.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * AnimationType - List of available Animations.
+    */
+   
+   #ifndef ANIMATIONTYPE_H
+   #define ANIMATIONTYPE_H
+   
+   namespace PixelMaestro {
+       enum class AnimationType : uint8_t {
+           Blink,
+           Cycle,
+           Fire,
+           Lightning,
+           Mandelbrot,
+           Plasma,
+           Radial,
+           Random,
+           Solid,
+           Sparkle,
+           Wave
+       };
+   }
+   
+   #endif // ANIMATIONTYPE_H

@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestro_1_1Point:
+
+Class Point
+===========
+
+- Defined in :ref:`file_src_core_point.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Point
+   :members:
+   :protected-members:
+   :undoc-members:
