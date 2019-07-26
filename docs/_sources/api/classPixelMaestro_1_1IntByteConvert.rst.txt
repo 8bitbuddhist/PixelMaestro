@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestro_1_1IntByteConvert:
+
+Class IntByteConvert
+====================
+
+- Defined in :ref:`file_src_cue_cuecontroller.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::IntByteConvert
+   :members:
+   :protected-members:
+   :undoc-members:

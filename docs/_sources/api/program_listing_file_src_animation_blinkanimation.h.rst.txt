@@ -1,0 +1,28 @@
+
+.. _program_listing_file_src_animation_blinkanimation.h:
+
+Program Listing for File blinkanimation.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_blinkanimation.h>` (``src/animation/blinkanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef BLINKANIMATION_H
+   #define BLINKANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace PixelMaestro {
+       class BlinkAnimation : public Animation {
+           public:
+               explicit BlinkAnimation(Section& section);
+               ~BlinkAnimation() = default;
+               void map();
+               void update();
+       };
+   }
+   
+   #endif // BLINKANIMATION_H

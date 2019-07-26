@@ -1,0 +1,153 @@
+
+.. _program_listing_file_src_core_maestro.cpp:
+
+Program Listing for File maestro.cpp
+====================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_maestro.cpp>` (``src/core/maestro.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+       Maestro.cpp - Library for controlling a collection of Pixels and Sections.
+   */
+   
+   #include <stdint.h>
+   #include "../utility.h"
+   #include "maestro.h"
+   #include "section.h"
+   
+   namespace PixelMaestro {
+   
+       Maestro::Maestro(uint16_t rows, uint16_t columns, uint8_t num_sections) {
+           Section* sections = new Section[num_sections] {
+               Section(rows, columns)
+           };
+           set_sections(sections, num_sections);
+           dynamically_allocated_sections_ = true;
+       }
+   
+       Maestro::Maestro(Section* sections, uint8_t num_sections) {
+           set_sections(sections, num_sections);
+       }
+   
+       CueController& Maestro::get_cue_controller() const {
+           return *cue_controller_;
+       }
+   
+       uint8_t Maestro::get_num_sections() const {
+           return num_sections_;
+       }
+   
+       Colors::RGB Maestro::get_pixel_color(uint8_t section, uint16_t x, uint16_t y) const {
+           return sections_[section].get_pixel_color(x, y);
+       }
+   
+       Section* Maestro::get_section(uint8_t section) const {
+           if (section >= num_sections_) {
+               return nullptr;
+           }
+           else {
+               return &sections_[section];
+           }
+       }
+   
+       Show* Maestro::get_show() const {
+           return show_;
+       }
+   
+       Timer& Maestro::get_timer() const {
+           return const_cast<Timer&>(timer_);
+       }
+   
+       void Maestro::remove_sections() {
+           if (dynamically_allocated_sections_) {
+               delete [] sections_;
+           }
+       }
+   
+       void Maestro::remove_show() {
+           delete show_;
+           show_ = nullptr;
+       }
+   
+       void Maestro::set_brightness(uint8_t brightness) {
+           for (uint8_t section = 0; section < num_sections_; section++) {
+               sections_[section].set_brightness(brightness);
+           }
+       }
+   
+       CueController& Maestro::set_cue_controller(uint16_t buffer_size) {
+           if (cue_controller_ == nullptr) {
+               cue_controller_ = new CueController(*this, buffer_size);
+           }
+   
+           return *cue_controller_;
+       }
+   
+       void Maestro::set_sections(Section* sections, uint8_t num_sections) {
+           remove_sections();
+   
+           sections_ = sections;
+           num_sections_ = num_sections;
+   
+           for (uint16_t section = 0; section < num_sections; section++) {
+               sections_[section].set_maestro(*this);
+           }
+       }
+   
+       Show& Maestro::set_show(Event* events, uint16_t num_events) {
+           if (show_ == nullptr) {
+               show_ = new Show(set_cue_controller(), events, num_events);
+           }
+           else {
+               show_->set_events(events, num_events);
+           }
+   
+           return *show_;
+       }
+   
+       Timer& Maestro::set_timer(uint16_t interval) {
+           timer_.set_interval(interval);
+           return timer_;
+       }
+   
+       void Maestro::sync(const uint32_t& new_time) {
+           this->get_timer().set_last_time(new_time);
+           for (uint8_t section = 0; section < num_sections_; section++) {
+               sections_[section].sync(new_time);
+           }
+   
+           if (show_ != nullptr) {
+               show_->sync(new_time);
+           }
+       }
+   
+       bool Maestro::update(const uint32_t& current_time, bool force) {
+           // Update if the time is exceeded or if force is true
+           if (timer_.update(current_time) || force) {
+               // Run the Show
+               if (show_) {
+                   show_->update(current_time);
+               }
+   
+               // Update each Section
+               for (uint8_t section = 0; section < num_sections_; section++) {
+                   sections_[section].update(current_time);
+               }
+   
+               return true;
+           }
+   
+           return false;
+       }
+   
+       Maestro::~Maestro() {
+           delete cue_controller_;
+           remove_show();
+   
+           remove_sections();
+       }
+   }

@@ -1,0 +1,36 @@
+
+.. _program_listing_file_src_canvas_fonts_font.h:
+
+Program Listing for File font.h
+===============================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_canvas_fonts_font.h>` (``src/canvas/fonts/font.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * Font.h - Base class for Pattern fonts.
+    */
+   #ifndef FONT_H
+   #define FONT_H
+   
+   #include <stdint.h>
+   #include "../../core/point.h"
+   
+   namespace PixelMaestro {
+       class Font {
+           public:
+               enum class Type :uint8_t {
+                   Font5x8
+               };
+   
+               Point size = {0, 0};
+               virtual const uint8_t* get_char(uint8_t character) = 0;
+   
+               virtual ~Font() {}
+       };
+   }
+   
+   #endif // FONT_H

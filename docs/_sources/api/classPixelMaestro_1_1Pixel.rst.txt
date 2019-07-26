@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestro_1_1Pixel:
+
+Class Pixel
+===========
+
+- Defined in :ref:`file_src_core_pixel.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Pixel
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,221 @@
+
+.. _program_listing_file_src_core_section.h:
+
+Program Listing for File section.h
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_section.h>` (``src/core/section.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+       Section.cpp - Class for controlling multiple Pixels.
+   */
+   
+   #ifndef SECTION_H
+   #define SECTION_H
+   
+   #include <stdint.h>
+   #include "../animation/animation.h"
+   #include "../animation/animationtype.h"
+   #include "../canvas/canvas.h"
+   #include "colors.h"
+   #include "maestro.h"
+   #include "point.h"
+   #include "pixel.h"
+   #include "../utility.h"
+   
+   namespace PixelMaestro {
+       class Canvas;
+   
+       class Animation;
+   
+       class Maestro;
+   
+       class Section {
+   
+           public:
+               struct Scroll {
+                   uint16_t interval_x = 0;
+                   uint16_t interval_y = 0;
+   
+                   bool reverse_x = false;
+                   bool reverse_y = false;
+   
+                   Timer* timer_x = nullptr;
+                   Timer* timer_y = nullptr;
+   
+                   uint16_t step_x = 0;
+                   uint16_t step_y = 0;
+   
+                   void remove_timer_x() {
+                       delete timer_x;
+                       timer_x = nullptr;
+                   }
+   
+                   void remove_timer_y() {
+                       delete timer_y;
+                       timer_y = nullptr;
+                   }
+   
+                   void set(uint16_t refresh_interval, Point* dimensions, uint16_t interval_x, uint16_t interval_y, bool reverse_x = false, bool reverse_y = false) {
+                       this->interval_x = interval_x;
+                       this->interval_y = interval_y;
+                       this->reverse_x = reverse_x;
+                       this->reverse_y = reverse_y;
+                       /*
+                        * Calculate step counts.
+                        * Using the scroll interval, we need to determine how to change the offset values on each refresh.
+                        *
+                        * If the interval is low (Section scrolls quickly), each update moves the image > 1 pixel.
+                        * In this case, we simply adjust the offset by the number of pixels it needs to move per refresh.
+                        *
+                        * If the interval is high (Section scrolls slowly), each update moves the image < 1 pixel.
+                        * In this case, we calculate the amount of time until the offset moves 1 pixel.
+                        * If this time is larger than the Maestro's refresh interval, scrolling won't occur until at least the next refresh.
+                        */
+   
+                       /*
+                        * Calculate the x-axis step count.
+                        *
+                        * Divide the x interval by the Maestro's refresh rate, then divide the Section's x-axis size by the result.
+                        * This gives you the number of pixels to move over per refresh.
+                        */
+                       float x = dimensions->x / (float)(interval_x / (float)refresh_interval);
+                       // If x is less than 1 pixel, calculate the amount of time until the Section scrolls by 1 pixel.
+                       if (x > 0 && x < 1) {
+                           uint16_t interval = (1 / x) * refresh_interval;
+                           if (timer_x) {
+                               timer_x->set_interval(interval);
+                           }
+                           else {
+                               timer_x = new Timer(interval);
+                           }
+                       }
+                       // x is greater than 1 pixel, so use x as our step amount.
+                       else {
+                           remove_timer_x();
+                           step_x = x;
+                       }
+   
+                       float y = dimensions->y / (float)(interval_y / (float)refresh_interval);
+                       if (y > 0 && y < 1) {
+                           uint16_t interval = (1 / y) * refresh_interval;
+                           if (timer_y) {
+                               timer_y->set_interval(interval);
+                           }
+                           else {
+                               timer_y = new Timer(interval);
+                           }
+                       }
+                       else {
+                           remove_timer_y();
+                           step_y = y;
+                       }
+                   }
+   
+                   ~Scroll() {
+                       remove_timer_x();
+                       remove_timer_y();
+                   }
+               };
+   
+               struct Layer {
+                   Section* section = nullptr;
+   
+                   Colors::MixMode mix_mode = Colors::MixMode::None;
+   
+                   uint8_t alpha;
+   
+                   Layer(Section& parent, Colors::MixMode mix_mode, uint8_t alpha = 0) {
+                       this->section = new Section(parent.get_dimensions().x, parent.get_dimensions().y, &parent);
+                       this->section->set_maestro(parent.get_maestro());
+                       this->mix_mode = mix_mode;
+                       this->alpha = alpha;
+                   }
+   
+                   ~Layer() {
+                       delete this->section;
+                   }
+               };
+   
+               struct Mirror {
+                   bool x = false;
+                   bool y = false;
+   
+                   uint16_t mid_x = 0;
+                   uint16_t mid_y = 0;
+   
+                   void set(bool x, bool y, const Point& dimensions) {
+                       this->x = x;
+                       this->y = y;
+   
+                       this->mid_x = dimensions.x / static_cast<float>(2);
+                       this->mid_y = dimensions.y / static_cast<float>(2);
+                   }
+               };
+   
+               Section();
+               Section(uint16_t x, uint16_t y, Section* parent = nullptr);
+               ~Section();
+               Animation* get_animation() const;
+               uint8_t get_brightness() const;
+               Canvas* get_canvas() const;
+               Point& get_dimensions() const;
+               Section::Layer* get_layer() const;
+               Maestro& get_maestro() const;
+               Mirror* get_mirror() const;
+               Point& get_offset();
+               Section* get_parent_section() const;
+               Pixel& get_pixel(uint16_t x, uint16_t y) const;
+               Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);
+               Scroll* get_scroll() const;
+               void remove_animation(bool clear_pixels);
+               void remove_canvas();
+               void remove_layer();
+               void remove_scroll();
+               Animation& set_animation(AnimationType animation_type, bool preserve_settings = true);
+               void set_brightness(uint8_t brightness);
+               Canvas& set_canvas(uint16_t num_frames = 1);
+               void set_dimensions(uint16_t x, uint16_t y);
+               Layer& set_layer(Colors::MixMode mix_mode = Colors::MixMode::Alpha, uint8_t alpha = 128);
+               void set_maestro(Maestro& maestro);
+               Mirror* set_mirror(bool x, bool y);
+               Point& set_offset(uint16_t x, uint16_t y);
+               void set_pixel_color(uint16_t x, uint16_t y, const Colors::RGB& color);
+               Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
+               void set_step_count(uint8_t step_count);
+               void sync(const uint32_t& new_time);
+               void update(const uint32_t& current_time);
+               void update_scroll(const uint32_t& current_time);
+   
+           private:
+               Animation* animation_ = nullptr;
+   
+               float brightness_ = 1.0;
+   
+               Canvas* canvas_ = nullptr;
+   
+               Point dimensions_;
+   
+               Layer* layer_ = nullptr;
+   
+               Maestro* maestro_ = nullptr;
+   
+               Mirror* mirror_ = nullptr;
+   
+               Point offset_ = Point(0, 0);
+   
+               Section* parent_section_ = nullptr;
+   
+               Pixel* pixels_ = nullptr;
+   
+               Scroll* scroll_ = nullptr;
+   
+               uint8_t step_count_ = 1;
+       };
+   }
+   
+   #endif

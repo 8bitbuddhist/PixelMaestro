@@ -1,0 +1,28 @@
+.. _dir_src:
+
+
+Directory src
+=============
+
+
+*Directory path:* ``src``
+
+Subdirectories
+--------------
+
+- :ref:`dir_src_animation`
+- :ref:`dir_src_canvas`
+- :ref:`dir_src_core`
+- :ref:`dir_src_cue`
+
+
+Files
+-----
+
+- :ref:`file_src_colorpresets.cpp`
+- :ref:`file_src_colorpresets.h`
+- :ref:`file_src_PixelMaestro.h`
+- :ref:`file_src_utility.cpp`
+- :ref:`file_src_utility.h`
+
+

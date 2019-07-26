@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestro_1_1Event:
+
+Class Event
+===========
+
+- Defined in :ref:`file_src_cue_event.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Event
+   :members:
+   :protected-members:
+   :undoc-members:

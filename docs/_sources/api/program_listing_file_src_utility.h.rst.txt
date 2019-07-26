@@ -1,0 +1,30 @@
+
+.. _program_listing_file_src_utility.h:
+
+Program Listing for File utility.h
+==================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_utility.h>` (``src/utility.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef UTILITY_H
+   #define UTILITY_H
+   
+   #include <stdint.h>
+   
+   namespace PixelMaestro {
+       class Utility {
+           public:
+               static uint32_t abs_int(int32_t val);
+               static int32_t rand(int32_t max = 0);
+               static void srand(int32_t seed);
+   
+           private:
+               static int32_t seed_;
+       };
+   }
+   
+   #endif // UTILITY_H

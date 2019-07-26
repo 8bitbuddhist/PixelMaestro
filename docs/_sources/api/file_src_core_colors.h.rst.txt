@@ -1,0 +1,81 @@
+
+.. _file_src_core_colors.h:
+
+File colors.h
+=============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core>` (``src/core``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/core/colors.h``)
+----------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_core_colors.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``stdint.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_animation_animation.h`
+
+- :ref:`file_src_core_palette.h`
+
+- :ref:`file_src_canvas_canvas.h`
+
+- :ref:`file_src_core_section.h`
+
+- :ref:`file_src_core_maestro.h`
+
+- :ref:`file_src_core_pixel.h`
+
+- :ref:`file_src_colorpresets.h`
+
+- :ref:`file_src_core_colors.cpp`
+
+- :ref:`file_src_core_pixel.cpp`
+
+- :ref:`file_src_core_section.cpp`
+
+- :ref:`file_src_cue_animationcuehandler.h`
+
+- :ref:`file_src_cue_sectioncuehandler.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Colors_1_1RGB`
+
+- :ref:`exhale_class_classPixelMaestro_1_1Colors`
+

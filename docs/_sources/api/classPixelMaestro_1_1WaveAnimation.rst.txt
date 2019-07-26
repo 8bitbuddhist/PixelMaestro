@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestro_1_1WaveAnimation:
+
+Class WaveAnimation
+===================
+
+- Defined in :ref:`file_src_animation_waveanimation.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public PixelMaestro::Animation`` (:ref:`exhale_class_classPixelMaestro_1_1Animation`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::WaveAnimation
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,544 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Sections &mdash; PixelMaestro 2.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Points" href="Points.html" />
+    <link rel="prev" title="Maestros" href="Maestros.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> PixelMaestro
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Home.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Home.html#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Home.html#faq">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial.html#core-concepts">Core Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial.html#what-s-a-section">What’s a Section?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial.html#what-s-a-maestro">What’s a Maestro?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Tutorial.html#using-pixelmaestro">Using PixelMaestro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Tutorial.html#sample-sketch">Sample Sketch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#primary-components">Primary Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Components.html#secondary-components">Secondary Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Maestros.html">Maestros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#creating-a-maestro">Creating a Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#updating-the-maestro">Updating the Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#changing-the-refresh-interval">Changing the Refresh Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#interacting-with-sections">Interacting with Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#setting-a-global-brightness-level">Setting a Global Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Maestros.html#synchronizing-components">Synchronizing Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-section">Creating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updating-a-section">Updating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#interacting-with-the-pixel-grid">Interacting With the Pixel Grid</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-a-pixel-s-color">Setting a Pixel’s Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#retrieving-a-pixel-s-color">Retrieving a Pixel’s Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#animating-a-section">Animating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#displaying-custom-shapes-and-patterns">Displaying Custom Shapes and Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-a-brightness-level">Setting a Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-layers">Using Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scrolling">Scrolling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#offsetting">Offsetting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#mirroring">Mirroring</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Points.html">Points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Points.html#creating-a-point">Creating a Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Points.html#coordinates-versus-dimensions">Coordinates Versus Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Points.html#other-methods">Other Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Pixels.html">Pixels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Pixels.html#creating-pixels">Creating Pixels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Pixels.html#how-pixels-work">How Pixels Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Pixels.html#performance-options">Performance Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Pixels.html#disabling-fading">Disabling Fading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Pixels.html#enabling-accurate-fading">Enabling Accurate Fading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Colors.html">Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Colors.html#creating-colors">Creating Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Colors.html#mixing-colors">Mixing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Colors.html#sample-colors">Sample Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Palettes.html">Palettes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#creating-a-palette">Creating a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#using-a-palette">Using a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#changing-colors">Changing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Palettes.html#retrieving-colors">Retrieving Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Animations.html">Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#animation-types">Animation Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#creating-an-animation">Creating an Animation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Animations.html#animation-cycles">Animation Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Animations.html#setting-the-color-palette">Setting the Color Palette</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Animations.html#setting-additional-options">Setting Additional Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#setting-the-orientation">Setting the Orientation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#changing-the-animation-timing">Changing the Animation Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#toggling-fading">Toggling Fading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#changing-the-center">Changing the Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Animations.html#how-animations-work">How Animations Work</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Canvases.html">Canvases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#creating-a-canvas">Creating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#setting-the-palette">Setting the Palette</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#animating-a-canvas">Animating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#frames">Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#switching-frames">Switching Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Canvases.html#drawing-shapes">Drawing Shapes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#selecting-a-color">Selecting a Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#lines">Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#points">Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#rectangles">Rectangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#text">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#triangles">Triangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Canvases.html#clearing-the-canvas">Clearing the Canvas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Cues.html">Cues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#initializing-the-cuecontroller">Initializing the CueController</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="Cues.html#setting-the-buffer-size">Setting the Buffer Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Cues.html#enabling-cuehandlers">Enabling CueHandlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#creating-cues">Creating Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#running-cues">Running Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#blocking-cues">Blocking Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Cues.html#structure">Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Shows.html">Shows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#adding-events">Adding Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#timing-modes">Timing Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Shows.html#looping">Looping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Timers.html">Timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#creating-a-timer">Creating a Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#changing-the-interval">Changing the Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timers.html#starting-and-stopping-a-timer">Starting and Stopping a Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/root.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/root.html#full-api">Full API</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/namespace_PixelMaestro.html">Namespace PixelMaestro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#classes-and-structs">Classes and Structs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Colors_1_1RGB.html">Struct Colors::RGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1CueController_1_1BlockedCue.html">Struct CueController::BlockedCue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Section_1_1Layer.html">Struct Section::Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Section_1_1Mirror.html">Struct Section::Mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/structPixelMaestro_1_1Section_1_1Scroll.html">Struct Section::Scroll</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Animation.html">Class Animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1AnimationCueHandler.html">Class AnimationCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1AnimationTimer.html">Class AnimationTimer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1BlinkAnimation.html">Class BlinkAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Canvas.html">Class Canvas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CanvasCueHandler.html">Class CanvasCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1ColorPresets.html">Class ColorPresets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Colors.html">Class Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CueController.html">Class CueController</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CueHandler.html">Class CueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1CycleAnimation.html">Class CycleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Event.html">Class Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1FireAnimation.html">Class FireAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1FloatByteConvert.html">Class FloatByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Font.html">Class Font</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Font5x8.html">Class Font5x8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1IntByteConvert.html">Class IntByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1LightningAnimation.html">Class LightningAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Maestro.html">Class Maestro</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1MaestroCueHandler.html">Class MaestroCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1MandelbrotAnimation.html">Class MandelbrotAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Palette.html">Class Palette</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Pixel.html">Class Pixel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1PlasmaAnimation.html">Class PlasmaAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Point.html">Class Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1RadialAnimation.html">Class RadialAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1RandomAnimation.html">Class RandomAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Section.html">Class Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SectionCueHandler.html">Class SectionCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Show.html">Class Show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1ShowCueHandler.html">Class ShowCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SolidAnimation.html">Class SolidAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Timer.html">Class Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html">Enum AnimationType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/root.html#unions">Unions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html">Union FloatByteConvert::Converter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PixelMaestro</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Sections</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/Sections.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="sections">
+<h1>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h1>
+<p>A Section is a logical representation of <a class="reference internal" href="Pixels.html"><span class="doc">Pixels</span></a> laid out in a 2D grid. In addition to storing the Pixel grid, Sections bridge components that modify each Pixel’s color values, particularly <a class="reference internal" href="Animations.html"><span class="doc">Animations</span></a> and <a class="reference internal" href="Canvases.html"><span class="doc">Canvases</span></a>. Sections are managed by <a class="reference internal" href="Maestros.html"><span class="doc">Maestros</span></a>, with one Maestro managing multiple Sections.</p>
+<div class="section" id="creating-a-section">
+<h2>Creating a Section<a class="headerlink" href="#creating-a-section" title="Permalink to this headline">¶</a></h2>
+<p>A Section can be created in one of two ways: explicitly by initializing a <code class="docutils literal notranslate"><span class="pre">Section</span></code> object and assigning it to a Maestro, or implicitly while initializing a Maestro. In either case, you will need to specify the <a class="reference internal" href="Points.html"><span class="doc">dimensions</span></a> of the Section in terms of rows and columns.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>A single Maestro can manage up to 256 Sections.</p>
+</div>
+<p>When creating a <code class="docutils literal notranslate"><span class="pre">Section</span></code> explicitly, you will need to assign the Section to a Maestro using <code class="docutils literal notranslate"><span class="pre">Maestro::set_sections(Section*</span> <span class="pre">sections,</span> <span class="pre">uint8_t</span> <span class="pre">num_sections)</span></code>. The following example creates and assigns two Sections to a Maestro: one 10 pixels wide and 20 pixels tall, and another 30 pixels wide and 40 pixels tall:</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Section</span> <span class="n">sections</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">Section</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+    <span class="n">Section</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">Maestro</span> <span class="n">maestro</span><span class="p">(</span><span class="n">sections</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To declare a Section implicitly, declare a <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> object and pass the dimensions of the Section. This example allocates a single 10x20 Section. This Section is fully managed by the Maestro: if the Maestro is deleted, so is the Section.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Maestro</span> <span class="nf">maestro</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="updating-a-section">
+<h2>Updating a Section<a class="headerlink" href="#updating-a-section" title="Permalink to this headline">¶</a></h2>
+<p>To update a Section, call <code class="docutils literal notranslate"><span class="pre">Section::update(uint32_t</span> <span class="pre">runtime)</span></code>. This updates the Section along with any components managed by the Section including Animations, Canvases, and Layers.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Instead of calling this method directly, you should use <code class="docutils literal notranslate"><span class="pre">Maestro::update()</span></code>, which automatically calls this method for you.</p>
+</div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">section</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">millis</span><span class="p">());</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="interacting-with-the-pixel-grid">
+<h2>Interacting With the Pixel Grid<a class="headerlink" href="#interacting-with-the-pixel-grid" title="Permalink to this headline">¶</a></h2>
+<p>After calling the Section’s constructor, the Section automatically allocates a <a class="reference internal" href="Pixels.html"><span class="doc">Pixel</span></a> grid with the dimensions specified. This grid is logically laid out as a <a class="reference external" href="https://en.wikipedia.org/wiki/Cartesian_coordinate_system">Cartesian plane</a>, with the origin (0, 0) starting in the top-left corner and increasing as you move to the right and down. For example, the coordinates (3, 5) represent a pixel 3 spaces to the right and 5 spaces down.</p>
+<div class="section" id="setting-a-pixel-s-color">
+<h3>Setting a Pixel’s Color<a class="headerlink" href="#setting-a-pixel-s-color" title="Permalink to this headline">¶</a></h3>
+<p>You can write colors directly to a Pixel using <code class="docutils literal notranslate"><span class="pre">Section::set_pixel_color(uint8_t</span> <span class="pre">x,</span> <span class="pre">uint8_t</span> <span class="pre">y,</span> <span class="pre">Colors::RGB&amp;</span> <span class="pre">color)</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">blue</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">};</span>
+<span class="n">section</span><span class="p">.</span><span class="n">set_pixel_color</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">blue</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Note that other components also use <code class="docutils literal notranslate"><span class="pre">set_pixel_color()</span></code> and may overwrite your changes. To avoid this, run <code class="docutils literal notranslate"><span class="pre">set_pixel_color()</span></code> after <code class="docutils literal notranslate"><span class="pre">Section::update()</span></code> in your control loop.</p>
+</div>
+<div class="section" id="retrieving-a-pixel-s-color">
+<h3>Retrieving a Pixel’s Color<a class="headerlink" href="#retrieving-a-pixel-s-color" title="Permalink to this headline">¶</a></h3>
+<p>There are two ways of retrieving a Pixel’s color from a Section.</p>
+<p>The first returns the Pixel’s post-processed color. This takes the Pixel’s color and applies any layered or post-processing effects such as Canvases, Layers, brightness, etc. This is the method you’ll want to use, since it offers the greatest number of features. To get the color, use <code class="docutils literal notranslate"><span class="pre">Section::get_pixel_color(uint16_t</span> <span class="pre">x,</span> <span class="pre">uint16_t</span> <span class="pre">y)</span></code>, where <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are the coordinates of the Pixel.</p>
+<p>The second method returns the Pixel’s “true” color, or the color stored in memory. This is the Pixel’s color before any effects have been applied, and is really only useful for manually setting colors and Animations. However, it’s much less CPU-intensive. To get the color, use <code class="docutils literal notranslate"><span class="pre">Section::get_pixel(x,</span> <span class="pre">y).get_color()</span></code>.</p>
+</div>
+</div>
+<div class="section" id="animating-a-section">
+<h2>Animating a Section<a class="headerlink" href="#animating-a-section" title="Permalink to this headline">¶</a></h2>
+<p>Animations let you display dynamic visual effects on a Section. To learn more, see <a class="reference internal" href="Animations.html"><span class="doc">Animations</span></a>.</p>
+</div>
+<div class="section" id="displaying-custom-shapes-and-patterns">
+<h2>Displaying Custom Shapes and Patterns<a class="headerlink" href="#displaying-custom-shapes-and-patterns" title="Permalink to this headline">¶</a></h2>
+<p>Canvases let you draw custom shapes and patterns onto a Section. To learn more, see <a class="reference internal" href="Canvases.html"><span class="doc">Canvases</span></a>.</p>
+</div>
+<div class="section" id="setting-a-brightness-level">
+<h2>Setting a Brightness Level<a class="headerlink" href="#setting-a-brightness-level" title="Permalink to this headline">¶</a></h2>
+<p>You can change the Section’s overall brightness using <code class="docutils literal notranslate"><span class="pre">Section::set_brightness(uint8_t</span> <span class="pre">brightness)</span></code>. Brightness sets the luminosity of each Pixel. You can set the brightness on a scale between 0-255, with 0 being unlit and 255 being fully lit.</p>
+</div>
+<div class="section" id="using-layers">
+<h2>Using Layers<a class="headerlink" href="#using-layers" title="Permalink to this headline">¶</a></h2>
+<p>A Layer is a second Section rendered on top of an existing Section. When rendering the base Section, the color output of the Layer is merged with that of the base, creating a composite image. You can learn more about color merging in the <a class="reference internal" href="Colors.html"><span class="doc">Colors</span></a> document.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Be careful when using Layers on low-memory devices. Adding a Layer creates a second framebuffer, requiring lots of RAM.</p>
+</div>
+<a class="reference external image-reference" href="images/layer-example.png"><img alt="Layers" src="_images/layer-example.png" /></a>
+<p><em>Layering Section 2 (center) on top of Section 1 (left) using the alpha MixMode results in Section 3 (right).</em></p>
+<p>Create a Layer by calling <code class="docutils literal notranslate"><span class="pre">Section::set_layer(Colors::MixMode</span> <span class="pre">mix_mode,</span> <span class="pre">uint8_t</span> <span class="pre">alpha)</span></code>. <code class="docutils literal notranslate"><span class="pre">MixMode</span></code> is the method used to combine the Layer’s colors with those of the base Section, and <code class="docutils literal notranslate"><span class="pre">alpha</span></code> sets the percentage that the Layer’s colors are blended with the base’s colors. Note that <code class="docutils literal notranslate"><span class="pre">alpha</span></code> only applies when using the Alpha MixMode.</p>
+<p>This method returns a new <code class="docutils literal notranslate"><span class="pre">Layer</span></code>, object, which contains a newly initialized <code class="docutils literal notranslate"><span class="pre">Section</span></code> object wholly independent of the base Section. You can access the Layer using <code class="docutils literal notranslate"><span class="pre">Section::get_layer()</span></code>, and you can access the layered Section using <code class="docutils literal notranslate"><span class="pre">Section::get_layer()-&gt;section</span></code>. You can perform any normal action on this layered Section including adding an Animation or Canvas.</p>
+<p>Since any Section can have a Layer, you can stack Layers on top of other Layers by calling <code class="docutils literal notranslate"><span class="pre">Layer::section.set_layer()</span></code>. For example, to add two new Layers onto a Section, you could use <code class="docutils literal notranslate"><span class="pre">Section::get_layer()-&gt;section.set_layer(mix_mode,</span> <span class="pre">alpha)-&gt;section.set_layer(mix_mode_2,</span> <span class="pre">alpha_2)</span></code>.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">Section</span> <span class="nf">base</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+<span class="p">...</span>
+<span class="c1">// Creates a new Layer and sets its Animation.</span>
+<span class="c1">// The final color will be 50% of the base color and 50% of the overlaid color.</span>
+<span class="n">Layer</span><span class="o">&amp;</span> <span class="n">layer</span> <span class="o">=</span> <span class="n">base</span><span class="p">.</span><span class="n">set_layer</span><span class="p">(</span><span class="n">Colors</span><span class="o">::</span><span class="n">MixMode</span><span class="o">::</span><span class="n">Alpha</span><span class="p">,</span> <span class="mi">127</span><span class="p">);</span>
+<span class="n">Animation</span><span class="o">&amp;</span> <span class="n">layer_animation</span> <span class="o">=</span> <span class="n">layer</span><span class="p">.</span><span class="n">section</span><span class="o">-&gt;</span><span class="n">set_animation</span><span class="p">(</span><span class="n">AnimationType</span><span class="o">::</span><span class="n">RadialAnimation</span><span class="p">);</span>
+<span class="n">layer_animation</span><span class="p">.</span><span class="n">set_palette</span><span class="p">(</span><span class="n">ColorPresets</span><span class="o">::</span><span class="n">Colorwheel_Palette</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="scrolling">
+<h2>Scrolling<a class="headerlink" href="#scrolling" title="Permalink to this headline">¶</a></h2>
+<p>Scrolling shifts the entire pixel grid across the Section, making it appear as if the Section is moving laterally and/or vertically. Scrolling is measured in terms of speed (how long it takes to scroll any one pixel from one end of the Section to the other). <code class="docutils literal notranslate"><span class="pre">Section::set_scroll(uint16_t</span> <span class="pre">x_interval,</span> <span class="pre">uint16_t</span> <span class="pre">y_interval,</span> <span class="pre">bool</span> <span class="pre">x_reverse,</span> <span class="pre">bool</span> <span class="pre">y_reverse)</span></code> sets both the amount of time to complete a scroll and the direction to scroll across the x and y axes. <code class="docutils literal notranslate"><span class="pre">interval</span></code> is the amount of time it takes for the Section to complete a single scroll, and <code class="docutils literal notranslate"><span class="pre">reverse</span></code> swaps the direction of the scroll. By default, scrolling on the x axis moves the grid from right to left, and scrolling on the y axis moves the grid from bottom to top.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The apparent scrolling speed changes relative to the size of the grid. A 10x10 grid will appear to scroll much slower than a 50x50 grid even if they both have the same scroll interval. This is because the 50x50 grid needs to cover a larger distance (50 pixels) in the same amount of time that the smaller grid only needs to cover 10.</p>
+</div>
+<p>This example scrolls to the right once every 2000 milliseconds and down once every 1000 milliseconds.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">section</span><span class="p">.</span><span class="n">set_scroll</span><span class="p">(</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="nb">false</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>To disable scrolling on either axis, set its scroll rate to 0. You can also completely disable scrolling by calling <code class="docutils literal notranslate"><span class="pre">Section::remove_scroll()</span></code>.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Disabling scrolling will stop the grid in its current location. If you want to move the grid back to the center, set its <span class="xref std std-ref">offset</span> to 0.</p>
+</div>
+<div class="section" id="offsetting">
+<h3>Offsetting<a class="headerlink" href="#offsetting" title="Permalink to this headline">¶</a></h3>
+<p>Offsetting shifts the Section from its default position by a certain number of pixels. This is similar to <span class="xref std std-ref">scrolling</span>, except it’s a one-time operation.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If scrolling is enabled, the offset values will be overridden each time the Section updates.</p>
+</div>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">section</span><span class="p">.</span><span class="n">set_offset</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mirroring">
+<h2>Mirroring<a class="headerlink" href="#mirroring" title="Permalink to this headline">¶</a></h2>
+<p>Mirroring shows a reflection of the Section across the center of the x or y axis.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">mirror_x</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+<span class="kt">bool</span> <span class="n">mirror_y</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+<span class="n">section</span><span class="p">.</span><span class="n">set_mirror</span><span class="p">(</span><span class="n">mirror_x</span><span class="p">,</span> <span class="n">mirror_y</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="Points.html" class="btn btn-neutral float-right" title="Points" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="Maestros.html" class="btn btn-neutral float-left" title="Maestros" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

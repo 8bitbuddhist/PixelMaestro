@@ -1,0 +1,26 @@
+.. _exhale_class_classPixelMaestro_1_1Colors:
+
+Class Colors
+============
+
+- Defined in :ref:`file_src_core_colors.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_struct_structPixelMaestro_1_1Colors_1_1RGB`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Colors
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,33 @@
+
+.. _program_listing_file_src_animation_fireanimation.h:
+
+Program Listing for File fireanimation.h
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_fireanimation.h>` (``src/animation/fireanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef FIREANIMATION_H
+   #define FIREANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace PixelMaestro {
+       class FireAnimation : public Animation {
+           public:
+               explicit FireAnimation(Section& section);
+               ~FireAnimation() = default;
+               uint8_t get_multiplier() const;
+               void map();
+               void set_multiplier(uint8_t multiplier);
+               void update();
+   
+           private:
+               uint8_t multiplier_ = 48;
+       };
+   }
+   
+   #endif // FIREANIMATION_H

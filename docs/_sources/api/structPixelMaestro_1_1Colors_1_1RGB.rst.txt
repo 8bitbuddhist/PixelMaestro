@@ -1,0 +1,22 @@
+.. _exhale_struct_structPixelMaestro_1_1Colors_1_1RGB:
+
+Struct Colors::RGB
+==================
+
+- Defined in :ref:`file_src_core_colors.h`
+
+
+Nested Relationships
+--------------------
+
+This struct is a nested type of :ref:`exhale_class_classPixelMaestro_1_1Colors`.
+
+
+Struct Documentation
+--------------------
+
+
+.. doxygenstruct:: PixelMaestro::Colors::RGB
+   :members:
+   :protected-members:
+   :undoc-members:

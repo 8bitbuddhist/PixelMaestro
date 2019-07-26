@@ -1,0 +1,56 @@
+
+.. _file_src_cue_animationcuehandler.cpp:
+
+File animationcuehandler.cpp
+============================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_cue>` (``src/cue``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/cue/animationcuehandler.cpp``)
+------------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_cue_animationcuehandler.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../animation/fireanimation.h``
+
+- ``../animation/lightninganimation.h``
+
+- ``../animation/plasmaanimation.h``
+
+- ``../animation/radialanimation.h``
+
+- ``../animation/sparkleanimation.h``
+
+- ``../animation/waveanimation.h``
+
+- ``animationcuehandler.h`` (:ref:`file_src_cue_animationcuehandler.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

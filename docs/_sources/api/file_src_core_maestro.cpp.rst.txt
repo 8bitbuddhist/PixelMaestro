@@ -1,0 +1,50 @@
+
+.. _file_src_core_maestro.cpp:
+
+File maestro.cpp
+================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core>` (``src/core``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/core/maestro.cpp``)
+-------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_core_maestro.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../utility.h``
+
+- ``maestro.h`` (:ref:`file_src_core_maestro.h`)
+
+- ``section.h`` (:ref:`file_src_core_section.h`)
+
+- ``stdint.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

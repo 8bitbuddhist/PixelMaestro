@@ -1,0 +1,51 @@
+
+.. _program_listing_file_src_animation_plasmaanimation.cpp:
+
+Program Listing for File plasmaanimation.cpp
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_plasmaanimation.cpp>` (``src/animation/plasmaanimation.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include <math.h>
+   #include "plasmaanimation.h"
+   
+   namespace PixelMaestro {
+       PlasmaAnimation::PlasmaAnimation(Section& section) : Animation(section) {
+           type_ = AnimationType::Plasma;
+           map();
+       }
+   
+       float PlasmaAnimation::get_resolution() const {
+           return resolution_;
+       }
+   
+       float PlasmaAnimation::get_size() const {
+           return size_;
+       }
+   
+       void PlasmaAnimation::map() {
+           for (uint16_t y = 0; y < dimensions_.y; y++) {
+               for (uint16_t x = 0; x < dimensions_.x; x++) {
+                   set_map_color_index(x, y, ((resolution_ + (resolution_ * sin(x / size_))) + (resolution_ + (resolution_ * sin(y / size_)))) / 2);
+               }
+           }
+       }
+   
+       void PlasmaAnimation::set_resolution(float resolution) {
+           this->resolution_ = resolution;
+           map();
+       }
+   
+       void PlasmaAnimation::set_size(float size) {
+           this->size_ = size;
+           map();
+       }
+   
+       void PlasmaAnimation::update() {
+           update_cycle(0, palette_->get_num_colors());
+       }
+   }

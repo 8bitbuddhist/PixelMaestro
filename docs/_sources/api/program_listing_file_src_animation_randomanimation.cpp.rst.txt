@@ -1,0 +1,35 @@
+
+.. _program_listing_file_src_animation_randomanimation.cpp:
+
+Program Listing for File randomanimation.cpp
+============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_randomanimation.cpp>` (``src/animation/randomanimation.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "randomanimation.h"
+   #include "../utility.h"
+   
+   namespace PixelMaestro {
+       RandomAnimation::RandomAnimation(Section& section) : Animation(section) {
+           type_ = AnimationType::Random;
+           map();
+       }
+   
+       void RandomAnimation::map() {
+           if (palette_ == nullptr) return;
+   
+           for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+               for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+                   set_map_color_index(x, y, Utility::rand(palette_->get_num_colors()));
+               }
+           }
+       }
+   
+       void RandomAnimation::update() {
+           map();
+       }
+   }

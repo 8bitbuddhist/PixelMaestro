@@ -1,0 +1,74 @@
+
+.. _file_src_core_section.cpp:
+
+File section.cpp
+================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_core>` (``src/core``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/core/section.cpp``)
+-------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_core_section.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../animation/blinkanimation.h``
+
+- ``../animation/cycleanimation.h``
+
+- ``../animation/fireanimation.h``
+
+- ``../animation/lightninganimation.h``
+
+- ``../animation/mandelbrotanimation.h``
+
+- ``../animation/plasmaanimation.h``
+
+- ``../animation/radialanimation.h``
+
+- ``../animation/randomanimation.h``
+
+- ``../animation/solidanimation.h``
+
+- ``../animation/sparkleanimation.h``
+
+- ``../animation/waveanimation.h``
+
+- ``../canvas/canvas.h``
+
+- ``../utility.h``
+
+- ``colors.h`` (:ref:`file_src_core_colors.h`)
+
+- ``pixel.h`` (:ref:`file_src_core_pixel.h`)
+
+- ``section.h`` (:ref:`file_src_core_section.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

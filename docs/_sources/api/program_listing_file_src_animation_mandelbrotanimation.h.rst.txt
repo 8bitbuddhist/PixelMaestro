@@ -1,0 +1,38 @@
+
+.. _program_listing_file_src_animation_mandelbrotanimation.h:
+
+Program Listing for File mandelbrotanimation.h
+==============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_mandelbrotanimation.h>` (``src/animation/mandelbrotanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * Mandelbrot - Draws a Mandlebrot fractal.
+    * Core logic provided by Joni Salonen's C fractal library: https://github.com/joni/fractals/
+    */
+   
+   #ifndef MANDELBROTANIMATION_H
+   #define MANDELBROTANIMATION_H
+   
+   #include "animation.h"
+   
+   namespace PixelMaestro {
+       class MandelbrotAnimation : public Animation {
+           public:
+               explicit MandelbrotAnimation(Section& section);
+               ~MandelbrotAnimation() = default;
+               void set_palette(const Colors::RGB colors[], uint8_t num_colors);
+               void update();
+   
+           private:
+               uint8_t iterations_ = 0;
+   
+               void map();
+       };
+   }
+   
+   #endif // MANDELBROTANIMATION_H

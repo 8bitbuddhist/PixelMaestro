@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestro_1_1Timer:
+
+Class Timer
+===========
+
+- Defined in :ref:`file_src_core_timer_timer.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Derived Type
+************
+
+- ``public PixelMaestro::AnimationTimer`` (:ref:`exhale_class_classPixelMaestro_1_1AnimationTimer`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::Timer
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestro_1_1RandomAnimation:
+
+Class RandomAnimation
+=====================
+
+- Defined in :ref:`file_src_animation_randomanimation.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public PixelMaestro::Animation`` (:ref:`exhale_class_classPixelMaestro_1_1Animation`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::RandomAnimation
+   :members:
+   :protected-members:
+   :undoc-members:

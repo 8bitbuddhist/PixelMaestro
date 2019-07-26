@@ -1,0 +1,79 @@
+
+.. _program_listing_file_src_canvas_canvas.h:
+
+Program Listing for File canvas.h
+=================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_canvas_canvas.h>` (``src/canvas/canvas.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * Canvas.h - Base class for drawing patterns on a Section.
+    */
+   
+   #ifndef CANVAS_H
+   #define CANVAS_H
+   
+   #include <stdint.h>
+   #include "../core/colors.h"
+   #include "../core/point.h"
+   #include "../core/section.h"
+   #include "../core/timer/timer.h"
+   #include "fonts/font.h"
+   
+   namespace PixelMaestro {
+       class Section;
+       class Timer;
+   
+       class Canvas {
+           public:
+               explicit Canvas(Section& section, uint16_t num_frames = 1);
+               ~Canvas();
+               void initialize();
+   
+               void clear();
+               void draw_circle(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t radius, bool fill);
+               void draw_frame(uint16_t frame_index, uint8_t* frame, uint16_t size_x, uint16_t size_y);
+               void draw_line(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t target_x, uint16_t target_y);
+               void draw_point(uint16_t frame_index, uint8_t color_index, uint16_t x, uint16_t y);
+               void draw_rect(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, uint16_t size_x, uint16_t size_y, bool fill);
+               void draw_text(uint16_t frame_index, uint8_t color_index, uint16_t origin_x, uint16_t origin_y, Font& font, const char* text, uint8_t num_chars);
+               void draw_triangle(uint16_t frame_index, uint8_t color_index, uint16_t point_a_x, uint16_t point_a_y, uint16_t point_b_x, uint16_t point_b_y, uint16_t point_c_x, uint16_t point_c_y, bool fill);
+               void erase_point(uint16_t frame_index, uint16_t x, uint16_t y);
+               uint16_t get_current_frame_index() const;
+               Timer* get_frame_timer() const;
+               uint8_t* get_frame(uint16_t frame) const;
+               uint16_t get_num_frames() const;
+               Palette* get_palette() const;
+               Colors::RGB* get_pixel_color(uint16_t x, uint16_t y);
+               Section& get_section() const;
+               void next_frame();
+               void previous_frame();
+               void remove_frame_timer();
+               void set_current_frame_index(uint16_t index);
+               void set_frame_timer(uint16_t speed);
+               void set_num_frames(uint16_t num_frames);
+               void set_palette(Palette& palette);
+               void update(const uint32_t& current_time);
+   
+           private:
+               uint16_t current_frame_index_ = 0;
+   
+               Timer* frame_timer_ = nullptr;
+   
+               uint8_t** frames_ = nullptr;
+   
+               uint16_t num_frames_ = 0;
+   
+               Palette* palette_ = nullptr;
+   
+               Section& section_;
+   
+               void delete_frames();
+       };
+   }
+   
+   #endif // CANVAS_H

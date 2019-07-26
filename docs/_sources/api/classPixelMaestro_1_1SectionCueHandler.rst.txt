@@ -1,0 +1,25 @@
+.. _exhale_class_classPixelMaestro_1_1SectionCueHandler:
+
+Class SectionCueHandler
+=======================
+
+- Defined in :ref:`file_src_cue_sectioncuehandler.h`
+
+
+Inheritance Relationships
+-------------------------
+
+Base Type
+*********
+
+- ``public PixelMaestro::CueHandler`` (:ref:`exhale_class_classPixelMaestro_1_1CueHandler`)
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::SectionCueHandler
+   :members:
+   :protected-members:
+   :undoc-members:

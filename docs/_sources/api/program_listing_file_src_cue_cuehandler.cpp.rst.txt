@@ -1,0 +1,105 @@
+
+.. _program_listing_file_src_cue_cuehandler.cpp:
+
+Program Listing for File cuehandler.cpp
+=======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_cue_cuehandler.cpp>` (``src/cue/cuehandler.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * CueHandler - Base class for mapping Cues to PixelMaestro actions.
+    */
+   
+   #include "cuehandler.h"
+   
+   namespace PixelMaestro {
+   
+       CueHandler::CueHandler(CueController &controller) : controller_(controller) { }
+   
+       void CueHandler::add_float_to_cue(uint32_t& index, float value) {
+           FloatByteConvert converted(value);
+           controller_.get_buffer()[++index] = converted.converted.byte[0];
+           controller_.get_buffer()[++index] = converted.converted.byte[1];
+           controller_.get_buffer()[++index] = converted.converted.byte[2];
+           controller_.get_buffer()[++index] = converted.converted.byte[3];
+       }
+   
+       void CueHandler::add_uint16_to_cue(uint32_t& index, uint16_t value) {
+           IntByteConvert converted(value);
+           controller_.get_buffer()[++index] = converted.converted_0;
+           controller_.get_buffer()[++index] = converted.converted_1;
+       }
+   
+       void CueHandler::add_uint32_to_cue(uint32_t &index, uint32_t value) {
+           IntByteConvert converted(value);
+           controller_.get_buffer()[++index] = converted.converted_0;
+           controller_.get_buffer()[++index] = converted.converted_1;
+           controller_.get_buffer()[++index] = converted.converted_2;
+           controller_.get_buffer()[++index] = converted.converted_3;
+       }
+   
+       Palette* CueHandler::deserialize_palette(const uint8_t* cue, uint8_t num_colors) {
+           int index = -1;
+           Colors::RGB colors[num_colors];
+           for (uint8_t i = 0; i < num_colors; i++) {
+               colors[i].r = cue[++index];
+               colors[i].g = cue[++index];
+               colors[i].b = cue[++index];
+           }
+           return new Palette(colors, num_colors);
+       }
+   
+       Section* CueHandler::get_section(uint8_t section_id, uint8_t layer_id) const {
+           Section* section = controller_.get_maestro().get_section(section_id);
+   
+           /*
+            * Iterate until we hit the desired Layer level.
+            * If there is no Layer at that level, create it.
+            * Important: Layers start at index 1, not 0!
+            */
+           if (section != nullptr && layer_id > 0) {
+               for (uint8_t i = 0; i < layer_id; i++) {
+                   if (section->get_layer() != nullptr) {
+                       section = section->get_layer()->section;
+                   }
+                   else {
+                       section = nullptr;
+                   }
+               }
+           }
+   
+           return section;
+       }
+   
+       uint16_t CueHandler::serialize_palette(uint8_t cue[], const Palette& palette) {
+           int index = -1;
+           for (uint8_t i = 0; i < palette.get_num_colors(); i++) {
+               Colors::RGB color = palette.get_color_at_index(i);
+               cue[++index] = color.r;
+               cue[++index] = color.g;
+               cue[++index] = color.b;
+           }
+   
+           return index;
+       }
+   
+       uint32_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte) {
+           uint16_t index = (uint8_t)CueController::Byte::PayloadByte;
+           controller_.get_buffer()[index] = handler_byte;
+           controller_.get_buffer()[++index] = action_byte;
+   
+           return index;
+       }
+   
+       uint32_t CueHandler::start_cue(uint8_t handler_byte, uint8_t action_byte, uint8_t section_num, uint8_t layer_num) {
+           uint32_t index = start_cue(handler_byte, action_byte);
+           controller_.get_buffer()[++index] = section_num;
+           controller_.get_buffer()[++index] = layer_num;
+   
+           return index;
+       }
+   }

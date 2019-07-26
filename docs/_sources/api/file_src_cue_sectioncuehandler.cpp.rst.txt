@@ -1,0 +1,46 @@
+
+.. _file_src_cue_sectioncuehandler.cpp:
+
+File sectioncuehandler.cpp
+==========================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_cue>` (``src/cue``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/cue/sectioncuehandler.cpp``)
+----------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_cue_sectioncuehandler.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``cuecontroller.h`` (:ref:`file_src_cue_cuecontroller.h`)
+
+- ``sectioncuehandler.h`` (:ref:`file_src_cue_sectioncuehandler.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

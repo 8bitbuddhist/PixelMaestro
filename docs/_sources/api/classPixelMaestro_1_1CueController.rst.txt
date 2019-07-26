@@ -1,0 +1,26 @@
+.. _exhale_class_classPixelMaestro_1_1CueController:
+
+Class CueController
+===================
+
+- Defined in :ref:`file_src_cue_cuecontroller.h`
+
+
+Nested Relationships
+--------------------
+
+
+Nested Types
+************
+
+- :ref:`exhale_struct_structPixelMaestro_1_1CueController_1_1BlockedCue`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::CueController
+   :members:
+   :protected-members:
+   :undoc-members:

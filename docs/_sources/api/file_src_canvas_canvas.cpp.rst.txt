@@ -1,0 +1,50 @@
+
+.. _file_src_canvas_canvas.cpp:
+
+File canvas.cpp
+===============
+
+|exhale_lsh| :ref:`Parent directory <dir_src_canvas>` (``src/canvas``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/canvas/canvas.cpp``)
+--------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_canvas_canvas.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../utility.h``
+
+- ``canvas.h`` (:ref:`file_src_canvas_canvas.h`)
+
+- ``colorpresets.h`` (:ref:`file_src_colorpresets.h`)
+
+- ``math.h``
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

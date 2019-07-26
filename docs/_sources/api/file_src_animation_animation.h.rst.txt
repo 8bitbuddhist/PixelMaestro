@@ -1,0 +1,97 @@
+
+.. _file_src_animation_animation.h:
+
+File animation.h
+================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_animation>` (``src/animation``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/animation/animation.h``)
+------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_animation_animation.h.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``../core/colors.h``
+
+- ``../core/palette.h``
+
+- ``../core/point.h``
+
+- ``../core/section.h``
+
+- ``../core/timer/animationtimer.h``
+
+- ``animationtype.h`` (:ref:`file_src_animation_animationtype.h`)
+
+- ``stdint.h``
+
+
+
+Included By
+-----------
+
+
+- :ref:`file_src_animation_animation.cpp`
+
+- :ref:`file_src_core_section.h`
+
+- :ref:`file_src_core_timer_animationtimer.h`
+
+- :ref:`file_src_animation_blinkanimation.h`
+
+- :ref:`file_src_animation_cycleanimation.h`
+
+- :ref:`file_src_animation_fireanimation.h`
+
+- :ref:`file_src_animation_lightninganimation.h`
+
+- :ref:`file_src_animation_mandelbrotanimation.h`
+
+- :ref:`file_src_animation_plasmaanimation.h`
+
+- :ref:`file_src_animation_radialanimation.h`
+
+- :ref:`file_src_animation_randomanimation.h`
+
+- :ref:`file_src_animation_solidanimation.h`
+
+- :ref:`file_src_animation_sparkleanimation.h`
+
+- :ref:`file_src_animation_waveanimation.h`
+
+- :ref:`file_src_cue_animationcuehandler.h`
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+
+
+Classes
+-------
+
+
+- :ref:`exhale_class_classPixelMaestro_1_1Animation`
+

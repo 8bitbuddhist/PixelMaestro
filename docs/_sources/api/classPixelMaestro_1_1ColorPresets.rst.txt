@@ -1,0 +1,16 @@
+.. _exhale_class_classPixelMaestro_1_1ColorPresets:
+
+Class ColorPresets
+==================
+
+- Defined in :ref:`file_src_colorpresets.h`
+
+
+Class Documentation
+-------------------
+
+
+.. doxygenclass:: PixelMaestro::ColorPresets
+   :members:
+   :protected-members:
+   :undoc-members:

@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class Colors &mdash; PixelMaestro 2.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class CueController" href="classPixelMaestro_1_1CueController.html" />
+    <link rel="prev" title="Class ColorPresets" href="classPixelMaestro_1_1ColorPresets.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#faq">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#core-concepts">Core Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-section">What’s a Section?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-maestro">What’s a Maestro?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#using-pixelmaestro">Using PixelMaestro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#sample-sketch">Sample Sketch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#primary-components">Primary Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#secondary-components">Secondary Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Maestros.html">Maestros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-maestro">Creating a Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#updating-the-maestro">Updating the Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#changing-the-refresh-interval">Changing the Refresh Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#interacting-with-sections">Interacting with Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#setting-a-global-brightness-level">Setting a Global Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#synchronizing-components">Synchronizing Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Sections.html">Sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#creating-a-section">Creating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#updating-a-section">Updating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#interacting-with-the-pixel-grid">Interacting With the Pixel Grid</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#setting-a-pixel-s-color">Setting a Pixel’s Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#retrieving-a-pixel-s-color">Retrieving a Pixel’s Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#animating-a-section">Animating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#displaying-custom-shapes-and-patterns">Displaying Custom Shapes and Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#setting-a-brightness-level">Setting a Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Points.html">Points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#creating-a-point">Creating a Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Points.html#coordinates-versus-dimensions">Coordinates Versus Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#other-methods">Other Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Pixels.html">Pixels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#creating-pixels">Creating Pixels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#how-pixels-work">How Pixels Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#performance-options">Performance Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#disabling-fading">Disabling Fading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#enabling-accurate-fading">Enabling Accurate Fading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Colors.html">Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#creating-colors">Creating Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#mixing-colors">Mixing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#sample-colors">Sample Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Palettes.html">Palettes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#creating-a-palette">Creating a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#using-a-palette">Using a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#changing-colors">Changing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#retrieving-colors">Retrieving Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Animations.html">Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#animation-types">Animation Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#creating-an-animation">Creating an Animation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#animation-cycles">Animation Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-the-color-palette">Setting the Color Palette</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-additional-options">Setting Additional Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#setting-the-orientation">Setting the Orientation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-animation-timing">Changing the Animation Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#toggling-fading">Toggling Fading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-center">Changing the Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#how-animations-work">How Animations Work</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvases.html">Canvases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#creating-a-canvas">Creating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#setting-the-palette">Setting the Palette</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#animating-a-canvas">Animating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#frames">Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#switching-frames">Switching Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#drawing-shapes">Drawing Shapes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#selecting-a-color">Selecting a Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#lines">Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#points">Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#rectangles">Rectangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#text">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#triangles">Triangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#clearing-the-canvas">Clearing the Canvas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Cues.html">Cues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#initializing-the-cuecontroller">Initializing the CueController</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#setting-the-buffer-size">Setting the Buffer Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#enabling-cuehandlers">Enabling CueHandlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#creating-cues">Creating Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#running-cues">Running Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#blocking-cues">Blocking Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#structure">Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Shows.html">Shows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#adding-events">Adding Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#timing-modes">Timing Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#looping">Looping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Timers.html">Timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#creating-a-timer">Creating a Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#changing-the-interval">Changing the Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#starting-and-stopping-a-timer">Starting and Stopping a Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="root.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="root.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespace_PixelMaestro.html">Namespace PixelMaestro</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="root.html#classes-and-structs">Classes and Structs</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Colors_1_1RGB.html">Struct Colors::RGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1CueController_1_1BlockedCue.html">Struct CueController::BlockedCue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Layer.html">Struct Section::Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Mirror.html">Struct Section::Mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Scroll.html">Struct Section::Scroll</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Animation.html">Class Animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationCueHandler.html">Class AnimationCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationTimer.html">Class AnimationTimer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1BlinkAnimation.html">Class BlinkAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Canvas.html">Class Canvas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CanvasCueHandler.html">Class CanvasCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ColorPresets.html">Class ColorPresets</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Class Colors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CueController.html">Class CueController</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html">Class CueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CycleAnimation.html">Class CycleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Event.html">Class Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FireAnimation.html">Class FireAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FloatByteConvert.html">Class FloatByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font.html">Class Font</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font5x8.html">Class Font5x8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1IntByteConvert.html">Class IntByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1LightningAnimation.html">Class LightningAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Maestro.html">Class Maestro</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MaestroCueHandler.html">Class MaestroCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MandelbrotAnimation.html">Class MandelbrotAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Palette.html">Class Palette</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Pixel.html">Class Pixel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1PlasmaAnimation.html">Class PlasmaAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Point.html">Class Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RadialAnimation.html">Class RadialAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RandomAnimation.html">Class RandomAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Section.html">Class Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SectionCueHandler.html">Class SectionCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Show.html">Class Show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ShowCueHandler.html">Class ShowCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SolidAnimation.html">Class SolidAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html">Enum AnimationType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#unions">Unions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html">Union FloatByteConvert::Converter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="root.html">API Reference</a> &raquo;</li>
+        
+      <li>Class Colors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/classPixelMaestro_1_1Colors.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-colors">
+<span id="exhale-class-classpixelmaestro-1-1colors"></span><h1>Class Colors<a class="headerlink" href="#class-colors" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_src_core_colors.h.html#file-src-core-colors-h"><span class="std std-ref">File colors.h</span></a></p></li>
+</ul>
+<div class="section" id="nested-relationships">
+<h2>Nested Relationships<a class="headerlink" href="#nested-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nested-types">
+<h3>Nested Types<a class="headerlink" href="#nested-types" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="structPixelMaestro_1_1Colors_1_1RGB.html#exhale-struct-structpixelmaestro-1-1colors-1-1rgb"><span class="std std-ref">Struct Colors::RGB</span></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N12PixelMaestro6ColorsE">
+<span id="_CPPv3N12PixelMaestro6ColorsE"></span><span id="_CPPv2N12PixelMaestro6ColorsE"></span><span id="PixelMaestro::Colors"></span><span class="target" id="classPixelMaestro_1_1Colors"></span><em class="property">class </em><code class="sig-name descname">Colors</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6ColorsE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="enum">
+<dt id="_CPPv4N12PixelMaestro6Colors7MixModeE">
+<span id="_CPPv3N12PixelMaestro6Colors7MixModeE"></span><span id="_CPPv2N12PixelMaestro6Colors7MixModeE"></span><span class="target" id="classPixelMaestro_1_1Colors_1a7c626dc9b8d761de2f72bfe3537a411b"></span><em class="property">enum </em><code class="sig-name descname">MixMode</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors7MixModeE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Determines the blending algorithm used when mixing two colors. </p>
+<p><em>Values:</em></p>
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro6Colors4NoneE">
+<span id="_CPPv3N12PixelMaestro6Colors4NoneE"></span><span id="_CPPv2N12PixelMaestro6Colors4NoneE"></span><span class="target" id="classPixelMaestro_1_1Colors_1a7c626dc9b8d761de2f72bfe3537a411ba6adf97f83acf6453d4a6a4b1070f3754"></span><code class="sig-name descname">None</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors4NoneE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Do not mix the colors. </p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro6Colors5AlphaE">
+<span id="_CPPv3N12PixelMaestro6Colors5AlphaE"></span><span id="_CPPv2N12PixelMaestro6Colors5AlphaE"></span><span class="target" id="classPixelMaestro_1_1Colors_1a7c626dc9b8d761de2f72bfe3537a411ba6132295fcf5570fb8b0a944ef322a598"></span><code class="sig-name descname">Alpha</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors5AlphaE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Mixes both colors with a specific blend percentage (blending is applied to the Layer). </p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro6Colors8MultiplyE">
+<span id="_CPPv3N12PixelMaestro6Colors8MultiplyE"></span><span id="_CPPv2N12PixelMaestro6Colors8MultiplyE"></span><span class="target" id="classPixelMaestro_1_1Colors_1a7c626dc9b8d761de2f72bfe3537a411bae257376d913f3b53cbb4a9b19d770648"></span><code class="sig-name descname">Multiply</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors8MultiplyE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Multiplies the base color by the layered color. </p>
+</dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro6Colors7OverlayE">
+<span id="_CPPv3N12PixelMaestro6Colors7OverlayE"></span><span id="_CPPv2N12PixelMaestro6Colors7OverlayE"></span><span class="target" id="classPixelMaestro_1_1Colors_1a7c626dc9b8d761de2f72bfe3537a411ba6b551379c3c0b59326abdaf3b4395bd3"></span><code class="sig-name descname">Overlay</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors7OverlayE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Only draws the layered color if it’s not black. Black pixels are rendered transparent. </p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Static Functions</p>
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors14generate_cometEP3RGB7uint8_tR3RGBR3RGB7uint8_t7uint8_t">
+<span id="_CPPv3N12PixelMaestro6Colors14generate_cometEP3RGB7uint8_tR3RGBR3RGB7uint8_t7uint8_t"></span><span id="_CPPv2N12PixelMaestro6Colors14generate_cometEP3RGB7uint8_tR3RGBR3RGB7uint8_t7uint8_t"></span><span id="PixelMaestro::Colors::generate_comet__RGBP.uint8_t.RGBR.RGBR.uint8_t.uint8_t"></span><span class="target" id="classPixelMaestro_1_1Colors_1a69e8cbdc60745c320e2d2e4e39484e8f"></span>void <code class="sig-name descname">generate_comet</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> *<em>array</em>, uint8_t <em>array_size</em>, <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> &amp;<em>start_color</em>, <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> &amp;<em>end_color</em>, uint8_t <em>comet_start</em>, uint8_t <em>comet_length</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors14generate_cometEP3RGB7uint8_tR3RGBR3RGB7uint8_t7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generates a comet with a tail. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code>: The array to populate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">array_size</span></code>: The size of the array. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">body_color</span></code>: The color of the comet’s body. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tail_color</span></code>: The color that the comet fades to. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">comet_start</span></code>: How far the comet body is from the start of the array. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">comet_length</span></code>: The length of the comet from body to tail. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors21generate_random_colorEv">
+<span id="_CPPv3N12PixelMaestro6Colors21generate_random_colorEv"></span><span id="_CPPv2N12PixelMaestro6Colors21generate_random_colorEv"></span><span id="PixelMaestro::Colors::generate_random_color"></span><span class="target" id="classPixelMaestro_1_1Colors_1af8481553cbcceca03b7237903f221daa"></span><a class="reference internal" href="#_CPPv4N12PixelMaestro6ColorsE" title="PixelMaestro::Colors">Colors</a>::<a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> <code class="sig-name descname">generate_random_color</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors21generate_random_colorEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates a random color. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Random color. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors27generate_random_color_arrayEP3RGB7uint8_t">
+<span id="_CPPv3N12PixelMaestro6Colors27generate_random_color_arrayEP3RGB7uint8_t"></span><span id="_CPPv2N12PixelMaestro6Colors27generate_random_color_arrayEP3RGB7uint8_t"></span><span id="PixelMaestro::Colors::generate_random_color_array__RGBP.uint8_t"></span><span class="target" id="classPixelMaestro_1_1Colors_1ae86305bec9df25983a4672b49e170217"></span>void <code class="sig-name descname">generate_random_color_array</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> *<em>array</em>, uint8_t <em>num_colors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors27generate_random_color_arrayEP3RGB7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates a randomly generated array of colors. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code>: The array to populate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_colors</span></code>: The number of colors to generate. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors28generate_scaling_color_arrayEP3RGBR3RGBR3RGB7uint8_tb">
+<span id="_CPPv3N12PixelMaestro6Colors28generate_scaling_color_arrayEP3RGBR3RGBR3RGB7uint8_tb"></span><span id="_CPPv2N12PixelMaestro6Colors28generate_scaling_color_arrayEP3RGBR3RGBR3RGB7uint8_tb"></span><span id="PixelMaestro::Colors::generate_scaling_color_array__RGBP.RGBR.RGBR.uint8_t.b"></span><span class="target" id="classPixelMaestro_1_1Colors_1af6b1e3fab589cdc1338333a11e27754c"></span>void <code class="sig-name descname">generate_scaling_color_array</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> *<em>array</em>, <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> &amp;<em>base_color</em>, <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> &amp;<em>target_color</em>, uint8_t <em>num_colors</em>, bool <em>mirror</em> = false<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors28generate_scaling_color_arrayEP3RGBR3RGBR3RGB7uint8_tb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Creates an array of colors that gradually blend from a base color to a target color.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">array</span></code>: The array to populate. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">base_color</span></code>: The initial color. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">target_color</span></code>: The target color. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_colors</span></code>: Number of colors in the array. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mirror</span></code>: If true, the array will be mirrored from the target color back to the base color. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors10mix_colorsERK3RGBRK3RGB7MixMode7uint8_t">
+<span id="_CPPv3N12PixelMaestro6Colors10mix_colorsERK3RGBRK3RGB7MixMode7uint8_t"></span><span id="_CPPv2N12PixelMaestro6Colors10mix_colorsERK3RGBRK3RGB7MixMode7uint8_t"></span><span id="PixelMaestro::Colors::mix_colors__RGBCR.RGBCR.MixMode.uint8_t"></span><span class="target" id="classPixelMaestro_1_1Colors_1a5e71d99d56aacfd4e547f9cb83c7eac3"></span><a class="reference internal" href="#_CPPv4N12PixelMaestro6ColorsE" title="PixelMaestro::Colors">Colors</a>::<a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> <code class="sig-name descname">mix_colors</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> &amp;<em>color_one</em>, <em class="property">const</em> <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> &amp;<em>color_two</em>, <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors7MixModeE" title="PixelMaestro::Colors::MixMode">MixMode</a> <em>mode</em>, uint8_t <em>alpha</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors10mix_colorsERK3RGBRK3RGB7MixMode7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Mixes two colors.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>The mixed color. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">color_one</span></code>: The first color to mix. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">color_two</span></code>: The second color to mix. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">mode</span></code>: The type of mixing to perform. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">alpha</span></code>: Color two alpha factor (0 - 255). </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<dl class="class">
+<dt id="_CPPv4N12PixelMaestro6Colors3RGBE">
+<span id="_CPPv3N12PixelMaestro6Colors3RGBE"></span><span id="_CPPv2N12PixelMaestro6Colors3RGBE"></span><span id="PixelMaestro::Colors::RGB"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB"></span><em class="property">struct </em><code class="sig-name descname">RGB</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Stores an <a class="reference internal" href="structPixelMaestro_1_1Colors_1_1RGB.html#structPixelMaestro_1_1Colors_1_1RGB"><span class="std std-ref">RGB</span></a> definition of a color. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors3RGB3RGBE7uint8_t7uint8_t7uint8_t">
+<span id="_CPPv3N12PixelMaestro6Colors3RGB3RGBE7uint8_t7uint8_t7uint8_t"></span><span id="_CPPv2N12PixelMaestro6Colors3RGB3RGBE7uint8_t7uint8_t7uint8_t"></span><span id="PixelMaestro::Colors::RGB::RGB__uint8_t.uint8_t.uint8_t"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1aa2c95d22464df09a89a5f907ff060ebe"></span><code class="sig-name descname">RGB</code><span class="sig-paren">(</span>uint8_t <em>red</em> = 0, uint8_t <em>green</em> = 0, uint8_t <em>blue</em> = 0<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors3RGB3RGBE7uint8_t7uint8_t7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructor. Defaults to black if no other parameters are provided. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">red</span></code>: Red value. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">green</span></code>: Green value. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">blue</span></code>: Blue value. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors3RGB3RGBERK3RGB">
+<span id="_CPPv3N12PixelMaestro6Colors3RGB3RGBERK3RGB"></span><span id="_CPPv2N12PixelMaestro6Colors3RGB3RGBERK3RGB"></span><span id="PixelMaestro::Colors::RGB::RGB__RGBCR"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1ac0796e7d5c3c07c5748e339313dc299e"></span><code class="sig-name descname">RGB</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGB3RGBE7uint8_t7uint8_t7uint8_t" title="PixelMaestro::Colors::RGB::RGB">RGB</a> &amp;<em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors3RGB3RGBERK3RGB" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Copy constructor. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">other</span></code>: <a class="reference internal" href="structPixelMaestro_1_1Colors_1_1RGB.html#structPixelMaestro_1_1Colors_1_1RGB"><span class="std std-ref">RGB</span></a> to copy. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro6Colors3RGBaSE3RGB">
+<span id="_CPPv3N12PixelMaestro6Colors3RGBaSE3RGB"></span><span id="_CPPv2N12PixelMaestro6Colors3RGBaSE3RGB"></span><span id="PixelMaestro::Colors::RGB::assign-operator__RGB"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1a5898d0a3a42cc2d28a91794e1c0f9b58"></span>void <code class="sig-name descname">operator=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> <em>color_two</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors3RGBaSE3RGB" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro6Colors3RGBeqE3RGB">
+<span id="_CPPv3NK12PixelMaestro6Colors3RGBeqE3RGB"></span><span id="_CPPv2NK12PixelMaestro6Colors3RGBeqE3RGB"></span><span id="PixelMaestro::Colors::RGB::eq-operator__RGBC"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1abdaf593ca36febd1696f4bee7628ee6f"></span>bool <code class="sig-name descname">operator==</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> <em>color_two</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro6Colors3RGBeqE3RGB" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro6Colors3RGBneE3RGB">
+<span id="_CPPv3NK12PixelMaestro6Colors3RGBneE3RGB"></span><span id="_CPPv2NK12PixelMaestro6Colors3RGBneE3RGB"></span><span id="PixelMaestro::Colors::RGB::neq-operator__RGBC"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1a49d3c5117deb72e1148c826b6fbe6e15"></span>bool <code class="sig-name descname">operator!=</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> <em>color_two</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro6Colors3RGBneE3RGB" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro6Colors3RGBmlEf">
+<span id="_CPPv3NK12PixelMaestro6Colors3RGBmlEf"></span><span id="_CPPv2NK12PixelMaestro6Colors3RGBmlEf"></span><span id="PixelMaestro::Colors::RGB::mul-operator__floatC"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1a627d71efc211fd607017823eb93b6d13"></span><a class="reference internal" href="#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> <code class="sig-name descname">operator*</code><span class="sig-paren">(</span>float <em>multiplier</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro6Colors3RGBmlEf" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro6Colors3RGB1rE">
+<span id="_CPPv3N12PixelMaestro6Colors3RGB1rE"></span><span id="_CPPv2N12PixelMaestro6Colors3RGB1rE"></span><span id="PixelMaestro::Colors::RGB::r__uint8_t"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1a1d74fc372f38c89ed20ddc948eb5d566"></span>uint8_t <code class="sig-name descname">r</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors3RGB1rE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The color’s red value. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro6Colors3RGB1gE">
+<span id="_CPPv3N12PixelMaestro6Colors3RGB1gE"></span><span id="_CPPv2N12PixelMaestro6Colors3RGB1gE"></span><span id="PixelMaestro::Colors::RGB::g__uint8_t"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1af906a144d8009798f008ba5052771168"></span>uint8_t <code class="sig-name descname">g</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors3RGB1gE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The color’s green value. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro6Colors3RGB1bE">
+<span id="_CPPv3N12PixelMaestro6Colors3RGB1bE"></span><span id="_CPPv2N12PixelMaestro6Colors3RGB1bE"></span><span id="PixelMaestro::Colors::RGB::b__uint8_t"></span><span class="target" id="structPixelMaestro_1_1Colors_1_1RGB_1aab507cf796a7db04ce6a9cac32c96871"></span>uint8_t <code class="sig-name descname">b</code><a class="headerlink" href="#_CPPv4N12PixelMaestro6Colors3RGB1bE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The color’s blue value. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classPixelMaestro_1_1CueController.html" class="btn btn-neutral float-right" title="Class CueController" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="classPixelMaestro_1_1ColorPresets.html" class="btn btn-neutral float-left" title="Class ColorPresets" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

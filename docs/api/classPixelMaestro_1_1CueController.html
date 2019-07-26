@@ -1,0 +1,791 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Class CueController &mdash; PixelMaestro 2.0.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/collapsible-lists/css/tree_view.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Class CueHandler" href="classPixelMaestro_1_1CueHandler.html" />
+    <link rel="prev" title="Class Colors" href="classPixelMaestro_1_1Colors.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> PixelMaestro
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Home.html">Home</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#getting-started">Getting Started</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Home.html#faq">FAQ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Tutorial.html">Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#core-concepts">Core Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-section">What’s a Section?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#what-s-a-maestro">What’s a Maestro?</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Tutorial.html#using-pixelmaestro">Using PixelMaestro</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Tutorial.html#sample-sketch">Sample Sketch</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#primary-components">Primary Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Components.html#secondary-components">Secondary Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Maestros.html">Maestros</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-maestro">Creating a Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#updating-the-maestro">Updating the Maestro</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#changing-the-refresh-interval">Changing the Refresh Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#interacting-with-sections">Interacting with Sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#setting-a-global-brightness-level">Setting a Global Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Maestros.html#synchronizing-components">Synchronizing Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Sections.html">Sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#creating-a-section">Creating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#updating-a-section">Updating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#interacting-with-the-pixel-grid">Interacting With the Pixel Grid</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#setting-a-pixel-s-color">Setting a Pixel’s Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#retrieving-a-pixel-s-color">Retrieving a Pixel’s Color</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#animating-a-section">Animating a Section</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#displaying-custom-shapes-and-patterns">Displaying Custom Shapes and Patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#setting-a-brightness-level">Setting a Brightness Level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Points.html">Points</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#creating-a-point">Creating a Point</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Points.html#coordinates-versus-dimensions">Coordinates Versus Dimensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Points.html#other-methods">Other Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Pixels.html">Pixels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#creating-pixels">Creating Pixels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#how-pixels-work">How Pixels Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Pixels.html#performance-options">Performance Options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#disabling-fading">Disabling Fading</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Pixels.html#enabling-accurate-fading">Enabling Accurate Fading</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Colors.html">Colors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#creating-colors">Creating Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#mixing-colors">Mixing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Colors.html#sample-colors">Sample Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Palettes.html">Palettes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#creating-a-palette">Creating a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#using-a-palette">Using a Palette</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#changing-colors">Changing Colors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Palettes.html#retrieving-colors">Retrieving Colors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Animations.html">Animations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#animation-types">Animation Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#creating-an-animation">Creating an Animation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#animation-cycles">Animation Cycles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-the-color-palette">Setting the Color Palette</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Animations.html#setting-additional-options">Setting Additional Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#setting-the-orientation">Setting the Orientation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-animation-timing">Changing the Animation Timing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#toggling-fading">Toggling Fading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#changing-the-center">Changing the Center</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Animations.html#how-animations-work">How Animations Work</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Canvases.html">Canvases</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#creating-a-canvas">Creating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#setting-the-palette">Setting the Palette</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#animating-a-canvas">Animating a Canvas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#frames">Frames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#switching-frames">Switching Frames</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Canvases.html#drawing-shapes">Drawing Shapes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#selecting-a-color">Selecting a Color</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#lines">Lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#points">Points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#rectangles">Rectangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#text">Text</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#triangles">Triangles</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Canvases.html#clearing-the-canvas">Clearing the Canvas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Cues.html">Cues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#initializing-the-cuecontroller">Initializing the CueController</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#setting-the-buffer-size">Setting the Buffer Size</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Cues.html#enabling-cuehandlers">Enabling CueHandlers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#creating-cues">Creating Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#running-cues">Running Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#blocking-cues">Blocking Cues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Cues.html#structure">Structure</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Shows.html">Shows</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#creating-a-show">Creating a Show</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#adding-events">Adding Events</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#timing-modes">Timing Modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Shows.html#looping">Looping</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Timers.html">Timers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#creating-a-timer">Creating a Timer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#changing-the-interval">Changing the Interval</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Timers.html#starting-and-stopping-a-timer">Starting and Stopping a Timer</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="root.html">API Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="root.html#class-hierarchy">Class Hierarchy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="root.html#file-hierarchy">File Hierarchy</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="root.html#full-api">Full API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="root.html#namespaces">Namespaces</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespace_PixelMaestro.html">Namespace PixelMaestro</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current"><a class="reference internal" href="root.html#classes-and-structs">Classes and Structs</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Colors_1_1RGB.html">Struct Colors::RGB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1CueController_1_1BlockedCue.html">Struct CueController::BlockedCue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Layer.html">Struct Section::Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Mirror.html">Struct Section::Mirror</a></li>
+<li class="toctree-l4"><a class="reference internal" href="structPixelMaestro_1_1Section_1_1Scroll.html">Struct Section::Scroll</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Animation.html">Class Animation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationCueHandler.html">Class AnimationCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1AnimationTimer.html">Class AnimationTimer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1BlinkAnimation.html">Class BlinkAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Canvas.html">Class Canvas</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CanvasCueHandler.html">Class CanvasCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ColorPresets.html">Class ColorPresets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Colors.html">Class Colors</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">Class CueController</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html">Class CueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1CycleAnimation.html">Class CycleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Event.html">Class Event</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FireAnimation.html">Class FireAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1FloatByteConvert.html">Class FloatByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font.html">Class Font</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Font5x8.html">Class Font5x8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1IntByteConvert.html">Class IntByteConvert</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1LightningAnimation.html">Class LightningAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Maestro.html">Class Maestro</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MaestroCueHandler.html">Class MaestroCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1MandelbrotAnimation.html">Class MandelbrotAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Palette.html">Class Palette</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Pixel.html">Class Pixel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1PlasmaAnimation.html">Class PlasmaAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Point.html">Class Point</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RadialAnimation.html">Class RadialAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1RandomAnimation.html">Class RandomAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Section.html">Class Section</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SectionCueHandler.html">Class SectionCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Show.html">Class Show</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1ShowCueHandler.html">Class ShowCueHandler</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SolidAnimation.html">Class SolidAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#enums">Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html">Enum AnimationType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="root.html#unions">Unions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html">Union FloatByteConvert::Converter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PixelMaestro</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="root.html">API Reference</a> &raquo;</li>
+        
+      <li>Class CueController</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api/classPixelMaestro_1_1CueController.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="class-cuecontroller">
+<span id="exhale-class-classpixelmaestro-1-1cuecontroller"></span><h1>Class CueController<a class="headerlink" href="#class-cuecontroller" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>Defined in <a class="reference internal" href="file_src_cue_cuecontroller.h.html#file-src-cue-cuecontroller-h"><span class="std std-ref">File cuecontroller.h</span></a></p></li>
+</ul>
+<div class="section" id="nested-relationships">
+<h2>Nested Relationships<a class="headerlink" href="#nested-relationships" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nested-types">
+<h3>Nested Types<a class="headerlink" href="#nested-types" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="structPixelMaestro_1_1CueController_1_1BlockedCue.html#exhale-struct-structpixelmaestro-1-1cuecontroller-1-1blockedcue"><span class="std std-ref">Struct CueController::BlockedCue</span></a></p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="class-documentation">
+<h2>Class Documentation<a class="headerlink" href="#class-documentation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="_CPPv4N12PixelMaestro13CueControllerE">
+<span id="_CPPv3N12PixelMaestro13CueControllerE"></span><span id="_CPPv2N12PixelMaestro13CueControllerE"></span><span id="PixelMaestro::CueController"></span><span class="target" id="classPixelMaestro_1_1CueController"></span><em class="property">class </em><code class="sig-name descname">CueController</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueControllerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Types</p>
+<dl class="enum">
+<dt id="_CPPv4N12PixelMaestro13CueController4ByteE">
+<span id="_CPPv3N12PixelMaestro13CueController4ByteE"></span><span id="_CPPv2N12PixelMaestro13CueController4ByteE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209"></span><em class="property">enum </em><code class="sig-name descname">Byte</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController4ByteE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Common bit indices for each Cue. </p>
+<p><em>Values:</em></p>
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController7IDByte1E">
+<span id="_CPPv3N12PixelMaestro13CueController7IDByte1E"></span><span id="_CPPv2N12PixelMaestro13CueController7IDByte1E"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209af8798e26dd69126c89510d36d5a4a510"></span><code class="sig-name descname">IDByte1</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController7IDByte1E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController7IDByte2E">
+<span id="_CPPv3N12PixelMaestro13CueController7IDByte2E"></span><span id="_CPPv2N12PixelMaestro13CueController7IDByte2E"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209ac30f20f5321443d8563970191299e539"></span><code class="sig-name descname">IDByte2</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController7IDByte2E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController7IDByte3E">
+<span id="_CPPv3N12PixelMaestro13CueController7IDByte3E"></span><span id="_CPPv2N12PixelMaestro13CueController7IDByte3E"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209a9eac5ff6bb69fbe90b5e38b5b44a6eab"></span><code class="sig-name descname">IDByte3</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController7IDByte3E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController12ChecksumByteE">
+<span id="_CPPv3N12PixelMaestro13CueController12ChecksumByteE"></span><span id="_CPPv2N12PixelMaestro13CueController12ChecksumByteE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209a5e253074dfa32beb85f2eda213adb7b4"></span><code class="sig-name descname">ChecksumByte</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController12ChecksumByteE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController9SizeByte1E">
+<span id="_CPPv3N12PixelMaestro13CueController9SizeByte1E"></span><span id="_CPPv2N12PixelMaestro13CueController9SizeByte1E"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209a3c11f84a5b61a0e1168cc83f0d05a795"></span><code class="sig-name descname">SizeByte1</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController9SizeByte1E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController9SizeByte2E">
+<span id="_CPPv3N12PixelMaestro13CueController9SizeByte2E"></span><span id="_CPPv2N12PixelMaestro13CueController9SizeByte2E"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209a7bf7888d321cd570b6f9dc88c5e8bf20"></span><code class="sig-name descname">SizeByte2</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController9SizeByte2E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController9SizeByte3E">
+<span id="_CPPv3N12PixelMaestro13CueController9SizeByte3E"></span><span id="_CPPv2N12PixelMaestro13CueController9SizeByte3E"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209a037aba5d7eb8db3a8564df4ce91f80f8"></span><code class="sig-name descname">SizeByte3</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController9SizeByte3E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController9SizeByte4E">
+<span id="_CPPv3N12PixelMaestro13CueController9SizeByte4E"></span><span id="_CPPv2N12PixelMaestro13CueController9SizeByte4E"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209aa164605b0c1a924b27dd20b555d788ed"></span><code class="sig-name descname">SizeByte4</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController9SizeByte4E" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController11PayloadByteE">
+<span id="_CPPv3N12PixelMaestro13CueController11PayloadByteE"></span><span id="_CPPv2N12PixelMaestro13CueController11PayloadByteE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a97eee78b1aaa5301e3f4d02638a27209a33fab58ce69ed09226473cfe3bb311c2"></span><code class="sig-name descname">PayloadByte</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController11PayloadByteE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="enum">
+<dt id="_CPPv4N12PixelMaestro13CueController7HandlerE">
+<span id="_CPPv3N12PixelMaestro13CueController7HandlerE"></span><span id="_CPPv2N12PixelMaestro13CueController7HandlerE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a57e6edcea5d39c5e1206d66f3cd8fc15"></span><em class="property">enum </em><code class="sig-name descname">Handler</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController7HandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The different handlers available for running Cues. </p>
+<p><em>Values:</em></p>
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController19AnimationCueHandlerE">
+<span id="_CPPv3N12PixelMaestro13CueController19AnimationCueHandlerE"></span><span id="_CPPv2N12PixelMaestro13CueController19AnimationCueHandlerE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a57e6edcea5d39c5e1206d66f3cd8fc15a3f2fe467c6f6f9dc1b63a948e2e9fcac"></span><code class="sig-name descname">AnimationCueHandler</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController19AnimationCueHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController16CanvasCueHandlerE">
+<span id="_CPPv3N12PixelMaestro13CueController16CanvasCueHandlerE"></span><span id="_CPPv2N12PixelMaestro13CueController16CanvasCueHandlerE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a57e6edcea5d39c5e1206d66f3cd8fc15aca36e5648ba544ff411f73d5ba4a8b1a"></span><code class="sig-name descname">CanvasCueHandler</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController16CanvasCueHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController17MaestroCueHandlerE">
+<span id="_CPPv3N12PixelMaestro13CueController17MaestroCueHandlerE"></span><span id="_CPPv2N12PixelMaestro13CueController17MaestroCueHandlerE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a57e6edcea5d39c5e1206d66f3cd8fc15a68dd24b23bd96c0df549f2a4ec7cb357"></span><code class="sig-name descname">MaestroCueHandler</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController17MaestroCueHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController17SectionCueHandlerE">
+<span id="_CPPv3N12PixelMaestro13CueController17SectionCueHandlerE"></span><span id="_CPPv2N12PixelMaestro13CueController17SectionCueHandlerE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a57e6edcea5d39c5e1206d66f3cd8fc15af76387c58a7f7c7f1188048ff291490a"></span><code class="sig-name descname">SectionCueHandler</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController17SectionCueHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="enumerator">
+<dt id="_CPPv4N12PixelMaestro13CueController14ShowCueHandlerE">
+<span id="_CPPv3N12PixelMaestro13CueController14ShowCueHandlerE"></span><span id="_CPPv2N12PixelMaestro13CueController14ShowCueHandlerE"></span><span class="target" id="classPixelMaestro_1_1CueController_1a57e6edcea5d39c5e1206d66f3cd8fc15aa69d7429a33093355338ac499f8ad6a2"></span><code class="sig-name descname">ShowCueHandler</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController14ShowCueHandlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController13CueControllerER7Maestro8uint32_t">
+<span id="_CPPv3N12PixelMaestro13CueController13CueControllerER7Maestro8uint32_t"></span><span id="_CPPv2N12PixelMaestro13CueController13CueControllerER7Maestro8uint32_t"></span><span id="PixelMaestro::CueController::CueController__MaestroR.uint32_t"></span><span class="target" id="classPixelMaestro_1_1CueController_1a9ee73b2e41f8d16f8a6178fed805579a"></span><code class="sig-name descname">CueController</code><span class="sig-paren">(</span><a class="reference internal" href="classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7MaestroE" title="PixelMaestro::Maestro">Maestro</a> &amp;<em>maestro</em>, uint32_t <em>buffer_size</em> = UINT8_MAX<span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController13CueControllerER7Maestro8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Constructor. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">maestro</span></code>: <a class="reference internal" href="classPixelMaestro_1_1Maestro.html#classPixelMaestro_1_1Maestro"><span class="std std-ref">Maestro</span></a> that processed Cues will run on. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">buffer_size</span></code>: The size of the Cue buffer (defaults to 256). </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueControllerD0Ev">
+<span id="_CPPv3N12PixelMaestro13CueControllerD0Ev"></span><span id="_CPPv2N12PixelMaestro13CueControllerD0Ev"></span><span id="PixelMaestro::CueController::~CueController"></span><span class="target" id="classPixelMaestro_1_1CueController_1addc6a547130b0c25b0b9103b02a1b9f0"></span><code class="sig-name descname">~CueController</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueControllerD0Ev" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController8assembleE8uint32_t">
+<span id="_CPPv3N12PixelMaestro13CueController8assembleE8uint32_t"></span><span id="_CPPv2N12PixelMaestro13CueController8assembleE8uint32_t"></span><span id="PixelMaestro::CueController::assemble__uint32_t"></span><span class="target" id="classPixelMaestro_1_1CueController_1aa4a90984a6ea8015f65ee91c74e832ff"></span>uint8_t *<code class="sig-name descname">assemble</code><span class="sig-paren">(</span>uint32_t <em>payload_size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController8assembleE8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Prepares the Cue for transport by adding header info. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Assembled Cue. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">payload_size</span></code>: The size of the payload. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController8checksumEPK7uint8_t8uint32_t">
+<span id="_CPPv3N12PixelMaestro13CueController8checksumEPK7uint8_t8uint32_t"></span><span id="_CPPv2N12PixelMaestro13CueController8checksumEPK7uint8_t8uint32_t"></span><span id="PixelMaestro::CueController::checksum__uint8_tCP.uint32_t"></span><span class="target" id="classPixelMaestro_1_1CueController_1a3eab58a39e2495f7d90feda95d1df095"></span>uint8_t <code class="sig-name descname">checksum</code><span class="sig-paren">(</span><em class="property">const</em> uint8_t *<em>cue</em>, uint32_t <em>cue_size</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController8checksumEPK7uint8_t8uint32_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Generates a checksum for verifying the integrity of a Cue. Calculated by summing each byte in the Cue, diving by 256, and taking the remainder. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>New checksum. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cue</span></code>: The contents of the Cue. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cue_size</span></code>: The size of the Cue. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController28enable_animation_cue_handlerEv">
+<span id="_CPPv3N12PixelMaestro13CueController28enable_animation_cue_handlerEv"></span><span id="_CPPv2N12PixelMaestro13CueController28enable_animation_cue_handlerEv"></span><span id="PixelMaestro::CueController::enable_animation_cue_handler"></span><span class="target" id="classPixelMaestro_1_1CueController_1ab13e4f2d1016cf02092ef1a80623c8d4"></span><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerE" title="PixelMaestro::CueHandler">CueHandler</a> &amp;<code class="sig-name descname">enable_animation_cue_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController28enable_animation_cue_handlerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables the <a class="reference internal" href="classPixelMaestro_1_1Animation.html#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a> <a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#classPixelMaestro_1_1CueHandler"><span class="std std-ref">CueHandler</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>New handler. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController25enable_canvas_cue_handlerEv">
+<span id="_CPPv3N12PixelMaestro13CueController25enable_canvas_cue_handlerEv"></span><span id="_CPPv2N12PixelMaestro13CueController25enable_canvas_cue_handlerEv"></span><span id="PixelMaestro::CueController::enable_canvas_cue_handler"></span><span class="target" id="classPixelMaestro_1_1CueController_1a53a41bfca8f1cb30dae4a95fd375143f"></span><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerE" title="PixelMaestro::CueHandler">CueHandler</a> &amp;<code class="sig-name descname">enable_canvas_cue_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController25enable_canvas_cue_handlerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables the <a class="reference internal" href="classPixelMaestro_1_1Canvas.html#classPixelMaestro_1_1Canvas"><span class="std std-ref">Canvas</span></a> <a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#classPixelMaestro_1_1CueHandler"><span class="std std-ref">CueHandler</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>New handler. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController26enable_maestro_cue_handlerEv">
+<span id="_CPPv3N12PixelMaestro13CueController26enable_maestro_cue_handlerEv"></span><span id="_CPPv2N12PixelMaestro13CueController26enable_maestro_cue_handlerEv"></span><span id="PixelMaestro::CueController::enable_maestro_cue_handler"></span><span class="target" id="classPixelMaestro_1_1CueController_1a7d8018fe8c95b74621f8041d8446115c"></span><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerE" title="PixelMaestro::CueHandler">CueHandler</a> &amp;<code class="sig-name descname">enable_maestro_cue_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController26enable_maestro_cue_handlerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables the <a class="reference internal" href="classPixelMaestro_1_1Maestro.html#classPixelMaestro_1_1Maestro"><span class="std std-ref">Maestro</span></a> <a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#classPixelMaestro_1_1CueHandler"><span class="std std-ref">CueHandler</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>New handler. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController26enable_section_cue_handlerEv">
+<span id="_CPPv3N12PixelMaestro13CueController26enable_section_cue_handlerEv"></span><span id="_CPPv2N12PixelMaestro13CueController26enable_section_cue_handlerEv"></span><span id="PixelMaestro::CueController::enable_section_cue_handler"></span><span class="target" id="classPixelMaestro_1_1CueController_1ab4c48ea637b2a66c20bd014be6e61121"></span><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerE" title="PixelMaestro::CueHandler">CueHandler</a> &amp;<code class="sig-name descname">enable_section_cue_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController26enable_section_cue_handlerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables the <a class="reference internal" href="classPixelMaestro_1_1Section.html#classPixelMaestro_1_1Section"><span class="std std-ref">Section</span></a> <a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#classPixelMaestro_1_1CueHandler"><span class="std std-ref">CueHandler</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>New handler. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController23enable_show_cue_handlerEv">
+<span id="_CPPv3N12PixelMaestro13CueController23enable_show_cue_handlerEv"></span><span id="_CPPv2N12PixelMaestro13CueController23enable_show_cue_handlerEv"></span><span id="PixelMaestro::CueController::enable_show_cue_handler"></span><span class="target" id="classPixelMaestro_1_1CueController_1a3af0ca821d918a7ad5c942fa25c7e114"></span><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerE" title="PixelMaestro::CueHandler">CueHandler</a> &amp;<code class="sig-name descname">enable_show_cue_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController23enable_show_cue_handlerEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Enables the <a class="reference internal" href="classPixelMaestro_1_1Show.html#classPixelMaestro_1_1Show"><span class="std std-ref">Show</span></a> <a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#classPixelMaestro_1_1CueHandler"><span class="std std-ref">CueHandler</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>New handler. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro13CueController10get_bufferEv">
+<span id="_CPPv3NK12PixelMaestro13CueController10get_bufferEv"></span><span id="_CPPv2NK12PixelMaestro13CueController10get_bufferEv"></span><span id="PixelMaestro::CueController::get_bufferC"></span><span class="target" id="classPixelMaestro_1_1CueController_1a3f0cc82592a6dd167c9ceeeed27a206d"></span>uint8_t *<code class="sig-name descname">get_buffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro13CueController10get_bufferEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the currently cached Cue. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Cue buffer. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro13CueController12get_cue_sizeEv">
+<span id="_CPPv3NK12PixelMaestro13CueController12get_cue_sizeEv"></span><span id="_CPPv2NK12PixelMaestro13CueController12get_cue_sizeEv"></span><span id="PixelMaestro::CueController::get_cue_sizeC"></span><span class="target" id="classPixelMaestro_1_1CueController_1a08b5abdb40c2f5b1bb1b1f0868fd7a77"></span>uint32_t <code class="sig-name descname">get_cue_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro13CueController12get_cue_sizeEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the size of the currently cached Cue. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Cue size. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro13CueController12get_cue_sizeEP7uint8_t">
+<span id="_CPPv3NK12PixelMaestro13CueController12get_cue_sizeEP7uint8_t"></span><span id="_CPPv2NK12PixelMaestro13CueController12get_cue_sizeEP7uint8_t"></span><span id="PixelMaestro::CueController::get_cue_size__uint8_tPC"></span><span class="target" id="classPixelMaestro_1_1CueController_1a757bb1de3dde3e0671e804af51e8400c"></span>uint32_t <code class="sig-name descname">get_cue_size</code><span class="sig-paren">(</span>uint8_t *<em>cue</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro13CueController12get_cue_sizeEP7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the size of the specified Cue. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Cue size. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cue</span></code>: Cue to measure. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro13CueController11get_handlerE7Handler">
+<span id="_CPPv3NK12PixelMaestro13CueController11get_handlerE7Handler"></span><span id="_CPPv2NK12PixelMaestro13CueController11get_handlerE7Handler"></span><span id="PixelMaestro::CueController::get_handler__HandlerC"></span><span class="target" id="classPixelMaestro_1_1CueController_1ae527b8212abd737f40df7d5a1e5b4b7d"></span><a class="reference internal" href="classPixelMaestro_1_1CueHandler.html#_CPPv4N12PixelMaestro10CueHandlerE" title="PixelMaestro::CueHandler">CueHandler</a> *<code class="sig-name descname">get_handler</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro13CueController7HandlerE" title="PixelMaestro::CueController::Handler">Handler</a> <em>handler</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro13CueController11get_handlerE7Handler" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the instance of the specified Handler. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>Handler instance. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">handler</span></code>: Handler to get. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro13CueController11get_maestroEv">
+<span id="_CPPv3NK12PixelMaestro13CueController11get_maestroEv"></span><span id="_CPPv2NK12PixelMaestro13CueController11get_maestroEv"></span><span id="PixelMaestro::CueController::get_maestroC"></span><span class="target" id="classPixelMaestro_1_1CueController_1a3d4c8ee324c2f0a26aec1327a237fffb"></span><a class="reference internal" href="classPixelMaestro_1_1Maestro.html#_CPPv4N12PixelMaestro7MaestroE" title="PixelMaestro::Maestro">Maestro</a> &amp;<code class="sig-name descname">get_maestro</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro13CueController11get_maestroEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns the controller’s <a class="reference internal" href="classPixelMaestro_1_1Maestro.html#classPixelMaestro_1_1Maestro"><span class="std std-ref">Maestro</span></a>. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p><a class="reference internal" href="classPixelMaestro_1_1Maestro.html#classPixelMaestro_1_1Maestro"><span class="std std-ref">Maestro</span></a> controlling this <a class="reference internal" href="#classPixelMaestro_1_1CueController"><span class="std std-ref">CueController</span></a>. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4NK12PixelMaestro13CueController10is_blockedEPK7uint8_t">
+<span id="_CPPv3NK12PixelMaestro13CueController10is_blockedEPK7uint8_t"></span><span id="_CPPv2NK12PixelMaestro13CueController10is_blockedEPK7uint8_t"></span><span id="PixelMaestro::CueController::is_blocked__uint8_tCPC"></span><span class="target" id="classPixelMaestro_1_1CueController_1a5e903c1bf0749483c047d6963f699c0d"></span>bool <code class="sig-name descname">is_blocked</code><span class="sig-paren">(</span><em class="property">const</em> uint8_t *<em>cue</em><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro13CueController10is_blockedEPK7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Checks whether the Cue is blocked according to the block list. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if blocked. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cue</span></code>: Cue to check. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController4readE7uint8_t">
+<span id="_CPPv3N12PixelMaestro13CueController4readE7uint8_t"></span><span id="_CPPv2N12PixelMaestro13CueController4readE7uint8_t"></span><span id="PixelMaestro::CueController::read__uint8_t"></span><span class="target" id="classPixelMaestro_1_1CueController_1a6604634807074746c308e53edc09ec12"></span>bool <code class="sig-name descname">read</code><span class="sig-paren">(</span>uint8_t <em>byte</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController4readE7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Reads a Cue byte-by-byte into the buffer. Once the end of the Cue has been reached, the Cue runs and the reader resets for the next Cue. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if the Cue was successfully executed. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">byte</span></code>: Byte to read into the buffer. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController3runEv">
+<span id="_CPPv3N12PixelMaestro13CueController3runEv"></span><span id="_CPPv2N12PixelMaestro13CueController3runEv"></span><span id="PixelMaestro::CueController::run"></span><span class="target" id="classPixelMaestro_1_1CueController_1a4efe39ca932edb6f1ec1da5376c87819"></span>void <code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController3runEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Runs the currently loaded Cue. </p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController3runEP7uint8_t">
+<span id="_CPPv3N12PixelMaestro13CueController3runEP7uint8_t"></span><span id="_CPPv2N12PixelMaestro13CueController3runEP7uint8_t"></span><span id="PixelMaestro::CueController::run__uint8_tP"></span><span class="target" id="classPixelMaestro_1_1CueController_1aa8a71eff3b7a419e15b3ce19333f1605"></span>void <code class="sig-name descname">run</code><span class="sig-paren">(</span>uint8_t *<em>cue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController3runEP7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Validates and runs the specified Cue. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cue</span></code>: Cue to load. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController16set_blocked_cuesEP10BlockedCue7uint8_t">
+<span id="_CPPv3N12PixelMaestro13CueController16set_blocked_cuesEP10BlockedCue7uint8_t"></span><span id="_CPPv2N12PixelMaestro13CueController16set_blocked_cuesEP10BlockedCue7uint8_t"></span><span id="PixelMaestro::CueController::set_blocked_cues__BlockedCueP.uint8_t"></span><span class="target" id="classPixelMaestro_1_1CueController_1ab7ed70a3033215ef7151a157b68bf585"></span>void <code class="sig-name descname">set_blocked_cues</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro13CueController10BlockedCueE" title="PixelMaestro::CueController::BlockedCue">BlockedCue</a> *<em>blocks</em>, uint8_t <em>num_blocks</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController16set_blocked_cuesEP10BlockedCue7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets the Cue block list. <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">blocks</span></code>: Block list as an array of BlockedCues. </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_blocks</span></code>: Number of items in the array. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController15validate_headerEP7uint8_t">
+<span id="_CPPv3N12PixelMaestro13CueController15validate_headerEP7uint8_t"></span><span id="_CPPv2N12PixelMaestro13CueController15validate_headerEP7uint8_t"></span><span id="PixelMaestro::CueController::validate_header__uint8_tP"></span><span class="target" id="classPixelMaestro_1_1CueController_1a141362a202e57125d0e563372bd66d0a"></span>bool <code class="sig-name descname">validate_header</code><span class="sig-paren">(</span>uint8_t *<em>cue</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController15validate_headerEP7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Validates the header and checksum of the provided Cue. <dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>True if valid, false if not. </p>
+</dd>
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cue</span></code>: Cue to validate. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+</div>
+<dl class="class">
+<dt id="_CPPv4N12PixelMaestro13CueController10BlockedCueE">
+<span id="_CPPv3N12PixelMaestro13CueController10BlockedCueE"></span><span id="_CPPv2N12PixelMaestro13CueController10BlockedCueE"></span><span id="PixelMaestro::CueController::BlockedCue"></span><span class="target" id="structPixelMaestro_1_1CueController_1_1BlockedCue"></span><em class="property">struct </em><code class="sig-name descname">BlockedCue</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController10BlockedCueE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Defines a Cue that should be blocked from serialization. </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Functions</p>
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro13CueController10BlockedCue10BlockedCueE7Handler7uint8_t">
+<span id="_CPPv3N12PixelMaestro13CueController10BlockedCue10BlockedCueE7Handler7uint8_t"></span><span id="_CPPv2N12PixelMaestro13CueController10BlockedCue10BlockedCueE7Handler7uint8_t"></span><span id="PixelMaestro::CueController::BlockedCue::BlockedCue__Handler.uint8_t"></span><span class="target" id="structPixelMaestro_1_1CueController_1_1BlockedCue_1a5efb40d6a459e528d59bc5c47c7ed839"></span><code class="sig-name descname">BlockedCue</code><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N12PixelMaestro13CueController7HandlerE" title="PixelMaestro::CueController::Handler">Handler</a> <em>handler</em>, uint8_t <em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController10BlockedCue10BlockedCueE7Handler7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric">Public Members</p>
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro13CueController10BlockedCue7handlerE">
+<span id="_CPPv3N12PixelMaestro13CueController10BlockedCue7handlerE"></span><span id="_CPPv2N12PixelMaestro13CueController10BlockedCue7handlerE"></span><span id="PixelMaestro::CueController::BlockedCue::handler__Handler"></span><span class="target" id="structPixelMaestro_1_1CueController_1_1BlockedCue_1ad49e6c283f75b1b18ab9c8709477b025"></span><a class="reference internal" href="#_CPPv4N12PixelMaestro13CueController7HandlerE" title="PixelMaestro::CueController::Handler">Handler</a> <code class="sig-name descname">handler</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController10BlockedCue7handlerE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The Handler that this Cue belongs to. </p>
+</dd></dl>
+
+<dl class="member">
+<dt id="_CPPv4N12PixelMaestro13CueController10BlockedCue6actionE">
+<span id="_CPPv3N12PixelMaestro13CueController10BlockedCue6actionE"></span><span id="_CPPv2N12PixelMaestro13CueController10BlockedCue6actionE"></span><span id="PixelMaestro::CueController::BlockedCue::action__uint8_t"></span><span class="target" id="structPixelMaestro_1_1CueController_1_1BlockedCue_1a4d4c6d33d6b718810abf9d604d2702f0"></span>uint8_t <code class="sig-name descname">action</code><a class="headerlink" href="#_CPPv4N12PixelMaestro13CueController10BlockedCue6actionE" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>The action being performed. </p>
+</dd></dl>
+
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="classPixelMaestro_1_1CueHandler.html" class="btn btn-neutral float-right" title="Class CueHandler" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="classPixelMaestro_1_1Colors.html" class="btn btn-neutral float-left" title="Class Colors" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, 8bitbuddhist
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

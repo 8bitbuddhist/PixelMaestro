@@ -1,0 +1,61 @@
+
+.. _program_listing_file_src_animation_sparkleanimation.cpp:
+
+Program Listing for File sparkleanimation.cpp
+=============================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_sparkleanimation.cpp>` (``src/animation/sparkleanimation.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "../utility.h"
+   #include "sparkleanimation.h"
+   
+   namespace PixelMaestro {
+       SparkleAnimation::SparkleAnimation(Section& section) : Animation(section) {
+           type_ = AnimationType::Sparkle;
+           map();
+       }
+   
+       uint8_t SparkleAnimation::get_threshold() const {
+           return threshold_;
+       }
+   
+       void SparkleAnimation::set_threshold(uint8_t threshold) {
+           this->threshold_ = threshold;
+       }
+   
+       void SparkleAnimation::map() {
+           if (orientation_ == Orientation::Vertical || orientation_ == Orientation::VerticalFlipped) {
+               for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+                   for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+                       if (Utility::rand(255) <= threshold_) {
+                           set_map_color_index(x, y, y);
+                       }
+                       else {
+                           set_map_color_index(x, y, 255);
+                       }
+                   }
+               }
+           }
+           else {  // Horizontal
+               for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+                   for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
+                       if (Utility::rand(255) <= threshold_) {
+                           set_map_color_index(x, y, x);
+                       }
+                       else {
+                           set_map_color_index(x, y, 255);
+                       }
+                   }
+               }
+           }
+       }
+   
+       void SparkleAnimation::update() {
+           map();
+       }
+   }
+   

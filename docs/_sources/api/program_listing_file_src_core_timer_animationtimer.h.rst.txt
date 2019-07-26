@@ -1,0 +1,44 @@
+
+.. _program_listing_file_src_core_timer_animationtimer.h:
+
+Program Listing for File animationtimer.h
+=========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_core_timer_animationtimer.h>` (``src/core/timer/animationtimer.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   /*
+    * AnimationTimer - Class for managing time-sensitive actions for Animations.
+    */
+   
+   #ifndef ANIMATIONTIMER_H
+   #define ANIMATIONTIMER_H
+   
+   #include <stdint.h>
+   #include "../../animation/animation.h"
+   #include "timer.h"
+   
+   namespace PixelMaestro {
+       class Animation;
+       class AnimationTimer : public Timer {
+           public:
+               explicit AnimationTimer(const Animation& animation);
+               uint16_t get_delay() const;
+               uint8_t get_step_count() const;
+               void recalculate_step_count();
+               void set_interval(uint16_t interval, uint16_t delay = 0);
+               bool update(const uint32_t& current_time);
+   
+           private:
+               const Animation& animation_;
+   
+               uint16_t delay_ = 0;
+   
+               uint8_t step_count_ = 1;
+       };
+   }
+   
+   #endif // ANIMATIONTIMER_H
