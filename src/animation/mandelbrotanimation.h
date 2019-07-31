@@ -20,6 +20,9 @@ namespace PixelMaestro {
 			/// Tracks the number of runs through the Mandelbrot function for each Pixel.
 			uint8_t iterations_ = 0;
 
+			/// Maximum number of iterations to run. Defaults to num_colors.
+			uint8_t max_iterations_ = 10;
+
 			void map();
 	};
 }
