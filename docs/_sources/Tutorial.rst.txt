@@ -2,26 +2,24 @@
 Tutorial
 ========
 
-This tutorial will show you how to use PixelMaestro to animate a 10x10 grid of LEDs.
+This tutorial will walk you through the basics of using PixelMaestro. By the end, you will have learned how to create and animate a 10x10 grid of LEDs.
 
 Core Concepts
 -------------
 
-Let's start with the two most important components: ``Sections`` and ``Maestros``.
+Let's start by explaining the two most important components in PixelMaestro: ``Sections`` and ``Maestros``.
 
 What's a Section?
 ^^^^^^^^^^^^^^^^^
 
-A :doc:`Section <Sections>` is a 2D representation of a pixel grid stored entirely in RAM. Each pixel corresponds to an individual LED and stores the LED's current color. This virtual grid is known as a *framebuffer*, and ``Sections`` act as gateways between you, other components, and the framebuffer.
-
-``Sections`` are also responsible for managing components that interact with the framebuffer, such as :doc:`Animations <Animations>` and :doc:`Canvases <Canvases>`.
+A :doc:`Section <Sections>` is a virtual reproduction of an LED grid stored entirely in memory. This virtual grid is called a *framebuffer*, and each virtual LED is called a :doc:`Pixel <Pixels>`. Sections are designed to make it easy for you to modify and interact with the framebuffer. ``Sections`` are also responsible for managing components that interact with the framebuffer, such as :doc:`Animations <Animations>` and :doc:`Canvases <Canvases>`.
 
 What's a Maestro?
 ^^^^^^^^^^^^^^^^^
 
-A :doc:`Maestro <Maestros>` manages all other PixelMaestro components, particularly ``Sections`` and :doc:`Shows <Shows>`. They also store global parameters (such as the refresh rate). ``Maestros`` are essential for timing: they ensure that all components are continuously kept up-to-date and synchronized. For this reason, you should only create a single ``Maestro`` when using PixelMaestro.
+A :doc:`Maestro <Maestros>` manages all other PixelMaestro components, particularly ``Sections`` and :doc:`Shows <Shows>`. They also store global parameters, such as the refresh rate. ``Maestros`` are essential for timing: they ensure that all components are continuously kept up-to-date and synchronized.
 
-Most important, a ``Maestro`` directly manages ``Sections``. A ``Maestro`` can manage one or more ``Sections``, but a ``Section`` can only be assigned to one ``Maestro``.
+Most importantly, a ``Maestro`` directly manages ``Sections``. A ``Maestro`` can manage one or more ``Sections``, but a ``Section`` can only be assigned to one ``Maestro``. Because of this, you should use a single Maestro to manage all of your Sections.
 
 Using PixelMaestro
 ------------------
@@ -29,7 +27,7 @@ Using PixelMaestro
 There are four steps to using PixelMaestro in your app:
 
 
-#. Initialize a new ``Maestro`` object and any ``Sections`` that it will manage.
+#. Initialize a new ``Maestro`` and any ``Sections`` that it will manage.
 #. Configure the ``Maestro`` and ``Section(s)``. This might include adding ``Animations``, drawing ``Canvases``, enabling ``Shows``, etc.
 #. Run the Maestro's ``update()`` method in a continuous loop and provide it with the application's current runtime in milliseconds.
 #. Copy the contents of the ``Section's`` framebuffer to the output device. The exact implementation will vary depending on the type of device you're outputting to.
@@ -37,7 +35,7 @@ There are four steps to using PixelMaestro in your app:
 Sample Sketch
 ^^^^^^^^^^^^^
 
-Below is a sample Arduino sketch created using `PlatformIO <http://platformio.org/>`_. It creates a ``Section`` containing a 10x10 grid and starts a blinking animation using a pre-defined color palette.
+Here is an example sample Arduino sketch created using `PlatformIO <http://platformio.org/>`_. It creates a ``Section`` containing a 10x10 grid and starts a blinking animation using a pre-defined color palette.
 
 .. code-block:: c++
 

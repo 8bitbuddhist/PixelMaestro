@@ -89,9 +89,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Home.html#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Home.html#faq">FAQ</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#how-do-i-change-a-pixel-s-color">How do I change a Pixel’s color?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#how-do-i-connect-my-leds-to-pixelmaestro">How do I connect my LEDs to PixelMaestro?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#why-am-i-getting-poor-performance-running-out-of-memory">Why am I getting poor performance / running out of memory?</a></li>
 </ul>
 </li>
 </ul>
@@ -402,7 +402,15 @@
 <dl class="function">
 <dt id="_CPPv4N12PixelMaestro19MandelbrotAnimation11set_paletteEA_KN6Colors3RGBE7uint8_t">
 <span id="_CPPv3N12PixelMaestro19MandelbrotAnimation11set_paletteEA_KN6Colors3RGBE7uint8_t"></span><span id="_CPPv2N12PixelMaestro19MandelbrotAnimation11set_paletteEA_KN6Colors3RGBE7uint8_t"></span><span id="PixelMaestro::MandelbrotAnimation::set_palette__Colors::RGBCA.uint8_t"></span><span class="target" id="classPixelMaestro_1_1MandelbrotAnimation_1ae1c1e7e12f505b99b97ad6f570771a97"></span>void <code class="sig-name descname">set_palette</code><span class="sig-paren">(</span><em class="property">const</em> <a class="reference internal" href="classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6ColorsE" title="PixelMaestro::Colors">Colors</a>::<a class="reference internal" href="classPixelMaestro_1_1Colors.html#_CPPv4N12PixelMaestro6Colors3RGBE" title="PixelMaestro::Colors::RGB">RGB</a> <em>colors</em>[], uint8_t <em>num_colors</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro19MandelbrotAnimation11set_paletteEA_KN6Colors3RGBE7uint8_t" title="Permalink to this definition">¶</a><br /></dt>
-<dd></dd></dl>
+<dd><p>Overrides Animation::SetColors. Sets the number of iterations equal to the number of colors <dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">colors</span></code>: </p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">num_colors</span></code>: </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="_CPPv4N12PixelMaestro19MandelbrotAnimation6updateEv">

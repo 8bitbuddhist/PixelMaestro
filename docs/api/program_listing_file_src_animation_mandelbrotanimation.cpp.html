@@ -87,9 +87,9 @@
 <li class="toctree-l2"><a class="reference internal" href="../Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Home.html#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Home.html#faq">FAQ</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#how-do-i-change-a-pixel-s-color">How do I change a Pixel’s color?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#how-do-i-connect-my-leds-to-pixelmaestro">How do I connect my LEDs to PixelMaestro?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Home.html#why-am-i-getting-poor-performance-running-out-of-memory">Why am I getting poor performance / running out of memory?</a></li>
 </ul>
 </li>
 </ul>
@@ -378,28 +378,27 @@
 
     <span class="c1">// FIXME: Fix Animations on Arduinos, likely caused by rounding errors.</span>
     <span class="kt">void</span> <span class="n">MandelbrotAnimation</span><span class="o">::</span><span class="n">map</span><span class="p">()</span> <span class="p">{</span>
-        <span class="kt">uint8_t</span> <span class="n">max_iterations</span> <span class="o">=</span> <span class="n">palette_</span><span class="o">-&gt;</span><span class="n">get_num_colors</span><span class="p">();</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">orientation_</span> <span class="o">==</span> <span class="n">Orientation</span><span class="o">::</span><span class="n">Horizontal</span> <span class="o">||</span> <span class="n">orientation_</span> <span class="o">==</span> <span class="n">Orientation</span><span class="o">::</span><span class="n">HorizontalFlipped</span><span class="p">)</span> <span class="p">{</span>
             <span class="c1">// Calculate the size/scale of the pattern</span>
-            <span class="kt">double</span> <span class="n">image_width</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">/</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">(</span><span class="n">dimensions_</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
+            <span class="kt">float</span> <span class="n">image_width</span> <span class="o">=</span> <span class="mf">4.0F</span> <span class="o">/</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">dimensions_</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
 
             <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kt">double</span> <span class="n">c_imaginary</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
+                <span class="kt">float</span> <span class="n">c_imaginary</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
                 <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="kt">double</span> <span class="n">c_real</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
+                    <span class="kt">float</span> <span class="n">c_real</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
 
-                    <span class="kt">double</span> <span class="n">temp_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                    <span class="kt">double</span> <span class="n">temp_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="kt">float</span> <span class="n">temp_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="kt">float</span> <span class="n">temp_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
                     <span class="n">iterations_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-                    <span class="k">while</span> <span class="p">((</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">4.0</span> <span class="o">&amp;&amp;</span> <span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="kt">double</span> <span class="n">temp_x_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_real</span><span class="p">;</span>
-                        <span class="n">temp_y</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_imaginary</span><span class="p">;</span>
+                    <span class="k">while</span> <span class="p">(</span><span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations_</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mf">4.0F</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="kt">float</span> <span class="n">temp_x_2</span> <span class="o">=</span> <span class="p">((</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">))</span> <span class="o">+</span> <span class="n">c_real</span><span class="p">;</span>
+                        <span class="n">temp_y</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0F</span> <span class="o">*</span> <span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_imaginary</span><span class="p">;</span>
                         <span class="n">temp_x</span> <span class="o">=</span> <span class="n">temp_x_2</span><span class="p">;</span>
-                        <span class="n">iterations_</span><span class="o">++</span><span class="p">;</span>
+                        <span class="o">++</span><span class="n">iterations_</span><span class="p">;</span>
                     <span class="p">}</span>
 
-                    <span class="k">if</span> <span class="p">(</span><span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations_</span><span class="p">)</span> <span class="p">{</span>
                         <span class="n">set_map_color_index</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">iterations_</span><span class="p">);</span>
                     <span class="p">}</span>
                     <span class="k">else</span> <span class="p">{</span>
@@ -409,25 +408,25 @@
             <span class="p">}</span>
         <span class="p">}</span>
         <span class="k">else</span> <span class="p">{</span> <span class="c1">// Vertical orientation</span>
-            <span class="kt">double</span> <span class="n">image_width</span> <span class="o">=</span> <span class="mf">4.0</span> <span class="o">/</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
+            <span class="kt">float</span> <span class="n">image_width</span> <span class="o">=</span> <span class="mf">4.0F</span> <span class="o">/</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">float</span><span class="o">&gt;</span><span class="p">(</span><span class="n">dimensions_</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
 
             <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="kt">double</span> <span class="n">c_imaginary</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
+                <span class="kt">float</span> <span class="n">c_imaginary</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
                 <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="kt">double</span> <span class="n">c_real</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
+                    <span class="kt">float</span> <span class="n">c_real</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">center_</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">image_width</span><span class="p">;</span>
 
-                    <span class="kt">double</span> <span class="n">temp_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-                    <span class="kt">double</span> <span class="n">temp_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="kt">float</span> <span class="n">temp_x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                    <span class="kt">float</span> <span class="n">temp_y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
                     <span class="n">iterations_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
 
-                    <span class="k">while</span> <span class="p">((</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span> <span class="o">&amp;&amp;</span> <span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="kt">double</span> <span class="n">temp_y_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_real</span><span class="p">;</span>
-                        <span class="n">temp_x</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_imaginary</span><span class="p">;</span>
+                    <span class="k">while</span> <span class="p">(</span><span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations_</span> <span class="o">&amp;&amp;</span> <span class="p">((</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">))</span> <span class="o">&lt;</span> <span class="mf">4.0F</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="kt">float</span> <span class="n">temp_y_2</span>  <span class="o">=</span> <span class="p">((</span><span class="n">temp_y</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_x</span><span class="p">))</span> <span class="o">+</span> <span class="n">c_real</span><span class="p">;</span>
+                        <span class="n">temp_x</span> <span class="o">=</span> <span class="p">(</span><span class="mf">2.0F</span> <span class="o">*</span> <span class="n">temp_x</span> <span class="o">*</span> <span class="n">temp_y</span><span class="p">)</span> <span class="o">+</span> <span class="n">c_imaginary</span><span class="p">;</span>
                         <span class="n">temp_y</span> <span class="o">=</span> <span class="n">temp_y_2</span><span class="p">;</span>
-                        <span class="n">iterations_</span><span class="o">++</span><span class="p">;</span>
+                        <span class="o">++</span><span class="n">iterations_</span><span class="p">;</span>
                     <span class="p">}</span>
 
-                    <span class="k">if</span> <span class="p">(</span><span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">iterations_</span> <span class="o">&lt;</span> <span class="n">max_iterations_</span><span class="p">)</span> <span class="p">{</span>
                         <span class="n">set_map_color_index</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">iterations_</span><span class="p">);</span>
                     <span class="p">}</span>
                     <span class="k">else</span> <span class="p">{</span>
@@ -436,6 +435,11 @@
                 <span class="p">}</span>
             <span class="p">}</span>
         <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">MandelbrotAnimation</span><span class="o">::</span><span class="n">set_palette</span><span class="p">(</span><span class="k">const</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">colors</span><span class="p">[],</span> <span class="kt">uint8_t</span> <span class="n">num_colors</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">palette_</span><span class="o">-&gt;</span><span class="n">set_colors</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span> <span class="n">num_colors</span><span class="p">);</span>
+        <span class="n">max_iterations_</span> <span class="o">=</span> <span class="n">num_colors</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">MandelbrotAnimation</span><span class="o">::</span><span class="n">update</span><span class="p">()</span> <span class="p">{</span>

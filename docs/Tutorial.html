@@ -89,9 +89,9 @@
 <li class="toctree-l2"><a class="reference internal" href="Home.html#what-is-pixelmaestro">What is PixelMaestro?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Home.html#getting-started">Getting Started</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Home.html#faq">FAQ</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="Home.html#changing-a-pixel-s-color">Changing a Pixel’s color</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Home.html#controlling-leds-directly-over-the-wire">Controlling LEDs directly over the wire</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Home.html#poor-performance-running-out-of-memory-pixels-aren-t-refreshing">Poor Performance / Running Out of Memory / Pixels Aren’t Refreshing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#how-do-i-change-a-pixel-s-color">How do I change a Pixel’s color?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#how-do-i-connect-my-leds-to-pixelmaestro">How do I connect my LEDs to PixelMaestro?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Home.html#why-am-i-getting-poor-performance-running-out-of-memory">Why am I getting poor performance / running out of memory?</a></li>
 </ul>
 </li>
 </ul>
@@ -368,33 +368,32 @@
             
   <div class="section" id="tutorial">
 <h1>Tutorial<a class="headerlink" href="#tutorial" title="Permalink to this headline">¶</a></h1>
-<p>This tutorial will show you how to use PixelMaestro to animate a 10x10 grid of LEDs.</p>
+<p>This tutorial will walk you through the basics of using PixelMaestro. By the end, you will have learned how to create and animate a 10x10 grid of LEDs.</p>
 <div class="section" id="core-concepts">
 <h2>Core Concepts<a class="headerlink" href="#core-concepts" title="Permalink to this headline">¶</a></h2>
-<p>Let’s start with the two most important components: <code class="docutils literal notranslate"><span class="pre">Sections</span></code> and <code class="docutils literal notranslate"><span class="pre">Maestros</span></code>.</p>
+<p>Let’s start by explaining the two most important components in PixelMaestro: <code class="docutils literal notranslate"><span class="pre">Sections</span></code> and <code class="docutils literal notranslate"><span class="pre">Maestros</span></code>.</p>
 <div class="section" id="what-s-a-section">
 <h3>What’s a Section?<a class="headerlink" href="#what-s-a-section" title="Permalink to this headline">¶</a></h3>
-<p>A <a class="reference internal" href="Sections.html"><span class="doc">Section</span></a> is a 2D representation of a pixel grid stored entirely in RAM. Each pixel corresponds to an individual LED and stores the LED’s current color. This virtual grid is known as a <em>framebuffer</em>, and <code class="docutils literal notranslate"><span class="pre">Sections</span></code> act as gateways between you, other components, and the framebuffer.</p>
-<p><code class="docutils literal notranslate"><span class="pre">Sections</span></code> are also responsible for managing components that interact with the framebuffer, such as <a class="reference internal" href="Animations.html"><span class="doc">Animations</span></a> and <a class="reference internal" href="Canvases.html"><span class="doc">Canvases</span></a>.</p>
+<p>A <a class="reference internal" href="Sections.html"><span class="doc">Section</span></a> is a virtual reproduction of an LED grid stored entirely in memory. This virtual grid is called a <em>framebuffer</em>, and each virtual LED is called a <a class="reference internal" href="Pixels.html"><span class="doc">Pixel</span></a>. Sections are designed to make it easy for you to modify and interact with the framebuffer. <code class="docutils literal notranslate"><span class="pre">Sections</span></code> are also responsible for managing components that interact with the framebuffer, such as <a class="reference internal" href="Animations.html"><span class="doc">Animations</span></a> and <a class="reference internal" href="Canvases.html"><span class="doc">Canvases</span></a>.</p>
 </div>
 <div class="section" id="what-s-a-maestro">
 <h3>What’s a Maestro?<a class="headerlink" href="#what-s-a-maestro" title="Permalink to this headline">¶</a></h3>
-<p>A <a class="reference internal" href="Maestros.html"><span class="doc">Maestro</span></a> manages all other PixelMaestro components, particularly <code class="docutils literal notranslate"><span class="pre">Sections</span></code> and <a class="reference internal" href="Shows.html"><span class="doc">Shows</span></a>. They also store global parameters (such as the refresh rate). <code class="docutils literal notranslate"><span class="pre">Maestros</span></code> are essential for timing: they ensure that all components are continuously kept up-to-date and synchronized. For this reason, you should only create a single <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> when using PixelMaestro.</p>
-<p>Most important, a <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> directly manages <code class="docutils literal notranslate"><span class="pre">Sections</span></code>. A <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> can manage one or more <code class="docutils literal notranslate"><span class="pre">Sections</span></code>, but a <code class="docutils literal notranslate"><span class="pre">Section</span></code> can only be assigned to one <code class="docutils literal notranslate"><span class="pre">Maestro</span></code>.</p>
+<p>A <a class="reference internal" href="Maestros.html"><span class="doc">Maestro</span></a> manages all other PixelMaestro components, particularly <code class="docutils literal notranslate"><span class="pre">Sections</span></code> and <a class="reference internal" href="Shows.html"><span class="doc">Shows</span></a>. They also store global parameters, such as the refresh rate. <code class="docutils literal notranslate"><span class="pre">Maestros</span></code> are essential for timing: they ensure that all components are continuously kept up-to-date and synchronized.</p>
+<p>Most importantly, a <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> directly manages <code class="docutils literal notranslate"><span class="pre">Sections</span></code>. A <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> can manage one or more <code class="docutils literal notranslate"><span class="pre">Sections</span></code>, but a <code class="docutils literal notranslate"><span class="pre">Section</span></code> can only be assigned to one <code class="docutils literal notranslate"><span class="pre">Maestro</span></code>. Because of this, you should use a single Maestro to manage all of your Sections.</p>
 </div>
 </div>
 <div class="section" id="using-pixelmaestro">
 <h2>Using PixelMaestro<a class="headerlink" href="#using-pixelmaestro" title="Permalink to this headline">¶</a></h2>
 <p>There are four steps to using PixelMaestro in your app:</p>
 <ol class="arabic simple">
-<li><p>Initialize a new <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> object and any <code class="docutils literal notranslate"><span class="pre">Sections</span></code> that it will manage.</p></li>
+<li><p>Initialize a new <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> and any <code class="docutils literal notranslate"><span class="pre">Sections</span></code> that it will manage.</p></li>
 <li><p>Configure the <code class="docutils literal notranslate"><span class="pre">Maestro</span></code> and <code class="docutils literal notranslate"><span class="pre">Section(s)</span></code>. This might include adding <code class="docutils literal notranslate"><span class="pre">Animations</span></code>, drawing <code class="docutils literal notranslate"><span class="pre">Canvases</span></code>, enabling <code class="docutils literal notranslate"><span class="pre">Shows</span></code>, etc.</p></li>
 <li><p>Run the Maestro’s <code class="docutils literal notranslate"><span class="pre">update()</span></code> method in a continuous loop and provide it with the application’s current runtime in milliseconds.</p></li>
 <li><p>Copy the contents of the <code class="docutils literal notranslate"><span class="pre">Section's</span></code> framebuffer to the output device. The exact implementation will vary depending on the type of device you’re outputting to.</p></li>
 </ol>
 <div class="section" id="sample-sketch">
 <h3>Sample Sketch<a class="headerlink" href="#sample-sketch" title="Permalink to this headline">¶</a></h3>
-<p>Below is a sample Arduino sketch created using <a class="reference external" href="http://platformio.org/">PlatformIO</a>. It creates a <code class="docutils literal notranslate"><span class="pre">Section</span></code> containing a 10x10 grid and starts a blinking animation using a pre-defined color palette.</p>
+<p>Here is an example sample Arduino sketch created using <a class="reference external" href="http://platformio.org/">PlatformIO</a>. It creates a <code class="docutils literal notranslate"><span class="pre">Section</span></code> containing a 10x10 grid and starts a blinking animation using a pre-defined color palette.</p>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;Arduino.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;PixelMaestro/animation/blinkanimation.h&gt;</span><span class="cp"></span>
 <span class="cp">#include</span> <span class="cpf">&lt;PixelMaestro/colorpresets.h&gt;</span><span class="cp"></span>

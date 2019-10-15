@@ -31,6 +31,8 @@ Program Listing for File mandelbrotanimation.h
            private:
                uint8_t iterations_ = 0;
    
+               uint8_t max_iterations_ = 10;
+   
                void map();
        };
    }

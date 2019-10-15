@@ -18,62 +18,85 @@ The following animation types are available:
 
    * - Name
      - Description
+     - Preview
      - Orientations
      - Cycles
      - Reversible
    * - Blink
      - Cycles between the Solid Animation and off.
-     - Horizontal:raw-html-m2r:`<br/>`Vertical
+     - .. image:: images/animations/animation-blink.gif
+        :alt: Blink animation
+     - Horizontal, Vertical
      - 2
      - 
    * - Cycle
      - Cycles through the Palette one color at a time.
+     - .. image:: images/animations/animation-cycle.gif
+        :alt: Cycle animation
      - 
      - [Palette size]
      - X
    * - Fire
      - Displays a fire with rising smoke.
+     - .. image:: images/animations/animation-fire.gif
+        :alt: Fire animation
      - Horizontal
      - 
      - 
    * - Lightning
      - Displays lightning bolts arcing across the Section.
-     - Horizontal:raw-html-m2r:`<br/>`Vertical
+     - .. image:: images/animations/animation-lightning.gif
+        :alt: Lightning animation
+     - Horizontal, Vertical
      - 
      - 
    * - Mandelbrot
      - Displays a `Mandelbrot set <https://en.wikipedia.org/wiki/Mandelbrot_set>`_ with colors radiating to/from the center.
+     - .. image:: images/animations/animation-mandelbrot.gif
+        :alt: Mandelbrot animation
      - Horizontal
      - [Palette size]
      - X
    * - Plasma
      - Displays a set of orbs with radiating colors.
+     - .. image:: images/animations/animation-plasma.gif
+        :alt: Plasma animation
      - 
      - [Palette size]
      - X
    * - Radial
      - Radiates colors to/from the center of the grid in concentric circles.
-     - Horizontal:raw-html-m2r:`<br/>`Vertical
+     - .. image:: images/animations/animation-radial.gif
+        :alt: Radial animation
+     - Horizontal, Vertical
      - [Palette size]
      - X
    * - Random
      - Sets each Pixel to a random Palette color.
+     - .. image:: images/animations/animation-random.gif
+        :alt: Random animation
      - 
      - 
      - 
    * - Solid
      - Sets each row or column of the grid to the next Palette color.
-     - Horizontal:raw-html-m2r:`<br/>`Vertical
+     - .. image:: images/animations/animation-solid.png
+        :alt: Solid animation
+     - Horizontal, Vertical
      - 1
      - 
    * - Sparkle
      - Activates a select number of random pixels.
-     - Horizontal:raw-html-m2r:`<br/>`Vertical
+     - .. image:: images/animations/animation-sparkle.gif
+        :alt: Sparkle animation
+     - Horizontal, Vertical
      - 
      - 
    * - Wave
      - Scrolls the Palette across the Section.
-     - Horizontal:raw-html-m2r:`<br/>`Vertical
+     - .. image:: images/animations/animation-wave.gif
+        :alt: Wave animation
+     - Horizontal, Vertical
      - [Palette size]
      - X
 
