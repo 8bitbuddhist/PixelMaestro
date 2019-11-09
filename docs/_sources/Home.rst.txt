@@ -9,7 +9,7 @@ What is PixelMaestro?
 
 PixelMaestro is a graphics library for LED displays. It features 24-bit colors, a variety of animations and visual effects, support for drawing bitmap images, and much more. It's designed to be simple to use, flexible, and compatible with existing LED libraries such as `Adafruit's NeoPixel Library <https://github.com/adafruit/Adafruit_NeoPixel>`_ and `FastLED <http://fastled.io/>`_.
 
-This documemtation is for the core PixelMaestro library. For the desktop app, see the `PixelMaestro Studio documentation <https://pixelmaestro.studio>`_.
+This documentation is for the core PixelMaestro library. For the desktop app, see the `PixelMaestro Studio documentation <https://8bitbuddhist.github.io/PixelMaestro-Studio/>`_.
 
 Getting Started
 ---------------
