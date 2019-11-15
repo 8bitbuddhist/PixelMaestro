@@ -130,9 +130,15 @@ Program Listing for File animation.cpp
            if (timer_->update(current_time)) {
                // Call the derived Animation's update routine
                update();
+   
                section_.set_step_count(timer_->get_step_count());
                for (uint16_t x = 0; x < section_.get_dimensions().x; x++) {
                    for (uint16_t y = 0; y < section_.get_dimensions().y; y++) {
+                       /*
+                        * TODO: What if instead of applying the color directly to the Pixel, we return it to the Section?
+                        * We can then mix it with the Canvas and other elements all during Section::update(), instead of during Section::get_pixel_color()
+                        */
+   
                        // Color index 255 reserved for black
                        if (map_[y][x] == 255) {
                            section_.set_pixel_color(x, y, Colors::RGB(0, 0, 0));

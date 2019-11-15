@@ -433,7 +433,7 @@
     <span class="p">}</span>
 
     <span class="kt">uint16_t</span> <span class="n">CueHandler</span><span class="o">::</span><span class="n">serialize_palette</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">cue</span><span class="p">[],</span> <span class="k">const</span> <span class="n">Palette</span><span class="o">&amp;</span> <span class="n">palette</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">int</span> <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+        <span class="kt">uint16_t</span> <span class="n">index</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
         <span class="k">for</span> <span class="p">(</span><span class="kt">uint8_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">palette</span><span class="p">.</span><span class="n">get_num_colors</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">color</span> <span class="o">=</span> <span class="n">palette</span><span class="p">.</span><span class="n">get_color_at_index</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
             <span class="n">cue</span><span class="p">[</span><span class="o">++</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span><span class="p">.</span><span class="n">r</span><span class="p">;</span>
@@ -445,7 +445,7 @@
     <span class="p">}</span>
 
     <span class="kt">uint32_t</span> <span class="n">CueHandler</span><span class="o">::</span><span class="n">start_cue</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">handler_byte</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">action_byte</span><span class="p">)</span> <span class="p">{</span>
-        <span class="kt">uint16_t</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">CueController</span><span class="o">::</span><span class="n">Byte</span><span class="o">::</span><span class="n">PayloadByte</span><span class="p">;</span>
+        <span class="kt">uint32_t</span> <span class="n">index</span> <span class="o">=</span> <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">CueController</span><span class="o">::</span><span class="n">Byte</span><span class="o">::</span><span class="n">PayloadByte</span><span class="p">;</span>
         <span class="n">controller_</span><span class="p">.</span><span class="n">get_buffer</span><span class="p">()[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">handler_byte</span><span class="p">;</span>
         <span class="n">controller_</span><span class="p">.</span><span class="n">get_buffer</span><span class="p">()[</span><span class="o">++</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">action_byte</span><span class="p">;</span>
 

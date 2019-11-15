@@ -426,7 +426,7 @@
                     <span class="c1">// Delete existing Events</span>
                     <span class="k">delete</span> <span class="p">[]</span> <span class="n">show</span><span class="o">-&gt;</span><span class="n">get_events</span><span class="p">();</span>
                     <span class="kt">uint16_t</span> <span class="n">num_events</span> <span class="o">=</span> <span class="n">IntByteConvert</span><span class="o">::</span><span class="n">byte_to_uint16</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span><span class="p">]);</span>
-                    <span class="kt">bool</span> <span class="n">preserve_cycle_index</span> <span class="o">=</span> <span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
+                    <span class="kt">bool</span> <span class="n">preserve_current_index</span> <span class="o">=</span> <span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span> <span class="o">+</span> <span class="mi">2</span><span class="p">];</span>
 
                     <span class="c1">// Rebuild Event list</span>
                     <span class="n">Event</span><span class="o">*</span> <span class="n">events</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Event</span><span class="p">[</span><span class="n">num_events</span><span class="p">];</span>
@@ -440,12 +440,12 @@
                         <span class="n">options_index</span> <span class="o">+=</span> <span class="mi">4</span><span class="p">;</span>
 
                         <span class="c1">// Set Cues</span>
-                        <span class="kt">uint16_t</span> <span class="n">event_cue_size</span> <span class="o">=</span> <span class="n">controller_</span><span class="p">.</span><span class="n">get_cue_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cue</span><span class="p">[</span><span class="n">options_index</span><span class="p">]);</span>
+                        <span class="kt">uint32_t</span> <span class="n">event_cue_size</span> <span class="o">=</span> <span class="n">controller_</span><span class="p">.</span><span class="n">get_cue_size</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cue</span><span class="p">[</span><span class="n">options_index</span><span class="p">]);</span>
                         <span class="n">events</span><span class="p">[</span><span class="n">event</span><span class="p">].</span><span class="n">set_cue</span><span class="p">(</span><span class="o">&amp;</span><span class="n">cue</span><span class="p">[</span><span class="n">options_index</span><span class="p">]);</span>
                         <span class="n">options_index</span> <span class="o">+=</span> <span class="n">event_cue_size</span><span class="p">;</span>
                     <span class="p">}</span>
 
-                    <span class="n">show</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">num_events</span><span class="p">,</span> <span class="n">preserve_cycle_index</span><span class="p">);</span>
+                    <span class="n">show</span><span class="o">-&gt;</span><span class="n">set_events</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="n">num_events</span><span class="p">,</span> <span class="n">preserve_current_index</span><span class="p">);</span>
                 <span class="p">}</span>
                 <span class="k">break</span><span class="p">;</span>
             <span class="k">case</span> <span class="n">Action</span><span class="o">::</span><span class="nl">SetLooping</span><span class="p">:</span>

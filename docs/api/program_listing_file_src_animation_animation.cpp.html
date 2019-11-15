@@ -487,9 +487,15 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">timer_</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">(</span><span class="n">current_time</span><span class="p">))</span> <span class="p">{</span>
             <span class="c1">// Call the derived Animation&#39;s update routine</span>
             <span class="n">update</span><span class="p">();</span>
+
             <span class="n">section_</span><span class="p">.</span><span class="n">set_step_count</span><span class="p">(</span><span class="n">timer_</span><span class="o">-&gt;</span><span class="n">get_step_count</span><span class="p">());</span>
             <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">section_</span><span class="p">.</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">x</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">section_</span><span class="p">.</span><span class="n">get_dimensions</span><span class="p">().</span><span class="n">y</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="cm">/*</span>
+<span class="cm">                     * TODO: What if instead of applying the color directly to the Pixel, we return it to the Section?</span>
+<span class="cm">                     * We can then mix it with the Canvas and other elements all during Section::update(), instead of during Section::get_pixel_color()</span>
+<span class="cm">                     */</span>
+
                     <span class="c1">// Color index 255 reserved for black</span>
                     <span class="k">if</span> <span class="p">(</span><span class="n">map_</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
                         <span class="n">section_</span><span class="p">.</span><span class="n">set_pixel_color</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">));</span>

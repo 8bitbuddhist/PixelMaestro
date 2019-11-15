@@ -9,7 +9,7 @@ What is PixelMaestro?
 
 PixelMaestro is a graphics library for LED displays. It features 24-bit colors, a variety of animations and visual effects, support for drawing bitmap images, and much more. It's designed to be simple to use, flexible, and compatible with existing LED libraries such as `Adafruit's NeoPixel Library <https://github.com/adafruit/Adafruit_NeoPixel>`_ and `FastLED <http://fastled.io/>`_.
 
-This documemtation is for the core PixelMaestro library. For the desktop app, see the `PixelMaestro Studio documentation <https://pixelmaestro.studio>`_.
+This documentation is for the core PixelMaestro library. For the desktop app, see the `PixelMaestro Studio documentation <https://8bitbuddhist.github.io/PixelMaestro-Studio/>`_.
 
 Getting Started
 ---------------
@@ -25,12 +25,19 @@ FAQ
 How do I change a Pixel's color?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The easiest way to set a Pixel's color without using an Animation is to use a :doc:`Canvas <Canvases>` and :ref:`draw on the Pixel <canvases-points>`. You can also use :ref:`Section::set_pixel_color() <sections-setting-pixel-color>` , although this is a bit more complicated. See :ref:`How Pixels Work <pixels-how-pixels-work>` to learn more.
+Use :ref:`Section::set_pixel_color() <sections-setting-pixel-color>`. For example, to immediately turn a Pixel blue:
+
+```c++
+section.set_step_count(1);
+section.set_pixel_color(0, 0, ColorPresets::Blue};
+```
+
+You can also use a :doc:`Canvas <Canvases>`, although this is a bit more complicated. See :ref:`How Pixels Work <pixels-how-pixels-work>` to learn more.
 
 How do I connect my LEDs to PixelMaestro?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-PixelMaestro can't control LEDs directly, but you can pair it with a library like `NeoPixel <https://github.com/adafruit/Adafruit_NeoPixel>`_ or `LightWS2812 <https://github.com/cpldcpu/light_ws2812>`_. On each loop, grab the  color value of each ``Pixel``  using ``maestro.get_pixel_color(section_id, x_coordinate, y_coordinate)`` and pass it to the library.
+PixelMaestro can't control LEDs directly, but you can use it with a library like `NeoPixel <https://github.com/adafruit/Adafruit_NeoPixel>`_ or `LightWS2812 <https://github.com/cpldcpu/light_ws2812>`_. On each loop, grab the color value of each ``Pixel``  using ``maestro.get_pixel_color(section_id, x_coordinate, y_coordinate)`` and pass it to the library.
 
 Why am I getting poor performance / running out of memory?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

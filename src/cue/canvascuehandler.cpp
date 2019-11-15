@@ -151,7 +151,7 @@ namespace PixelMaestro {
 			controller_.get_buffer()[++index] = text[i];
 		}
 
-		return controller_.assemble(index);
+		return controller_.assemble(++index);
 	}
 
 	uint8_t* CanvasCueHandler::erase_point(uint8_t section_num, uint8_t layer_num, uint16_t frame_index, uint16_t x, uint16_t y) {

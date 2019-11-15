@@ -57,7 +57,7 @@ namespace PixelMaestro {
 					// Delete existing Events
 					delete [] show->get_events();
 					uint16_t num_events = IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]);
-					bool preserve_cycle_index = cue[(uint8_t)Byte::OptionsByte + 2];
+					bool preserve_current_index = cue[(uint8_t)Byte::OptionsByte + 2];
 
 					// Rebuild Event list
 					Event* events = new Event[num_events];
@@ -71,12 +71,12 @@ namespace PixelMaestro {
 						options_index += 4;
 
 						// Set Cues
-						uint16_t event_cue_size = controller_.get_cue_size(&cue[options_index]);
+						uint32_t event_cue_size = controller_.get_cue_size(&cue[options_index]);
 						events[event].set_cue(&cue[options_index]);
 						options_index += event_cue_size;
 					}
 
-					show->set_events(events, num_events, preserve_cycle_index);
+					show->set_events(events, num_events, preserve_current_index);
 				}
 				break;
 			case Action::SetLooping:

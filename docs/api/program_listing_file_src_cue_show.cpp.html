@@ -472,11 +472,11 @@
 
     <span class="kt">void</span> <span class="n">Show</span><span class="o">::</span><span class="n">update_event_index</span><span class="p">()</span> <span class="p">{</span>
         <span class="c1">// If we&#39;ve exceeded the number of events, start over from 0</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">loop_</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">current_index_</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="n">num_events_</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">timing_mode_</span> <span class="o">==</span> <span class="n">TimingMode</span><span class="o">::</span><span class="n">Relative</span> <span class="o">&amp;&amp;</span> <span class="n">loop_</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">current_index_</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="n">num_events_</span><span class="p">))</span> <span class="p">{</span>
             <span class="n">current_index_</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
         <span class="p">}</span>
         <span class="k">else</span> <span class="p">{</span>
-            <span class="n">current_index_</span><span class="o">++</span><span class="p">;</span>
+            <span class="o">++</span><span class="n">current_index_</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
