@@ -18,13 +18,13 @@ namespace PixelMaestro {
 			/// Stores an RGB definition of a color.
 			struct RGB {
 				/// The color's red value.
-				uint8_t r;
+				int16_t r;
 
 				/// The color's green value.
-				uint8_t g;
+				int16_t g;
 
 				/// The color's blue value.
-				uint8_t b;
+				int16_t b;
 
 				/**
 				 * Constructor. Defaults to black if no other parameters are provided.
