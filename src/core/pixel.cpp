@@ -40,9 +40,9 @@ namespace PixelMaestro {
 	*/
 	void Pixel::set_next_color(const Colors::RGB& next_color, uint8_t step_count) {
 #ifndef PIXEL_DISABLE_FADING
-		step_.r = (next_color.r - current_color_.r) / (float)step_count;
-		step_.g = (next_color.g - current_color_.g) / (float)step_count;
-		step_.b = (next_color.b - current_color_.b) / (float)step_count;
+		step_.r = (next_color.r - current_color_.r) / step_count;
+		step_.g = (next_color.g - current_color_.g) / step_count;
+		step_.b = (next_color.b - current_color_.b) / step_count;
 
 #ifdef PIXEL_ENABLE_ACCURATE_FADING
 			next_color_ = next_color;
