@@ -385,11 +385,16 @@
 <h2>FAQ<a class="headerlink" href="#faq" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="how-do-i-change-a-pixel-s-color">
 <h3>How do I change a Pixel’s color?<a class="headerlink" href="#how-do-i-change-a-pixel-s-color" title="Permalink to this headline">¶</a></h3>
-<p>The easiest way to set a Pixel’s color without using an Animation is to use a <a class="reference internal" href="Canvases.html"><span class="doc">Canvas</span></a> and <a class="reference internal" href="Canvases.html#canvases-points"><span class="std std-ref">draw on the Pixel</span></a>. You can also use <a class="reference internal" href="Sections.html#sections-setting-pixel-color"><span class="std std-ref">Section::set_pixel_color()</span></a> , although this is a bit more complicated. See <a class="reference internal" href="Pixels.html#pixels-how-pixels-work"><span class="std std-ref">How Pixels Work</span></a> to learn more.</p>
+<p>Use <a class="reference internal" href="Sections.html#sections-setting-pixel-color"><span class="std std-ref">Section::set_pixel_color()</span></a>. For example, to immediately turn a Pixel blue:</p>
+<p><code class="docutils literal notranslate"><span class="pre">`c++</span>
+<span class="pre">section.set_step_count(1);</span>
+<span class="pre">section.set_pixel_color(0,</span> <span class="pre">0,</span> <span class="pre">ColorPresets::Blue};</span>
+<span class="pre">`</span></code></p>
+<p>You can also use a <a class="reference internal" href="Canvases.html"><span class="doc">Canvas</span></a>, although this is a bit more complicated. See <a class="reference internal" href="Pixels.html#pixels-how-pixels-work"><span class="std std-ref">How Pixels Work</span></a> to learn more.</p>
 </div>
 <div class="section" id="how-do-i-connect-my-leds-to-pixelmaestro">
 <h3>How do I connect my LEDs to PixelMaestro?<a class="headerlink" href="#how-do-i-connect-my-leds-to-pixelmaestro" title="Permalink to this headline">¶</a></h3>
-<p>PixelMaestro can’t control LEDs directly, but you can pair it with a library like <a class="reference external" href="https://github.com/adafruit/Adafruit_NeoPixel">NeoPixel</a> or <a class="reference external" href="https://github.com/cpldcpu/light_ws2812">LightWS2812</a>. On each loop, grab the  color value of each <code class="docutils literal notranslate"><span class="pre">Pixel</span></code>  using <code class="docutils literal notranslate"><span class="pre">maestro.get_pixel_color(section_id,</span> <span class="pre">x_coordinate,</span> <span class="pre">y_coordinate)</span></code> and pass it to the library.</p>
+<p>PixelMaestro can’t control LEDs directly, but you can use it with a library like <a class="reference external" href="https://github.com/adafruit/Adafruit_NeoPixel">NeoPixel</a> or <a class="reference external" href="https://github.com/cpldcpu/light_ws2812">LightWS2812</a>. On each loop, grab the color value of each <code class="docutils literal notranslate"><span class="pre">Pixel</span></code>  using <code class="docutils literal notranslate"><span class="pre">maestro.get_pixel_color(section_id,</span> <span class="pre">x_coordinate,</span> <span class="pre">y_coordinate)</span></code> and pass it to the library.</p>
 </div>
 <div class="section" id="why-am-i-getting-poor-performance-running-out-of-memory">
 <h3>Why am I getting poor performance / running out of memory?<a class="headerlink" href="#why-am-i-getting-poor-performance-running-out-of-memory" title="Permalink to this headline">¶</a></h3>

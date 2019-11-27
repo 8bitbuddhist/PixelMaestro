@@ -171,11 +171,11 @@ namespace PixelMaestro {
 	*/
 	void Show::update_event_index() {
 		// If we've exceeded the number of events, start over from 0
-		if (loop_ && (current_index_ + 1 >= num_events_)) {
+		if (timing_mode_ == TimingMode::Relative && loop_ && (current_index_ + 1 >= num_events_)) {
 			current_index_ = 0;
 		}
 		else {
-			current_index_++;
+			++current_index_;
 		}
 	}
 }

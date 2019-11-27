@@ -3,6 +3,15 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v2.1.0] - In Progress
+
+### Changed
+- Fixed `Canvas::draw_text()` bug.
+- Fixed Pixel fading not working properly on 32-bit devices (PR #10).
+
+### Removed
+- Removed extra `map()` call from CycleAnimation.
+
 ## [v2.0.2-docs] - 2019-07-26
 
 ### Changed
