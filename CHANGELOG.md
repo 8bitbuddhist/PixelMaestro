@@ -5,6 +5,9 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ## [v2.1.0] - In Progress
 
+### Added
+- Added `wrap` parameter to Sections. This lets you toggle whether to wrap Pixels in an offset Section from one side to another.
+
 ### Changed
 - Fixed `Canvas::draw_text()` bug.
 - Fixed Pixel fading not working properly on 32-bit devices (PR #10).

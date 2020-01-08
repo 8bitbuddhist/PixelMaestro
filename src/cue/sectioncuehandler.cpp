@@ -145,6 +145,19 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
+	uint8_t* SectionCueHandler::set_wrap(uint8_t section_num, uint8_t layer_num, bool wrap) {
+		uint32_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetWrap,
+			section_num,
+			layer_num
+		);
+
+		controller_.get_buffer()[++index] = static_cast<uint8_t>(wrap);
+
+		return controller_.assemble(++index);
+	}
+
 	void SectionCueHandler::run(uint8_t *cue) {
 		Section* section = get_section(cue[(uint8_t)Byte::SectionByte], cue[(uint8_t)Byte::LayerByte]);
 
@@ -210,7 +223,8 @@ namespace PixelMaestro {
 					(bool)cue[(uint8_t)Byte::OptionsByte + 5]
 				);
 				break;
-			default:
+			case Action::SetWrap:
+				section->set_wrap(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 		}
 	}

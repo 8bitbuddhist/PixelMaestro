@@ -209,6 +209,7 @@ namespace PixelMaestro {
 			Pixel& get_pixel(uint16_t x, uint16_t y) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);
 			Scroll* get_scroll() const;
+			bool get_wrap() const;
 			void remove_animation(bool clear_pixels);
 			void remove_canvas();
 			void remove_layer();
@@ -224,6 +225,7 @@ namespace PixelMaestro {
 			void set_pixel_color(uint16_t x, uint16_t y, const Colors::RGB& color);
 			Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			void set_step_count(uint8_t step_count);
+			void set_wrap(bool wrap);
 			void sync(const uint32_t& new_time);
 			void update(const uint32_t& current_time);
 			void update_scroll(const uint32_t& current_time);
@@ -264,6 +266,9 @@ namespace PixelMaestro {
 
 			/// The number of steps for fading Pixels. Set by Animations. Defaults to 1.
 			uint8_t step_count_ = 1;
+
+			/// Wraps around an offset Pixel from one side of the Section to the other.
+			bool wrap_ = true;
 	};
 }
 

@@ -135,11 +135,17 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color) {
 
-		if (!dimensions_.in_bounds(x, y)) return Colors::RGB(0, 0, 0);
 
 		// Adjust coordinates based on offset
-		uint16_t offset_x = (x + offset_.x) % dimensions_.x;
-		uint16_t offset_y = (y + offset_.y) % dimensions_.y;
+		uint16_t offset_x = (x + offset_.x);
+		uint16_t offset_y = (y + offset_.y);
+
+		if (wrap_) {
+			offset_x %= dimensions_.x;
+			offset_y %= dimensions_.y;
+		}
+
+		if (!dimensions_.in_bounds(offset_x, offset_y)) return Colors::RGB(0, 0, 0);
 
 		// If mirroring is enabled, mirror across the axes.
 		if (mirror_ != nullptr) {
@@ -156,7 +162,7 @@ namespace PixelMaestro {
 			}
 		}
 
-		Colors::RGB final_color;
+		Colors::RGB final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
 
 		// If we have a Canvas and it returns a color, use that color instead of the Pixel's actual color.
 		if (canvas_ != nullptr) {
@@ -164,12 +170,6 @@ namespace PixelMaestro {
 			if (canvas_color != nullptr) {
 				final_color = *canvas_color;
 			}
-			else {
-				final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
-			}
-		}
-		else {
-			final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
 		}
 
 		/*
@@ -191,12 +191,7 @@ namespace PixelMaestro {
 		}
 
 		// Return the final color after applying brightness
-		if (brightness_ == 1.0F) {
-			return final_color;
-		}
-		else {
-			return final_color * brightness_;
-		}
+		return final_color * brightness_;
 	}
 
 	/**
@@ -222,6 +217,15 @@ namespace PixelMaestro {
 				pixels_[pixel].clear();
 			}
 		}
+	}
+
+	/**
+	 * Returns whether to wrap Pixels on an offset Section.
+	 *
+	 * @return If true, Pixels wrap.
+	 */
+	bool Section::get_wrap() const {
+		return wrap_;
 	}
 
 	/**
@@ -478,6 +482,15 @@ namespace PixelMaestro {
 	}
 
 	/**
+	 * Sets whether to wrap Pixels across an offset Section.
+	 *
+	 * @param wrap If true, Pixels wrap. If not, Pixels display black.
+	 */
+	void Section::set_wrap(bool wrap) {
+		this->wrap_ = wrap;
+	}
+
+	/**
 	 * Sets the last update time of each component's timer.
 	 * @param new_time New last refresh time.
 	 */
@@ -556,12 +569,14 @@ namespace PixelMaestro {
 				x_step = scroll_->step_x;
 			}
 
-			// Check to see if we need to reset the offset
-			if (!scroll_->reverse_x && offset_.x >= dimensions_.x) {
-				offset_.x = 0;
-			}
-			else if (scroll_->reverse_x && offset_.x == 0) {
-				offset_.x = dimensions_.x;
+			// Check to see if we need to reset the offset, but only when wrapping is enabled
+			if (wrap_) {
+				if (!scroll_->reverse_x && offset_.x >= dimensions_.x) {
+					offset_.x = 0;
+				}
+				else if (scroll_->reverse_x && offset_.x == 0) {
+					offset_.x = dimensions_.x;
+				}
 			}
 
 			// Finally, apply the movement
@@ -586,12 +601,14 @@ namespace PixelMaestro {
 				y_step = scroll_->step_y;
 			}
 
-			// Check to see if we need to reset the offset
-			if (!scroll_->reverse_y && offset_.y >= dimensions_.y) {
-				offset_.y = 0;
-			}
-			else if (scroll_->reverse_y && offset_.y == 0) {
-				offset_.y = dimensions_.y;
+			// Check to see if we need to reset the offset, but only when wrapping is enabled
+			if (wrap_) {
+				if (!scroll_->reverse_y && offset_.y >= dimensions_.y) {
+					offset_.y = 0;
+				}
+				else if (scroll_->reverse_y && offset_.y == 0) {
+					offset_.y = dimensions_.y;
+				}
 			}
 
 			// Finally, apply the movement

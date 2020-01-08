@@ -148,6 +148,16 @@ Offsetting shifts the Section from its default position by a certain number of p
 
    section.set_offset(5, 1);
 
+.. _sections-wrapping:
+Wrapping
+^^^^^^^^
+
+If a Section is offset, Pixels shifted out of bounds automatically wrap around to the other side of the grid. If wrapping is disabled, these Pixels are instead not shown at all. This is useful for things like scrolling text off-screen.
+
+.. code-block:: c++
+
+    section.set_wrap(false);
+
 .. _sections-mirroring:
 Mirroring
 ---------
