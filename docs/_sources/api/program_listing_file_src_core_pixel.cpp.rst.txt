@@ -33,7 +33,8 @@ Program Listing for File pixel.cpp
        }
    
        Colors::RGB& Pixel::get_color() {
-           return this->current_color_;
+           //return this->current_color_;
+           return this->rendered_color_;
        }
    
        void Pixel::set_next_color(const Colors::RGB& next_color, uint8_t step_count) {
@@ -50,6 +51,10 @@ Program Listing for File pixel.cpp
    #endif // PIXEL_DISABLE_FADING
        }
    
+       void Pixel::set_rendered_color(const Colors::RGB &rendered_color) {
+           this->rendered_color_ = rendered_color;
+       }
+   
        void Pixel::update(bool apply_next_color) {
    #ifndef PIXEL_DISABLE_FADING
            current_color_.r += step_.r;
@@ -60,6 +65,8 @@ Program Listing for File pixel.cpp
            if (apply_next_color) {
                current_color_ = next_color_;
            }
+   
+           rendered_color_ = current_color_;
    #endif // PIXEL_ENABLE_ACCURATE_FADING
    #endif // PIXEL_DISABLE_FADING
        }

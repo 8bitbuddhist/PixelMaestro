@@ -137,6 +137,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#wrapping">Wrapping</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
@@ -287,6 +288,7 @@
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1VUAnimation.html">Class VUAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
 </ul>
 </li>
@@ -392,7 +394,8 @@
     <span class="p">}</span>
 
     <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">&amp;</span> <span class="n">Pixel</span><span class="o">::</span><span class="n">get_color</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">current_color_</span><span class="p">;</span>
+        <span class="c1">//return this-&gt;current_color_;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">-&gt;</span><span class="n">rendered_color_</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">Pixel</span><span class="o">::</span><span class="n">set_next_color</span><span class="p">(</span><span class="k">const</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">&amp;</span> <span class="n">next_color</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">step_count</span><span class="p">)</span> <span class="p">{</span>
@@ -409,6 +412,10 @@
 <span class="cp">#endif </span><span class="c1">// PIXEL_DISABLE_FADING</span>
     <span class="p">}</span>
 
+    <span class="kt">void</span> <span class="n">Pixel</span><span class="o">::</span><span class="n">set_rendered_color</span><span class="p">(</span><span class="k">const</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="o">&amp;</span><span class="n">rendered_color</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">this</span><span class="o">-&gt;</span><span class="n">rendered_color_</span> <span class="o">=</span> <span class="n">rendered_color</span><span class="p">;</span>
+    <span class="p">}</span>
+
     <span class="kt">void</span> <span class="n">Pixel</span><span class="o">::</span><span class="n">update</span><span class="p">(</span><span class="kt">bool</span> <span class="n">apply_next_color</span><span class="p">)</span> <span class="p">{</span>
 <span class="cp">#ifndef PIXEL_DISABLE_FADING</span>
         <span class="n">current_color_</span><span class="p">.</span><span class="n">r</span> <span class="o">+=</span> <span class="n">step_</span><span class="p">.</span><span class="n">r</span><span class="p">;</span>
@@ -419,6 +426,8 @@
         <span class="k">if</span> <span class="p">(</span><span class="n">apply_next_color</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">current_color_</span> <span class="o">=</span> <span class="n">next_color_</span><span class="p">;</span>
         <span class="p">}</span>
+
+        <span class="n">rendered_color_</span> <span class="o">=</span> <span class="n">current_color_</span><span class="p">;</span>
 <span class="cp">#endif </span><span class="c1">// PIXEL_ENABLE_ACCURATE_FADING</span>
 <span class="cp">#endif </span><span class="c1">// PIXEL_DISABLE_FADING</span>
     <span class="p">}</span>

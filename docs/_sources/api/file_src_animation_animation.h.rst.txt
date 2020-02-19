@@ -75,6 +75,8 @@ Included By
 
 - :ref:`file_src_animation_sparkleanimation.h`
 
+- :ref:`file_src_animation_vuanimation.h`
+
 - :ref:`file_src_animation_waveanimation.h`
 
 - :ref:`file_src_cue_animationcuehandler.h`

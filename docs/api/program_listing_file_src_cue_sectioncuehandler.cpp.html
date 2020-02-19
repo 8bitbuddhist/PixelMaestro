@@ -137,6 +137,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#wrapping">Wrapping</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
@@ -287,6 +288,7 @@
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1VUAnimation.html">Class VUAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
 </ul>
 </li>
@@ -516,6 +518,19 @@
         <span class="k">return</span> <span class="n">controller_</span><span class="p">.</span><span class="n">assemble</span><span class="p">(</span><span class="o">++</span><span class="n">index</span><span class="p">);</span>
     <span class="p">}</span>
 
+    <span class="kt">uint8_t</span><span class="o">*</span> <span class="n">SectionCueHandler</span><span class="o">::</span><span class="n">set_wrap</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section_num</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">layer_num</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">wrap</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">uint32_t</span> <span class="n">index</span> <span class="o">=</span> <span class="n">start_cue</span><span class="p">(</span>
+            <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">CueController</span><span class="o">::</span><span class="n">Handler</span><span class="o">::</span><span class="n">SectionCueHandler</span><span class="p">,</span>
+            <span class="p">(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Action</span><span class="o">::</span><span class="n">SetWrap</span><span class="p">,</span>
+            <span class="n">section_num</span><span class="p">,</span>
+            <span class="n">layer_num</span>
+        <span class="p">);</span>
+
+        <span class="n">controller_</span><span class="p">.</span><span class="n">get_buffer</span><span class="p">()[</span><span class="o">++</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">uint8_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">wrap</span><span class="p">);</span>
+
+        <span class="k">return</span> <span class="n">controller_</span><span class="p">.</span><span class="n">assemble</span><span class="p">(</span><span class="o">++</span><span class="n">index</span><span class="p">);</span>
+    <span class="p">}</span>
+
     <span class="kt">void</span> <span class="n">SectionCueHandler</span><span class="o">::</span><span class="n">run</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="o">*</span><span class="n">cue</span><span class="p">)</span> <span class="p">{</span>
         <span class="n">Section</span><span class="o">*</span> <span class="n">section</span> <span class="o">=</span> <span class="n">get_section</span><span class="p">(</span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Byte</span><span class="o">::</span><span class="n">SectionByte</span><span class="p">],</span> <span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Byte</span><span class="o">::</span><span class="n">LayerByte</span><span class="p">]);</span>
 
@@ -581,7 +596,8 @@
                     <span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span> <span class="o">+</span> <span class="mi">5</span><span class="p">]</span>
                 <span class="p">);</span>
                 <span class="k">break</span><span class="p">;</span>
-            <span class="k">default</span><span class="o">:</span>
+            <span class="k">case</span> <span class="n">Action</span><span class="o">::</span><span class="nl">SetWrap</span><span class="p">:</span>
+                <span class="n">section</span><span class="o">-&gt;</span><span class="n">set_wrap</span><span class="p">(</span><span class="n">cue</span><span class="p">[(</span><span class="kt">uint8_t</span><span class="p">)</span><span class="n">Byte</span><span class="o">::</span><span class="n">OptionsByte</span><span class="p">]);</span>
                 <span class="k">break</span><span class="p">;</span>
         <span class="p">}</span>
     <span class="p">}</span>

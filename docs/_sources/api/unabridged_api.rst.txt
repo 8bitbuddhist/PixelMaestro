@@ -218,6 +218,11 @@ Classes and Structs
 .. toctree::
    :maxdepth: 5
 
+   classPixelMaestro_1_1VUAnimation.rst
+
+.. toctree::
+   :maxdepth: 5
+
    classPixelMaestro_1_1WaveAnimation.rst
 
 Enums

@@ -22,6 +22,7 @@ Derived Types
 - ``public PixelMaestro::RandomAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1RandomAnimation`)
 - ``public PixelMaestro::SolidAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1SolidAnimation`)
 - ``public PixelMaestro::SparkleAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1SparkleAnimation`)
+- ``public PixelMaestro::VUAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1VUAnimation`)
 - ``public PixelMaestro::WaveAnimation`` (:ref:`exhale_class_classPixelMaestro_1_1WaveAnimation`)
 
 

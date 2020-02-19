@@ -139,6 +139,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#wrapping">Wrapping</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
@@ -289,6 +290,7 @@
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1VUAnimation.html">Class VUAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
 </ul>
 </li>
@@ -561,6 +563,17 @@
 </dd></dl>
 
 <dl class="function">
+<dt id="_CPPv4NK12PixelMaestro7Section8get_wrapEv">
+<span id="_CPPv3NK12PixelMaestro7Section8get_wrapEv"></span><span id="_CPPv2NK12PixelMaestro7Section8get_wrapEv"></span><span id="PixelMaestro::Section::get_wrapC"></span><span class="target" id="classPixelMaestro_1_1Section_1ae328e58a97f74db50d91c689d93ab8bf"></span>bool <code class="sig-name descname">get_wrap</code><span class="sig-paren">(</span><span class="sig-paren">)</span> <em class="property">const</em><a class="headerlink" href="#_CPPv4NK12PixelMaestro7Section8get_wrapEv" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Returns whether to wrap Pixels on an offset <a class="reference internal" href="#classPixelMaestro_1_1Section"><span class="std std-ref">Section</span></a>.</p>
+<p><dl class="simple">
+<dt><strong>Return</strong></dt><dd><p>If true, Pixels wrap. </p>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="_CPPv4N12PixelMaestro7Section16remove_animationEb">
 <span id="_CPPv3N12PixelMaestro7Section16remove_animationEb"></span><span id="_CPPv2N12PixelMaestro7Section16remove_animationEb"></span><span id="PixelMaestro::Section::remove_animation__b"></span><span class="target" id="classPixelMaestro_1_1Section_1a718e2c22979a08663f73dd343619ad82"></span>void <code class="sig-name descname">remove_animation</code><span class="sig-paren">(</span>bool <em>clear_pixels</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro7Section16remove_animationEb" title="Permalink to this definition">¶</a><br /></dt>
 <dd><p>Deletes the current <a class="reference internal" href="classPixelMaestro_1_1Animation.html#classPixelMaestro_1_1Animation"><span class="std std-ref">Animation</span></a>.</p>
@@ -740,6 +753,19 @@
 <dd><p>Sets the number of steps for fading Pixels. <dl class="simple">
 <dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">step_count</span></code>: When &gt; 0, gradually fades Pixels from their current color to their next color. </p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="_CPPv4N12PixelMaestro7Section8set_wrapEb">
+<span id="_CPPv3N12PixelMaestro7Section8set_wrapEb"></span><span id="_CPPv2N12PixelMaestro7Section8set_wrapEb"></span><span id="PixelMaestro::Section::set_wrap__b"></span><span class="target" id="classPixelMaestro_1_1Section_1a61102a063b6ecd114237442af1adf3ef"></span>void <code class="sig-name descname">set_wrap</code><span class="sig-paren">(</span>bool <em>wrap</em><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N12PixelMaestro7Section8set_wrapEb" title="Permalink to this definition">¶</a><br /></dt>
+<dd><p>Sets whether to wrap Pixels across an offset <a class="reference internal" href="#classPixelMaestro_1_1Section"><span class="std std-ref">Section</span></a>.</p>
+<p><dl class="simple">
+<dt><strong>Parameters</strong></dt><dd><ul class="breatheparameterlist simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">wrap</span></code>: If true, Pixels wrap. If not, Pixels display black. </p></li>
 </ul>
 </dd>
 </dl>

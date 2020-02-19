@@ -385,6 +385,16 @@ Files
 .. toctree::
    :maxdepth: 5
 
+   file_src_animation_vuanimation.cpp.rst
+
+.. toctree::
+   :maxdepth: 5
+
+   file_src_animation_vuanimation.h.rst
+
+.. toctree::
+   :maxdepth: 5
+
    file_src_animation_waveanimation.cpp.rst
 
 .. toctree::

@@ -137,6 +137,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#using-layers">Using Layers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#scrolling">Scrolling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="../Sections.html#offsetting">Offsetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../Sections.html#wrapping">Wrapping</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../Sections.html#mirroring">Mirroring</a></li>
@@ -287,6 +288,7 @@
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Timer.html">Class Timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1VUAnimation.html">Class VUAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
 </ul>
 </li>
@@ -390,7 +392,8 @@
                 <span class="n">SetOffset</span><span class="p">,</span>
                 <span class="n">SetScroll</span><span class="p">,</span>
                 <span class="n">SetBrightness</span><span class="p">,</span>
-                <span class="n">SetMirror</span>
+                <span class="n">SetMirror</span><span class="p">,</span>
+                <span class="n">SetWrap</span>
             <span class="p">};</span>
 
             <span class="k">enum</span> <span class="k">class</span> <span class="nc">Byte</span> <span class="o">:</span> <span class="kt">uint8_t</span> <span class="p">{</span>
@@ -414,6 +417,7 @@
             <span class="kt">uint8_t</span><span class="o">*</span> <span class="nf">set_mirror</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section_num</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">layer_num</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">x</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">y</span><span class="p">);</span>
             <span class="kt">uint8_t</span><span class="o">*</span> <span class="nf">set_offset</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section_num</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">layer_num</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">x</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">y</span><span class="p">);</span>
             <span class="kt">uint8_t</span><span class="o">*</span> <span class="nf">set_scroll</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section_num</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">layer_num</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">x</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">y</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reverse_x</span> <span class="o">=</span> <span class="nb">false</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">reverse_y</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
+            <span class="kt">uint8_t</span><span class="o">*</span> <span class="nf">set_wrap</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">section_num</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">layer_num</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">wrap</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">run</span><span class="p">(</span><span class="kt">uint8_t</span><span class="o">*</span> <span class="n">cue</span><span class="p">);</span>
     <span class="p">};</span>
 <span class="p">}</span>

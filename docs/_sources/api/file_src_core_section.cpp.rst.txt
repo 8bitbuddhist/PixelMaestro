@@ -49,6 +49,8 @@ Includes
 
 - ``../animation/sparkleanimation.h``
 
+- ``../animation/vuanimation.h``
+
 - ``../animation/waveanimation.h``
 
 - ``../canvas/canvas.h``

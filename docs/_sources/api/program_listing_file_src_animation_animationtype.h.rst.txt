@@ -29,7 +29,8 @@ Program Listing for File animationtype.h
            Random,
            Solid,
            Sparkle,
-           Wave
+           Wave,
+           VUMeter
        };
    }
    

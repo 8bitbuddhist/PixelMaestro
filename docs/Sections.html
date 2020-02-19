@@ -139,6 +139,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#using-layers">Using Layers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#scrolling">Scrolling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#offsetting">Offsetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#wrapping">Wrapping</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#mirroring">Mirroring</a></li>
@@ -289,6 +290,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Timer.html">Class Timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1VUAnimation.html">Class VUAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
 </ul>
 </li>
@@ -479,6 +481,13 @@
 <p>If scrolling is enabled, the offset values will be overridden each time the Section updates.</p>
 </div>
 <div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">section</span><span class="p">.</span><span class="n">set_offset</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="wrapping">
+<h3>Wrapping<a class="headerlink" href="#wrapping" title="Permalink to this headline">¶</a></h3>
+<p>If a Section is offset, Pixels shifted out of bounds automatically wrap around to the other side of the grid. If wrapping is disabled, these Pixels are instead not shown at all. This is useful for things like scrolling text off-screen.</p>
+<div class="highlight-c++ notranslate"><div class="highlight"><pre><span></span><span class="n">section</span><span class="p">.</span><span class="n">set_wrap</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>

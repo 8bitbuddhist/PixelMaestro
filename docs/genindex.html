@@ -138,6 +138,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Sections.html#using-layers">Using Layers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Sections.html#scrolling">Scrolling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Sections.html#offsetting">Offsetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Sections.html#wrapping">Wrapping</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Sections.html#mirroring">Mirroring</a></li>
@@ -288,6 +289,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Timer.html">Class Timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1VUAnimation.html">Class VUAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
 </ul>
 </li>
@@ -959,8 +961,6 @@
 </li>
       <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvertE">PixelMaestro::FloatByteConvert (C++ class)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert13byte_to_floatEP7uint8_t">PixelMaestro::FloatByteConvert::byte_to_float (C++ function)</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert9convertedE">PixelMaestro::FloatByteConvert::converted (C++ member)</a>
@@ -971,6 +971,8 @@
 </li>
       <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert9Converter3valE">PixelMaestro::FloatByteConvert::Converter::val (C++ member)</a>, <a href="api/unionPixelMaestro_1_1FloatByteConvert_1_1Converter.html#_CPPv4N12PixelMaestro16FloatByteConvert9Converter3valE">[1]</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/classPixelMaestro_1_1FloatByteConvert.html#_CPPv4N12PixelMaestro16FloatByteConvert16FloatByteConvertEf">PixelMaestro::FloatByteConvert::FloatByteConvert (C++ function)</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1Font.html#_CPPv4N12PixelMaestro4FontE">PixelMaestro::Font (C++ class)</a>
@@ -1153,6 +1155,8 @@
 </li>
       <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel14set_next_colorERKN6Colors3RGBE7uint8_t">PixelMaestro::Pixel::set_next_color (C++ function)</a>
 </li>
+      <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel18set_rendered_colorERKN6Colors3RGBE">PixelMaestro::Pixel::set_rendered_color (C++ function)</a>
+</li>
       <li><a href="api/classPixelMaestro_1_1Pixel.html#_CPPv4N12PixelMaestro5Pixel6updateEb">PixelMaestro::Pixel::update (C++ function)</a>
 </li>
       <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro6PlasmaE">PixelMaestro::Plasma (C++ enumerator)</a>
@@ -1249,6 +1253,8 @@
 </li>
       <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section10get_scrollEv">PixelMaestro::Section::get_scroll (C++ function)</a>
 </li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4NK12PixelMaestro7Section8get_wrapEv">PixelMaestro::Section::get_wrap (C++ function)</a>
+</li>
       <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5LayerE">PixelMaestro::Section::Layer (C++ class)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5LayerE">[1]</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section5Layer5alphaE">PixelMaestro::Section::Layer::alpha (C++ member)</a>, <a href="api/structPixelMaestro_1_1Section_1_1Layer.html#_CPPv4N12PixelMaestro7Section5Layer5alphaE">[1]</a>
@@ -1331,6 +1337,8 @@
 </li>
       <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section14set_step_countE7uint8_t">PixelMaestro::Section::set_step_count (C++ function)</a>
 </li>
+      <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section8set_wrapEb">PixelMaestro::Section::set_wrap (C++ function)</a>
+</li>
       <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section4syncERK8uint32_t">PixelMaestro::Section::sync (C++ function)</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1Section.html#_CPPv4N12PixelMaestro7Section6updateERK8uint32_t">PixelMaestro::Section::update (C++ function)</a>
@@ -1387,6 +1395,8 @@
 </li>
       <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler10set_scrollE7uint8_t7uint8_t8uint16_t8uint16_tbb">PixelMaestro::SectionCueHandler::set_scroll (C++ function)</a>
 </li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler8set_wrapE7uint8_t7uint8_tb">PixelMaestro::SectionCueHandler::set_wrap (C++ function)</a>
+</li>
       <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler12SetAnimationE">PixelMaestro::SectionCueHandler::SetAnimation (C++ enumerator)</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler13SetBrightnessE">PixelMaestro::SectionCueHandler::SetBrightness (C++ enumerator)</a>
@@ -1402,6 +1412,8 @@
       <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9SetOffsetE">PixelMaestro::SectionCueHandler::SetOffset (C++ enumerator)</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler9SetScrollE">PixelMaestro::SectionCueHandler::SetScroll (C++ enumerator)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandler7SetWrapE">PixelMaestro::SectionCueHandler::SetWrap (C++ enumerator)</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1SectionCueHandler.html#_CPPv4N12PixelMaestro17SectionCueHandlerD0Ev">PixelMaestro::SectionCueHandler::~SectionCueHandler (C++ function)</a>
 </li>
@@ -1530,6 +1542,18 @@
       <li><a href="api/classPixelMaestro_1_1Utility.html#_CPPv4N12PixelMaestro7Utility4randE7int32_t">PixelMaestro::Utility::rand (C++ function)</a>
 </li>
       <li><a href="api/classPixelMaestro_1_1Utility.html#_CPPv4N12PixelMaestro7Utility5srandE7int32_t">PixelMaestro::Utility::srand (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1VUAnimation.html#_CPPv4N12PixelMaestro11VUAnimationE">PixelMaestro::VUAnimation (C++ class)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1VUAnimation.html#_CPPv4N12PixelMaestro11VUAnimation10set_sampleE7uint8_td">PixelMaestro::VUAnimation::set_sample (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1VUAnimation.html#_CPPv4N12PixelMaestro11VUAnimation6updateEv">PixelMaestro::VUAnimation::update (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1VUAnimation.html#_CPPv4N12PixelMaestro11VUAnimation11VUAnimationER7Section">PixelMaestro::VUAnimation::VUAnimation (C++ function)</a>
+</li>
+      <li><a href="api/classPixelMaestro_1_1VUAnimation.html#_CPPv4N12PixelMaestro11VUAnimationD0Ev">PixelMaestro::VUAnimation::~VUAnimation (C++ function)</a>
+</li>
+      <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro7VUMeterE">PixelMaestro::VUMeter (C++ enumerator)</a>
 </li>
       <li><a href="api/enum_animationtype_8h_1af3853e8c7ec34f748f90c869cfeae993.html#_CPPv4N12PixelMaestro4WaveE">PixelMaestro::Wave (C++ enumerator)</a>
 </li>
