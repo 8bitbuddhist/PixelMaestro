@@ -97,7 +97,7 @@ A Layer is a second Section rendered on top of an existing Section. When renderi
 
 
 .. image:: images/layer-example.png
-   :target: images/layer-example.png
+   :target: _images/layer-example.png
    :alt: Layers
 
 *Layering Section 2 (center) on top of Section 1 (left) using the alpha MixMode results in Section 3 (right).*

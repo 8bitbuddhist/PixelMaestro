@@ -3,10 +3,15 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v2.1.0] - In Progress
+## [v2.1.1] - 2020-03-05
 
 ### Added
 - Added `wrap` parameter to Sections. This lets you toggle whether to wrap Pixels in an offset Section from one side to another.
+
+### Changed
+- Fixed bug where a short Animation cycle could cause a division by 0.
+
+## [v2.1.0] - 2019-11-26
 
 ### Changed
 - Fixed `Canvas::draw_text()` bug.

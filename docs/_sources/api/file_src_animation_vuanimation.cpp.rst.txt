@@ -1,0 +1,44 @@
+
+.. _file_src_animation_vuanimation.cpp:
+
+File vuanimation.cpp
+====================
+
+|exhale_lsh| :ref:`Parent directory <dir_src_animation>` (``src/animation``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. contents:: Contents
+   :local:
+   :backlinks: none
+
+Definition (``src/animation/vuanimation.cpp``)
+----------------------------------------------
+
+
+.. toctree::
+   :maxdepth: 1
+
+   program_listing_file_src_animation_vuanimation.cpp.rst
+
+
+
+
+
+Includes
+--------
+
+
+- ``vuanimation.h`` (:ref:`file_src_animation_vuanimation.h`)
+
+
+
+
+
+
+Namespaces
+----------
+
+
+- :ref:`namespace_PixelMaestro`
+

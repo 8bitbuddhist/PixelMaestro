@@ -1,0 +1,48 @@
+
+.. _program_listing_file_src_animation_vuanimation.cpp:
+
+Program Listing for File vuanimation.cpp
+========================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_vuanimation.cpp>` (``src/animation/vuanimation.cpp``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #include "vuanimation.h"
+   
+   namespace PixelMaestro {
+       VUAnimation::VUAnimation(Section& section) : Animation(section) {
+           type_ = AnimationType::VUMeter;
+           map();
+       }
+   
+       void VUAnimation::map() {
+           // Expand or shrink sample visualization based on Section size
+           double sample_index = 0;
+           double gap = (NUM_SAMPLES / 2) / dimensions_.x;
+   
+           for (uint16_t x = 0; x < dimensions_.x; x++) {
+               int y_max = static_cast<int>(vReal[static_cast<int>(sample_index)]);
+               for (uint16_t y = 0; y < dimensions_.y; y++) {
+                   // Check to see if the Pixel is outside of the sample, assuming we're drawing it from bottom to top
+                   if (dimensions_.y - y > y_max) {
+                       set_map_color_index(x, y, 255);
+                   }
+                   else {
+                       set_map_color_index(x, y, 0);
+                   }
+               }
+   
+               sample_index += gap;
+           }
+       }
+   
+       void VUAnimation::set_sample(uint8_t index, double sample) {
+           vReal[index] = sample;
+           vImg[index] = 0;
+       }
+   
+       void VUAnimation::update() { }
+   }

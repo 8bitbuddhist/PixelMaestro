@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Sections &mdash; PixelMaestro 2.0.2 documentation</title>
+  <title>Sections &mdash; PixelMaestro 2.1.0 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -442,7 +442,7 @@
 <p class="admonition-title">Warning</p>
 <p>Be careful when using Layers on low-memory devices. Adding a Layer creates a second framebuffer, requiring lots of RAM.</p>
 </div>
-<a class="reference external image-reference" href="images/layer-example.png"><img alt="Layers" src="_images/layer-example.png" /></a>
+<a class="reference external image-reference" href="_images/layer-example.png"><img alt="Layers" src="_images/layer-example.png" /></a>
 <p><em>Layering Section 2 (center) on top of Section 1 (left) using the alpha MixMode results in Section 3 (right).</em></p>
 <p>Create a Layer by calling <code class="docutils literal notranslate"><span class="pre">Section::set_layer(Colors::MixMode</span> <span class="pre">mix_mode,</span> <span class="pre">uint8_t</span> <span class="pre">alpha)</span></code>. <code class="docutils literal notranslate"><span class="pre">MixMode</span></code> is the method used to combine the Layer’s colors with those of the base Section, and <code class="docutils literal notranslate"><span class="pre">alpha</span></code> sets the percentage that the Layer’s colors are blended with the base’s colors. Note that <code class="docutils literal notranslate"><span class="pre">alpha</span></code> only applies when using the Alpha MixMode.</p>
 <p>This method returns a new <code class="docutils literal notranslate"><span class="pre">Layer</span></code>, object, which contains a newly initialized <code class="docutils literal notranslate"><span class="pre">Section</span></code> object wholly independent of the base Section. You can access the Layer using <code class="docutils literal notranslate"><span class="pre">Section::get_layer()</span></code>, and you can access the layered Section using <code class="docutils literal notranslate"><span class="pre">Section::get_layer()-&gt;section</span></code>. You can perform any normal action on this layered Section including adding an Animation or Canvas.</p>
@@ -523,7 +523,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

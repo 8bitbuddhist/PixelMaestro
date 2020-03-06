@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Program Listing for File pixel.h &mdash; PixelMaestro 2.0.2 documentation</title>
+  <title>Program Listing for File pixel.h &mdash; PixelMaestro 2.1.0 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -392,15 +392,11 @@
             <span class="kt">void</span> <span class="n">clear</span><span class="p">();</span>
             <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">&amp;</span> <span class="n">get_color</span><span class="p">();</span>
             <span class="kt">void</span> <span class="nf">set_next_color</span><span class="p">(</span><span class="k">const</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">&amp;</span> <span class="n">next_color</span><span class="p">,</span> <span class="kt">uint8_t</span> <span class="n">step_count</span><span class="p">);</span>
-            <span class="kt">void</span> <span class="nf">set_rendered_color</span><span class="p">(</span><span class="k">const</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">&amp;</span> <span class="n">rendered_color</span><span class="p">);</span>
             <span class="kt">void</span> <span class="nf">update</span><span class="p">(</span><span class="kt">bool</span> <span class="n">apply_next_color</span> <span class="o">=</span> <span class="nb">false</span><span class="p">);</span>
 
         <span class="k">private</span><span class="o">:</span>
 
             <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">current_color_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
-
-            <span class="c1">// FIXME: Store the final rendered color of the Pixel</span>
-            <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">rendered_color_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
 
             <span class="cp">#ifndef PIXEL_DISABLE_FADING</span>
                 <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">step_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">};</span>
@@ -429,7 +425,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

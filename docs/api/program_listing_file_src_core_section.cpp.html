@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Program Listing for File section.cpp &mdash; PixelMaestro 2.0.2 documentation</title>
+  <title>Program Listing for File section.cpp &mdash; PixelMaestro 2.1.0 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="../_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
@@ -445,20 +445,14 @@
 
     <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">Section</span><span class="o">::</span><span class="n">get_pixel_color</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">x</span><span class="p">,</span> <span class="kt">uint16_t</span> <span class="n">y</span><span class="p">,</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">*</span> <span class="n">base_color</span><span class="p">)</span> <span class="p">{</span>
 
-        <span class="cm">/* FIXME: Yet another go at moving get_pixel_color() to update().</span>
-<span class="cm">         *   First, move the Pixel color storing and calculation logic to Animation, since that&#39;s what it&#39;s originally designed for.</span>
-<span class="cm">         *   Next, use Animation::get_pixel_color() and Canvas::get_pixel_color() to simultanously calculate the color and move it to the Pixel.</span>
-<span class="cm">         *   To fix the Canvas/Animation redraw issue, use an if statement to pull the Animation color if the Canvas color is transparent.</span>
-<span class="cm">         *   Apply layering and brightness in update() too.</span>
-<span class="cm">         *   Finally, use this method to do offsetting and mirroring.</span>
-<span class="cm">         *</span>
-<span class="cm">         * ALTERNATIVELY: don&#39;t even store the final color, but grab it from the Animation and/or Canvas on Section::get_pixel_color(). For Animations, we can apply fading in Animation::get_pixel_color(). This could save a *lot* of memory, but adds processing time and basically undermines the update() consolidation idea</span>
-<span class="cm">         */</span>
-
         <span class="c1">// Adjust coordinates based on offset</span>
-        <span class="kt">uint16_t</span> <span class="n">offset_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">+</span> <span class="n">offset_</span><span class="p">.</span><span class="n">x</span><span class="p">);</span>
-        <span class="kt">uint16_t</span> <span class="n">offset_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">offset_</span><span class="p">.</span><span class="n">y</span><span class="p">);</span>
+        <span class="kt">uint16_t</span> <span class="n">offset_x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">offset_</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
+        <span class="kt">uint16_t</span> <span class="n">offset_y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">offset_</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
 
+        <span class="cm">/*</span>
+<span class="cm">         * If enabled, use the remainder to wrap the Section around the grid.</span>
+<span class="cm">         * Otherwise, return black for any out of bound Pixels.</span>
+<span class="cm">         */</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">wrap_</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">offset_x</span> <span class="o">%=</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">x</span><span class="p">;</span>
             <span class="n">offset_y</span> <span class="o">%=</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">y</span><span class="p">;</span>
@@ -466,7 +460,7 @@
 
         <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">dimensions_</span><span class="p">.</span><span class="n">in_bounds</span><span class="p">(</span><span class="n">offset_x</span><span class="p">,</span> <span class="n">offset_y</span><span class="p">))</span> <span class="k">return</span> <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
 
-        <span class="c1">// If mirroring is enabled, mirror across the axes.</span>
+        <span class="c1">// If mirroring is enabled, mirror across the axes center.</span>
         <span class="k">if</span> <span class="p">(</span><span class="n">mirror_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">if</span> <span class="p">(</span><span class="n">mirror_</span><span class="o">-&gt;</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">if</span> <span class="p">(</span><span class="n">offset_y</span> <span class="o">&gt;</span> <span class="n">mirror_</span><span class="o">-&gt;</span><span class="n">mid_y</span><span class="p">)</span> <span class="p">{</span>
@@ -481,7 +475,36 @@
             <span class="p">}</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="n">pixels_</span><span class="p">[</span><span class="n">dimensions_</span><span class="p">.</span><span class="n">get_inline_index</span><span class="p">(</span><span class="n">offset_x</span><span class="p">,</span> <span class="n">offset_y</span><span class="p">)].</span><span class="n">get_color</span><span class="p">();</span>
+        <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">final_color</span> <span class="o">=</span> <span class="n">pixels_</span><span class="p">[</span><span class="n">dimensions_</span><span class="p">.</span><span class="n">get_inline_index</span><span class="p">(</span><span class="n">offset_x</span><span class="p">,</span> <span class="n">offset_y</span><span class="p">)].</span><span class="n">get_color</span><span class="p">();</span>
+
+        <span class="c1">// If we have a Canvas and it returns a color, use that color instead of the Pixel&#39;s actual color.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">canvas_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">*</span> <span class="n">canvas_color</span> <span class="o">=</span> <span class="n">canvas_</span><span class="o">-&gt;</span><span class="n">get_pixel_color</span><span class="p">(</span><span class="n">offset_x</span><span class="p">,</span> <span class="n">offset_y</span><span class="p">);</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">canvas_color</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">final_color</span> <span class="o">=</span> <span class="o">*</span><span class="n">canvas_color</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="cm">/*</span>
+<span class="cm">         * If this Section a Layer, combine this Pixel&#39;s color with its parent Pixel&#39;s color.</span>
+<span class="cm">         * This is done recursively, with each Layer building on top of its parent Section.</span>
+<span class="cm">         * We check both the parent Section and Layer to ensure colors are layered correctly.</span>
+<span class="cm">         */</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">parent_section_</span> <span class="o">!=</span> <span class="k">nullptr</span> <span class="o">&amp;&amp;</span> <span class="n">base_color</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">final_color</span> <span class="o">=</span> <span class="n">Colors</span><span class="o">::</span><span class="n">mix_colors</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">base_color</span><span class="p">,</span>
+            <span class="n">final_color</span><span class="p">,</span>
+            <span class="n">parent_section_</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">mix_mode</span><span class="p">,</span>
+            <span class="n">parent_section_</span><span class="o">-&gt;</span><span class="n">get_layer</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">alpha</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// If this Section has a Layer, merge in the Layer&#39;s color output.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">layer_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">final_color</span> <span class="o">=</span> <span class="n">layer_</span><span class="o">-&gt;</span><span class="n">section</span><span class="o">-&gt;</span><span class="n">get_pixel_color</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">final_color</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Return the final color after applying brightness</span>
+        <span class="k">return</span> <span class="n">final_color</span> <span class="o">*</span> <span class="n">brightness_</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="n">Section</span><span class="o">::</span><span class="n">Scroll</span><span class="o">*</span> <span class="n">Section</span><span class="o">::</span><span class="n">get_scroll</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
@@ -678,8 +701,6 @@
     <span class="p">}</span>
 
     <span class="kt">void</span> <span class="n">Section</span><span class="o">::</span><span class="n">set_step_count</span><span class="p">(</span><span class="kt">uint8_t</span> <span class="n">step_count</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">step_count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="n">step_count</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-
         <span class="k">this</span><span class="o">-&gt;</span><span class="n">step_count_</span> <span class="o">=</span> <span class="n">step_count</span><span class="p">;</span>
     <span class="p">}</span>
 
@@ -706,14 +727,9 @@
     <span class="kt">void</span> <span class="n">Section</span><span class="o">::</span><span class="n">update</span><span class="p">(</span><span class="k">const</span> <span class="kt">uint32_t</span><span class="o">&amp;</span> <span class="n">current_time</span><span class="p">)</span> <span class="p">{</span>
 
         <span class="cm">/*</span>
-<span class="cm">         * First, update the Animation and Canvas. These set each Pixel&#39;s color output directly.</span>
-<span class="cm">         * Next, update any post-processing effects. For now this is just Scroll.</span>
-<span class="cm">         * Finally, update the Layer.</span>
+<span class="cm">         * Run the update.</span>
+<span class="cm">         * Since the Animation directly modifies Pixel color, it must be run first.</span>
 <span class="cm">         */</span>
-        <span class="k">if</span> <span class="p">(</span><span class="n">layer_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-            <span class="n">layer_</span><span class="o">-&gt;</span><span class="n">section</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">(</span><span class="n">current_time</span><span class="p">);</span>
-        <span class="p">}</span>
-
         <span class="k">if</span> <span class="p">(</span><span class="n">animation_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">animation_</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">(</span><span class="n">current_time</span><span class="p">);</span>
         <span class="p">}</span>
@@ -723,51 +739,21 @@
         <span class="p">}</span>
 
 <span class="cp">#ifndef PIXEL_DISABLE_FADING</span>
-        <span class="c1">//if (step_count_ &gt; 0) {</span>
-            <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">y</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                <span class="k">for</span> <span class="p">(</span><span class="kt">uint16_t</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">x</span><span class="p">;</span> <span class="n">x</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-                    <span class="n">Pixel</span><span class="o">&amp;</span> <span class="n">pixel</span> <span class="o">=</span> <span class="n">pixels_</span><span class="p">[</span><span class="n">dimensions_</span><span class="p">.</span><span class="n">get_inline_index</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)];</span>
-
-                    <span class="k">if</span> <span class="p">(</span><span class="n">step_count_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">pixel</span><span class="p">.</span><span class="n">update</span><span class="p">(</span><span class="n">step_count_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
-                    <span class="p">}</span>
-
-                    <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span> <span class="n">final_color</span> <span class="o">=</span> <span class="n">pixel</span><span class="p">.</span><span class="n">get_color</span><span class="p">();</span>
-
-                    <span class="c1">// Render Canvas</span>
-                    <span class="k">if</span> <span class="p">(</span><span class="n">canvas_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">Colors</span><span class="o">::</span><span class="n">RGB</span><span class="o">*</span> <span class="n">canvas_color</span> <span class="o">=</span> <span class="n">canvas_</span><span class="o">-&gt;</span><span class="n">get_pixel_color</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
-                        <span class="k">if</span> <span class="p">(</span><span class="n">canvas_color</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-                            <span class="n">final_color</span> <span class="o">=</span> <span class="o">*</span><span class="n">canvas_color</span><span class="p">;</span>
-                        <span class="p">}</span>
-                    <span class="p">}</span>
-
-                    <span class="cm">/*</span>
-<span class="cm">                     * If this Section a Layer, combine this Pixel&#39;s color with its parent Pixel&#39;s color.</span>
-<span class="cm">                     * This is done recursively, with each Layer building on top of its parent Section.</span>
-<span class="cm">                     * We check both the parent Section and Layer to ensure colors are layered correctly.</span>
-<span class="cm">                     */</span>
-
-                    <span class="k">if</span> <span class="p">(</span><span class="n">layer_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
-                        <span class="n">final_color</span> <span class="o">=</span> <span class="n">Colors</span><span class="o">::</span><span class="n">mix_colors</span><span class="p">(</span>
-                                          <span class="n">final_color</span><span class="p">,</span>
-                                          <span class="n">layer_</span><span class="o">-&gt;</span><span class="n">section</span><span class="o">-&gt;</span><span class="n">get_pixel</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">).</span><span class="n">get_color</span><span class="p">(),</span>
-                                          <span class="n">layer_</span><span class="o">-&gt;</span><span class="n">mix_mode</span><span class="p">,</span>
-                                          <span class="n">layer_</span><span class="o">-&gt;</span><span class="n">alpha</span><span class="p">);</span>
-                    <span class="p">}</span>
-
-                    <span class="n">pixel</span><span class="p">.</span><span class="n">set_rendered_color</span><span class="p">(</span><span class="n">final_color</span> <span class="o">*</span> <span class="n">brightness_</span><span class="p">);</span>
-                <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">step_count_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">uint32_t</span> <span class="n">pixel</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">pixel</span> <span class="o">&lt;</span> <span class="n">dimensions_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">pixel</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">pixels_</span><span class="p">[</span><span class="n">pixel</span><span class="p">].</span><span class="n">update</span><span class="p">(</span><span class="n">step_count_</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
             <span class="p">}</span>
 
-            <span class="k">if</span> <span class="p">(</span><span class="n">step_count_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-                <span class="o">--</span><span class="n">step_count_</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="c1">//}</span>
+            <span class="n">step_count_</span><span class="o">--</span><span class="p">;</span>
+        <span class="p">}</span>
 <span class="cp">#endif</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">scroll_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
             <span class="n">update_scroll</span><span class="p">(</span><span class="n">current_time</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">layer_</span> <span class="o">!=</span> <span class="k">nullptr</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">layer_</span><span class="o">-&gt;</span><span class="n">section</span><span class="o">-&gt;</span><span class="n">update</span><span class="p">(</span><span class="n">current_time</span><span class="p">);</span>
         <span class="p">}</span>
     <span class="p">}</span>
 
@@ -864,7 +850,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

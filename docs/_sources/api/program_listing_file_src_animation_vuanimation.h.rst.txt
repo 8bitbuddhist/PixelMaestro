@@ -1,0 +1,40 @@
+
+.. _program_listing_file_src_animation_vuanimation.h:
+
+Program Listing for File vuanimation.h
+======================================
+
+|exhale_lsh| :ref:`Return to documentation for file <file_src_animation_vuanimation.h>` (``src/animation/vuanimation.h``)
+
+.. |exhale_lsh| unicode:: U+021B0 .. UPWARDS ARROW WITH TIP LEFTWARDS
+
+.. code-block:: cpp
+
+   #ifndef VUANIMATION_H
+   #define VUANIMATION_H
+   
+   #include "animation.h"
+   
+   // TODO: Complete VUAnimation
+   // Example with code: https://github.com/shajeebtm/Arduino-audio-spectrum-visualizer-analyzer/
+   // Other example: https://classes.engineering.wustl.edu/ese205/core/index.php?title=Fast_Fourier_Transform_Library_%26_Arduino
+   
+   namespace PixelMaestro {
+       class VUAnimation : public Animation {
+           public:
+               explicit VUAnimation(Section& section);
+               ~VUAnimation() = default;
+               void set_sample(uint8_t index, double sample);
+               void update();
+   
+           private:
+               static const uint8_t NUM_SAMPLES = 128;
+   
+               double vReal[NUM_SAMPLES];
+               double vImg[NUM_SAMPLES];
+   
+               void map();
+       };
+   }
+   
+   #endif // VUANIMATION_H

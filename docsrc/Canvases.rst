@@ -12,7 +12,7 @@ A ``Canvas`` is a drawing surface where you can create shapes, write text, free 
 
 
 .. image:: images/palette-canvas.png
-   :target: images/palette-canvas.png
+   :target: _images/palette-canvas.png
    :alt: Canvas
 
 

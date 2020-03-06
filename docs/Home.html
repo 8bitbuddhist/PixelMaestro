@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Home &mdash; PixelMaestro 2.0.2 documentation</title>
+  <title>Home &mdash; PixelMaestro 2.1.0 documentation</title>
   
 
   
@@ -23,12 +23,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
-        <script type="text/javascript" src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script src="_static/collapsible-lists/js/CollapsibleLists.compressed.js"></script>
+        <script src="_static/collapsible-lists/js/apply-collapsible-lists.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -139,6 +139,7 @@
 <li class="toctree-l2"><a class="reference internal" href="Sections.html#using-layers">Using Layers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Sections.html#scrolling">Scrolling</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Sections.html#offsetting">Offsetting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Sections.html#wrapping">Wrapping</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Sections.html#mirroring">Mirroring</a></li>
@@ -289,6 +290,7 @@
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1SparkleAnimation.html">Class SparkleAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Timer.html">Class Timer</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1Utility.html">Class Utility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1VUAnimation.html">Class VUAnimation</a></li>
 <li class="toctree-l4"><a class="reference internal" href="api/classPixelMaestro_1_1WaveAnimation.html">Class WaveAnimation</a></li>
 </ul>
 </li>
@@ -401,10 +403,10 @@
 <p>Performance is affected by:</p>
 <ul class="simple">
 <li><p>How much RAM your device has and how fast its CPU is</p></li>
-<li><p>The number of <a href="#id1"><span class="problematic" id="id2">:doc:`Pixels &lt;Pixels&gt;`_</span></a> being rendered</p></li>
-<li><p>How many <a href="#id3"><span class="problematic" id="id4">:ref:`Layers &lt;section-layers&gt;`_</span></a> you have active</p></li>
+<li><p>The number of <a class="reference internal" href="Pixels.html"><span class="doc">Pixels</span></a> being rendered</p></li>
+<li><p>How many <span class="xref std std-ref">Layers</span> you have active</p></li>
 <li><p>Whether you’re using <a class="reference internal" href="Animations.html"><span class="doc">Animations</span></a> or <a class="reference internal" href="Canvases.html"><span class="doc">Canvases</span></a></p></li>
-<li><p>Whether you’re using <a href="#id5"><span class="problematic" id="id6">:doc:`Cues &lt;Cues&gt;`_</span></a></p></li>
+<li><p>Whether you’re using <a class="reference internal" href="Cues.html"><span class="doc">Cues</span></a></p></li>
 <li><p>Any other libraries you are using simultaneously</p></li>
 </ul>
 <p>For a device like an Arduino, your biggest limitation is memory. Each Pixel requires at least 3 bytes of RAM (one for each color channel). If fading is enabled (which it is by default), each Pixel requires 3 additional bytes to store its target color. If accurate fading is enabled (it’s not by default), then each Pixel will require another 3 bytes. This means that a 10x10 grid needs anywhere between 300 and 900 bytes just to store color data.</p>
@@ -434,7 +436,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2019, 8bitbuddhist
+        &copy; Copyright 2020, 8bitbuddhist
 
     </p>
   </div>

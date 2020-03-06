@@ -46,10 +46,10 @@ Performance is affected by:
 
 
 * How much RAM your device has and how fast its CPU is
-* The number of :doc:`Pixels <Pixels>`_ being rendered
-* How many :ref:`Layers <section-layers>`_ you have active
+* The number of :doc:`Pixels <Pixels>` being rendered
+* How many :ref:`Layers <section-layers>` you have active
 * Whether you're using :doc:`Animations <Animations>` or :doc:`Canvases <Canvases>`
-* Whether you're using :doc:`Cues <Cues>`_
+* Whether you're using :doc:`Cues <Cues>`
 * Any other libraries you are using simultaneously
 
 For a device like an Arduino, your biggest limitation is memory. Each Pixel requires at least 3 bytes of RAM (one for each color channel). If fading is enabled (which it is by default), each Pixel requires 3 additional bytes to store its target color. If accurate fading is enabled (it's not by default), then each Pixel will require another 3 bytes. This means that a 10x10 grid needs anywhere between 300 and 900 bytes just to store color data.

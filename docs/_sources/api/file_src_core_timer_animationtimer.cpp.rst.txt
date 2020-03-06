@@ -31,6 +31,8 @@ Includes
 
 - ``animationtimer.h`` (:ref:`file_src_core_timer_animationtimer.h`)
 
+- ``math.h``
+
 
 
 

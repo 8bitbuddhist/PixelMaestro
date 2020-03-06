@@ -84,20 +84,14 @@ Program Listing for File section.cpp
    
        Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color) {
    
-           /* FIXME: Yet another go at moving get_pixel_color() to update().
-            *   First, move the Pixel color storing and calculation logic to Animation, since that's what it's originally designed for.
-            *   Next, use Animation::get_pixel_color() and Canvas::get_pixel_color() to simultanously calculate the color and move it to the Pixel.
-            *   To fix the Canvas/Animation redraw issue, use an if statement to pull the Animation color if the Canvas color is transparent.
-            *   Apply layering and brightness in update() too.
-            *   Finally, use this method to do offsetting and mirroring.
-            *
-            * ALTERNATIVELY: don't even store the final color, but grab it from the Animation and/or Canvas on Section::get_pixel_color(). For Animations, we can apply fading in Animation::get_pixel_color(). This could save a *lot* of memory, but adds processing time and basically undermines the update() consolidation idea
-            */
-   
            // Adjust coordinates based on offset
-           uint16_t offset_x = (x + offset_.x);
-           uint16_t offset_y = (y + offset_.y);
+           uint16_t offset_x = x + offset_.x;
+           uint16_t offset_y = y + offset_.y;
    
+           /*
+            * If enabled, use the remainder to wrap the Section around the grid.
+            * Otherwise, return black for any out of bound Pixels.
+            */
            if (wrap_) {
                offset_x %= dimensions_.x;
                offset_y %= dimensions_.y;
@@ -105,7 +99,7 @@ Program Listing for File section.cpp
    
            if (!dimensions_.in_bounds(offset_x, offset_y)) return Colors::RGB(0, 0, 0);
    
-           // If mirroring is enabled, mirror across the axes.
+           // If mirroring is enabled, mirror across the axes center.
            if (mirror_ != nullptr) {
                if (mirror_->x) {
                    if (offset_y > mirror_->mid_y) {
@@ -120,7 +114,36 @@ Program Listing for File section.cpp
                }
            }
    
-           return pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+           Colors::RGB final_color = pixels_[dimensions_.get_inline_index(offset_x, offset_y)].get_color();
+   
+           // If we have a Canvas and it returns a color, use that color instead of the Pixel's actual color.
+           if (canvas_ != nullptr) {
+               Colors::RGB* canvas_color = canvas_->get_pixel_color(offset_x, offset_y);
+               if (canvas_color != nullptr) {
+                   final_color = *canvas_color;
+               }
+           }
+   
+           /*
+            * If this Section a Layer, combine this Pixel's color with its parent Pixel's color.
+            * This is done recursively, with each Layer building on top of its parent Section.
+            * We check both the parent Section and Layer to ensure colors are layered correctly.
+            */
+           if (parent_section_ != nullptr && base_color != nullptr) {
+               final_color = Colors::mix_colors(
+               *base_color,
+               final_color,
+               parent_section_->get_layer()->mix_mode,
+               parent_section_->get_layer()->alpha);
+           }
+   
+           // If this Section has a Layer, merge in the Layer's color output.
+           if (layer_ != nullptr) {
+               final_color = layer_->section->get_pixel_color(x, y, &final_color);
+           }
+   
+           // Return the final color after applying brightness
+           return final_color * brightness_;
        }
    
        Section::Scroll* Section::get_scroll() const {
@@ -317,8 +340,6 @@ Program Listing for File section.cpp
        }
    
        void Section::set_step_count(uint8_t step_count) {
-           if (step_count == 0) step_count = 1;
-   
            this->step_count_ = step_count;
        }
    
@@ -345,14 +366,9 @@ Program Listing for File section.cpp
        void Section::update(const uint32_t& current_time) {
    
            /*
-            * First, update the Animation and Canvas. These set each Pixel's color output directly.
-            * Next, update any post-processing effects. For now this is just Scroll.
-            * Finally, update the Layer.
+            * Run the update.
+            * Since the Animation directly modifies Pixel color, it must be run first.
             */
-           if (layer_ != nullptr) {
-               layer_->section->update(current_time);
-           }
-   
            if (animation_ != nullptr) {
                animation_->update(current_time);
            }
@@ -362,51 +378,21 @@ Program Listing for File section.cpp
            }
    
    #ifndef PIXEL_DISABLE_FADING
-           //if (step_count_ > 0) {
-               for (uint16_t y = 0; y < dimensions_.y; y++) {
-                   for (uint16_t x = 0; x < dimensions_.x; x++) {
-                       Pixel& pixel = pixels_[dimensions_.get_inline_index(x, y)];
-   
-                       if (step_count_ > 0) {
-                           pixel.update(step_count_ == 1);
-                       }
-   
-                       Colors::RGB final_color = pixel.get_color();
-   
-                       // Render Canvas
-                       if (canvas_ != nullptr) {
-                           Colors::RGB* canvas_color = canvas_->get_pixel_color(x, y);
-                           if (canvas_color != nullptr) {
-                               final_color = *canvas_color;
-                           }
-                       }
-   
-                       /*
-                        * If this Section a Layer, combine this Pixel's color with its parent Pixel's color.
-                        * This is done recursively, with each Layer building on top of its parent Section.
-                        * We check both the parent Section and Layer to ensure colors are layered correctly.
-                        */
-   
-                       if (layer_ != nullptr) {
-                           final_color = Colors::mix_colors(
-                                             final_color,
-                                             layer_->section->get_pixel(x, y).get_color(),
-                                             layer_->mix_mode,
-                                             layer_->alpha);
-                       }
-   
-                       pixel.set_rendered_color(final_color * brightness_);
-                   }
+           if (step_count_ > 0) {
+               for (uint32_t pixel = 0; pixel < dimensions_.size(); pixel++) {
+                   pixels_[pixel].update(step_count_ == 1);
                }
    
-               if (step_count_ > 0) {
-                   --step_count_;
-               }
-           //}
+               step_count_--;
+           }
    #endif
    
            if (scroll_ != nullptr) {
                update_scroll(current_time);
+           }
+   
+           if (layer_ != nullptr) {
+               layer_->section->update(current_time);
            }
        }
    
