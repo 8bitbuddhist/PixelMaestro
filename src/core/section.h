@@ -194,6 +194,26 @@ namespace PixelMaestro {
 				}
 			};
 
+			/**
+			 * @brief The scale of the rendered Section.
+			 */
+			struct Scale {
+				uint8_t x;
+				uint8_t y;
+
+				void set(uint8_t x, uint8_t y) {
+					if (x == 0) x = 1;
+					if (y == 0) y = 1;
+
+					this->x = x;
+					this->y = y;
+				}
+
+				Scale(uint8_t x, uint8_t y) {
+					set(x, y);
+				}
+			};
+
 			Section();
 			Section(uint16_t x, uint16_t y, Section* parent = nullptr);
 			~Section();
@@ -208,6 +228,7 @@ namespace PixelMaestro {
 			Section* get_parent_section() const;
 			Pixel& get_pixel(uint16_t x, uint16_t y) const;
 			Colors::RGB get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color = nullptr);
+			Scale& get_scale();
 			Scroll* get_scroll() const;
 			bool get_wrap() const;
 			void remove_animation(bool clear_pixels);
@@ -223,6 +244,7 @@ namespace PixelMaestro {
 			Mirror* set_mirror(bool x, bool y);
 			Point& set_offset(uint16_t x, uint16_t y);
 			void set_pixel_color(uint16_t x, uint16_t y, const Colors::RGB& color);
+			void set_scale(uint8_t x, uint8_t y);
 			Scroll& set_scroll(uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			void set_step_count(uint8_t step_count);
 			void set_wrap(bool wrap);
@@ -260,6 +282,9 @@ namespace PixelMaestro {
 
 			/// The array of Pixels managed by the Section.
 			Pixel* pixels_ = nullptr;
+
+			/// Sets the Scale of the Section when rendering.
+			Scale scale_ = Scale(5,5);
 
 			/// The Section's scrolling behavior.
 			Scroll* scroll_ = nullptr;

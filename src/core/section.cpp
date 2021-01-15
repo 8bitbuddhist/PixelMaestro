@@ -13,6 +13,7 @@
 #include "../animation/randomanimation.h"
 #include "../animation/solidanimation.h"
 #include "../animation/sparkleanimation.h"
+#include "../animation/vuanimation.h"
 #include "../animation/waveanimation.h"
 #include "../canvas/canvas.h"
 #include "../utility.h"
@@ -135,11 +136,14 @@ namespace PixelMaestro {
 	*/
 	Colors::RGB Section::get_pixel_color(uint16_t x, uint16_t y, Colors::RGB* base_color) {
 
+		// Adjust coordinates based on offset and scale
+		uint16_t offset_x = (x + offset_.x) / scale_.x;
+		uint16_t offset_y = (y + offset_.y) / scale_.y;
 
-		// Adjust coordinates based on offset
-		uint16_t offset_x = (x + offset_.x);
-		uint16_t offset_y = (y + offset_.y);
-
+		/*
+		 * If enabled, use the remainder to wrap the Section around the grid.
+		 * Otherwise, return black for any out of bound Pixels.
+		 */
 		if (wrap_) {
 			offset_x %= dimensions_.x;
 			offset_y %= dimensions_.y;
@@ -147,7 +151,7 @@ namespace PixelMaestro {
 
 		if (!dimensions_.in_bounds(offset_x, offset_y)) return Colors::RGB(0, 0, 0);
 
-		// If mirroring is enabled, mirror across the axes.
+		// If mirroring is enabled, mirror across the axes center.
 		if (mirror_ != nullptr) {
 			if (mirror_->x) {
 				if (offset_y > mirror_->mid_y) {
@@ -192,6 +196,14 @@ namespace PixelMaestro {
 
 		// Return the final color after applying brightness
 		return final_color * brightness_;
+	}
+
+	/**
+	 * @brief Returns the Section's scaling behavior.
+	 * @return Current scale.
+	 */
+	Section::Scale& Section::get_scale() {
+		return scale_;
 	}
 
 	/**
@@ -293,6 +305,9 @@ namespace PixelMaestro {
 			case AnimationType::Sparkle:
 				new_animation = new SparkleAnimation(*this);
 				break;
+			//case AnimationType::VUMeter:
+				//new_animation = new VUAnimation(*this);
+				//break;
 			case AnimationType::Wave:
 				new_animation = new WaveAnimation(*this);
 				break;
@@ -452,6 +467,10 @@ namespace PixelMaestro {
 		}
 	}
 
+	void Section::set_scale(uint8_t x, uint8_t y) {
+		this->scale_.set(x, y);
+	}
+
 	/**
 	 * Sets the direction and rate that the Section will scroll.
 	 * The values determine the amount of time until the Section completes a single scroll along the respective axis.
@@ -518,9 +537,8 @@ namespace PixelMaestro {
 	void Section::update(const uint32_t& current_time) {
 
 		/*
-		 * First, update the Animation and Canvas. These set each Pixel's color output directly.
-		 * Next, update any post-processing effects. For now this is just Scroll.
-		 * Finally, update the Layer.
+		 * Run the update.
+		 * Since the Animation directly modifies Pixel color, it must be run first.
 		 */
 		if (animation_ != nullptr) {
 			animation_->update(current_time);

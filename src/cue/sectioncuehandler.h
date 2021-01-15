@@ -20,7 +20,8 @@ namespace PixelMaestro {
 				SetScroll,
 				SetBrightness,
 				SetMirror,
-				SetWrap
+				SetWrap,
+				SetScale
 			};
 
 			enum class Byte : uint8_t {
@@ -43,6 +44,7 @@ namespace PixelMaestro {
 			uint8_t* set_layer(uint8_t section_num, uint8_t layer_num, Colors::MixMode mix_mode, uint8_t alpha);
 			uint8_t* set_mirror(uint8_t section_num, uint8_t layer_num, bool x, bool y);
 			uint8_t* set_offset(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
+			uint8_t* set_scale(uint8_t section_num, uint8_t layer_num, uint8_t x, uint8_t y);
 			uint8_t* set_scroll(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y, bool reverse_x = false, bool reverse_y = false);
 			uint8_t* set_wrap(uint8_t section_num, uint8_t layer_num, bool wrap);
 			void run(uint8_t* cue);

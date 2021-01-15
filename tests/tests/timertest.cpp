@@ -43,4 +43,12 @@ TEST_CASE("Create and manipulate a Timer.", "[Timer]") {
 		timer.start();
 		REQUIRE(timer.update(interval + 1) == true);
 	}
+
+	SECTION("Verify upm_to_millis returns accurate conversion.", "[int]") {
+		REQUIRE(Timer::upm_to_millis(120) == 500);
+		REQUIRE(Timer::upm_to_millis(100) == 600);
+		REQUIRE(Timer::upm_to_millis(150) == 400);
+		REQUIRE(Timer::upm_to_millis(136) == 441);
+		REQUIRE(Timer::upm_to_millis(180) == 333);
+	}
 }

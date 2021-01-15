@@ -19,6 +19,8 @@ namespace PixelMaestro {
 			void start();
 			void stop();
 			bool update(const uint32_t& current_time);
+			static uint16_t upm_to_millis(float upm);
+			static float millis_to_upm(uint16_t millis);
 
 		protected:
 			/// The amount of time (in milliseconds) since the last event.

@@ -3,6 +3,12 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
+## [v2.1.2] - In Progress
+
+### Added
+- Added `scale` parameter to Sections, which changes the, uh, scale of the final image.
+
+
 ## [v2.1.1] - 2020-03-05
 
 ### Added

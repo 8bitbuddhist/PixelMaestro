@@ -128,6 +128,20 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
+	uint8_t* SectionCueHandler::set_scale(uint8_t section_num, uint8_t layer_num, uint8_t x, uint8_t y) {
+		uint32_t index = start_cue(
+			(uint8_t)CueController::Handler::SectionCueHandler,
+			(uint8_t)Action::SetScale,
+			section_num,
+			layer_num
+		);
+
+		controller_.get_buffer()[++index] = x;
+		controller_.get_buffer()[++index] = y;
+
+		return controller_.assemble(++index);
+	}
+
 	uint8_t* SectionCueHandler::set_scroll(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y, bool reverse_x, bool reverse_y) {
 		uint32_t index = start_cue(
 			(uint8_t)CueController::Handler::SectionCueHandler,
@@ -213,6 +227,12 @@ namespace PixelMaestro {
 				section->set_offset(
 					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
 					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 2])
+				);
+				break;
+			case Action::SetScale:
+				section->set_scale(
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
+					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 1])
 				);
 				break;
 			case Action::SetScroll:
