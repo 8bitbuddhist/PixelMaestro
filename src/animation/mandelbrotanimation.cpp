@@ -80,6 +80,6 @@ namespace PixelMaestro {
 	}
 
 	void MandelbrotAnimation::update() {
-		update_cycle(0, palette_->get_num_colors());
+		update_frame(0, palette_->get_num_colors());
 	}
 }

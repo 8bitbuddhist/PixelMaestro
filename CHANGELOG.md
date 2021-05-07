@@ -6,7 +6,10 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 ## [v2.1.2] - In Progress
 
 ### Added
-- Added `scale` parameter to Sections, which changes the, uh, scale of the final image.
+- Added `scale` parameter to Sections, which changes the scale of the final image.
+
+### Changed
+- Renamed Animation "cycles" to "frames."
 
 
 ## [v2.1.1] - 2020-03-05

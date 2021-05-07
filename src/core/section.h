@@ -284,7 +284,7 @@ namespace PixelMaestro {
 			Pixel* pixels_ = nullptr;
 
 			/// Sets the Scale of the Section when rendering.
-			Scale scale_ = Scale(5,5);
+			Scale scale_ = Scale(1,1);
 
 			/// The Section's scrolling behavior.
 			Scroll* scroll_ = nullptr;

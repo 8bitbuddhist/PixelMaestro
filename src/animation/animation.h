@@ -30,7 +30,7 @@ namespace PixelMaestro {
 			explicit Animation(Section& section);
 			virtual ~Animation();
 			Point& get_center() const;
-			uint8_t get_cycle_index() const;
+			uint8_t get_frame_index() const;
 			bool get_fade() const;
 			Orientation get_orientation() const;
 			Palette* get_palette() const;
@@ -40,7 +40,7 @@ namespace PixelMaestro {
 			AnimationType get_type() const;
 			virtual void map() = 0;
 			void rebuild_map();
-			void set_cycle_index(uint8_t index);
+			void set_frame_index(uint8_t index);
 			void set_fade(bool fade);
 			void set_map_color_index(uint16_t x, uint16_t y, uint8_t color_index);
 			void set_center(uint16_t x, uint16_t y);
@@ -54,13 +54,13 @@ namespace PixelMaestro {
 			/// The center of the Animation.
 			Point center_;
 
-			///	The current stage in the animation cycle. Defaults to 0.
-			uint8_t cycle_index_ = 0;
+			///	The current stage in the animation. Defaults to 0.
+			uint8_t frame_index_ = 0;
 
 			/// Stores the current grid size.
 			Point dimensions_;
 
-			/// Whether to fade between cycles. Defaults to true.
+			/// Whether to fade between frames. Defaults to true.
 			bool fade_ = true;
 
 			/// False until the Animation has been fully allocated and mapped. Created for set_center().
@@ -91,7 +91,7 @@ namespace PixelMaestro {
 			AnimationType type_ = AnimationType::Solid;
 
 			virtual void update() = 0;
-			void update_cycle(uint8_t min, uint8_t max);
+			void update_frame(uint8_t min, uint8_t max);
 	};
 }
 

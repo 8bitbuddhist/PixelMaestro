@@ -269,7 +269,7 @@ namespace PixelMaestro {
 	 *
 	 * @param type Animation type.
 	 * @param palette The color palette to use.
-	 * @param preserve_settings If true, the generic configurations in the old Animation (Palette, cycle index, orientation, fade, reverse, speed, and pause) are copied to the new Animation.
+	 * @param preserve_settings If true, the generic configurations in the old Animation (Palette, frame index, orientation, fade, reverse, speed, and pause) are copied to the new Animation.
 	 * @return New Animation.
 	 */
 	Animation& Section::set_animation(AnimationType animation_type, bool preserve_settings) {
@@ -321,7 +321,7 @@ namespace PixelMaestro {
 			if (preserve_settings) {
 				new_animation->set_center(this->animation_->get_center().x, this->animation_->get_center().y);
 				new_animation->set_palette(*this->animation_->get_palette());
-				new_animation->set_cycle_index(this->animation_->get_cycle_index());
+				new_animation->set_frame_index(this->animation_->get_frame_index());
 				new_animation->set_fade(this->animation_->get_fade());
 				new_animation->set_orientation(this->animation_->get_orientation());
 				new_animation->set_reverse(this->animation_->get_reverse());

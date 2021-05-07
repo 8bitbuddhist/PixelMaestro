@@ -10,7 +10,7 @@ namespace PixelMaestro {
 	class AnimationCueHandler : public CueHandler {
 		public:
 			enum class Action : uint8_t {
-				SetCycleIndex,
+				SetFrameIndex,
 				SetFade,
 				SetFireOptions,
 				SetLightningOptions,
@@ -48,7 +48,7 @@ namespace PixelMaestro {
 
 			// General Animation calls
 			uint8_t* set_center(uint8_t section_num, uint8_t layer_num, uint16_t x, uint16_t y);
-			uint8_t* set_cycle_index(uint8_t section_num, uint8_t layer_num, uint8_t cycle_index);
+			uint8_t* set_frame_index(uint8_t section_num, uint8_t layer_num, uint8_t frame_index);
 			uint8_t* set_fade(uint8_t section_num, uint8_t layer_num, bool fade);
 			uint8_t* set_orientation(uint8_t section_num, uint8_t layer_num, Animation::Orientation orientation);
 			uint8_t* set_palette(uint8_t section_num, uint8_t layer_num, const Palette& palette);

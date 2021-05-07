@@ -7,6 +7,7 @@
 #include <stdint.h>
 #include "../../core/point.h"
 
+// TODO: Any way to merge in or utilize Font Chef? https://github.com/mobius3/font-chef
 namespace PixelMaestro {
 	class Font {
 		public:

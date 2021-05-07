@@ -24,12 +24,12 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Returns the current cycle index.
+	 * Returns the current frame index.
 	 *
-	 * @return Cycle index.
+	 * @return Current frame index.
 	 */
-	uint8_t Animation::get_cycle_index() const {
-		return cycle_index_;
+	uint8_t Animation::get_frame_index() const {
+		return frame_index_;
 	}
 
 	/**
@@ -120,22 +120,22 @@ namespace PixelMaestro {
 	}
 
 	/**
-	 * Sets the cycle index to the specified index.
+	 * Sets the frame index to the specified index.
 	 *
-	 * @param index New cycle index.
+	 * @param index New frame index.
 	 */
-	void Animation::set_cycle_index(uint8_t index) {
+	void Animation::set_frame_index(uint8_t index) {
 		if (palette_ != nullptr && index > palette_->get_num_colors()) {
 			index %= palette_->get_num_colors();
 		}
 
-		cycle_index_ = index;
+		frame_index_ = index;
 	}
 
 	/**
 	 * Toggles fading the animation.
 	 *
-	 * @param fade If true, fade between cycles.
+	 * @param fade If true, fade between frames.
 	 */
 	void Animation::set_fade(bool fade) {
 		fade_ = fade;
@@ -188,8 +188,8 @@ namespace PixelMaestro {
 	/**
 	 * Sets the amount of time between animation updates.
 	 *
-	 * @param speed Amount of time (in milliseconds) between animation cycles.
-	 * @param delay Amount of time (in milliseconds) to wait before starting an animation cycle.
+	 * @param speed Amount of time (in milliseconds) between animation frames.
+	 * @param delay Amount of time (in milliseconds) to wait before starting an animation frame.
 	 */
 	AnimationTimer& Animation::set_timer(uint16_t speed, uint16_t delay) {
 		timer_->set_interval(speed, delay);
@@ -222,7 +222,7 @@ namespace PixelMaestro {
 					else {
 						section_.set_pixel_color(x,
 							y,
-							palette_->get_color_at_index(map_[y][x] + cycle_index_)
+							palette_->get_color_at_index(map_[y][x] + frame_index_)
 						);
 					}
 				}
@@ -235,28 +235,28 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Incremnets the current animation cycle.
-		If reverse_animation_ is true, this decrements the cycle, moving the animation backwards.
-		If the animation reaches the end of its cycle, it will jump back (or forward) to the start (or end).
+		Incremnets the current animation frame.
+		If reverse_animation_ is true, this decrements the frame, moving the animation backwards.
+		If the animation reaches the end of its frame, it will jump back (or forward) to the start (or end).
 
-		@param min The minimum possible value of cycle_index_.
-		@param max The maximum possible value of cycle_index_.
+		@param min The minimum possible value of frame_index_.
+		@param max The maximum possible value of frame_index_.
 	*/
-	void Animation::update_cycle(uint8_t min, uint8_t max) {
+	void Animation::update_frame(uint8_t min, uint8_t max) {
 		if (reverse_) {
-			if (cycle_index_ == 0) {
-				cycle_index_ = max - 1;
+			if (frame_index_ == 0) {
+				frame_index_ = max - 1;
 			}
 			else {
-				cycle_index_--;
+				frame_index_--;
 			}
 		}
 		else {
-			if (cycle_index_ >= max - 1) {
-				cycle_index_ = min;
+			if (frame_index_ >= max - 1) {
+				frame_index_ = min;
 			}
 			else {
-				cycle_index_++;
+				frame_index_++;
 			}
 		}
 	}

@@ -100,14 +100,14 @@ namespace PixelMaestro {
 		return controller_.assemble(++index);
 	}
 
-	uint8_t* AnimationCueHandler::set_cycle_index(uint8_t section_num, uint8_t layer_num, uint8_t cycle_index) {
+	uint8_t* AnimationCueHandler::set_frame_index(uint8_t section_num, uint8_t layer_num, uint8_t frame_index) {
 		uint32_t index = start_cue(
 			(uint8_t)CueController::Handler::AnimationCueHandler,
-			(uint8_t)Action::SetCycleIndex,
+			(uint8_t)Action::SetFrameIndex,
 			section_num,
 			layer_num
 		);
-		controller_.get_buffer()[++index] = cycle_index;
+		controller_.get_buffer()[++index] = frame_index;
 
 		return controller_.assemble(++index);
 	}
@@ -211,8 +211,8 @@ namespace PixelMaestro {
 				animation->set_center(IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
 						IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 2]));
 				break;
-			case Action::SetCycleIndex:
-				animation->set_cycle_index(cue[(uint8_t)Byte::OptionsByte]);
+			case Action::SetFrameIndex:
+				animation->set_frame_index(cue[(uint8_t)Byte::OptionsByte]);
 				break;
 			case Action::SetFade:
 				animation->set_fade(cue[(uint8_t)Byte::OptionsByte]);

@@ -18,7 +18,8 @@ namespace PixelMaestro {
 		Random,
 		Solid,
 		Sparkle,
-		Wave
+		Wave,
+		VUMeter
 	};
 }
 
