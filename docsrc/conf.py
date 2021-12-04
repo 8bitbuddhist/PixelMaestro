@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'PixelMaestro'
-copyright = '2020, 8bitbuddhist'
+copyright = '2021, 8bitbuddhist'
 author = '8bitbuddhist'
 
 # The full version, including alpha/beta/rc tags

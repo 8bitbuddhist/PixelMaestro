@@ -1,15 +1,14 @@
 
-Canvases
-========
+Canvases and Image Editing
+==========================
 
-Canvases let you draw custom shapes and images onto a Section similar to an image editor.
+A Canvas lets you draw custom shapes and images onto a Section. This works like a `raster image editor <https://en.wikipedia.org/wiki/Raster_graphics>`_.
 
 .. _canvases-overview:
 Overview
 --------
 
 A ``Canvas`` is a drawing surface where you can create shapes, write text, free draw, and add other objects to your Section.
-
 
 .. image:: images/palette-canvas.png
    :target: _images/palette-canvas.png

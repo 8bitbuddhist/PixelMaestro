@@ -2,7 +2,7 @@
 Colors
 ======
 
-The Colors class provides methods for creating and managing colors. Colors are based on the RGB color model and are stored as 24-bit objects (8 bits dedicated to each color channel). Colors are defined by the ``Colors::RGB`` struct.
+The Colors class provides methods for creating and managing colors. Colors are stored as 24-bit objects, with 8 bits dedicated to each color channel (red, green, and blue). Colors are defined in the ``Colors::RGB`` struct and follow the `RGB color model <https://en.wikipedia.org/wiki/RGB_color_model>`_.
 
 .. _colors-creating:
 Creating Colors
@@ -14,16 +14,20 @@ To create a color, set each of the three color channels to a value between 0 (of
 
    Colors::RGB blue = {0, 0, 255};
 
-You can also create a completely random color by calling ``Colors::generate_random_color()``.
+To create a random color, use ``Colors::generate_random_color()``.
 
-For color palettes, you can use the ``generate_scaling_color_array()`` method. Pass the initial color, the target color, the array that you want to populate, and the number of colors, and it will automatically create a gradient of colors from the starting color to the target color. You can also use ``generate_random_color_array()`` to create a completely random color set.
+Creating Color Palettes
+------------------------
+
+A :doc:`Palette <Palettes>` is a collection of one or more colors. Read the Palette documentation for details on how to create new Palettes.
+
+The ``Colors`` class provides methods for populating color palettes. The ``generate_scaling_color_array()`` method generates a gradient of colors that scales from one color to another. Provide your initial color, target color, the ``Colors::RGB`` array you want to populate, and the number of colors to create, The ``generate_random_color_array()`` creates a completely random set of colors.
 
 .. _colors-mixing:
-Mixing Colors
--------------
+Combining/Mixing Colors
+-----------------------
 
-``mix_colors()`` blends two colors together and returns the result. This is primarily used for Section Layers, but it can also be used on its own. You can use a variety of different color mixing options (as provided in the ``MixMode`` enum):
-
+You can blend two colors together using the ``mix_colors()`` method. There are a number of different color mixing options (as provided in the ``MixMode`` enum):
 
 * Alpha: Blends the second color with the first color by the specified amount (0 - 255, where 0 is none and 255 is full).
 * Multiply: Multiplies the first color by the second.

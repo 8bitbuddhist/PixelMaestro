@@ -21,6 +21,8 @@ namespace PixelMaestro {
 			Section(rows, columns)
 		};
 		set_sections(sections, num_sections);
+
+		// TODO: Create own unique_ptr class to replace new/delete calls (see https://www.reddit.com/r/cpp_questions/comments/no8ulu/do_you_ever_use_newdelete_in_modern_code/h00e9qc/?utm_source=reddit&utm_medium=web2x&context=3)
 		dynamically_allocated_sections_ = true;
 	}
 

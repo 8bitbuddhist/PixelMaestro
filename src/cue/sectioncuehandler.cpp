@@ -231,8 +231,8 @@ namespace PixelMaestro {
 				break;
 			case Action::SetScale:
 				section->set_scale(
-					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte]),
-					IntByteConvert::byte_to_uint16(&cue[(uint8_t)Byte::OptionsByte + 1])
+					cue[(uint8_t)Byte::OptionsByte],
+					cue[(uint8_t)Byte::OptionsByte + 1]
 				);
 				break;
 			case Action::SetScroll:

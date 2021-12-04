@@ -33,6 +33,13 @@ namespace PixelMaestro {
 	 */
 	void AnimationTimer::recalculate_step_count() {
 		/*
+		 * TODO: Thoughts on updating timing:
+		 *	Right now, we time by frame (how long until the next frame) when we should probably time by cycle (how long to complete the animation).
+		 *	The challenge is the interval is calculated around the frame.
+		 *	To calculate around the cycle, we'd need the length of the cycle (e.g. # of colors in the palette).
+		 */
+
+		/*
 		 * If fading, calculate the distance in steps between the current cycle and the next cycle.
 		 * Otherwise, just jump to the next cycle.
 		 */
