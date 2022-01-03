@@ -13,7 +13,6 @@
 #include "../animation/randomanimation.h"
 #include "../animation/solidanimation.h"
 #include "../animation/sparkleanimation.h"
-#include "../animation/vuanimation.h"
 #include "../animation/waveanimation.h"
 #include "../canvas/canvas.h"
 #include "../utility.h"
@@ -305,9 +304,6 @@ namespace PixelMaestro {
 			case AnimationType::Sparkle:
 				new_animation = new SparkleAnimation(*this);
 				break;
-			//case AnimationType::VUMeter:
-				//new_animation = new VUAnimation(*this);
-				//break;
 			case AnimationType::Wave:
 				new_animation = new WaveAnimation(*this);
 				break;
