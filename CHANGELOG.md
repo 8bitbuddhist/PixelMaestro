@@ -7,9 +7,12 @@ The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
 ### Added
 - Added `scale` parameter to Sections, which changes the scale of the final image.
+- Added example code for Raspberry Pi (WIP).
 
 ### Changed
 - Renamed Animation "cycles" to "frames."
+- Fixed issue where `Animation::frame_interval_` wasn’t updating.
+- Changed `Timer::upm_to_millis` and `Timer::millis_to_upm` to convert to updates per second instead of updates per minute.
 
 
 ## [v2.1.1] - 2020-03-05

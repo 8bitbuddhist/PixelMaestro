@@ -227,6 +227,8 @@ namespace PixelMaestro {
 					}
 				}
 			}
+			++frame_index_;
+			if (frame_index_ >= palette_->get_num_colors()) frame_index_ = 0;
 
 			return true;
 		}

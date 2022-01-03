@@ -80,19 +80,19 @@ namespace PixelMaestro {
 
 	/**
 	 * Converts the number of updates per minute into an interval (in milliseconds)
-	 * @param upm Updates per minute
+	 * @param ups Updates per second
 	 * @return Interval in milliseconds
 	 */
-	uint16_t Timer::upm_to_millis(float upm) {
-		return 60000/upm;
+	uint16_t Timer::ups_to_millis(float ups) {
+		return 1000/ups;
 	}
 
 	/**
-	 * Converts a millisecond interval into updates per minute.
+	 * Converts a millisecond interval into updates per second.
 	 * @param millis Interval in milliseconds.
-	 * @return Updates per minute.
+	 * @return Updates per second.
 	 */
-	float Timer::millis_to_upm(uint16_t millis) {
-		return 60000/(float)millis;
+	float Timer::millis_to_ups(uint16_t millis) {
+		return 1000/(float)millis;
 	}
 }
