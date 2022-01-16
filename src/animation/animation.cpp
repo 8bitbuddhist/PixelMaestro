@@ -227,8 +227,6 @@ namespace PixelMaestro {
 					}
 				}
 			}
-			++frame_index_;
-			if (frame_index_ >= palette_->get_num_colors()) frame_index_ = 0;
 
 			return true;
 		}
@@ -237,7 +235,7 @@ namespace PixelMaestro {
 	}
 
 	/**
-		Incremnets the current animation frame.
+		Increments the current animation frame.
 		If reverse_animation_ is true, this decrements the frame, moving the animation backwards.
 		If the animation reaches the end of its frame, it will jump back (or forward) to the start (or end).
 

@@ -123,7 +123,7 @@ namespace PixelMaestro {
 					}
 
 					float y = 0;
-					if (interval_y != 0.0f) dimensions->y / (float)(interval_y / (float)refresh_interval);
+					if (interval_y != 0.0f) y = dimensions->y / (float)(interval_y / (float)refresh_interval);
 					if (y > 0 && y < 1) {
 						uint16_t interval = (1 / y) * refresh_interval;
 						if (timer_y) {
