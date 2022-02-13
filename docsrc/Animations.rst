@@ -5,7 +5,7 @@
 Animations
 ==========
 
-``Animations`` are animated patterns rendered to a :doc:`Section <Sections>`. Animations are split into multiple frames (called *cycles*). On each update, the Animation renders a new cycle and sets each ``Pixel`` to the appropriate color. When performed quickly, this process creates a smooth, continuous visual effect.
+``Animations`` are animated patterns rendered to a :doc:`Section <Sections>`. Animations have multiple *frames*. On each update, the Animation renders a new frame and sets each ``Pixel`` to the appropriate color. When fading is enabled, the Animation smoothly transitions between frames, otherwise it jumps straight from one to the next.
 
 .. _animations-types:
 Animation Types
@@ -20,7 +20,7 @@ The following animation types are available:
      - Description
      - Preview
      - Orientations
-     - Cycles
+     - Frames
      - Reversible
    * - Blink
      - Cycles between the Solid Animation and off.
@@ -139,14 +139,12 @@ Let's customize the blink Animation we just created, then replace it with a new 
    Animation& new_animation = section.set_animation(AnimationType::Wave, true);
 
 .. _animations-cycles:
-Animation Cycles
+Animation Frames
 ^^^^^^^^^^^^^^^^
 
-Each Animation is made up of multiple repeating patterns called *cycles.* On each cycle, the Animation generates a new pattern and stores it in the ``map``.
+When the Animation redraws the Pixel grid, this is called a *frame*. On each frame, the Animation generates a new pattern and stores it in the ``map``.
 
-The number of cycles varies by Animation. For example, ``SolidAnimation`` has one cycle (on), ``BlinkAnimation`` has two cycles (on and off). For many Animations, it's equal to the number of colors in the Palette. For example, ``WaveAnimation`` has as many cycles as colors in its ``Palette`` (one cycle per color). After the last cycle completes, the Animation starts over from the beginning.
-
-Randomly generated Animations (e.g. ``SparkleAnimation``) don't use cycles since they generate randomized patterns each time.
+The number of frames can vary by Animation. For example, ``SolidAnimation`` has only one frame (on), while ``BlinkAnimation`` has two frames (on and off). For many Animations, it's equal to the number of colors in the Palette. For example, ``WaveAnimation`` has as many frames as colors in its ``Palette``. After the last frame is rendered, the Animation starts over from the beginning. Randomly generated Animations (e.g. ``SparkleAnimation``) generate a new frame on each update.
 
 .. _animations-palette:
 Setting the Color Palette
@@ -195,7 +193,7 @@ The options available are:
      - The size of the flames.
    * - Lightning
      - Bolts
-     - The number of bolts displayed on each cycle.
+     - The number of bolts displayed on each frame.
    * - Lightning
      - Fork Chance
      - The chance for a bolt to create a fork.
@@ -235,7 +233,7 @@ Some Animations (such as ``CycleAnimation``) aren't affected by orientations.
 Changing the Animation Timing
 -----------------------------
 
-The *timing interval* is the amount of time (in milliseconds) that a single cycle takes to finish. For example, an Animation with 5 cycles and an interval of 100 will take 500 milliseconds (5 * 100 milliseconds) to complete, while the same Animation with an interval of 500 will take 2500 milliseconds (5 * 500) to finish. You can set the Animation's timing interval via ``Animation::set_timer()``.
+The *timing interval* is the amount of time (in milliseconds) that a single frame takes to render. For example, an Animation with 5 frames and an interval of 100 will take 500 milliseconds (5 * 100 milliseconds) to complete, while the same Animation with an interval of 500 will take 2500 milliseconds (5 * 500) to complete. You can set the Animation's timing interval via ``Animation::set_timer()``.
 
 .. code-block:: c++
 
@@ -249,11 +247,19 @@ The *delay interval* is the amount of time (in milliseconds) that the Animation 
 
 .. Note:: Delay is only available when fading is enabled.
 
+Alternatively, if you want to set the number of frames per second (FPS) instead of the interval, you can use `Timer::ups_to_millis(frames_per_second)` to convert from FPS to a timer-friendly interval:
+
+.. code-block:: c++
+
+   // Render at 10 FPS
+   uint16_t interval = Timer::ups_to_millis(10);
+   animation.set_timer(interval);
+
 .. _animations-fading:
 Toggling Fading
 ---------------
 
-By default, Pixels gradually fade between Animation cycles. When fading is disabled, Pixels change instantly from one color to the next at the end of the cycle. You can disable fading using ``Animation::set_fade()``.
+By default, Pixels gradually fade between Animation frames. When fading is disabled, Pixels change instantly from one color to the next on each frame. You can disable fading using ``Animation::set_fade()``.
 
 .. code-block:: c++
 

@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include "../../core/point.h"
 
-// NOTE: Possibility of using Font Chef? https://github.com/mobius3/font-chef
+// NOTE: Possibility of using Font Chef, at least in PixelMaestro Studio? https://github.com/mobius3/font-chef
 namespace PixelMaestro {
 	class Font {
 		public:

@@ -3,13 +3,14 @@ All notable changes to PixelMaestro will be documented in this file.
 
 The format is loosely based on [Keep a Changelog](http://keepachangelog.com/).
 
-## [v2.1.2] - In Progress
+## [v2.2.0] - In Progress
 
 ### Added
 - Added `scale` parameter to Sections, which changes the scale of the final image.
 - Added example code for Raspberry Pi (WIP).
 
 ### Changed
+- Changed `Maestro::update()` to compensate for lag. If multiple cycles pass between `Maestro::update()` gets called (e.g. due to a laggy device), the Maestro will drop frames to catch up to where it should be.
 - Renamed Animation "cycles" to "frames."
 - Fixed issue where `Animation::frame_interval_` wasn’t updating.
 - Changed `Timer::upm_to_millis` and `Timer::millis_to_upm` to convert to updates per second instead of updates per minute.

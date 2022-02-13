@@ -204,17 +204,36 @@ namespace PixelMaestro {
 		@return True if the Maestro has changed.
 	*/
 	bool Maestro::update(const uint32_t& current_time, bool force) {
+		uint32_t last_time = timer_.get_last_time();
+
 		// Update if the time is exceeded or if force is true
 		if (timer_.update(current_time) || force) {
-			// Run the Show
-			if (show_) {
-				show_->update(current_time);
-			}
 
-			// Update each Section
-			for (uint8_t section = 0; section < num_sections_; section++) {
-				sections_[section].update(current_time);
+			/*
+			 * To account for lag, check to see how many times the Maestro should be updated.
+			 * First, derive the number of updates that should've run from the last time and interval.
+			 * For each update, multiply the update num by the interval and add this to the last time to get what should have been the current_time for that update, then store this in new_time.
+			 * Then, pass new_time to each component and continue the loop.
+			 */
+
+			uint16_t num_updates = (current_time - last_time) / timer_.get_interval();
+			uint16_t i = 1;
+
+			do {
+				uint32_t new_time = timer_.get_last_time() + (timer_.get_interval() * i);
+
+				// Run the Show
+				if (show_) {
+					show_->update(new_time);
+				}
+
+				// Update each Section
+				for (uint8_t section = 0; section < num_sections_; section++) {
+					sections_[section].update(new_time);
+				}
+				++i;
 			}
+			while (i <= num_updates);
 
 			return true;
 		}

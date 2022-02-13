@@ -62,7 +62,7 @@ Finally, in the ``loop()`` function, we update the Maestro using ``maestro.updat
        /*
         * Create and configure a Blink Animation.
         * The ColorPresets class provides several pre-built colors and palettes.
-        * We'll decrease the Animation's cycle time (making it blink every second) and disable fading.
+        * We'll decrease the Animation's frame time so that it updates twice a second, and disable fading.
         */
        Animation& animation = section->set_animation(AnimationType::Blink);
        animation.set_palette(ColorPresets:Rainbow_Palette);
